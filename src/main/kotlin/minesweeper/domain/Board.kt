@@ -6,7 +6,7 @@ class Board(width: Int, length: Int) {
         private set
 
     private fun makeCoordinate(width: Int, length: Int): List<Coordinate> {
-        return (FIST until width).flatMap { x -> (FIST until length).map { y -> Coordinate(x, y) } }
+        return (FIST until length).flatMap { y -> (FIST until width).map { x -> Coordinate(x, y) } }
     }
 
     fun makePoint(mineCount: Int = 0) {
