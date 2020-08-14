@@ -13,13 +13,12 @@ class BoardTest {
     }
 
     @Test
-    fun find_coordinate() {
+    fun find_point() {
         val board = Board(10, 10)
 
-        val coordinate = board.findCoordinate(2, 3)
+        val point = board.findPoint(2, 3)
 
-        assertThat(coordinate.x).isEqualTo(2)
-        assertThat(coordinate.y).isEqualTo(3)
+        assertThat(point.coordinate).isEqualTo(Coordinate(2, 3))
     }
 
     @Test
@@ -27,7 +26,7 @@ class BoardTest {
         val board = Board(10, 10)
 
         assertThatThrownBy {
-            board.findCoordinate(10, 10)
+            board.findPoint(10, 10)
         }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("10, 10 좌표는 없습니다.")
     }
 }

@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test
 
 class PointTest {
     @Test
-    fun make_area() {
+    fun make_point() {
         val coordinate = Coordinate(1, 1)
         val isMine = true
 
-        val area = Point(coordinate, isMine)
+        val point = Point(coordinate, isMine)
 
-        assertThat(area.isMine).isTrue()
-        assertThat(area.coordinate).isEqualTo(coordinate)
+        assertThat(point.isMine).isTrue()
+        assertThat(point.coordinate).isEqualTo(coordinate)
     }
 }
