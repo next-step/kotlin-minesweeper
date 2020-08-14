@@ -9,7 +9,7 @@ class BoardTest {
     fun make_board_10x10() {
         val board = Board(10, 10)
 
-        assertThat(board.area).hasSize(100)
+        assertThat(board.points).hasSize(100)
     }
 
     @Test

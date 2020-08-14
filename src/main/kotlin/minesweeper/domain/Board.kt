@@ -1,11 +1,17 @@
 package minesweeper.domain
 
 class Board(width: Int, length: Int) {
-    val area = makeArea(width, length)
+    val points = makePoint(width, length)
 
-    private fun makeArea(width: Int, length: Int): List<Coordinate> {
-        return (0 until width).flatMap { x -> (0 until length).map { y -> Coordinate(x, y) } }
+    private fun makePoint(width: Int, length: Int): List<Point> = makeCoordinate(width, length).map { Point(it, false) }
+
+    private fun makeCoordinate(width: Int, length: Int): List<Coordinate> {
+        return (FIST until width).flatMap { x -> (FIST until length).map { y -> Coordinate(x, y) } }
     }
 
-    fun findCoordinate(x: Int, y: Int): Coordinate = area.find { it.x == x && it.y == y } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+    fun findCoordinate(x: Int, y: Int): Coordinate = points.map { it.coordinate }.find { it.x == x && it.y == y } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+
+    companion object {
+        const val FIST = 0
+    }
 }
