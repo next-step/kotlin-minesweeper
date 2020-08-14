@@ -9,7 +9,7 @@ object ResultView {
     }
 
     private fun draw(point: Point, lastX: Int) {
-        if (point.coordinate.x == lastX) {
+        if (point.isLastX(lastX)) {
             println(drawWhat(point))
         } else {
             print(drawWhat(point))

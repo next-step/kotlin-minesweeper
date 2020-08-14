@@ -20,6 +20,14 @@ class PointTest {
         val coordinate = Coordinate(1, 1)
         val point = Point(coordinate)
 
-        assertThat(point.isIt(coordinate)).isTrue()
+        assertThat(point.isItCoordinate(coordinate)).isTrue()
+    }
+
+    @Test
+    fun is_last_x() {
+        val coordinate = Coordinate(1, 1)
+        val point = Point(coordinate)
+        val lastX = 2
+        assertThat(point.isLastX(lastX)).isFalse()
     }
 }

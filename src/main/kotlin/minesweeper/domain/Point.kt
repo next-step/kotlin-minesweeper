@@ -1,5 +1,7 @@
 package minesweeper.domain
 
 class Point(val coordinate: Coordinate, val isMine: Boolean = false) {
-    fun isIt(coordinate: Coordinate): Boolean = this.coordinate == coordinate
+    fun isItCoordinate(coordinate: Coordinate): Boolean = this.coordinate.isIt(coordinate)
+
+    fun isLastX(lastX: Int): Boolean = coordinate.isX(lastX)
 }

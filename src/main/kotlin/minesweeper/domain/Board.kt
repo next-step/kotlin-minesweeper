@@ -24,7 +24,7 @@ class Board(width: Int, length: Int) {
     }
 
     fun findPoint(x: Int, y: Int): Point =
-        points.find { it.isIt(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+        points.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
 
     fun countMine(): Int = points.filter { it.isMine }.size
 
