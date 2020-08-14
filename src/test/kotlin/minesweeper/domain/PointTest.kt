@@ -14,4 +14,12 @@ class PointTest {
         assertThat(point.isMine).isTrue()
         assertThat(point.coordinate).isEqualTo(coordinate)
     }
+
+    @Test
+    fun is_it() {
+        val coordinate = Coordinate(1, 1)
+        val point = Point(coordinate)
+
+        assertThat(point.isIt(coordinate)).isTrue()
+    }
 }
