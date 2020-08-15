@@ -13,6 +13,7 @@ class MineFieldGeneratorTest {
             }
         })
         val expectedMineField = MineField(
+            Rectangle(2, 2),
             listOf(
                 Block(1, 1, true),
                 Block(2, 1, false),
@@ -21,7 +22,7 @@ class MineFieldGeneratorTest {
             )
         )
         // when
-        val mineField = mineFieldGenerator.create(2, 2, 1)
+        val mineField = mineFieldGenerator.create(Rectangle(2, 2), 1)
 
         // then
         assertThat(mineField).isEqualTo(expectedMineField)
