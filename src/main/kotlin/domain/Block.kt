@@ -1,6 +1,8 @@
 package domain
 
 data class Block(
-    private val position: Position,
+    val position: Position,
     val isMine: Boolean
-)
+) {
+    constructor(xPosition: Int, yPosition: Int, isMine: Boolean) : this(Position(xPosition, yPosition), isMine)
+}
