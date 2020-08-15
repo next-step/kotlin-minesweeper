@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MinesweeperBoard(boardSize: BoardSize, mineNumber: MineNumber) {
+class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
     private var _minBoard = MutableList(boardSize.height.length * boardSize.width.length) { BoardType.LOAD }
     private var _minesweeperBoard: MutableList<List<BoardType>> = MutableList(boardSize.height.length) { List(boardSize.width.length) { BoardType.LOAD } }
     val minesweeperBoard get() = _minesweeperBoard.toList()

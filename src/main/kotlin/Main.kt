@@ -3,11 +3,14 @@ import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
 fun main() {
-    val minesweeperGame = MinesweeperGame(
-        InputView.getHeight(),
-        InputView.getWidth(),
-        InputView.getMinCount()
-    )
-
-    ResultView.showMinesweeperBoard(minesweeperGame.minesweeperBoard)
+    try {
+        val minesweeperGame = MinesweeperGame(
+            InputView.getHeight(),
+            InputView.getWidth(),
+            InputView.getMinCount()
+        )
+        ResultView.showMinesweeperBoard(minesweeperGame.minesweeperBoard)
+    } catch (e: Exception) {
+        println(e.message)
+    }
 }

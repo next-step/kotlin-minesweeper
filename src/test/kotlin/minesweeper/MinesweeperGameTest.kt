@@ -1,10 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.BoardSize
-import minesweeper.domain.BoardType
-import minesweeper.domain.LengthNumber
-import minesweeper.domain.MineNumber
-import minesweeper.domain.MinesweeperBoard
+import minesweeper.domain.MinesweeperGame
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -14,39 +11,31 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class MinesweeperGameTest {
-    @Test
-    @DisplayName("사용자가 입력한 높이, 너비 크기의 배열을 만들기")
-    fun checkCreateMinesweeperBoard() {
-        val boardSize = BoardSize(LengthNumber(10), LengthNumber(7))
-        val mineCount = MineNumber(10, boardSize)
-        val mineSweeperBoard = MinesweeperBoard(boardSize, mineCount)
-
-        val boardHeight = mineSweeperBoard.minesweeperBoard.size
-        val boardWidth = mineSweeperBoard.minesweeperBoard[0].size
-
-        assertAll(
-            { assertThat(boardSize.height.length).isEqualTo(boardHeight) },
-            { assertThat(boardSize.width.length).isEqualTo(boardWidth) }
-        )
-    }
-
-    @Test
-    @DisplayName("만들어진 배열에 랜덤하게 지뢰를 배치")
-    fun checkDistributeMine() {
-        val boardSize = BoardSize(LengthNumber(10), LengthNumber(7))
-        val mineCount = MineNumber(10, boardSize)
-        val mineSweeperBoard = MinesweeperBoard(boardSize, mineCount)
-
-        val mineCountInBoard =
-            mineSweeperBoard.minesweeperBoard.sumBy { it.filter { boardType -> boardType == BoardType.MINE }.count() }
-
-        assertThat(mineCount.mineNumber).isEqualTo(mineCountInBoard)
-    }
-
     @ParameterizedTest
-    @ValueSource(strings = ["", "-1", "400", "ㄱ"])
-    fun validateBoardSize(number: String) {
-        assertThatThrownBy { LengthNumber(number) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+    @ValueSource(strings = ["r", "-1", "#", ""])
+    @DisplayName("게임 시작시, 입력값 확인, 오류사 ")
+    fun validateMinesweeperGame(number: String) {
+        assertThatThrownBy {
+            MinesweeperGame(number, "10", "10")
+        }.isInstanceOf(IllegalArgumentException::class.java)
+    }
+
+    @Test
+    @DisplayName("게임 시작시, 입력값 확인 ")
+    fun validateMinesweeperGame() {
+        val height = "10"
+        val width = "7"
+        val mineCount = "20"
+
+        val minesweeperGame = MinesweeperGame(height, width, mineCount)
+        val minesweeperBoard = minesweeperGame.minesweeperBoard
+        assertAll(
+            {
+                assertThat(minesweeperBoard.boardSize).isEqualTo(BoardSize(height, width))
+            },
+            {
+                assertThat(minesweeperBoard.mineNumber.mineNumber).isEqualTo(mineCount.toInt())
+            }
+        )
     }
 }
