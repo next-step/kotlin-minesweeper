@@ -5,4 +5,14 @@ data class Block(
     val isMine: Boolean
 ) {
     constructor(xPosition: Int, yPosition: Int, isMine: Boolean) : this(Position(xPosition, yPosition), isMine)
+
+    companion object {
+        fun ofNormalsFrom(positions: List<Position>): List<Block> {
+            return positions.map { Block(it, false) }
+        }
+
+        fun ofMinesFrom(positions: List<Position>): List<Block> {
+            return positions.map { Block(it, true) }
+        }
+    }
 }
