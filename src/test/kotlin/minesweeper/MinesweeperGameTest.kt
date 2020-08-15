@@ -1,14 +1,19 @@
+package minesweeper
+
 import minesweeper.domain.BoardSize
 import minesweeper.domain.BoardType
 import minesweeper.domain.LengthNumber
 import minesweeper.domain.MineNumber
 import minesweeper.domain.MinesweeperBoard
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
-class MinesweeperBoardGameTest {
+class MinesweeperGameTest {
     @Test
     @DisplayName("사용자가 입력한 높이, 너비 크기의 배열을 만들기")
     fun checkCreateMinesweeperBoard() {
@@ -36,5 +41,12 @@ class MinesweeperBoardGameTest {
             mineSweeperBoard.minesweeperBoard.sumBy { it.filter { boardType -> boardType == BoardType.MINE }.count() }
 
         assertThat(mineCount.mineNumber).isEqualTo(mineCountInBoard)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["", "-1", "400", "ㄱ"])
+    fun validateBoardSize(number: String) {
+        assertThatThrownBy { LengthNumber(number) }
+            .isInstanceOf(IllegalArgumentException::class.java)
     }
 }
