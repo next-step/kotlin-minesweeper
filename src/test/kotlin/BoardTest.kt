@@ -1,6 +1,5 @@
 import game.Board
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -19,10 +18,11 @@ class BoardTest {
         assertThat(Board(10, 10, mineCount)).isNull()
     }
 
-    @Test
-    fun `지뢰는 X로 표시한다`() {
+    @ParameterizedTest
+    @ValueSource(ints = [3, 5, 10])
+    fun `지뢰는 X로 표시한다`(mineCount: Int) {
         assertThat(
-            Board(10, 10, 5).toString().count { it.toString() == "X" }
-        ).isEqualTo(5)
+            Board(10, 10, mineCount).toString().count { it.toString() == "X" }
+        ).isEqualTo(mineCount)
     }
 }
