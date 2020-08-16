@@ -5,10 +5,20 @@ class MinesweeperGame(height: String, width: String, mineCount: String) {
         private set
 
     init {
-        require(NUMBER_REGEX.matches(height)) { "숫자를 입력해주세요." }
-        require(NUMBER_REGEX.matches(width)) { "숫자를 입력해주세요." }
         val boardSize = BoardSize(height, width)
-        require(NUMBER_REGEX.matches(mineCount)) { "숫자를 입력해주세요." }
         minesweeperBoard = MinesweeperBoard(boardSize, MineNumber(mineCount, boardSize))
+    }
+
+    companion object {
+        fun requestGame(height: String, width: String, mineCount: String): MinesweeperGameResult {
+            if (!NUMBER_REGEX.matches(height) || !NUMBER_REGEX.matches(width) || !NUMBER_REGEX.matches(mineCount)) {
+                return MinesweeperGameResult.Error("숫자를 입력해주세요.")
+            }
+            return MinesweeperGameResult.Success(height, width, mineCount)
+        }
+
+        fun newInstance(height: String, width: String, mineCount: String): MinesweeperGame {
+            return MinesweeperGame(height, width, mineCount)
+        }
     }
 }
