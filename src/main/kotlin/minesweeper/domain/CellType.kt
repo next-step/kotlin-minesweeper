@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-enum class BoardType(val symbol: String) {
+enum class CellType(val symbol: String) {
     MINE("*"),
     LOAD("C")
 }
