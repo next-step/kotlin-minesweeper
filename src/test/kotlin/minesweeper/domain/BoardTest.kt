@@ -9,24 +9,21 @@ class BoardTest {
     fun make_board_10x10() {
         val board = Board(10, 10)
 
-        assertThat(board.coordinates).hasSize(100)
+        assertThat(board.points).hasSize(100)
     }
 
     @Test
-    fun make_point() {
-        val board = Board(10, 10)
-        val mines = 10
+    fun count_mine() {
+        val board = Board(10, 10, 10)
 
-        board.makePoint(mines)
+        val mineCount = board.countMine()
 
-        assertThat(board.countMine()).isEqualTo(10)
-        assertThat(board.points).hasSize(100)
+        assertThat(mineCount).isEqualTo(10)
     }
 
     @Test
     fun find_point() {
         val board = Board(10, 10)
-        board.makePoint()
 
         val point = board.findPoint(2, 3)
 
@@ -36,7 +33,6 @@ class BoardTest {
     @Test
     fun find_error() {
         val board = Board(10, 10)
-        board.makePoint()
 
         assertThatThrownBy {
             board.findPoint(10, 10)

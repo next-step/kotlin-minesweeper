@@ -11,7 +11,7 @@ class PointTest {
 
         val point = Point(coordinate, isMine)
 
-        assertThat(point.isMine).isTrue()
+        assertThat(point.hasMine).isTrue()
         assertThat(point.coordinate).isEqualTo(coordinate)
     }
 

@@ -13,14 +13,6 @@ class CoordinateTest {
     }
 
     @Test
-    fun is_it() {
-        val coordinate = Coordinate(1, 1)
-        val coordinate2 = Coordinate(1, 1)
-
-        assertThat(coordinate.isIt(coordinate2)).isTrue()
-    }
-
-    @Test
     fun is_x() {
         val coordinate = Coordinate(1, 1)
         val x = 1

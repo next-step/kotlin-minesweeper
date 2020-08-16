@@ -18,7 +18,7 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
-        if (point.isMine) {
+        if (point.hasMine) {
             return "*"
         }
         return "C"
