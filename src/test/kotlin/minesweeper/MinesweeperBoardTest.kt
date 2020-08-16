@@ -35,7 +35,7 @@ class MinesweeperBoardTest {
         val mineSweeperBoard = MinesweeperBoard(boardSize, mineCount)
 
         val mineCountInBoard =
-            mineSweeperBoard.minesweeperBoard.sumBy { it.filter { boardType -> boardType == CellType.MINE }.count() }
+            mineSweeperBoard.minesweeperBoard.sumBy { it.filter { cell -> cell.cellType == CellType.MINE }.count() }
 
         assertThat(mineCount.mineNumber).isEqualTo(mineCountInBoard)
     }

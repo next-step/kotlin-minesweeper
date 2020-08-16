@@ -3,6 +3,7 @@ import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
 fun main() {
+
     try {
         val minesweeperGame = MinesweeperGame(
             InputView.getHeight(),
