@@ -1,4 +1,4 @@
-class NumberOfMine(number: Int, private val boardSize: BoardSize) {
+class NumberOfMine(private val number: Int, private val boardSize: BoardSize) {
 
     init {
         require(number in MIN_MINE_NUMBER..boardSize.get()) {
@@ -6,7 +6,7 @@ class NumberOfMine(number: Int, private val boardSize: BoardSize) {
         }
     }
 
-    fun getMineIndexes() = (MIN_MINE_NUMBER..boardSize.get()).shuffled()
+    fun getMineIndexes() = (MIN_MINE_NUMBER..boardSize.get()).shuffled().take(number)
 
     companion object {
         private const val MIN_MINE_NUMBER = 1
