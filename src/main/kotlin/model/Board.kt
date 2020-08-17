@@ -1,3 +1,5 @@
+package model
+
 class Board(private val boardSize: BoardSize) {
     private val _grid = mutableListOf<Char>()
     val grid: List<Char> get() = _grid

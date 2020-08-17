@@ -1,3 +1,12 @@
+package controller
+
+import model.Board
+import model.BoardSize
+import model.LengthOfSide
+import model.NumberOfMine
+import view.InputView
+import view.ResultView
+
 fun main() {
     val (row, col) = requestRowAndCol()
     val boardSize = BoardSize(row, col)

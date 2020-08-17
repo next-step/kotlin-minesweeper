@@ -1,3 +1,5 @@
+package model
+
 class NumberOfMine(private val number: Int, private val boardSize: BoardSize) {
 
     init {

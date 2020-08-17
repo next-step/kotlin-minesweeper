@@ -1,3 +1,5 @@
+package model
+
 class LengthOfSide(val length: Int) {
 
     init {

@@ -1,3 +1,5 @@
+package view
+
 object InputView {
 
     fun requestInputByMode(mode: Mode): Int {
