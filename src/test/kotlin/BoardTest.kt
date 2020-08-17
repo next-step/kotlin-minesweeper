@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class BoardTest {
 
     @ParameterizedTest
-    @ValueSource(strings = ["O O\nO O\nO O\n"])
+    @ValueSource(strings = ["0 0\n0 0\n0 0\n"])
     fun `높이 * 너비 크기의 판을 생성한다`(board: String) {
         assertThat(Board(2, 3, 0).toString()).isEqualTo(board)
     }
@@ -24,5 +24,14 @@ class BoardTest {
         assertThat(
             Board(10, 10, mineCount).toString().count { it.toString() == "X" }
         ).isEqualTo(mineCount)
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [10])
+    fun `지뢰가 아닐 경우 주변 8개 사각형에 포함된 지뢰의 개수를 표시한다`(mineCount: Int) {
+        val boardString = Board(10, 5, mineCount).toString()
+        assertThat(
+            boardString.split(" ", "\n").filter { it.isNotBlank() && it != "X" }
+        ).allSatisfy { it.toInt() in 0..mineCount }
     }
 }
