@@ -9,13 +9,13 @@ class Board private constructor(
     private val mineCount: Int = 0
 ) {
     private val boardInfo = MutableList(height) { MutableList(width) { SYMBOL_EMPTY } }
-    private val mineLocations = createMines()
 
     init {
         initBoard()
     }
 
     private fun initBoard() {
+        val mineLocations = createMines()
         for (i in 0 until mineCount) {
             setMine(mineLocations[i].first, mineLocations[i].second)
         }
@@ -32,15 +32,15 @@ class Board private constructor(
         }
     }
 
-    private fun increaseMineCount(x: Int, y: Int) {
-        if (boardInfo[x][y] > SYMBOL_MINE) {
-            boardInfo[x][y] += 1
-        }
-    }
-
     private fun notifySetMine(x: Int, y: Int) {
         for (location in findNotifyRange(x, y)) {
             increaseMineCount(location.first, location.second)
+        }
+    }
+
+    private fun increaseMineCount(x: Int, y: Int) {
+        if (boardInfo[x][y] > SYMBOL_MINE) {
+            boardInfo[x][y] += 1
         }
     }
 
