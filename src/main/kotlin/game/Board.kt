@@ -12,13 +12,16 @@ class Board private constructor(
     }
 
     private fun initBoard() {
-        var count = mineCount
-        while (count > 0) {
-            val x = (0 until height).random()
-            val y = (0 until width).random()
-            count -= setMine(x, y)
+        var count = 0
+        val location = createRandomLocation()
+        while (count < mineCount) {
+            count += setMine(location[count].first, location[count].second)
         }
     }
+
+    private fun createRandomLocation() = (0 until height).flatMap { x ->
+        (0 until width).map { y -> Pair(x, y) }
+    }.shuffled().take(mineCount)
 
     private fun setMine(x: Int, y: Int): Int {
         if (boardInfo[x][y] == SYMBOL_EMPTY) {
