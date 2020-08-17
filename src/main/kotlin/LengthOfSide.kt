@@ -1,4 +1,4 @@
-class LengthOfSide(length: Int) {
+class LengthOfSide(val length: Int) {
 
     init {
         require(length in NUMBER_RANGE) {
