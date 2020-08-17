@@ -13,22 +13,3 @@ class BoardTest {
         assertThat(board.grid.count { it == MineType.MINE.symbol }).isEqualTo(3)
     }
 }
-
-class Board(private val boardSize: BoardSize) {
-    private val _grid = mutableListOf<Char>()
-    val grid: List<Char> get() = _grid
-
-    fun make(mineIndexes: List<Int>) {
-        repeat(boardSize.get()) {
-            _grid.add(MineType.NONE.symbol)
-        }
-        mineIndexes.take(mineIndexes.size).map {
-            _grid[it] = MineType.MINE.symbol
-        }
-    }
-}
-
-enum class MineType(val symbol: Char) {
-    NONE('C'),
-    MINE('*')
-}
