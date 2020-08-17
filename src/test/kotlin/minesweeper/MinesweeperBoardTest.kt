@@ -1,7 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.BoardSize
-import minesweeper.domain.BoardType
+import minesweeper.domain.CellType
 import minesweeper.domain.LengthNumber
 import minesweeper.domain.MineNumber
 import minesweeper.domain.MinesweeperBoard
@@ -35,7 +35,7 @@ class MinesweeperBoardTest {
         val mineSweeperBoard = MinesweeperBoard(boardSize, mineCount)
 
         val mineCountInBoard =
-            mineSweeperBoard.minesweeperBoard.sumBy { it.filter { boardType -> boardType == BoardType.MINE }.count() }
+            mineSweeperBoard.minesweeperBoard.sumBy { it.filter { cell -> cell.cellType == CellType.MINE }.count() }
 
         assertThat(mineCount.mineNumber).isEqualTo(mineCountInBoard)
     }
