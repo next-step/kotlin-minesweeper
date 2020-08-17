@@ -5,6 +5,12 @@ fun main() {
         number = InputView.requestInputByMode(InputView.Mode.MINE_COUNT),
         boardSize = boardSize
     )
+
+    val board = Board(boardSize).apply {
+        make(mineCount.getMineIndexes())
+    }
+
+    ResultView.printBoard(board, row)
 }
 
 private fun requestRowAndCol() =
