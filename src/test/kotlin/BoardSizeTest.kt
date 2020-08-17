@@ -10,8 +10,3 @@ class BoardSizeTest {
         assertThat(boardSize.get()).isEqualTo(100)
     }
 }
-
-class BoardSize(private val row: LengthOfSide, private val col: LengthOfSide) {
-
-    fun get(): Int = row.length * col.length
-}
