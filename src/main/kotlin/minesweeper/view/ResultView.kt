@@ -2,7 +2,7 @@ package minesweeper.view
 
 import minesweeper.domain.MineMap
 
-const val ANNOUNCE_GAME_START = "지뢰게임 시작"
+const val ANNOUNCE_GAME_START = "지뢰찾기 게임 시작"
 
 object ResultView {
 
