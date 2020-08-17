@@ -1,25 +1,8 @@
 package minesweeper.domain
 
-class Board(width: Int, length: Int, mineCount: Int = 0) {
-    private val coordinates = makeCoordinate(width, length)
-    val points: List<Point> = makePoint(mineCount)
-
-    private fun makeCoordinate(width: Int, length: Int): List<Coordinate> {
-        return (FIRST until length).flatMap { y -> (FIRST until width).map { x -> Coordinate(x, y) } }
-    }
-
-    private fun makePoint(mineCount: Int = 0): List<Point> {
-        val mineCoordinates = getMineCoordinate(mineCount)
-        return coordinates.map { setMine(mineCoordinates.contains(it), it) }
-    }
-
-    private fun getMineCoordinate(mineCount: Int): List<Coordinate> = coordinates.shuffled().take(mineCount)
-
-    private fun setMine(isContain: Boolean, coordinate: Coordinate): Point {
-        if (isContain) {
-            return Point(coordinate, true)
-        }
-        return Point(coordinate)
+class Board(val points: List<Point>) {
+    init {
+        points.forEach { it.setMineCount(getAroundMines(it)) }
     }
 
     fun findPoint(x: Int, y: Int): Point =
@@ -27,7 +10,15 @@ class Board(width: Int, length: Int, mineCount: Int = 0) {
 
     fun countMine(): Int = points.filter { it.hasMine }.size
 
-    companion object {
-        const val FIRST = 0
+    private fun getAroundMines(point: Point): Int {
+        return Direction.values().filter { isMine(it.getCoordinate(point.coordinate)) }.size
+    }
+
+    private fun isMine(coordinate: Coordinate): Boolean {
+        return try {
+            findPoint(coordinate.x, coordinate.y).hasMine
+        } catch (e: Exception) {
+            false
+        }
     }
 }

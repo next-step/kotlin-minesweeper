@@ -21,6 +21,6 @@ object ResultView {
         if (point.hasMine) {
             return "*"
         }
-        return "C"
+        return point.mineCount.toString()
     }
 }

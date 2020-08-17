@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.Board
+import minesweeper.domain.BoardFactory
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 import kotlin.system.exitProcess
@@ -18,6 +18,6 @@ fun startGame() {
     val length = InputView.inputLength()
     val width = InputView.inputWidth()
     val mineCount = InputView.inputMines()
-    val board = Board(width, length, mineCount)
+    val board = BoardFactory.makeBoard(width, length) { BoardFactory.makeMineCoordinates(it, mineCount) }
     ResultView.resultBoard(board, width - 1)
 }
