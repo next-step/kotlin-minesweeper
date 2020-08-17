@@ -22,10 +22,10 @@ class Mines(private val mines: List<Mine>) {
         }
     }
 
-    private fun setIntoEachRow(nthRow: Int, col: MutableList<String>) {
+    private fun setIntoEachRow(nthRow: Int, row: MutableList<String>) {
         mines.filter { it.isIn(nthRow) }
             .forEach { mine ->
-                col[mine.getX()] = mine.symbol
+                row[mine.getX()] = mine.symbol
             }
     }
 }
