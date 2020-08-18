@@ -11,4 +11,8 @@ object ResultView {
             println(it.joinToString())
         }
     }
+
+    fun printError(exception: Exception) {
+        println(exception.message)
+    }
 }
