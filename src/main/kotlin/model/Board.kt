@@ -1,10 +1,10 @@
 package model
 
-class Board(private val boardSize: BoardSize) {
+class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     private val _grid = mutableListOf<Char>()
     val grid: List<Char> get() = _grid
 
-    fun make(mineIndexes: List<Int>) {
+    init {
         repeat(boardSize.get()) {
             _grid.add(MineType.NONE.symbol)
         }
