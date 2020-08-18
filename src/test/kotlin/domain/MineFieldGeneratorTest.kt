@@ -15,10 +15,10 @@ class MineFieldGeneratorTest {
         val expectedMineField = MineField(
             Rectangle(2, 2),
             listOf(
-                Block(1, 1, true),
-                Block(2, 1, false),
-                Block(1, 2, false),
-                Block(2, 2, false)
+                Mine(1, 1),
+                NormalBlock(2, 1, 0),
+                NormalBlock(1, 2, 0),
+                NormalBlock(2, 2, 0)
             )
         )
         // when

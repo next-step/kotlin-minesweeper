@@ -10,9 +10,9 @@ fun printGameStart() {
 }
 
 fun printMineField(mineField: MineField) {
-    val blockQueue: Queue<Block> = LinkedList<Block>(mineField.blocks)
+    val normalBlockQueue: Queue<Block> = LinkedList<Block>(mineField.blocks)
     repeat(mineField.getHeight()) {
-        repeat(mineField.getWidth()) { printBlock(blockQueue.poll().isMine) }
+        repeat(mineField.getWidth()) { printBlock(normalBlockQueue.poll().isMine()) }
         println()
     }
 }
