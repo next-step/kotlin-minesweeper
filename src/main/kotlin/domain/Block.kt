@@ -1,18 +1,9 @@
 package domain
 
-data class Block(
-    val position: Position,
-    val isMine: Boolean
-) {
-    constructor(xPosition: Int, yPosition: Int, isMine: Boolean) : this(Position(xPosition, yPosition), isMine)
+interface Block {
+    val position: Position
 
-    companion object {
-        fun ofNormalsFrom(positions: List<Position>): List<Block> {
-            return positions.map { Block(it, false) }
-        }
+    fun isMine(): Boolean
 
-        fun ofMinesFrom(positions: List<Position>): List<Block> {
-            return positions.map { Block(it, true) }
-        }
-    }
+    fun getMinesCount(): Int
 }

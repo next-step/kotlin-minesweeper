@@ -1,32 +1,41 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class BlockTest {
+
     @Test
-    fun `Position들을 가지고 지뢰가 아닌 일반 칸 만들기`() {
+    fun `지뢰칸 만들기`() {
         // given
-        val positions = listOf(Position(1, 1), Position(2, 1))
-        val expectedBlocks = listOf(
-            Block(1, 1, false),
-            Block(2, 1, false)
-        )
+        val block: Block = Mine(Position.of(0, 0))
 
         // then
-        assertThat(Block.ofNormalsFrom(positions)).isEqualTo(expectedBlocks)
+        assertThat(block.isMine()).isTrue()
     }
 
     @Test
-    fun `Position들을 가지고 지뢰 칸 만들기`() {
+    fun `지뢰는 주변 지뢰 개수를 가질 수 없음`() {
         // given
-        val positions = listOf(Position(1, 1), Position(2, 1))
-        val expectedBlocks = listOf(
-            Block(1, 1, true),
-            Block(2, 1, true)
-        )
+        val block: Block = Mine(1, 1)
 
         // then
-        assertThat(Block.ofMinesFrom(positions)).isEqualTo(expectedBlocks)
+        assertThatThrownBy { block.getMinesCount() }
+            .isInstanceOf(UnsupportedOperationException::class.java)
+            .hasMessage("지뢰는 주변 지뢰의 개수를 가지고 있지 않습니다.")
+    }
+
+    @Test
+    fun `지뢰가 아닌 칸 만들기`() {
+        // given
+        val block: Block = NormalBlock(Position.of(0, 0), 1)
+
+        // then
+        assertAll(
+            { assertThat(block.isMine()).isFalse() },
+            { assertThat(block.getMinesCount()).isEqualTo(1) }
+        )
     }
 }

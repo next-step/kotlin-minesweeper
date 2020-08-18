@@ -9,12 +9,12 @@ class RandomMinePositionsSelectorTest {
     fun `원하는 개수의 원하는 지뢰의 위치를 뱉는지 확인`() {
         // given
         val positions = listOf(
-            Position(1, 1),
-            Position(2, 1),
-            Position(2, 1),
-            Position(2, 2)
+            Position.of(1, 1),
+            Position.of(2, 1),
+            Position.of(2, 1),
+            Position.of(2, 2)
         )
-        val expectedMinePositions = listOf(Position(1, 1), Position(2, 2))
+        val expectedMinePositions = listOf(Position.of(1, 1), Position.of(2, 2))
         val mineSelector = object : MinePositionsSelectStrategy {
             override fun getMinePositionsFrom(positions: List<Position>, count: Int): List<Position> {
                 return expectedMinePositions
