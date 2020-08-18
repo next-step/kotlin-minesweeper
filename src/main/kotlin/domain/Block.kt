@@ -4,7 +4,7 @@ data class Block(
     val position: Position,
     val isMine: Boolean
 ) {
-    constructor(xPosition: Int, yPosition: Int, isMine: Boolean) : this(Position(xPosition, yPosition), isMine)
+    constructor(xPosition: Int, yPosition: Int, isMine: Boolean) : this(Position.of(xPosition, yPosition), isMine)
 
     companion object {
         fun ofNormalsFrom(positions: List<Position>): List<Block> {

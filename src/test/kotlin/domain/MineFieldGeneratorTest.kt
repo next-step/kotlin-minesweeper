@@ -9,7 +9,7 @@ class MineFieldGeneratorTest {
         // given
         val mineFieldGenerator = MineFieldGenerator(object : MinePositionsSelectStrategy {
             override fun getMinePositionsFrom(positions: List<Position>, count: Int): List<Position> {
-                return listOf(Position(1, 1))
+                return listOf(Position.of(1, 1))
             }
         })
         val expectedMineField = MineField(
