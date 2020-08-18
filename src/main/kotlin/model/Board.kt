@@ -8,7 +8,7 @@ class Board(private val boardSize: BoardSize) {
         repeat(boardSize.get()) {
             _grid.add(MineType.NONE.symbol)
         }
-        mineIndexes.take(mineIndexes.size).map {
+        mineIndexes.forEach {
             _grid[it] = MineType.MINE.symbol
         }
     }
