@@ -10,6 +10,5 @@ fun main() {
     val mineCount = InputView.readCountOfMines(height, width)
 
     val mineMap = MineMap(height, width, mineCount)
-
     ResultView.showMineMap(mineMap)
 }

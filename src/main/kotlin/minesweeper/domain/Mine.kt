@@ -17,6 +17,6 @@ data class Mine(
     fun isSameRow(nthRow: Int): Boolean = nthRow == this.y
 
     companion object {
-        private const val MINE_SYMBOL = "*"
+        const val MINE_SYMBOL = "*"
     }
 }
