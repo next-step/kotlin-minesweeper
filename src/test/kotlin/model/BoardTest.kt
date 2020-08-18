@@ -12,4 +12,8 @@ class BoardTest {
 
         assertThat(board.grid.flatten().count { it == MineType.MINE.symbol }).isEqualTo(3)
     }
+
+    @Test
+    fun `지뢰 좌표 구하기`() {
+    }
 }
