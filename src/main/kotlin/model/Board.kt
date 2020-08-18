@@ -1,15 +1,22 @@
 package model
 
 class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
-    private val _grid = mutableListOf<Char>()
-    val grid: List<Char> get() = _grid
+    private val _linear = mutableListOf<Char>()
+    val grid: List<List<Char>>
 
     init {
+        setupLinear(boardSize, mineIndexes)
+        grid = convertToGrid(boardSize)
+    }
+
+    private fun convertToGrid(boardSize: BoardSize) = _linear.chunked(boardSize.getRow())
+
+    private fun setupLinear(boardSize: BoardSize, mineIndexes: List<Int>) {
         repeat(boardSize.get()) {
-            _grid.add(MineType.NONE.symbol)
+            _linear.add(MineType.NONE.symbol)
         }
         mineIndexes.forEach {
-            _grid[it] = MineType.MINE.symbol
+            _linear[it] = MineType.MINE.symbol
         }
     }
 }

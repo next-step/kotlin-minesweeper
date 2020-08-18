@@ -1,13 +1,12 @@
 package view
 
 import model.Board
-import model.LengthOfSide
 
 object ResultView {
 
-    fun printBoard(board: Board, row: LengthOfSide) {
+    fun printBoard(board: Board) {
         println("지뢰 찾기 게임 시작")
-        board.grid.chunked(row.length).map {
+        board.grid.map {
             println(it.joinToString())
         }
     }

@@ -21,7 +21,7 @@ fun main() {
 
     val board = Board(boardSize, mineCount.getMineIndexes())
 
-    ResultView.printBoard(board, row)
+    ResultView.printBoard(board)
 }
 
 private fun tryLengthOfSideInput(data: Int): Result<LengthOfSide> =
