@@ -12,15 +12,15 @@ fun printGameStart() {
 fun printMineField(mineField: MineField) {
     val normalBlockQueue: Queue<Block> = LinkedList<Block>(mineField.blocks)
     repeat(mineField.getHeight()) {
-        repeat(mineField.getWidth()) { printBlock(normalBlockQueue.poll().isMine()) }
+        repeat(mineField.getWidth()) { printBlock(normalBlockQueue.poll()) }
         println()
     }
 }
 
-fun printBlock(isMine: Boolean) {
-    if (isMine) {
+fun printBlock(block: Block) {
+    if (block.isMine()) {
         print("* ")
         return
     }
-    print("□ ")
+    print("${block.getMinesCount()} ")
 }
