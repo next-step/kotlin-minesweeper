@@ -53,4 +53,15 @@ class BoardTest {
         assertThat(mineCountBoard[8][1]).isEqualTo('1')
         assertThat(mineCountBoard[9][1]).isEqualTo('1')
     }
+
+    @Test
+    fun `오른쪽 하단에 지뢰가 있는 경우`() {
+        val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
+        val board = Board(boardSize, listOf(99))
+        val mineCountBoard = board.convertToMineCount()
+
+        assertThat(mineCountBoard[9][8]).isEqualTo('1')
+        assertThat(mineCountBoard[8][8]).isEqualTo('1')
+        assertThat(mineCountBoard[8][9]).isEqualTo('1')
+    }
 }
