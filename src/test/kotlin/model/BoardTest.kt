@@ -20,4 +20,8 @@ class BoardTest {
 
         assertThat(board.getMineCoordinates().first()).isEqualTo(Coordinates(1, 1))
     }
+
+    @Test
+    fun `왼쪽 상단에 지뢰가 있는 경우`() {
+    }
 }
