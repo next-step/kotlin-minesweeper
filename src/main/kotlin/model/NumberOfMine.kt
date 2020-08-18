@@ -8,7 +8,7 @@ class NumberOfMine(private val number: Int, private val boardSize: BoardSize) {
         }
     }
 
-    fun getMineIndexes() = (MIN_MINE_NUMBER..boardSize.get()).shuffled().take(number)
+    fun getMineIndexes() = (MIN_MINE_NUMBER until boardSize.get()).shuffled().take(number)
 
     companion object {
         private const val MIN_MINE_NUMBER = 1
