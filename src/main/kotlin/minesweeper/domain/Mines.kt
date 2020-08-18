@@ -4,8 +4,7 @@ class Mines(private val mines: List<Mine>) {
 
     fun hasDuplicate(): Boolean {
         val nonDuplicateMines = mines.toSet()
-        if (nonDuplicateMines.size != this.mines.size) return true
-        return false
+        return nonDuplicateMines.size != this.mines.size
     }
 
     fun duplicateRemoved() = mines.distinct()
@@ -23,9 +22,9 @@ class Mines(private val mines: List<Mine>) {
     }
 
     private fun setIntoEachRow(nthRow: Int, row: MutableList<String>) {
-        mines.filter { it.isIn(nthRow) }
+        mines.filter { it.isSameRow(nthRow) }
             .forEach { mine ->
-                row[mine.getX()] = mine.symbol
+                row[mine.x] = mine.symbol
             }
     }
 }

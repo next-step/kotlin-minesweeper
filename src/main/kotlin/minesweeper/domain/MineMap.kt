@@ -1,6 +1,9 @@
 package minesweeper.domain
 
-class MineMap(private val mapArea: Pair<Int, Int>, _mines: Mines) {
+class MineMap(
+    private val dimension: MapDimension,
+    _mines: Mines
+) {
     var mines = _mines
         private set
 
@@ -8,30 +11,29 @@ class MineMap(private val mapArea: Pair<Int, Int>, _mines: Mines) {
         validateMineCount()
     }
 
-    constructor(area: Pair<Int, Int>, mineCount: Int) : this(
-        area,
-        _mines = Mines((1..mineCount).map { Mine.createMine(area, randomPositionStrategy) })
+    constructor(height: Int, width: Int, mineCount: Int) : this(
+        MapDimension(height, width),
+        _mines = Mines((1..mineCount).map { Mine(dimensionBounds = MapDimension(height, width)) })
     )
 
     private fun validateMineCount() {
         while (mines.hasDuplicate()) {
-            val duplicateCount = mines.size() - mines.duplicateRemoved().size
-            val oldMines = mines.duplicateRemoved()
-            val newMines = (1..duplicateCount).map { Mine.createMine(mapArea, randomPositionStrategy) }
-            mines = Mines(oldMines + newMines)
+            val nonDuplicateMines = mines.duplicateRemoved()
+            val duplicateCount = mines.size() - nonDuplicateMines.size
+            val newMines = (1..duplicateCount).map { Mine(dimensionBounds = dimension) }
+            mines = Mines(nonDuplicateMines + newMines)
         }
     }
 
     fun stateOfMap(): List<List<String>> {
-        return mines.setIntoMap(mapInitialized(mapArea.first, mapArea.second))
+        return mines.setIntoMap(mapInitialized(dimension.height, dimension.width))
     }
 
     companion object {
         private const val MAP_SYMBOL = "C"
-        private val randomPositionStrategy = RandomPositionStrategy
 
-        fun mapInitialized(height: Int, width: Int): List<List<String>> {
-            return List(height) { List(width) { MAP_SYMBOL } }
+        fun mapInitialized(height: Height, width: Width): List<List<String>> {
+            return List(height.value) { List(width.value) { MAP_SYMBOL } }
         }
     }
 }

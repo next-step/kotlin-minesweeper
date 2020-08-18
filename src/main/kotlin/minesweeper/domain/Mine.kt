@@ -1,19 +1,22 @@
 package minesweeper.domain
 
-data class Mine(private val position: Pair<Int, Int>, val symbol: String = MINE_SYMBOL) {
+data class Mine(
+    val position: MinePosition,
+    val symbol: String = MINE_SYMBOL
+) {
+    val x: Int = this.position.x
+    val y: Int = this.position.y
 
-    fun getX(): Int = this.position.first
-    fun getY(): Int = this.position.second
+    constructor(dimensionBounds: MapDimension, positionStrategy: PositionStrategy = RandomPositionStrategy) : this(
+        MinePosition(
+            positionStrategy.setXPosition(dimensionBounds.width),
+            positionStrategy.setYPosition(dimensionBounds.height)
+        )
+    )
 
-    fun isIn(nthRow: Int): Boolean = nthRow == this.getY()
+    fun isSameRow(nthRow: Int): Boolean = nthRow == this.y
 
     companion object {
         private const val MINE_SYMBOL = "*"
-
-        fun createMine(mapArea: Pair<Int, Int>, positionStrategy: PositionStrategy): Mine {
-            val x = positionStrategy.setXPosition(Width.from(mapArea.second))
-            val y = positionStrategy.setYPosition(Height.from(mapArea.first))
-            return Mine(Pair(x, y))
-        }
     }
 }

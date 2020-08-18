@@ -7,7 +7,7 @@ class HeightTest {
 
     @Test
     fun `높이를 반환한다`() {
-        val height = Height.from(10)
+        val height = Height(10)
         assertThat(height.value).isEqualTo(10)
     }
 }
