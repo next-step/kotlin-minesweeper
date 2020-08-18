@@ -21,7 +21,7 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
         val mineMap = Array(grid.size) { IntArray(grid[0].size) { ZERO_ASCII } }
         val mineCoordinates = getMineCoordinates()
         mineCoordinates.forEach { makeMineMap(mineMap, it) }
-        mineCoordinates.forEach { mineMap[it.row][it.col] = MINE_ASCII }
+        mineCoordinates.forEach { mineMap[it.row][it.col] = MineType.MINE.ascii }
         return mineMap.map { row -> row.map { it.toChar() } }
     }
 
@@ -62,7 +62,6 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     }
 
     companion object {
-        private const val MINE_ASCII = 42
         private const val ZERO_ASCII = 48
     }
 }
