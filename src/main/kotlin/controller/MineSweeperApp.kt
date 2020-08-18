@@ -15,9 +15,7 @@ fun main() {
         boardSize = boardSize
     )
 
-    val board = Board(boardSize).apply {
-        make(mineCount.getMineIndexes())
-    }
+    val board = Board(boardSize, mineCount.getMineIndexes())
 
     ResultView.printBoard(board, row)
 }

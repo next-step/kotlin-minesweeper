@@ -8,9 +8,7 @@ class BoardTest {
     @Test
     fun `보드에 지뢰 설치하기`() {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
-        val board = Board(boardSize).apply {
-            make(listOf(1, 2, 3))
-        }
+        val board = Board(boardSize, listOf(1, 2, 3))
 
         assertThat(board.grid.count { it == MineType.MINE.symbol }).isEqualTo(3)
     }
