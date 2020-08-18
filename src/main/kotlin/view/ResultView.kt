@@ -6,7 +6,7 @@ object ResultView {
 
     fun printBoard(board: Board) {
         println("지뢰 찾기 게임 시작")
-        board.grid.map {
+        board.convertToMineCount().map {
             println(it.joinToString())
         }
     }
