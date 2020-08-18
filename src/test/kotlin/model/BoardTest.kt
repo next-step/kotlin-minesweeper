@@ -15,5 +15,9 @@ class BoardTest {
 
     @Test
     fun `지뢰 좌표 구하기`() {
+        val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
+        val board = Board(boardSize, listOf(11))
+
+        assertThat(board.getMineCoordinates().first()).isEqualTo(Coordinates(1, 1))
     }
 }
