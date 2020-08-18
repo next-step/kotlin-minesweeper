@@ -40,7 +40,7 @@ class Position private constructor(
     }
 
     companion object {
-        private const val POSITION_START = 1
+        const val POSITION_START = 1
         private const val UP = -1
         private const val DOWN = 1
         private const val LEFT = -1
@@ -51,12 +51,6 @@ class Position private constructor(
         fun of(x: Int, y: Int): Position {
             val position = x to y
             return cache.computeIfAbsent(position) { Position(x, y) }
-        }
-
-        fun createAll(rectangle: Rectangle): List<Position> {
-            return (POSITION_START..rectangle.height).flatMap { y ->
-                (POSITION_START..rectangle.width).map { x -> Position(x, y) }
-            }
         }
     }
 }
