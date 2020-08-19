@@ -5,7 +5,8 @@ data class NormalBlock(
     private val mineCount: Int,
     override val isClose: Boolean = true
 ) : Block {
-    constructor(x: Int, y: Int, mineCount: Int) : this(Position.of(x, y), mineCount)
+
+    constructor(x: Int, y: Int, mineCount: Int, isClosed: Boolean = true) : this(Position.of(x, y), mineCount, isClosed)
 
     override fun isMine(): Boolean = false
 
