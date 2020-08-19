@@ -1,8 +1,8 @@
 package model
 
 class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
-    private val _linear = mutableListOf<Char>()
-    val grid: List<List<Char>>
+    private val _linear = mutableListOf<MineType>()
+    val grid: List<List<MineType>>
 
     init {
         setupLinear(boardSize, mineIndexes)
@@ -17,12 +17,12 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
         return mineCoordinates
     }
 
-    fun convertToMineCount(): List<List<Char>> {
-        val mineMap = Array(grid.size) { IntArray(grid[0].size) { ZERO_ASCII } }
+    fun convertToMineCount(): List<List<MineType>> {
+        val mineMap = Array(grid.size) { IntArray(grid[0].size) { MineType.ZERO.ascii } }
         val mineCoordinates = getMineCoordinates()
         setupMineAround(mineCoordinates, mineMap)
         setupMine(mineCoordinates, mineMap)
-        return mineMap.map { row -> row.map { it.toChar() } }
+        return mineMap.map { row -> row.map { MineType.findByAscii(it) } }
     }
 
     private fun setupMine(mineCoordinates: List<Coordinates>, mineMap: Array<IntArray>) {
@@ -38,7 +38,7 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
 
     private fun makeMineCoordinates(row: Int, mineCoordinates: MutableList<Coordinates>) {
         for (col in grid.indices) {
-            if (grid[row][col] != MineType.MINE.symbol) continue
+            if (grid[row][col] != MineType.MINE) continue
             mineCoordinates.add(Coordinates(row, col))
         }
     }
@@ -47,14 +47,10 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
 
     private fun setupLinear(boardSize: BoardSize, mineIndexes: List<Int>) {
         repeat(boardSize.get()) {
-            _linear.add(MineType.NONE.symbol)
+            _linear.add(MineType.NONE)
         }
         mineIndexes.forEach {
-            _linear[it] = MineType.MINE.symbol
+            _linear[it] = MineType.MINE
         }
-    }
-
-    companion object {
-        private const val ZERO_ASCII = 48
     }
 }
