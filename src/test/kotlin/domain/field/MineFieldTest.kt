@@ -47,6 +47,6 @@ class MineFieldTest {
         val expectedMineField = MineField(Rectangle(3, 3), expectedBlocks)
 
         // then
-        assertThat(mineField.pick(Position.of(1, 1))).isEqualTo(expectedMineField)
+        assertThat(mineField.open(Position.of(1, 1))).isEqualTo(expectedMineField)
     }
 }

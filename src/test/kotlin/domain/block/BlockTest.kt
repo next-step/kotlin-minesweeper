@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class BlockTest {
 
@@ -49,5 +51,16 @@ class BlockTest {
 
         // then
         assertThat(openedBlock.isClose).isFalse()
+    }
+
+    @CsvSource("1,1,true", "0,0,false")
+    @ParameterizedTest
+    fun `칸이 해당 위치에 있는지 확인`(x: Int, y: Int, isAtPosition: Boolean) {
+        // given
+        val block: Block = NormalBlock(1, 1, 0)
+        val position = Position.of(x, y)
+
+        // then
+        assertThat(block.isAt(position)).isEqualTo(isAtPosition)
     }
 }

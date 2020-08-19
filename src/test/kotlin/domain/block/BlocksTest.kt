@@ -1,16 +1,12 @@
 package domain.block
 
-import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 
 class BlocksTest {
 
-    @CsvSource("0,0,true", "1,1,false")
-    @ParameterizedTest
-    fun `해당 위치가 지뢰인지 확인`(x: Int, y: Int, isMine: Boolean) {
+    @Test
+    fun `해당 위치가 지뢰인지 확인`() {
         // given
         val blocks = Blocks(
             listOf(
@@ -20,11 +16,11 @@ class BlocksTest {
                 NormalBlock(1, 1, 1)
             )
         )
-        // when
-        val minePosition = Position.of(x, y)
 
         // then
-        assertThat(blocks.isMineIn(minePosition)).isEqualTo(isMine)
+        assertThatThrownBy { blocks.open(Position.of(0, 0)) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("해당 칸은 지뢰입니다!")
     }
 
     @Test
@@ -41,7 +37,7 @@ class BlocksTest {
         val invalidPosition = Position.of(2, 2)
 
         // then
-        assertThatThrownBy { blocks.getIn(invalidPosition) }
+        assertThatThrownBy { blocks.open(invalidPosition) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("${invalidPosition}에 해당하는 칸을 찾을 수 없습니다.")
     }
