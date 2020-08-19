@@ -1,4 +1,4 @@
-package domain
+package domain.block
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

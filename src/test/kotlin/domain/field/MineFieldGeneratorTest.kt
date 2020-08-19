@@ -1,5 +1,9 @@
-package domain
+package domain.field
 
+import domain.MinePositionsSelectStrategy
+import domain.block.Mine
+import domain.block.NormalBlock
+import domain.block.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,11 +17,12 @@ class MineFieldGeneratorTest {
     @Test
     fun `전체 필드를 제대로 만드는지 확인`() {
         // given
-        val mineFieldGenerator = MineFieldGenerator(object : MinePositionsSelectStrategy {
-            override fun getMinePositionsFrom(positions: List<Position>, count: Int): List<Position> {
-                return listOf(Position.of(3, 1), Position.of(1, 2), Position.of(2, 3))
-            }
-        })
+        val mineFieldGenerator =
+            MineFieldGenerator(object : MinePositionsSelectStrategy {
+                override fun getMinePositionsFrom(positions: List<Position>, count: Int): List<Position> {
+                    return listOf(Position.of(3, 1), Position.of(1, 2), Position.of(2, 3))
+                }
+            })
         val expectedMineField = MineField(
             Rectangle(3, 3),
             listOf(

@@ -1,7 +1,7 @@
 package view
 
-import domain.Block
-import domain.MineField
+import domain.block.Block
+import domain.field.MineField
 import java.util.LinkedList
 import java.util.Queue
 

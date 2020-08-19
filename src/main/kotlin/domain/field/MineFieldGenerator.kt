@@ -1,4 +1,10 @@
-package domain
+package domain.field
+
+import domain.MinePositionsSelectStrategy
+import domain.block.Block
+import domain.block.Mine
+import domain.block.NormalBlock
+import domain.block.Position
 
 class MineFieldGenerator(
     private val minePositionsSelectStrategy: MinePositionsSelectStrategy
@@ -8,14 +14,21 @@ class MineFieldGenerator(
         val minePositions = minePositionsSelectStrategy.getMinePositionsFrom(positions, minesCount)
         val normalBlocks = createNormalBlocks(positions, minePositions)
         val mineBlocks = Mine.from(minePositions)
-        return MineField(rectangle, (normalBlocks + mineBlocks).sortedBy { it.position })
+        return MineField(
+            rectangle,
+            (normalBlocks + mineBlocks).sortedBy { it.position })
     }
 
     private fun createNormalBlocks(allPositions: List<Position>, minePositions: List<Position>): List<Block> {
         val normalPositions = allPositions - minePositions
         return normalPositions.map { it.surroundings() }
             .map { countPositionsContainsMines(it, minePositions) }
-            .zip(normalPositions) { minesCount, position -> NormalBlock(position, minesCount) }
+            .zip(normalPositions) { minesCount, position ->
+                NormalBlock(
+                    position,
+                    minesCount
+                )
+            }
     }
 
     private fun countPositionsContainsMines(positions: List<Position>, minePositions: List<Position>): Int {

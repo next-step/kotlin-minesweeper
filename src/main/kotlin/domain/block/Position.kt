@@ -1,4 +1,4 @@
-package domain
+package domain.block
 
 class Position private constructor(
     private val x: Int,
@@ -7,7 +7,12 @@ class Position private constructor(
 
     fun surroundings(): List<Position> {
         return (UP..DOWN).flatMap { dy ->
-            (LEFT..RIGHT).map { dx -> of(this.x + dx, this.y + dy) }
+            (LEFT..RIGHT).map { dx ->
+                of(
+                    this.x + dx,
+                    this.y + dy
+                )
+            }
         } - this
     }
 
@@ -50,7 +55,12 @@ class Position private constructor(
 
         fun of(x: Int, y: Int): Position {
             val position = x to y
-            return cache.computeIfAbsent(position) { Position(x, y) }
+            return cache.computeIfAbsent(position) {
+                Position(
+                    x,
+                    y
+                )
+            }
         }
     }
 }

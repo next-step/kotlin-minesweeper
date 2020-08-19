@@ -1,4 +1,4 @@
-package domain
+package domain.block
 
 data class Mine(
     override val position: Position

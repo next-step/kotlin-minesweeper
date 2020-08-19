@@ -1,4 +1,6 @@
-package domain
+package domain.field
+
+import domain.block.Block
 
 data class MineField(
     private val rectangle: Rectangle,

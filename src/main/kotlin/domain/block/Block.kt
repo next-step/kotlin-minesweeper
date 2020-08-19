@@ -1,4 +1,4 @@
-package domain
+package domain.block
 
 interface Block {
     val position: Position

@@ -1,5 +1,7 @@
-package domain
+package domain.field
 
+import domain.block.Position
+import domain.field.Rectangle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
