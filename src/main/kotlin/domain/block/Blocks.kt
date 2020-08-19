@@ -23,8 +23,9 @@ data class Blocks(
 
     private tailrec fun visitBlocks(blocksToVisit: List<Block>, visitedBlocks: List<Block> = emptyList()): List<Block> {
         if (blocksToVisit.isEmpty()) return visitedBlocks
-        val nextVisitBlocks = getNextVisitBlocks(blocksToVisit) - visitedBlocks
-        return visitBlocks(nextVisitBlocks, visitedBlocks + blocksToVisit)
+        val newVisitedBlocks = visitedBlocks + blocksToVisit
+        val nextVisitBlocks = getNextVisitBlocks(blocksToVisit) - newVisitedBlocks
+        return visitBlocks(nextVisitBlocks, newVisitedBlocks)
     }
 
     private fun getNextVisitBlocks(blocks: List<Block>): List<Block> {

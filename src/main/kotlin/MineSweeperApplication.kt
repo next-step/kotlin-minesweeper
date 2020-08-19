@@ -15,6 +15,7 @@ fun main() {
     var mineField = MineFieldGenerator(RandomMinePositionsSelector()).create(rectangle, getMinesCount())
     printGameStart()
     printMineField(mineField)
+    println()
     while (true) {
         try {
             val inputPosition = Position.of(getPositionToOpen())
