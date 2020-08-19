@@ -58,5 +58,9 @@ class Position private constructor(
         fun of(x: Int, y: Int): Position {
             return cache.computeIfAbsent(x to y) { Position(x, y) }
         }
+
+        fun of(pair: Pair<Int, Int>): Position {
+            return of(pair.first, pair.second)
+        }
     }
 }

@@ -15,5 +15,11 @@ fun getMinesCount(): Int {
     return readLineFromConsole().toInt()
 }
 
+fun getPositionToOpen(): Pair<Int, Int> {
+    print("open: ")
+    val (x, y) = readLineFromConsole().split(",").map { it.toInt() }
+    return Pair(x, y)
+}
+
 private fun readLineFromConsole() = readLine()
     ?: throw IllegalStateException("콘솔 값을 읽을 수 없습니다.")
