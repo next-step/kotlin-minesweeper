@@ -20,27 +20,20 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     fun convertToMineCount(): List<List<Char>> {
         val mineMap = Array(grid.size) { IntArray(grid[0].size) { ZERO_ASCII } }
         val mineCoordinates = getMineCoordinates()
-        mineCoordinates.forEach { makeMineMap(mineMap, it) }
-        mineCoordinates.forEach { mineMap[it.row][it.col] = MineType.MINE.ascii }
+        setupMineAround(mineCoordinates, mineMap)
+        setupMine(mineCoordinates, mineMap)
         return mineMap.map { row -> row.map { it.toChar() } }
     }
 
-    private fun makeMineMap(mineMap: Array<IntArray>, coordinates: Coordinates) {
-        setMineMap(mineMap, coordinates.row - 1, coordinates.col - 1)
-        setMineMap(mineMap, coordinates.row - 1, coordinates.col)
-        setMineMap(mineMap, coordinates.row - 1, coordinates.col + 1)
-        setMineMap(mineMap, coordinates.row, coordinates.col - 1)
-        setMineMap(mineMap, coordinates.row, coordinates.col + 1)
-        setMineMap(mineMap, coordinates.row + 1, coordinates.col - 1)
-        setMineMap(mineMap, coordinates.row + 1, coordinates.col)
-        setMineMap(mineMap, coordinates.row + 1, coordinates.col + 1)
+    private fun setupMine(mineCoordinates: List<Coordinates>, mineMap: Array<IntArray>) {
+        mineCoordinates.forEach { mineMap[it.row][it.col] = MineType.MINE.ascii }
     }
 
-    private fun setMineMap(mineMap: Array<IntArray>, row: Int, col: Int) {
-        val isMin = row < 0 || col < 0
-        val isMax = row > mineMap.lastIndex || col > mineMap[0].lastIndex
-        if (isMin || isMax) return
-        mineMap[row][col] += 1
+    private fun setupMineAround(mineCoordinates: List<Coordinates>, mineMap: Array<IntArray>) {
+        mineCoordinates.forEach { mineCoordinate ->
+            val aroundMine = mineCoordinate.getAround(grid.lastIndex, grid[0].lastIndex)
+            aroundMine.map { mineMap[it.row][it.col] += 1 }
+        }
     }
 
     private fun makeMineCoordinates(row: Int, mineCoordinates: MutableList<Coordinates>) {
