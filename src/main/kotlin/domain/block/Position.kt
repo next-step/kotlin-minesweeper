@@ -6,14 +6,7 @@ class Position private constructor(
 ) : Comparable<Position> {
 
     fun surroundings(): List<Position> {
-        return (UP..DOWN).flatMap { dy ->
-            (LEFT..RIGHT).map { dx ->
-                of(
-                    this.x + dx,
-                    this.y + dy
-                )
-            }
-        } - this
+        return Direction.values().map { it.transform(this) }
     }
 
     override fun compareTo(other: Position): Int {
@@ -44,23 +37,26 @@ class Position private constructor(
         return "$x, $y"
     }
 
+    private enum class Direction(
+        val transform: (Position) -> Position
+    ) {
+        EAST({ of(it.x + 1, it.y) }),
+        WEST({ of(it.x - 1, it.y) }),
+        NORTH({ of(it.x, it.y - 1) }),
+        SOUTH({ of(it.x, it.y + 1) }),
+        NORTH_WEST({ of(it.x - 1, it.y - 1) }),
+        NORTH_EAST({ of(it.x + 1, it.y - 1) }),
+        SOUTH_EAST({ of(it.x + 1, it.y + 1) }),
+        SOUTH_WEST({ of(it.x - 1, it.y + 1) });
+    }
+
     companion object {
         const val POSITION_START = 1
-        private const val UP = -1
-        private const val DOWN = 1
-        private const val LEFT = -1
-        private const val RIGHT = 1
 
         private val cache = mutableMapOf<Pair<Int, Int>, Position>()
 
         fun of(x: Int, y: Int): Position {
-            val position = x to y
-            return cache.computeIfAbsent(position) {
-                Position(
-                    x,
-                    y
-                )
-            }
+            return cache.computeIfAbsent(x to y) { Position(x, y) }
         }
     }
 }
