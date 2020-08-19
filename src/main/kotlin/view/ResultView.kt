@@ -11,7 +11,7 @@ object ResultView {
         }
     }
 
-    fun printError(exception: Exception) {
-        println(exception.message)
+    fun printError(exception: Throwable?) {
+        println(exception?.message)
     }
 }

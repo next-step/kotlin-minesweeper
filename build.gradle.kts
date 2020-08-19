@@ -23,6 +23,7 @@ configure<JavaPluginConvention> {
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.freeCompilerArgs = listOf("-Xallow-result-return-type")
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
