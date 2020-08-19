@@ -38,4 +38,16 @@ class BlockTest {
             { assertThat(block.getMinesCount()).isEqualTo(1) }
         )
     }
+
+    @Test
+    fun `칸을 열 수 있다`() {
+        // given
+        val block: Block = NormalBlock(0, 0, 0)
+
+        // when
+        val openedBlock: Block = block.open()
+
+        // then
+        assertThat(openedBlock.isClose).isFalse()
+    }
 }
