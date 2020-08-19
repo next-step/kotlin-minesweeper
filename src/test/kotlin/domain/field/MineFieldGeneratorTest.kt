@@ -1,6 +1,7 @@
 package domain.field
 
 import domain.MinePositionsSelectStrategy
+import domain.block.Blocks
 import domain.block.Mine
 import domain.block.NormalBlock
 import domain.block.Position
@@ -25,16 +26,18 @@ class MineFieldGeneratorTest {
             })
         val expectedMineField = MineField(
             Rectangle(3, 3),
-            listOf(
-                NormalBlock(1, 1, 1),
-                NormalBlock(2, 1, 2),
-                Mine(3, 1),
-                Mine(1, 2),
-                NormalBlock(2, 2, 3),
-                NormalBlock(3, 2, 2),
-                NormalBlock(1, 3, 2),
-                Mine(2, 3),
-                NormalBlock(3, 3, 1)
+            Blocks(
+                listOf(
+                    NormalBlock(1, 1, 1),
+                    NormalBlock(2, 1, 2),
+                    Mine(3, 1),
+                    Mine(1, 2),
+                    NormalBlock(2, 2, 3),
+                    NormalBlock(3, 2, 2),
+                    NormalBlock(1, 3, 2),
+                    Mine(2, 3),
+                    NormalBlock(3, 3, 1)
+                )
             )
         )
 
