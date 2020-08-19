@@ -22,3 +22,7 @@ fun printBlock(block: Block) = when {
     block.isMine() -> print("* ")
     else -> print("${block.getMinesCount()} ")
 }
+
+fun printGameWin() {
+    println("지뢰를 모두 찾았습니다!")
+}

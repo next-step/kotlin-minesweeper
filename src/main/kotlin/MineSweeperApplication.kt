@@ -8,6 +8,7 @@ import view.getMinesCount
 import view.getWidthOfField
 import view.getPositionToOpen
 import view.printGameStart
+import view.printGameWin
 import view.printMineField
 
 fun main() {
@@ -15,8 +16,7 @@ fun main() {
     var mineField = MineFieldGenerator(RandomMinePositionsSelector()).create(rectangle, getMinesCount())
     printGameStart()
     printMineField(mineField)
-    println()
-    while (true) {
+    while (!mineField.isAllNormalBlocksOpened()) {
         try {
             val inputPosition = Position.of(getPositionToOpen())
             mineField = mineField.open(inputPosition)
@@ -25,4 +25,5 @@ fun main() {
             println("Lose Game.")
         }
     }
+    printGameWin()
 }

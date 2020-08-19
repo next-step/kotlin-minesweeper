@@ -1,11 +1,17 @@
 package domain.block
 
+import domain.GameOverException
+
 data class Blocks(
     val values: List<Block>
 ) {
+    fun isAllNormalBlocksOpened(): Boolean = findAllNormalBlocks().all { !it.isClose }
+
+    private fun findAllNormalBlocks(): List<Block> = values.filterIsInstance<NormalBlock>()
+
     fun open(position: Position): Blocks {
         val blockToOpen = getIn(position)
-        require(!blockToOpen.isMine()) { "해당 칸은 지뢰입니다!" }
+        if (blockToOpen.isMine()) throw GameOverException("해당 칸은 지뢰입니다!")
         val visitedBlocks = visitBlocks(listOf(blockToOpen))
         return Blocks(createOpenedBlocks(visitedBlocks))
     }

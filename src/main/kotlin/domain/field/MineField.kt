@@ -13,7 +13,7 @@ data class MineField(
 
     fun getBlocks() = blocks.values
 
-    fun open(position: Position): MineField {
-        return copy(blocks = blocks.open(position))
-    }
+    fun open(position: Position): MineField = copy(blocks = blocks.open(position))
+
+    fun isAllNormalBlocksOpened(): Boolean = blocks.isAllNormalBlocksOpened()
 }
