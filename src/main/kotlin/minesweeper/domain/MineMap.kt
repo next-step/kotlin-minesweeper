@@ -4,12 +4,12 @@ import minesweeper.domain.Mine.Companion.MINE_SYMBOL
 
 class MineMap(
     private val dimension: MapDimension,
-    _mines: Mines
+    mines: Mines
 ) {
     private val mineMap: List<List<String>>
         get() = mines.setIntoMap(initMap(dimension.height, dimension.width))
 
-    var mines = _mines
+    var mines = mines
         private set
 
     init {
@@ -17,15 +17,15 @@ class MineMap(
     }
 
     constructor(height: Int, width: Int, mineCount: Int) : this(
-        MapDimension(height, width),
-        _mines = Mines((1..mineCount).map { Mine(dimensionBounds = MapDimension(height, width)) })
+        dimension = MapDimension(height, width),
+        mines = Mines((1..mineCount).map { Mine(MapDimension(height, width)) })
     )
 
     private fun validateMineCount() {
         while (mines.hasDuplicate()) {
             val nonDuplicateMines = mines.duplicateRemoved()
-            val duplicateCount = mines.size() - nonDuplicateMines.size
-            val newMines = (1..duplicateCount).map { Mine(dimensionBounds = dimension) }
+
+            val newMines = (1..mines.duplicateSize()).map { Mine(dimension) }
             mines = Mines(nonDuplicateMines + newMines)
         }
     }
@@ -45,11 +45,11 @@ class MineMap(
     }
 
     private fun mineCountedMap(x: Int, y: Int, mineMap: List<List<String>>): List<List<String>> {
-        var map = mineMap.map { it.toMutableList() }.toMutableList()
+        val map = mineMap.map { it.toMutableList() }.toMutableList()
         var count = 0
 
         repeat(DIRECTION_X.size) { index ->
-            var (nextX: Int, nextY: Int) = setNextXY(x, y, index)
+            val (nextX: Int, nextY: Int) = setNextXY(x, y, index)
 
             if (isInBounds(nextX, nextY)) {
                 if (map[nextX][nextY] == MINE_SYMBOL) count++
@@ -64,8 +64,8 @@ class MineMap(
     }
 
     private fun setNextXY(x: Int, y: Int, i: Int): Pair<Int, Int> {
-        var nextX = x + DIRECTION_X[i]
-        var nextY = y + DIRECTION_Y[i]
+        val nextX = x + DIRECTION_X[i]
+        val nextY = y + DIRECTION_Y[i]
         return Pair(nextX, nextY)
     }
 

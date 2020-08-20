@@ -13,15 +13,15 @@ class MinesTest {
     fun setUp() {
         mines = Mines(
             listOf(
-                MinePosition(0, 0),
-                MinePosition(1, 1),
-                MinePosition(0, 0)
+                Position(0, 0),
+                Position(1, 1),
+                Position(0, 0)
             ).map { Mine(it) }
         )
 
         minesExpected = listOf(
-            MinePosition(0, 0),
-            MinePosition(1, 1)
+            Position(0, 0),
+            Position(1, 1)
         ).map { Mine(it) }
     }
 

@@ -1,14 +1,14 @@
 package minesweeper.domain
 
 data class Mine(
-    val position: MinePosition,
+    val position: Position,
     val symbol: String = MINE_SYMBOL
 ) {
     val x: Int = this.position.x
     val y: Int = this.position.y
 
     constructor(dimensionBounds: MapDimension, positionStrategy: PositionStrategy = RandomPositionStrategy) : this(
-        MinePosition(
+        Position(
             positionStrategy.setXPosition(dimensionBounds.width),
             positionStrategy.setYPosition(dimensionBounds.height)
         )

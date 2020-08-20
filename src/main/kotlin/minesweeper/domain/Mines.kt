@@ -6,10 +6,11 @@ class Mines(private val mines: List<Mine>) {
         val nonDuplicateMines = mines.toSet()
         return nonDuplicateMines.size != this.mines.size
     }
-
     fun duplicateRemoved() = mines.distinct()
 
     fun size() = mines.size
+
+    fun duplicateSize() = mines.size - duplicateRemoved().size
 
     fun setIntoMap(originalMap: List<List<String>>): List<List<String>> {
         val mineMap =
