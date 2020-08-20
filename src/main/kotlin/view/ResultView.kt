@@ -1,6 +1,6 @@
 package view
 
-import game.Board
+import domain.Board
 
 object ResultView {
     private const val START_GAME = "지뢰찾기 게임 시작"

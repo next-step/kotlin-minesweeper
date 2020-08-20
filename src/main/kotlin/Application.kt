@@ -1,4 +1,4 @@
-import game.Board
+import domain.Board
 import view.InputView
 import view.ResultView
 

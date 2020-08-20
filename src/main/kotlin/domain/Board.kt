@@ -1,4 +1,4 @@
-package game
+package domain
 
 import kotlin.math.max
 import kotlin.math.min
