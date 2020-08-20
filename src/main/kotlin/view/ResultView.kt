@@ -9,8 +9,12 @@ object ResultView {
     private const val SYMBOL_HIDDEN: String = "?"
     private const val SYMBOL_MINE = "X"
 
-    fun printBoard(board: Board) {
+    fun printStart(board: Board) {
         println(START_GAME)
+        printBoard(board)
+    }
+
+    fun printBoard(board: Board) {
         board.boardInfo.entries.forEachIndexed { index, entry ->
             print(findSymbol(entry.value))
             print(if (index % board.width == board.width - 1) "\n" else " ")

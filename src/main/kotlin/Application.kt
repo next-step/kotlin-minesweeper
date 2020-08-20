@@ -1,6 +1,5 @@
 import domain.Board
 import view.InputView
-import view.ResultView
 
 fun main() {
     val width = InputView.readWidth()
@@ -8,6 +7,6 @@ fun main() {
     val mineCount = InputView.readMineCount { Board.isValidMineCount(width, height, it) }
 
     Board.getOrNull(width, height, mineCount)?.run {
-        ResultView.printBoard(this)
+        Minesweeper(this).start()
     }
 }
