@@ -36,4 +36,46 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
             minesweeperBoard[i].subList(left, right + 1).forEach { it.addMine() }
         }
     }
+
+    fun openCell(position: Position): PlayState {
+        val selectedCell = getCell(position)
+        if (selectedCell.cellType == CellType.MINE) return PlayState.LOSE
+        if (selectedCell.isOpen) return PlayState.PLAYING
+
+        selectedCell.open()
+
+        if (selectedCell.numberOfNeighboringMine == 0) {
+            openNeighboringArea(position)
+        }
+        if (getCountOfOpenCells() == mineNumber.mineNumber) return PlayState.WIN
+        return PlayState.PLAYING
+    }
+
+    fun openAll() {
+        minesweeperBoard.forEach { list -> list.forEach { it.isOpen = true } }
+    }
+
+    private fun openNeighboringArea(position: Position) {
+        val x: XPosition = position.x
+        val y: YPosition = position.y
+        val up = maxOf(y.value - 1, 0)
+        val down = minOf(y.value + 1, boardSize.height.length - 1)
+        val left = maxOf(x.value - 1, 0)
+        val right = minOf(x.value + 1, boardSize.width.length - 1)
+        for (_row in up..down) {
+            minesweeperBoard[_row].subList(left, right + 1)
+                .forEachIndexed { _column,
+                    cell ->
+                    if (!cell.isOpen) openCell(Position.of(left + _column + 1, _row + 1))
+                }
+        }
+    }
+
+    private fun getCell(position: Position): Cell {
+        val column: Int = position.x.value
+        val row: Int = position.y.value
+        return minesweeperBoard[row][column]
+    }
+
+    private fun getCountOfOpenCells(): Int = minesweeperBoard.sumBy { list -> list.count { it.isOpen } }
 }

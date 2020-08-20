@@ -3,10 +3,17 @@ package minesweeper.domain
 class MinesweeperGame(height: String, width: String, mineCount: String) {
     var minesweeperBoard: MinesweeperBoard
         private set
+    var playState: PlayState = PlayState.PLAYING
+        private set
 
     init {
         val boardSize = BoardSize(height, width)
         minesweeperBoard = MinesweeperBoard(boardSize, MineNumber(mineCount, boardSize))
+    }
+
+    fun openCell(positionString: String) {
+        playState = minesweeperBoard.openCell(Position.from(positionString))
+        if (playState != PlayState.PLAYING) minesweeperBoard.openAll()
     }
 
     companion object {

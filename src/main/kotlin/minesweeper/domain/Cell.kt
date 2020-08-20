@@ -4,4 +4,19 @@ data class Cell(val cellType: CellType, var numberOfNeighboringMine: Int = 0, va
     fun addMine() {
         numberOfNeighboringMine++
     }
+
+    fun open() {
+        isOpen = true
+    }
+
+    fun showSymbol(): String {
+        if (isOpen) {
+            if (cellType != CellType.MINE && numberOfNeighboringMine > 0) {
+                return "$numberOfNeighboringMine "
+            }
+            return cellType.symbol
+        } else {
+            return "\uD83C\uDF2B️️"
+        }
+    }
 }
