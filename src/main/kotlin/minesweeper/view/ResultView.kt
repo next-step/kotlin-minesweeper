@@ -18,4 +18,8 @@ object ResultView {
         }
         println(symbolOfBoard)
     }
+
+    fun showErrorMessage(message: String) {
+        println(message)
+    }
 }

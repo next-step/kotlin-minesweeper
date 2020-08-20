@@ -11,14 +11,22 @@ fun main() {
         InputView.getMinCount()
     )
 
-    val minesweeperGame: MinesweeperGame
     when (result) {
         is MinesweeperGameResult.Success -> {
-            minesweeperGame = MinesweeperGame.newInstance(result.height, result.width, result.mineCount)
+            val minesweeperGame = MinesweeperGame.of(result.height, result.width, result.mineCount)
             ResultView.showMinesweeperBoard(minesweeperGame.minesweeperBoard)
         }
         is MinesweeperGameResult.Error -> {
-            println(result.message)
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+        is MinesweeperGameResult.InvalidHeight -> {
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+        is MinesweeperGameResult.InvalidWidth -> {
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+        is MinesweeperGameResult.InvalidMineCount -> {
+            ResultView.showErrorMessage(result.getMessage(result))
         }
     }
 }
