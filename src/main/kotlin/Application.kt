@@ -7,7 +7,7 @@ fun main() {
     val height = InputView.readHeight()
     val mineCount = InputView.readMineCount { Board.isValidMineCount(width, height, it) }
 
-    Board(width, height, mineCount)?.run {
+    Board.getOrNull(width, height, mineCount)?.run {
         ResultView.printBoard(this)
     }
 }

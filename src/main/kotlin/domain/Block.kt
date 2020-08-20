@@ -17,4 +17,6 @@ data class Block(
     fun open() {
         isOpened = true
     }
+
+    fun isMine() = type == BlockType.MINE
 }
