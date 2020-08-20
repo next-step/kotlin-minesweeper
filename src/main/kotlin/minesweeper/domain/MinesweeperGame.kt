@@ -3,7 +3,7 @@ package minesweeper.domain
 class MinesweeperGame(height: String, width: String, mineCount: String) {
     var minesweeperBoard: MinesweeperBoard
         private set
-    var playState: PlayState = PlayState.PLAYING
+    var playState: PlayState = PlayState.READY
         private set
 
     init {

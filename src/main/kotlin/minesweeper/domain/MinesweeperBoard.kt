@@ -44,10 +44,9 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
 
         selectedCell.open()
 
-        if (selectedCell.numberOfNeighboringMine == 0) {
-            openNeighboringArea(position)
-        }
-        if (getCountOfOpenCells() == mineNumber.mineNumber) return PlayState.WIN
+        if (selectedCell.numberOfNeighboringMine == 0) openNeighboringArea(position)
+
+        if (getCountOfOpenCells() == boardSize.count - mineNumber.mineNumber) return PlayState.WIN
         return PlayState.PLAYING
     }
 

@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class XPosition(val value: Int) {
+data class XPosition(val value: Int) {
     companion object {
         private val xPositions: Map<Int, XPosition> by lazy {
             (MIN_SIZE..MAX_SIZE).associateWith { XPosition(it - 1) }
