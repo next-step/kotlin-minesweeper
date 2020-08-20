@@ -1,0 +1,13 @@
+package minesweeper.domain
+
+class YPosition(val y: Int) {
+    companion object {
+        private val yPositions: Map<Int, YPosition> by lazy {
+            (MIN_SIZE..MAX_SIZE).associateWith { YPosition(it) }
+        }
+
+        fun of(number: Int): YPosition {
+            return yPositions[number] ?: throw IllegalArgumentException("$MIN_SIZE~$MAX_SIZE 사이의 숫자를 입력해 주세요.")
+        }
+    }
+}
