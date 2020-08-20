@@ -13,9 +13,9 @@ class BlocksTest {
         val blocks = Blocks(
             listOf(
                 Mine(0, 0),
-                NormalBlock(1, 0, 1),
-                NormalBlock(0, 1, 1),
-                NormalBlock(1, 1, 1)
+                OpenedBlock(1, 0, 1),
+                OpenedBlock(0, 1, 1),
+                OpenedBlock(1, 1, 1)
             )
         )
 
@@ -31,9 +31,9 @@ class BlocksTest {
         val blocks = Blocks(
             listOf(
                 Mine(0, 0),
-                NormalBlock(1, 0, 1),
-                NormalBlock(0, 1, 1),
-                NormalBlock(1, 1, 1)
+                OpenedBlock(1, 0, 1),
+                OpenedBlock(0, 1, 1),
+                OpenedBlock(1, 1, 1)
             )
         )
         val invalidPosition = Position.of(2, 2)
@@ -54,28 +54,28 @@ class BlocksTest {
         // given
         val blocks = Blocks(
             listOf(
-                NormalBlock(1, 1, 0),
-                NormalBlock(2, 1, 1),
-                NormalBlock(3, 1, 1),
-                NormalBlock(1, 2, 1),
-                NormalBlock(2, 2, 2),
+                OpenedBlock(1, 1, 0),
+                OpenedBlock(2, 1, 1),
+                OpenedBlock(3, 1, 1),
+                OpenedBlock(1, 2, 1),
+                OpenedBlock(2, 2, 2),
                 Mine(3, 2),
                 Mine(1, 3),
-                NormalBlock(2, 3, 2),
-                NormalBlock(3, 3, 1)
+                OpenedBlock(2, 3, 2),
+                OpenedBlock(3, 3, 1)
             )
         )
         val expectedBlocks = Blocks(
             listOf(
-                NormalBlock(1, 1, 0, false),
-                NormalBlock(2, 1, 1, false),
-                NormalBlock(3, 1, 1),
-                NormalBlock(1, 2, 1, false),
-                NormalBlock(2, 2, 2, false),
+                OpenedBlock(1, 1, 0),
+                OpenedBlock(2, 1, 1),
+                OpenedBlock(3, 1, 1),
+                OpenedBlock(1, 2, 1),
+                OpenedBlock(2, 2, 2),
                 Mine(3, 2),
                 Mine(1, 3),
-                NormalBlock(2, 3, 2),
-                NormalBlock(3, 3, 1)
+                OpenedBlock(2, 3, 2),
+                OpenedBlock(3, 3, 1)
             )
         )
 
@@ -89,9 +89,9 @@ class BlocksTest {
         val blocks = Blocks(
             listOf(
                 Mine(0, 0),
-                NormalBlock(1, 0, 1, false),
-                NormalBlock(0, 1, 1, false),
-                NormalBlock(1, 1, 1, false)
+                OpenedBlock(1, 0, 1),
+                OpenedBlock(0, 1, 1),
+                OpenedBlock(1, 1, 1)
             )
         )
 

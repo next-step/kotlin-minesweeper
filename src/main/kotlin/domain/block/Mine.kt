@@ -1,19 +1,18 @@
 package domain.block
 
 data class Mine(
-    override val position: Position,
-    override val isClose: Boolean = true
+    override val position: Position
 ) : Block {
 
     constructor(x: Int, y: Int) : this(Position.of(x, y))
 
     override fun isMine(): Boolean = true
 
+    override fun isClosed(): Boolean = true
+
     override fun getMinesCount(): Int {
         throw UnsupportedOperationException("지뢰는 주변 지뢰의 개수를 가지고 있지 않습니다.")
     }
-
-    override fun open(): Block = this.copy(isClose = false)
 
     companion object {
         fun from(positions: List<Position>): List<Block> {

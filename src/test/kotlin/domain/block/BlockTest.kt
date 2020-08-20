@@ -32,7 +32,7 @@ class BlockTest {
     @Test
     fun `지뢰가 아닌 칸 만들기`() {
         // given
-        val block: Block = NormalBlock(Position.of(0, 0), 1)
+        val block: Block = OpenedBlock(Position.of(0, 0), 1)
 
         // then
         assertAll(
@@ -41,23 +41,23 @@ class BlockTest {
         )
     }
 
-    @Test
-    fun `칸을 열 수 있다`() {
-        // given
-        val block: Block = NormalBlock(0, 0, 0)
-
-        // when
-        val openedBlock: Block = block.open()
-
-        // then
-        assertThat(openedBlock.isClose).isFalse()
-    }
+    // @Test
+    // fun `칸을 열 수 있다`() {
+    //     // given
+    //     val block: Block = OpenedBlock(0, 0, 0)
+    //
+    //     // when
+    //     val openedBlock: Block = block.open()
+    //
+    //     // then
+    //     assertThat(openedBlock.isClose).isFalse()
+    // }
 
     @CsvSource("1,1,true", "0,0,false")
     @ParameterizedTest
     fun `칸이 해당 위치에 있는지 확인`(x: Int, y: Int, isAtPosition: Boolean) {
         // given
-        val block: Block = NormalBlock(1, 1, 0)
+        val block: Block = OpenedBlock(1, 1, 0)
         val position = Position.of(x, y)
 
         // then

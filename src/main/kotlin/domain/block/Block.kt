@@ -2,7 +2,6 @@ package domain.block
 
 interface Block {
     val position: Position
-    val isClose: Boolean
 
     fun isAt(position: Position): Boolean = this.position == position
 
@@ -10,7 +9,7 @@ interface Block {
 
     fun isMine(): Boolean
 
-    fun getMinesCount(): Int
+    fun isClosed(): Boolean
 
-    fun open(): Block
+    fun getMinesCount(): Int
 }

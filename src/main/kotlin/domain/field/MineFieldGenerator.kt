@@ -4,7 +4,7 @@ import domain.MinePositionsSelectStrategy
 import domain.block.Block
 import domain.block.Blocks
 import domain.block.Mine
-import domain.block.NormalBlock
+import domain.block.OpenedBlock
 import domain.block.Position
 
 class MineFieldGenerator(
@@ -21,7 +21,7 @@ class MineFieldGenerator(
         val normalPositions = allPositions - minePositions
         return normalPositions.map { it.surroundings() }
             .map { countPositionsContainsMines(it, minePositions) }
-            .zip(normalPositions) { minesCount, position -> NormalBlock(position, minesCount) }
+            .zip(normalPositions) { minesCount, position -> OpenedBlock(position, minesCount) }
     }
 
     private fun countPositionsContainsMines(positions: List<Position>, minePositions: List<Position>): Int {

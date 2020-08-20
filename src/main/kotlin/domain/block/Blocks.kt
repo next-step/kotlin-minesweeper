@@ -5,9 +5,9 @@ import domain.GameOverException
 data class Blocks(
     val values: List<Block>
 ) {
-    fun isAllNormalBlocksOpened(): Boolean = findAllNormalBlocks().all { !it.isClose }
+    fun isAllNormalBlocksOpened(): Boolean = findAllNonMineBlocks().all { !it.isClosed() }
 
-    private fun findAllNormalBlocks(): List<Block> = values.filterIsInstance<NormalBlock>()
+    private fun findAllNonMineBlocks(): List<Block> = values.filter { it !is Mine }
 
     fun open(position: Position): Blocks {
         val blockToOpen = getIn(position)
@@ -18,7 +18,7 @@ data class Blocks(
 
     private fun createOpenedBlocks(visitedBlocks: List<Block>): List<Block> {
         val closedBlocks = this.values - visitedBlocks
-        val openedBlocks = visitedBlocks.map { it.open() }
+        val openedBlocks = visitedBlocks
         return (openedBlocks + closedBlocks).sortedBy { it.position }
     }
 
