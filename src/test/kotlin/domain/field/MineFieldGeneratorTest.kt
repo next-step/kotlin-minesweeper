@@ -2,8 +2,8 @@ package domain.field
 
 import domain.MinePositionsSelectStrategy
 import domain.block.Blocks
+import domain.block.ClosedBlock
 import domain.block.Mine
-import domain.block.OpenedBlock
 import domain.block.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -28,15 +28,15 @@ class MineFieldGeneratorTest {
             Rectangle(3, 3),
             Blocks(
                 listOf(
-                    OpenedBlock(1, 1, 1),
-                    OpenedBlock(2, 1, 2),
+                    ClosedBlock(1, 1),
+                    ClosedBlock(2, 1),
                     Mine(3, 1),
                     Mine(1, 2),
-                    OpenedBlock(2, 2, 3),
-                    OpenedBlock(3, 2, 2),
-                    OpenedBlock(1, 3, 2),
+                    ClosedBlock(2, 2),
+                    ClosedBlock(3, 2),
+                    ClosedBlock(1, 3),
                     Mine(2, 3),
-                    OpenedBlock(3, 3, 1)
+                    ClosedBlock(3, 3)
                 )
             )
         )
