@@ -19,11 +19,13 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
     }
 
     private fun calculateMine() {
-        minesweeperBoard.forEachIndexed { row, list -> calculateColumnMine(list, row) }
+        _minesweeperBoard.forEachIndexed { row, list -> calculateColumnMine(list, row) }
     }
 
     private fun calculateColumnMine(list: List<Cell>, row: Int) {
-        list.forEachIndexed { column, cell -> if (cell.cellType == CellType.MINE) checkNeighboringMine(row, column) }
+        list
+            .filter { it.cellType == CellType.MINE }
+            .forEachIndexed { column, _ -> checkNeighboringMine(row, column) }
     }
 
     private fun checkNeighboringMine(row: Int, column: Int) {
