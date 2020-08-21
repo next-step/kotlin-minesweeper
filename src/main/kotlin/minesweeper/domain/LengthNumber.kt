@@ -1,7 +1,7 @@
 package minesweeper.domain
 
-private const val MIN_SIZE = 1
-private const val MAX_SIZE = 100
+const val MIN_SIZE = 1
+const val MAX_SIZE = 100
 val NUMBER_REGEX = "(\\d{1,2})".toRegex()
 
 data class LengthNumber(val length: Int) {

@@ -16,4 +16,9 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         return readLine()!!
     }
+
+    fun getPosition(): String {
+        println("어느 위치를 여시겠습니까")
+        return readLine()!!
+    }
 }

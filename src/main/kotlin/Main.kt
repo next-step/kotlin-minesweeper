@@ -1,5 +1,7 @@
 import minesweeper.domain.MinesweeperGame
 import minesweeper.domain.MinesweeperGameResult
+import minesweeper.domain.PlayState
+import minesweeper.domain.exhaustive
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -11,14 +13,26 @@ fun main() {
         InputView.getMinCount()
     )
 
-    val minesweeperGame: MinesweeperGame
     when (result) {
         is MinesweeperGameResult.Success -> {
-            minesweeperGame = MinesweeperGame.newInstance(result.height, result.width, result.mineCount)
-            ResultView.showMinesweeperBoard(minesweeperGame.minesweeperBoard)
+            val minesweeperGame = MinesweeperGame.of(result.height, result.width, result.mineCount)
+            while (minesweeperGame.playState.ordinal <= PlayState.PLAYING.ordinal) {
+                ResultView.showMinesweeperBoard(minesweeperGame)
+                minesweeperGame.openCell(InputView.getPosition())
+            }
+            ResultView.showMinesweeperBoard(minesweeperGame)
         }
         is MinesweeperGameResult.Error -> {
-            println(result.message)
+            ResultView.showErrorMessage(result.getMessage(result))
         }
-    }
+        is MinesweeperGameResult.InvalidHeight -> {
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+        is MinesweeperGameResult.InvalidWidth -> {
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+        is MinesweeperGameResult.InvalidMineCount -> {
+            ResultView.showErrorMessage(result.getMessage(result))
+        }
+    }.exhaustive
 }
