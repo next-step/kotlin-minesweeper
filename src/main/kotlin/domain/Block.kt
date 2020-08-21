@@ -14,8 +14,12 @@ data class Block(
         }
     }
 
-    fun open() {
-        isOpened = true
+    fun open(): Boolean {
+        if (!isOpened) {
+            isOpened = true
+            return true
+        }
+        return false
     }
 
     fun isMine() = type == BlockType.MINE

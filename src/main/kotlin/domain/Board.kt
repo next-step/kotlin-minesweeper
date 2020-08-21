@@ -7,16 +7,30 @@ class Board private constructor(
 ) {
     val boardInfo: Map<Location, Block> get() = _boardInfo.toMap()
 
-    private val size = width * height
-    private val _boardInfo = LinkedHashMap<Location, Block>(size)
+    private var remainBlock = width * height
+    private val _boardInfo = LinkedHashMap<Location, Block>(remainBlock)
 
     init {
         initBoard()
     }
 
-    fun open(location: Location) {
-        boardInfo[location]?.open()
+    fun open(location: Location): Result {
+        val selectedBlock = boardInfo[location] ?: return Result.INVALID
+        if (selectedBlock.isOpened) {
+            return Result.ALREADY_OPEN
+        }
+
+        remainBlock -= if (selectedBlock.open()) 1 else 0
+        return when {
+            selectedBlock.isMine() -> Result.LOSE
+            isWin() -> Result.WIN
+            else -> Result.PROGRESS
+        }
     }
+
+    fun openAll() = boardInfo.entries.forEach { it.value.open() }
+
+    private fun isWin() = remainBlock == mineCount
 
     private fun initBoard() {
         val locations = createLocations().shuffled()
@@ -31,7 +45,7 @@ class Board private constructor(
         locations.take(mineCount).map { Pair(it, Block(BlockType.MINE)) }
 
     private fun createGenerals(locations: List<Location>) =
-        locations.takeLast(size - mineCount).map { Pair(it, Block()) }
+        locations.takeLast(remainBlock - mineCount).map { Pair(it, Block()) }
 
     private fun createLocations() = (0 until height).flatMap { x ->
         (0 until width).map { y -> Location(x, y) }

@@ -30,7 +30,6 @@ data class Location(val x: Int, val y: Int) : Comparable<Location> {
         (location.x in 0 until width) && (location.y in 0 until height)
 
     companion object {
-        private const val NOTIFY_RANGE = 1
         private const val DELIMITER = ","
         private const val DIMENSION = 2
 

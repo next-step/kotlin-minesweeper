@@ -1,6 +1,7 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -25,5 +26,23 @@ class BoardTest {
     fun `지뢰가 아닐 경우 주변 8개 사각형에 포함된 지뢰의 개수를 표시한다`(mineCount: Int) {
         val boardInfo = Board.getOrNull(10, 5, mineCount)?.boardInfo
         assertThat(boardInfo?.values).allSatisfy { it.mineCount in 0..mineCount }
+    }
+
+    @Test
+    fun `지뢰를 선택하면 패배한다`() {
+        val board = Board.getOrNull(10, 5, 50)!!
+        board.boardInfo.filter { !it.value.isMine() }
+        assertThat(board.open(Location(0, 0)).name).isEqualTo("LOSE")
+    }
+
+    @Test
+    fun `지뢰가 아닌 모든 블록을 열면 승리한다`() {
+        val board = Board.getOrNull(10, 5, 10)!!
+        val generals = board.boardInfo.filter { !it.value.isMine() }.keys
+        var result: Result? = null
+        for (general in generals) {
+            result = board.open(general)
+        }
+        assertThat(result?.name).isEqualTo("WIN")
     }
 }
