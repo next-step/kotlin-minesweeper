@@ -10,7 +10,7 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(1, 2, 3))
 
-        assertThat(board.grid.flatten().count { it == MineType.MINE }).isEqualTo(3)
+        assertThat(board.getMineCoordinates().size).isEqualTo(3)
     }
 
     @Test

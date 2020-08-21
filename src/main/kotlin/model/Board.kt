@@ -1,21 +1,15 @@
 package model
 
 class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
-    private val _linear = mutableListOf<MineType>()
-    val grid: List<List<MineType>>
+    private val grid: List<List<MineType>>
+    private val boardMap: Map<Coordinates, MineType>
 
     init {
-        setupLinear(boardSize, mineIndexes)
-        grid = convertToGrid(boardSize)
+        grid = getGrid(boardSize, mineIndexes)
+        boardMap = setupBoardMap(boardSize, mineIndexes)
     }
 
-    fun getMineCoordinates(): List<Coordinates> {
-        val mineCoordinates = mutableListOf<Coordinates>()
-        for (row in grid.indices) {
-            makeMineCoordinates(row, mineCoordinates)
-        }
-        return mineCoordinates
-    }
+    fun getMineCoordinates(): Set<Coordinates> = boardMap.filterValues { it == MineType.MINE }.keys
 
     fun convertToMineCount(): List<List<MineType>> {
         val mineMap = Array(grid.size) { IntArray(grid[0].size) { MineType.ZERO.ascii } }
@@ -25,32 +19,56 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
         return mineMap.map { row -> row.map { MineType.findByAscii(it) } }
     }
 
-    private fun setupMine(mineCoordinates: List<Coordinates>, mineMap: Array<IntArray>) {
+    private fun setupMine(mineCoordinates: Set<Coordinates>, mineMap: Array<IntArray>) {
         mineCoordinates.forEach { mineMap[it.row][it.col] = MineType.MINE.ascii }
     }
 
-    private fun setupMineAround(mineCoordinates: List<Coordinates>, mineMap: Array<IntArray>) {
+    private fun setupMineAround(mineCoordinates: Set<Coordinates>, mineMap: Array<IntArray>) {
         mineCoordinates.forEach { mineCoordinate ->
             val aroundMine = mineCoordinate.getAround(grid.lastIndex, grid[0].lastIndex)
             aroundMine.map { mineMap[it.row][it.col] += 1 }
         }
     }
 
-    private fun makeMineCoordinates(row: Int, mineCoordinates: MutableList<Coordinates>) {
-        for (col in grid.indices) {
-            if (grid[row][col] != MineType.MINE) continue
-            mineCoordinates.add(Coordinates(row, col))
+    private fun setupBoardMap(boardSize: BoardSize, mineIndexes: List<Int>): Map<Coordinates, MineType> {
+        val grid = getGrid(boardSize, mineIndexes)
+        val coordinatesToMineType = mutableMapOf<Coordinates, MineType>()
+        for (row in grid.indices) {
+            makeBoardMap(grid, row, coordinatesToMineType)
+        }
+        return coordinatesToMineType
+    }
+
+    private fun makeBoardMap(
+        grid: List<List<MineType>>,
+        row: Int,
+        coordinatesToMineType: MutableMap<Coordinates, MineType>
+    ) {
+        for (col in grid[0].indices) {
+            setupBoardMap(grid, Coordinates(row, col), coordinatesToMineType)
         }
     }
 
-    private fun convertToGrid(boardSize: BoardSize) = _linear.chunked(boardSize.getRow())
+    private fun setupBoardMap(
+        grid: List<List<MineType>>,
+        coordinates: Coordinates,
+        coordinatesToMineType: MutableMap<Coordinates, MineType>
+    ) {
+        if (grid[coordinates.row][coordinates.col] == MineType.MINE) {
+            coordinatesToMineType[coordinates] = MineType.MINE
+            return
+        }
+        coordinatesToMineType[coordinates] = MineType.NONE
+    }
 
-    private fun setupLinear(boardSize: BoardSize, mineIndexes: List<Int>) {
+    private fun getGrid(boardSize: BoardSize, mineIndexes: List<Int>): List<List<MineType>> {
+        val linear = mutableListOf<MineType>()
         repeat(boardSize.get()) {
-            _linear.add(MineType.NONE)
+            linear.add(MineType.NONE)
         }
         mineIndexes.forEach {
-            _linear[it] = MineType.MINE
+            linear[it] = MineType.MINE
         }
+        return linear.chunked(boardSize.getRow())
     }
 }
