@@ -11,12 +11,19 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
 
     fun getMineCoordinates(): Set<Coordinates> = boardMap.filterValues { it == MineType.MINE }.keys
 
-    fun convertToMineCount(): List<List<MineType>> {
-        val mineMap = Array(grid.size) { IntArray(grid[0].size) { MineType.ZERO.ascii } }
-        val mineCoordinates = getMineCoordinates()
-        setupMineAround(mineCoordinates, mineMap)
-        setupMine(mineCoordinates, mineMap)
-        return mineMap.map { row -> row.map { MineType.findByAscii(it) } }
+    fun convertToMineCount(): Map<Coordinates, MineType> {
+        val mineCounts = Array(grid.size) { IntArray(grid[0].size) { MineType.ZERO.ascii } }.also {
+            val mineCoordinates = getMineCoordinates()
+            setupMineAround(mineCoordinates, it)
+            setupMine(mineCoordinates, it)
+        }
+        val mineMap = mutableMapOf<Coordinates, MineType>()
+        mineCounts.mapIndexed { row, rowElements ->
+            rowElements.mapIndexed { col, mineType ->
+                mineMap[Coordinates(row, col)] = MineType.findByAscii(mineType)
+            }
+        }
+        return mineMap
     }
 
     private fun setupMine(mineCoordinates: Set<Coordinates>, mineMap: Array<IntArray>) {

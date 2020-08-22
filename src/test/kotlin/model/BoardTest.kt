@@ -27,9 +27,9 @@ class BoardTest {
         val board = Board(boardSize, listOf(0))
         val mineCountBoard = board.convertToMineCount()
 
-        assertThat(mineCountBoard[0][1]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[1][0]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[1][1]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(0, 1)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(1, 0)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(1, 1)]).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -38,9 +38,9 @@ class BoardTest {
         val board = Board(boardSize, listOf(9))
         val mineCountBoard = board.convertToMineCount()
 
-        assertThat(mineCountBoard[0][8]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[1][8]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[1][9]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(0, 8)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(1, 8)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(1, 9)]).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -49,9 +49,9 @@ class BoardTest {
         val board = Board(boardSize, listOf(90))
         val mineCountBoard = board.convertToMineCount()
 
-        assertThat(mineCountBoard[8][0]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[8][1]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[9][1]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(8, 0)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(8, 1)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(9, 1)]).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -60,8 +60,8 @@ class BoardTest {
         val board = Board(boardSize, listOf(99))
         val mineCountBoard = board.convertToMineCount()
 
-        assertThat(mineCountBoard[9][8]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[8][8]).isEqualTo(MineType.ONE)
-        assertThat(mineCountBoard[8][9]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(9, 8)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(8, 8)]).isEqualTo(MineType.ONE)
+        assertThat(mineCountBoard[Coordinates(8, 9)]).isEqualTo(MineType.ONE)
     }
 }
