@@ -13,14 +13,6 @@ class CoordinateTest {
     }
 
     @Test
-    fun is_it() {
-        val coordinate = Coordinate(1, 1)
-        val coordinate2 = Coordinate(1, 1)
-
-        assertThat(coordinate.isIt(coordinate2)).isTrue()
-    }
-
-    @Test
     fun is_x() {
         val coordinate = Coordinate(1, 1)
         val x = 1
@@ -34,5 +26,15 @@ class CoordinateTest {
         val y = 1
 
         assertThat(coordinate.isY(y)).isTrue()
+    }
+
+    @Test
+    fun get_north_coordinate() {
+        val coordinate = Coordinate(1, 1)
+        val northCoordinate = Coordinate(1, 0)
+
+        val moveNorth = coordinate move Direction.NORTH
+
+        assertThat(moveNorth).isEqualTo(northCoordinate)
     }
 }

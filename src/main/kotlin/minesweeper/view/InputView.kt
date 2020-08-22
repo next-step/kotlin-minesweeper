@@ -23,7 +23,7 @@ object InputView {
         try {
             return inputValue.toInt()
         } catch (e: Exception) {
-            throw IllegalArgumentException("숫자 이외의 값을 입력하지 마세요.")
+            throw IllegalArgumentException("숫자 이외의 값: $inputValue")
         }
     }
 }

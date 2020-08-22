@@ -4,9 +4,7 @@ import minesweeper.domain.Board
 import minesweeper.domain.Point
 
 object ResultView {
-    fun resultBoard(board: Board, lastX: Int) {
-        board.points.forEach { draw(it, lastX) }
-    }
+    fun resultBoard(board: Board, lastX: Int) = board.forEachPoints { draw(it, lastX) }
 
     private fun draw(point: Point, lastX: Int) {
         if (point.isLastX(lastX)) {
@@ -18,9 +16,9 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
-        if (point.isMine) {
+        if (point.isMine()) {
             return "*"
         }
-        return "C"
+        return point.mineCount.toString()
     }
 }
