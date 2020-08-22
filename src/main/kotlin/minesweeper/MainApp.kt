@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.MineMap
+import minesweeper.domain.CityMap
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -9,6 +9,7 @@ fun main() {
     val width = InputView.readWidth()
     val mineCount = InputView.readCountOfMines(height, width)
 
-    val mineMap = MineMap(height, width, mineCount)
-    ResultView.showMineMap(mineMap)
+    val cityMap = CityMap(height, width, mineCount)
+
+    ResultView.showCityMap(cityMap)
 }
