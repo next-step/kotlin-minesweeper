@@ -20,7 +20,11 @@ class Board private constructor(
             return Result.ALREADY_OPEN
         }
 
-        remainBlock -= if (selectedBlock.open()) 1 else 0
+        remainBlock -= selectedBlock.open()
+        if (selectedBlock.mineCount == 0) {
+            openSurroundings(location)
+        }
+
         return when {
             selectedBlock.isMine() -> Result.LOSE
             isWin() -> Result.WIN
@@ -28,16 +32,17 @@ class Board private constructor(
         }
     }
 
-    fun openAll() = boardInfo.entries.forEach { it.value.open() }
+    fun openAll() {
+        boardInfo.entries.forEach { it.value.open() }
+        remainBlock = 0
+    }
 
     private fun isWin() = remainBlock == mineCount
 
     private fun initBoard() {
         val locations = createLocations().shuffled()
         val mines = createMines(locations)
-        val points = (mines + createGenerals(locations)).sortedBy { it.first }
-
-        _boardInfo.putAll(points)
+        _boardInfo.putAll((mines + createGenerals(locations)).sortedBy { it.first })
         mines.forEach { notifySetMine(it.first) }
     }
 
@@ -52,10 +57,18 @@ class Board private constructor(
     }
 
     private fun notifySetMine(mine: Location) {
-        for (location in mine.findNotifyRange(width, height)) {
+        for (location in findSurroundings(mine)) {
             _boardInfo[location]?.increaseMineCount()
         }
     }
+
+    private fun openSurroundings(mine: Location) =
+        findSurroundings(mine).filterNot { boardInfo[it]?.isOpened ?: true }.forEach { open(it) }
+
+    private fun findSurroundings(mine: Location) =
+        Direction.values().map { mine + it }.filter { mine in this }
+
+    operator fun contains(location: Location) = _boardInfo.contains(location)
 
     companion object {
         private const val MINE_MIN = 1

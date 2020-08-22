@@ -16,6 +16,6 @@ internal class BlockTest {
     @Test
     fun `사용자가 공개할 블록을 선택할 수 있다`() {
         val block = Block().apply { open() }
-        assertThat(block.isOpened).isTrue()
+        assertThat(block.isOpened).isEqualTo(true)
     }
 }
