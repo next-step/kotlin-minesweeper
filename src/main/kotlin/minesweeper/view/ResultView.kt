@@ -14,13 +14,13 @@ object ResultView {
             it.forEach { symbolOfBoard.append(" ${it.showSymbol()} ") }
             symbolOfBoard.append("\n")
         }
-        println(addMessageForPlayState(minesweeperGame.playState, symbolOfBoard))
+        println(symbolOfBoard.addMessageForPlayState(minesweeperGame.playState))
     }
 
-    private fun addMessageForPlayState(playState: PlayState, stringBuilder: StringBuilder): StringBuilder {
-        if (playState == PlayState.READY) stringBuilder.insert(0, START_NOTICE)
-        if (playState == PlayState.LOSE || playState == PlayState.WIN) stringBuilder.append(FINISH_NOTICE + playState.name)
-        return stringBuilder
+    private fun StringBuilder.addMessageForPlayState(playState: PlayState): StringBuilder {
+        if (playState == PlayState.READY) this.insert(0, START_NOTICE)
+        if (playState == PlayState.LOSE || playState == PlayState.WIN) this.append(FINISH_NOTICE + playState.name)
+        return this
     }
 
     fun showErrorMessage(message: String) {

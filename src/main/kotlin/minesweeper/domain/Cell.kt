@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+private const val LOAD_SYMBOL = "\uD83C\uDF2B️️"
 data class Cell(val cellType: CellType, var numberOfNeighboringMine: Int = 0, var isOpen: Boolean = false) {
     fun addMine() {
         numberOfNeighboringMine++
@@ -13,10 +14,10 @@ data class Cell(val cellType: CellType, var numberOfNeighboringMine: Int = 0, va
         if (isOpen) {
             return getOpenSymbol()
         }
-        return "\uD83C\uDF2B️️"
+        return LOAD_SYMBOL
     }
 
-    fun getOpenSymbol(): String {
+    private fun getOpenSymbol(): String {
         if (cellType != CellType.MINE && numberOfNeighboringMine > 0) {
             return "$numberOfNeighboringMine "
         }

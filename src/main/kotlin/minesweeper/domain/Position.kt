@@ -1,8 +1,9 @@
 package minesweeper.domain
 
-private val POSITION_REGULAR_EXPRESSION = "^(\\d{1,2},)+\\d{1,2}$".toRegex()
+val POSITION_REGULAR_EXPRESSION = "^(\\d{1,2},)+\\d{1,2}$".toRegex()
 
 data class Position(val x: XPosition, val y: YPosition) {
+
     companion object {
         fun from(positionString: String): Position {
             require(POSITION_REGULAR_EXPRESSION.matches(positionString))
