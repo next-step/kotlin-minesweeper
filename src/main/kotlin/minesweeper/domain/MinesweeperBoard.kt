@@ -28,7 +28,6 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
     }
 
     private fun checkNeighboringMine(position: Position) {
-        println(position.x.value)
         val up = position.getNeighboringValue(Direction.UP, boardSize)
         val down = position.getNeighboringValue(Direction.DOWN, boardSize)
         val left = position.getNeighboringValue(Direction.LEFT, boardSize)
@@ -63,10 +62,8 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
         val right = position.getNeighboringValue(Direction.RIGHT, boardSize)
         for (_row in up..down) {
             minesweeperBoard[_row].subList(left, right + 1)
-                .forEachIndexed { _column,
-                    cell ->
-                    if (!cell.isOpen) openCell(Position.of(left + _column, _row))
-                }
+                .filterNot { it.isOpen }
+                .forEach { openCell(Position.of(minesweeperBoard[_row].indexOf(it), _row)) }
         }
     }
 

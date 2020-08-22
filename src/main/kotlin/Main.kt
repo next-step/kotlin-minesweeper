@@ -16,23 +16,31 @@ fun main() {
     when (result) {
         is MinesweeperGameResult.Success -> {
             val minesweeperGame = MinesweeperGame.of(result.height, result.width, result.mineCount)
-            while (minesweeperGame.playState.ordinal <= PlayState.PLAYING.ordinal) {
-                ResultView.showMinesweeperBoard(minesweeperGame)
-                minesweeperGame.openCell(InputView.getPosition())
-            }
-            ResultView.showMinesweeperBoard(minesweeperGame)
+            playMinesweeperGame(minesweeperGame)
         }
         is MinesweeperGameResult.Error -> {
-            ResultView.showErrorMessage(result.getMessage(result))
+            ResultView.showErrorMessage(result)
         }
         is MinesweeperGameResult.InvalidHeight -> {
-            ResultView.showErrorMessage(result.getMessage(result))
+            ResultView.showErrorMessage(result)
         }
         is MinesweeperGameResult.InvalidWidth -> {
-            ResultView.showErrorMessage(result.getMessage(result))
+            ResultView.showErrorMessage(result)
         }
         is MinesweeperGameResult.InvalidMineCount -> {
-            ResultView.showErrorMessage(result.getMessage(result))
+            ResultView.showErrorMessage(result)
         }
     }.exhaustive
+}
+
+fun playMinesweeperGame(minesweeperGame: MinesweeperGame) {
+    try {
+        while (minesweeperGame.playState.ordinal <= PlayState.PLAYING.ordinal) {
+            ResultView.showMinesweeperBoard(minesweeperGame)
+            minesweeperGame.openCell(InputView.getPosition())
+        }
+        ResultView.showMinesweeperBoard(minesweeperGame)
+    } catch (e: Exception) {
+        ResultView.showErrorMessage(e.message.toString())
+    }
 }

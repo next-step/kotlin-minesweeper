@@ -3,6 +3,7 @@ package minesweeper.view
 import minesweeper.domain.Cell
 import minesweeper.domain.CellType
 import minesweeper.domain.MinesweeperGame
+import minesweeper.domain.MinesweeperGameResult
 import minesweeper.domain.PlayState
 
 object ResultView {
@@ -32,6 +33,10 @@ object ResultView {
         println(message)
     }
 
+    fun showErrorMessage(minesweeperGameResult: MinesweeperGameResult) {
+        println(showErrorMessage(getMessage(minesweeperGameResult)))
+    }
+
     private fun getCellSymbol(cell: Cell): String {
         if (cell.isOpen) return getOpenCellSymbol(cell)
         return LOAD_SYMBOL
@@ -43,5 +48,15 @@ object ResultView {
         }
         if (cell.cellType == CellType.MINE) return MINE_CHARACTER
         return LOAD_CHARACTER
+    }
+
+    private fun getMessage(result: MinesweeperGameResult): String {
+        return when (result) {
+            is MinesweeperGameResult.Success -> "지뢰판이 만들어졌습니다."
+            is MinesweeperGameResult.Error -> "에러가 발생했습니다."
+            is MinesweeperGameResult.InvalidHeight -> "높이는 자연수로 입력해주세요."
+            is MinesweeperGameResult.InvalidWidth -> "너비는 자연수로 입력해주세요."
+            is MinesweeperGameResult.InvalidMineCount -> "지뢰개수는 자연수로 입력해주세요."
+        }
     }
 }
