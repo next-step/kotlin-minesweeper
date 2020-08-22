@@ -1,7 +1,7 @@
 package model
 
 enum class MineType(val ascii: Int) {
-    NONE(34),
+    NONE(67),
     MINE(42),
     ZERO(48),
     ONE(49),
