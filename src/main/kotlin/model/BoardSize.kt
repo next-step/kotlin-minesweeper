@@ -1,8 +1,7 @@
 package model
 
-class BoardSize(private val row: LengthOfSide, private val col: LengthOfSide) {
-
-    fun get(): Int = row.length * col.length
-
-    fun getRow(): Int = row.length
+class BoardSize(row: LengthOfSide, col: LengthOfSide) {
+    val size = row.length * col.length
+    val row = row.length
+    val col = col.length
 }
