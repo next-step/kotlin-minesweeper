@@ -17,8 +17,3 @@ class WinnerTest {
         Assertions.assertThat(Winner.isLose(gamer)).isTrue()
     }
 }
-
-object Winner {
-
-    fun isLose(gamer: Gamer) = gamer.gameBoard.containsValue(MineType.MINE)
-}
