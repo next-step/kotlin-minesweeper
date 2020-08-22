@@ -12,7 +12,7 @@ enum class MineType(val ascii: Int) {
     SIX(54),
     SEVEN(55),
     EIGHT(56),
-    NINE(578);
+    NINE(57);
 
     companion object {
         fun findByAscii(ascii: Int): MineType = values().first { it.ascii == ascii }
