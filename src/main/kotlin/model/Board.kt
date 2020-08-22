@@ -1,12 +1,15 @@
 package model
 
 class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
-    private val grid: List<List<MineType>>
+    val grid: List<List<MineType>>
     private val boardMap: Map<Coordinates, MineType>
+    private val mineCountMap: Map<Coordinates, MineType>
+    private val showedArea = mutableMapOf<Coordinates, MineType>()
 
     init {
         grid = getGrid(boardSize, mineIndexes)
-        boardMap = setupBoardMap(boardSize, mineIndexes)
+        boardMap = setupBoardMap()
+        mineCountMap = convertToMineCount()
     }
 
     fun getMineCoordinates(): Set<Coordinates> = boardMap.filterValues { it == MineType.MINE }.keys
@@ -26,6 +29,32 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
         return mineMap
     }
 
+    fun getShowedArea(coordinates: Coordinates): Map<Coordinates, MineType> {
+        updateShowedArea(coordinates)
+        return showedArea
+    }
+
+    fun getInitBoard(): Map<Coordinates, MineType> =
+        mutableMapOf<Coordinates, MineType>().also {
+            for (row in grid.indices) {
+                for (col in grid[0].indices) {
+                    it[Coordinates(row, col)] = MineType.NONE
+                }
+            }
+        }
+
+    private fun getValueInCoordinates(coordinates: Coordinates): MineType =
+        mineCountMap.filterKeys { it == coordinates }.values.first()
+
+    private fun updateShowedArea(coordinates: Coordinates) {
+        showedArea[coordinates] = getValueInCoordinates(coordinates)
+        if (getValueInCoordinates(coordinates) != MineType.ZERO) return
+        coordinates.getAround(grid.size, grid[0].size).map {
+            if (showedArea.contains(it)) return@map
+            updateShowedArea(it)
+        }
+    }
+
     private fun setupMine(mineCoordinates: Set<Coordinates>, mineMap: Array<IntArray>) {
         mineCoordinates.forEach { mineMap[it.row][it.col] = MineType.MINE.ascii }
     }
@@ -37,8 +66,7 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
         }
     }
 
-    private fun setupBoardMap(boardSize: BoardSize, mineIndexes: List<Int>): Map<Coordinates, MineType> {
-        val grid = getGrid(boardSize, mineIndexes)
+    private fun setupBoardMap(): Map<Coordinates, MineType> {
         val coordinatesToMineType = mutableMapOf<Coordinates, MineType>()
         for (row in grid.indices) {
             makeBoardMap(grid, row, coordinatesToMineType)
