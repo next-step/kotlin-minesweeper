@@ -17,17 +17,17 @@ object InputView {
         if (message != ENTER_HEIGHT) println()
         println(message)
 
-        var text = readLine()?.toIntOrNull()
-        while (text == null || text < 1) {
+        var input = readLine()?.toIntOrNull()
+        while (input == null || input < 1) {
             println(RE_ENTER_NUMBER_OVER_ONE)
-            text = readLine()?.toIntOrNull()
+            input = readLine()?.toIntOrNull()
         }
 
-        while (text == null || !fitsCondition(text)) {
+        while (input == null || !fitsCondition(input)) {
             println(RE_ENTER_MINE_COUNT)
-            text = readLine()?.toIntOrNull()
+            input = readLine()?.toIntOrNull()
         }
 
-        return text
+        return input
     }
 }
