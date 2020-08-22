@@ -15,7 +15,7 @@ class Board private constructor(
     }
 
     fun open(location: Location): Result {
-        val selectedBlock = boardInfo[location] ?: return Result.INVALID
+        val selectedBlock = _boardInfo[location] ?: return Result.INVALID
         if (selectedBlock.isOpened) {
             return Result.ALREADY_OPEN
         }
@@ -52,8 +52,8 @@ class Board private constructor(
     private fun createGenerals(locations: List<Location>) =
         locations.takeLast(remainBlock - mineCount).map { Pair(it, Block()) }
 
-    private fun createLocations() = (0 until height).flatMap { x ->
-        (0 until width).map { y -> Location(x, y) }
+    private fun createLocations() = (0 until width).flatMap { x ->
+        (0 until height).map { y -> Location(x, y) }
     }
 
     private fun notifySetMine(mine: Location) {
@@ -62,11 +62,10 @@ class Board private constructor(
         }
     }
 
-    private fun openSurroundings(mine: Location) =
-        findSurroundings(mine).filterNot { boardInfo[it]?.isOpened ?: true }.forEach { open(it) }
+    private fun openSurroundings(mine: Location) = findSurroundings(mine).forEach { open(it) }
 
     private fun findSurroundings(mine: Location) =
-        Direction.values().map { mine + it }.filter { mine in this }
+        Direction.values().map { mine + it }.filterNot { boardInfo[it]?.isOpened ?: true }
 
     operator fun contains(location: Location) = _boardInfo.contains(location)
 

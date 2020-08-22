@@ -7,7 +7,7 @@ object InputView {
     private const val INPUT_OPEN_LOCATION = "open : "
 
     private const val ERR_INVALID_NUMBER = "1 이상의 정수를 입력해주세요."
-    private const val ERR_INVALID_LOCATION = "유효한 좌표를 입력해주세요. (예: 1,1)"
+    private const val ERR_INVALID_LOCATION = "'x, y' 형식으로 유효한 좌표를 입력해주세요."
     private const val ERR_INVALID_MINE_COUNT = "지뢰의 개수는 0보다 크고 보드의 크기보다 작은 정수여야 합니다."
 
     fun invalidLocation() {

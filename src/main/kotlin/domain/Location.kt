@@ -3,9 +3,9 @@ package domain
 data class Location(val x: Int, val y: Int) : Comparable<Location> {
 
     override fun compareTo(other: Location): Int {
-        val result = x.compareTo(other.x)
+        val result = y.compareTo(other.y)
         if (result == 0) {
-            return y.compareTo(other.y)
+            return x.compareTo(other.x)
         }
         return result
     }
