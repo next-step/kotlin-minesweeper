@@ -27,4 +27,14 @@ class CoordinateTest {
 
         assertThat(coordinate.isY(y)).isTrue()
     }
+
+    @Test
+    fun get_north_coordinate() {
+        val coordinate = Coordinate(1, 1)
+        val northCoordinate = Coordinate(1, 0)
+
+        val moveNorth = coordinate move Direction.NORTH
+
+        assertThat(moveNorth).isEqualTo(northCoordinate)
+    }
 }

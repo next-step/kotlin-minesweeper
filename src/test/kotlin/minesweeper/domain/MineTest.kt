@@ -3,9 +3,11 @@ package minesweeper.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DirectionTest {
+class MineTest {
     @Test
-    fun has_8_direction() {
-        assertThat(Direction.values()).hasSize(8)
+    fun has_mine() {
+        val mine = Mine(Coordinate(1, 1))
+
+        assertThat(mine.isMine()).isTrue()
     }
 }

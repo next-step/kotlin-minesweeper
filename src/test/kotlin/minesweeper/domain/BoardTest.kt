@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class BoardTest {
     @Test
     fun find_point() {
-        val board = BoardFactory.makeBoard(10, 10) { listOf() }
+        val board = Board(10, 10)
 
         val point = board.findPoint(2, 3)
 
@@ -16,7 +16,7 @@ class BoardTest {
 
     @Test
     fun find_error() {
-        val board = BoardFactory.makeBoard(10, 10) { listOf() }
+        val board = Board(10, 10)
 
         assertThatThrownBy {
             board.findPoint(10, 10)
@@ -24,18 +24,11 @@ class BoardTest {
     }
 
     @Test
-    fun how_many_mines_around_this_point() {
-        val board = BoardFactory.makeBoard(10, 10) { listOf(Coordinate(0, 1), Coordinate(0, 2), Coordinate(0, 3)) }
-        val point1 = board.findPoint(0, 0)
-        val point2 = board.findPoint(1, 1)
-        val point3 = board.findPoint(1, 2)
+    fun count_mines() {
+        val board = Board(10, 10, 10)
 
-        val result1 = point1.mineCount
-        val result2 = point2.mineCount
-        val result3 = point3.mineCount
+        val mineCount = board.countMine()
 
-        assertThat(result1).isEqualTo(1)
-        assertThat(result2).isEqualTo(2)
-        assertThat(result3).isEqualTo(3)
+        assertThat(mineCount).isEqualTo(10)
     }
 }

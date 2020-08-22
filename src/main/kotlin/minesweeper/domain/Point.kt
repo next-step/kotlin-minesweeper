@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Point(val coordinate: Coordinate, isMine: Boolean = false) : Mine(isMine) {
+abstract class Point(val coordinate: Coordinate) {
     var mineCount = 0
         private set
 
@@ -11,4 +11,6 @@ class Point(val coordinate: Coordinate, isMine: Boolean = false) : Mine(isMine) 
     fun setMineCount(mineCount: Int) {
         this.mineCount = mineCount
     }
+
+    open fun isMine(): Boolean = false
 }

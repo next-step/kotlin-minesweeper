@@ -1,24 +1,14 @@
 package minesweeper.domain
 
-class Board(val points: List<Point>) {
-    init {
-        points.forEach { it.setMineCount(getAroundMines(it)) }
-    }
+class Board(width: Int, length: Int, mines: Int = 0) {
+    private val coordinates = Coordinates(width, length)
+    private val points = Points(coordinates, coordinates.makeMineCoordinates(mines))
 
-    fun findPoint(x: Int, y: Int): Point =
-        points.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+    fun findPoint(x: Int, y: Int): Point = points.findPoint(x, y)
 
-    fun countMine(): Int = points.filter { it.hasMine }.size
+    fun countMine(): Int = points.countMine()
 
-    private fun getAroundMines(point: Point): Int {
-        return Direction.values().filter { isMine(it.getCoordinate(point.coordinate)) }.size
-    }
-
-    private fun isMine(coordinate: Coordinate): Boolean {
-        return try {
-            findPoint(coordinate.x, coordinate.y).hasMine
-        } catch (e: Exception) {
-            false
-        }
+    fun forEachPoints(f: (point: Point) -> Unit) {
+        points.forEach { f(it) }
     }
 }

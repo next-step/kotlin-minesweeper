@@ -1,3 +1,5 @@
 package minesweeper.domain
 
-abstract class Mine(val hasMine: Boolean)
+class Mine(coordinate: Coordinate) : Point(coordinate) {
+    override fun isMine(): Boolean = true
+}
