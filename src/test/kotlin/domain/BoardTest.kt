@@ -32,7 +32,15 @@ class BoardTest {
     fun `지뢰를 선택하면 패배한다`() {
         val board = Board.getOrNull(10, 5, 50)!!
         board.boardInfo.filter { !it.value.isMine() }
-        assertThat(board.open(Location(0, 0)).name).isEqualTo("LOSE")
+        assertThat(board.open(Location(0, 0))).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `이미 열었던 블록은 다시 열 수 없다`() {
+        val board = Board.getOrNull(10, 5, 40)!!
+        val general = board.boardInfo.filter { !it.value.isMine() }.entries.first()
+        assertThat(board.open(general.key)).isEqualTo(Result.PROGRESS)
+        assertThat(board.open(general.key)).isEqualTo(Result.ALREADY_OPEN)
     }
 
     @Test
@@ -43,6 +51,6 @@ class BoardTest {
         for (general in generals) {
             result = board.open(general)
         }
-        assertThat(result?.name).isEqualTo("WIN")
+        assertThat(result).isEqualTo(Result.WIN)
     }
 }
