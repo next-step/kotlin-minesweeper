@@ -2,6 +2,7 @@ package model
 
 class Gamer(private val board: Board) {
     private val _gameBoard = mutableMapOf<Coordinates, MineType>()
+    val gameBoard: Map<Coordinates, MineType> get() = _gameBoard
 
     init {
         _gameBoard.putAll(board.getInitBoard(MineType.NONE))
