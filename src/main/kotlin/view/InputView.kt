@@ -7,6 +7,11 @@ object InputView {
         return readLine()?.toInt() ?: 0
     }
 
+    fun requestCoordinates(): List<Int> {
+        print("open:")
+        return readLine()?.split(",")?.map { it.toInt() } ?: emptyList()
+    }
+
     enum class Mode(val message: String) {
         ROW("높이를 입력하세요."),
         COL("너비를 입력하세요."),
