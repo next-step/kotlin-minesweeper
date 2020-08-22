@@ -33,8 +33,8 @@ class Board private constructor(
     }
 
     fun openAll() {
-        boardInfo.entries.forEach { it.value.open() }
-        remainBlock = 0
+        _boardInfo.entries.forEach { it.value.open() }
+        remainBlock = mineCount
     }
 
     private fun isWin() = remainBlock == mineCount
@@ -65,7 +65,7 @@ class Board private constructor(
     private fun openSurroundings(mine: Location) = findSurroundings(mine).forEach { open(it) }
 
     private fun findSurroundings(mine: Location) =
-        Direction.values().map { mine + it }.filterNot { boardInfo[it]?.isOpened ?: true }
+        Direction.values().map { mine + it }.filterNot { _boardInfo[it]?.isOpened ?: true }
 
     operator fun contains(location: Location) = _boardInfo.contains(location)
 
