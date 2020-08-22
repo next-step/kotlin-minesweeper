@@ -1,6 +1,4 @@
-import model.cell.MINE
 import model.cell.MineStatus
-import model.cell.NOT_MINE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

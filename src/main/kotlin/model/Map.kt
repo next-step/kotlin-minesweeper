@@ -1,10 +1,13 @@
 package model
 
-import model.cell.*
+import model.cell.Cell
+import model.cell.Cells
+import model.cell.MineStatus
+import model.cell.Position
 
-class Map(val width: Int, val height: Int, val mine: Int) {
-    private val cells: Cells = Cells(createDefaultMap(width, height))
-    
+class Map(val x: Int, val y: Int, val mine: Int) {
+    private val cells: Cells = Cells(createDefaultMap(x, y))
+
     fun createMine(mine: Int) {
         cells.changeNotToMine(mine)
     }
