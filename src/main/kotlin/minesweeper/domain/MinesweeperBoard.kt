@@ -23,16 +23,16 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
     }
 
     private fun calculateColumnMine(list: List<Cell>, row: Int) {
-        list
-            .filter { it.cellType == CellType.MINE }
-            .forEachIndexed { column, _ -> checkNeighboringMine(row, column) }
+        list.filter { it.cellType == CellType.MINE }
+            .forEach { checkNeighboringMine(Position.of(list.indexOf(it), row)) }
     }
 
-    private fun checkNeighboringMine(row: Int, column: Int) {
-        val up = maxOf(row - 1, 0)
-        val down = minOf(row + 1, boardSize.height.length - 1)
-        val left = maxOf(column - 1, 0)
-        val right = minOf(column + 1, boardSize.width.length - 1)
+    private fun checkNeighboringMine(position: Position) {
+        println(position.x.value)
+        val up = position.getNeighboringValue(Direction.UP, boardSize)
+        val down = position.getNeighboringValue(Direction.DOWN, boardSize)
+        val left = position.getNeighboringValue(Direction.LEFT, boardSize)
+        val right = position.getNeighboringValue(Direction.RIGHT, boardSize)
 
         for (i in up..down) {
             minesweeperBoard[i].subList(left, right + 1).forEach { it.addMine() }
@@ -57,17 +57,15 @@ class MinesweeperBoard(val boardSize: BoardSize, val mineNumber: MineNumber) {
     }
 
     private fun openNeighboringArea(position: Position) {
-        val x: XPosition = position.x
-        val y: YPosition = position.y
-        val up = maxOf(y.value - 1, 0)
-        val down = minOf(y.value + 1, boardSize.height.length - 1)
-        val left = maxOf(x.value - 1, 0)
-        val right = minOf(x.value + 1, boardSize.width.length - 1)
+        val up = position.getNeighboringValue(Direction.UP, boardSize)
+        val down = position.getNeighboringValue(Direction.DOWN, boardSize)
+        val left = position.getNeighboringValue(Direction.LEFT, boardSize)
+        val right = position.getNeighboringValue(Direction.RIGHT, boardSize)
         for (_row in up..down) {
             minesweeperBoard[_row].subList(left, right + 1)
                 .forEachIndexed { _column,
                     cell ->
-                    if (!cell.isOpen) openCell(Position.of(left + _column + 1, _row + 1))
+                    if (!cell.isOpen) openCell(Position.of(left + _column, _row))
                 }
         }
     }
