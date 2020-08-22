@@ -1,7 +1,6 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -28,29 +27,27 @@ class BoardTest {
         assertThat(boardInfo?.values).allSatisfy { it.mineCount in 0..mineCount }
     }
 
-    @Test
-    fun `지뢰를 선택하면 패배한다`() {
-        val board = Board.getOrNull(10, 5, 50)!!
-        board.boardInfo.filter { !it.value.isMine() }
+    @ParameterizedTest
+    @ValueSource(ints = [5])
+    fun `지뢰를 선택하면 패배한다`(boardSize: Int) {
+        val board = Board.getOrNull(boardSize, boardSize, boardSize * boardSize)!!
         assertThat(board.open(Location(0, 0))).isEqualTo(Result.LOSE)
     }
 
-    @Test
-    fun `이미 열었던 블록은 다시 열 수 없다`() {
-        val board = Board.getOrNull(10, 5, 40)!!
+    @ParameterizedTest
+    @ValueSource(ints = [5])
+    fun `이미 열었던 블록은 다시 열 수 없다`(boardSize: Int) {
+        val board = Board.getOrNull(boardSize, boardSize, boardSize * boardSize - 2)!!
         val general = board.boardInfo.filter { !it.value.isMine() }.entries.first()
         assertThat(board.open(general.key)).isEqualTo(Result.PROGRESS)
         assertThat(board.open(general.key)).isEqualTo(Result.ALREADY_OPEN)
     }
 
-    @Test
-    fun `지뢰가 아닌 모든 블록을 열면 승리한다`() {
-        val board = Board.getOrNull(10, 5, 10)!!
-        val generals = board.boardInfo.filter { !it.value.isMine() }.keys
-        var result: Result? = null
-        for (general in generals) {
-            result = board.open(general)
-        }
-        assertThat(result).isEqualTo(Result.WIN)
+    @ParameterizedTest
+    @ValueSource(ints = [5])
+    fun `지뢰가 아닌 모든 블록을 열면 승리한다`(boardSize: Int) {
+        val board = Board.getOrNull(boardSize, boardSize, boardSize * boardSize - 1)!!
+        val general = board.boardInfo.filter { !it.value.isMine() }.keys.first()
+        assertThat(board.open(general)).isEqualTo(Result.WIN)
     }
 }
