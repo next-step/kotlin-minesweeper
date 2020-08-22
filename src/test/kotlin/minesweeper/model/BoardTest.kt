@@ -17,6 +17,6 @@ class BoardTest {
         Assertions.assertThat(board.getRow(29)).isEqualTo(4)
         Assertions.assertThat(board.getCol(29)).isEqualTo(5)
 
-        Assertions.assertThat(board.getTotal()).isEqualTo(29)
+        Assertions.assertThat(board.getTotal()).isEqualTo(30)
     }
 }
