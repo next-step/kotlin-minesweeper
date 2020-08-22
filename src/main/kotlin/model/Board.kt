@@ -4,7 +4,6 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     val grid: List<List<MineType>>
     private val boardMap: Map<Coordinates, MineType>
     private val mineCountMap: Map<Coordinates, MineType>
-    private val showedArea = mutableMapOf<Coordinates, MineType>()
 
     init {
         grid = getGrid(boardSize, mineIndexes)
@@ -30,7 +29,8 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     }
 
     fun getShowedArea(coordinates: Coordinates): Map<Coordinates, MineType> {
-        updateShowedArea(coordinates)
+        val showedArea = mutableMapOf<Coordinates, MineType>()
+        updateShowedArea(coordinates, showedArea)
         return showedArea
     }
 
@@ -46,12 +46,12 @@ class Board(boardSize: BoardSize, mineIndexes: List<Int>) {
     private fun getValueInCoordinates(coordinates: Coordinates): MineType =
         mineCountMap.filterKeys { it == coordinates }.values.first()
 
-    private fun updateShowedArea(coordinates: Coordinates) {
+    private fun updateShowedArea(coordinates: Coordinates, showedArea: MutableMap<Coordinates, MineType>) {
         showedArea[coordinates] = getValueInCoordinates(coordinates)
         if (getValueInCoordinates(coordinates) != MineType.ZERO) return
         coordinates.getAround(grid.size, grid[0].size).map {
             if (showedArea.contains(it)) return@map
-            updateShowedArea(it)
+            updateShowedArea(it, showedArea)
         }
     }
 
