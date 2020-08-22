@@ -5,7 +5,7 @@ class Gamer(private val board: Board) {
     val gameBoard: Map<Coordinates, MineType> get() = _gameBoard
 
     init {
-        _gameBoard.putAll(board.getInitBoard())
+        _gameBoard.putAll(board.getInitBoard(MineType.NONE))
     }
 
     fun clickCoordinate(coordinates: Coordinates) {
