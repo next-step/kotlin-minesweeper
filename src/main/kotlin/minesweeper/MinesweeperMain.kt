@@ -5,10 +5,12 @@ import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
 fun main() {
-    val height = InputView.getHeight()
-    val width = InputView.getWidth()
+    val row = InputView.getHeight()
+    val col = InputView.getWidth()
     val mineCount = InputView.getMineCount()
-    val mineSweeperGame = MineSweeperGame(height, width, mineCount)
+
+    val mineSweeperGame = MineSweeperGame(row, col)
+    mineSweeperGame.generateBoard(mineCount)
 
     OutputView.printTitle()
     OutputView.printMineSweeper(mineSweeperGame.board)

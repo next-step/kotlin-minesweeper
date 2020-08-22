@@ -12,12 +12,4 @@ class MineSweeperMakerTest {
         candidate.remove(8)
         Assertions.assertThat(candidate).isEqualTo(9)
     }
-
-    @Test
-    fun `Maker Test`() {
-        val maker = MineSweeperMaker()
-        val minePositions = maker.getMinePosition(5,5,5)
-
-        Assertions.assertThat(minePositions.size).isEqualTo(5)
-    }
 }

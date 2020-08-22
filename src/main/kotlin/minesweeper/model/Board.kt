@@ -1,23 +1,25 @@
 package minesweeper.model
 
-const val DEFAULT_POSITION = 0
+class Board(val row: Int, val col: Int) {
+    var board: List<List<Block>> = List(row) { List(col) { Block() } }
 
-data class Board(val row: Int, val col: Int, val mineCount: Int) {
-    val board: List<List<Block>> = List(row) { List(col) { Block() } }
-
-    init {
-        val minePositions = MineSweeperMaker().getMinePosition(row, col, mineCount)
-
-        for (position in DEFAULT_POSITION until row * col) {
-            turnInOrder(position, minePositions, board)
-        }
+    constructor(board: Board) : this(board.getRow(board.getTotal()), board.getCol(board.getTotal())) {
+        this.board = board.board
     }
 
-    private fun turnInOrder(position: Int, minePositions: List<Int>, board: List<List<Block>>) {
-        minePositions.forEach {
-            if (it == position) {
-                board[(it - 1) / col][(it - 1) % col].type = Type.MINE
-            }
-        }
+    fun getTotal(): Int {
+        return row * col
+    }
+
+    fun getBlock(position: Int): Block {
+        return board[getRow(position)][getCol(position)]
+    }
+
+    fun getRow(position: Int): Int {
+        return position / col
+    }
+
+    fun getCol(position: Int): Int {
+        return position % col
     }
 }

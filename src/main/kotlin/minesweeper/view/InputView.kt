@@ -2,12 +2,12 @@ package minesweeper.view
 
 object InputView {
     fun getHeight(): Int {
-        print("높이를 입력하세요.")
+        print("높이(row)를 입력하세요.")
         return readLine()!!.toInt()
     }
 
     fun getWidth(): Int {
-        print("너비를 입력하세요.")
+        print("너비(column)를 입력하세요.")
         return readLine()!!.toInt()
     }
 
