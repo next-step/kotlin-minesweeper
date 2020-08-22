@@ -1,5 +1,7 @@
 package minesweeper.model
 
+import minesweeper.model.block.Block
+
 class Board(val row: Int, val col: Int) {
     var board: List<List<Block>> = List(row) { List(col) { Block() } }
 
