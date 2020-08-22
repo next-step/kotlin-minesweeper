@@ -18,8 +18,8 @@ fun printMineField(mineField: MineField) {
 }
 
 fun printBlock(block: Block) = when {
-    block.isMine() -> print("* ")
     block.isClosed() -> print("□ ")
+    block.isMine() -> print("* ")
     else -> print("${block.getMinesCount()} ")
 }
 
