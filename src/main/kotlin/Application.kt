@@ -1,12 +1,14 @@
-import domain.Board
+import domain.BoardGenerator
 import view.InputView
+import view.ResultView
 
 fun main() {
     val width = InputView.readWidth()
     val height = InputView.readHeight()
-    val mineCount = InputView.readMineCount { Board.isValidMineCount(width, height, it) }
+    val mineCount = InputView.readMineCount { BoardGenerator.getOrNull(width, height, it) != null }
 
-    Board.getOrNull(width, height, mineCount)?.run {
-        Minesweeper(this).start()
+    BoardGenerator.getOrNull(width, height, mineCount)?.run {
+        ResultView.printStart()
+        Minesweeper(width, height, this.execute()).start()
     }
 }

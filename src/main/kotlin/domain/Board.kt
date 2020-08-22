@@ -1,21 +1,17 @@
 package domain
 
-class Board private constructor(
-    val width: Int,
-    private val height: Int,
-    private val mineCount: Int = 0
+class Board(
+    val map: Map<Location, Block>,
+    private val mineCount: Int
 ) {
-    val boardInfo: Map<Location, Block> get() = _boardInfo.toMap()
-
-    private var remainBlock = width * height
-    private val _boardInfo = LinkedHashMap<Location, Block>(remainBlock)
+    private var remainBlock = map.size
 
     init {
-        initBoard()
+        require(mineCount >= 0) { "지뢰 개수는 음수일 수 없습니다." }
     }
 
     fun open(location: Location): Result {
-        val selectedBlock = _boardInfo[location] ?: return Result.INVALID
+        val selectedBlock = map[location] ?: return Result.INVALID
         if (selectedBlock.isOpened) {
             return Result.ALREADY_OPEN
         }
@@ -33,52 +29,14 @@ class Board private constructor(
     }
 
     fun openAll() {
-        _boardInfo.entries.forEach { it.value.open() }
+        map.entries.forEach { it.value.open() }
         remainBlock = mineCount
     }
 
     private fun isWin() = remainBlock == mineCount
 
-    private fun initBoard() {
-        val locations = createLocations().shuffled()
-        val mines = createMines(locations)
-        _boardInfo.putAll((mines + createGenerals(locations)).sortedBy { it.first })
-        mines.forEach { notifySetMine(it.first) }
-    }
-
-    private fun createMines(locations: List<Location>) =
-        locations.take(mineCount).map { Pair(it, Block(BlockType.MINE)) }
-
-    private fun createGenerals(locations: List<Location>) =
-        locations.takeLast(remainBlock - mineCount).map { Pair(it, Block()) }
-
-    private fun createLocations() = (0 until width).flatMap { x ->
-        (0 until height).map { y -> Location(x, y) }
-    }
-
-    private fun notifySetMine(mine: Location) {
-        for (location in findSurroundings(mine)) {
-            _boardInfo[location]?.increaseMineCount()
-        }
-    }
-
-    private fun openSurroundings(mine: Location) = findSurroundings(mine).forEach { open(it) }
-
-    private fun findSurroundings(mine: Location) =
-        Direction.values().map { mine + it }.filterNot { _boardInfo[it]?.isOpened ?: true }
-
-    operator fun contains(location: Location) = _boardInfo.contains(location)
-
-    companion object {
-        private const val MINE_MIN = 1
-
-        fun isValidMineCount(width: Int, height: Int, mineCount: Int) = mineCount in MINE_MIN..(width * height)
-
-        fun getOrNull(width: Int, height: Int, mineCount: Int): Board? {
-            if (isValidMineCount(width, height, mineCount)) {
-                return Board(width, height, mineCount)
-            }
-            return null
-        }
-    }
+    private fun openSurroundings(mine: Location) =
+        Direction.findSurroundings(mine)
+            .filterNot { map[it]?.isOpened ?: true }
+            .forEach { open(it) }
 }

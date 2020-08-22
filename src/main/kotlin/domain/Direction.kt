@@ -9,4 +9,9 @@ enum class Direction(val distanceX: Int, val distanceY: Int) {
     RIGHT(1, 0),
     RIGHT_TOP(1, 1),
     RIGHT_DOWN(1, -1);
+
+    companion object {
+
+        fun findSurroundings(location: Location) = values().map { location + it }
+    }
 }

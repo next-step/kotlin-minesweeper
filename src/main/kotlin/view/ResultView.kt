@@ -13,20 +13,18 @@ object ResultView {
     private const val RESULT_ALREADY_OPEN = "이미 열려있는 칸입니다."
     private const val RESULT_INVALID = "올바른 좌표가 아닙니다"
 
-    fun printStart(board: Board) {
+    fun printStart() {
         println(START_GAME)
-        printBoard(board)
     }
 
-    fun printBoard(board: Board) {
-        board.boardInfo.entries.forEachIndexed { index, block ->
+    fun printBoard(board: Board, lineBreakInterval: Int) {
+        board.map.entries.forEachIndexed { index, block ->
             print(findSymbol(block.value))
-            print(if (index % board.width == board.width - 1) "\n" else " ")
+            print(if (index % lineBreakInterval == lineBreakInterval - 1) "\n" else " ")
         }
     }
 
-    fun printResult(result: Result, board: Board) {
-        printBoard(board)
+    fun printResult(result: Result) {
         if (result == Result.PROGRESS) {
             return
         }
