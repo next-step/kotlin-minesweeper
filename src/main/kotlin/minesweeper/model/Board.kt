@@ -5,8 +5,8 @@ import minesweeper.model.block.Block
 class Board(val row: Int, val col: Int) {
     var board: List<List<Block>> = List(row) { List(col) { Block() } }
 
-    constructor(board: Board) : this(board.getRow(board.getTotal()), board.getCol(board.getTotal())) {
-        this.board = board.board
+    constructor(board: List<List<Block>>) : this(board.size, board[0].size) {
+        this.board = board
     }
 
     fun getTotal(): Int {

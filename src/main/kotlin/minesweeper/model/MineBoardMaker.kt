@@ -5,7 +5,7 @@ const val START_POSITION = 0
 const val MINE_ADD_VALUE = 1
 const val MINE_EMPTY_VALUE = 0
 
-class MineSweeperMaker {
+class MineBoardMaker {
     private val counter: MineCounter = MineCounter()
 
     fun setMinePosition(board: Board, mineCount: Int): Board {
