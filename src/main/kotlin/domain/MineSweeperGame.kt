@@ -14,6 +14,12 @@ object MineSweeperGame {
         return board.toMap()
     }
 
+    fun validateMineCount(totalBoardCount: Int): (Int) -> Boolean {
+        return { count ->
+            count <= totalBoardCount
+        }
+    }
+
     private fun initRow(
         height: Int,
         board: MutableMap<Position, Block>,

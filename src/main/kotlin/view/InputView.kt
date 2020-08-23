@@ -23,14 +23,14 @@ object InputView {
         }
     }
 
-    tailrec fun inputMine(): Int {
+    tailrec fun inputMine(validateMineCount: (Int) -> Boolean): Int {
         println("지뢰는 몇 개 인가요?")
         val mine = readLine()?.toIntOrNull()
-        return if (mine != null) {
+        return if (mine != null && validateMineCount(mine)) {
             mine
         } else {
-            println("지뢰는 숫자만 입력 가능합니다.")
-            inputMine()
+            println("숫자만 입력 가능하고, 너비와 높이의 곱보다 작아야합니다.")
+            inputMine(validateMineCount)
         }
     }
 }
