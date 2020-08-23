@@ -1,20 +1,13 @@
 package model
 
-class Gamer(private val board: Board) {
-    private val _gameBoard = mutableMapOf<Coordinates, MineType>()
-    val gameBoard: Map<Coordinates, MineType> get() = _gameBoard
+class Gamer(val board: Board) {
 
-    init {
-        _gameBoard.putAll(board.getInitBoard(MineType.NONE))
-    }
-
-    fun clickCoordinate(coordinates: Coordinates) {
-        board.getShowedArea(coordinates).forEach { _gameBoard[it.key] = it.value }
-    }
+    fun clickCoordinate(coordinates: Coordinates) =
+        board.updateShowedArea(coordinates)
 
     fun getCurrentGameBoard(): List<List<MineType>> {
-        val row = _gameBoard.keys.groupBy { it.row }.size
-        return _gameBoard.values
+        val row = board.value.keys.groupBy { it.row }.size
+        return board.value.values
             .chunked(row)
     }
 }
