@@ -28,4 +28,12 @@ object ResultView {
         }
         return point.mineCount.toString()
     }
+
+    fun resultGame(isWin: Boolean) {
+        if (isWin) {
+            println("당신은 모든 지뢰를 피하셨습니다. 승리를 축하합니다!!")
+        } else {
+            println("당신은 지뢰를 오픈했습니다. 패배하셧습니다!!")
+        }
+    }
 }

@@ -19,7 +19,14 @@ fun startGame() {
     val width = InputView.inputWidth()
     val mines = InputView.inputMines()
     val board = Board(width, length, mines)
-    val coordinate = InputView.inputCoordinate()
-    board.openPoint(coordinate)
-    ResultView.resultBoard(board, width - 1)
+    ResultView.resultGame(playingGame(board, width))
+}
+
+fun playingGame(board: Board, width: Int): Boolean {
+    while (board.isPlaying) {
+        val coordinate = InputView.inputCoordinate()
+        board.openPoint(coordinate)
+        ResultView.resultBoard(board, width - 1)
+    }
+    return board.isPlayerWin()
 }

@@ -1,10 +1,10 @@
 package minesweeper.domain
 
 class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listOf()) {
-    val points = makePoint(coordinates, mineCoordinates)
+    private val allPoints = makePoint(coordinates, mineCoordinates)
 
     init {
-        points.forEach { it.setMineCount(getAroundMines(it)) }
+        allPoints.forEach { it.setMineCount(getAroundMines(it)) }
     }
 
     private fun makePoint(coordinates: Coordinates, mineCoordinates: List<Coordinate>): List<Point> {
@@ -31,9 +31,13 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
     }
 
     fun findPoint(x: Int, y: Int): Point =
-        points.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+        allPoints.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
 
     fun forEach(f: (point: Point) -> Unit) {
-        points.forEach { f(it) }
+        allPoints.forEach { f(it) }
+    }
+
+    fun getNotOpenPoints(): List<Point> {
+        return allPoints.filterNot { it.isMine() || it.isOpen }
     }
 }
