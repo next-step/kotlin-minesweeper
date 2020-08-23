@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 class MineTypeTest {
     @Test
     fun `Mine 출력 테스트`() {
-        assertThat(MineType(true).toString()).isEqualTo("*")
+        assertThat(MineType.MINE.toString()).isEqualTo("*")
     }
 
     @Test
     fun `NotMine 출력 테스트`() {
-        assertThat(MineType(false).toString()).isEqualTo("C")
+        assertThat(MineType.ZERO.toString()).isEqualTo("C")
     }
 }

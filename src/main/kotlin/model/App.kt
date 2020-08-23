@@ -7,6 +7,6 @@ fun main() {
     val width = Input.inputWidth()
     val height = Input.inputHeight()
     val mineCount = Input.inputMine(width * height)
-    val map = Map(width, height, mineCount).apply { createMine(mine) }
+    val map = Map(width, height, mineCount)
     Output.drawMap(map)
 }

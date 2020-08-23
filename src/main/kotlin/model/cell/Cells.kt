@@ -1,14 +1,12 @@
 package model.cell
 
-class Cells(private val cells: MutableList<Cell>) {
-    fun get(position: Position): Cell {
-        return cells.first { it.position.x == position.x && it.position.y == position.y }
-    }
+class Cells(cells: List<Cell>) {
+    private val cells: MutableList<Cell> = cells.toMutableList()
 
-    fun changeNotToMine(count: Int) {
+    fun createRandomMine(count: Int) {
         cells.shuffled().take(count).forEach { changeCell ->
             if (cells.removeIf { targetCell -> targetCell.position == changeCell.position }) {
-                cells.add(Cell(MineType(!changeCell.mineType.isMine), changeCell.position))
+                cells.add(Cell(MineType.ZERO, changeCell.position))
             }
         }
     }
