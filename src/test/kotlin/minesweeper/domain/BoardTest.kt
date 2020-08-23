@@ -27,7 +27,7 @@ class BoardTest {
     fun open_point() {
         val board = Board(10, 10)
 
-        board.openPoint(1, 1)
+        board.openPoint(Coordinate(1, 1))
 
         assertThat(board.findPoint(1, 1).isOpen).isTrue()
     }

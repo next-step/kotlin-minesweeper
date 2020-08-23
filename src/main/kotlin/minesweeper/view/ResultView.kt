@@ -17,9 +17,9 @@ object ResultView {
 
     private fun drawWhat(point: Point): String {
         if (point.isOpen) {
-            drawOpen(point)
+            return drawOpen(point)
         }
-        return "■"
+        return "C"
     }
 
     private fun drawOpen(point: Point): String {

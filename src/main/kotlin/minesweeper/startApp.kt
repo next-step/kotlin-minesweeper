@@ -19,5 +19,7 @@ fun startGame() {
     val width = InputView.inputWidth()
     val mines = InputView.inputMines()
     val board = Board(width, length, mines)
+    val coordinate = InputView.inputCoordinate()
+    board.openPoint(coordinate)
     ResultView.resultBoard(board, width - 1)
 }
