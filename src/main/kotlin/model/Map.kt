@@ -2,7 +2,7 @@ package model
 
 import model.cell.Cell
 import model.cell.Cells
-import model.cell.MineStatus
+import model.cell.MineType
 import model.cell.Position
 
 class Map(val x: Int, val y: Int, val mine: Int) {
@@ -15,7 +15,7 @@ class Map(val x: Int, val y: Int, val mine: Int) {
     private fun createDefaultMap(width: Int, height: Int): MutableList<Cell> {
         return (0 until width).flatMap { x ->
             (0 until height).map { y ->
-                Cell(MineStatus(false), Position(x, y))
+                Cell(MineType(false), Position(x, y))
             }
         }.toMutableList()
     }

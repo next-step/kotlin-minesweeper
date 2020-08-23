@@ -8,7 +8,7 @@ class Cells(private val cells: MutableList<Cell>) {
     fun changeNotToMine(count: Int) {
         cells.shuffled().take(count).forEach { changeCell ->
             if (cells.removeIf { targetCell -> targetCell.position == changeCell.position }) {
-                cells.add(Cell(MineStatus(!changeCell.mineStatus.isMine), changeCell.position))
+                cells.add(Cell(MineType(!changeCell.mineType.isMine), changeCell.position))
             }
         }
     }

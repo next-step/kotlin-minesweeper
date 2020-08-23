@@ -1,7 +1,7 @@
 package model.cell
 
-data class Cell(val mineStatus: MineStatus, val position: Position) {
+data class Cell(val mineType: MineType, val position: Position) {
     override fun toString(): String {
-        return mineStatus.toString()
+        return mineType.toString()
     }
 }
