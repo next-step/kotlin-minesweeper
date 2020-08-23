@@ -27,12 +27,29 @@ private fun startGameUntilTheEnd(gamer: Gamer) {
 }
 
 private fun registerGamer(): Gamer {
-    val (row, col) = requestLengthOfSide(InputView.Mode.ROW) to requestLengthOfSide(InputView.Mode.COL)
+    val row = requestLengthOfSideUntilNonNull(InputView.Mode.ROW)
+    val col = requestLengthOfSideUntilNonNull(InputView.Mode.COL)
     val boardSize = BoardSize(row, col)
-    val mineCount = requestMineCount(boardSize)
+    val mineCount = requestNumberOfMineUntilNonNull(boardSize)
 
     val board = Board(boardSize, mineCount.getMineIndexes())
     return Gamer(board)
+}
+
+private fun requestNumberOfMineUntilNonNull(boardSize: BoardSize): NumberOfMine {
+    var result = requestMineCount(boardSize)
+    while (result == null) {
+        result = requestMineCount(boardSize)
+    }
+    return result
+}
+
+private fun requestLengthOfSideUntilNonNull(inputMode: InputView.Mode): LengthOfSide {
+    var result = requestLengthOfSide(inputMode)
+    while (result == null) {
+        result = requestLengthOfSide(inputMode)
+    }
+    return result
 }
 
 private fun requestMineCount(boardSize: BoardSize): NumberOfMine? =
