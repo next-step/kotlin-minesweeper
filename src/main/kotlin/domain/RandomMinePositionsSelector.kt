@@ -1,5 +1,7 @@
 package domain
 
+import domain.block.Position
+
 class RandomMinePositionsSelector : MinePositionsSelectStrategy {
 
     override fun getMinePositionsFrom(positions: List<Position>, count: Int): List<Position> {

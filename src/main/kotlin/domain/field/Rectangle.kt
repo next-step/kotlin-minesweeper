@@ -1,4 +1,6 @@
-package domain
+package domain.field
+
+import domain.block.Position
 
 data class Rectangle(
     val width: Int,

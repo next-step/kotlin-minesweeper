@@ -1,5 +1,6 @@
-package domain
+package domain.block
 
+import domain.block.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

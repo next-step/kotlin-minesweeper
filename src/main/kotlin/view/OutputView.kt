@@ -1,7 +1,7 @@
 package view
 
-import domain.Block
-import domain.MineField
+import domain.block.Block
+import domain.field.MineField
 import java.util.LinkedList
 import java.util.Queue
 
@@ -10,17 +10,19 @@ fun printGameStart() {
 }
 
 fun printMineField(mineField: MineField) {
-    val normalBlockQueue: Queue<Block> = LinkedList<Block>(mineField.blocks)
+    val normalBlockQueue: Queue<Block> = LinkedList<Block>(mineField.getBlocks())
     repeat(mineField.getHeight()) {
         repeat(mineField.getWidth()) { printBlock(normalBlockQueue.poll()) }
         println()
     }
 }
 
-fun printBlock(block: Block) {
-    if (block.isMine()) {
-        print("* ")
-        return
-    }
-    print("${block.getMinesCount()} ")
+fun printBlock(block: Block) = when {
+    block.isClosed() -> print("□ ")
+    block.isMine() -> print("* ")
+    else -> print("${block.getMinesCount()} ")
+}
+
+fun printGameWin() {
+    println("지뢰를 모두 찾았습니다!")
 }
