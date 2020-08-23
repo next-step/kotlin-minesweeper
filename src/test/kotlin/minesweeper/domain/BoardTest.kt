@@ -22,4 +22,13 @@ class BoardTest {
             board.findPoint(10, 10)
         }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("10, 10 좌표는 없습니다.")
     }
+
+    @Test
+    fun open_point() {
+        val board = Board(10, 10)
+
+        board.openPoint(1, 1)
+
+        assertThat(board.findPoint(1, 1).isOpen).isTrue()
+    }
 }

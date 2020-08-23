@@ -9,4 +9,8 @@ class Board(width: Int, length: Int, mines: Int = 0) {
     fun forEachPoints(f: (point: Point) -> Unit) {
         points.forEach { f(it) }
     }
+
+    fun openPoint(x: Int, y: Int) {
+        findPoint(x, y).openPoint()
+    }
 }
