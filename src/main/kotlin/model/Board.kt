@@ -16,7 +16,7 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
             val mineCoordinates = getMineCoordinates()
             setupMineAroundCount(mineCoordinates, mineMap)
             setupMine(mineCoordinates, mineMap)
-        }
+        }.toMap()
 
     private fun setupMine(mineCoordinates: Set<Coordinates>, mineMap: MutableMap<Coordinates, MineType>) =
         mineCoordinates.forEach { mineMap[it] = MineType.MINE }
@@ -34,7 +34,7 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
     fun getShowedArea(coordinates: Coordinates): Map<Coordinates, MineType> =
         mutableMapOf<Coordinates, MineType>().also {
             updateShowedArea(coordinates, it)
-        }
+        }.toMap()
 
     fun getInitBoard(defaultMineType: MineType): Map<Coordinates, MineType> =
         mutableMapOf<Coordinates, MineType>().also {
@@ -43,7 +43,7 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
                     it[Coordinates(row, col)] = defaultMineType
                 }
             }
-        }
+        }.toMap()
 
     private fun getValueInCoordinates(coordinates: Coordinates): MineType =
         mineCountMap.filterKeys { it == coordinates }.values.first()
@@ -62,5 +62,5 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
             mineIndexes
                 .map { Pair(it.div(boardSize.row + 1), it.rem(boardSize.row + 1)) }
                 .map { board[Coordinates(it.first, it.second)] = MineType.MINE }
-        }
+        }.toMap()
 }
