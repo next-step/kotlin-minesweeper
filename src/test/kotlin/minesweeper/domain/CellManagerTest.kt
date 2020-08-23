@@ -1,6 +1,8 @@
 package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.MineCell
+import minesweeper.domain.cell.NumberCell
 import minesweeper.domain.cell.Position
 import minesweeper.domain.cell.toCell
 import minesweeper.domain.cell.toMineCell
@@ -67,5 +69,23 @@ class CellManagerTest {
 
         assertThat(beforeSize)
             .isEqualTo(positions.size)
+    }
+
+    @DisplayName(value = "전체 open을 하면, 폭탄,번호 Cell중 하나여야한다.")
+    @Test
+    fun openAllTest() {
+        val cells: MutableSet<Cell> = mutableSetOf(
+            Position(0, 0).toCell(),
+            Position(0, 1).toCell(),
+            Position(1, 0).toCell(),
+            Position(1, 1).toMineCell()
+        )
+        val cellManager = CellManager.newInstance(cells)
+        cellManager.openAll()
+
+        cellManager.cells.forEach { cell ->
+            assertThat(cell)
+                .isInstanceOfAny(MineCell::class.java, NumberCell::class.java)
+        }
     }
 }
