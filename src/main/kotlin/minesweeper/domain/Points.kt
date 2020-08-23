@@ -33,8 +33,6 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
     fun findPoint(x: Int, y: Int): Point =
         points.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
 
-    fun countMine(): Int = points.count { it.isMine() }
-
     fun forEach(f: (point: Point) -> Unit) {
         points.forEach { f(it) }
     }

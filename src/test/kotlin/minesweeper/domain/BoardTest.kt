@@ -22,13 +22,4 @@ class BoardTest {
             board.findPoint(10, 10)
         }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("10, 10 좌표는 없습니다.")
     }
-
-    @Test
-    fun count_mines() {
-        val board = Board(10, 10, 10)
-
-        val mineCount = board.countMine()
-
-        assertThat(mineCount).isEqualTo(10)
-    }
 }

@@ -16,6 +16,13 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
+        if (point.isOpen) {
+            drawOpen(point)
+        }
+        return "■"
+    }
+
+    private fun drawOpen(point: Point): String {
         if (point.isMine()) {
             return "*"
         }

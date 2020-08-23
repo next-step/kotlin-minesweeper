@@ -37,16 +37,6 @@ class PointsTest {
     }
 
     @Test
-    fun count_mines() {
-        val coordinates = Coordinates(10, 10)
-        val points = Points(coordinates, coordinates.makeMineCoordinates(10))
-
-        val mineCount = points.countMine()
-
-        assertThat(mineCount).isEqualTo(10)
-    }
-
-    @Test
     fun point_around_mines_count() {
         val coordinates = Coordinates(10, 10)
         val mineCoordinates = listOf(Coordinate(0, 1), Coordinate(2, 1), Coordinate(1, 3))
