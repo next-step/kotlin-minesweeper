@@ -11,14 +11,11 @@ data class Street(val streetNumber: Int, val width: Int) {
 
     init {
         _spots = MutableList(width) { nthPosition ->
-            MineLessSpot(
-                streetNumber,
-                nthPosition
-            )
+            MineLessSpot(streetNumber, nthPosition)
         }
     }
 
-    fun setMinePosition(positionChoosingStrategy: PositionChoosingStrategy): Boolean {
+    fun setMineSpot(positionChoosingStrategy: PositionChoosingStrategy): Boolean {
         if (this.isFullOfMines()) return true
 
         var nth = getNthPosition(positionChoosingStrategy)

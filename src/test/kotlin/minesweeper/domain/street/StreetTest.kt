@@ -23,7 +23,7 @@ class StreetTest {
     @Test
     fun `원하는 위치에 지뢰를 설치할 수 있다`() {
         // when
-        street.setMinePosition(object : PositionChoosingStrategy {
+        street.setMineSpot(object : PositionChoosingStrategy {
             override fun getPosition(streetWidth: Int): Int = 2
         })
 
@@ -34,8 +34,8 @@ class StreetTest {
     @Test
     fun `지뢰 개수`() {
         // given
-        street.setMinePosition(RandomPositionChoosingStrategy)
-        street.setMinePosition(RandomPositionChoosingStrategy)
+        street.setMineSpot(RandomPositionChoosingStrategy)
+        street.setMineSpot(RandomPositionChoosingStrategy)
 
         // when
         val count = street.mineCount()
@@ -48,7 +48,7 @@ class StreetTest {
     fun `지뢰가 가득차면 True, 아니면 False를 반환한다`() {
         // given
         repeat(3) {
-            mineFullStreet.setMinePosition(RandomPositionChoosingStrategy)
+            mineFullStreet.setMineSpot(RandomPositionChoosingStrategy)
         }
 
         // when
@@ -63,10 +63,10 @@ class StreetTest {
     @Test
     fun `좌우 지뢰 개수의 합을 구한다`() {
         // given
-        street.setMinePosition(object : PositionChoosingStrategy {
+        street.setMineSpot(object : PositionChoosingStrategy {
             override fun getPosition(streetWidth: Int): Int = 0
         })
-        street.setMinePosition(object : PositionChoosingStrategy {
+        street.setMineSpot(object : PositionChoosingStrategy {
             override fun getPosition(streetWidth: Int): Int = 2
         })
 
@@ -82,10 +82,10 @@ class StreetTest {
     @Test
     fun `위 아래 다른 거리의 지뢰 개수를 더한다`() {
         // given
-        prevStreet.setMinePosition(object : PositionChoosingStrategy {
+        prevStreet.setMineSpot(object : PositionChoosingStrategy {
             override fun getPosition(streetWidth: Int): Int = 0
         })
-        nextStreet.setMinePosition(object : PositionChoosingStrategy {
+        nextStreet.setMineSpot(object : PositionChoosingStrategy {
             override fun getPosition(streetWidth: Int): Int = 0
         })
 

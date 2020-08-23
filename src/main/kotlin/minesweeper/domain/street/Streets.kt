@@ -9,11 +9,11 @@ class Streets(private val streets: List<Street>) {
         positionChoosingStrategy: PositionChoosingStrategy = RandomPositionChoosingStrategy
     ) {
         var number = getStreetNumber(streetChoosingStrategy)
-        var isFullOfMines = streets[number].setMinePosition(positionChoosingStrategy)
+        var isFullOfMines = streets[number].setMineSpot(positionChoosingStrategy)
 
         while (isFullOfMines) {
             number = getStreetNumber(streetChoosingStrategy)
-            isFullOfMines = streets[number].setMinePosition(positionChoosingStrategy)
+            isFullOfMines = streets[number].setMineSpot(positionChoosingStrategy)
         }
     }
 
