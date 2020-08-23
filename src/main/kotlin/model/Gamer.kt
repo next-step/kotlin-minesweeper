@@ -12,10 +12,9 @@ class Gamer(private val board: Board) {
         board.getShowedArea(coordinates).forEach { _gameBoard[it.key] = it.value }
     }
 
-    fun getCurrentGameBoard(): List<List<Char>> {
+    fun getCurrentGameBoard(): List<List<MineType>> {
         val row = _gameBoard.keys.groupBy { it.row }.size
         return _gameBoard.values
             .chunked(row)
-            .map { rowElements -> rowElements.map { it.ascii.toChar() } }
     }
 }

@@ -14,7 +14,9 @@ object ResultView {
     }
 
     fun printBoard(gamer: Gamer) {
-        gamer.getCurrentGameBoard().map { println(it.joinToString()) }
+        gamer.getCurrentGameBoard()
+            .map { mineType -> mineType.map { it.ascii.toChar() } }
+            .map { println(it.joinToString()) }
     }
 
     fun printResult(gamer: Gamer) {
