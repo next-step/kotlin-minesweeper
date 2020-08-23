@@ -10,7 +10,7 @@ object InputView {
     fun readHeight(): Int = readInput(message = ENTER_HEIGHT) { true }
     fun readWidth(): Int = readInput(message = ENTER_WIDTH) { true }
 
-    fun readCountOfMines(height: Int, width: Int): Int =
+    fun readMineCount(height: Int, width: Int): Int =
         readInput(message = ENTER_COUNT_OF_MINES) { count -> count < height * width }
 
     private fun readInput(message: String = "", fitsCondition: (Int) -> Boolean): Int {

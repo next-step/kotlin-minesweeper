@@ -4,7 +4,7 @@ class CityMap(private var streets: Streets, mineCount: Int) {
 
     init {
         repeat(mineCount) { streets.layMine() }
-        streets = streets.mineCountedMap()
+        streets = streets.mineCounted()
     }
 
     constructor(height: Int, width: Int, mineCount: Int) : this(

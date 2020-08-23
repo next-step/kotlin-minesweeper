@@ -70,7 +70,7 @@ class StreetTest {
         })
 
         // when
-        street.calculateMineCountAround(street.spots)
+        street.addMineCountAround(street.spots)
 
         val mineCount = street.spots[1].getMineCount()
 
@@ -89,8 +89,8 @@ class StreetTest {
         })
 
         // when
-        street.calculateMineCountAround(prevStreet.spots)
-        street.calculateMineCountAround(nextStreet.spots)
+        street.addMineCountAround(prevStreet.spots)
+        street.addMineCountAround(nextStreet.spots)
 
         val mineCount = street.spots[1].getMineCount()
 

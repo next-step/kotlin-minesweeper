@@ -20,8 +20,8 @@ class MineLessSpotTest {
     @Test
     fun `(근처) 지뢰자리를 받으면 지뢰개수 1개를 더한다`() {
         // given
-        mineLessSpot.addMineCount(MineSpot(3, 2))
-        mineLessSpot.addMineCount(MineLessSpot(3, 2))
+        mineLessSpot.addCountIfIsMineSpot(MineSpot(3, 2))
+        mineLessSpot.addCountIfIsMineSpot(MineLessSpot(3, 2))
 
         // when
         val count = mineLessSpot.getMineCount()

@@ -4,13 +4,13 @@ data class MineLessSpot(
     override val streetNumber: Int,
     override val nthPosition: Int
 ) : Spot {
-    private var nearMineCount: Int = 0
+    private var nearByMineCount: Int = 0
 
-    override fun getMineCount(): Int = nearMineCount
+    override fun getMineCount(): Int = nearByMineCount
 
-    override fun addMineCount(spot: Spot) {
-        if (spot is MineSpot) nearMineCount++
+    override fun addCountIfIsMineSpot(spot: Spot) {
+        if (spot is MineSpot) nearByMineCount++
     }
 
-    override fun toString(): String = nearMineCount.toString()
+    override fun toString(): String = nearByMineCount.toString()
 }

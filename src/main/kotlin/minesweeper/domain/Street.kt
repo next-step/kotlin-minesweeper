@@ -10,7 +10,7 @@ data class Street(val streetNumber: Int, val width: Int) {
     }
 
     fun setMinePosition(positionChoosingStrategy: PositionChoosingStrategy): Boolean {
-        if (isFullOfMines()) return true
+        if (this.isFullOfMines()) return true
 
         var nth = getNthPosition(positionChoosingStrategy)
         while (_spots[nth] is MineSpot) {
@@ -23,15 +23,15 @@ data class Street(val streetNumber: Int, val width: Int) {
     private fun getNthPosition(positionChoosingStrategy: PositionChoosingStrategy) =
         positionChoosingStrategy.getPosition(width)
 
-    fun calculateMineCountAround(spots: List<Spot>) {
+    fun addMineCountAround(spots: List<Spot>) {
         this.spots.forEach {
             val left = it.nthPosition - 1 // 좌
             val right = it.nthPosition + 1 // 우
 
-            if (0 <= left) it.addMineCount(spots[left])
-            if (right < this.width) it.addMineCount(spots[right])
+            if (0 <= left) it.addCountIfIsMineSpot(spots[left])
+            if (right < this.width) it.addCountIfIsMineSpot(spots[right])
 
-            it.addMineCount(spots[it.nthPosition]) // 자신의 위치
+            it.addCountIfIsMineSpot(spots[it.nthPosition]) // 자신의 위치
         }
     }
 

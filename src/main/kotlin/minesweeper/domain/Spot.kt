@@ -4,7 +4,7 @@ interface Spot {
     val streetNumber: Int
     val nthPosition: Int
 
-    fun addMineCount(spot: Spot)
+    fun addCountIfIsMineSpot(spot: Spot)
 
     fun getMineCount(): Int
 }
