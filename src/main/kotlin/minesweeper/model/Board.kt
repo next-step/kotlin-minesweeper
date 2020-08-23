@@ -1,23 +1,52 @@
 package minesweeper.model
 
-const val DEFAULT_POSITION = 0
-const val NEXT_POSITION = 1
+import minesweeper.model.block.Block
 
-data class Board(val row: Int, val col: Int, val mineCount: Int) {
-    val board: Array<Array<Block>> = Array(row) { Array(col) { Block() } }
+class Board(val row: Int, val col: Int) {
+    var board: List<List<Block>> = List(row) { List(col) { Block() } }
 
-    init {
-        val minePositions = MineSweeperMaker().getMinePosition(row, col, mineCount)
-        var position = DEFAULT_POSITION
+    constructor(board: List<List<Block>>) : this(board.size, board[0].size) {
+        this.board = board
+    }
 
-        for (row in board) {
-            for (block in row) {
-                position += NEXT_POSITION
+    fun setMinePosition(mineCount: Int): Board {
+        val minePositions = MineBoardMaker().setRandomMinePosition(mineCount, getTotal())
 
-                if (minePositions.contains(position)) {
-                    block.type = Type.MINE
-                }
-            }
+        for (minePosition in minePositions) {
+            val block = getBlock(minePosition)
+
+            block.setMine()
         }
+        return Board(this.board)
+    }
+
+    fun setNearbyMineCount(): Board {
+        val counter = NearByMineCounter()
+
+        for (position in START_POSITION until getTotal()) {
+
+            val block = getBlock(position)
+
+            if (block.type == Type.MINE) continue
+
+            block.setCount(counter.getMineNumber(position, this))
+        }
+        return Board(this.board)
+    }
+
+    fun getTotal(): Int {
+        return row * col
+    }
+
+    private fun getBlock(position: Int): Block {
+        return board[getRow(position)][getCol(position)]
+    }
+
+    fun getRow(position: Int): Int {
+        return position / col
+    }
+
+    fun getCol(position: Int): Int {
+        return position % col
     }
 }
