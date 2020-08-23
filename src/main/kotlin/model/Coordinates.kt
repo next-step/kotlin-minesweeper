@@ -1,9 +1,6 @@
 package model
 
-data class Coordinates(
-    val row: Int,
-    val col: Int
-) {
+data class Coordinates(val row: Int, val col: Int) {
 
     fun getAround(maxRow: Int, maxCol: Int): List<Coordinates> {
         val around = mutableListOf<Coordinates>()
@@ -13,7 +10,7 @@ data class Coordinates(
                 around.add(Coordinates(row, col))
             }
         }
-        return around
+        return around.toList()
     }
 
     private fun isNotAvailableRange(row: Int, col: Int, maxRow: Int, maxCol: Int): Boolean {
