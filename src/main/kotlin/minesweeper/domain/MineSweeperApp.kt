@@ -12,5 +12,8 @@ class MineSweeperApp(
 
     fun getMaxMineCount() = mineMap.getMapSize()
 
-    fun getResult() = mineMap
+    fun getResult(): MineMap {
+        mineMap.openAll()
+        return mineMap
+    }
 }

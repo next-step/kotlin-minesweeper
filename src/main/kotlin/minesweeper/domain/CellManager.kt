@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Position
 
 class CellManager private constructor(
     private val _cells: MutableSet<Cell> = mutableSetOf()
@@ -19,6 +20,23 @@ class CellManager private constructor(
     fun changeCell(cell: Cell) {
         if (_cells.removeIf { it.position == cell.position }) _cells.add(cell)
     }
+
+    fun openAll() {
+        cells.forEach(::openCell)
+    }
+
+    private fun openCell(cell: Cell) {
+        if (cell.isMine().not()) {
+            val aroundMineCount = cell.getAroundPositions().sumBy(::getMineCounter)
+            changeCell(cell.open(aroundMineCount))
+        }
+    }
+
+    private fun getMineCounter(position: Position) =
+        if (getCell(position)?.isMine() == true) 1 else 0
+
+    private fun getCell(position: Position) =
+        cells.find { it.isPosition(position) }
 
     companion object {
         fun newInstance() = CellManager()

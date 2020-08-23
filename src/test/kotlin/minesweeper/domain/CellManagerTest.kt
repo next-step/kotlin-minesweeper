@@ -52,4 +52,20 @@ class CellManagerTest {
         assertThat(cellManager.size)
             .isEqualTo(positions.size)
     }
+
+    @DisplayName(value = "전체 open을 해도, 전체 사이즈는 같아야 한다.")
+    @Test
+    fun openAllTestSameSize() {
+        val positions: MutableSet<Position> = mutableSetOf(
+            Position(1, 2),
+            Position(1, 2),
+            Position(1, 3)
+        )
+        val cellManager = CellManager.newInstance(positions.map { it.toCell() }.toMutableSet())
+        val beforeSize = cellManager.size
+        cellManager.openAll()
+
+        assertThat(beforeSize)
+            .isEqualTo(positions.size)
+    }
 }

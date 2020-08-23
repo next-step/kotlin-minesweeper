@@ -28,6 +28,10 @@ class MineMap(
         }
     }
 
+    fun openAll() {
+        mineMap.openAll()
+    }
+
     fun getMapSize() = mineMap.size
 
     override fun toString() = mineMap.cells.groupBy { it.position.x }
