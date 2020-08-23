@@ -6,7 +6,7 @@ class MineCell(
 
     override fun isMine() = true
 
-    override fun toString() = "*"
+    override fun toString() = "\uD83D\uDCA3"
 }
 
 fun Position.toMineCell() = MineCell(this)

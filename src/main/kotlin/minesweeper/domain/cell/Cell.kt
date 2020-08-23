@@ -9,7 +9,7 @@ open class Cell(
         return position == (other as? Cell)?.position
     }
 
-    override fun toString() = "C"
+    override fun toString() = "\uD83C\uDF2B"
 
     override fun hashCode(): Int {
         return position.hashCode()
