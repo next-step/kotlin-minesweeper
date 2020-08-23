@@ -5,15 +5,15 @@ import minesweeper.domain.cell.toCell
 import minesweeper.domain.cell.toMineCell
 import minesweeper.domain.cell.toPosition
 
-data class MineMap(
+class MineMap(
     private val height: Int,
     private val width: Int,
     private val generator: MineGenerator = MineGenerator(height * width),
-    private val mineMap: CellManager = CellManager()
+    private val mineMap: CellManager = CellManager.newInstance()
 ) {
 
     init {
-        (0 until height * width).forEach(::makeCell)
+        repeat(height * width, ::makeCell)
     }
 
     private fun makeCell(number: Int) {
@@ -28,8 +28,8 @@ data class MineMap(
         }
     }
 
-    fun getMapSize() = mineMap.getSize()
+    fun getMapSize() = mineMap.size
 
-    fun toShowString() = mineMap.cells.groupBy { it.position.x }
+    override fun toString() = mineMap.cells.groupBy { it.position.x }
         .values.joinToString("\n") { it.joinToString(" ") }
 }

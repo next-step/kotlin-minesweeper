@@ -18,20 +18,20 @@ class CellManagerTest {
             Position(1, 2).toCell(),
             Position(1, 3).toCell()
         )
-        val cellManager = CellManager(cells)
-        assertThat(cellManager.getSize()).isEqualTo(cells.size)
+        val cellManager = CellManager.newInstance(cells)
+        assertThat(cellManager.size).isEqualTo(cells.size)
     }
 
     @DisplayName(value = "중복 cell을 널었을땐, 사이즈가 증가하지 않는다.")
     @Test
     fun addCellTest() {
-        val cellManager = CellManager().apply {
+        val cellManager = CellManager.newInstance().apply {
             addCell(Position(1, 1).toCell())
             addCell(Position(1, 1).toCell())
         }
-        val beforeSize = cellManager.getSize()
+        val beforeSize = cellManager.size
         cellManager.addCell(Position(1, 1).toCell())
-        assertThat(cellManager.getSize())
+        assertThat(cellManager.size)
             .isEqualTo(beforeSize)
             .isEqualTo(1)
     }
@@ -44,12 +44,12 @@ class CellManagerTest {
             Position(1, 2),
             Position(1, 3)
         )
-        val cellManager = CellManager(positions.map { it.toCell() }.toMutableSet())
+        val cellManager = CellManager.newInstance(positions.map { it.toCell() }.toMutableSet())
 
         positions.map {
             cellManager.changeCell(it.toMineCell())
         }
-        assertThat(cellManager.getSize())
+        assertThat(cellManager.size)
             .isEqualTo(positions.size)
     }
 }
