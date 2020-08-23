@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.spot
 
 data class MineLessSpot(
     override val streetNumber: Int,

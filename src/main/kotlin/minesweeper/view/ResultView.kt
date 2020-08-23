@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.CityMap
+import minesweeper.domain.map.CityMap
 
 private const val ANNOUNCE_GAME_START = "지뢰찾기 게임 시작"
 

@@ -1,4 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.street
+
+import minesweeper.domain.spot.MineLessSpot
+import minesweeper.domain.spot.MineSpot
+import minesweeper.domain.spot.Spot
 
 data class Street(val streetNumber: Int, val width: Int) {
     private var _spots: MutableList<Spot>
@@ -6,7 +10,12 @@ data class Street(val streetNumber: Int, val width: Int) {
         get() = _spots.toList()
 
     init {
-        _spots = MutableList(width) { nthPosition -> MineLessSpot(streetNumber, nthPosition) }
+        _spots = MutableList(width) { nthPosition ->
+            MineLessSpot(
+                streetNumber,
+                nthPosition
+            )
+        }
     }
 
     fun setMinePosition(positionChoosingStrategy: PositionChoosingStrategy): Boolean {

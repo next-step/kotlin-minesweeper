@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.street
 
 class Streets(private val streets: List<Street>) {
 

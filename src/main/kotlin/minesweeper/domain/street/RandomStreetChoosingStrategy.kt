@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.street
 
 object RandomStreetChoosingStrategy : StreetChoosingStrategy {
     override fun getStreetNumber(streetCount: Int): Int = (0 until streetCount).random()

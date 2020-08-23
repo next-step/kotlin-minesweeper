@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.CityMap
+import minesweeper.domain.map.CityMap
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 

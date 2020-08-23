@@ -1,5 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.street
 
+import minesweeper.domain.spot.SpotSymbol
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,7 +25,7 @@ class StreetsTest {
                 override fun getStreetNumber(streetCount: Int): Int = 0
             },
             object : PositionChoosingStrategy {
-                override fun getPosition(streetLength: Int): Int = 2
+                override fun getPosition(streetWidth: Int): Int = 2
             }
         )
 
@@ -36,7 +37,10 @@ class StreetsTest {
     fun `전체 지뢰 개수`() {
         // given
         repeat(8) {
-            streets.layMine(RandomStreetChoosingStrategy, RandomPositionChoosingStrategy)
+            streets.layMine(
+                RandomStreetChoosingStrategy,
+                RandomPositionChoosingStrategy
+            )
         }
 
         // when

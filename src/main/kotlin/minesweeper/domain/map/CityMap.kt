@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.map
+
+import minesweeper.domain.street.Street
+import minesweeper.domain.street.Streets
 
 class CityMap(private var streets: Streets, mineCount: Int) {
 

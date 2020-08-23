@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.spot
 
 interface Spot {
     val streetNumber: Int
