@@ -11,6 +11,6 @@ class MineCounterTest {
         val empty = Block(Type.from(0))
         val board = Board(listOf(listOf(empty, mine), listOf(mine, mine)))
 
-        Assertions.assertThat(MineCounter().getMineNumber(0, board)).isEqualTo(3)
+        Assertions.assertThat(NearByMineCounter().getMineNumber(0, board)).isEqualTo(3)
     }
 }

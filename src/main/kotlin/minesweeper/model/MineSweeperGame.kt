@@ -7,12 +7,10 @@ class MineSweeperGame(board: Board) {
             return Board(_board.board)
         }
 
-    private val boardMaker = MineBoardMaker()
-
     constructor(row: Int, col: Int) : this(board = Board(row, col))
 
-    fun generateBoard(mineCount: Int) {
-        _board = boardMaker.setMinePosition(_board, mineCount)
-        _board = boardMaker.setMineCount(_board)
+    fun generateMine(mineCount: Int) {
+        _board = _board.setMinePosition(mineCount)
+        _board = _board.setNearbyMineCount()
     }
 }

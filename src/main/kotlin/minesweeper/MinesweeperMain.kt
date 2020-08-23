@@ -10,7 +10,7 @@ fun main() {
     val mineCount = InputView.getMineCount()
 
     val mineSweeperGame = MineSweeperGame(row, col)
-    mineSweeperGame.generateBoard(mineCount)
+    mineSweeperGame.generateMine(mineCount)
 
     OutputView.printTitle()
     OutputView.printMineSweeper(mineSweeperGame.board)

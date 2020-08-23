@@ -1,11 +1,13 @@
 package minesweeper.model
 
-class MineCounter {
+const val MINE_ADD_VALUE = 1
+
+class NearByMineCounter {
     fun getMineNumber(position: Int, board: Board): Int {
         var count = 0
 
         for (point in CardinalPoint.values()) {
-            count += plusMine(point, board, board.getRow(position), board.getCol(position))
+            count = count.plusMine(point, board, board.getRow(position), board.getCol(position))
         }
 
         return count
@@ -17,10 +19,10 @@ class MineCounter {
         return board.board[row][col].type == Type.MINE
     }
 
-    private fun plusMine(point: CardinalPoint, board: Board, rowNum: Int, colNum: Int): Int {
+    private fun Int.plusMine(point: CardinalPoint, board: Board, rowNum: Int, colNum: Int): Int {
         if (isMine(board, rowNum + point.moveSide, colNum + point.moveUpDown)) {
-            return MINE_ADD_VALUE
+            return this.plus(MINE_ADD_VALUE)
         }
-        return MINE_EMPTY_VALUE
+        return this
     }
 }

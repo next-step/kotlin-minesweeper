@@ -10,6 +10,6 @@ class MineBoardMakerTest {
 
         Assertions.assertThat(candidate.size).isEqualTo(10)
         candidate.remove(8)
-        Assertions.assertThat(candidate).isEqualTo(9)
+        Assertions.assertThat(candidate.size).isEqualTo(9)
     }
 }
