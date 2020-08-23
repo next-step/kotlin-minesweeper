@@ -35,26 +35,17 @@ private fun registerGamer(): Gamer {
     return Gamer(board)
 }
 
-private fun requestMineCount(boardSize: BoardSize): NumberOfMine =
+private fun requestMineCount(boardSize: BoardSize): NumberOfMine? =
     runCatching {
         NumberOfMine(
             number = InputView.requestInputByMode(InputView.Mode.MINE_COUNT),
             boardSize = boardSize
         )
-    }.also {
-        showErrorIfFailure(it)
-        return@also
-    }.getOrNull()!!
-
-private fun requestLengthOfSide(inputMode: InputView.Mode): LengthOfSide =
-    runCatching { LengthOfSide(InputView.requestInputByMode(inputMode)) }
-        .also {
-            showErrorIfFailure(it)
-            return@also
-        }.getOrNull()!!
-
-private fun <T> showErrorIfFailure(result: Result<T>) {
-    if (result.isFailure) {
-        ResultView.printError(result.exceptionOrNull())
     }
-}
+        .onFailure { ResultView.printError(it) }
+        .getOrNull()
+
+private fun requestLengthOfSide(inputMode: InputView.Mode): LengthOfSide? =
+    runCatching { LengthOfSide(InputView.requestInputByMode(inputMode)) }
+        .onFailure { ResultView.printError(it) }
+        .getOrNull()
