@@ -9,6 +9,6 @@ class BoardSizeTest {
     fun `보드의 크기 구하기`() {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
 
-        assertThat(boardSize.get()).isEqualTo(100)
+        assertThat(boardSize.size).isEqualTo(100)
     }
 }

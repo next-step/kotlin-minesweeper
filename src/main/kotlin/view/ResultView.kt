@@ -1,17 +1,23 @@
 package view
 
-import model.Board
+import model.Gamer
+import model.Winner
 
 object ResultView {
 
-    fun printBoard(board: Board) {
+    fun printStartGame() {
         println("지뢰 찾기 게임 시작")
-        board.convertToMineCount().map {
-            println(it.joinToString())
-        }
     }
 
-    fun printError(exception: Exception) {
-        println(exception.message)
+    fun printError(exception: Throwable?) {
+        println(exception?.message)
+    }
+
+    fun printBoard(gamer: Gamer) {
+        gamer.getCurrentGameBoard().map { println(it.joinToString()) }
+    }
+
+    fun printResult(gamer: Gamer) {
+        if (Winner.isLose(gamer)) println("Lose Game.") else println("Win Game.")
     }
 }

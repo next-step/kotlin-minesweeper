@@ -1,39 +1,60 @@
 package controller
 
-import Result
-import check
 import model.Board
 import model.BoardSize
+import model.Coordinates
+import model.Gamer
 import model.LengthOfSide
 import model.NumberOfMine
+import model.Winner
 import view.InputView
 import view.ResultView
 
 fun main() {
-    val row = tryLengthOfSideInput(InputView.requestInputByMode(InputView.Mode.ROW)).check() ?: return
-    val col = tryLengthOfSideInput(InputView.requestInputByMode(InputView.Mode.COL)).check() ?: return
-
-    val boardSize = BoardSize(row, col)
-    val mineCount = tryNumberOfMineInput(
-        number = InputView.requestInputByMode(InputView.Mode.MINE_COUNT),
-        boardSize = boardSize
-    ).check() ?: return
-
-    val board = Board(boardSize, mineCount.getMineIndexes())
-
-    ResultView.printBoard(board)
+    registerGamer().also {
+        ResultView.printStartGame()
+        startGameUntilTheEnd(it)
+        ResultView.printResult(it)
+    }
 }
 
-private fun tryLengthOfSideInput(data: Int): Result<LengthOfSide> =
-    try {
-        Result.Success(LengthOfSide(data))
-    } catch (e: IllegalArgumentException) {
-        Result.Failure(e)
+private fun startGameUntilTheEnd(gamer: Gamer) {
+    while (!Winner.isLose(gamer)) {
+        val coordinates = InputView.requestCoordinates()
+        gamer.clickCoordinate(Coordinates(coordinates[0], coordinates[1]))
+        ResultView.printBoard(gamer)
     }
+}
 
-private fun tryNumberOfMineInput(number: Int, boardSize: BoardSize): Result<NumberOfMine> =
-    try {
-        Result.Success(NumberOfMine(number, boardSize))
-    } catch (e: IllegalArgumentException) {
-        Result.Failure(e)
+private fun registerGamer(): Gamer {
+    val (row, col) = requestLengthOfSide(InputView.Mode.ROW) to requestLengthOfSide(InputView.Mode.COL)
+    val boardSize = BoardSize(row, col)
+    val mineCount = requestMineCount(boardSize)
+
+    val board = Board(boardSize, mineCount.getMineIndexes())
+    return Gamer(board)
+}
+
+private fun requestMineCount(boardSize: BoardSize): NumberOfMine =
+    runCatching {
+        NumberOfMine(
+            number = InputView.requestInputByMode(InputView.Mode.MINE_COUNT),
+            boardSize = boardSize
+        )
+    }.also {
+        showErrorIfFailure(it)
+        return@also
+    }.getOrNull()!!
+
+private fun requestLengthOfSide(inputMode: InputView.Mode): LengthOfSide =
+    runCatching { LengthOfSide(InputView.requestInputByMode(inputMode)) }
+        .also {
+            showErrorIfFailure(it)
+            return@also
+        }.getOrNull()!!
+
+private fun <T> showErrorIfFailure(result: Result<T>) {
+    if (result.isFailure) {
+        ResultView.printError(result.exceptionOrNull())
     }
+}
