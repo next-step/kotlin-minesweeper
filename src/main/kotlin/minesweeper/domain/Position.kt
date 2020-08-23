@@ -10,17 +10,24 @@ data class Position(val x: XPosition, val y: YPosition) {
             Direction.DOWN -> minOf(y.value + 1, boardSize.height.length - 1)
             Direction.LEFT -> maxOf(x.value - 1, 0)
             Direction.RIGHT -> minOf(x.value + 1, boardSize.width.length - 1)
-        }.exhaustive
+        }
     }
 
     companion object {
-        fun of(positionString: String, boardSize: BoardSize = BoardSize()): Position {
-            require(POSITION_REGULAR_EXPRESSION.matches(positionString))
+        fun requestPosition(positionString: String, boardSize: BoardSize = BoardSize()): PositionCheckResult {
+            if (!POSITION_REGULAR_EXPRESSION.matches(positionString)) return PositionCheckResult.InvalidateExpression
             val numbers: List<String> = positionString.split(",")
             val x = numbers[0].toInt()
             val y = numbers[1].toInt()
-            require(x in MIN_SIZE..boardSize.width.length) { "열의 위치는 $MIN_SIZE ~ ${boardSize.width.length} 사이의 숫자를 입력해주세요" }
-            require(y in MIN_SIZE..boardSize.height.length) { "행의 위치는 $MIN_SIZE ~ ${boardSize.height.length} 사이의 숫자를 입력해주세요" }
+            if (x !in MIN_SIZE..boardSize.width.length) return PositionCheckResult.InvalidateY(boardSize)
+            if (y !in MIN_SIZE..boardSize.height.length) return PositionCheckResult.InvalidateX(boardSize)
+            return PositionCheckResult.Success(positionString, boardSize)
+        }
+
+        fun from(positionString: String): Position {
+            val numbers: List<String> = positionString.split(",")
+            val x = numbers[0].toInt()
+            val y = numbers[1].toInt()
             return Position(XPosition.of(x), YPosition.of(y))
         }
 

@@ -11,10 +11,22 @@ class MinesweeperGame(height: String, width: String, mineCount: String) {
         minesweeperBoard = MinesweeperBoard(boardSize, MineNumber(mineCount, boardSize))
     }
 
-    fun openCell(positionString: String) {
-        require(POSITION_REGULAR_EXPRESSION.matches(positionString)) { "X, Y 값을 각각 자연수 범위내로 입력하시고, 구분자는 ','를 입력해주세요" }
-        playState = minesweeperBoard.openCell(Position.of(positionString, minesweeperBoard.boardSize))
-        if (playState != PlayState.PLAYING) minesweeperBoard.openAll()
+    fun openCell(positionString: String): PositionCheckResult {
+        val boardSize = minesweeperBoard.boardSize
+        val positionCheckResult: PositionCheckResult = Position.requestPosition(positionString, boardSize)
+        (
+            return when (positionCheckResult) {
+                is PositionCheckResult.Success -> {
+                    val position = Position.from(positionString)
+                    playState = minesweeperBoard.openCell(position)
+                    if (playState != PlayState.PLAYING) minesweeperBoard.openAll()
+                    positionCheckResult
+                }
+                is PositionCheckResult.InvalidateX,
+                is PositionCheckResult.InvalidateY,
+                PositionCheckResult.InvalidateExpression -> positionCheckResult
+            }.exhaustive
+            )
     }
 
     companion object {

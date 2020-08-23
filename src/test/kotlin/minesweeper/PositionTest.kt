@@ -3,10 +3,10 @@ package minesweeper
 import minesweeper.domain.BoardSize
 import minesweeper.domain.LengthNumber
 import minesweeper.domain.Position
+import minesweeper.domain.PositionCheckResult
 import minesweeper.domain.XPosition
 import minesweeper.domain.YPosition
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -18,14 +18,16 @@ class PositionTest {
     @ParameterizedTest
     @ValueSource(strings = ["인", "-1", "", "#", "1,2000", "3#3"])
     fun validationPosition(positionString: String) {
-        assertThatThrownBy { Position.of(positionString) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        val positionCheckResult = Position.requestPosition(positionString)
+
+        assertThat(positionCheckResult)
+            .isInstanceOf(PositionCheckResult.InvalidateExpression::class.java)
     }
 
     @DisplayName("위치 입력값 유효성 확인")
     @Test
     fun validationPosition() {
-        assertThat(Position.of("1,2"))
+        assertThat(Position.from("1,2"))
             .isInstanceOf(Position::class.java)
     }
 
@@ -36,22 +38,17 @@ class PositionTest {
         val yOutBoundIndexOutOfBounds = "6,2"
         val xOutBoundIndexOutOfBounds = "2,6"
 
-        assertAll(
-            {
-                assertThatThrownBy { Position.of(xOutBoundIndexOutOfBounds, boardSize) }
-                    .isInstanceOf(IllegalArgumentException::class.java)
-            },
-            {
-                assertThatThrownBy { Position.of(yOutBoundIndexOutOfBounds, boardSize) }
-                    .isInstanceOf(IllegalArgumentException::class.java)
-            }
-        )
+        assertThat(Position.requestPosition(xOutBoundIndexOutOfBounds, boardSize))
+            .isInstanceOf(PositionCheckResult.InvalidateX::class.java)
+
+        assertThat(Position.requestPosition(yOutBoundIndexOutOfBounds, boardSize))
+            .isInstanceOf(PositionCheckResult.InvalidateY::class.java)
     }
 
     @DisplayName("위치 입력값 equal 확인")
     @Test
     fun checkEqualPosition() {
-        val position = Position.of("10,12")
+        val position = Position.from("10,12")
 
         assertAll(
             { assertThat(position.x).isSameAs(XPosition.of(10)) },
