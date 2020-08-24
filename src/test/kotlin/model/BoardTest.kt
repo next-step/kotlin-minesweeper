@@ -18,7 +18,7 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(11))
 
-        assertThat(board.minePositions.keys.first()).isEqualTo(Coordinates(1, 1))
+        assertThat(board.minePositions.coordinates.first()).isEqualTo(Coordinates(1, 1))
     }
 
     @Test
@@ -26,9 +26,9 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(0))
 
-        assertThat(board.numberOfMineAround[Coordinates(0, 1)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(1, 0)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(1, 1)]).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(0, 1))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(1, 0))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(1, 1))).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -36,9 +36,9 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(9))
 
-        assertThat(board.numberOfMineAround[Coordinates(0, 8)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(1, 8)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(1, 9)]).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(0, 8))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(1, 8))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(1, 9))).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -46,9 +46,9 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(90))
 
-        assertThat(board.numberOfMineAround[Coordinates(8, 0)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(8, 1)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(9, 1)]).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(8, 0))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(8, 1))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(9, 1))).isEqualTo(MineType.ONE)
     }
 
     @Test
@@ -56,8 +56,8 @@ class BoardTest {
         val boardSize = BoardSize(LengthOfSide(10), LengthOfSide(10))
         val board = Board(boardSize, listOf(99))
 
-        assertThat(board.numberOfMineAround[Coordinates(9, 8)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(8, 8)]).isEqualTo(MineType.ONE)
-        assertThat(board.numberOfMineAround[Coordinates(8, 9)]).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(9, 8))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(8, 8))).isEqualTo(MineType.ONE)
+        assertThat(board.numberOfMineAround.getValue(Coordinates(8, 9))).isEqualTo(MineType.ONE)
     }
 }

@@ -2,18 +2,18 @@ package model
 
 class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
     private val _minePositions = mutableMapOf<Coordinates, MineType>()
-    val minePositions: Map<Coordinates, MineType> get() = _minePositions
+    val minePositions: BoardMap get() = BoardMap(_minePositions)
 
     private val _numberOfMineAround = mutableMapOf<Coordinates, MineType>()
-    val numberOfMineAround: Map<Coordinates, MineType> get() = _numberOfMineAround
+    val numberOfMineAround: BoardMap get() = BoardMap(_numberOfMineAround)
 
-    private val _value = mutableMapOf<Coordinates, MineType>()
-    val value: Map<Coordinates, MineType> get() = _value
+    private val _map = mutableMapOf<Coordinates, MineType>()
+    val map: BoardMap get() = BoardMap(_map)
 
     init {
         setupBoardMap(mineIndexes)
         setupMineCountMap()
-        setupValue()
+        setupMap()
     }
 
     fun updateShowedArea(coordinates: Coordinates) {
@@ -39,24 +39,19 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
         }
     }
 
-    private fun setupValue() {
+    private fun setupMap() {
         for (row in 0..boardSize.row) {
             for (col in 0..boardSize.col) {
-                _value[Coordinates(row, col)] = MineType.NONE
+                _map[Coordinates(row, col)] = MineType.NONE
             }
         }
     }
 
-    private fun getValueInCoordinates(coordinates: Coordinates): MineType =
-        numberOfMineAround.filterKeys { it == coordinates }.values.let {
-            if (it.isEmpty()) MineType.ZERO else it.first()
-        }
-
     private fun makeShowedArea(coordinates: Coordinates) {
-        _value[coordinates] = getValueInCoordinates(coordinates)
-        if (_value[coordinates] != MineType.ZERO) return
+        _map[coordinates] = numberOfMineAround.getValue(coordinates)
+        if (_map[coordinates] != MineType.ZERO) return
         coordinates.getAround(boardSize.row, boardSize.col).forEach {
-            if (_value[it] == getValueInCoordinates(it)) return@forEach
+            if (_map[it] == numberOfMineAround.getValue(coordinates)) return@forEach
             makeShowedArea(it)
         }
     }

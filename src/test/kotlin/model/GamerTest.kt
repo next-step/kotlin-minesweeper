@@ -14,7 +14,7 @@ class GamerTest {
         val gamer = Gamer(board)
         gamer.clickCoordinate(Coordinates(0, 0))
 
-        assertThat(gamer.board.value.filterNot { it.value == MineType.NONE }.count()).isEqualTo(8)
+        assertThat(gamer.board.map.getCount(MineType.NONE)).isEqualTo(92)
     }
 
     @Test
@@ -26,6 +26,6 @@ class GamerTest {
         val gamer = Gamer(board)
         gamer.clickCoordinate(Coordinates(0, 1))
 
-        assertThat(gamer.board.value.filter { it.value == MineType.ONE }.count()).isEqualTo(1)
+        assertThat(gamer.board.map.getCount(MineType.ONE)).isEqualTo(1)
     }
 }
