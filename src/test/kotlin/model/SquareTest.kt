@@ -8,8 +8,8 @@ class SquareTest() {
     @Test
     @DisplayName("지뢰 게임을 위한 플레이트를 생성한다")
     fun `make`() {
-        val width = Line(5)
-        val height = Line(5)
+        val width = Number(5)
+        val height = Number(5)
         val square = Square(width, height)
         val minePlate = square.make()
         assertThat(minePlate.value.size).isEqualTo(height.value)

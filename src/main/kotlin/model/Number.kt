@@ -1,6 +1,6 @@
 package model
 
-class Line(val value: Int) {
+class Number(val value: Int) {
     constructor(value: String) : this(value.toInt()) {
         if (!NUMBER_REGEX.matches(value)) {
             throw IllegalArgumentException("not acceptd not number value")

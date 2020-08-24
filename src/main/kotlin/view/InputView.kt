@@ -1,41 +1,31 @@
 package view
 
-import model.Line
-import model.Mine
+import model.MineCount
+import model.Number
 import kotlin.system.exitProcess
 
 class InputView {
-    fun inputWidth(): Line {
+    fun inputWidth(): Number {
         println("넓이를 입력하세요.")
-        val input = readLine()
-        println()
-        checkNotNull(input)
-        try {
-            return Line(input)
-        } catch (ex: IllegalArgumentException) {
-            exitProcess(0)
-        }
+        return inputNumber()
     }
 
-    fun inputHeight(): Line {
+    fun inputHeight(): Number {
         println("높이를 입력하세요.")
-        val input = readLine()
-        println()
-        checkNotNull(input)
-        try {
-            return Line(input)
-        } catch (ex: IllegalArgumentException) {
-            exitProcess(0)
-        }
+        return inputNumber()
     }
 
-    fun inputMine(): Mine {
+    fun inputMine(): MineCount {
         println("지뢰는 몇 개인가요?")
+        return MineCount(inputNumber())
+    }
+
+    private fun inputNumber(): Number {
         val input = readLine()
         println()
         checkNotNull(input)
         try {
-            return Mine(input)
+            return Number(input)
         } catch (ex: IllegalArgumentException) {
             exitProcess(0)
         }

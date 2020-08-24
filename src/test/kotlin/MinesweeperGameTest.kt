@@ -1,5 +1,5 @@
-import model.Line
-import model.Mine
+import model.MineCount
+import model.Number
 import model.Square
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -9,9 +9,9 @@ class MinesweeperGameTest() {
     @Test
     @DisplayName("지뢰수만큼 지뢰가 생성된다")
     fun start() {
-        val square = Square(Line(5), Line(5))
+        val square = Square(Number(5), Number(5))
         val minesweeperGame = MinesweeperGame()
-        val result = minesweeperGame.start(square.make(), Mine(10))
-        assertThat(result.value.flatten().count { it == "*" }).isEqualTo(10)
+        val result = minesweeperGame.start(square.make(), MineCount(10))
+        assertThat(result.value.flatten().count { !it.isBlock() }).isEqualTo(10)
     }
 }

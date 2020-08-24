@@ -1,21 +1,23 @@
-import model.Mine
+import model.MineCount
 import model.MinePlate
+import model.Position
 
 class MinesweeperGame() {
-    fun start(minePlate: MinePlate, mine: Mine): MinePlate {
-        repeat(mine.value) {
-            var colRandom: Int
-            var rowRandom: Int
-            do {
-                colRandom = (minePlate.value.indices).random()
-                rowRandom = (minePlate.value[0].indices).random()
-            } while (minePlate.value[rowRandom][colRandom] == MINE_SYMBOL)
-            minePlate.value[rowRandom][colRandom] = MINE_SYMBOL
-        }
+    fun start(minePlate: MinePlate, mineCount: MineCount): MinePlate {
+        val mineList = positionList(minePlate).shuffled().take(mineCount.value.value)
+
+        mineList.forEach { minePlate.value[it.y][it.x].changeToMine() }
+
         return minePlate
     }
 
-    companion object {
-        const val MINE_SYMBOL = "*"
+    private fun positionList(minePlate: MinePlate): List<Position> {
+        val positionList: MutableList<Position> = mutableListOf()
+        for (i in minePlate.value.indices) {
+            for (j in minePlate.value[i].indices) {
+                positionList.add(Position(j, i))
+            }
+        }
+        return positionList.toList()
     }
 }

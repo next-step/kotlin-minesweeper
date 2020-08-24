@@ -1,8 +1,13 @@
 package model
 
-class Square(private val width: Line, private val height: Line) {
+class Square(private val width: Number, private val height: Number) {
     fun make(): MinePlate {
-        val rows = Array(height.value) { Array(width.value) { "C" } }
+        val rows = arrayListOf<ArrayList<Block>>()
+        repeat(height.value) {
+            val cols = arrayListOf<Block>()
+            repeat(width.value) { cols.add(Block()) }
+            rows.add(cols)
+        }
         return MinePlate(rows)
     }
 }
