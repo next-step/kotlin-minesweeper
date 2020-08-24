@@ -11,7 +11,7 @@ class BoardGenerator private constructor(
         initBoard()
     }
 
-    fun execute(): Board {
+    fun generate(): Board {
         boardMap.clear()
         initBoard()
         return Board(boardMap.toMap(), mineCount)
@@ -43,7 +43,7 @@ class BoardGenerator private constructor(
     companion object {
         private const val MINE_MIN = 1
 
-        private fun isValidMineCount(width: Int, height: Int, mineCount: Int) = mineCount in MINE_MIN..(width * height)
+        fun isValidMineCount(width: Int, height: Int, mineCount: Int) = mineCount in MINE_MIN..(width * height)
 
         fun getOrNull(width: Int, height: Int, mineCount: Int): BoardGenerator? {
             if (isValidMineCount(width, height, mineCount)) {
