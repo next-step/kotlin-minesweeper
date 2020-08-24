@@ -16,7 +16,7 @@ class Board(
             return Result.ALREADY_OPEN
         }
 
-        remainBlock -= selectedBlock.open()
+        remainBlock -= if (selectedBlock.open()) 1 else 0
         if (selectedBlock.mineCount == 0) {
             openSurroundings(location)
         }

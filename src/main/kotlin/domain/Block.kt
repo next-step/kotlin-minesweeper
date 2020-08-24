@@ -9,11 +9,11 @@ abstract class Block {
 
     abstract fun increaseMineCount()
 
-    fun open(): Int {
+    fun open(): Boolean {
         if (!isOpened) {
             isOpened = true
-            return 1
+            return true
         }
-        return 0
+        return false
     }
 }
