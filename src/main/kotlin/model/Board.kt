@@ -28,8 +28,8 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
 
     private fun setupMineType(mineCoordinate: Coordinates, mineMap: MutableMap<Coordinates, MineType>) {
         mineCoordinate.getAround(boardSize.row, boardSize.col).map {
-            val mineType = mineMap[it]?.ordinal ?: MineType.ZERO.ordinal
-            mineMap[it] = MineType.findByOrdinal(mineType + 1)
+            val mineType = mineMap[it] ?: MineType.ZERO
+            mineMap[it] = MineType.findByNextType(mineType)
         }
     }
 
