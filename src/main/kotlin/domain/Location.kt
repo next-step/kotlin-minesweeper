@@ -18,16 +18,16 @@ data class Location(val x: Int, val y: Int) : Comparable<Location> {
         private const val DELIMITER = ","
         private const val DIMENSION = 2
 
-        fun String?.toLocationOrNull(): Location? {
-            val parsedLocation = parseLocation() ?: return null
+        fun String?.toLocationOrNull(): Location? = this?.run {
+            val parsedLocation = parseLocation()
             if (parsedLocation.size == DIMENSION) {
-                return Location(parsedLocation[0].toInt(), parsedLocation[1].toInt())
+                Location(parsedLocation[0], parsedLocation[1])
             }
-            return null
+            null
         }
 
-        private fun String?.parseLocation() = this?.split(DELIMITER)
-            ?.map { it.trim() }
-            ?.filter { it.toIntOrNull() != null }
+        private fun String.parseLocation() = this.split(DELIMITER)
+            .map { it.trim() }
+            .mapNotNull { it.toIntOrNull() }
     }
 }
