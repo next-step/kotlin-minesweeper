@@ -40,7 +40,7 @@ object ResultView {
 
     private fun findSymbol(block: Block) = when {
         !block.isOpened -> SYMBOL_HIDDEN
-        block.isMine() -> SYMBOL_MINE
+        block.isMine -> SYMBOL_MINE
         else -> block.mineCount.toString()
     }
 }

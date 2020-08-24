@@ -1,18 +1,13 @@
 package domain
 
-data class Block(
-    val type: BlockType = BlockType.GENERAL
-) {
+abstract class Block {
     var isOpened: Boolean = false
         private set
-    var mineCount = type.defaultValue
-        private set
 
-    fun increaseMineCount() {
-        if (type != BlockType.MINE) {
-            mineCount++
-        }
-    }
+    abstract val isMine: Boolean
+    abstract var mineCount: Int
+
+    abstract fun increaseMineCount()
 
     fun open(): Int {
         if (!isOpened) {
@@ -21,6 +16,4 @@ data class Block(
         }
         return 0
     }
-
-    fun isMine() = type == BlockType.MINE
 }

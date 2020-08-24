@@ -31,10 +31,10 @@ class BoardGenerator private constructor(
     }
 
     private fun createMines(locations: List<Location>) =
-        locations.take(mineCount).map { Pair(it, Block(BlockType.MINE)) }
+        locations.take(mineCount).map { Pair(it, Mine()) }
 
     private fun createGenerals(locations: List<Location>) =
-        locations.takeLast(width * height - mineCount).map { Pair(it, Block()) }
+        locations.takeLast(width * height - mineCount).map { Pair(it, NormalBlock()) }
 
     private fun createLocations() = (0 until width).flatMap { x ->
         (0 until height).map { y -> Location(x, y) }

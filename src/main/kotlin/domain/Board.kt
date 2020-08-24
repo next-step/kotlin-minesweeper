@@ -22,7 +22,7 @@ class Board(
         }
 
         return when {
-            selectedBlock.isMine() -> Result.LOSE
+            selectedBlock.isMine -> Result.LOSE
             isWin() -> Result.WIN
             else -> Result.PROGRESS
         }
