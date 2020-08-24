@@ -21,9 +21,9 @@ data class Location(val x: Int, val y: Int) : Comparable<Location> {
         fun String?.toLocationOrNull(): Location? = this?.run {
             val parsedLocation = parseLocation()
             if (parsedLocation.size == DIMENSION) {
-                Location(parsedLocation[0], parsedLocation[1])
+                return Location(parsedLocation[0], parsedLocation[1])
             }
-            null
+            return null
         }
 
         private fun String.parseLocation() = this.split(DELIMITER)
