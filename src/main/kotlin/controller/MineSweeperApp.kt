@@ -36,21 +36,11 @@ private fun registerGamer(): Gamer {
     return Gamer(board)
 }
 
-private fun requestNumberOfMineUntilNonNull(boardSize: BoardSize): NumberOfMine {
-    var result = requestMineCount(boardSize)
-    while (result == null) {
-        result = requestMineCount(boardSize)
-    }
-    return result
-}
+private fun requestNumberOfMineUntilNonNull(boardSize: BoardSize): NumberOfMine =
+    requestMineCount(boardSize) ?: requestNumberOfMineUntilNonNull(boardSize)
 
-private fun requestLengthOfSideUntilNonNull(inputMode: InputView.Mode): LengthOfSide {
-    var result = requestLengthOfSide(inputMode)
-    while (result == null) {
-        result = requestLengthOfSide(inputMode)
-    }
-    return result
-}
+private fun requestLengthOfSideUntilNonNull(inputMode: InputView.Mode): LengthOfSide =
+    requestLengthOfSide(inputMode) ?: requestLengthOfSideUntilNonNull(inputMode)
 
 private fun requestMineCount(boardSize: BoardSize): NumberOfMine? =
     runCatching {
