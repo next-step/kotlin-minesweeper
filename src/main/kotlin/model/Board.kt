@@ -34,9 +34,7 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
     }
 
     fun updateShowedArea(coordinates: Coordinates) {
-        mutableMapOf<Coordinates, MineType>().also { buildShowedArea(coordinates, it) }
-            .toMap()
-            .forEach { _value[it.key] = it.value }
+        makeShowedArea(coordinates)
     }
 
     private fun getInitBoard(defaultMineType: MineType): Map<Coordinates, MineType> =
@@ -51,12 +49,12 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
     private fun getValueInCoordinates(coordinates: Coordinates): MineType =
         numberOfMineAround.filterKeys { it == coordinates }.values.first()
 
-    private fun buildShowedArea(coordinates: Coordinates, showedArea: MutableMap<Coordinates, MineType>) {
-        showedArea[coordinates] = getValueInCoordinates(coordinates)
-        if (getValueInCoordinates(coordinates) != MineType.ZERO) return
-        coordinates.getAround(boardSize.row, boardSize.col).map {
-            if (showedArea.contains(it)) return@map
-            buildShowedArea(it, showedArea)
+    private fun makeShowedArea(coordinates: Coordinates) {
+        _value[coordinates] = getValueInCoordinates(coordinates)
+        if (_value[coordinates] != MineType.ZERO) return
+        coordinates.getAround(boardSize.row, boardSize.col).forEach {
+            if (_value[it] == getValueInCoordinates(it)) return@forEach
+            makeShowedArea(it)
         }
     }
 
