@@ -20,10 +20,14 @@ object InputView {
 
     fun inputCoordinate(): Coordinate {
         print("open:")
-        val inputValue = readLine() ?: throw IllegalArgumentException("null값을 입력하지 마세요")
-        val list = inputValue.split(",").map { changeInt(it.trim()) }
-        checkListSize(list)
-        return Coordinate(list[0], list[1])
+        return try {
+            val inputValue = readLine() ?: throw IllegalArgumentException()
+            val list = inputValue.split(",").map { changeInt(it.trim()) }
+            checkListSize(list)
+            Coordinate(list[0], list[1])
+        } catch (e: Exception) {
+            inputCoordinate()
+        }
     }
 
     private fun changeInt(inputValue: String?): Int {

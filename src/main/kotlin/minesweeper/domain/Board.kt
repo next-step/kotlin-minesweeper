@@ -8,42 +8,43 @@ class Board(width: Int, length: Int, mines: Int = 0) {
 
     fun findPoint(x: Int, y: Int): Point = points.findPoint(x, y)
 
-    fun forEachPoints(f: (point: Point) -> Unit) {
-        points.forEach { f(it) }
+    fun getPoints(): List<Point> {
+        return points.getAllPoints()
     }
 
-    fun openPoint(coordinate: Coordinate) {
+    fun open(coordinate: Coordinate) {
         val point = findPoint(coordinate.x, coordinate.y)
         point.openPoint()
-        endGame { point.isMine() || isPlayerWin() }
+        endGame(point.isMine() || isPlayerWin())
         if (point.mineCount == OPEN_AROUND_NUMBER) {
-            findAroundCoordinate(point)
+            getAroundPoint(point).forEach { againOpen(it) }
         }
     }
 
-    private fun findAroundCoordinate(point: Point) {
-        Direction.values().forEach {
+    private fun getAroundPoint(point: Point): List<Point> {
+        return Direction.values().filter { isRealPoint(point.coordinate move it) }.map {
             val coordinate = point.coordinate move it
-            findAroundPoint(coordinate)
+            findPoint(coordinate.x, coordinate.y)
         }
     }
 
-    private fun findAroundPoint(coordinate: Coordinate) {
-        try {
-            val point = findPoint(coordinate.x, coordinate.y)
-            returnOpenPoint(point, coordinate)
+    private fun isRealPoint(coordinate: Coordinate): Boolean {
+        return try {
+            findPoint(coordinate.x, coordinate.y)
+            true
         } catch (e: Exception) {
+            false
         }
     }
 
-    private fun returnOpenPoint(point: Point, coordinate: Coordinate) {
+    private fun againOpen(point: Point) {
         if (!point.isOpen) {
-            openPoint(coordinate)
+            open(point.coordinate)
         }
     }
 
-    private fun endGame(f: () -> Boolean) {
-        if (f()) {
+    private fun endGame(isGameOver: Boolean) {
+        if (isGameOver) {
             isPlaying = false
         }
     }

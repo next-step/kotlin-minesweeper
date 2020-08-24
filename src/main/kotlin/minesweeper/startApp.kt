@@ -25,7 +25,7 @@ fun startGame() {
 fun playingGame(board: Board, width: Int): Boolean {
     while (board.isPlaying) {
         val coordinate = InputView.inputCoordinate()
-        board.openPoint(coordinate)
+        board.open(coordinate)
         ResultView.resultBoard(board, width - 1)
     }
     return board.isPlayerWin()
