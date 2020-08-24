@@ -13,6 +13,6 @@ class SquareTest() {
         val square = Square(width, height)
         val minePlate = square.make()
         assertThat(minePlate.value.size).isEqualTo(height.value)
-        assertThat(minePlate.value[0].size).isEqualTo(width.value)
+        assertThat(minePlate.value[0].column.blocks.size).isEqualTo(width.value)
     }
 }

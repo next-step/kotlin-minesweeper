@@ -12,6 +12,7 @@ class MinesweeperGameTest() {
         val square = Square(Number(5), Number(5))
         val minesweeperGame = MinesweeperGame()
         val result = minesweeperGame.start(square.make(), MineCount(10))
-        assertThat(result.value.flatten().count { !it.isBlock() }).isEqualTo(10)
+
+        assertThat(result.value.sumBy { it.mineCount() }).isEqualTo(10)
     }
 }

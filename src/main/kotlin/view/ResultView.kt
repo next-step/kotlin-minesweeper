@@ -7,7 +7,7 @@ object ResultView {
         println("지뢰찾기 게임 시작")
         minePlate.value.forEach { row ->
             run {
-                row.forEach { col -> run { print(col) } }
+                row.column.blocks.forEach { col -> run { print(col) } }
                 println()
             }
         }

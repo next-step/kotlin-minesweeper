@@ -1,3 +1,3 @@
 package model
 
-class MinePlate(val value: ArrayList<ArrayList<Block>>)
+class MinePlate(val value: ArrayList<MineRow>)

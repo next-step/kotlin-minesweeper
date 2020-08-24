@@ -2,11 +2,10 @@ package model
 
 class Square(private val width: Number, private val height: Number) {
     fun make(): MinePlate {
-        val rows = arrayListOf<ArrayList<Block>>()
+        val rows = arrayListOf<MineRow>()
         repeat(height.value) {
-            val cols = arrayListOf<Block>()
-            repeat(width.value) { cols.add(Block()) }
-            rows.add(cols)
+            val cols = MineColumn(width)
+            rows.add(MineRow(cols))
         }
         return MinePlate(rows)
     }
