@@ -16,8 +16,9 @@ object ResultView {
 
     fun printBoard(gamer: Gamer) {
         gamer.getCurrentGameBoard()
-            .map { mineType -> mineType.map { convertMineTypeToSymbol(it) } }
-            .map { println(it.joinToString()) }
+            .forEach { mineType ->
+                println(mineType.map { convertMineTypeToSymbol(it) }.joinToString())
+            }
     }
 
     fun printResult(gamer: Gamer) {
