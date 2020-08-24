@@ -1,53 +1,56 @@
 package model
 
 class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
-    private val minePositions: Map<Coordinates, MineType>
-    private val numberOfMineAround: Map<Coordinates, MineType>
-    private val _value = getInitBoard(MineType.NONE).toMutableMap()
+    private val _minePositions = mutableMapOf<Coordinates, MineType>()
+    val minePositions: Map<Coordinates, MineType> get() = _minePositions
+
+    private val _numberOfMineAround = mutableMapOf<Coordinates, MineType>()
+    val numberOfMineAround: Map<Coordinates, MineType> get() = _numberOfMineAround
+
+    private val _value = mutableMapOf<Coordinates, MineType>()
     val value: Map<Coordinates, MineType> get() = _value
 
     init {
-        minePositions = setupBoardMap(mineIndexes)
-        numberOfMineAround = getMineCountMap()
-    }
-
-    fun getMineCoordinates(): Set<Coordinates> = minePositions.filterValues { it == MineType.MINE }.keys
-
-    fun getMineCountMap(): Map<Coordinates, MineType> =
-        getInitBoard(MineType.ZERO).toMutableMap().also { mineMap ->
-            val mineCoordinates = getMineCoordinates()
-            setupMineAroundCount(mineCoordinates, mineMap)
-            setupMine(mineCoordinates, mineMap)
-        }.toMap()
-
-    private fun setupMine(mineCoordinates: Set<Coordinates>, mineMap: MutableMap<Coordinates, MineType>) =
-        mineCoordinates.forEach { mineMap[it] = MineType.MINE }
-
-    private fun setupMineAroundCount(mineCoordinates: Set<Coordinates>, mineMap: MutableMap<Coordinates, MineType>) =
-        mineCoordinates.forEach { setupMineType(it, mineMap) }
-
-    private fun setupMineType(mineCoordinate: Coordinates, mineMap: MutableMap<Coordinates, MineType>) {
-        mineCoordinate.getAround(boardSize.row, boardSize.col).map {
-            val mineType = mineMap[it] ?: MineType.ZERO
-            mineMap[it] = MineType.findByNextType(mineType)
-        }
+        setupBoardMap(mineIndexes)
+        setupMineCountMap()
+        setupValue()
     }
 
     fun updateShowedArea(coordinates: Coordinates) {
         makeShowedArea(coordinates)
     }
 
-    private fun getInitBoard(defaultMineType: MineType): Map<Coordinates, MineType> =
-        mutableMapOf<Coordinates, MineType>().also {
-            for (row in 0..boardSize.row) {
-                for (col in 0..boardSize.col) {
-                    it[Coordinates(row, col)] = defaultMineType
-                }
+    private fun setupMineCountMap() {
+        setupMineAroundCount()
+        setupMine()
+    }
+
+    private fun setupMine() =
+        _minePositions.forEach { _numberOfMineAround[it.key] = MineType.MINE }
+
+    private fun setupMineAroundCount() =
+        _minePositions.forEach { setupMineType(it.key) }
+
+    private fun setupMineType(mineCoordinate: Coordinates) {
+        mineCoordinate.getAround(boardSize.row, boardSize.col).map {
+            _numberOfMineAround.computeIfAbsent(it) { MineType.ZERO }
+            val mineType = _numberOfMineAround[it] ?: MineType.ZERO
+            _numberOfMineAround[it] = MineType.findByNextType(mineType)
+        }
+    }
+
+    private fun setupValue() {
+        for (row in 0..boardSize.row) {
+            for (col in 0..boardSize.col) {
+                _value[Coordinates(row, col)] = MineType.NONE
             }
-        }.toMap()
+        }
+    }
 
     private fun getValueInCoordinates(coordinates: Coordinates): MineType =
-        numberOfMineAround.filterKeys { it == coordinates }.values.first()
+        numberOfMineAround.filterKeys { it == coordinates }.values.let {
+            if (it.isEmpty()) MineType.ZERO else it.first()
+        }
 
     private fun makeShowedArea(coordinates: Coordinates) {
         _value[coordinates] = getValueInCoordinates(coordinates)
@@ -58,10 +61,9 @@ class Board(private val boardSize: BoardSize, mineIndexes: List<Int>) {
         }
     }
 
-    private fun setupBoardMap(mineIndexes: List<Int>): Map<Coordinates, MineType> =
-        getInitBoard(MineType.NONE).toMutableMap().also { board ->
-            mineIndexes
-                .map { Pair(it.div(boardSize.row + 1), it.rem(boardSize.row + 1)) }
-                .map { board[Coordinates(it.first, it.second)] = MineType.MINE }
-        }.toMap()
+    private fun setupBoardMap(mineIndexes: List<Int>) {
+        mineIndexes
+            .map { Pair(it.div(boardSize.row + 1), it.rem(boardSize.row + 1)) }
+            .forEach { _minePositions[Coordinates(it.first, it.second)] = MineType.MINE }
+    }
 }
