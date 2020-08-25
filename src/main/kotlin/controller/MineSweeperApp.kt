@@ -27,34 +27,32 @@ private fun startGameUntilTheEnd(gamer: Gamer) {
 }
 
 private fun registerGamer(): Gamer {
-    val (row, col) = requestLengthOfSide(InputView.Mode.ROW) to requestLengthOfSide(InputView.Mode.COL)
+    val row = requestLengthOfSideUntilNonNull(InputView.Mode.ROW)
+    val col = requestLengthOfSideUntilNonNull(InputView.Mode.COL)
     val boardSize = BoardSize(row, col)
-    val mineCount = requestMineCount(boardSize)
+    val mineCount = requestNumberOfMineUntilNonNull(boardSize)
 
     val board = Board(boardSize, mineCount.getMineIndexes())
     return Gamer(board)
 }
 
-private fun requestMineCount(boardSize: BoardSize): NumberOfMine =
+private fun requestNumberOfMineUntilNonNull(boardSize: BoardSize): NumberOfMine =
+    requestMineCount(boardSize) ?: requestNumberOfMineUntilNonNull(boardSize)
+
+private fun requestLengthOfSideUntilNonNull(inputMode: InputView.Mode): LengthOfSide =
+    requestLengthOfSide(inputMode) ?: requestLengthOfSideUntilNonNull(inputMode)
+
+private fun requestMineCount(boardSize: BoardSize): NumberOfMine? =
     runCatching {
         NumberOfMine(
             number = InputView.requestInputByMode(InputView.Mode.MINE_COUNT),
             boardSize = boardSize
         )
-    }.also {
-        showErrorIfFailure(it)
-        return@also
-    }.getOrNull()!!
-
-private fun requestLengthOfSide(inputMode: InputView.Mode): LengthOfSide =
-    runCatching { LengthOfSide(InputView.requestInputByMode(inputMode)) }
-        .also {
-            showErrorIfFailure(it)
-            return@also
-        }.getOrNull()!!
-
-private fun <T> showErrorIfFailure(result: Result<T>) {
-    if (result.isFailure) {
-        ResultView.printError(result.exceptionOrNull())
     }
-}
+        .onFailure { ResultView.printError(it) }
+        .getOrNull()
+
+private fun requestLengthOfSide(inputMode: InputView.Mode): LengthOfSide? =
+    runCatching { LengthOfSide(InputView.requestInputByMode(inputMode)) }
+        .onFailure { ResultView.printError(it) }
+        .getOrNull()

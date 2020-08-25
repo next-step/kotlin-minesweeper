@@ -1,6 +1,7 @@
 package view
 
 import model.Gamer
+import model.MineType
 import model.Winner
 
 object ResultView {
@@ -14,10 +15,29 @@ object ResultView {
     }
 
     fun printBoard(gamer: Gamer) {
-        gamer.getCurrentGameBoard().map { println(it.joinToString()) }
+        gamer.getCurrentGameBoard()
+            .forEach { mineType ->
+                println(mineType.map { convertMineTypeToSymbol(it) }.joinToString())
+            }
     }
 
     fun printResult(gamer: Gamer) {
         if (Winner.isLose(gamer)) println("Lose Game.") else println("Win Game.")
     }
+
+    private fun convertMineTypeToSymbol(mineType: MineType): Char =
+        when (mineType) {
+            MineType.NONE -> 'C'
+            MineType.ZERO -> '0'
+            MineType.ONE -> '1'
+            MineType.TWO -> '2'
+            MineType.THREE -> '3'
+            MineType.FOUR -> '4'
+            MineType.FIVE -> '5'
+            MineType.SIX -> '6'
+            MineType.SEVEN -> '7'
+            MineType.EIGHT -> '8'
+            MineType.NINE -> '9'
+            MineType.MINE -> '*'
+        }
 }
