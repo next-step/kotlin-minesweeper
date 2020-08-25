@@ -24,16 +24,12 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
     }
 
     private fun checkMine(coordinate: Coordinate): Boolean {
-        return try {
-            findPoint(coordinate.x, coordinate.y).isMine()
-                ?: throw IllegalArgumentException("해당 point는 open되어 있지 않습니다.")
-        } catch (e: Exception) {
-            false
-        }
+        val point = findPoint(coordinate.x, coordinate.y) ?: return false
+        return point.isMine()!!
     }
 
-    fun findPoint(x: Int, y: Int): Point =
-        allPoints.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
+    fun findPoint(x: Int, y: Int): Point? =
+        allPoints.find { it.isItCoordinate(Coordinate(x, y)) }
 
     fun getClosePointsSize(): Int {
         return allPoints.count { !it.isOpen }

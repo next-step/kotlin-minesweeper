@@ -26,9 +26,9 @@ fun startGame() {
 fun playingGame(board: Board, width: Int): Boolean {
     var coordinate = Coordinate(0, 0)
     while (board.isPlaying) {
-        coordinate = InputView.inputCoordinate()
+        coordinate = InputView.inputCoordinate(board)
         board.open(coordinate)
         ResultView.resultBoard(board, width - 1)
     }
-    return board.isPlayerWin(board.findPoint(coordinate.x, coordinate.y))
+    return board.isPlayerWin(board.findPoint(coordinate.x, coordinate.y)!!)
 }

@@ -1,5 +1,6 @@
 package minesweeper.view
 
+import minesweeper.domain.Board
 import minesweeper.domain.Coordinate
 
 object InputView {
@@ -18,11 +19,12 @@ object InputView {
         return changeInt(readLine()) ?: inputMines()
     }
 
-    fun inputCoordinate(): Coordinate {
+    fun inputCoordinate(board: Board): Coordinate {
         print("open:")
-        val inputValue = readLine() ?: return inputCoordinate()
-        val list = inputValue.split(",").map { changeInt(it.trim()) ?: return inputCoordinate() }
-        checkListSize(list) ?: return inputCoordinate()
+        val inputValue = readLine() ?: return inputCoordinate(board)
+        val list = inputValue.split(",").map { changeInt(it.trim()) ?: return inputCoordinate(board) }
+        checkListSize(list) ?: return inputCoordinate(board)
+        board.findPoint(list[0], list[1]) ?: return inputCoordinate(board)
         return Coordinate(list[0], list[1])
     }
 
