@@ -11,7 +11,7 @@ class BoardGenerator private constructor(
         initBoard()
     }
 
-    fun execute(): Board {
+    fun generate(): Board {
         boardMap.clear()
         initBoard()
         return Board(boardMap.toMap(), mineCount)
@@ -31,10 +31,10 @@ class BoardGenerator private constructor(
     }
 
     private fun createMines(locations: List<Location>) =
-        locations.take(mineCount).map { Pair(it, Block(BlockType.MINE)) }
+        locations.take(mineCount).map { Pair(it, Mine()) }
 
     private fun createGenerals(locations: List<Location>) =
-        locations.takeLast(width * height - mineCount).map { Pair(it, Block()) }
+        locations.takeLast(width * height - mineCount).map { Pair(it, NormalBlock()) }
 
     private fun createLocations() = (0 until width).flatMap { x ->
         (0 until height).map { y -> Location(x, y) }
@@ -43,7 +43,7 @@ class BoardGenerator private constructor(
     companion object {
         private const val MINE_MIN = 1
 
-        private fun isValidMineCount(width: Int, height: Int, mineCount: Int) = mineCount in MINE_MIN..(width * height)
+        fun isValidMineCount(width: Int, height: Int, mineCount: Int) = mineCount in MINE_MIN..(width * height)
 
         fun getOrNull(width: Int, height: Int, mineCount: Int): BoardGenerator? {
             if (isValidMineCount(width, height, mineCount)) {
