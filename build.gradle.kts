@@ -32,6 +32,6 @@ tasks {
     }
     ktlint {
         verbose.set(true)
-        disabledRules.addAll("import-ordering")
+        disabledRules.addAll("import-ordering", "no-wildcard-imports")
     }
 }
