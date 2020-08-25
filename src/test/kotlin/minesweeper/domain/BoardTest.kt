@@ -31,4 +31,25 @@ class BoardTest {
 
         assertThat(board.findPoint(1, 1).isOpen).isTrue()
     }
+
+    @Test
+    fun is_player_lose() {
+        val board = Board(10, 10)
+        val point = Mine(Coordinate(1, 1))
+
+        val result = board.isPlayerWin(point)
+
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun is_player_win() {
+        val board = Board(10, 10)
+        val point = NotMine(Coordinate(1, 1))
+        board.open(point.coordinate)
+
+        val result = board.isPlayerWin(point)
+
+        assertThat(result).isTrue()
+    }
 }

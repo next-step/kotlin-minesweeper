@@ -3,7 +3,7 @@ package minesweeper.domain
 abstract class Point(val coordinate: Coordinate) {
     var mineCount = 0
         private set
-    var isOpen = false
+    var isOpen = true
         private set
 
     fun isItCoordinate(coordinate: Coordinate): Boolean = this.coordinate == coordinate
@@ -14,9 +14,18 @@ abstract class Point(val coordinate: Coordinate) {
         this.mineCount = mineCount
     }
 
-    open fun isMine(): Boolean = false
+    open fun isMine(): Boolean? {
+        if (isOpen) {
+            return false
+        }
+        return null
+    }
 
     fun openPoint() {
         isOpen = true
+    }
+
+    fun closePoint() {
+        isOpen = false
     }
 }

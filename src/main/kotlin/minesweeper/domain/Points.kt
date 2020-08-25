@@ -5,6 +5,7 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
 
     init {
         allPoints.forEach { it.setMineCount(getAroundMines(it)) }
+        allPoints.forEach { it.closePoint() }
     }
 
     private fun makePoint(coordinates: Coordinates, mineCoordinates: List<Coordinate>): List<Point> {
@@ -25,6 +26,7 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
     private fun checkMine(coordinate: Coordinate): Boolean {
         return try {
             findPoint(coordinate.x, coordinate.y).isMine()
+                ?: throw IllegalArgumentException("해당 point는 open되어 있지 않습니다.")
         } catch (e: Exception) {
             false
         }
@@ -33,7 +35,7 @@ class Points(coordinates: Coordinates, mineCoordinates: List<Coordinate> = listO
     fun findPoint(x: Int, y: Int): Point =
         allPoints.find { it.isItCoordinate(Coordinate(x, y)) } ?: throw IllegalArgumentException("$x, $y 좌표는 없습니다.")
 
-    fun getNotOpenPoints(): List<Point> {
-        return allPoints.filterNot { it.isMine() || it.isOpen }
+    fun getClosePointsSize(): Int {
+        return allPoints.count { !it.isOpen }
     }
 }

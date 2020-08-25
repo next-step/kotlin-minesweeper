@@ -12,7 +12,9 @@ class PointsTest {
 
         val points = Points(coordinates, mineCoordinates)
 
-        assertThat(points.findPoint(0, 0).isMine()).isTrue()
+        val point = points.findPoint(0, 0)
+        point.openPoint()
+        assertThat(point.isMine()).isTrue()
     }
 
     @Test
@@ -58,13 +60,11 @@ class PointsTest {
         val coordinates = Coordinates(5, 5)
         val mineCoordinates = listOf(Coordinate(0, 1), Coordinate(2, 1), Coordinate(1, 3))
         val points = Points(coordinates, mineCoordinates)
-        val point1 = points.findPoint(0, 0)
-        val point2 = points.findPoint(1, 1)
-        point1.openPoint()
-        point2.openPoint()
+        points.findPoint(0, 0).openPoint()
+        points.findPoint(1, 1).openPoint()
 
-        val notOpenPoints = points.getNotOpenPoints()
+        val notOpenPoints = points.getClosePointsSize()
 
-        assertThat(notOpenPoints).hasSize(20)
+        assertThat(notOpenPoints).isEqualTo(23)
     }
 }

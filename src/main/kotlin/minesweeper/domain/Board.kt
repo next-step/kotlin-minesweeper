@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Board(width: Int, length: Int, mines: Int = 0) {
+class Board(width: Int, length: Int, private val mines: Int = 0) {
     private val coordinates = Coordinates(width, length)
     private val points = Points(coordinates, coordinates.makeMineCoordinates(mines))
     var isPlaying = true
@@ -15,7 +15,7 @@ class Board(width: Int, length: Int, mines: Int = 0) {
     fun open(coordinate: Coordinate) {
         val point = findPoint(coordinate.x, coordinate.y)
         point.openPoint()
-        endGame(point.isMine() || isPlayerWin())
+        endGame(point.isMine()!! || isPlayerWin(point))
         if (point.mineCount == OPEN_AROUND_NUMBER) {
             getAroundPoint(point).forEach { againOpen(it) }
         }
@@ -49,7 +49,12 @@ class Board(width: Int, length: Int, mines: Int = 0) {
         }
     }
 
-    fun isPlayerWin(): Boolean = points.getNotOpenPoints().isEmpty()
+    fun isPlayerWin(point: Point): Boolean {
+        if (point.isMine() ?: throw IllegalArgumentException("해당 point는 open되어 있지 않습니다.")) {
+            return false
+        }
+        return points.getClosePointsSize() == mines
+    }
 
     companion object {
         const val OPEN_AROUND_NUMBER = 0
