@@ -9,7 +9,7 @@ class Board(width: Int, length: Int, mines: Int = 0) {
     fun findPoint(x: Int, y: Int): Point = points.findPoint(x, y)
 
     fun getPoints(): List<Point> {
-        return points.getAllPoints()
+        return points.allPoints
     }
 
     fun open(coordinate: Coordinate) {
