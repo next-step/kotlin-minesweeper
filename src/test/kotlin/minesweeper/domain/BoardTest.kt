@@ -24,11 +24,11 @@ class BoardTest {
     }
 
     @Test
-    fun count_mines() {
-        val board = Board(10, 10, 10)
+    fun open_point() {
+        val board = Board(10, 10)
 
-        val mineCount = board.countMine()
+        board.open(Coordinate(1, 1))
 
-        assertThat(mineCount).isEqualTo(10)
+        assertThat(board.findPoint(1, 1).isOpen).isTrue()
     }
 }

@@ -4,7 +4,7 @@ import minesweeper.domain.Board
 import minesweeper.domain.Point
 
 object ResultView {
-    fun resultBoard(board: Board, lastX: Int) = board.forEachPoints { draw(it, lastX) }
+    fun resultBoard(board: Board, lastX: Int) = board.getPoints().forEach { draw(it, lastX) }
 
     private fun draw(point: Point, lastX: Int) {
         if (point.isLastX(lastX)) {
@@ -16,9 +16,24 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
+        if (point.isOpen) {
+            return drawOpen(point)
+        }
+        return "C"
+    }
+
+    private fun drawOpen(point: Point): String {
         if (point.isMine()) {
             return "*"
         }
         return point.mineCount.toString()
+    }
+
+    fun resultGame(isWin: Boolean) {
+        if (isWin) {
+            println("당신은 모든 지뢰를 피하셨습니다. 승리를 축하합니다!!")
+        } else {
+            println("당신은 지뢰를 오픈했습니다. 패배하셧습니다!!")
+        }
     }
 }
