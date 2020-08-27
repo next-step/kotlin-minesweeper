@@ -1,10 +1,8 @@
 package model.cell
 
-enum class MineType(private val value: Int) {
-    MINE(-1),
-    ZERO(0);
+const val MINE_STRING = "*"
 
-    override fun toString(): String {
-        return if (value < 0) "*" else "C"
-    }
+enum class MineType {
+    MINE,
+    NOT_MINE;
 }

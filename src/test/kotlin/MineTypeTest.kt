@@ -10,6 +10,6 @@ class MineTypeTest {
 
     @Test
     fun `NotMine 출력 테스트`() {
-        assertThat(MineType.ZERO.toString()).isEqualTo("C")
+        assertThat(MineType.NOT_MINE.toString()).isEqualTo("C")
     }
 }
