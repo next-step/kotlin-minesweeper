@@ -27,8 +27,9 @@ class Cells(cells: List<Cell>) {
             operand.map { operandY ->
                 val targetX = x + operandX
                 val targetY = y + operandY
-                if (!(targetX in 0 until maxX && targetY in 0 until maxY)) return
-                cells.firstOrNull() { it.match(position) && it.mineType == MineType.NOT_MINE }?.addCount() ?: return
+                if ((targetX in 0 until maxX && targetY in 0 until maxY))
+                    cells.firstOrNull() { it.match(Position(targetX, targetY)) && it.mineType == MineType.NOT_MINE }
+                        ?.addCount()
             }
         }
     }
