@@ -11,21 +11,22 @@ object InputView {
         return readLine()?.toIntOrNull() ?: 0
     }
 
-    private fun getValidatedAnswer(
+    private tailrec fun getValidatedAnswer(
         question: String,
         maxCount: Int? = null
-    ): Int =
-        try {
-            val answer = getQuestionAnswer(question)
-            require(answer > 0) { "입력값은 1보다 커야한다." }
-            maxCount?.let {
-                require(answer < it) { "입력값은 maxCount보다 작아야한다." }
-            }
+    ): Int {
+        val answer = getQuestionAnswer(question)
+        return if (validate(answer, maxCount)) {
             answer
-        } catch (e: Exception) {
-            println(TRY_AGAIN + " - ${e.localizedMessage}")
-            getValidatedAnswer(question)
+        } else {
+            println(TRY_AGAIN)
+            getValidatedAnswer(question, maxCount)
         }
+    }
+
+    private fun validate(answer: Int, maxCount: Int? = null): Boolean {
+        return answer > 0 && answer <= (maxCount ?: Int.MAX_VALUE)
+    }
 
     fun getHeight(): Int = getValidatedAnswer(INPUT_HEIGHT)
 

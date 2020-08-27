@@ -5,11 +5,21 @@ open class Cell(
 ) {
     open fun isMine() = false
 
-    override fun equals(other: Any?): Boolean {
-        return position == (other as? Cell)?.position
-    }
+    override fun equals(other: Any?) =
+        when (other) {
+            is Cell -> isPosition(other.position)
+            is Position -> isPosition(other)
+            else -> false
+        }
 
-    override fun toString() = "C"
+    fun getAroundPositions() = position.getAroundPositions()
+
+    fun open(aroundMineCount: Int): Cell =
+        if (isMine()) this else NumberCell(aroundMineCount, position)
+
+    fun isPosition(position: Position) = this.position == position
+
+    override fun toString() = "\uD83C\uDF2B"
 
     override fun hashCode(): Int {
         return position.hashCode()

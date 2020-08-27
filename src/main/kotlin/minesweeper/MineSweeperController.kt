@@ -21,7 +21,7 @@ class MineSweeperController(
     }
 
     private fun showResult() {
-        resultView.showResult(mineSweeperApp.getResult())
+        resultView.showResult(mineSweeperApp.getResult().toString())
     }
 }
 

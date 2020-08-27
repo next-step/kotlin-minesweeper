@@ -16,4 +16,12 @@ class PositionTest {
     fun checkTheOtherPosition() {
         assertThat(Position(1, 0)).isNotEqualTo(Position(1, 1))
     }
+
+    @DisplayName(value = "주변 position은 중복 되지 않은 8개의 위치다. ")
+    @Test
+    fun checkAroundPosition() {
+        val aroundPosition = Position(1, 0).getAroundPositions().distinct()
+        assertThat(aroundPosition.size)
+            .isEqualTo(8)
+    }
 }
