@@ -8,7 +8,7 @@ object MineSweeperGame {
         val board = blocks.mapIndexed { index, block ->
             val x = index / weight
             val y = index % weight
-            Position.getInstance(x, y) to block
+            Position(x, y) to block
         }.toMap()
 
         return MineBoard.getInstance(board)
