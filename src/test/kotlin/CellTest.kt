@@ -6,18 +6,15 @@ import org.junit.jupiter.api.Test
 
 class CellTest {
     private val mineCell = Cell(true, Position(1, 1))
-    private val notMineCell = Cell(false, Position(1, 1))
-    private val targetCell1 = Cell(true, Position(1, 1))
-    private val targetCell2 = Cell(false, Position(2, 1))
 
     @Test
     fun `Cell match 테스트`() {
-        assertThat(mineCell.match(targetCell1)).isEqualTo(true)
+        assertThat(mineCell.match(Cell(true, Position(1, 1)))).isTrue()
     }
 
     @Test
     fun `Cell match 테스트2`() {
-        assertThat(mineCell.match(targetCell2)).isEqualTo(false)
+        assertThat(mineCell.match(Cell(false, Position(2, 1)))).isFalse()
     }
 
     @Test
@@ -27,7 +24,7 @@ class CellTest {
 
     @Test
     fun `NotMine 출력 테스트`() {
-        assertThat(notMineCell.toString()).isEqualTo(notMineCell.aroundMineCount.toString())
+        assertThat(Cell(false, Position(1, 1)).toString()).isEqualTo("0")
     }
 
     @Test

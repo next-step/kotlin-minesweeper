@@ -22,21 +22,25 @@ class Map(val width: Int, val height: Int) {
     fun calculateMineAroundCount(maxX: Int, maxY: Int) {
         _cells.forEach {
             if (it.isMine) {
-                addCount(it.position, maxX, maxY)
+                getAroundPositions(it.position, maxX, maxY)
             }
         }
     }
 
-    private fun addCount(position: Position, maxX: Int, maxY: Int) {
+    private fun a() {
+
+    }
+
+    private fun getAroundPositions(position: Position, maxX: Int, maxY: Int): List<Position> {
+        //if (checkInvalidRange(targetPosition, maxX, maxY)) {
+        //    getNotMineCell(targetPosition)?.addCount()
+        //}
         val operand = listOf(-1, 0, 1)
-        operand.flatMap { operandX ->
+        return operand.flatMap { operandX ->
             operand.map { operandY ->
-                val targetPosition = Position(position.x + operandX, position.y + operandY)
-                if (checkInvalidRange(targetPosition, maxX, maxY)) {
-                    getNotMineCell(targetPosition)?.addCount()
-                }
+                Position(position.x + operandX, position.y + operandY)
             }
-        }
+        }.toList()
     }
 
     private fun checkInvalidRange(targetPosition: Position, maxX: Int, maxY: Int): Boolean {
@@ -55,6 +59,6 @@ class Map(val width: Int, val height: Int) {
 
     override fun toString(): String {
         return _cells.sortedWith(compareBy({ it.position.x }, { it.position.y }))
-            .groupBy { it.position.y }.values.joinToString("\n") { it.joinToString(" ") }
+                .groupBy { it.position.y }.values.joinToString("\n") { it.joinToString(" ") }
     }
 }
