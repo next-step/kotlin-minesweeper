@@ -8,6 +8,13 @@ fun main() {
     val map = Map(width, height).apply {
         createDefaultMap(width, height)
         createRandomMines(Input.inputMine(width * height))
+        calculateMineAroundCount()
     }
-    Output.drawMap(map)
+    while (true) {
+        if (!map.clickMap(Input.inputPosition(width, height))) {
+            Output.lose()
+            break
+        }
+        Output.drawMap(map)
+    }
 }

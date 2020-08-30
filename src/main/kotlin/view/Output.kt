@@ -7,4 +7,8 @@ object Output {
         println("지뢰찾기 게임 시작")
         println(map.toString())
     }
+
+    fun lose() {
+        println("you lose")
+    }
 }

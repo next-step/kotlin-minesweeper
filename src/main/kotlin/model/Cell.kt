@@ -1,8 +1,11 @@
 package model
 
 const val MINE_STRING = "*"
+const val NOT_MINE_STRING = "C"
 
 data class Cell(val isMine: Boolean, val position: Position) {
+    var isClick = false
+        private set
     var aroundMineCount: Int = 0
         private set
 
@@ -10,11 +13,19 @@ data class Cell(val isMine: Boolean, val position: Position) {
         aroundMineCount++
     }
 
-    fun match(cell: Cell): Boolean {
-        return cell == this
+    fun match(position: Position): Boolean {
+        return position == this.position
+    }
+
+    fun click() {
+        isClick = true
     }
 
     override fun toString(): String {
-        return if (isMine) MINE_STRING else aroundMineCount.toString()
+        return return when {
+            isClick && isMine -> MINE_STRING
+            isClick && !isMine -> aroundMineCount.toString()
+            else -> NOT_MINE_STRING
+        }
     }
 }

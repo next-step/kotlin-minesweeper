@@ -1,5 +1,6 @@
 package view
 
+import model.Position
 import kotlin.system.exitProcess
 
 object Input {
@@ -22,6 +23,15 @@ object Input {
         val mineCount = readLineToInt()
         if (0 >= mineCount || mineCount > maxCount) exitProcess(-1)
         return mineCount
+    }
+
+    fun inputPosition(width: Int, height: Int): Position {
+        println("좌료를 입력하세요 ex)2,1")
+        val values = readLine()?.split(",") ?: exitProcess(-1)
+        val value1 = values[0].toInt()
+        val value2 = values[1].toInt()
+        if (value1 !in 1..width || value2 !in 1..height) exitProcess(-1)
+        return Position(value1 - 1, value2 - 1)
     }
 
     private fun readLineToInt(): Int {

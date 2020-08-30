@@ -9,12 +9,12 @@ class CellTest {
 
     @Test
     fun `Cell match 테스트`() {
-        assertThat(mineCell.match(Cell(true, Position(1, 1)))).isTrue()
+        assertThat(mineCell.match(Position(1, 1))).isTrue()
     }
 
     @Test
     fun `Cell match 테스트2`() {
-        assertThat(mineCell.match(Cell(false, Position(2, 1)))).isFalse()
+        assertThat(mineCell.match(Position(2, 1))).isFalse()
     }
 
     @Test
