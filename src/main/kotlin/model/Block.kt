@@ -15,21 +15,16 @@ class Block(var status: MineStatus = MineStatus.block) {
 
         for (dy in startYPosition..endYPosition) {
             for (dx in startXPosition..endXPosition) {
-                if (excludeSelf(dx, x, dy, y)) continue
                 setMineCountValue(minePlate, dy, dx)
             }
         }
     }
 
-    private fun excludeSelf(dx: Int, x: Int, dy: Int, y: Int): Boolean {
-        if (dx == x && dy == y) {
-            return true
-        }
-        return false
-    }
-
     private fun setMineCountValue(minePlate: MinePlate, dy: Int, dx: Int) {
         try {
+            if(minePlate.value[dy].column.blocks[dx] == this) {
+                return
+            }
             if (minePlate.value[dy].column.blocks[dx].isMine()) {
                 mineCount++
             }
