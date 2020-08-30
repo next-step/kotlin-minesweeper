@@ -15,8 +15,8 @@ class MinesweeperGame() {
         val rowSize = minePlate.value.size
         val colSize = minePlate.value[0].column.blocks.size
 
-        for(y in 0 until rowSize) {
-            for(x in 0 until colSize) {
+        for (y in 0 until rowSize) {
+            for (x in 0 until colSize) {
                 minePlate.value[y].column.blocks[x].setMineCount(x, y, minePlate)
             }
         }
