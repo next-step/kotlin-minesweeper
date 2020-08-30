@@ -11,7 +11,7 @@ object MineSweeperGame {
             Position(x, y) to block
         }.toMap()
 
-        return MineBoard.getInstance(board)
+        return MineBoard(board)
     }
 
     fun validateMineCount(totalBoardCount: Int): (Int) -> Boolean {

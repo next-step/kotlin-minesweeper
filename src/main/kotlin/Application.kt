@@ -8,5 +8,5 @@ fun main() {
     val totalBoardCount = height * weight
     val mineCount = InputView.inputMine(MineSweeperGame.validateMineCount(totalBoardCount))
     val board = MineSweeperGame.initBoard(weight, height, mineCount)
-    OutputView.drawMine(height, weight, board)
+    OutputView.drawMine(board)
 }
