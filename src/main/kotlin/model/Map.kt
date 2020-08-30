@@ -19,34 +19,6 @@ class Map(val width: Int, val height: Int) {
         }
     }
 
-    fun calculateMineAroundCount(maxX: Int, maxY: Int) {
-        _cells.forEach {
-            if (it.isMine) {
-                getAroundPositions(it.position, maxX, maxY)
-            }
-        }
-    }
-
-    private fun a() {
-
-    }
-
-    private fun getAroundPositions(position: Position, maxX: Int, maxY: Int): List<Position> {
-        //if (checkInvalidRange(targetPosition, maxX, maxY)) {
-        //    getNotMineCell(targetPosition)?.addCount()
-        //}
-        val operand = listOf(-1, 0, 1)
-        return operand.flatMap { operandX ->
-            operand.map { operandY ->
-                Position(position.x + operandX, position.y + operandY)
-            }
-        }.toList()
-    }
-
-    private fun checkInvalidRange(targetPosition: Position, maxX: Int, maxY: Int): Boolean {
-        return targetPosition.x in 0 until maxX && targetPosition.y in 0 until maxY
-    }
-
     private fun getNotMineCell(targetPosition: Position): Cell? {
         return _cells.firstOrNull { it.match(Cell(false, targetPosition)) && !it.isMine }
     }
