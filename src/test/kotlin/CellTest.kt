@@ -1,11 +1,12 @@
 import model.Cell
-import model.MINE_STRING
 import model.Position
+import model.Value
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CellTest {
-    private val mineCell = Cell(true, Position(1, 1))
+    private val mineCell = Cell(Position(1, 1), Value.MINE)
+    private val zeroCell = Cell(Position(1,1),Value.ZERO)
 
     @Test
     fun `Cell match 테스트`() {
@@ -18,18 +19,18 @@ class CellTest {
     }
 
     @Test
-    fun `Mine 출력 테스트`() {
-        assertThat(mineCell.toString()).isEqualTo(MINE_STRING)
-    }
-
-    @Test
-    fun `NotMine 출력 테스트`() {
-        assertThat(Cell(false, Position(1, 1)).toString()).isEqualTo("0")
-    }
-
-    @Test
     fun `Cell addCount 테스트`() {
-        mineCell.addCount()
-        assertThat(mineCell.aroundMineCount).isEqualTo(1)
+        zeroCell.addCount()
+        assertThat(zeroCell.value.string).isEqualTo("1")
+    }
+
+    @Test
+    fun `Cell isMine 테스트1`() {
+        assertThat(mineCell.isMine()).isTrue()
+    }
+
+    @Test
+    fun `Cell isMine 테스트2`() {
+        assertThat(zeroCell.isMine()).isFalse()
     }
 }
