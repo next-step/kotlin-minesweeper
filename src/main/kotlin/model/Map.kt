@@ -43,7 +43,6 @@ class Map(val width: Int, val height: Int) {
     }
 
     fun winCheck(): Boolean {
-        //val cells = cells.filter { }
         return cells.size == mines.size && cells.containsAll(mines)
     }
 

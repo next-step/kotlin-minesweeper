@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class CellTest {
     private val mineCell = Cell(Position(1, 1), Value.MINE)
-    private val zeroCell = Cell(Position(1,1),Value.ZERO)
+    private val zeroCell = Cell(Position(1, 1), Value.ZERO)
 
     @Test
     fun `Cell match 테스트`() {
