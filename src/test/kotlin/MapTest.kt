@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MapTest {
-    val width = 10
-    val height = 10
+    private val width = 10
+    private val height = 10
     private val mineMap = Map(width = width, height = height).apply { this.createDefaultMap(width, height) }
 
     @Test
@@ -13,11 +13,6 @@ class MapTest {
         assertThat(mineMap.width).isEqualTo(10)
         assertThat(mineMap.height).isEqualTo(10)
         assertThat(mineMap.cells.size).isEqualTo(mineMap.width * mineMap.height)
-    }
-
-    @Test
-    fun `Map 클릭 테스트`() {
-        assertThat(mineMap.clickMap(Position(0, 0))).isFalse()
     }
 
     @Test
@@ -31,7 +26,9 @@ class MapTest {
     fun `승리 true 테스트`() {
         val winMap = Map(width = width, height = height).apply {
             createDefaultMap(width, height)
+            createCountMap()
             createRandomMines(width * height)
+            calculateCount()
         }
         assertThat(winMap.winCheck()).isTrue()
     }
@@ -39,8 +36,10 @@ class MapTest {
     @Test
     fun `승리 false 테스트`() {
         val winMap = Map(width = width, height = height).apply {
-            this.createDefaultMap(width, height)
-            this.createRandomMines(width * height - 1)
+            createDefaultMap(width, height)
+            createCountMap()
+            createRandomMines(width * height - 1)
+            calculateCount()
         }
         assertThat(winMap.winCheck()).isFalse()
     }

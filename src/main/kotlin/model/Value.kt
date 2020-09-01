@@ -1,6 +1,7 @@
 package model
 
 enum class Value(val string: String) {
+    MINE("*"),
     UNDEFINE("C"),
     ZERO("0"),
     ONE("1"),
@@ -10,8 +11,7 @@ enum class Value(val string: String) {
     FIVE("5"),
     SIX("6"),
     SEVEN("7"),
-    EIGHT("8"),
-    MINE("*");
+    EIGHT("8");
 
     companion object {
         fun plusValue(value: Value): Value {

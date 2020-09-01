@@ -3,7 +3,11 @@ package model
 class Map(val width: Int, val height: Int) {
     val cells: MutableList<Cell> = mutableListOf()
     val mines: List<Cell>
-        get() = this.cells.filter { it.value == Value.MINE }
+        get() = this.countMap.filter { it.value == Value.MINE }
+    var lose: Boolean = false
+        private set
+    private val countMap: MutableList<Cell> = mutableListOf()
+
 
     fun createDefaultMap(width: Int, height: Int) {
         (0 until width).flatMap { x ->
@@ -13,42 +17,62 @@ class Map(val width: Int, val height: Int) {
         }
     }
 
+    fun createCountMap() {
+        cells.forEach {
+            countMap.add(Cell(it.position, Value.ZERO))
+        }
+    }
+
     fun createRandomMines(mineCount: Int) {
-        this.cells.shuffled().take(mineCount).forEach {
+        this.countMap.shuffled().take(mineCount).forEach {
             notMineToMine(it.position)
         }
     }
 
-    fun calculateMineAroundCount() {
-        cells.forEach {
-            if (it.value == Value.MINE) {
-                addCount(it.position)
+    fun calculateCount() {
+        countMap.forEach {
+            if (it.isMine()) {
+                aroundCellAddCount(it.position)
             }
         }
     }
 
-    private fun addCount(position: Position) {
-        Position.getAroundPositions(position, width, height).forEach { aroundPosition ->
-            cells.find { it.match(aroundPosition) }?.addCount()
+    fun openMap(position: Position) {
+        val cell = findCell(countMap, position)
+        unDefineToCount(cell)
+        if (cell.value == Value.MINE) {
+            lose = true
+            return
+        }
+        if (cell.value != Value.ZERO) return
+        Position.getAroundPositions(position, width, height).forEach {
+            openMap(it)
         }
     }
 
-    private fun openMap(cell: Cell): Boolean {
-        return true
-    }
-
-    fun clickMap(position: Position): Boolean {
-        val cell = cells.find { it.match(position) } ?: return false
-        return openMap(cell)
-    }
-
     fun winCheck(): Boolean {
-        return cells.size == mines.size && cells.containsAll(mines)
+        return cells.filter { it.value == Value.UNDEFINE }.size == mines.size && countMap.containsAll(mines)
+    }
+
+    private fun findCell(targetCells: MutableList<Cell>, position: Position): Cell {
+        return targetCells.find { it.match(position) } ?: throw IllegalArgumentException("해당하는 칸이 없습니다.")
+    }
+
+    private fun aroundCellAddCount(position: Position) {
+        Position.getAroundPositions(position, width, height).forEach {
+            findCell(countMap, it)?.addCount()
+        }
     }
 
     private fun notMineToMine(position: Position) {
-        if (this.cells.removeIf { it.match(position) }) {
-            this.cells.add(Cell(position, Value.MINE))
+        if (this.countMap.removeIf { it.match(position) }) {
+            this.countMap.add(Cell(position, Value.MINE))
+        }
+    }
+
+    private fun unDefineToCount(cell: Cell) {
+        if (this.cells.removeIf { it.match(cell.position) }) {
+            this.cells.add(Cell(cell.position, cell.value))
         }
     }
 
