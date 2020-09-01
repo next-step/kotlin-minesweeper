@@ -21,7 +21,7 @@ fun main() {
         Output.drawMap(map)
         if (map.winCheck()) {
             Output.win()
-            break;
+            break
         }
     }
 }
