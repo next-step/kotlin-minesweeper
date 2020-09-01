@@ -27,17 +27,22 @@ class Map(val width: Int, val height: Int) {
     }
 
     private fun addCount(position: Position) {
-        position.getAroundPositions(width, height).forEach { aroundPosition ->
+        Position.getAroundPositions(position, width, height).forEach { aroundPosition ->
             cells.find { it.match(aroundPosition) }?.addCount()
         }
     }
 
-    fun clickMap(position: Position) {
-        val cell = cells.find { it.match(position) } ?: return
-    }
-
-    private fun openCell(position: Position) {
-        clickMap(position)
+    fun clickMap(position: Position): Boolean {
+        val cell = cells.find { it.match(position) } ?: return false
+        if (cell.isMine) return false
+        cell.click()
+        when (cell.aroundMineCount) {
+            0 -> Position.getAroundPositions(position, width, height).forEach {
+                clickMap(it)
+            }
+            else -> return true
+        }
+        return true
     }
 
     private fun notMineToMine(position: Position) {
@@ -47,6 +52,6 @@ class Map(val width: Int, val height: Int) {
     }
 
     override fun toString(): String {
-        return this.cells.sortedWith(compareBy({ it.position.x }, { it.position.y })).groupBy { it.position.y }.values.joinToString("\n") { it.joinToString(" ") }
+        return this.cells.sortedWith(compareBy({ it.position.x }, { it.position.y })).groupBy { it.position.x }.values.joinToString("\n") { it.joinToString(" ") }
     }
 }
