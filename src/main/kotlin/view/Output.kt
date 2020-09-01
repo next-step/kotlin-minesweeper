@@ -11,4 +11,8 @@ object Output {
     fun lose() {
         println("you lose")
     }
+
+    fun win() {
+        println("you win")
+    }
 }

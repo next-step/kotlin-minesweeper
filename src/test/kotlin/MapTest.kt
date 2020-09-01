@@ -1,5 +1,4 @@
 import model.Map
-import model.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -19,5 +19,9 @@ fun main() {
             break
         }
         Output.drawMap(map)
+        if (map.winCheck()) {
+            Output.win()
+            break;
+        }
     }
 }

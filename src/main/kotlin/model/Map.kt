@@ -8,7 +8,6 @@ class Map(val width: Int, val height: Int) {
         private set
     private val countMap: MutableList<Cell> = mutableListOf()
 
-
     fun createDefaultMap(width: Int, height: Int) {
         (0 until width).flatMap { x ->
             (0 until height).map { y ->
