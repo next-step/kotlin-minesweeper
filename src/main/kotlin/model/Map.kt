@@ -2,7 +2,8 @@ package model
 
 class Map(val width: Int, val height: Int) {
     val cells: MutableList<Cell> = mutableListOf()
-    val mines: List<Cell> = this.cells.filter { it.isMine }
+    val mines: List<Cell>
+        get() = this.cells.filter { it.isMine }
 
     fun createDefaultMap(width: Int, height: Int) {
         (0 until width).flatMap { x ->
@@ -34,8 +35,8 @@ class Map(val width: Int, val height: Int) {
 
     fun clickMap(position: Position): Boolean {
         val cell = cells.find { it.match(position) } ?: return false
-        if (cell.isMine) return false
         cell.click()
+        if (cell.isMine) return false
         when (cell.aroundMineCount) {
             0 -> Position.getAroundPositions(position, width, height).forEach {
                 clickMap(it)
@@ -43,6 +44,12 @@ class Map(val width: Int, val height: Int) {
             else -> return true
         }
         return true
+    }
+
+    fun winCheck(): Boolean {
+        val cells = cells.filter { !it.isClick }
+        return cells.size == mines.size
+                && cells.containsAll(mines)
     }
 
     private fun notMineToMine(position: Position) {
@@ -54,4 +61,6 @@ class Map(val width: Int, val height: Int) {
     override fun toString(): String {
         return this.cells.sortedWith(compareBy({ it.position.x }, { it.position.y })).groupBy { it.position.x }.values.joinToString("\n") { it.joinToString(" ") }
     }
+
+
 }
