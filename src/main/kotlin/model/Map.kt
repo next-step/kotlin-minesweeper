@@ -48,8 +48,7 @@ class Map(val width: Int, val height: Int) {
 
     fun winCheck(): Boolean {
         val cells = cells.filter { !it.isClick }
-        return cells.size == mines.size
-                && cells.containsAll(mines)
+        return cells.size == mines.size && cells.containsAll(mines)
     }
 
     private fun notMineToMine(position: Position) {
@@ -61,6 +60,4 @@ class Map(val width: Int, val height: Int) {
     override fun toString(): String {
         return this.cells.sortedWith(compareBy({ it.position.x }, { it.position.y })).groupBy { it.position.x }.values.joinToString("\n") { it.joinToString(" ") }
     }
-
-
 }

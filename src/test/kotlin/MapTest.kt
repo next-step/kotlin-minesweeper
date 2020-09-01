@@ -40,7 +40,7 @@ class MapTest {
     fun `승리 false 테스트`() {
         val winMap = Map(width = width, height = height).apply {
             this.createDefaultMap(width, height)
-            this.createRandomMines(width * height - 1);
+            this.createRandomMines(width * height - 1)
         }
         assertThat(winMap.winCheck()).isFalse()
     }
