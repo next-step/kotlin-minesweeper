@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test
 class PointsTest {
     @Test
     fun make_points() {
-        val coordinates = Coordinates(2, 1)
+        val coordinates = Coordinates(10, 10)
         val mineCoordinates = listOf(Coordinate(0, 0))
 
         val points = Points(coordinates, mineCoordinates)
 
         val point = points.findPoint(0, 0)!!
-        point.openPoint()
-        assertThat(point.isMine()).isTrue()
+        val openPoint = points.open(point)
+        assertThat(openPoint.isMine()).isTrue()
+        assertThat(points.allPoints).hasSize(100)
     }
 
     @Test
@@ -57,11 +58,24 @@ class PointsTest {
         val coordinates = Coordinates(5, 5)
         val mineCoordinates = listOf(Coordinate(0, 1), Coordinate(2, 1), Coordinate(1, 3))
         val points = Points(coordinates, mineCoordinates)
-        points.findPoint(0, 0)!!.openPoint()
-        points.findPoint(1, 1)!!.openPoint()
+        points.open(points.findPoint(0, 0)!!)
+        points.open(points.findPoint(1, 1)!!)
 
         val notOpenPoints = points.getClosePointsSize()
 
         assertThat(notOpenPoints).isEqualTo(23)
+    }
+
+    @Test
+    fun well_done_open() {
+        val coordinates = Coordinates(10, 10)
+        val mineCoordinates = listOf(Coordinate(0, 0))
+        val points = Points(coordinates, mineCoordinates)
+        val point = points.findPoint(0, 0)!!
+
+        val openPoint = points.open(point)
+        val findOpenPoint = points.findPoint(0, 0)!!
+
+        assertThat(openPoint).isEqualTo(findOpenPoint)
     }
 }

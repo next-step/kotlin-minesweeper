@@ -14,17 +14,16 @@ class Board(width: Int, length: Int, private val mines: Int = 0) {
 
     fun open(coordinate: Coordinate) {
         val point = findPoint(coordinate.x, coordinate.y)!!
-        point.openPoint()
-        endGame(point.isMine()!! || isPlayerWin(point))
-        if (point.mineCount == OPEN_AROUND_NUMBER) {
-            getAroundPoint(point).forEach { againOpen(it) }
+        val openPoint = points.open(point)
+        endGame(openPoint.isMine()!! || isPlayerWin(openPoint))
+        if (openPoint.mineCount == OPEN_AROUND_NUMBER) {
+            getAroundCoordinates(openPoint).forEach { againOpen(it) }
         }
     }
 
-    private fun getAroundPoint(point: Point): List<Point> {
+    private fun getAroundCoordinates(point: Point): List<Coordinate> {
         return Direction.values().filter { isRealPoint(point.coordinate move it) }.map {
-            val coordinate = point.coordinate move it
-            findPoint(coordinate.x, coordinate.y)!!
+            point.coordinate move it
         }
     }
 
@@ -32,9 +31,10 @@ class Board(width: Int, length: Int, private val mines: Int = 0) {
         return findPoint(coordinate.x, coordinate.y) != null
     }
 
-    private fun againOpen(point: Point) {
-        if (!point.isOpen) {
-            open(point.coordinate)
+    private fun againOpen(coordinate: Coordinate) {
+        val point = findPoint(coordinate.x, coordinate.y)!!
+        if (!point.isOpen()) {
+            open(coordinate)
         }
     }
 

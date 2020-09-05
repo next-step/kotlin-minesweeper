@@ -26,7 +26,7 @@ class BoardTest {
 
         board.open(Coordinate(1, 1))
 
-        assertThat(board.findPoint(1, 1)!!.isOpen).isTrue()
+        assertThat(board.findPoint(1, 1)!!.isOpen()).isTrue()
     }
 
     @Test

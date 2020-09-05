@@ -16,7 +16,7 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
-        if (point.isOpen) {
+        if (point.isOpen()) {
             return drawOpen(point)
         }
         return "C"
