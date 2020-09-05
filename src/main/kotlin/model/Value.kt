@@ -1,22 +1,30 @@
 package model
 
-enum class Value(val string: String) {
-    MINE("*"),
-    UNDEFINE("C"),
-    ZERO("0"),
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+enum class Value(val count: Int) {
+    MINE(-99),
+    UNDEFINE(-1),
+    ZERO(0),
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
-    companion object {
-        fun plusValue(value: Value): Value {
-            if (value == MINE) return MINE
-            return values()[value.ordinal + 1]
+    fun isMine(): Boolean = this == MINE
+
+    fun addValue(): Value {
+        if (this == MINE) return MINE
+        return values().first { it.count == this.count + 1 }
+    }
+
+    override fun toString(): String {
+        return return when (this.count) {
+            in 0..8 -> this.count.toString()
+            -1 -> "C"
+            else -> "*"
         }
     }
 }

@@ -21,7 +21,7 @@ class CellTest {
     @Test
     fun `Cell addCount 테스트`() {
         zeroCell.addCount()
-        assertThat(zeroCell.value.string).isEqualTo("1")
+        assertThat(zeroCell.value.count).isEqualTo("1")
     }
 
     @Test
