@@ -1,11 +1,11 @@
-import model.Map
+import model.Game
 import view.Input
 import view.Output
 
 fun main() {
     val width = Input.inputWidth()
     val height = Input.inputHeight()
-    val map = Map(width, height).apply {
+    val map = Game(width, height).apply {
         createDefaultMap(width, height)
         createCountMap()
         createRandomMines(Input.inputMine(width * height))

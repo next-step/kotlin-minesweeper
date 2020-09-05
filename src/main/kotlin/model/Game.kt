@@ -2,7 +2,7 @@ package model
 
 import java.lang.RuntimeException
 
-class Map(val width: Int, val height: Int) {
+class Game(val width: Int, val height: Int) {
     val cells: MutableList<Cell> = mutableListOf()
     val mines: List<Cell>
         get() = this.countMap.filter { it.value == Value.MINE }

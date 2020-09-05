@@ -1,11 +1,11 @@
-import model.Map
+import model.Game
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class MapTest {
+class GameTest {
     private val width = 10
     private val height = 10
-    private val mineMap = Map(width = width, height = height).apply { this.createDefaultMap(width, height) }
+    private val mineMap = Game(width = width, height = height).apply { this.createDefaultMap(width, height) }
 
     @Test
     fun `기본 Map 생성 테스트`() {
@@ -23,7 +23,7 @@ class MapTest {
 
     @Test
     fun `승리 true 테스트`() {
-        val winMap = Map(width = width, height = height).apply {
+        val winMap = Game(width = width, height = height).apply {
             createDefaultMap(width, height)
             createCountMap()
             createRandomMines(width * height)
@@ -34,7 +34,7 @@ class MapTest {
 
     @Test
     fun `승리 false 테스트`() {
-        val winMap = Map(width = width, height = height).apply {
+        val winMap = Game(width = width, height = height).apply {
             createDefaultMap(width, height)
             createCountMap()
             createRandomMines(width * height - 1)

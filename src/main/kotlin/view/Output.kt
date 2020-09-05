@@ -1,11 +1,11 @@
 package view
 
-import model.Map
+import model.Game
 
 object Output {
-    fun drawMap(map: Map) {
+    fun drawMap(game: Game) {
         println("지뢰찾기 게임 시작")
-        println(map.toString())
+        println(game.toString())
     }
 
     fun lose() {
