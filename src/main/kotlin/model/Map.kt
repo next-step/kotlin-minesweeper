@@ -1,11 +1,11 @@
 package model
 
+import java.lang.RuntimeException
+
 class Map(val width: Int, val height: Int) {
     val cells: MutableList<Cell> = mutableListOf()
     val mines: List<Cell>
         get() = this.countMap.filter { it.value == Value.MINE }
-    var lose: Boolean = false
-        private set
     private val countMap: MutableList<Cell> = mutableListOf()
 
     fun createDefaultMap(width: Int, height: Int) {
@@ -37,13 +37,10 @@ class Map(val width: Int, val height: Int) {
     }
 
     fun openMap(position: Position) {
-        val cell = findCell(countMap, position)
+        val cell = findCell(position)
         unDefineToCount(cell)
-        if (cell.value == Value.MINE) {
-            lose = true
-            return
-        }
-        if (cell.value != Value.ZERO) return
+        if (cell.isMine()) return throw RuntimeException("패배했습니다.")
+        if (!cell.isZero()) return
         Position.getAroundPositions(position, width, height).forEach {
             openMap(it)
         }
@@ -53,13 +50,13 @@ class Map(val width: Int, val height: Int) {
         return cells.filter { it.value == Value.UNDEFINE }.size == mines.size && countMap.containsAll(mines)
     }
 
-    private fun findCell(targetCells: MutableList<Cell>, position: Position): Cell {
-        return targetCells.find { it.match(position) } ?: throw IllegalArgumentException("해당하는 칸이 없습니다.")
+    private fun findCell(position: Position): Cell {
+        return countMap.find { it.match(position) } ?: throw IllegalArgumentException("해당하는 칸이 없습니다.")
     }
 
     private fun aroundCellAddCount(position: Position) {
         Position.getAroundPositions(position, width, height).forEach {
-            findCell(countMap, it)?.addCount()
+            findCell(it)?.addCount()
         }
     }
 

@@ -13,11 +13,6 @@ fun main() {
     }
     while (true) {
         map.openMap(Input.inputPosition(width, height))
-        if (map.lose) {
-            Output.lose()
-            Output.drawMap(map)
-            break
-        }
         Output.drawMap(map)
         if (map.winCheck()) {
             Output.win()
