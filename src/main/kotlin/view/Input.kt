@@ -1,6 +1,5 @@
 package view
 
-import model.Position
 import kotlin.system.exitProcess
 
 object Input {
