@@ -9,7 +9,12 @@ class CellTypeTest {
     }
 
     @Test
-    fun `CellType NextValue 테스트`() {
+    fun `CellType NextValue 테스트 - count value`() {
         assertThat(CellType.nextValue(CellType.ONE)).isEqualTo(CellType.TWO)
+    }
+
+    @Test
+    fun `CellType NextValue 테스트 - not count value`() {
+        assertThat(CellType.nextValue(CellType.MINE)).isEqualTo(CellType.MINE)
     }
 }

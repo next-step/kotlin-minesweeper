@@ -3,6 +3,7 @@ package model
 enum class CellType(val value: String) {
     MINE("*"),
     NONE("C"),
+    ZERO("0"),
     ONE("1"),
     TWO("2"),
     THREE("3"),
@@ -15,6 +16,7 @@ enum class CellType(val value: String) {
     companion object {
         fun nextValue(cellType: CellType): CellType {
             return when (cellType) {
+                ZERO -> ONE
                 ONE -> TWO
                 TWO -> THREE
                 THREE -> FOUR
