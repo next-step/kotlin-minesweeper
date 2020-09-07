@@ -1,7 +1,7 @@
 package model
 
-class Size(val size: Int) {
+class Size(val value: Int) {
     init {
-        if (size !in 5..15) throw IllegalArgumentException("사이즈는 5~15사이만 가능합니다.")
+        if (value !in 5..15) throw IllegalArgumentException("사이즈는 5~15사이만 가능합니다.")
     }
 }

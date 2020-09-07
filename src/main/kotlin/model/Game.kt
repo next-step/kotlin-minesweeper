@@ -12,6 +12,15 @@ class Game(private val mapSize: MapSize, private val mineCount: MineCount) {
         createMines()
     }
 
+    fun openMap(position: Position) {
+        _viewMap[position] = countMap.getPositionValue(position)
+        if (_countMap[position] == CellType.MINE) throw Exception("You lose")
+        if (_countMap[position] != CellType.ZERO) return
+        position.getAround(mapSize).forEach {
+            if (_countMap[it] == CellType.ZERO) openMap(it) else return
+        }
+    }
+
     private fun createBaseMap() {
         for (x in 0 until mapSize.maxX) {
             for (y in 0 until mapSize.maxY) {
@@ -30,7 +39,7 @@ class Game(private val mapSize: MapSize, private val mineCount: MineCount) {
     private fun calculateMineAroundCount(position: Position) {
         _countMap[position] = CellType.MINE
         position.getAround(mapSize).forEach {
-            _countMap[position] = CellType.nextValue(countMap.getPositionValue(position))
+            _countMap[it] = CellType.nextValue(countMap.getPositionValue(it))
         }
     }
 

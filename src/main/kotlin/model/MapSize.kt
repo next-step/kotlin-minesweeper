@@ -1,7 +1,7 @@
 package model
 
 class MapSize(x: Size, y: Size) {
-    val size = x.size * y.size
-    val maxX = x.size
-    val maxY = x.size
+    val size = x.value * y.value
+    val maxX = x.value
+    val maxY = x.value
 }
