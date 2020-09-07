@@ -17,8 +17,13 @@ class Game(private val mapSize: MapSize, private val mineCount: MineCount) {
         if (_countMap[position] == CellType.MINE) throw Exception("You lose")
         if (_countMap[position] != CellType.ZERO) return
         position.getAround(mapSize).forEach {
-            if (_countMap[it] == CellType.ZERO) openMap(it) else return
+            if (_viewMap[it] == _countMap[it]) return@forEach
+            openMap(it)
         }
+    }
+
+    fun win(): Boolean {
+        return _viewMap.filter { it.value == CellType.NONE }.size == _countMap.filter { it.value.isMine() }.size
     }
 
     private fun createBaseMap() {

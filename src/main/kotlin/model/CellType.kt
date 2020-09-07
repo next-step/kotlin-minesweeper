@@ -13,6 +13,10 @@ enum class CellType(val value: String) {
     SEVEN("7"),
     EIGHT("8");
 
+    fun isMine(): Boolean {
+        return MINE == this
+    }
+
     companion object {
         fun nextValue(cellType: CellType): CellType {
             return when (cellType) {

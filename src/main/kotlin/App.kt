@@ -12,9 +12,9 @@ fun main() {
     val mineCount = MineCount(Input.mineCount(mapSize.size), mapSize.size)
     val game = Game(mapSize, mineCount)
 
-    Output.drawMap(game.countMap, width)
     while (true) {
         game.openMap(Input.position(width.value, height.value))
         Output.drawMap(game.viewMap, width)
+        if (game.win()) Output.win()
     }
 }
