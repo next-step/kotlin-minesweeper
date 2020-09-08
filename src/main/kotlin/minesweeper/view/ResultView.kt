@@ -16,14 +16,14 @@ object ResultView {
     }
 
     private fun drawWhat(point: Point): String {
-        if (point.isOpen) {
+        if (point.isOpen()) {
             return drawOpen(point)
         }
         return "C"
     }
 
     private fun drawOpen(point: Point): String {
-        if (point.isMine()) {
+        if (point.isMine() ?: throw IllegalArgumentException("해당 point는 open되어 있지 않습니다.")) {
             return "*"
         }
         return point.mineCount.toString()

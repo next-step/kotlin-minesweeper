@@ -1,18 +1,20 @@
 package minesweeper.domain
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PointsTest {
     @Test
     fun make_points() {
-        val coordinates = Coordinates(2, 1)
+        val coordinates = Coordinates(10, 10)
         val mineCoordinates = listOf(Coordinate(0, 0))
 
         val points = Points(coordinates, mineCoordinates)
 
-        assertThat(points.findPoint(0, 0).isMine()).isTrue()
+        val point = points.findPoint(0, 0)!!
+        val openPoint = points.open(point)
+        assertThat(openPoint.isMine()).isTrue()
+        assertThat(points.allPoints).hasSize(100)
     }
 
     @Test
@@ -20,7 +22,7 @@ class PointsTest {
         val coordinates = Coordinates(10, 10)
         val points = Points(coordinates)
 
-        val point = points.findPoint(2, 3)
+        val point = points.findPoint(2, 3)!!
 
         assertThat(point.coordinate).isEqualTo(Coordinate(2, 3))
     }
@@ -30,9 +32,7 @@ class PointsTest {
         val coordinates = Coordinates(10, 10)
         val points = Points(coordinates)
 
-        Assertions.assertThatThrownBy {
-            points.findPoint(10, 10)
-        }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("10, 10 좌표는 없습니다.")
+        assertThat(points.findPoint(10, 10)).isNull()
     }
 
     @Test
@@ -40,9 +40,9 @@ class PointsTest {
         val coordinates = Coordinates(10, 10)
         val mineCoordinates = listOf(Coordinate(0, 1), Coordinate(2, 1), Coordinate(1, 3))
         val points = Points(coordinates, mineCoordinates)
-        val point1 = points.findPoint(0, 0)
-        val point2 = points.findPoint(1, 1)
-        val point3 = points.findPoint(1, 2)
+        val point1 = points.findPoint(0, 0)!!
+        val point2 = points.findPoint(1, 1)!!
+        val point3 = points.findPoint(1, 2)!!
 
         val result1 = point1.mineCount
         val result2 = point2.mineCount
@@ -58,13 +58,24 @@ class PointsTest {
         val coordinates = Coordinates(5, 5)
         val mineCoordinates = listOf(Coordinate(0, 1), Coordinate(2, 1), Coordinate(1, 3))
         val points = Points(coordinates, mineCoordinates)
-        val point1 = points.findPoint(0, 0)
-        val point2 = points.findPoint(1, 1)
-        point1.openPoint()
-        point2.openPoint()
+        points.open(points.findPoint(0, 0)!!)
+        points.open(points.findPoint(1, 1)!!)
 
-        val notOpenPoints = points.getNotOpenPoints()
+        val notOpenPoints = points.getClosePointsSize()
 
-        assertThat(notOpenPoints).hasSize(20)
+        assertThat(notOpenPoints).isEqualTo(23)
+    }
+
+    @Test
+    fun well_done_open() {
+        val coordinates = Coordinates(10, 10)
+        val mineCoordinates = listOf(Coordinate(0, 0))
+        val points = Points(coordinates, mineCoordinates)
+        val point = points.findPoint(0, 0)!!
+
+        val openPoint = points.open(point)
+        val findOpenPoint = points.findPoint(0, 0)!!
+
+        assertThat(openPoint).isEqualTo(findOpenPoint)
     }
 }

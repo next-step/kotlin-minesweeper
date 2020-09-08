@@ -12,7 +12,7 @@ class NotMineTest {
 
         assertThat(point.isMine()).isFalse()
         assertThat(point.coordinate).isEqualTo(coordinate)
-        assertThat(point.isOpen).isFalse()
+        assertThat(point.isOpen()).isTrue()
     }
 
     @Test
@@ -32,12 +32,9 @@ class NotMineTest {
     }
 
     @Test
-    fun close_point_change_open() {
-        val coordinate = Coordinate(1, 1)
-        val point = NotMine(coordinate)
+    fun can_not_get_is_mine_in_close_point() {
+        val point = NotMine(Coordinate(1, 1))
 
-        point.openPoint()
-
-        assertThat(point.isOpen).isTrue()
+        assertThat(point.isMine()).isFalse()
     }
 }
