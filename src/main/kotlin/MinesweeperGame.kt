@@ -12,13 +12,13 @@ class MinesweeperGame() {
     }
 
     private fun setBlockValue(minePlate: MinePlate): MinePlate {
-        val rowSize = minePlate.value.size
-        val colSize = minePlate.value[0].column.blocks.size
+        val rowSize = minePlate.rowSize()
+        val colSize = minePlate.colSize()
 
         for (y in 0 until rowSize) {
             for (x in 0 until colSize) {
                 val mineCount = calculateMineCount(x, y, minePlate)
-                minePlate.value[y].column.blocks[x].mineCount = mineCount
+                minePlate.setMineValue(x, y, mineCount)
             }
         }
 
@@ -35,10 +35,10 @@ class MinesweeperGame() {
         for (dy in startYPosition..endYPosition) {
             for (dx in startXPosition..endXPosition) {
                 try {
-                    if(minePlate.value[dy].column.blocks[dx] == minePlate.value[x].column.blocks[y]) {
+                    if(minePlate.block(dx, dy) == minePlate.block(x, y)) {
                         continue
                     }
-                    if (minePlate.value[dy].column.blocks[dx].isMine()) {
+                    if (minePlate.block(dx, dy).isMine()) {
                         mineCount++
                     }
                 } catch (ex: IndexOutOfBoundsException) {
@@ -52,8 +52,8 @@ class MinesweeperGame() {
 
     private fun positionList(minePlate: MinePlate): List<Position> {
         val positionList: MutableList<Position> = mutableListOf()
-        for (j in minePlate.value.indices) {
-            for (i in minePlate.value[j].column.blocks.indices) {
+        for (j in minePlate.rowIndices()) {
+            for (i in minePlate.colIndices(j)) {
                 positionList.add(Position(i, j))
             }
         }
