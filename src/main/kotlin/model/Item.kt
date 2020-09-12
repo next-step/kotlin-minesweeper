@@ -1,6 +1,6 @@
 package model
 
-data class Item(val position: Position, val type: Type) {
+data class Item(val position: Position, var type: Type) {
     var isOpen: Boolean = false
         private set
 

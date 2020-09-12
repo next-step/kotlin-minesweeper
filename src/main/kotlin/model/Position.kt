@@ -1,6 +1,6 @@
 package model
 
-data class Position(private val x: Int, private val y: Int) {
+data class Position(val x: Int, val y: Int) {
     fun getAroundPosition(mapSize: MapSize): List<Position> {
         val operand: List<Int> = listOf(-1, 0, 1)
         return operand.flatMap { x ->
