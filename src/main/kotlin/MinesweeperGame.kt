@@ -25,7 +25,7 @@ class MinesweeperGame() {
         return minePlate
     }
 
-    fun calculateMineCount(x: Int, y: Int, minePlate: MinePlate): Int {
+    private fun calculateMineCount(x: Int, y: Int, minePlate: MinePlate): Int {
         var mineCount = 0
         val startXPosition = x - 1
         val endXPosition = x + 1
