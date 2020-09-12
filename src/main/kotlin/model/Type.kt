@@ -31,4 +31,8 @@ enum class Type(private val value: String) {
             else -> this
         }
     }
+
+    override fun toString(): String {
+        return value
+    }
 }
