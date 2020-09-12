@@ -10,13 +10,15 @@ class MineGame(private val mapSize: MapSize, private val mineCount: MineCount) {
     }
 
     fun openMap(position: Position) {
-        val item = findItem(position)
-        item.type = map.getPositionValue(position)
-        if (item.type == Type.MINE) throw Exception("You lose")
-        if (item.type != Type.ZERO) return
+        val item = findItem(position).apply {
+            isOpen()
+        }
+        if (item.type.isMine()) throw Exception("You lose")
+        if (item.type != Type.ZERO) {
+            return
+        }
         position.getAroundPosition(mapSize).forEach {
-            val item = findItem(position)
-            if (item.isOpen) return@forEach
+            if (findItem(it).isOpen) return@forEach
             openMap(it)
         }
     }
@@ -28,7 +30,7 @@ class MineGame(private val mapSize: MapSize, private val mineCount: MineCount) {
     private fun createBaseMap() {
         for (x in 0 until mapSize.lengthX.value) {
             for (y in 0 until mapSize.lengthY.value) {
-                _map.add(Item(Position(x, y), Type.NONE))
+                _map.add(Item(Position(x, y), Type.ZERO))
             }
         }
     }
