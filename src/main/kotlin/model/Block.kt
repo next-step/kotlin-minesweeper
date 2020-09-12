@@ -1,9 +1,13 @@
 package model
 
 class Block(var status: MineStatus = MineStatus.block) {
+    var mineCount: Int = 0
+
     fun changeToMine() {
         this.status = MineStatus.mine
     }
+
+
 
     fun isBlock(): Boolean {
         return this.status == MineStatus.block
@@ -15,7 +19,7 @@ class Block(var status: MineStatus = MineStatus.block) {
 
     override fun toString(): String {
         return if (this.status == MineStatus.block) {
-            BLOCK
+            mineCount.toString()
         } else {
             MINE
         }
