@@ -1,3 +1,4 @@
+import model.Item
 import model.Position
 import model.Type
 import model.Map
@@ -6,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
 
 class MapTest {
-    private val items: MutableMap<Position, Type> = mutableMapOf(Position(0, 0) to Type.MINE, Position(0, 1) to Type.MINE, Position(1, 0) to Type.MINE, Position(1, 1) to Type.MINE)
+    private val items: List<Item> = mutableListOf(Item(Position(0, 0), Type.MINE), Item(Position(0, 1), Type.MINE), Item(Position(1, 0), Type.MINE), Item(Position(0, 0), Type.MINE))
     private val testMap = Map(items)
 
     @Test
