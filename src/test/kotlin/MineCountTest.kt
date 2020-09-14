@@ -1,14 +1,19 @@
-import model.MapSize
 import model.MineCount
-import model.Size
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
 
 class MineCountTest {
     @Test
-    fun `MineCountTest`() {
+    fun `MineCount - 비정상 생성 테스트1`() {
         assertThatExceptionOfType(Exception::class.java).isThrownBy {
-            MineCount(101, MapSize(Size(10), Size(10)).size)
+            MineCount(0, 10)
+        }
+    }
+
+    @Test
+    fun `MineCount - 비정상 생성 테스트2`() {
+        assertThatExceptionOfType(Exception::class.java).isThrownBy {
+            MineCount(11, 10)
         }
     }
 }

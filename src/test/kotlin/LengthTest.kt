@@ -1,19 +1,19 @@
-import model.Size
+import model.Length
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
 
-class SizeTest {
+class LengthTest {
     @Test
-    fun `Size Invalid Error Case Test1`() {
+    fun `Length 테스트 - 비정상 생성1`() {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            Size(4)
+            Length(4)
         }
     }
 
     @Test
-    fun `Size Invalid Error Case Test2`() {
+    fun `Length 테스트 - 비정상 생성2`() {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            Size(16)
+            Length(16)
         }
     }
 }

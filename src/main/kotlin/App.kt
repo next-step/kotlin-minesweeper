@@ -1,20 +1,21 @@
-import model.Game
+import model.Length
 import model.MapSize
 import model.MineCount
-import model.Size
+import model.MineGame
 import view.Input
 import view.Output
 
 fun main() {
-    val width = Size(Input.width())
-    val height = Size(Input.height())
+    val width = Length(Input.width())
+    val height = Length(Input.height())
     val mapSize = MapSize(width, height)
-    val mineCount = MineCount(Input.mineCount(mapSize.size), mapSize.size)
-    val game = Game(mapSize, mineCount)
+    val mapTotalCellCount = mapSize.lengthX.value * mapSize.lengthY.value
+    val mineCount = MineCount(Input.mineCount(mapTotalCellCount), mapTotalCellCount)
+    val game = MineGame(mapSize, mineCount)
 
     while (true) {
         game.openMap(Input.position(width.value, height.value))
-        Output.drawMap(game.viewMap, width)
+        Output.drawMap(game.map)
         if (game.win()) Output.win()
     }
 }
