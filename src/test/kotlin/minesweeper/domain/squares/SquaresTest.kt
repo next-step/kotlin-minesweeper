@@ -50,21 +50,19 @@ class SquaresTest {
     @Test
     fun `원하는 순서로 지점 목록을 반환하는지 확인`() {
         // given
-        val customSquares = Squares(
-            listOf(
+        val customSquares =
+            Squares.createFrom(
                 Square(2, 2),
                 Square(3, 3),
                 Square(1, 1)
             )
-        )
 
-        val expected = Squares(
-            listOf(
+        val expected =
+            Squares.createFrom(
                 Square(1, 1),
                 Square(2, 2),
                 Square(3, 3)
             )
-        )
 
         // when
         val actual: Squares = customSquares.shuffled(object : SquaresShuffleStrategy {
@@ -93,7 +91,7 @@ class SquaresTest {
     @Test
     fun `지뢰 개수로 지점을 나타낼 수 있다`() {
         // given
-        val spots = Squares(listOf(Square(1, 1)))
+        val spots = Squares.createFrom(Square(1, 1))
 
         // when
         val mineCountedSquares: Squares = spots.mineCounted { 3 }

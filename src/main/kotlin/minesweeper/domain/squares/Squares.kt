@@ -7,7 +7,7 @@ import minesweeper.domain.squarestate.Empty
 import minesweeper.domain.squarestate.Mine
 import minesweeper.domain.squarestate.SquareState
 
-data class Squares(private val squares: List<Square>) {
+data class Squares private constructor(private val squares: List<Square>) {
 
     fun updateStateIfOnBoundary(height: Int, width: Int): Squares {
         val squaresOnBoundary: List<Square> = squares.filter { it.isOnBoundary(height, width) }
@@ -62,5 +62,7 @@ data class Squares(private val squares: List<Square>) {
                 (0..(width + 1)).map { y -> Square(x, y, state = Empty.default) }
             }
         )
+
+        fun createFrom(vararg square: Square): Squares = Squares(square.toList())
     }
 }

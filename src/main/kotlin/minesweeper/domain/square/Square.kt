@@ -7,7 +7,7 @@ data class Square(
     val position: Position,
     private val state: SquareState
 ) {
-    constructor(x: Int, y: Int) : this(Position(x, y), state = Empty())
+    constructor(x: Int, y: Int) : this(Position(x, y), state = Empty.default)
 
     constructor(x: Int, y: Int, state: SquareState) : this(Position(x, y), state)
 

@@ -5,31 +5,31 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class EmptyTest {
-    private lateinit var empty: Empty
+    private lateinit var defaultEmpty: Empty
 
     @BeforeEach
     fun setUp() {
-        empty = Empty()
+        defaultEmpty = Empty.default
     }
 
     @Test
     fun `지뢰 아님`() {
-        assertThat(empty.isMine).isFalse()
+        assertThat(defaultEmpty.isMine).isFalse()
     }
 
     @Test
     fun `지뢰 개수 업데이트된 Empty가 반환되는지 확인`() {
         // when
-        val emptyUpdated: SquareState = empty.updateMineCount(3)
+        val emptyUpdated: SquareState = defaultEmpty.updateMineCount(3)
 
         // then
-        assertThat(empty.mineCount).isEqualTo(0)
+        assertThat(defaultEmpty.mineCount).isEqualTo(0)
         assertThat(emptyUpdated.mineCount).isEqualTo(3)
     }
 
     @Test
     fun `심볼 확인`() {
-        assertThat(empty.toString()).isEqualTo("0")
-        assertThat(Empty(3).toString()).isEqualTo("3")
+        assertThat(defaultEmpty.toString()).isEqualTo("0")
+        assertThat(defaultEmpty.updateMineCount(3).toString()).isEqualTo("3")
     }
 }
