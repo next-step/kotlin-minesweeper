@@ -18,8 +18,8 @@ data class Squares(private val squares: List<Square>) {
     private fun updateStatesOf(squaresToChange: List<Square>, newState: SquareState): List<Square> =
         this.squares - squaresToChange + squaresToChange.map { it.copy(state = newState) }
 
-    fun shuffled(squaresShufflingStrategy: SquaresShufflingStrategy): Squares =
-        Squares(squaresShufflingStrategy.shuffle(squares))
+    fun shuffled(squaresShuffleStrategy: SquaresShuffleStrategy): Squares =
+        Squares(squaresShuffleStrategy.shuffle(squares))
 
     fun mineLaid(mineCount: Int): Squares {
         val squaresChosen: List<Square> = squares.filter { !it.isBoundary() }.take(mineCount)
@@ -48,16 +48,16 @@ data class Squares(private val squares: List<Square>) {
 
     fun joinToString(): String {
         val lastIndexOfRow: Int = squares.last().position.y
-        return squares.joinToString("") { spot ->
-            when (spot.position.y) {
-                lastIndexOfRow -> "${spot.currentState()}\n"
-                else -> "${spot.currentState()} "
+        return squares.joinToString("") { square ->
+            when (square.position.y) {
+                lastIndexOfRow -> "${square.currentState()}\n"
+                else -> "${square.currentState()} "
             }
         }
     }
 
     companion object {
-        fun createAllWithinBoundaries(height: Int, width: Int): Squares = Squares(
+        fun createAllWithBoundary(height: Int, width: Int): Squares = Squares(
             (0..(height + 1)).flatMap { x ->
                 (0..(width + 1)).map { y -> Square(x, y, state = Empty.default) }
             }

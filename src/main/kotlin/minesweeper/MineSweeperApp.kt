@@ -1,7 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.GridBoard
-import minesweeper.domain.squares.RandomSquaresShufflingStrategy
+import minesweeper.domain.squares.RandomSquaresShuffleStrategy
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -11,7 +11,7 @@ fun main() {
     val mineCount: Int = InputView.readMineCount(height, width)
 
     val board: GridBoard = GridBoard(height, width)
-        .mineLaid(mineCount, RandomSquaresShufflingStrategy)
+        .mineLaid(mineCount, RandomSquaresShuffleStrategy)
         .mineCounted()
 
     ResultView.showBoard(board)

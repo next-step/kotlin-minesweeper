@@ -14,7 +14,7 @@ class SquaresTest {
 
     @BeforeEach
     fun setUp() {
-        twoByTwoSquares = Squares.createAllWithinBoundaries(2, 2)
+        twoByTwoSquares = Squares.createAllWithBoundary(2, 2)
             .updateStateIfOnBoundary(2, 2)
     }
 
@@ -67,7 +67,7 @@ class SquaresTest {
         )
 
         // when
-        val actual: Squares = customSquares.shuffled(object : SquaresShufflingStrategy {
+        val actual: Squares = customSquares.shuffled(object : SquaresShuffleStrategy {
             override fun shuffle(squares: List<Square>): List<Square> = squares.sortedBy { it.position.x }
         })
 

@@ -14,7 +14,6 @@ class MineTest {
 
     @Test
     fun `지뢰임`() {
-        // then
         assertThat(mine.isMine).isTrue()
     }
 
@@ -23,6 +22,7 @@ class MineTest {
         // when
         val symbol: String = mine.toString()
 
+        // then
         assertThat(symbol).isEqualTo(SquareSymbol.MINE.symbol)
     }
 }

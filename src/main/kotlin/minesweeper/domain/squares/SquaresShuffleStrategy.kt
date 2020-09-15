@@ -2,6 +2,6 @@ package minesweeper.domain.squares
 
 import minesweeper.domain.square.Square
 
-interface SquaresShufflingStrategy {
+interface SquaresShuffleStrategy {
     fun shuffle(squares: List<Square>): List<Square>
 }

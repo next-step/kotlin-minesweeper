@@ -1,17 +1,17 @@
 package minesweeper.domain
 
 import minesweeper.domain.squares.Squares
-import minesweeper.domain.squares.SquaresShufflingStrategy
+import minesweeper.domain.squares.SquaresShuffleStrategy
 
 class GridBoard(private val squares: Squares) {
 
     constructor(height: Int, width: Int) : this(
-        Squares.createAllWithinBoundaries(height, width)
+        Squares.createAllWithBoundary(height, width)
             .updateStateIfOnBoundary(height, width)
     )
 
-    fun mineLaid(mineCount: Int, squaresShufflingStrategy: SquaresShufflingStrategy): GridBoard {
-        val shuffled: Squares = squares.shuffled(squaresShufflingStrategy)
+    fun mineLaid(mineCount: Int, squaresShuffleStrategy: SquaresShuffleStrategy): GridBoard {
+        val shuffled: Squares = squares.shuffled(squaresShuffleStrategy)
         val mineLaid: Squares = shuffled.mineLaid(mineCount)
         return GridBoard(mineLaid)
     }
