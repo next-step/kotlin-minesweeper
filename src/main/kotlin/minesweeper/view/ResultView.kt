@@ -1,15 +1,13 @@
 package minesweeper.view
 
-import minesweeper.domain.MineMap
+import minesweeper.domain.GridBoard
 
-const val ANNOUNCE_GAME_START = "지뢰찾기 게임 시작"
+private const val ANNOUNCE_GAME_START = "지뢰 찾기 게임 시작"
 
 object ResultView {
 
-    fun showMineMap(mineMap: MineMap) {
+    fun showBoard(board: GridBoard) {
         println("\n$ANNOUNCE_GAME_START")
-
-        val map = mineMap.stateOfMap()
-        map.indices.forEach { println(map[it].joinToString(" ")) }
+        print(board.joinToString())
     }
 }
