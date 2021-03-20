@@ -24,7 +24,7 @@ class BoardViewTest {
     @Test
     internal fun `폭탄을 출력한다`() {
         val out = StringWriter()
-        BoardView(Cells(listOf(Cell(), Cell()), width = 2), out).show()
+        BoardView(Cells(listOf(Cell(), Cell(bomb = true)), width = 2), out).show()
         assertThat(out.toString()).isEqualTo(
             """
             ◻️💣
@@ -40,9 +40,20 @@ class BoardViewTest {
             val result = (1..height).joinToString(System.lineSeparator()) {
                 val startIndex = (it - 1) * cells.width
                 val endIndex = startIndex + cells.width
-                cells.subList(startIndex, endIndex).joinToString("") { "◻️" }
+                cells.subList(startIndex, endIndex).map(::CellView).joinToString("")
             }
             out.print(result)
+        }
+    }
+
+    class CellView(private val cell: Cell) {
+        override fun toString(): String {
+            return if (cell.bomb) BOMB else BLANK
+        }
+
+        companion object {
+            const val BLANK = "◻️"
+            const val BOMB = "💣"
         }
     }
 }
