@@ -4,7 +4,7 @@ import minesweeper.domain.Cells
 import java.io.PrintWriter
 import java.io.Writer
 
-class BoardView(private val cells: Cells, private val out: PrintWriter) {
+class BoardView(private val cells: Cells, private val out: PrintWriter = PrintWriter(System.out, true)) {
     constructor(cells: Cells, writer: Writer) : this(cells, PrintWriter(writer, true))
 
     fun show() {
@@ -15,5 +15,6 @@ class BoardView(private val cells: Cells, private val out: PrintWriter) {
             cells.subList(startIndex, endIndex).map(::CellView).joinToString("")
         }
         out.print(result)
+        out.flush()
     }
 }
