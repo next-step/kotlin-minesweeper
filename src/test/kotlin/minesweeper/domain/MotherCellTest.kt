@@ -16,6 +16,19 @@ class MotherCellTest {
         assertThat(bombCell.sideCells).contains(cells[1], cells[2], cells[3])
     }
 
+    @Test
+    internal fun `주변셀의 숫자를 증가한다`() {
+        val bombCell = MotherCell(bomb = true).apply {
+            sideCells = listOf(MotherCell(), MotherCell(), MotherCell())
+        }
+
+        bombCell.increseCount()
+
+        assertThat(bombCell.sideCells).allSatisfy {
+            assertThat(it.count).isEqualTo(1)
+        }
+    }
+
     class MotherCell(bomb: Boolean = false) {
         var sideCells = emptyList<MotherCell>()
     }
