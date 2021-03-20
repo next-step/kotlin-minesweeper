@@ -20,9 +20,11 @@ class MotherCellTest {
         fun cells(bomb: Int): List<Cell> {
             val randoms = (1..(width * height)).map { Random.nextDouble() }
             val boundary = randoms.sorted().take(bomb + 1).last()
-            return randoms.map { Cell(it < boundary) }
+            return Cells(randoms.map { Cell(it < boundary) })
         }
     }
 
     class Cell(val bomb: Boolean)
+
+    class Cells(val cells: List<Cell>) : List<Cell> by cells
 }
