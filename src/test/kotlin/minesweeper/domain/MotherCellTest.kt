@@ -10,14 +10,8 @@ class MotherCellTest {
     }
 
     class MotherCells(width: Int, height: Int) {
-        val cells: Cells = Cells(width, height)
+        val cells: List<MotherCell> = (1..(width * height)).map { MotherCell() }
     }
 
-    class Cells(private val cells: List<Cell>) : List<Cell> by cells {
-        constructor(width: Int, height: Int) : this(Cell() * (width * height))
-    }
-
-    class Cell() {
-        operator fun times(number: Int): List<Cell> = (0 until number).map { Cell() }
-    }
+    class MotherCell
 }
