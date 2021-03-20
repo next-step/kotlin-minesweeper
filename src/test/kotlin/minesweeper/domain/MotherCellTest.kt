@@ -2,7 +2,6 @@ package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import kotlin.random.Random
 
 class MotherCellTest {
     @Test
@@ -15,16 +14,4 @@ class MotherCellTest {
         val cells: List<Cell> = MotherCells(10, 10).cells(bomb = 10)
         assertThat(cells.filter { it.bomb }).hasSize(10)
     }
-
-    class MotherCells(private val width: Int, private val height: Int) {
-        fun cells(bomb: Int): List<Cell> {
-            val randoms = (1..(width * height)).map { Random.nextDouble() }
-            val boundary = randoms.sorted().take(bomb + 1).last()
-            return Cells(randoms.map { Cell(it < boundary) }, 2)
-        }
-    }
-
-    class Cell(val bomb: Boolean = false)
-
-    class Cells(val cells: List<Cell>, val width: Int) : List<Cell> by cells
 }

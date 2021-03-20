@@ -1,0 +1,4 @@
+package minesweeper
+
+fun main() {
+}
