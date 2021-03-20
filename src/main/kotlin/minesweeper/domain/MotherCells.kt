@@ -12,7 +12,6 @@ class MotherCells(private val width: Int, height: Int) {
 
     fun cells(bomb: Int): Cells {
         require(bomb > 0)
-        require(total > bomb)
 
         return Cells(randomCell(boundary(bomb)), width)
     }

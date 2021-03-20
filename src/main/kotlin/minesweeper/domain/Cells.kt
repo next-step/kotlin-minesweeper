@@ -5,6 +5,6 @@ class Cells(val cells: List<Cell>, val width: Int) : List<Cell> by cells {
 
     init {
         require(width > 0 && height > 0)
-        requireNotNull(cells.find { it.bomb })
+        require(cells.filter { it.bomb }.count() in 1 until size)
     }
 }
