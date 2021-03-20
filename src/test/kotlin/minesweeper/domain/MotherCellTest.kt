@@ -25,4 +25,9 @@ class MotherCellTest {
     internal fun `너비와 높이는 1 이상이어야 한다`() {
         assertThrows<IllegalArgumentException> { MotherCells(0, 10).cells(bomb = 0) }
     }
+
+    @Test
+    internal fun `지뢰수는 전체 셀수보다 작아야 한다`() {
+        assertThrows<IllegalArgumentException> { MotherCells(2, 2).cells(bomb = 4) }
+    }
 }
