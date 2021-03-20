@@ -21,12 +21,17 @@ class BoardViewTest {
         )
     }
 
-    class BoardView(cells: Cells, private val out: PrintWriter) {
+    class BoardView(private val cells: Cells, private val out: PrintWriter) {
         constructor(cells: Cells, writer: Writer) : this(cells, PrintWriter(writer, true))
 
         fun show() {
-            out.println("◻️◻️")
-            out.print("◻️◻️")
+            val height = cells.size / cells.width
+            val result = (1..height).joinToString(System.lineSeparator()) {
+                val startIndex = (it - 1) * cells.width
+                val endIndex = startIndex + cells.width
+                cells.subList(startIndex, endIndex).joinToString("") { "◻️" }
+            }
+            out.print(result)
         }
     }
 }
