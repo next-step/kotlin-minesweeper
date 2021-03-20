@@ -7,26 +7,20 @@ import org.junit.jupiter.api.Test
 import java.io.StringWriter
 
 class BoardViewTest {
-    @Test
-    internal fun `높이 너비로 화면에 출력한다`() {
-        val out = StringWriter()
-        BoardView(Cells(listOf(Cell(), Cell(), Cell(), Cell()), width = 2), out).show()
-        assertThat(out.toString()).isEqualTo(
-            """
-            ◻️◻️
-            ◻️◻️
-            """.trimIndent()
-        )
-    }
+    private val out = StringWriter()
 
     @Test
-    internal fun `폭탄을 출력한다`() {
-        val out = StringWriter()
-        BoardView(Cells(listOf(Cell(), Cell(bomb = true)), width = 2), out).show()
-        assertThat(out.toString()).isEqualTo(
+    internal fun `높이 너비로 화면에 출력한다`() {
+        BoardView(Cells(listOf(Cell(), Cell(), Cell(), Cell(bomb = true)), width = 2), out).show()
+
+        out showed
             """
-            ◻️💣
-            """.trimIndent()
-        )
+                ◻️◻️
+                ◻️💣
+            """
     }
+}
+
+private infix fun StringWriter.showed(content: String) {
+    assertThat(toString()).isEqualTo(content.trimIndent())
 }

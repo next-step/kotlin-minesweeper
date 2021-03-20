@@ -9,7 +9,7 @@ class BoardView(private val cells: Cells, private val out: PrintWriter = PrintWr
     constructor(cells: Cells, writer: Writer) : this(cells, PrintWriter(writer, true))
 
     fun show() {
-        out.print(rows().joinToString(lineSeparator(), transform = this::rowView))
+        out.print(rows() mapBy this::rowView)
         out.flush()
     }
 
@@ -26,4 +26,8 @@ class BoardView(private val cells: Cells, private val out: PrintWriter = PrintWr
     companion object {
         const val EMPTY = ""
     }
+}
+
+private infix fun IntRange.mapBy(transform: (it: Int) -> String): String {
+    return joinToString(lineSeparator(), transform = transform)
 }
