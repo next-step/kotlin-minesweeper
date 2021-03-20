@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class MotherCellTest {
+class MotherCellsTest {
     @Test
     internal fun `높이 너비만큼 셀을 만든다`() {
         assertThat(MotherCells(10, 10).cells(1)).hasSize(100)
