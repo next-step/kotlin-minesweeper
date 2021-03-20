@@ -1,3 +1,5 @@
 package minesweeper.domain
 
-class Cells(val cells: List<Cell>, val width: Int) : List<Cell> by cells
+class Cells(val cells: List<Cell>, val width: Int) : List<Cell> by cells {
+    val height: Int = size / width
+}
