@@ -21,6 +21,17 @@ class BoardViewTest {
         )
     }
 
+    @Test
+    internal fun `폭탄을 출력한다`() {
+        val out = StringWriter()
+        BoardView(Cells(listOf(Cell(), Cell()), width = 2), out).show()
+        assertThat(out.toString()).isEqualTo(
+            """
+            ◻️💣
+            """.trimIndent()
+        )
+    }
+
     class BoardView(private val cells: Cells, private val out: PrintWriter) {
         constructor(cells: Cells, writer: Writer) : this(cells, PrintWriter(writer, true))
 
