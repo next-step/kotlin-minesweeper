@@ -1,7 +1,5 @@
 package minesweeper.domain
 
-import minesweeper.domain.CoordinateTest.Coordinate
-import minesweeper.domain.CoordinateTest.Matrix
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,24 +24,6 @@ class MotherCellTest {
 
         assertThat(bombCell.sideCells).allSatisfy {
             assertThat(it.count).isEqualTo(1)
-        }
-    }
-
-    class MotherCell(val bomb: Boolean = false) {
-        var count: Int = 0
-        var sideCells = emptyList<MotherCell>()
-
-        fun increaseCount() {
-            sideCells
-                .filter { it.bomb.not() }
-                .forEach {
-                    it.increase()
-                }
-        }
-
-        private fun increase() {
-            require(!bomb)
-            count++
         }
     }
 }

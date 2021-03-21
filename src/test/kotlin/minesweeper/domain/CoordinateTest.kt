@@ -2,7 +2,6 @@ package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import kotlin.math.max
 
 class CoordinateTest {
     /**
@@ -64,55 +63,5 @@ class CoordinateTest {
     fun `11 x 2 우상단`() {
         assertThat(Coordinate(10, Matrix(11, 2)).sideIndexes)
             .isEqualTo(listOf(9, 20, 21))
-    }
-
-    class Matrix(private val width: Int, private val height: Int) {
-        private val base = max(width, height)
-        fun around(index: Int): List<Int> {
-            val (x, y) = toPosition(index)
-
-            return Around.apply(x, y)
-                .filter { it.valid(width, height) }
-                .map { toIndex(it) }
-        }
-
-        private fun toPosition(index: Int): Position {
-            return Position(index % width, index / width)
-        }
-
-        private fun toIndex(position: Position): Int {
-            return position.x + position.y * width
-        }
-    }
-
-    enum class Around(private val x: Int, private val y: Int) {
-        LEFT_TOP(-1, -1), TOP(0, -1), TOP_RIGHT(1, -1),
-        LEFT(-1, 0), RIGHT(1, 0),
-        LEFT_BOTTOM(-1, 1), BOTTOM(0, 1), BOTTOM_RIGHT(1, 1);
-
-        companion object {
-            fun apply(x: Int, y: Int): List<Position> {
-                return values().map { Position(it.x + x, it.y + y) }
-            }
-        }
-    }
-
-    data class Position(val x: Int, val y: Int) {
-        fun valid(width: Int, height: Int): Boolean = !negative() && !outside(width, height)
-
-        private fun outside(width: Int, height: Int) = x > width - 1 || y > height - 1
-
-        private fun negative() = x < 0 || y < 0
-
-        override fun toString(): String {
-            return "$x, $y"
-        }
-    }
-
-    class Coordinate(private val index: Int, private val matrix: Matrix) {
-        val sideIndexes: List<Int>
-            get() {
-                return matrix.around(index).sorted()
-            }
     }
 }
