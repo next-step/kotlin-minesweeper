@@ -34,15 +34,41 @@ class MotherCellsTest {
     @Test
     internal fun `셀 생성을 CellSource 에게 위임한다`() {
         val cells = listOf(Cell(), Cell(), Cell(), Cell(true))
+        val width = 2
         val motherCells = MotherCells(
-            2, 2,
+            width, cells.size / width,
             object : CellSource {
-                override val total: Int = 4
+                override val total: Int = cells.size
                 override fun cells(bomb: Int): List<Cell> {
                     return cells
                 }
             }
         )
-        assertThat(motherCells.cells(1)).isEqualTo(Cells(cells, 2))
+        assertThat(motherCells.cells(1)).isEqualTo(Cells(cells, width))
+    }
+
+    /**
+     * 0, 1, 💣, 💣
+     * 0, 1, 2, 2
+     * 0, 0, 0, 0
+     */
+    @Test
+    internal fun `옆 셀의 지뢰수가 기록되어 있다`() {
+        val cells = listOf(
+            Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
+            Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
+            Cell(), Cell(count = 0), Cell(count = 0), Cell(count = 0)
+        )
+        val width = 4
+        val motherCells = MotherCells(
+            width, cells.size / width,
+            object : CellSource {
+                override val total: Int = cells.size
+                override fun cells(bomb: Int): List<Cell> {
+                    return cells
+                }
+            }
+        )
+        assertThat(motherCells.cells(2)).isEqualTo(Cells(cells, width))
     }
 }
