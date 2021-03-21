@@ -30,4 +30,19 @@ class MotherCellsTest {
     internal fun `지뢰수는 전체 셀수보다 작아야 한다`() {
         assertThrows<IllegalArgumentException> { MotherCells(2, 2).cells(bomb = 4) }
     }
+
+    @Test
+    internal fun `셀 생성을 CellSource 에게 위임한다`() {
+        val cells = listOf(Cell(), Cell(), Cell(), Cell(true))
+        val motherCells = MotherCells(
+            2, 2,
+            object : CellSource {
+                override val total: Int = 4
+                override fun cells(bomb: Int): List<Cell> {
+                    return cells
+                }
+            }
+        )
+        assertThat(motherCells.cells(1)).isEqualTo(Cells(cells, 2))
+    }
 }
