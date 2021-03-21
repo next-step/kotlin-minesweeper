@@ -8,20 +8,8 @@ import java.io.StringWriter
 
 class BoardViewTest {
     private val out = StringWriter()
-
     @Test
-    internal fun `높이 너비로 화면에 출력한다`() {
-        BoardView(Cells(listOf(Cell(), Cell(), Cell(), Cell(bomb = true)), width = 2), out).show()
-
-        out showed
-            """
-                ◻️◻️
-                ◻️💣
-            """
-    }
-
-    @Test
-    internal fun `숫자가 표시된다`() {
+    internal fun `숫자와 폭탄수가 표시된다`() {
         val cells = listOf(
             Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
             Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
@@ -31,13 +19,13 @@ class BoardViewTest {
 
         out showed
             """
-                ◻️1💣💣
-                ◻️122
-                ◻️◻️◻️◻️
+                | 0 1💣💣
+                | 0 1 2 2
+                | 0 0 0 0
             """
     }
 }
 
 private infix fun StringWriter.showed(content: String) {
-    assertThat(toString()).isEqualTo(content.trimIndent())
+    assertThat(toString()).isEqualTo(content.trimMargin())
 }

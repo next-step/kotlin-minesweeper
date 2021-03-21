@@ -7,14 +7,10 @@ class CellView(private val cell: Cell) {
         if (cell.bomb) {
             return BOMB
         }
-        if (cell.count > 0) {
-            return cell.count.toString()
-        }
-        return BLANK
+        return String.format("%2d", cell.count)
     }
 
     companion object {
-        const val BLANK = "◻️"
         const val BOMB = "💣"
     }
 }
