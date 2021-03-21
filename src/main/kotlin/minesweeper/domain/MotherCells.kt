@@ -19,15 +19,24 @@ class MotherCells(
 }
 
 interface CellSource {
-    val total: Int
     fun cells(bomb: Int): List<Cell>
 
-    class Default(override val total: Int) : CellSource {
-        private val randoms = (1..total).map { Random.nextDouble() }
+    class Default(private val randoms: List<Double>) : CellSource {
+        constructor(total: Int) : this((1..total).map { Random.nextDouble() })
 
         override fun cells(bomb: Int): List<Cell> {
             val boundary = boundary(bomb)
-            return randoms.map { Cell(it <= boundary) }
+
+            val cells = randoms.map { MotherCell(it <= boundary) }
+            for ((index, cell) in cells.withIndex()) {
+                cell.sideCells = Coordinate(index, Matrix(2, 2)).sideIndexes.map { cells[it] }
+            }
+
+            for (cell in cells) {
+                cell.increaseCount()
+            }
+
+            return cells.map { it.cell }
         }
 
         private fun boundary(bomb: Int) = randoms.sorted().take(bomb).last()

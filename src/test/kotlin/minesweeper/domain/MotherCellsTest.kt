@@ -38,7 +38,6 @@ class MotherCellsTest {
         val motherCells = MotherCells(
             width, cells.size / width,
             object : CellSource {
-                override val total: Int = cells.size
                 override fun cells(bomb: Int): List<Cell> {
                     return cells
                 }
@@ -63,7 +62,6 @@ class MotherCellsTest {
         val motherCells = MotherCells(
             width, cells.size / width,
             object : CellSource {
-                override val total: Int = cells.size
                 override fun cells(bomb: Int): List<Cell> {
                     return cells
                 }
