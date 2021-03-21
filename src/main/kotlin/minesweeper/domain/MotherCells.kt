@@ -2,10 +2,11 @@ package minesweeper.domain
 
 import kotlin.random.Random
 
-class MotherCells(private val width: Int, height: Int) {
-    private val total = width * height
-    private val randoms = (1..total).map { Random.nextDouble() }
-
+class MotherCells(
+    private val width: Int,
+    height: Int,
+    private val source: CellSource = CellSource.Default(width * height)
+) {
     init {
         require(width > 0 && height > 0)
     }
@@ -13,10 +14,22 @@ class MotherCells(private val width: Int, height: Int) {
     fun cells(bomb: Int): Cells {
         require(bomb > 0)
 
-        return Cells(randomCell(boundary(bomb)), width)
+        return Cells(source.cells(bomb), width)
     }
+}
 
-    private fun randomCell(boundary: Double): List<Cell> = randoms.map { Cell(it <= boundary) }
+interface CellSource {
+    val total: Int
+    fun cells(bomb: Int): List<Cell>
 
-    private fun boundary(bomb: Int) = randoms.sorted().take(bomb).last()
+    class Default(override val total: Int) : CellSource {
+        private val randoms = (1..total).map { Random.nextDouble() }
+
+        override fun cells(bomb: Int): List<Cell> {
+            val boundary = boundary(bomb)
+            return randoms.map { Cell(it <= boundary) }
+        }
+
+        private fun boundary(bomb: Int) = randoms.sorted().take(bomb).last()
+    }
 }
