@@ -62,13 +62,17 @@ class MotherCellsTest {
         val motherCells = MotherCells(
             width, cells.size / width,
             CellSource.Default(
-                listOf(
-                    0, 0, 1, 1,
-                    0, 0, 0, 0,
-                    0, 0, 0, 0
-                ).map { it.toDouble() }
+                RandomDoubles(
+                    listOf(
+                        1, 1, 0, 0,
+                        1, 1, 1, 1,
+                        1, 1, 1, 1
+                    ).map { it.toDouble() } // 작은수가 지뢰
+                ),
+                Coordinate(Matrix(width, cells.size / width))
             )
         )
+
         assertThat(motherCells.cells(2)).isEqualTo(Cells(cells, width))
     }
 }

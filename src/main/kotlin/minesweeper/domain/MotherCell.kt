@@ -7,6 +7,10 @@ class MotherCell(val bomb: Boolean = false) {
         get() = Cell(bomb, count)
 
     fun increaseCount() {
+        if (!bomb) {
+            return
+        }
+
         sideCells
             .filter { it.bomb.not() }
             .forEach {

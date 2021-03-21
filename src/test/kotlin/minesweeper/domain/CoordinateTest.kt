@@ -10,7 +10,7 @@ class CoordinateTest {
      */
     @Test
     internal fun `2 x 2 좌상단 코너`() {
-        assertThat(Coordinate(0, Matrix(2, 2)).sideIndexes)
+        assertThat(Coordinate(Matrix(2, 2)).sideIndexes(0))
             .isEqualTo(listOf(1, 2, 3))
     }
 
@@ -20,7 +20,7 @@ class CoordinateTest {
      */
     @Test
     internal fun `2 x 2 우상단 코너`() {
-        assertThat(Coordinate(1, Matrix(2, 2)).sideIndexes)
+        assertThat(Coordinate(Matrix(2, 2)).sideIndexes(1))
             .isEqualTo(listOf(0, 2, 3))
     }
 
@@ -30,7 +30,7 @@ class CoordinateTest {
      */
     @Test
     fun `3 x 2 상단`() {
-        assertThat(Coordinate(1, Matrix(3, 2)).sideIndexes)
+        assertThat(Coordinate(Matrix(3, 2)).sideIndexes(1))
             .isEqualTo(listOf(0, 2, 3, 4, 5))
     }
 
@@ -40,7 +40,7 @@ class CoordinateTest {
      */
     @Test
     fun `3 x 2 우상단 코너`() {
-        assertThat(Coordinate(2, Matrix(3, 2)).sideIndexes)
+        assertThat(Coordinate(Matrix(3, 2)).sideIndexes(2))
             .isEqualTo(listOf(1, 4, 5))
     }
 
@@ -51,7 +51,7 @@ class CoordinateTest {
      */
     @Test
     fun `2 x 3 오른쪽`() {
-        assertThat(Coordinate(3, Matrix(2, 3)).sideIndexes)
+        assertThat(Coordinate(Matrix(2, 3)).sideIndexes(3))
             .isEqualTo(listOf(0, 1, 2, 4, 5))
     }
 
@@ -61,7 +61,7 @@ class CoordinateTest {
      */
     @Test
     fun `11 x 2 우상단`() {
-        assertThat(Coordinate(10, Matrix(11, 2)).sideIndexes)
+        assertThat(Coordinate(Matrix(11, 2)).sideIndexes(10))
             .isEqualTo(listOf(9, 20, 21))
     }
 }

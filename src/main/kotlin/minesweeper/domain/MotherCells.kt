@@ -5,7 +5,7 @@ import kotlin.random.Random
 class MotherCells(
     private val width: Int,
     height: Int,
-    private val source: CellSource = CellSource.Default(width * height)
+    private val source: CellSource = CellSource.Default(width, height)
 ) {
     init {
         require(width > 0 && height > 0)
@@ -21,15 +21,19 @@ class MotherCells(
 interface CellSource {
     fun cells(bomb: Int): List<Cell>
 
-    class Default(private val randoms: List<Double>) : CellSource {
-        constructor(total: Int) : this((1..total).map { Random.nextDouble() })
+    class Default(private val randomDoubles: RandomDoubles, private val coordinate: Coordinate) : CellSource {
+        constructor(width: Int, height: Int) : this(
+            RandomDoubles(width * height),
+            Coordinate(Matrix(width, height))
+        )
 
         override fun cells(bomb: Int): List<Cell> {
             val boundary = boundary(bomb)
 
-            val cells = randoms.map { MotherCell(it <= boundary) }
+            val cells = randomDoubles.map { MotherCell(it <= boundary) }
+
             for ((index, cell) in cells.withIndex()) {
-                cell.sideCells = Coordinate(index, Matrix(2, 2)).sideIndexes.map { cells[it] }
+                cell.sideCells = coordinate.sideIndexes(index).map { cells[it] }
             }
 
             for (cell in cells) {
@@ -39,6 +43,20 @@ interface CellSource {
             return cells.map { it.cell }
         }
 
-        private fun boundary(bomb: Int) = randoms.sorted().take(bomb).last()
+        private fun boundary(bomb: Int) = randomDoubles.sorted().take(bomb).last()
+    }
+}
+
+class RandomDoubles(private val values: List<Double>) {
+    constructor(count: Int) : this(valuesOf(count))
+
+    fun sorted(): List<Double> = values.sorted()
+
+    fun map(mapper: (Double) -> MotherCell): List<MotherCell> {
+        return values.map(mapper)
+    }
+
+    companion object {
+        private fun valuesOf(count: Int) = (1..count).map { Random.nextDouble() }
     }
 }
