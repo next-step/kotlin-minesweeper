@@ -5,28 +5,83 @@ import org.junit.jupiter.api.Test
 import kotlin.math.max
 
 class CoordinateTest {
+    /**
+     * x, 2
+     * 3, 4
+     */
     @Test
     internal fun `2 x 2 좌상단 코너`() {
         assertThat(Coordinate(0, Matrix(2, 2)).sideIndexes)
             .isEqualTo(listOf(1, 2, 3))
     }
 
+    /**
+     * 0, x
+     * 2, 3
+     */
     @Test
     internal fun `2 x 2 우상단 코너`() {
         assertThat(Coordinate(1, Matrix(2, 2)).sideIndexes)
             .isEqualTo(listOf(0, 2, 3))
     }
 
+    /**
+     * 0, x, 2
+     * 3, 4, 5
+     */
+    @Test
+    fun `3 x 2 상단`() {
+        assertThat(Coordinate(1, Matrix(3, 2)).sideIndexes)
+            .isEqualTo(listOf(0, 2, 3, 4, 5))
+    }
+
+    /**
+     * 0, 1, x
+     * 3, 4, 5
+     */
+    @Test
+    fun `3 x 2 우상단 코너`() {
+        assertThat(Coordinate(2, Matrix(3, 2)).sideIndexes)
+            .isEqualTo(listOf(1, 4, 5))
+    }
+
+    /**
+     * 0, 1
+     * 2, x
+     * 4, 5
+     */
+    @Test
+    fun `2 x 3 오른쪽`() {
+        assertThat(Coordinate(3, Matrix(2, 3)).sideIndexes)
+            .isEqualTo(listOf(0, 1, 2, 4, 5))
+    }
+
+    /**
+     * 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, x
+     * 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+     */
+    @Test
+    fun `11 x 2 우상단`() {
+        assertThat(Coordinate(10, Matrix(11, 2)).sideIndexes)
+            .isEqualTo(listOf(9, 20, 21))
+    }
+
     class Matrix(private val width: Int, private val height: Int) {
         private val base = max(width, height)
         fun around(index: Int): List<Int> {
-            val (x, y) = index.toString(base)
-                .let {
-                    if (it.length == 1) "0$it" else it
-                }
-                .map { Character.getNumericValue(it) }.toList()
-            return Around.apply(x, y).filter { valid(it) }
-                .map { "${it.x}${it.y}" }.map { it.toInt(base) }
+            val position = toPosition(index)
+
+            return Around.apply(position)
+                .filter { valid(it) }
+                .map { toIndex(it) }
+        }
+
+        private fun toPosition(index: Int): Position {
+            return Position(index % width, index / width)
+        }
+
+        private fun toIndex(position: Position): Int {
+            return position.x + position.y * width
         }
 
         private fun valid(position: Position): Boolean {
@@ -46,13 +101,21 @@ class CoordinateTest {
         LEFT_BOTTOM(-1, 1), BOTTOM(0, 1), BOTTOM_RIGHT(1, 1);
 
         companion object {
-            fun apply(x: Int, y: Int): List<Position> {
+            fun apply(position: Position): List<Position> {
+                return apply(position.x, position.y)
+            }
+
+            private fun apply(x: Int, y: Int): List<Position> {
                 return values().map { Position(it.x + x, it.y + y) }
             }
         }
     }
 
-    class Position(val x: Int, val y: Int)
+    class Position(val x: Int, val y: Int) {
+        override fun toString(): String {
+            return "$x, $y"
+        }
+    }
 
     class Coordinate(private val index: Int, private val matrix: Matrix) {
         val sideIndexes: List<Int>
