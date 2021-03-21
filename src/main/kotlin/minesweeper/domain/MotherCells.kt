@@ -28,22 +28,35 @@ interface CellSource {
         )
 
         override fun cells(bomb: Int): List<Cell> {
+            val cells = makeCell(bomb)
+
+            updateSide(cells)
+
+            increaseCount(cells)
+
+            return toCell(cells)
+        }
+
+        private fun makeCell(bomb: Int): List<MotherCell> {
             val boundary = boundary(bomb)
+            return randomDoubles.map { MotherCell(it <= boundary) }
+        }
 
-            val cells = randomDoubles.map { MotherCell(it <= boundary) }
+        private fun boundary(count: Int) = randomDoubles.sorted().take(count).last()
 
-            for ((index, cell) in cells.withIndex()) {
-                cell.sideCells = coordinate.sideIndexes(index).map { cells[it] }
-            }
-
+        private fun increaseCount(cells: List<MotherCell>) {
             for (cell in cells) {
                 cell.increaseCount()
             }
-
-            return cells.map { it.cell }
         }
 
-        private fun boundary(bomb: Int) = randomDoubles.sorted().take(bomb).last()
+        private fun updateSide(cells: List<MotherCell>) {
+            for ((index, cell) in cells.withIndex()) {
+                cell.sideCells = coordinate.sideIndexes(index).map { cells[it] }
+            }
+        }
+
+        private fun toCell(cells: List<MotherCell>) = cells.map { it.cell }
     }
 }
 
