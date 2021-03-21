@@ -69,10 +69,10 @@ class CoordinateTest {
     class Matrix(private val width: Int, private val height: Int) {
         private val base = max(width, height)
         fun around(index: Int): List<Int> {
-            val position = toPosition(index)
+            val (x, y) = toPosition(index)
 
-            return Around.apply(position)
-                .filter { valid(it) }
+            return Around.apply(x, y)
+                .filter { it.valid(width, height) }
                 .map { toIndex(it) }
         }
 
@@ -83,16 +83,6 @@ class CoordinateTest {
         private fun toIndex(position: Position): Int {
             return position.x + position.y * width
         }
-
-        private fun valid(position: Position): Boolean {
-            if (position.x < 0 || position.y < 0) {
-                return false
-            }
-            if (position.x > width - 1 || position.y > height - 1) {
-                return false
-            }
-            return true
-        }
     }
 
     enum class Around(private val x: Int, private val y: Int) {
@@ -101,17 +91,23 @@ class CoordinateTest {
         LEFT_BOTTOM(-1, 1), BOTTOM(0, 1), BOTTOM_RIGHT(1, 1);
 
         companion object {
-            fun apply(position: Position): List<Position> {
-                return apply(position.x, position.y)
-            }
-
-            private fun apply(x: Int, y: Int): List<Position> {
+            fun apply(x: Int, y: Int): List<Position> {
                 return values().map { Position(it.x + x, it.y + y) }
             }
         }
     }
 
-    class Position(val x: Int, val y: Int) {
+    data class Position(val x: Int, val y: Int) {
+        fun valid(width: Int, height: Int): Boolean {
+            if (x < 0 || y < 0) {
+                return false
+            }
+            if (x > width - 1 || y > height - 1) {
+                return false
+            }
+            return true
+        }
+
         override fun toString(): String {
             return "$x, $y"
         }
