@@ -52,7 +52,7 @@ class MotherCellsTest {
      * 0, 0, 0, 0
      */
     @Test
-    internal fun `옆 셀의 지뢰수가 기록되어 있다`() {
+    fun `옆 셀의 지뢰수가 기록되어 있다`() {
         val cells = listOf(
             Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
             Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
@@ -61,11 +61,13 @@ class MotherCellsTest {
         val width = 4
         val motherCells = MotherCells(
             width, cells.size / width,
-            object : CellSource {
-                override fun cells(bomb: Int): List<Cell> {
-                    return cells
-                }
-            }
+            CellSource.Default(
+                listOf(
+                    0, 0, 1, 1,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0
+                ).map { it.toDouble() }
+            )
         )
         assertThat(motherCells.cells(2)).isEqualTo(Cells(cells, width))
     }
