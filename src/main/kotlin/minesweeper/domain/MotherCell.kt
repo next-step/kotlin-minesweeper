@@ -2,7 +2,8 @@ package minesweeper.domain
 
 class MotherCell(val bomb: Boolean = false) {
     var count: Int = 0
-    var sideCells = emptyList<MotherCell>()
+        private set
+    lateinit var sideCells: List<MotherCell>
     val cell: Cell
         get() = Cell(bomb, count)
 
