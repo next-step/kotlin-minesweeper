@@ -1,9 +1,6 @@
 package minesweeper.domain
 
-import kotlin.math.max
-
 class Matrix(private val width: Int, private val height: Int) {
-    private val base = max(width, height)
     fun around(index: Int): List<Int> {
         val (x, y) = toPosition(index)
 
