@@ -23,7 +23,7 @@ class CellsTest {
     @Test
     internal fun `열릴 위치를 입력받으면 셀이 열려있다`() {
         val target = Cell()
-        val operation = Cells(listOf(target, Cell(true)), 2).operation()
+        val operation = Cells(listOf(target, Cell(true), Cell()), 3).operation()
         operation.open(Position(1, 1))
         assertThat(operation.result).isEqualTo(Result.SUCCESS)
         assertThat(target.open).isTrue()
@@ -54,5 +54,13 @@ class CellsTest {
         operation.open(Position(1, 1))
         assertThat(first.open).isTrue()
         assertThat(second.open).isTrue()
+    }
+
+    @Test
+    internal fun `모두 열리면 종료응답을 받는다`() {
+        val first = Cell()
+        val operation = Cells(listOf(first, Cell(true)), 2).operation()
+        operation.open(Position(1, 1))
+        assertThat(operation.result).isEqualTo(Result.END)
     }
 }
