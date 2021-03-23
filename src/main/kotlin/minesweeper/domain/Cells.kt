@@ -32,6 +32,12 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         return result
     }
 
+    fun allOpen() {
+        for (cell in cells) {
+            cell.open()
+        }
+    }
+
     interface Operation {
         var result: Result
         fun open(position: Position)
