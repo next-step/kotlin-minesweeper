@@ -16,10 +16,16 @@ class CellsTest {
     @Test
     internal fun `지뢰가 존재해야 한다`() {
         assertThrows<IllegalArgumentException> {
-            Cells(listOf(Cell(), Cell()), 3)
+            Cells(listOf(Cell(), Cell()), 2)
         }
     }
 
+    @Test
+    internal fun `지뢰가 아닌 셀이 존재해야 한다`() {
+        assertThrows<IllegalArgumentException> {
+            Cells(listOf(Cell(bomb = true), Cell(bomb = true)), 2)
+        }
+    }
     @Test
     internal fun `열릴 위치를 입력받으면 셀이 열려있다`() {
         val target = Cell()
