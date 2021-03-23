@@ -35,7 +35,6 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
     interface Operation {
         var result: Result
         fun open(position: Position)
-        fun opened(): List<Cell>
 
         class Smart(private val cells: List<Cell>) : Operation {
             override lateinit var result: Result
@@ -51,10 +50,6 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                 cells[0].open()
                 cells[1].open()
                 result = Result.SUCCESS
-            }
-
-            override fun opened(): List<Cell> {
-                return listOf(cells[0])
             }
         }
 

@@ -22,14 +22,11 @@ class CellsTest {
 
     @Test
     internal fun `열릴 위치를 입력받으면 셀이 열려있다`() {
-        val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
+        val target = Cell()
+        val operation = Cells(listOf(target, Cell(true)), 2).operation()
         operation.open(Position(1, 1))
         assertThat(operation.result).isEqualTo(Result.SUCCESS)
-        assertThat(operation.opened())
-            .hasSize(1)
-            .allSatisfy {
-                assertThat(it.open).isTrue()
-            }
+        assertThat(target.open).isTrue()
     }
 
     @Test
