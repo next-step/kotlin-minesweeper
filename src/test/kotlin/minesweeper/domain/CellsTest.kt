@@ -25,4 +25,12 @@ class CellsTest {
         Cells(listOf(cell, Cell(true)), 2).open(Position(1, 1))
         assertThat(cell.open).isTrue()
     }
+
+    @Test
+    internal fun `열려 있는 곳을 다시 열면 이미 열려있음 응답을 받는다`() {
+        val cell = Cell()
+        val operation = Cells(listOf(cell, Cell(true)), 2).operation()
+        operation.open(Position(1, 1))
+        assertThat(operation.result()).isEqualTo(Operation.Result.OPENED)
+    }
 }
