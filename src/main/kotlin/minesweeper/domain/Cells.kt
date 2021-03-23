@@ -54,6 +54,9 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                 }
 
                 result = open(cell, matrix.around(zeroBased))
+                if (completed()) {
+                    result = Result.END
+                }
             }
 
             private fun error(cell: Cell): Result {
@@ -67,20 +70,24 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
             }
 
             private tailrec fun open(cell: Cell, linked: List<Position>): Result {
-                cell.open()
-
-                if (cells.filterNot { it.open }.isEmpty()) {
-                    return Result.END
-                }
-
-                if (cell.count != 0 || linked.isEmpty()) {
+                if (linked.isEmpty()) {
                     return Result.SUCCESS
                 }
 
-                return open(cellOf(linked.first()), linked.drop(1))
+                val next = linked.first()
+
+                if (cell.bomb || cell.open) {
+                    return open(cellOf(next), linked.drop(1))
+                }
+
+                cell.open()
+
+                return open(cellOf(next), linked.drop(1) + matrix.around(next))
             }
 
             private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
+
+            private fun completed() = cells.filterNot { it.open || it.bomb }.isEmpty()
         }
 
         enum class Result {

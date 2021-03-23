@@ -61,11 +61,13 @@ class CellsTest {
         val first = Cell()
         val second = Cell()
         val third = Cell()
-        val operation = Cells(listOf(first, second, third, Cell(true)), 4).operation()
+        val bomb = Cell(true)
+        val operation = Cells(listOf(first, second, third, bomb), 4).operation()
         operation.open(Position(1, 1))
         assertThat(first.open).isTrue()
         assertThat(second.open).isTrue()
         assertThat(third.open).isTrue()
+        assertThat(bomb.open).isFalse()
     }
 
     @Test
