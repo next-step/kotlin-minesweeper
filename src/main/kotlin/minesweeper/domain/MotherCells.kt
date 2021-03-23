@@ -60,14 +60,8 @@ interface CellSource {
     }
 }
 
-class RandomDoubles(private val values: List<Double>) {
+class RandomDoubles(private val values: List<Double>) : List<Double> by values {
     constructor(count: Int) : this(valuesOf(count))
-
-    fun sorted(): List<Double> = values.sorted()
-
-    fun map(mapper: (Double) -> MotherCell): List<MotherCell> {
-        return values.map(mapper)
-    }
 
     companion object {
         private fun valuesOf(count: Int) = (1..count).map { Random.nextDouble() }
