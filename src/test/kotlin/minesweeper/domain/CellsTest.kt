@@ -71,7 +71,28 @@ class CellsTest {
     }
 
     @Test
-    internal fun `모두 열리면 종료응답을 받는다`() {
+    internal fun `두줄도 열린다`() {
+        val cells = listOf(
+            Cell(), Cell(), Cell(), Cell(true),
+            Cell(), Cell(), Cell(), Cell(),
+            Cell(bomb = true), Cell(), Cell(), Cell()
+        )
+        val operation = Cells(cells, 4).operation()
+        operation.open(Position(1, 1))
+        assertThat(cells.filter { !it.bomb })
+            .hasSize(10)
+            .allSatisfy {
+                assertThat(it.open).isTrue()
+            }
+        assertThat(cells.filter { it.bomb })
+            .hasSize(2)
+            .allSatisfy {
+                assertThat(it.open).isFalse()
+            }
+    }
+
+    @Test
+    fun `모두 열리면 종료응답을 받는다`() {
         val first = Cell()
         val operation = Cells(listOf(first, Cell(true)), 2).operation()
         operation.open(Position(1, 1))
