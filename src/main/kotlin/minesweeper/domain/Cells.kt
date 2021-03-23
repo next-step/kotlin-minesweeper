@@ -27,4 +27,8 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         result = 31 * result + height
         return result
     }
+
+    fun open(position: Position) {
+        cells[0].open()
+    }
 }

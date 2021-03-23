@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -21,7 +22,7 @@ class CellsTest {
     @Test
     internal fun `열릴 위치를 입력받으면 셀이 열려있다`() {
         val cell = Cell()
-        Cells(listOf(cell), 1).open(Position(1, 1))
+        Cells(listOf(cell, Cell(true)), 2).open(Position(1, 1))
         assertThat(cell.open).isTrue()
     }
 }
