@@ -57,7 +57,7 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                     return
                 }
 
-                result = open(cell, matrix.around(zeroBased))
+                result = open(zeroBased, matrix.around(zeroBased))
                 if (completed()) {
                     result = Result.END
                 }
@@ -74,7 +74,8 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                 return Result.NONE
             }
 
-            private tailrec fun open(cell: Cell, linked: List<Position>): Result {
+            private tailrec fun open(position: Position, linked: List<Position>): Result {
+                val cell = cellOf(position)
                 if (!cell.bomb) {
                     cell.open()
                 }
@@ -84,11 +85,11 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                 }
 
                 val next = linked.first()
-                val nextCell = cellOf(next)
-                return open(nextCell, linked.drop(1) + nextAround(nextCell, next))
+                return open(next, linked.drop(1) + nextAround(next).filter { it != position })
             }
 
-            private fun nextAround(nextCell: Cell, next: Position): List<Position> {
+            private fun nextAround(next: Position): List<Position> {
+                val nextCell = cellOf(next)
                 if (!(nextCell.bomb || nextCell.open || nextCell.count > 0)) {
                     return matrix.around(next)
                 }
