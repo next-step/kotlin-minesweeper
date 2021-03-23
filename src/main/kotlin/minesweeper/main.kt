@@ -23,8 +23,8 @@ fun main() {
         operation = cells.operation()
         val (x, y) = UserInput.IntArray("\nopen: ").answer()
         operation.open(Position(x, y))
-        printResult(operation.result)
-    } while (operation.result in listOf(SUCCESS, OPENED))
+        printResult(operation.result())
+    } while (operation.result() in listOf(SUCCESS, OPENED))
 
     cells.allOpen()
     BoardView(cells).show()

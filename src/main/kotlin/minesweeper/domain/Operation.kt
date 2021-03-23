@@ -1,11 +1,14 @@
 package minesweeper.domain
 
 interface Operation {
-    var result: Result
+    fun result(): Result
+
     fun open(position: Position)
 
     class Smart(private val cells: Cells, private val matrix: Matrix) : Operation {
-        override lateinit var result: Result
+        private lateinit var result: Result
+        override fun result(): Result = result
+
         override fun open(position: Position) {
             val zeroBased = Position(position.x - 1, position.y - 1)
             if (!matrix.contains(zeroBased)) {

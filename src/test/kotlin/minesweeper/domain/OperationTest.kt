@@ -10,7 +10,7 @@ class OperationTest {
         val operation = Cells(listOf(target, Cell(true), Cell()), 3).operation()
         operation.open(Position(1, 1))
 
-        assertThat(operation.result).isEqualTo(Operation.Result.SUCCESS)
+        assertThat(operation.result()).isEqualTo(Operation.Result.SUCCESS)
         assertThat(target.open).isTrue()
     }
 
@@ -21,7 +21,7 @@ class OperationTest {
         val operation = Cells(listOf(cell, Cell(true)), 2).operation()
         operation.open(Position(1, 1))
 
-        assertThat(operation.result).isEqualTo(Operation.Result.OPENED)
+        assertThat(operation.result()).isEqualTo(Operation.Result.OPENED)
     }
 
     @Test
@@ -29,7 +29,7 @@ class OperationTest {
         val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
         operation.open(Position(2, 1))
 
-        assertThat(operation.result).isEqualTo(Operation.Result.EXPLOSION)
+        assertThat(operation.result()).isEqualTo(Operation.Result.EXPLOSION)
     }
 
     @Test
@@ -105,7 +105,7 @@ class OperationTest {
         val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
         operation.open(Position(1, 1))
 
-        assertThat(operation.result).isEqualTo(Operation.Result.END)
+        assertThat(operation.result()).isEqualTo(Operation.Result.END)
     }
 
     @Test
@@ -113,6 +113,6 @@ class OperationTest {
         val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
         operation.open(Position(10, 10))
 
-        assertThat(operation.result).isEqualTo(Operation.Result.OUT_OF_MATRIX)
+        assertThat(operation.result()).isEqualTo(Operation.Result.OUT_OF_MATRIX)
     }
 }
