@@ -10,7 +10,7 @@ class Matrix(private val width: Int, private val height: Int) {
         val (x, y) = position
 
         return Around.aroundPositions(x, y)
-            .filter { it.valid(width, height) }
+            .filter { it.insideOf(width, height) }
     }
 
     private fun toPosition(index: Int): Position {
