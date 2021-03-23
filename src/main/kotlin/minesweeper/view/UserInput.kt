@@ -20,4 +20,21 @@ interface UserInput<T> {
             return scanner.nextInt()
         }
     }
+
+    class IntArray(
+        private val question: String,
+        readable: Readable = InputStreamReader(System.`in`)
+    ) : UserInput<kotlin.IntArray> {
+        private val scanner: Scanner = Scanner(readable)
+
+        constructor(question: String, answer: String) : this(question, StringReader(answer))
+
+        override fun answer(): kotlin.IntArray {
+            print(question)
+            return scanner.nextLine()
+                .split(",")
+                .map { it.toInt() }
+                .toIntArray()
+        }
+    }
 }
