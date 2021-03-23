@@ -8,6 +8,10 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         require(cells.filter { it.bomb }.count() in 1 until size)
     }
 
+    fun operation(): Operation {
+        return Operation.Smart(cells)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -28,27 +32,30 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         return result
     }
 
-    fun open(position: Position) {
-        cells[0].open()
-    }
-
-    fun operation(): Operation {
-        return Operation.Smart()
-    }
-
     interface Operation {
+        var result: Result
         fun open(position: Position)
-        fun result(): Result
+        fun opened(): List<Cell>
 
-        class Smart : Operation {
+        class Smart(private val cells: List<Cell>) : Operation {
+            override lateinit var result: Result
             override fun open(position: Position) {
+                if (cells[0].open) {
+                    result = Result.OPENED
+                    return
+                }
+                cells[0].open()
+                result = Result.SUCCESS
             }
 
-            override fun result(): Result = Result.OPENED
+            override fun opened(): List<Cell> {
+                return listOf(cells[0])
+            }
         }
 
         enum class Result {
-            OPENED
+            OPENED,
+            SUCCESS
         }
     }
 }

@@ -24,7 +24,7 @@ class CellsTest {
     internal fun `열릴 위치를 입력받으면 셀이 열려있다`() {
         val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
         operation.open(Position(1, 1))
-        assertThat(operation.result()).isEqualTo(Result.SUCCESS)
+        assertThat(operation.result).isEqualTo(Result.SUCCESS)
         assertThat(operation.opened())
             .hasSize(1)
             .allSatisfy {
@@ -35,8 +35,10 @@ class CellsTest {
     @Test
     internal fun `열려 있는 곳을 다시 열면 이미 열려있음 응답을 받는다`() {
         val cell = Cell()
+        cell.open()
+
         val operation = Cells(listOf(cell, Cell(true)), 2).operation()
         operation.open(Position(1, 1))
-        assertThat(operation.result()).isEqualTo(Result.OPENED)
+        assertThat(operation.result).isEqualTo(Result.OPENED)
     }
 }
