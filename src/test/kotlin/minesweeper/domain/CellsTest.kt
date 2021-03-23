@@ -92,6 +92,20 @@ class CellsTest {
     }
 
     @Test
+    internal fun `지뢰카운트가 1 이상이면 더 열리지 않는다`() {
+        val notOpenedCell = Cell()
+        val openedCell = Cell()
+        val cells = listOf(
+            Cell(), openedCell, notOpenedCell,
+            Cell(), Cell(), Cell(true)
+        )
+        val operation = Cells(cells, 4).operation()
+        operation.open(Position(1, 1))
+        assertThat(openedCell.open).isTrue()
+        assertThat(notOpenedCell.open).isFalse()
+    }
+
+    @Test
     fun `모두 열리면 종료응답을 받는다`() {
         val first = Cell()
         val operation = Cells(listOf(first, Cell(true)), 2).operation()
