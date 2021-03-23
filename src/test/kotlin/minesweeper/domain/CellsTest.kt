@@ -41,4 +41,11 @@ class CellsTest {
         operation.open(Position(1, 1))
         assertThat(operation.result).isEqualTo(Result.OPENED)
     }
+
+    @Test
+    internal fun `지뢰를 열면 폭파됨 응답을 받는다`() {
+        val operation = Cells(listOf(Cell(), Cell(true)), 2).operation()
+        operation.open(Position(2, 1))
+        assertThat(operation.result).isEqualTo(Result.EXPLOSION)
+    }
 }
