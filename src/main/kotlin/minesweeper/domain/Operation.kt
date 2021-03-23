@@ -9,26 +9,26 @@ interface Operation {
         private lateinit var result: Result
         override fun result(): Result = result
 
-        override fun open(position: Position) {
-            val zeroBased = Position(position.x - 1, position.y - 1)
-            if (!matrix.contains(zeroBased)) {
+        override fun open(inputPosition: Position) {
+            val position = inputPosition.toZeroBased()
+            if (!matrix.contains(position)) {
                 result = Result.OUT_OF_MATRIX
                 return
             }
-            val cell = cellOf(zeroBased)
 
-            result = error(cell)
+            result = error(position)
             if (result != Result.NONE) {
                 return
             }
 
-            result = open(zeroBased, matrix.around(zeroBased))
+            result = open(position, matrix.around(position))
             if (cells.completed()) {
                 result = Result.END
             }
         }
 
-        private fun error(cell: Cell): Result {
+        private fun error(position: Position): Result {
+            val cell = cellOf(position)
             if (cell.bomb) {
                 cell.explode()
                 return Result.EXPLOSION
