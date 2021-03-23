@@ -48,4 +48,14 @@ class CellsTest {
         operation.open(Position(2, 1))
         assertThat(operation.result).isEqualTo(Result.EXPLOSION)
     }
+
+    @Test
+    internal fun `열었을 때 옆 셀이 비어있으면 같이 열린다`() {
+        val first = Cell()
+        val second = Cell()
+        val operation = Cells(listOf(first, second, Cell(true)), 3).operation()
+        operation.open(Position(1, 1))
+        assertThat(first.open).isTrue()
+        assertThat(second.open).isTrue()
+    }
 }

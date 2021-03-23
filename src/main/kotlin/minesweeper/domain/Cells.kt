@@ -49,6 +49,7 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                     return
                 }
                 cells[0].open()
+                cells[1].open()
                 result = Result.SUCCESS
             }
 
