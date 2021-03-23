@@ -31,4 +31,24 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
     fun open(position: Position) {
         cells[0].open()
     }
+
+    fun operation(): Operation {
+        return Operation.Smart()
+    }
+
+    interface Operation {
+        fun open(position: Position)
+        fun result(): Result
+
+        class Smart : Operation {
+            override fun open(position: Position) {
+            }
+
+            override fun result(): Result = Result.OPENED
+        }
+
+        enum class Result {
+            OPENED
+        }
+    }
 }

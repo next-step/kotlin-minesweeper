@@ -31,6 +31,6 @@ class CellsTest {
         val cell = Cell()
         val operation = Cells(listOf(cell, Cell(true)), 2).operation()
         operation.open(Position(1, 1))
-        assertThat(operation.result()).isEqualTo(Operation.Result.OPENED)
+        assertThat(operation.result()).isEqualTo(Cells.Operation.Result.OPENED)
     }
 }
