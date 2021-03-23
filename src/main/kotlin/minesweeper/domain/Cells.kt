@@ -70,21 +70,24 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
             }
 
             private tailrec fun open(cell: Cell, linked: List<Position>): Result {
-                if (linked.isEmpty()) {
-                    return Result.SUCCESS
-                }
-
                 if (!cell.bomb) {
                     cell.open()
                 }
 
+                if (linked.isEmpty()) {
+                    return Result.SUCCESS
+                }
+
                 val next = linked.first()
                 val nextCell = cellOf(next)
-                var nextAround = emptyList<Position>()
-                if (!(nextCell.bomb || nextCell.open)) {
-                    nextAround = matrix.around(next)
+                return open(nextCell, linked.drop(1) + nextAround(nextCell, next))
+            }
+
+            private fun nextAround(nextCell: Cell, next: Position): List<Position> {
+                if (!(nextCell.bomb || nextCell.open || nextCell.count > 0)) {
+                    return matrix.around(next)
                 }
-                return open(nextCell, linked.drop(1) + nextAround)
+                return emptyList()
             }
 
             private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
