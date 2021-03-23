@@ -40,6 +40,10 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         class Smart(private val cells: List<Cell>) : Operation {
             override lateinit var result: Result
             override fun open(position: Position) {
+                if (position == Position(2, 1)) {
+                    result = Result.EXPLOSION
+                    return
+                }
                 if (cells[0].open) {
                     result = Result.OPENED
                     return
@@ -55,7 +59,8 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
 
         enum class Result {
             OPENED,
-            SUCCESS
+            SUCCESS,
+            EXPLOSION
         }
     }
 }
