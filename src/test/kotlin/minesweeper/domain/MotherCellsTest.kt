@@ -69,7 +69,7 @@ class MotherCellsTest {
                         1, 1, 1, 1
                     ).map { it.toDouble() } // 작은수가 지뢰
                 ),
-                Coordinate(Matrix(width, cells.size / width))
+                Matrix(width, cells.size / width)
             )
         )
 

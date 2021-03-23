@@ -21,10 +21,10 @@ class MotherCells(
 interface CellSource {
     fun cells(bomb: Int): List<Cell>
 
-    class Default(private val randomDoubles: RandomDoubles, private val coordinate: Coordinate) : CellSource {
+    class Default(private val randomDoubles: RandomDoubles, private val matrix: Matrix) : CellSource {
         constructor(width: Int, height: Int) : this(
             RandomDoubles(width * height),
-            Coordinate(Matrix(width, height))
+            Matrix(width, height)
         )
 
         override fun cells(bomb: Int): List<Cell> {
@@ -52,7 +52,7 @@ interface CellSource {
 
         private fun updateSide(cells: List<MotherCell>) {
             for ((index, cell) in cells.withIndex()) {
-                cell.sideCells = coordinate.sideIndexes(index).map { cells[it] }
+                cell.sideCells = matrix.around(index).map { cells[it] }
             }
         }
 

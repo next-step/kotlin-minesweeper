@@ -9,7 +9,7 @@ class MotherCellTest {
         val bombCell = MotherCell(bomb = true)
         val cells = listOf(bombCell, MotherCell(), MotherCell(), MotherCell())
         for ((index, cell) in cells.withIndex()) {
-            cell.sideCells = Coordinate(Matrix(2, 2)).sideIndexes(index).map { cells[it] }
+            cell.sideCells = Matrix(2, 2).around(index).map { cells[it] }
         }
         assertThat(bombCell.sideCells).contains(cells[1], cells[2], cells[3])
     }
