@@ -20,4 +20,8 @@ class Matrix(private val width: Int, private val height: Int) {
     fun toIndex(position: Position): Int {
         return position.x + position.y * width
     }
+
+    fun contains(position: Position): Boolean {
+        return position.x in (0 until width) && position.y in (0 until height)
+    }
 }

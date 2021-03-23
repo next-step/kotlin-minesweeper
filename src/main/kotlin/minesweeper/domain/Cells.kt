@@ -46,6 +46,10 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
             override lateinit var result: Result
             override fun open(position: Position) {
                 val zeroBased = Position(position.x - 1, position.y - 1)
+                if (!matrix.contains(zeroBased)) {
+                    result = Result.OUT_OF_MATRIX
+                    return
+                }
                 val cell = cellOf(zeroBased)
 
                 result = error(cell)
@@ -100,7 +104,8 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
             SUCCESS,
             EXPLOSION,
             END,
-            NONE
+            NONE,
+            OUT_OF_MATRIX
         }
     }
 }
