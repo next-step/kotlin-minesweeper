@@ -16,4 +16,12 @@ class UserInputTest {
     fun `숫자가 아니면 오류가 발생한다`() {
         assertThrows<InputMismatchException> { UserInput.Int("질문", "a\n").answer() }
     }
+
+    @Test
+    fun `숫자 어레이를 받는다`() {
+        val userInput = UserInput.IntArray("질문", "1,2\n")
+        assertThat(userInput.answer())
+            .hasSize(2)
+            .contains(1, 2)
+    }
 }
