@@ -65,6 +65,7 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
 
             private fun error(cell: Cell): Result {
                 if (cell.bomb) {
+                    cell.explode()
                     return Result.EXPLOSION
                 }
                 if (cell.open) {
