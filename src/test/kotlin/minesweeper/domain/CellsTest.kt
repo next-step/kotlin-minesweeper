@@ -112,4 +112,12 @@ class CellsTest {
         operation.open(Position(1, 1))
         assertThat(operation.result).isEqualTo(Result.END)
     }
+
+    @Test
+    fun `영역을 벗어난곳을 열면 OUT_OF_MATRIX 응답을 받는다`() {
+        val first = Cell()
+        val operation = Cells(listOf(first, Cell(true)), 2).operation()
+        operation.open(Position(10, 10))
+        assertThat(operation.result).isEqualTo(Result.OUT_OF_MATRIX)
+    }
 }
