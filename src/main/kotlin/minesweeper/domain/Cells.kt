@@ -74,15 +74,17 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
                     return Result.SUCCESS
                 }
 
-                val next = linked.first()
-
-                if (cell.bomb || cell.open) {
-                    return open(cellOf(next), linked.drop(1))
+                if (!cell.bomb) {
+                    cell.open()
                 }
 
-                cell.open()
-
-                return open(cellOf(next), linked.drop(1) + matrix.around(next))
+                val next = linked.first()
+                val nextCell = cellOf(next)
+                var nextAround = emptyList<Position>()
+                if (!(nextCell.bomb || nextCell.open)) {
+                    nextAround = matrix.around(next)
+                }
+                return open(nextCell, linked.drop(1) + nextAround)
             }
 
             private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
