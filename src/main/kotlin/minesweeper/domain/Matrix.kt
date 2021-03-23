@@ -9,7 +9,7 @@ class Matrix(private val width: Int, private val height: Int) {
     fun around(position: Position): List<Position> {
         val (x, y) = position
 
-        return Around.apply(x, y)
+        return Around.aroundPositions(x, y)
             .filter { it.valid(width, height) }
     }
 
