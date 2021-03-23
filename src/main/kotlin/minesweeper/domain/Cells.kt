@@ -9,7 +9,7 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
     }
 
     fun operation(): Operation {
-        return Operation.Smart(cells)
+        return Operation.Smart(cells, Matrix(width, height))
     }
 
     override fun equals(other: Any?): Boolean {
@@ -36,21 +36,35 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         var result: Result
         fun open(position: Position)
 
-        class Smart(private val cells: List<Cell>) : Operation {
+        class Smart(private val cells: List<Cell>, private val matrix: Matrix) : Operation {
             override lateinit var result: Result
             override fun open(position: Position) {
-                if (position == Position(2, 1)) {
+                val zeroBased = Position(position.x - 1, position.y - 1)
+                val cell = cellOf(zeroBased)
+                if (cell.bomb) {
                     result = Result.EXPLOSION
                     return
                 }
-                if (cells[0].open) {
+                open(cell, matrix.around(zeroBased))
+            }
+
+            private tailrec fun open(cell: Cell, linked: List<Position>) {
+                if (cell.open) {
                     result = Result.OPENED
                     return
                 }
-                cells[0].open()
-                cells[1].open()
+
+                cell.open()
                 result = Result.SUCCESS
+
+                if (cell.count != 0 || linked.isEmpty()) {
+                    return
+                }
+
+                open(cellOf(linked.first()), linked.drop(1))
             }
+
+            private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
         }
 
         enum class Result {
