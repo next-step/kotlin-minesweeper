@@ -41,27 +41,37 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
             override fun open(position: Position) {
                 val zeroBased = Position(position.x - 1, position.y - 1)
                 val cell = cellOf(zeroBased)
-                if (cell.bomb) {
-                    result = Result.EXPLOSION
+
+                result = error(cell)
+                if (result != Result.NONE) {
                     return
                 }
-                open(cell, matrix.around(zeroBased))
+
+                result = open(cell, matrix.around(zeroBased))
             }
 
-            private tailrec fun open(cell: Cell, linked: List<Position>) {
-                if (cell.open) {
-                    result = Result.OPENED
-                    return
+            private fun error(cell: Cell): Result {
+                if (cell.bomb) {
+                    return Result.EXPLOSION
                 }
+                if (cell.open) {
+                    return Result.OPENED
+                }
+                return Result.NONE
+            }
 
+            private tailrec fun open(cell: Cell, linked: List<Position>): Result {
                 cell.open()
-                result = Result.SUCCESS
+
+                if (cells.filterNot { it.open }.isEmpty()) {
+                    return Result.END
+                }
 
                 if (cell.count != 0 || linked.isEmpty()) {
-                    return
+                    return Result.SUCCESS
                 }
 
-                open(cellOf(linked.first()), linked.drop(1))
+                return open(cellOf(linked.first()), linked.drop(1))
             }
 
             private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
@@ -70,7 +80,9 @@ class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells
         enum class Result {
             OPENED,
             SUCCESS,
-            EXPLOSION
+            EXPLOSION,
+            END,
+            NONE
         }
     }
 }
