@@ -1,11 +1,11 @@
 package minesweeper
 
-import minesweeper.domain.Cells
-import minesweeper.domain.Cells.Operation.Result.END
-import minesweeper.domain.Cells.Operation.Result.EXPLOSION
-import minesweeper.domain.Cells.Operation.Result.OPENED
-import minesweeper.domain.Cells.Operation.Result.SUCCESS
+import minesweeper.domain.Operation.Result.END
+import minesweeper.domain.Operation.Result.EXPLOSION
+import minesweeper.domain.Operation.Result.OPENED
+import minesweeper.domain.Operation.Result.SUCCESS
 import minesweeper.domain.MotherCells
+import minesweeper.domain.Operation
 import minesweeper.domain.Position
 import minesweeper.view.BoardView
 import minesweeper.view.UserInput
@@ -17,7 +17,7 @@ fun main() {
 
     val cells = MotherCells(width, height).cells(bombCount)
     println("지뢰찾기 게임 시작")
-    var operation: Cells.Operation
+    var operation: Operation
     do {
         BoardView(cells).show()
         operation = cells.operation()
@@ -30,7 +30,7 @@ fun main() {
     BoardView(cells).show()
 }
 
-private fun printResult(result: Cells.Operation.Result) {
+private fun printResult(result: Operation.Result) {
     when (result) {
         OPENED -> println("이미 열려있습니다")
         EXPLOSION -> println("Lose Game.")
