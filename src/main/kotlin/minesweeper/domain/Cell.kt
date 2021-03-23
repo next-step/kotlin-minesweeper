@@ -14,4 +14,6 @@ data class Cell(val bomb: Boolean = false, val count: Int = 0) {
     fun explode() {
         exploded = true
     }
+
+    fun canOpen(): Boolean = !(bomb || open || count > 0)
 }

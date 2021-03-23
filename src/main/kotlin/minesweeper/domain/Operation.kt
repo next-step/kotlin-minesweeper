@@ -3,7 +3,7 @@ package minesweeper.domain
 interface Operation {
     fun result(): Result
 
-    fun open(position: Position)
+    fun open(inputPosition: Position)
 
     class Smart(private val cells: Cells, private val matrix: Matrix) : Operation {
         private lateinit var result: Result
@@ -54,8 +54,7 @@ interface Operation {
         }
 
         private fun nextAround(next: Position): List<Position> {
-            val nextCell = cellOf(next)
-            if (!(nextCell.bomb || nextCell.open || nextCell.count > 0)) {
+            if (cellOf(next).canOpen()) {
                 return matrix.around(next)
             }
             return emptyList()
