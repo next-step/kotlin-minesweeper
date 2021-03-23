@@ -57,6 +57,18 @@ class CellsTest {
     }
 
     @Test
+    internal fun `열었을 때 옆 셀이 여러개 있으면 같이 열린다`() {
+        val first = Cell()
+        val second = Cell()
+        val third = Cell()
+        val operation = Cells(listOf(first, second, third, Cell(true)), 4).operation()
+        operation.open(Position(1, 1))
+        assertThat(first.open).isTrue()
+        assertThat(second.open).isTrue()
+        assertThat(third.open).isTrue()
+    }
+
+    @Test
     internal fun `모두 열리면 종료응답을 받는다`() {
         val first = Cell()
         val operation = Cells(listOf(first, Cell(true)), 2).operation()
