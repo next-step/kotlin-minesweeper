@@ -4,11 +4,13 @@ import minesweeper.domain.Cell
 
 class CellView(private val cell: Cell) {
     override fun toString(): String {
-        return if (cell.bomb) BOMB else BLANK
+        if (cell.bomb) {
+            return BOMB
+        }
+        return String.format("%2d", cell.count)
     }
 
     companion object {
-        const val BLANK = "◻️"
         const val BOMB = "💣"
     }
 }
