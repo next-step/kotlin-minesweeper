@@ -10,17 +10,17 @@ class CellProduction(
     fun cells(bomb: Int): Cells {
         require(bomb > 0)
 
-        return Cells(budding.cells(bomb, Matrix(width, height)), width)
+        return budding.cells(bomb, Matrix(width, height))
     }
 }
 
 interface Budding {
-    fun cells(bomb: Int, matrix: Matrix): List<Cell>
+    fun cells(bomb: Int, matrix: Matrix): Cells
 
     class Default(private val randomDoubles: RandomDoubles) : Budding {
         constructor(size: Int) : this(RandomDoubles(size))
 
-        override fun cells(bomb: Int, matrix: Matrix): List<Cell> {
+        override fun cells(bomb: Int, matrix: Matrix): Cells {
             val stemCell = stemCell(bomb)
 
             stemCell.updateSide(matrix)
@@ -33,7 +33,7 @@ interface Budding {
             cells.forEachIndexed { index, cell ->
                 cell.link = link.cells(index)
             }
-            return cells
+            return Cells(cells, matrix)
         }
 
         private fun stemCell(bomb: Int): StemCell {
@@ -45,20 +45,20 @@ interface Budding {
     }
 }
 
-class StemCell(protoCells: List<ProtoCell>) : List<ProtoCell> by protoCells {
+class StemCell(private val protoCells: List<ProtoCell>) {
     fun updateSide(matrix: Matrix) {
-        for ((index, cell) in withIndex()) {
-            cell.sideCells = matrix.around(index).map { this[it] }
+        for ((index, cell) in protoCells.withIndex()) {
+            cell.sideCells = matrix.around(index).map { protoCells[it] }
         }
     }
 
     fun increaseCount() {
-        for (cell in this) {
+        for (cell in protoCells) {
             cell.increaseCount()
         }
     }
 
-    fun cell() = map { it.cell }
+    fun cell() = protoCells.map { it.cell }
 }
 
 class RandomDoubles(private val values: List<Double>) : List<Double> by values {

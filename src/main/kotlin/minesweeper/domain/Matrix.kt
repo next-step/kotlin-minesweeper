@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-data class Matrix(private val width: Int, val height: Int) {
+data class Matrix(val width: Int, val height: Int) {
     init {
         require(width > 0 && height > 0)
     }

@@ -1,12 +1,14 @@
 package minesweeper.domain
 
-class Cells(private val cells: List<Cell>, val width: Int) : List<Cell> by cells {
-    private val matrix: Matrix = Matrix(width, size / width)
+class Cells(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by cells {
     val height: Int = matrix.height
+    val width: Int = matrix.width
 
     init {
         require(cells.filter { it.bomb }.count() in 1 until size)
     }
+
+    constructor(cells: List<Cell>, width: Int) : this(cells, Matrix(width, cells.size / width))
 
     fun operation(): Operation {
         return Operation.Smart(this, matrix)

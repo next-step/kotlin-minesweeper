@@ -38,8 +38,8 @@ class CellProductionTest {
         val motherCells = CellProduction(
             width, cells.size / width,
             object : Budding {
-                override fun cells(bomb: Int, matrix: Matrix): List<Cell> {
-                    return cells
+                override fun cells(bomb: Int, matrix: Matrix): Cells {
+                    return Cells(cells, matrix)
                 }
             }
         )
