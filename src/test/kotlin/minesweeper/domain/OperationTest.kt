@@ -78,9 +78,9 @@ class OperationTest {
     @Test
     internal fun `열었을 때 다른 줄도 닫혀있으면 열린다`() {
         val cells = cells {
-            row(`⬜`, `⬜`, `⬜`, `💣`)
-            row(`⬜`, `⬜`, `⬜`, `⬜`)
-            row(`⬜`, `⬜`, `⬜`, `⬜`)
+            row(`⬜`, `⬜`, `⬜`, `⬜`, `💣`)
+            row(`⬜`, `⬜`, `⬜`, `⬜`, `⬜`)
+            row(`💣`, `⬜`, `⬜`, `⬜`, `⬜`)
         }.build()
 
         val operation = cells.operation()
@@ -88,12 +88,12 @@ class OperationTest {
 
         assertThat(cells)
             .filteredOnAssertions { assertThat(it.open).isTrue() }
-            .hasSize(11)
+            .hasSize(13)
             .allSatisfy { assertThat(it.bomb).isFalse() }
 
         assertThat(cells)
             .filteredOnAssertions { assertThat(it.open).isFalse() }
-            .hasSize(1)
+            .hasSize(2)
             .allSatisfy { assertThat(it.bomb).isTrue() }
     }
 
