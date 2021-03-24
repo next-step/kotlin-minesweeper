@@ -1,9 +1,9 @@
 package minesweeper.domain
 
-class MotherCell(val bomb: Boolean = false) {
+class ProtoCell(val bomb: Boolean = false) {
     var count: Int = 0
         private set
-    lateinit var sideCells: List<MotherCell>
+    lateinit var sideCells: List<ProtoCell>
     val cell: Cell
         get() = Cell(bomb, count)
 

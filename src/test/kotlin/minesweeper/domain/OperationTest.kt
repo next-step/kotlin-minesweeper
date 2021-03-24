@@ -159,9 +159,9 @@ class OperationTest {
 
         fun build(): Cells {
             val flatten = rows.flatMap { it.toList() }
-            return MotherCells(
+            return CellProduction(
                 rows[0].size, rows.size,
-                CellSource.Default(
+                Budding.Default(
                     RandomDoubles(
                         flatten.map { it.toDouble() }
                     )

@@ -4,7 +4,7 @@ import minesweeper.domain.Operation.Result.END
 import minesweeper.domain.Operation.Result.EXPLOSION
 import minesweeper.domain.Operation.Result.OPENED
 import minesweeper.domain.Operation.Result.SUCCESS
-import minesweeper.domain.MotherCells
+import minesweeper.domain.CellProduction
 import minesweeper.domain.Operation
 import minesweeper.domain.Position
 import minesweeper.view.BoardView
@@ -15,7 +15,7 @@ fun main() {
     val width = UserInput.Int("너비를 입력하세요.").answer()
     val bombCount = UserInput.Int("지뢰는 몇 개인가요?").answer()
 
-    val cells = MotherCells(width, height).cells(bombCount)
+    val cells = CellProduction(width, height).cells(bombCount)
     println("지뢰찾기 게임 시작")
     var operation: Operation
     do {
