@@ -1,12 +1,16 @@
 package minesweeper.domain
 
-class Matrix(private val width: Int, private val height: Int) {
+data class Matrix(private val width: Int, val height: Int) {
+    init {
+        require(width > 0 && height > 0)
+    }
+
     fun around(index: Int): List<Int> {
         return around(toPosition(index))
             .map { toIndex(it) }
     }
 
-    fun around(position: Position): List<Position> {
+    private fun around(position: Position): List<Position> {
         val (x, y) = position
 
         return Around.aroundPositions(x, y)

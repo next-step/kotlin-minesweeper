@@ -38,7 +38,7 @@ class MotherCellsTest {
         val motherCells = MotherCells(
             width, cells.size / width,
             object : CellSource {
-                override fun cells(bomb: Int): List<Cell> {
+                override fun cells(bomb: Int, matrix: Matrix): List<Cell> {
                     return cells
                 }
             }
@@ -68,8 +68,7 @@ class MotherCellsTest {
                         1, 1, 1, 1,
                         1, 1, 1, 1
                     ).map { it.toDouble() } // 작은수가 지뢰
-                ),
-                Matrix(width, cells.size / width)
+                )
             )
         )
 

@@ -16,48 +16,26 @@ interface Operation {
                 return
             }
 
-            result = error(position)
-            if (result != Result.NONE) {
+            val cell = cellOf(position)
+            if (cell.open) {
+                result = Result.OPENED
                 return
             }
 
-            result = open(position, matrix.around(position))
-            if (cells.completed()) {
-                result = Result.END
-            }
+            cell.open()
+
+            result = getResult(cell)
         }
 
-        private fun error(position: Position): Result {
-            val cell = cellOf(position)
-            if (cell.bomb) {
-                cell.explode()
+        private fun getResult(cell: Cell): Result {
+            if (cell.exploded) {
                 return Result.EXPLOSION
             }
-            if (cell.open) {
-                return Result.OPENED
-            }
-            return Result.NONE
-        }
 
-        private tailrec fun open(position: Position, linked: List<Position>): Result {
-            val cell = cellOf(position)
-            if (!cell.bomb) {
-                cell.open()
+            if (cells.completed()) {
+                return Result.END
             }
-
-            if (linked.isEmpty()) {
-                return Result.SUCCESS
-            }
-
-            val next = linked.first()
-            return open(next, linked.drop(1) + nextAround(next).filter { it != position })
-        }
-
-        private fun nextAround(next: Position): List<Position> {
-            if (cellOf(next).canOpen()) {
-                return matrix.around(next)
-            }
-            return emptyList()
+            return Result.SUCCESS
         }
 
         private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
@@ -68,7 +46,6 @@ interface Operation {
         SUCCESS,
         EXPLOSION,
         END,
-        NONE,
         OUT_OF_MATRIX
     }
 }
