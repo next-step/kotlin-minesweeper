@@ -3,21 +3,21 @@ package minesweeper.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class MotherCellTest {
+class ProtoCellTest {
     @Test
     internal fun `2 x 2 좌상단 코너`() {
-        val bombCell = MotherCell(bomb = true)
-        val cells = listOf(bombCell, MotherCell(), MotherCell(), MotherCell())
+        val bombCell = ProtoCell(bomb = true)
+        val cells = listOf(bombCell, ProtoCell(), ProtoCell(), ProtoCell())
         for ((index, cell) in cells.withIndex()) {
-            cell.sideCells = Coordinate(Matrix(2, 2)).sideIndexes(index).map { cells[it] }
+            cell.sideCells = Matrix(2, 2).around(index).map { cells[it] }
         }
         assertThat(bombCell.sideCells).contains(cells[1], cells[2], cells[3])
     }
 
     @Test
     internal fun `주변셀의 숫자를 증가한다`() {
-        val bombCell = MotherCell(bomb = true).apply {
-            sideCells = listOf(MotherCell(), MotherCell(), MotherCell())
+        val bombCell = ProtoCell(bomb = true).apply {
+            sideCells = listOf(ProtoCell(), ProtoCell(), ProtoCell())
         }
 
         bombCell.increaseCount()

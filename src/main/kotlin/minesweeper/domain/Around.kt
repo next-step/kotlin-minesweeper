@@ -6,7 +6,7 @@ enum class Around(private val x: Int, private val y: Int) {
     LEFT_BOTTOM(-1, 1), BOTTOM(0, 1), BOTTOM_RIGHT(1, 1);
 
     companion object {
-        fun apply(x: Int, y: Int): List<Position> {
+        fun aroundPositions(x: Int, y: Int): List<Position> {
             return values().map { Position(it.x + x, it.y + y) }
         }
     }

@@ -24,7 +24,7 @@ class BoardView(private val cells: Cells, private val out: PrintWriter = PrintWr
     private fun startIndex(row: Int) = (row - 1) * cells.width
 
     companion object {
-        const val EMPTY = ""
+        const val EMPTY = " "
     }
 }
 
