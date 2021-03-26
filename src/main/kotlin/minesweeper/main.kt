@@ -6,6 +6,7 @@ import minesweeper.domain.Operation.Result.OPENED
 import minesweeper.domain.Operation.Result.SUCCESS
 import minesweeper.domain.CellProduction
 import minesweeper.domain.Operation
+import minesweeper.domain.Operation.Result.OUT_OF_MATRIX
 import minesweeper.domain.Position
 import minesweeper.view.BoardView
 import minesweeper.view.UserInput
@@ -24,7 +25,7 @@ fun main() {
         val (x, y) = UserInput.IntArray("\nopen: ").answer()
         operation.open(Position(x, y))
         printResult(operation.result())
-    } while (operation.result() in listOf(SUCCESS, OPENED))
+    } while (operation.result() in listOf(SUCCESS, OPENED, OUT_OF_MATRIX))
 
     cells.allOpen()
     BoardView(cells).show()
@@ -32,9 +33,10 @@ fun main() {
 
 private fun printResult(result: Operation.Result) {
     when (result) {
-        OPENED -> println("이미 열려있습니다")
+        OPENED -> println("이미 열려있습니다.")
         EXPLOSION -> println("Lose Game.")
         END -> println("You Win.")
-        else -> println("opened")
+        OUT_OF_MATRIX -> println("입력범위를 벗어났습니다.")
+        else -> println("열었습니다.")
     }
 }
