@@ -5,4 +5,6 @@ fun main() {
 
     val boardGenerator = BoardGenerator(width, height, mineCount)
     val cells = Cells(boardGenerator.generateRandomCell(), width, height)
+
+    printCells(cells)
 }

@@ -1,4 +1,4 @@
-class Cells(val cells: List<Cell>, private val width: Int, private val height: Int) {
+class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
 
     init {
         require(width > 0 && height > 0) { "너비와 높이는 0보다 커야합니다" }
