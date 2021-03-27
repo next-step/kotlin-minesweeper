@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.position
 
 class Coordinate private constructor(private val value: Int) {
 
