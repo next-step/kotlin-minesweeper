@@ -1,5 +1,6 @@
 package userinterface
 
+import dto.MineBoardDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
@@ -9,6 +10,13 @@ object Console : UserInterface {
         val mineCount = inputInt("지뢰는 몇 개인가요?")
 
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
+    }
+
+    override fun outputMineSweeper(mineBoardDto: MineBoardDto) {
+        println("지뢰찾기 게임 시작")
+        mineBoardDto.board
+            .map { row -> row.joinToString(separator = " ") }
+            .forEach(::println)
     }
 
     private fun inputInt(message: String): Int {

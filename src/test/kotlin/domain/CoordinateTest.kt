@@ -15,6 +15,6 @@ internal class CoordinateTest {
     )
     fun `좌표 생성한다`(x: Int, y: Int) {
         val result = Coordinate(x = x, y = y)
-        assertThat(result).isNotNull
+        assertThat(result).isNotNull()
     }
 }

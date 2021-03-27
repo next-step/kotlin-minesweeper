@@ -11,7 +11,7 @@ internal class CoordinateFactoryTest {
     @Test
     fun `좌표를 생성할 수 있다`() {
         val result = CoordinateFactory.create(maxX = 1, maxY = 1, nthNumber = 1)
-        assertThat(result).isNotNull
+        assertThat(result).isNotNull()
     }
 
     @ParameterizedTest
