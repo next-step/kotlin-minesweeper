@@ -1,4 +1,5 @@
 import domain.MineBoardFactory
+import domain.coordinategenerator.BoardCoordinatesGenerator
 import domain.coordinategenerator.RandomCoordinatesGenerator
 import userinterface.Console
 import userinterface.UserInterface
@@ -14,8 +15,10 @@ class MineSweeperApplication(private val userInterface: UserInterface) {
     fun run() {
         val (height, width, mineCount) = userInterface.inputMineSweeperWidthHeightCount()
         val mineBoard = MineBoardFactory.create(
-            width = width,
-            height = height,
+            boardCoordinatesGenerator = BoardCoordinatesGenerator(
+                width = width,
+                height = height
+            ),
             mineCoordinatesGenerator = RandomCoordinatesGenerator(
                 maxX = width,
                 maxY = height,
