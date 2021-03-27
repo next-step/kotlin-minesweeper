@@ -5,9 +5,9 @@ import dto.MineSweeperInitDto
 
 object Console : UserInterface {
     override fun inputMineSweeperWidthHeightCount(): MineSweeperInitDto {
-        val height = inputInt("높이를 입력하세요.")
-        val width = inputInt("너비를 입력하세요.")
-        val mineCount = inputInt("지뢰는 몇 개인가요?")
+        val height = inputNaturalNumber("높이를 입력하세요.")
+        val width = inputNaturalNumber("너비를 입력하세요.")
+        val mineCount = inputNaturalNumber("지뢰는 몇 개인가요?")
 
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
     }
@@ -19,11 +19,13 @@ object Console : UserInterface {
             .forEach(::println)
     }
 
-    private fun inputInt(message: String): Int {
+    private fun inputNaturalNumber(message: String): Int {
         println(message)
-        return readLine()
+        val input = readLine()
             ?.trim()
-            ?.toInt()
-            ?: inputInt(message)
+            ?.toIntOrNull()
+            ?: inputNaturalNumber(message)
+
+        return if (input > 0) input else inputNaturalNumber(message)
     }
 }
