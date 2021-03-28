@@ -15,4 +15,17 @@ internal data class Position(val x: NaturalNumber, val y: NaturalNumber) : Compa
         }
         return this.x.compareTo(other.x)
     }
+
+    fun getRounds(): List<Position> {
+        val rounds = mutableListOf<Position>()
+
+        (-1..1).forEach { roundX ->
+            (-1..1).forEach { roundY ->
+                if (roundX + x.value >= 0 && roundY + y.value >= 0) {
+                    rounds.add(Position(roundX + x.value, roundY + y.value))
+                }
+            }
+        }
+        return rounds
+    }
 }

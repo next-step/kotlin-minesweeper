@@ -3,9 +3,34 @@ package minesweeper.domain
 import java.util.SortedMap
 import java.util.TreeMap
 
-internal class Board private constructor(_cells: SortedMap<Position, Cell>) {
+internal class Board private constructor(private var _cells: SortedMap<Position, Cell>) {
 
-    val cells: Map<Position, Cell> = _cells.toSortedMap()
+    val cells: Map<Position, Cell>
+        get() {
+            return _cells.toMap()
+        }
+
+    internal fun exposeCells() {
+        val newCells = TreeMap<Position, Cell>()
+        _cells.forEach {
+            val position = it.key
+            val cell = it.value
+
+            val cells = findRoundCells(position)
+            newCells.put(position, cell.expose(cells))
+        }
+
+        this._cells = newCells
+    }
+
+    private fun findRoundCells(position: Position): List<Cell> {
+        val cells = mutableListOf<Cell>()
+        position.getRounds().forEach {
+            _cells.get(it)?.let(cells::add)
+        }
+
+        return cells
+    }
 
     companion object {
         internal fun createBoard(

@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -18,5 +19,36 @@ internal class PositionTest {
         val first = Position(NaturalNumber(x1), NaturalNumber(y1))
         val second = Position(NaturalNumber(x2), NaturalNumber(y2))
         assertThat(first.compareTo(second)).isEqualTo(result)
+    }
+
+    @Test
+    fun `x,y가 0 이상만 조회`() {
+        val rounds = Position(NaturalNumber.ZERO, NaturalNumber.ZERO).getRounds()
+
+        val expect = listOf(
+            Position(NaturalNumber(1), NaturalNumber(0)),
+            Position(NaturalNumber(0), NaturalNumber(1)),
+            Position(NaturalNumber(1), NaturalNumber(1))
+        )
+
+        assertThat(rounds).containsAll(expect)
+    }
+
+    @Test
+    fun `주변 8개 조회`() {
+        val rounds = Position(NaturalNumber(1), NaturalNumber(1)).getRounds()
+
+        val expect = listOf(
+            Position(NaturalNumber(0), NaturalNumber(0)),
+            Position(NaturalNumber(0), NaturalNumber(1)),
+            Position(NaturalNumber(0), NaturalNumber(2)),
+            Position(NaturalNumber(1), NaturalNumber(0)),
+            Position(NaturalNumber(1), NaturalNumber(2)),
+            Position(NaturalNumber(2), NaturalNumber(0)),
+            Position(NaturalNumber(2), NaturalNumber(1)),
+            Position(NaturalNumber(2), NaturalNumber(2))
+        )
+
+        assertThat(rounds).containsAll(expect)
     }
 }
