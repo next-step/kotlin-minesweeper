@@ -1,3 +1,5 @@
 package minesweeper.domain
 
-class Mine
+enum class Mine {
+    BOOM, SAFE
+}
