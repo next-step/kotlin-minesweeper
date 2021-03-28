@@ -1,5 +1,6 @@
 package domain
 
+import model.GameData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,7 +14,7 @@ internal class MineFactoryTest {
         val height = 2
         val mineNum = 2
         val mineFactory = MineFactory()
-        val mines = mineFactory.createMines(width, height, mineNum)
+        val mines = mineFactory.createMines(GameData(width, height, mineNum))
 
         assertThat(mines).hasSize(mineNum)
         assertThat(mines[0].position.row).isLessThan(height)
@@ -27,7 +28,7 @@ internal class MineFactoryTest {
         val height = 2
         val mineNum = 1
         val mineFactory = MineFactory(TestRandomPositionIdFactory(listOf(positionId)))
-        val mines = mineFactory.createMines(width, height, mineNum)
+        val mines = mineFactory.createMines(GameData(width, height, mineNum))
 
         assertThat(mines).hasSize(mineNum)
         assertThat(mines[0].position.row).isEqualTo(row)

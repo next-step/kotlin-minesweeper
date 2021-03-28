@@ -1,17 +1,19 @@
 package domain
 
+import model.GameData
+
 class MineFactory(private val randomPositionIdFactory: RandomPositionIdFactory = DefaultRandomPositionIdFactory()) {
 
-    fun createMines(width: Int, height: Int, mineNum: Int): List<Mine> {
+    fun createMines(gameData: GameData): Mines {
 
         val mines = mutableListOf<Mine>()
-        val maxPositionId = width * height - 1
+        val maxPositionId = gameData.width * gameData.height - 1
 
-        randomPositionIdFactory.positionIds(mineNum, maxPositionId).map {
-            val position = it.position(width)
+        randomPositionIdFactory.positionIds(gameData.mineNumber, maxPositionId).map {
+            val position = it.position(gameData.width)
             mines.add(Mine(position))
         }
 
-        return mines
+        return Mines(mines)
     }
 }
