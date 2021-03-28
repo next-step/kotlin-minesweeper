@@ -7,7 +7,7 @@ internal class InputView {
     internal fun requestBoardSpec(): BoardSpec {
         val height = requestHeight()
         println()
-        val width = requestHeight()
+        val width = requestWidth()
         println()
         return BoardSpec(width, height, requestMineCount())
     }

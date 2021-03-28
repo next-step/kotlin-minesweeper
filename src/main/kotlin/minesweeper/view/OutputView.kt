@@ -1,13 +1,22 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
+import minesweeper.domain.NaturalNumber
 
 internal class OutputView {
     fun render(board: Board) {
-        println("\n지뢰찾기 게임 시작")
+        print("\n지뢰찾기 게임 시작")
 
-        board.cellRows.forEach {
-            println(it.cells.joinToString(" ") { it.display })
+        var curY = NaturalNumber.ZERO
+        println()
+
+        board.cells.forEach {
+            if (it.key.y != curY) {
+                curY = it.key.y
+                println()
+            }
+
+            print("${it.value.display} ")
         }
     }
 }

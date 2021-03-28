@@ -7,11 +7,13 @@ internal class BoardTest {
 
     @Test
     fun `board 생성`() {
-        val staticMinePositions = fun(boardSpec: BoardSpec): List<Position> {
-            return listOf(Position(NaturalNumber(0), NaturalNumber(0)))
-        }
+        val boardSpec = BoardSpec(
+            width = NaturalNumber(2),
+            height = NaturalNumber(2),
+            mineCount = NaturalNumber(1)
+        )
 
-        val board = Board.createBoard(BoardSpec(NaturalNumber(2), NaturalNumber(2), NaturalNumber(1)), staticMinePositions)
-        assertThat(board.cellRows[0].cells[0]).isEqualTo(Cell(true))
+        val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
+        assertThat(board.cells.get(Position(0, 0))).isInstanceOf(MineCell::class.java)
     }
 }

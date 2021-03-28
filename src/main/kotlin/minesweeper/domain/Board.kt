@@ -1,23 +1,29 @@
 package minesweeper.domain
 
-internal class Board private constructor(val cellRows: List<CellRow>) {
+import java.util.SortedMap
+import java.util.TreeMap
+
+internal class Board private constructor(_cells: SortedMap<Position, Cell>) {
+
+    val cells: Map<Position, Cell> = _cells.toSortedMap()
 
     companion object {
-        internal fun createBoard(boardSpec: BoardSpec, minePositions: (BoardSpec) -> List<Position> = this::randomMinePositions): Board {
-            val positions = minePositions(boardSpec)
-            val cellRows = mutableListOf<CellRow>()
-
-            repeat(boardSpec.height.value) {
-                val curY = it
-                val cells = (0 until boardSpec.width.value).map {
-                    val hasMine = positions.contains(Position(NaturalNumber(it), NaturalNumber(curY)))
-                    Cell(hasMine)
+        internal fun createBoard(
+            boardSpec: BoardSpec,
+            minePositions: List<Position> = randomMinePositions(boardSpec)
+        ): Board {
+            val cells: SortedMap<Position, Cell> = TreeMap()
+            repeat(boardSpec.height.value) { y ->
+                repeat(boardSpec.width.value) { x ->
+                    val position = Position(x, y)
+                    val hasMine = minePositions.contains(position)
+                    cells.put(position, if (hasMine) MineCell() else EmptyCell())
                 }
-                cellRows.add(CellRow(cells))
             }
 
-            return Board(cellRows)
+            return Board(cells)
         }
+
         fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
             val range = boardSpec.width * boardSpec.height
 
