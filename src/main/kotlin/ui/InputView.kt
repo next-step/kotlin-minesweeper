@@ -5,9 +5,9 @@ import model.GameData
 object InputView {
 
     fun askInfo(): GameData {
-        val height = InputView.askHeight()
-        val width = InputView.askWidth()
-        val mineNumber = InputView.askMineNumber()
+        val height = askHeight()
+        val width = askWidth()
+        val mineNumber = askMineNumber()
 
         return GameData(width, height, mineNumber)
     }

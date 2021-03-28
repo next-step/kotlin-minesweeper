@@ -11,6 +11,6 @@ object MineSweeperController {
         val mineFactory = MineFactory()
         val mines = mineFactory.createMines(gameData)
 
-        ResultView.printMineGameState(mines, gameData)
+        ResultView(gameData).printMineGameState(mines)
     }
 }

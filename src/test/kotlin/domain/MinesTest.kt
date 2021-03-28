@@ -11,8 +11,8 @@ internal class MinesTest {
         val mine2 = Mine(Position(0, 3))
 
         val mines = Mines(listOf(mine1, mine2))
-        Assertions.assertThat(mines.isMine(1, 2)).isTrue()
-        Assertions.assertThat(mines.isMine(0, 3)).isTrue()
-        Assertions.assertThat(mines.isMine(0, 0)).isFalse()
+        Assertions.assertThat(mines.isMine(Position(1, 2))).isTrue()
+        Assertions.assertThat(mines.isMine(Position(1, 2))).isTrue()
+        Assertions.assertThat(mines.isMine(Position(1, 2))).isFalse()
     }
 }

@@ -1,25 +1,28 @@
 package ui
 
 import domain.Mines
+import domain.Position
 import model.GameData
 
-object ResultView {
-    fun printMineGameState(mines: Mines, gameData: GameData) {
+class ResultView(
+    private val gameData: GameData
+) {
+    fun printMineGameState(mines: Mines) {
         println("지뢰찾기 게임 시작")
         repeat(gameData.height) { row ->
-            printRow(row, mines, gameData.width)
+            printRow(row, mines)
             println()
         }
     }
 
-    private fun printRow(row: Int, mines: Mines, width: Int) {
-        repeat(width) { col ->
-            printCell(mines, row, col)
+    private fun printRow(row: Int, mines: Mines) {
+        repeat(gameData.width) { col ->
+            printCell(Position(row, col), mines)
         }
     }
 
-    private fun printCell(mines: Mines, row: Int, col: Int) {
-        if (mines.isMine(row, col)) {
+    private fun printCell(position: Position, mines: Mines) {
+        if (mines.isMine(position)) {
             print("* ")
         } else {
             print("C ")
