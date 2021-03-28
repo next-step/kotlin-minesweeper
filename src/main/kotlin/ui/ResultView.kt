@@ -22,10 +22,9 @@ class ResultView(
     }
 
     private fun printCell(position: Position, mines: Mines) {
-        if (mines.isMine(position)) {
-            print("* ")
-        } else {
-            print("C ")
+        when (mines.isMine(position)) {
+            true -> print("* ")
+            false -> print("C ")
         }
     }
 }
