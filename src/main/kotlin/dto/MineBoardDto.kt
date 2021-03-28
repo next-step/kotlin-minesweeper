@@ -4,19 +4,17 @@ import domain.Block
 import domain.MineBoard
 
 data class MineBoardDto(val board: List<List<Char>>) {
-    constructor(mineBoard: MineBoard) : this(toto(mineBoard))
+    constructor(mineBoard: MineBoard) : this(mineBoard.toView())
+}
 
-    companion object {
-        private fun toto(mineBoard: MineBoard): List<List<Char>> {
-            val board = mineBoard.value
-            val width = board.keys.maxBy { it.x }!!.x
+private fun MineBoard.toView(): List<List<Char>> {
+    val board = this.value
+    val width = board.keys.maxBy { it.x }!!.x
 
-            return board.toSortedMap()
-                .map { it.value }
-                .map { it.toView() }
-                .windowed(size = width, step = width)
-        }
-    }
+    return board.toSortedMap()
+        .map { it.value }
+        .map { it.toView() }
+        .windowed(size = width, step = width)
 }
 
 private fun Block.toView(): Char {
