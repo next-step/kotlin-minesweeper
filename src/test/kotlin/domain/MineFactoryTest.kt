@@ -27,7 +27,7 @@ internal class MineFactoryTest {
         val width = 10
         val height = 2
         val mineNum = 1
-        val mineFactory = MineFactory(TestRandomPositionIdFactory(listOf(positionId)))
+        val mineFactory = MineFactory(TestPositionIdFactory(listOf(positionId)))
         val mines = mineFactory.createMines(GameData(width, height, mineNum))
 
         assertThat(mines).hasSize(mineNum)

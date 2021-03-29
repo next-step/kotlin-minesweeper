@@ -1,6 +1,6 @@
 package domain
 
-class TestRandomPositionIdFactory(private val returnValues: List<Int>) : RandomPositionIdFactory {
+class TestPositionIdFactory(private val returnValues: List<Int>) : PositionIdFactory {
     override fun positionIds(count: Int, positionIdMax: Int): List<PositionId> {
         return returnValues.map { PositionId(it) }
     }
