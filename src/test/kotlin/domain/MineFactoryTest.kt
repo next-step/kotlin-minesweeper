@@ -16,9 +16,11 @@ internal class MineFactoryTest {
         val mineFactory = MineFactory()
         val mines = mineFactory.createMines(GameData(width, height, mineNum))
 
-        assertThat(mines).hasSize(mineNum)
-        assertThat(mines[0].position.row).isLessThan(height)
-        assertThat(mines[0].position.col).isLessThan(width)
+        assertThat(mines.values).hasSize(mineNum)
+        assertThat(mines.values[0].position.row).isLessThan(height)
+        assertThat(mines.values[0].position.col).isLessThan(width)
+        assertThat(mines.values[1].position.row).isLessThan(height)
+        assertThat(mines.values[1].position.col).isLessThan(width)
     }
 
     @ParameterizedTest
@@ -30,8 +32,8 @@ internal class MineFactoryTest {
         val mineFactory = MineFactory(TestPositionIdFactory(listOf(positionId)))
         val mines = mineFactory.createMines(GameData(width, height, mineNum))
 
-        assertThat(mines).hasSize(mineNum)
-        assertThat(mines[0].position.row).isEqualTo(row)
-        assertThat(mines[0].position.col).isEqualTo(col)
+        assertThat(mines.values).hasSize(mineNum)
+        assertThat(mines.values[0].position.row).isEqualTo(row)
+        assertThat(mines.values[0].position.col).isEqualTo(col)
     }
 }

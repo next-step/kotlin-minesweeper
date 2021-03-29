@@ -1,6 +1,6 @@
 package domain
 
-class Mines(private val values: List<Mine>) : List<Mine> by values {
+class Mines(val values: List<Mine>) {
     fun isMine(position: Position): Boolean {
         return values.any { it.position == position }
     }
