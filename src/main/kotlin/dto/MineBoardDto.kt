@@ -1,8 +1,8 @@
 package dto
 
-import domain.Block
 import domain.CoordinateNotFoundException
 import domain.MineBoard
+import domain.block.Block
 
 data class MineBoardDto(val board: List<List<Char>>) {
     constructor(mineBoard: MineBoard) : this(mineBoard.toView())
@@ -19,8 +19,8 @@ private fun MineBoard.toView(): List<List<Char>> {
 }
 
 private fun Block.toView(): Char {
-    return when (this) {
-        Block.MINE -> '■'
-        Block.NOTHING -> '□'
+    return when (this.isMine()) {
+        true -> '■'
+        false -> '□'
     }
 }
