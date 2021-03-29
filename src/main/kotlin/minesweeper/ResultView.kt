@@ -1,3 +1,5 @@
+package minesweeper
+
 const val MINE = "#"
 const val CELL = "O"
 

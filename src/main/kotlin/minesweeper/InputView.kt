@@ -1,4 +1,4 @@
-
+package minesweeper
 fun inputHeight(): String? {
     println("높이를 입력하세요.")
     return readLine()

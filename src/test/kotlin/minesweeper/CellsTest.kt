@@ -1,3 +1,5 @@
+package minesweeper
+
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException

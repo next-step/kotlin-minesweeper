@@ -1,3 +1,5 @@
+package minesweeper
+
 fun main() {
     val width = inputWidth().parseInt()
     val height = inputHeight().parseInt()

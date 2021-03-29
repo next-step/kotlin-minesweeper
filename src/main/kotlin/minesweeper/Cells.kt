@@ -1,3 +1,5 @@
+package minesweeper
+
 class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
 
     init {

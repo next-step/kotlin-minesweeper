@@ -1,3 +1,5 @@
+package minesweeper
+
 fun String?.parseInt(): Int {
     require(this != null) { "빈 값을 입력하면 안됩니다." }
     try {
