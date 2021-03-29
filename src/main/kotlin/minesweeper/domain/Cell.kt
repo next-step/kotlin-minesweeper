@@ -2,6 +2,9 @@ package minesweeper.domain
 
 internal abstract class Cell {
     abstract val hasMine: Boolean
-    abstract val display: String
-    abstract fun expose(cells: List<Cell>): Cell
+    var roundMineCount: Int? = null
+
+    fun expose(cells: List<Cell>) {
+        roundMineCount = cells.filter(Cell::hasMine).count()
+    }
 }

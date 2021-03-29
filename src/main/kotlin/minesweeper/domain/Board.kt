@@ -11,16 +11,13 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         }
 
     internal fun exposeCells() {
-        val newCells = TreeMap<Position, Cell>()
         _cells.forEach {
             val position = it.key
             val cell = it.value
 
             val cells = findRoundCells(position)
-            newCells.put(position, cell.expose(cells))
+            cell.expose(cells)
         }
-
-        this._cells = newCells
     }
 
     private fun findRoundCells(position: Position): List<Cell> {
@@ -41,15 +38,15 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
             repeat(boardSpec.height.value) { y ->
                 repeat(boardSpec.width.value) { x ->
                     val position = Position(x, y)
-                    val hasMine = minePositions.contains(position)
-                    cells.put(position, if (hasMine) MineCell() else EmptyCell())
+                    val hasMine = position in minePositions
+                    cells[position] = if (hasMine) MineCell() else EmptyCell()
                 }
             }
 
             return Board(cells)
         }
 
-        fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
+        private fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
             val range = boardSpec.width * boardSpec.height
 
             return (0..range.value).shuffled().take(boardSpec.mineCount.value).map {
