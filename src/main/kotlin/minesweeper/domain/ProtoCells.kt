@@ -14,29 +14,29 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
     }
 
     fun cells(matrix: Matrix): List<Cell> {
-        val cellStates = protoCells.map { pair(it) }
+        val cellStateAndLink = protoCells.map { cellStateAndLink(it) }
 
-        cellStates.forEachIndexed { index, (_, list) ->
-            list?.addAll(
+        cellStateAndLink.forEachIndexed { index, (_, link) ->
+            link?.addAll(
                 matrix.around(index)
-                    .map { cellStates[it].first }
-                    .filter { it !is CellState.BombCell }
+                    .map { cellStateAndLink[it].first }
+                    .filter { it !is CellState.Bomb }
             )
         }
 
-        return cellStates.map { it.first }.map { Cell(it) }
+        return cellStateAndLink.map { it.first }.map { Cell(it) }
     }
 
-    private fun pair(protoCell: ProtoCell): Pair<CellState, MutableList<CellState>?> {
+    private fun cellStateAndLink(protoCell: ProtoCell): Pair<CellState, MutableList<CellState>?> {
         with(protoCell) {
             if (bomb) {
-                return CellState.BombCell() to null
+                return CellState.Bomb() to null
             }
             if (count > 0) {
-                return CellState.BombSideCell(count) to null
+                return CellState.BombSide(count) to null
             }
         }
-        val list = mutableListOf<CellState>()
-        return CellState.BlankCell(list) to list
+        val link = mutableListOf<CellState>()
+        return CellState.Blank(link) to link
     }
 }

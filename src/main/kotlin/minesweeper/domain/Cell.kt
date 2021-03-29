@@ -3,7 +3,7 @@ package minesweeper.domain
 class Cell(private val cellState: CellState) {
     val open: Boolean
         get() = cellState.open
-    val bomb: Boolean = cellState is CellState.BombCell
+    val bomb: Boolean = cellState is CellState.Bomb
     val exploded: Boolean
         get() = open && bomb
     val count: Int = cellState.count

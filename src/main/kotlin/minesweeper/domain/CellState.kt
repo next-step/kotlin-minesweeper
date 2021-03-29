@@ -12,13 +12,13 @@ sealed class CellState {
         open = true
     }
 
-    class BombCell : CellState() {
+    class Bomb : CellState() {
         override val count: Int = 0
     }
 
-    class BombSideCell(override val count: Int) : CellState()
+    class BombSide(override val count: Int) : CellState()
 
-    class BlankCell(private val link: List<CellState> = emptyList()) : CellState() {
+    class Blank(private val link: List<CellState> = emptyList()) : CellState() {
         override val count: Int = 0
         override fun discover() {
             super.discover()
