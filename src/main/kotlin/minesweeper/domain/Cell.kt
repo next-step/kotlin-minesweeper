@@ -5,18 +5,20 @@ interface Cell {
     val exploded: Boolean
     val bomb: Boolean
     val count: Int
+    val done: Boolean
     fun open()
     fun quietlyOpen()
-    fun done(): Boolean
 }
 
 class CellWithState(private val cellState: CellState) : Cell {
     override val open: Boolean
         get() = cellState.open
+    override val bomb: Boolean = cellState is CellState.BombCell
     override val exploded: Boolean
-        get() = this.open && cellState.bomb
-    override val bomb: Boolean = cellState.bomb
+        get() = open && bomb
     override val count: Int = cellState.count
+    override val done: Boolean
+        get() = open || bomb
 
     override fun open() {
         cellState.discover()
@@ -24,10 +26,6 @@ class CellWithState(private val cellState: CellState) : Cell {
 
     override fun quietlyOpen() {
         cellState.turnOpen()
-    }
-
-    override fun done(): Boolean {
-        return cellState.open || cellState.bomb
     }
 
     override fun equals(other: Any?): Boolean {

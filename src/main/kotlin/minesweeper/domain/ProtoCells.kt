@@ -16,26 +16,24 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
     fun cells(matrix: Matrix): List<Cell> {
         val cellStates = protoCells.map { pair(it) }
 
-        cellStates.forEachIndexed { index, (cellState, list) ->
-            if (cellState is CellState.BlankCell) {
-                list.addAll(
-                    matrix.around(index)
-                        .map { cellStates[it].first }
-                        .filter { it !is CellState.BombCell }
-                )
-            }
+        cellStates.forEachIndexed { index, (_, list) ->
+            list?.addAll(
+                matrix.around(index)
+                    .map { cellStates[it].first }
+                    .filter { it !is CellState.BombCell }
+            )
         }
 
         return cellStates.map { it.first }.map { CellWithState(it) }
     }
 
-    private fun pair(protoCell: ProtoCell): Pair<CellState, MutableList<CellState>> {
+    private fun pair(protoCell: ProtoCell): Pair<CellState, MutableList<CellState>?> {
         with(protoCell) {
             if (bomb) {
-                return CellState.BombCell() to mutableListOf()
+                return CellState.BombCell() to null
             }
             if (count > 0) {
-                return CellState.BombSideCell(count) to mutableListOf()
+                return CellState.BombSideCell(count) to null
             }
         }
         val list = mutableListOf<CellState>()

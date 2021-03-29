@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Board(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by cells {
+class Board(private val cells: List<Cell>, private val matrix: Matrix) : List<Cell> by cells {
     val height: Int = matrix.height
     val width: Int = matrix.width
 
@@ -20,7 +20,7 @@ class Board(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by c
         }
     }
 
-    fun completed() = all { it.done() }
+    fun completed() = all { it.done }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
