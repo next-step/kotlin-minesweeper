@@ -1,5 +1,5 @@
 package domain
 
-class Mine(
+data class Mine(
     val position: Position
 )
