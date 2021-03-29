@@ -1,11 +1,11 @@
 package minesweeper.domain
 
-import minesweeper.inputdata.MineGameCondition
+import minesweeper.inputdata.MineGameConfig
 
-class MineMap(private val mineGameCondition: MineGameCondition, boomPositions: List<BoomPosition>) {
+class MineMap(private val mineGameConfig: MineGameConfig, boomPositions: List<BoomPosition>) {
 
-    private val map = Array(mineGameCondition.height.size) {
-        Array(mineGameCondition.width.size) { Mine.SAFE }
+    private val map = Array(mineGameConfig.height.size) {
+        Array(mineGameConfig.width.size) { Mine.SAFE }
     }
 
     init {

@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.inputdata.MineGameCondition
+import minesweeper.inputdata.MineGameConfig
 
 object InputView {
     private tailrec fun inputHeight(): Int {
@@ -18,10 +18,10 @@ object InputView {
         return readLine()?.toIntOrNull() ?: inputMineCount()
     }
 
-    fun inputMineGameCondition(): MineGameCondition {
+    fun inputMineGameConfig(): MineGameConfig {
         val mapHeight = inputHeight()
         val mapWidth = inputWidth()
         val mapMineCount = inputMineCount()
-        return MineGameCondition.of(mapHeight, mapWidth, mapMineCount)
+        return MineGameConfig.of(mapHeight, mapWidth, mapMineCount)
     }
 }
