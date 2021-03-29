@@ -5,7 +5,7 @@ class ProtoCell(val bomb: Boolean = false) {
         private set
     lateinit var sideCells: List<ProtoCell>
     val cell: Cell
-        get() = Cell(bomb, count)
+        get() = CellLegacy(bomb, count)
 
     fun increaseCount() {
         if (!bomb) {

@@ -20,7 +20,7 @@ class Board(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by c
         }
     }
 
-    fun completed() = filterNot { it.open || it.bomb }.isEmpty()
+    fun completed() = all { it.done() }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

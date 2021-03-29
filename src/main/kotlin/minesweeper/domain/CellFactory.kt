@@ -13,13 +13,7 @@ interface CellFactory {
 
             protoCells.increaseCount()
 
-            val cells = protoCells.cell()
-
-            val link = Link(matrix, cells)
-            cells.forEachIndexed { index, cell ->
-                cell.link = link.cells(index)
-            }
-            return cells
+            return protoCells.cells(matrix)
         }
 
         private fun protoCells(bomb: Int): ProtoCells {

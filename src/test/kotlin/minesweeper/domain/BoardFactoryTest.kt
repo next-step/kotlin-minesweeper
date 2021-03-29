@@ -33,12 +33,12 @@ class BoardFactoryTest {
 
     @Test
     internal fun `셀 생성을 CellFactory 에게 위임한다`() {
-        val cells = listOf(Cell(), Cell(), Cell(), Cell(true))
+        val cells = listOf(CellLegacy(), CellLegacy(), CellLegacy(), CellLegacy(true))
         val width = 2
         val motherCells = BoardFactory(
             width, cells.size / width,
             object : CellFactory {
-                override fun cells(bomb: Int, matrix: Matrix): List<Cell> {
+                override fun cells(bomb: Int, matrix: Matrix): List<CellLegacy> {
                     return cells
                 }
             }
@@ -54,9 +54,9 @@ class BoardFactoryTest {
     @Test
     fun `옆 셀의 지뢰수가 기록되어 있다`() {
         val cells = listOf(
-            Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
-            Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
-            Cell(), Cell(count = 0), Cell(count = 0), Cell(count = 0)
+            CellLegacy(), CellLegacy(count = 1), CellLegacy(bomb = true), CellLegacy(bomb = true),
+            CellLegacy(), CellLegacy(count = 1), CellLegacy(count = 2), CellLegacy(count = 2),
+            CellLegacy(), CellLegacy(count = 0), CellLegacy(count = 0), CellLegacy(count = 0)
         )
         val width = 4
         val boardFactory = BoardFactory(

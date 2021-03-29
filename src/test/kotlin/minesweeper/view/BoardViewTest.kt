@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.Cell
+import minesweeper.domain.CellLegacy
 import minesweeper.domain.Board
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,9 +13,9 @@ class BoardViewTest {
     internal fun `숫자와 폭탄수가 표시된다`() {
         val cells = Board(
             listOf(
-                Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
-                Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
-                Cell(), Cell(count = 0), Cell(count = 0), Cell(count = 0)
+                CellLegacy(), CellLegacy(count = 1), CellLegacy(bomb = true), CellLegacy(bomb = true),
+                CellLegacy(), CellLegacy(count = 1), CellLegacy(count = 2), CellLegacy(count = 2),
+                CellLegacy(), CellLegacy(count = 0), CellLegacy(count = 0), CellLegacy(count = 0)
             ),
             width = 4
         ).apply {
@@ -35,7 +35,7 @@ class BoardViewTest {
     @Test
     internal fun `가려져 있다`() {
         BoardView(
-            Board(listOf(Cell(), Cell(bomb = true)), width = 2), out
+            Board(listOf(CellLegacy(), CellLegacy(bomb = true)), width = 2), out
         ).show()
 
         out showed
