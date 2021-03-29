@@ -1,7 +1,8 @@
 package minesweeper.view
 
-import minesweeper.domain.CellLegacy
-import minesweeper.domain.Board
+import minesweeper.domain.BoardBuilder.Companion.`⬜`
+import minesweeper.domain.BoardBuilder.Companion.`💣`
+import minesweeper.domain.board
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.io.StringWriter
@@ -11,18 +12,16 @@ class BoardViewTest {
 
     @Test
     internal fun `숫자와 폭탄수가 표시된다`() {
-        val cells = Board(
-            listOf(
-                CellLegacy(), CellLegacy(count = 1), CellLegacy(bomb = true), CellLegacy(bomb = true),
-                CellLegacy(), CellLegacy(count = 1), CellLegacy(count = 2), CellLegacy(count = 2),
-                CellLegacy(), CellLegacy(count = 0), CellLegacy(count = 0), CellLegacy(count = 0)
-            ),
-            width = 4
-        ).apply {
-            allOpen()
-        }
+        val board = board {
+            row(`⬜`, `⬜`, `⬜`, `💣`, `💣`)
+            row(`⬜`, `⬜`, `⬜`, `⬜`, `⬜`)
+            row(`💣`, `⬜`, `⬜`, `⬜`, `⬜`)
+        }.build()
+            .apply {
+                allOpen()
+            }
 
-        BoardView(cells, out).show()
+        BoardView(board, out).show()
 
         out showed
             """
@@ -35,7 +34,10 @@ class BoardViewTest {
     @Test
     internal fun `가려져 있다`() {
         BoardView(
-            Board(listOf(CellLegacy(), CellLegacy(bomb = true)), width = 2), out
+            board {
+                row(`⬜`, `💣`)
+            }.build(),
+            out
         ).show()
 
         out showed

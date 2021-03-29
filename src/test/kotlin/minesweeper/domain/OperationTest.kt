@@ -1,7 +1,7 @@
 package minesweeper.domain
 
-import minesweeper.domain.OperationTest.BoardBuilder.Companion.`⬜`
-import minesweeper.domain.OperationTest.BoardBuilder.Companion.`💣`
+import minesweeper.domain.BoardBuilder.Companion.`⬜`
+import minesweeper.domain.BoardBuilder.Companion.`💣`
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -144,34 +144,6 @@ class OperationTest {
 
         assertThat(board).allSatisfy {
             assertThat(it.open).isTrue()
-        }
-    }
-
-    private fun board(initializer: BoardBuilder.() -> Unit): BoardBuilder {
-        return BoardBuilder().apply(initializer)
-    }
-
-    class BoardBuilder {
-        private val rows: MutableList<IntArray> = mutableListOf()
-        fun row(vararg number: Int) {
-            rows.add(number.toList().toIntArray())
-        }
-
-        fun build(): Board {
-            val flatten = rows.flatMap { it.toList() }
-            return BoardFactory(
-                rows[0].size, rows.size,
-                CellFactory.Default(
-                    RandomDoubles(
-                        flatten.map { it.toDouble() }
-                    )
-                )
-            ).board(flatten.count { it == `💣` })
-        }
-
-        companion object {
-            const val `💣` = 0
-            const val `⬜` = 1
         }
     }
 }

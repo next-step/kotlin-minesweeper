@@ -1,8 +1,8 @@
 package minesweeper.domain
 
 interface Cell {
-    var open: Boolean
-    var exploded: Boolean
+    val open: Boolean
+    val exploded: Boolean
     val bomb: Boolean
     val count: Int
     fun open()
@@ -11,12 +11,10 @@ interface Cell {
 }
 
 class CellWithState(private val cellState: CellState) : Cell {
-    override var open: Boolean
+    override val open: Boolean
         get() = cellState.open
-        set(value) = TODO()
-    override var exploded: Boolean
+    override val exploded: Boolean
         get() = this.open && cellState.bomb
-        set(value) = TODO()
     override val bomb: Boolean = cellState.bomb
     override val count: Int = cellState.count
 
@@ -31,37 +29,19 @@ class CellWithState(private val cellState: CellState) : Cell {
     override fun done(): Boolean {
         return cellState.open || cellState.bomb
     }
-}
 
-data class CellLegacy(override val bomb: Boolean = false, override val count: Int = 0) : Cell {
-    lateinit var link: List<CellLegacy>
-    override var open: Boolean = false
-    override var exploded: Boolean = false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    override fun open() {
-        if (bomb) {
-            exploded = true
-            open = true
-            return
-        }
+        other as CellWithState
 
-        open = true
+        if (cellState != other.cellState) return false
 
-        if (count > 0) {
-            return
-        }
-
-        link.filter { it.canOpen() }
-            .forEach { it.open() }
+        return true
     }
 
-    override fun quietlyOpen() {
-        open = true
+    override fun hashCode(): Int {
+        return cellState.hashCode()
     }
-
-    override fun done(): Boolean {
-        return open || bomb
-    }
-
-    private fun canOpen(): Boolean = !(bomb || open)
 }

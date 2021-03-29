@@ -13,8 +13,6 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
         }
     }
 
-    fun cell(): List<Cell> = protoCells.map { it.cell }
-
     fun cells(matrix: Matrix): List<Cell> {
         val cellStates = protoCells.map { pair(it) }
 
