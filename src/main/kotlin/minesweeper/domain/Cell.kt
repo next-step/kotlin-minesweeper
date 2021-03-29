@@ -1,30 +1,20 @@
 package minesweeper.domain
 
-interface Cell {
+class Cell(private val cellState: CellState) {
     val open: Boolean
-    val exploded: Boolean
-    val bomb: Boolean
-    val count: Int
-    val done: Boolean
-    fun open()
-    fun quietlyOpen()
-}
-
-class CellWithState(private val cellState: CellState) : Cell {
-    override val open: Boolean
         get() = cellState.open
-    override val bomb: Boolean = cellState is CellState.BombCell
-    override val exploded: Boolean
+    val bomb: Boolean = cellState is CellState.BombCell
+    val exploded: Boolean
         get() = open && bomb
-    override val count: Int = cellState.count
-    override val done: Boolean
+    val count: Int = cellState.count
+    val done: Boolean
         get() = open || bomb
 
-    override fun open() {
+    fun open() {
         cellState.discover()
     }
 
-    override fun quietlyOpen() {
+    fun quietlyOpen() {
         cellState.turnOpen()
     }
 
@@ -32,7 +22,7 @@ class CellWithState(private val cellState: CellState) : Cell {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as CellWithState
+        other as Cell
 
         if (cellState != other.cellState) return false
 

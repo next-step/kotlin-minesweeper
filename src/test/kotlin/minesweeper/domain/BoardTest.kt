@@ -51,11 +51,11 @@ class BoardTest {
         }
 
         fun blank(): List<Cell> {
-            return listOf(CellWithState(CellState.BlankCell()))
+            return listOf(Cell(CellState.BlankCell()))
         }
 
         fun bomb(): List<Cell> {
-            return listOf(CellWithState(CellState.BombCell()))
+            return listOf(Cell(CellState.BombCell()))
         }
 
         infix fun List<Cell>.and(other: List<Cell>) {

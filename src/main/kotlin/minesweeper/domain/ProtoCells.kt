@@ -24,7 +24,7 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
             )
         }
 
-        return cellStates.map { it.first }.map { CellWithState(it) }
+        return cellStates.map { it.first }.map { Cell(it) }
     }
 
     private fun pair(protoCell: ProtoCell): Pair<CellState, MutableList<CellState>?> {
