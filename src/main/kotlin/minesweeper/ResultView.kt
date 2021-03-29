@@ -13,12 +13,12 @@ fun printCellLine(cells: Cells, row: Int) {
     val startIndex = row * cells.width
     val endIndex = (row + 1) * cells.width
     (startIndex until endIndex).forEach {
-        printCellView(cells.cells[it])
+        printCellView(cells, it)
     }
     println()
 }
 
-fun printCellView(cell: Cell) {
-    val view = if (cell.isMine) MINE else CELL
+fun printCellView(cells: Cells, index: Int) {
+    val view = if (cells.cells[index].isMine) MINE else cells.getCellValue(index).toString()
     print("$view ")
 }
