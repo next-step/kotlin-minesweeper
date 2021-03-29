@@ -5,7 +5,7 @@ interface Operation {
 
     fun open(inputPosition: Position)
 
-    class Smart(private val cells: Cells, private val matrix: Matrix) : Operation {
+    class Smart(private val board: Board, private val matrix: Matrix) : Operation {
         private lateinit var result: Result
         override fun result(): Result = result
 
@@ -32,13 +32,13 @@ interface Operation {
                 return Result.EXPLOSION
             }
 
-            if (cells.completed()) {
+            if (board.completed()) {
                 return Result.END
             }
             return Result.SUCCESS
         }
 
-        private fun cellOf(position: Position) = cells[matrix.toIndex(position)]
+        private fun cellOf(position: Position) = board[matrix.toIndex(position)]
     }
 
     enum class Result {

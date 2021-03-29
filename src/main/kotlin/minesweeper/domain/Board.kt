@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Cells(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by cells {
+class Board(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by cells {
     val height: Int = matrix.height
     val width: Int = matrix.width
 
@@ -21,21 +21,19 @@ class Cells(private val cells: List<Cell>, val matrix: Matrix) : List<Cell> by c
     }
 
     fun completed() = filterNot { it.open || it.bomb }.isEmpty()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Cells
+        other as Board
 
         if (cells != other.cells) return false
-        if (matrix != other.matrix) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = cells.hashCode()
-        result = 31 * result + matrix.hashCode()
-        return result
+        return cells.hashCode()
     }
 }

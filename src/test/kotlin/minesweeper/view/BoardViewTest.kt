@@ -1,7 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.Cell
-import minesweeper.domain.Cells
+import minesweeper.domain.Board
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.io.StringWriter
@@ -11,7 +11,7 @@ class BoardViewTest {
 
     @Test
     internal fun `숫자와 폭탄수가 표시된다`() {
-        val cells = Cells(
+        val cells = Board(
             listOf(
                 Cell(), Cell(count = 1), Cell(bomb = true), Cell(bomb = true),
                 Cell(), Cell(count = 1), Cell(count = 2), Cell(count = 2),
@@ -35,7 +35,7 @@ class BoardViewTest {
     @Test
     internal fun `가려져 있다`() {
         BoardView(
-            Cells(listOf(Cell(), Cell(bomb = true)), width = 2), out
+            Board(listOf(Cell(), Cell(bomb = true)), width = 2), out
         ).show()
 
         out showed

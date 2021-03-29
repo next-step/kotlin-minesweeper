@@ -4,7 +4,7 @@ import minesweeper.domain.Operation.Result.END
 import minesweeper.domain.Operation.Result.EXPLOSION
 import minesweeper.domain.Operation.Result.OPENED
 import minesweeper.domain.Operation.Result.SUCCESS
-import minesweeper.domain.CellProduction
+import minesweeper.domain.BoardFactory
 import minesweeper.domain.Operation
 import minesweeper.domain.Operation.Result.OUT_OF_MATRIX
 import minesweeper.domain.Position
@@ -16,19 +16,19 @@ fun main() {
     val width = UserInput.Int("너비를 입력하세요.").answer()
     val bombCount = UserInput.Int("지뢰는 몇 개인가요?").answer()
 
-    val cells = CellProduction(width, height).cells(bombCount)
+    val board = BoardFactory(width, height).board(bombCount)
     println("지뢰찾기 게임 시작")
     var operation: Operation
     do {
-        BoardView(cells).show()
-        operation = cells.operation()
+        BoardView(board).show()
+        operation = board.operation()
         val (x, y) = UserInput.IntArray("\nopen: ").answer()
         operation.open(Position(x, y))
         printResult(operation.result())
     } while (operation.result() in listOf(SUCCESS, OPENED, OUT_OF_MATRIX))
 
-    cells.allOpen()
-    BoardView(cells).show()
+    board.allOpen()
+    BoardView(board).show()
 }
 
 private fun printResult(result: Operation.Result) {
