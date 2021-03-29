@@ -6,12 +6,10 @@ class MineFactory(private val randomPositionIdFactory: RandomPositionIdFactory =
 
     fun createMines(gameData: GameData): Mines {
 
-        val mines = mutableListOf<Mine>()
         val maxPositionId = gameData.width * gameData.height - 1
 
-        randomPositionIdFactory.positionIds(gameData.mineNumber, maxPositionId).map {
-            val position = it.position(gameData.width)
-            mines.add(Mine(position))
+        val mines = randomPositionIdFactory.positionIds(gameData.mineNumber, maxPositionId).map {
+            Mine(it.position(gameData.width))
         }
 
         return Mines(mines)
