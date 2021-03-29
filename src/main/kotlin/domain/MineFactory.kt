@@ -8,7 +8,7 @@ class MineFactory(private val positionIdFactory: PositionIdFactory = RandomPosit
 
         val maxPositionId = gameData.width * gameData.height - 1
 
-        val mines = positionIdFactory.positionIds(gameData.mineNumber, maxPositionId).map {
+        val mines = positionIdFactory.positionIds(gameData.mineCount, maxPositionId).map {
             Mine(it.position(gameData.width))
         }
 
