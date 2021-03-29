@@ -22,7 +22,7 @@ internal class BoomPositionMakerTest {
 
     @Test
     @DisplayName("생성된 position들끼리는 겹치는 값이 없다.")
-    internal fun positionNotEquals() {
+    fun positionNotEquals() {
         val mineGameCondition = MineGameConfig(
             width = PositiveNumber(3),
             height = PositiveNumber(3),
@@ -32,6 +32,21 @@ internal class BoomPositionMakerTest {
             val boomPosition = BoomPositionMaker.makePosition(mineGameCondition)
             assertThat(boomPosition.toSet().size).isEqualTo(6)
         }
+    }
+
+    @Test
+    @DisplayName("생성된 폭탄의 위치는 맵 위치와 일치한다")
+    fun boomPositionMaker() {
+        val mineGameCondition = MineGameConfig(
+            width = PositiveNumber(2),
+            height = PositiveNumber(2),
+            mineCount = PositiveNumber(4)
+        )
+        val boomPosition = BoomPositionMaker.makePosition(mineGameCondition)
+        assertThat(boomPosition).contains(
+            BoomPosition(0, 0), BoomPosition(0, 1),
+            BoomPosition(1, 0), BoomPosition(1, 1)
+        )
 
     }
 }

@@ -5,7 +5,7 @@ import minesweeper.inputdata.MineGameConfig
 object BoomPositionMaker {
 
     fun makePosition(mineGameConfig: MineGameConfig): List<BoomPosition> {
-        return List(mineGameConfig.getMapSize()) { it + 1 }
+        return List(mineGameConfig.getMapSize()) { it }
             .shuffled()
             .take(mineGameConfig.mineCount.size)
             .map { it.numberToBoomPosition(mineGameConfig.width.size) }
