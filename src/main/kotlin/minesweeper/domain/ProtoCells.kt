@@ -18,7 +18,11 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
 
         cellStates.forEachIndexed { index, (cellState, list) ->
             if (cellState is CellState.BlankCell) {
-                list.addAll(matrix.around(index).map { cellStates[it].first })
+                list.addAll(
+                    matrix.around(index)
+                        .map { cellStates[it].first }
+                        .filter { it !is CellState.BombCell }
+                )
             }
         }
 

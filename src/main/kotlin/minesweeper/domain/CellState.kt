@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-sealed class CellState(val link: List<CellState>) {
+sealed class CellState {
     var open: Boolean = false
         private set
 
@@ -13,39 +13,21 @@ sealed class CellState(val link: List<CellState>) {
         open = true
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as CellState
-
-        if (count != other.count) return false
-        if (bomb != other.bomb) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = count
-        result = 31 * result + bomb.hashCode()
-        return result
-    }
-
-    class BombCell : CellState(emptyList()) {
+    class BombCell : CellState() {
         override val count: Int = 0
         override val bomb: Boolean = true
     }
 
-    class BombSideCell(override val count: Int) : CellState(emptyList()) {
+    class BombSideCell(override val count: Int) : CellState() {
         override val bomb: Boolean = false
     }
 
-    class BlankCell(link: List<CellState> = emptyList()) : CellState(link) {
+    class BlankCell(private val link: List<CellState> = emptyList()) : CellState() {
         override val count: Int = 0
         override val bomb: Boolean = false
         override fun discover() {
             super.discover()
-            link.filterNot { it.open || it.bomb }
+            link.filterNot { it.open }
                 .forEach { it.discover() }
         }
     }
