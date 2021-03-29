@@ -9,7 +9,7 @@ data class MineBoardDto(val board: List<List<Char>>) {
 
 private fun MineBoard.toView(): List<List<Char>> {
     val board = this.value
-    val width = board.keys.maxBy { it.x }!!.x
+    val width = board.keys.map { it.x }.max()!!
 
     return board.toSortedMap()
         .map { it.value }
