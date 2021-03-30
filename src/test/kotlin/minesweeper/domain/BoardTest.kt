@@ -18,22 +18,6 @@ internal class BoardTest {
     }
 
     @Test
-    fun `board expose`() {
-        val boardSpec = BoardSpec(
-            width = NaturalNumber(2),
-            height = NaturalNumber(2),
-            mineCount = NaturalNumber(1)
-        )
-
-        val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
-        board.exposeCells()
-
-        val cell = board.cells[Position(1, 1)]
-
-        assertThat(cell?.aroundMineCount).isEqualTo(1)
-    }
-
-    @Test
     fun `board expose WIN`() {
         val boardSpec = BoardSpec(
             width = NaturalNumber(2),
@@ -42,7 +26,9 @@ internal class BoardTest {
         )
 
         val board = Board.createBoard(boardSpec, listOf(Position(1, 1)))
-        assertThat(board.expose(Position(0, 0))).isEqualTo(GameState.WIN)
+        assertThat(board.expose(Position(0, 0))).isEqualTo(GameState.RUNNING)
+        assertThat(board.expose(Position(0, 1))).isEqualTo(GameState.RUNNING)
+        assertThat(board.expose(Position(1, 0))).isEqualTo(GameState.WIN)
     }
 
     @Test

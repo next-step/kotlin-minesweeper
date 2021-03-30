@@ -16,9 +16,10 @@ internal data class Position(val x: NaturalNumber, val y: NaturalNumber) : Compa
         return this.x.compareTo(other.x)
     }
 
-    fun getRounds(): List<Position> {
-        return PositionRound.values().mapNotNull { it.createRound(this) }
-    }
+    val around: List<Position>
+        get() {
+            return PositionRound.values().mapNotNull { it.createRound(this) }
+        }
 
     private enum class PositionRound(val x: Int, val y: Int) {
         LEFT(-1, 0),

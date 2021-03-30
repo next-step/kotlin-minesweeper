@@ -10,25 +10,23 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
     val cells: Map<Position, Cell>
         get() = this._cells.toMap()
 
-    internal fun exposeCells() {
-        _cells.forEach { (position, cell) ->
-            val cells = findRoundCells(position)
-            cell.expose(cells)
-        }
-    }
-
     internal fun expose(position: Position): GameState {
         val cell = _cells[position] ?: throw IllegalArgumentException("cell not exist ")
-
         if (cell.hasMine) {
             return GameState.LOSE
         }
 
-        cell.expose(findRoundCells(position))
-        expose(position.getRounds())
+        val mineCount = cell.expose(findRoundCells(position))
+        if (mineCount != 0) {
+            return findGameState()
+        }
 
-        val uncoveredCount = this.cells.values.filter { !it.covered }.count()
+        expose(position.around)
+        return findGameState()
+    }
 
+    private fun findGameState(): GameState {
+        val uncoveredCount = this._cells.values.filter { !it.covered }.count()
         if (this.mineCount == uncoveredCount) {
             return GameState.WIN
         }
@@ -53,12 +51,12 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
                 return@forEach
             }
 
-            expose(position.getRounds())
+            expose(position.around)
         }
     }
 
     private fun findRoundCells(position: Position): List<Cell> {
-        return position.getRounds().mapNotNull { this._cells[it] }
+        return position.around.mapNotNull { this._cells[it] }
     }
 
     companion object {
@@ -81,9 +79,9 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         private fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
             val range = boardSpec.width * boardSpec.height
 
-            return (0..range.value).shuffled().take(boardSpec.mineCount.value).map {
-                val x = it % boardSpec.height.value
-                val y = it / boardSpec.height.value
+            return (0 until range.value).shuffled().take(boardSpec.mineCount.value).map {
+                val x = it % boardSpec.width.value
+                val y = it / boardSpec.width.value
                 Position(NaturalNumber(x), NaturalNumber(y))
             }
         }
