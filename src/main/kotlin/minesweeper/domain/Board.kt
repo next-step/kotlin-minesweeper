@@ -5,6 +5,8 @@ import java.util.TreeMap
 
 internal class Board private constructor(private var _cells: SortedMap<Position, Cell>) {
 
+    private val mineCount: Int = _cells.values.filter { it.hasMine }.count()
+
     val cells: Map<Position, Cell>
         get() = this._cells.toMap()
 
@@ -15,8 +17,48 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         }
     }
 
+    internal fun expose(position: Position): GameState {
+        val cell = _cells[position] ?: throw IllegalArgumentException("cell not exist ")
+
+        if (cell.hasMine) {
+            return GameState.LOSE
+        }
+
+        cell.expose(findRoundCells(position))
+        expose(position.getRounds())
+
+        val uncoveredCount = this.cells.values.filter { !it.covered }.count()
+
+        if (this.mineCount == uncoveredCount) {
+            return GameState.WIN
+        }
+
+        return GameState.RUNNING
+    }
+
+    private fun expose(positions: List<Position>) {
+        positions.forEach { position ->
+
+            val cell = _cells[position] ?: return@forEach
+            if (cell.covered) {
+                return@forEach
+            }
+
+            if (cell.hasMine) {
+                return@forEach
+            }
+
+            val count = cell.expose(findRoundCells(position))
+            if (count != 0) {
+                return@forEach
+            }
+
+            expose(position.getRounds())
+        }
+    }
+
     private fun findRoundCells(position: Position): List<Cell> {
-        return position.getRounds().mapNotNull { _cells[it] }
+        return position.getRounds().mapNotNull { this._cells[it] }
     }
 
     companion object {
