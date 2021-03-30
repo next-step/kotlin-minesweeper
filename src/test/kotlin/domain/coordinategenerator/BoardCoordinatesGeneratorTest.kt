@@ -1,7 +1,6 @@
 package domain.coordinategenerator
 
 import domain.Coordinate
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -33,6 +32,6 @@ internal class BoardCoordinatesGeneratorTest {
         val result = org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
             BoardCoordinatesGenerator(width = width, height = height)
         }
-        Assertions.assertThat(result.message).isEqualTo(expectedMessage)
+        assertThat(result.message).isEqualTo(expectedMessage)
     }
 }
