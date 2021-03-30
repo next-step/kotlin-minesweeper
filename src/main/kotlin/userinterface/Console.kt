@@ -4,6 +4,7 @@ import dto.MineBoardDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
+
     override fun inputMineSweeperWidthHeightCount(): MineSweeperInitDto {
         val height = inputNaturalNumber("높이를 입력하세요.")
         val width = inputNaturalNumber("너비를 입력하세요.")
