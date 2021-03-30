@@ -18,6 +18,10 @@ object MineBoardFactory {
             .map { Pair(it.first, BlockFactory.create(it.second)) }
             .toMap()
 
-        return MineBoard(map)
+        return MineBoard(
+            width = boardCoordinatesGenerator.width,
+            height = boardCoordinatesGenerator.height,
+            value = map
+        )
     }
 }

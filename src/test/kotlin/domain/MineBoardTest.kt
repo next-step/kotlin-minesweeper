@@ -11,7 +11,7 @@ internal class MineBoardTest {
         val map = HashMap<Coordinate, Block>()
         map[Coordinate(1, 1)] = Nothing()
 
-        val result = MineBoard(map)
+        val result = MineBoard(1, 1, map)
 
         assertThat(result).isNotNull
     }

@@ -1,6 +1,5 @@
 package dto
 
-import domain.CoordinateNotFoundException
 import domain.MineBoard
 import domain.block.Block
 
@@ -10,7 +9,7 @@ data class MineBoardDto(val board: List<List<Char>>) {
 
 private fun MineBoard.toView(): List<List<Char>> {
     val board = this.value
-    val width = board.keys.map { it.x }.max() ?: throw CoordinateNotFoundException("좌표가 존재하지 않습니다. coordinates: ${board.keys}")
+    val width = this.width
 
     return board.toSortedMap()
         .map { it.value }
