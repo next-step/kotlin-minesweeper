@@ -1,29 +1,20 @@
 package minesweeper.domain
 
-sealed class CellState {
-    var open: Boolean = false
-        private set
+interface CellState {
+    fun count(): Int = 0
+    fun openLinkedCell() = Unit
 
-    abstract val count: Int
+    class Bomb : CellState
 
-    open fun open() = turnOpen()
-
-    fun turnOpen() {
-        open = true
+    class BombSide(private val count: Int) : CellState {
+        override fun count(): Int = count
     }
 
-    class Bomb : CellState() {
-        override val count: Int = 0
+    class Blank(private val link: List<Cell> = emptyList()) : CellState {
+        override fun openLinkedCell() = link.forEach { it.open() }
     }
 
-    class BombSide(override val count: Int) : CellState()
-
-    class Blank(private val link: List<CellState> = emptyList()) : CellState() {
-        override val count: Int = 0
-        override fun open() {
-            super.open()
-            link.filterNot { it.open }
-                .forEach { it.open() }
-        }
+    class Open(cellState: CellState) : CellState by cellState {
+        override fun openLinkedCell() = Unit
     }
 }
