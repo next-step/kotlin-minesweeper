@@ -18,7 +18,7 @@ class BoardBuilder {
         ).board(flatten.count { it == `💣` })
     }
 
-    fun cellFactory(): CellFactory {
+    private fun cellFactory(): CellFactory {
         val flatten = rows.flatMap { it.toList() }
         return CellFactory.Default(
             RandomDoubles(

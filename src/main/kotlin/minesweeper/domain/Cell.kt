@@ -11,7 +11,7 @@ class Cell(private val cellState: CellState) {
         get() = open || bomb
 
     fun open() {
-        cellState.discover()
+        cellState.open()
     }
 
     fun quietlyOpen() {

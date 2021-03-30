@@ -6,7 +6,7 @@ sealed class CellState {
 
     abstract val count: Int
 
-    open fun discover() = turnOpen()
+    open fun open() = turnOpen()
 
     fun turnOpen() {
         open = true
@@ -20,10 +20,10 @@ sealed class CellState {
 
     class Blank(private val link: List<CellState> = emptyList()) : CellState() {
         override val count: Int = 0
-        override fun discover() {
-            super.discover()
+        override fun open() {
+            super.open()
             link.filterNot { it.open }
-                .forEach { it.discover() }
+                .forEach { it.open() }
         }
     }
 }
