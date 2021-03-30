@@ -21,19 +21,4 @@ class Board(private val cells: List<Cell>, private val matrix: Matrix) : List<Ce
     }
 
     fun completed() = all { it.done }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Board
-
-        if (cells != other.cells) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return cells.hashCode()
-    }
 }

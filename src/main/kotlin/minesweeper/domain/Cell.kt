@@ -17,19 +17,4 @@ class Cell(private val cellState: CellState) {
     fun quietlyOpen() {
         cellState.turnOpen()
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Cell
-
-        if (cellState != other.cellState) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return cellState.hashCode()
-    }
 }
