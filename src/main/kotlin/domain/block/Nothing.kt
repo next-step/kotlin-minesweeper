@@ -3,7 +3,7 @@ package domain.block
 data class Nothing(private val surroundingMineCount: Int = 0) : Block() {
 
     init {
-        require(surroundingMineCount in 0..8) { "주변 지뢰의 개수는 0~8 사이의 값이어야 합니다. surroundingMineCount: $surroundingMineCount" }
+        require(surroundingMineCount in MIN_SURROUNDING_MINE_COUNT..MAX_SURROUNDING_MINE_COUNT) { "주변 지뢰의 개수는 $MIN_SURROUNDING_MINE_COUNT~$MAX_SURROUNDING_MINE_COUNT 사이의 값이어야 합니다. surroundingMineCount: $surroundingMineCount" }
     }
 
     override fun isMine() = false
@@ -22,5 +22,10 @@ data class Nothing(private val surroundingMineCount: Int = 0) : Block() {
 
     override fun hashCode(): Int {
         return surroundingMineCount
+    }
+
+    companion object {
+        private const val MIN_SURROUNDING_MINE_COUNT = 0
+        private const val MAX_SURROUNDING_MINE_COUNT = 8
     }
 }
