@@ -16,4 +16,18 @@ internal class BoardTest {
         val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
         assertThat(board.cells.get(Position(0, 0))).isInstanceOf(MineCell::class.java)
     }
+
+    @Test
+    fun `board expose`() {
+        val boardSpec = BoardSpec(
+            width = NaturalNumber(2),
+            height = NaturalNumber(2),
+            mineCount = NaturalNumber(1)
+        )
+
+        val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
+        board.exposeCells()
+
+        assertThat(board.cells.get(Position(0, 0)))
+    }
 }

@@ -9,5 +9,6 @@ fun main() {
     val outputView = OutputView()
 
     val board = Board.createBoard(inputView.requestBoardSpec())
+    board.exposeCells()
     outputView.render(board)
 }

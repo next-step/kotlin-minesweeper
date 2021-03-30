@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
+import minesweeper.domain.Cell
 import minesweeper.domain.NaturalNumber
 
 internal class OutputView {
@@ -19,4 +20,12 @@ internal class OutputView {
             print("${it.value.display} ")
         }
     }
+
+    private val Cell.display: String
+        get() {
+            if (this.hasMine) {
+                return "*"
+            }
+            return this.roundMineCount?.toString() ?: "C"
+        }
 }

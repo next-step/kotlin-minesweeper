@@ -3,9 +3,31 @@ package minesweeper.domain
 import java.util.SortedMap
 import java.util.TreeMap
 
-internal class Board private constructor(_cells: SortedMap<Position, Cell>) {
+internal class Board private constructor(private var _cells: SortedMap<Position, Cell>) {
 
-    val cells: Map<Position, Cell> = _cells.toSortedMap()
+    val cells: Map<Position, Cell>
+        get() {
+            return _cells.toMap()
+        }
+
+    internal fun exposeCells() {
+        _cells.forEach {
+            val position = it.key
+            val cell = it.value
+
+            val cells = findRoundCells(position)
+            cell.expose(cells)
+        }
+    }
+
+    private fun findRoundCells(position: Position): List<Cell> {
+        val cells = mutableListOf<Cell>()
+        position.getRounds().forEach {
+            _cells.get(it)?.let(cells::add)
+        }
+
+        return cells
+    }
 
     companion object {
         internal fun createBoard(
@@ -16,15 +38,15 @@ internal class Board private constructor(_cells: SortedMap<Position, Cell>) {
             repeat(boardSpec.height.value) { y ->
                 repeat(boardSpec.width.value) { x ->
                     val position = Position(x, y)
-                    val hasMine = minePositions.contains(position)
-                    cells.put(position, if (hasMine) MineCell() else EmptyCell())
+                    val hasMine = position in minePositions
+                    cells[position] = if (hasMine) MineCell() else EmptyCell()
                 }
             }
 
             return Board(cells)
         }
 
-        fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
+        private fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
             val range = boardSpec.width * boardSpec.height
 
             return (0..range.value).shuffled().take(boardSpec.mineCount.value).map {
