@@ -16,9 +16,9 @@ class ProtoCells(private val protoCells: List<ProtoCell>) {
     fun cells(matrix: Matrix): List<Cell> {
         val (cells, links) = protoCells.map { it.cellAndLink() }.unzip()
 
-        links.update(matrix, cells)
-
-        return cells
+        return cells.apply {
+            links.update(matrix, this)
+        }
     }
 
     private fun List<ProtoCell.Links>.update(matrix: Matrix, cells: List<Cell>) {
