@@ -1,11 +1,10 @@
 package minesweeper
 
+import minesweeper.domain.BoardFactory
+import minesweeper.domain.Operation
 import minesweeper.domain.Operation.Result.END
 import minesweeper.domain.Operation.Result.EXPLOSION
 import minesweeper.domain.Operation.Result.OPENED
-import minesweeper.domain.Operation.Result.SUCCESS
-import minesweeper.domain.BoardFactory
-import minesweeper.domain.Operation
 import minesweeper.domain.Operation.Result.OUT_OF_MATRIX
 import minesweeper.domain.Position
 import minesweeper.view.BoardView
@@ -18,14 +17,13 @@ fun main() {
 
     val board = BoardFactory(width, height).board(bombCount)
     println("지뢰찾기 게임 시작")
-    var operation: Operation
     do {
         BoardView(board).show()
-        operation = board.operation()
+        val operation = board.operation()
         val (x, y) = UserInput.IntArray("\nopen: ").answer()
         operation.open(Position(x, y))
         printResult(operation.result())
-    } while (operation.result() in listOf(SUCCESS, OPENED, OUT_OF_MATRIX))
+    } while (!operation.result().end())
 
     board.allOpen()
     BoardView(board).show()
