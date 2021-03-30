@@ -1,11 +1,12 @@
 package minesweeper.domain
 
-class Board(private val cells: List<Cell>, private val matrix: Matrix) : List<Cell> by cells {
+class Board(val cells: List<Cell>, private val matrix: Matrix) {
+    val cellCount: Int = cells.size
     val height: Int = matrix.height
     val width: Int = matrix.width
 
     init {
-        require(cells.filter { it.bomb }.count() in 1 until size)
+        require(cells.filter { it.bomb }.count() in 1 until cellCount)
     }
 
     constructor(cells: List<Cell>, width: Int) : this(cells, Matrix(width, cells.size / width))
@@ -15,10 +16,14 @@ class Board(private val cells: List<Cell>, private val matrix: Matrix) : List<Ce
     }
 
     fun allOpen() {
-        for (cell in this) {
+        for (cell in cells) {
             cell.quietlyOpen()
         }
     }
 
-    fun completed() = all { it.done }
+    fun completed() = cells.all { it.done }
+
+    fun cellOf(position: Position) = cells[matrix.toIndex(position)]
+
+    fun cellOf(fromIndex: Int, toIndex: Int) = cells.subList(fromIndex, toIndex)
 }

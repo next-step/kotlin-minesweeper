@@ -16,7 +16,7 @@ class OperationTest {
         operation.open(Position(1, 1))
 
         assertThat(operation.result()).isEqualTo(Operation.Result.SUCCESS)
-        assertThat(board[0].open).isTrue()
+        assertThat(board.cells[0].open).isTrue()
     }
 
     @Test
@@ -53,8 +53,8 @@ class OperationTest {
         val operation = board.operation()
         operation.open(Position(1, 1))
 
-        assertThat(board[0].open).isTrue()
-        assertThat(board[1].open).isTrue()
+        assertThat(board.cells[0].open).isTrue()
+        assertThat(board.cells[1].open).isTrue()
     }
 
     @Test
@@ -66,11 +66,11 @@ class OperationTest {
         val operation = board.operation()
         operation.open(Position(1, 1))
 
-        assertThat(board)
+        assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isTrue() }
             .hasSize(3)
 
-        assertThat(board)
+        assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isFalse() }
             .hasSize(1)
     }
@@ -86,12 +86,12 @@ class OperationTest {
         val operation = board.operation()
         operation.open(Position(1, 1))
 
-        assertThat(board)
+        assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isTrue() }
             .hasSize(13)
             .allSatisfy { assertThat(it.bomb).isFalse() }
 
-        assertThat(board)
+        assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isFalse() }
             .hasSize(2)
             .allSatisfy { assertThat(it.bomb).isTrue() }
@@ -107,8 +107,8 @@ class OperationTest {
         val operation = board.operation()
         operation.open(Position(1, 1))
 
-        assertThat(board[1].open).isTrue()
-        assertThat(board[2].open).isFalse()
+        assertThat(board.cells[1].open).isTrue()
+        assertThat(board.cells[2].open).isFalse()
     }
 
     @Test
@@ -142,7 +142,7 @@ class OperationTest {
 
         board.allOpen()
 
-        assertThat(board).allSatisfy {
+        assertThat(board.cells).allSatisfy {
             assertThat(it.open).isTrue()
         }
     }

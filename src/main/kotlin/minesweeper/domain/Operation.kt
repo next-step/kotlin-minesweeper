@@ -16,7 +16,7 @@ interface Operation {
                 return
             }
 
-            val cell = cellOf(position)
+            val cell = board.cellOf(position)
             if (cell.open) {
                 result = Result.OPENED
                 return
@@ -37,8 +37,6 @@ interface Operation {
             }
             return Result.SUCCESS
         }
-
-        private fun cellOf(position: Position) = board[matrix.toIndex(position)]
     }
 
     enum class Result {

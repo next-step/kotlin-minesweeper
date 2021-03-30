@@ -13,7 +13,7 @@ class BoardView(private val board: Board, private val out: PrintWriter = PrintWr
         out.flush()
     }
 
-    private fun rowView(it: Int): String = board.subList(startIndex(it), endIndex(it))
+    private fun rowView(it: Int): String = board.cellOf(startIndex(it), endIndex(it))
         .map(::CellView)
         .joinToString(EMPTY)
 
