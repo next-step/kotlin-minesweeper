@@ -6,27 +6,17 @@ import java.util.TreeMap
 internal class Board private constructor(private var _cells: SortedMap<Position, Cell>) {
 
     val cells: Map<Position, Cell>
-        get() {
-            return _cells.toMap()
-        }
+        get() = this._cells.toMap()
 
     internal fun exposeCells() {
-        _cells.forEach {
-            val position = it.key
-            val cell = it.value
-
+        _cells.forEach { (position, cell) ->
             val cells = findRoundCells(position)
             cell.expose(cells)
         }
     }
 
     private fun findRoundCells(position: Position): List<Cell> {
-        val cells = mutableListOf<Cell>()
-        position.getRounds().forEach {
-            _cells.get(it)?.let(cells::add)
-        }
-
-        return cells
+        return position.getRounds().mapNotNull { _cells[it] }
     }
 
     companion object {

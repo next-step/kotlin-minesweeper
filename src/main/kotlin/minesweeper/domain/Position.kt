@@ -17,15 +17,28 @@ internal data class Position(val x: NaturalNumber, val y: NaturalNumber) : Compa
     }
 
     fun getRounds(): List<Position> {
-        val rounds = mutableListOf<Position>()
+        return PositionRound.values().mapNotNull { it.createRound(this) }
+    }
 
-        (-1..1).forEach { roundX ->
-            (-1..1).forEach { roundY ->
-                if (roundX + x.value >= 0 && roundY + y.value >= 0) {
-                    rounds.add(Position(roundX + x.value, roundY + y.value))
-                }
+    private enum class PositionRound(val x: Int, val y: Int) {
+        LEFT(-1, 0),
+        RIGHT(1, 0),
+        UP(0, -1),
+        DOWN(0, 1),
+        LEFT_UP(-1, -1),
+        LEFT_DOWN(-1, 1),
+        RIGHT_UP(1, -1),
+        RIGHT_DOWN(1, 1);
+
+        fun createRound(position: Position): Position? {
+            val retX = x + position.x.value
+            val retY = y + position.y.value
+
+            if (retX < 0 || retY < 0) {
+                return null
             }
+
+            return Position(retX, retY)
         }
-        return rounds
     }
 }

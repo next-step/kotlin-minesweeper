@@ -28,6 +28,8 @@ internal class BoardTest {
         val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
         board.exposeCells()
 
-        assertThat(board.cells.get(Position(0, 0)))
+        val cell = board.cells[Position(1, 1)]
+
+        assertThat(cell?.roundMineCount).isEqualTo(1)
     }
 }
