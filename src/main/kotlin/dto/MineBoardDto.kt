@@ -20,6 +20,6 @@ private fun MineBoard.toView(): List<List<Char>> {
 private fun Block.toView(): Char {
     return when (this.isMine()) {
         true -> '■'
-        false -> '0'.plus(this.surroundingMineCount())
+        false -> '0'.plus(this.surroundingMineCount().value)
     }
 }
