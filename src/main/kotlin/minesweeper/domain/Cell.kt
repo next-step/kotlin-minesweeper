@@ -11,6 +11,9 @@ class Cell(private var cellState: CellState) {
         get() = open || bomb
 
     fun open() {
+        if (open) {
+            return
+        }
         val oldState = cellState
         cellState = CellState.Open(cellState)
         oldState.openLinkedCell()
