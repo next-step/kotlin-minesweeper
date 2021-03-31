@@ -7,18 +7,12 @@ interface CellFactory {
         constructor(size: Int) : this(RandomDoubles(size))
 
         override fun cells(bomb: Int, matrix: Matrix): List<Cell> {
-            val protoCells = protoCells(bomb)
-
-            protoCells.updateSide(matrix)
-
-            protoCells.increaseCount()
-
-            return protoCells.cells(matrix)
+            return protoCells(bomb, matrix).cells()
         }
 
-        private fun protoCells(bomb: Int): ProtoCells {
+        private fun protoCells(bomb: Int, matrix: Matrix): ProtoCells {
             val boundary = boundary(bomb)
-            return ProtoCells(randomDoubles.map { ProtoCell(it <= boundary) })
+            return ProtoCells(randomDoubles.map { ProtoCell(it <= boundary) }, matrix)
         }
 
         private fun boundary(count: Int) = randomDoubles.sorted().take(count).last()
