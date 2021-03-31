@@ -12,10 +12,9 @@ class OperationTest {
             row(`⬜`, `💣`, `⬜`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
 
-        assertThat(operation.result()).isEqualTo(Operation.Result.SUCCESS)
+        assertThat(board.result).isEqualTo(Result.SUCCESS)
         assertThat(board.cells[0].open).isTrue()
     }
 
@@ -25,11 +24,10 @@ class OperationTest {
             row(`⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
+        board.open(Position(1, 1))
 
-        assertThat(operation.result()).isEqualTo(Operation.Result.OPENED)
+        assertThat(board.result).isEqualTo(Result.OPENED)
     }
 
     @Test
@@ -38,10 +36,9 @@ class OperationTest {
             row(`⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(2, 1))
+        board.open(Position(2, 1))
 
-        assertThat(operation.result()).isEqualTo(Operation.Result.EXPLOSION)
+        assertThat(board.result).isEqualTo(Result.EXPLOSION)
     }
 
     @Test
@@ -50,8 +47,7 @@ class OperationTest {
             row(`⬜`, `⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
 
         assertThat(board.cells[0].open).isTrue()
         assertThat(board.cells[1].open).isTrue()
@@ -63,8 +59,7 @@ class OperationTest {
             row(`⬜`, `⬜`, `⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
 
         assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isTrue() }
@@ -83,8 +78,7 @@ class OperationTest {
             row(`💣`, `⬜`, `⬜`, `⬜`, `⬜`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
 
         assertThat(board.cells)
             .filteredOnAssertions { assertThat(it.open).isTrue() }
@@ -104,8 +98,7 @@ class OperationTest {
             row(`⬜`, `⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(1, 1))
+        board.open(Position(1, 1))
 
         assertThat(board.cells[1].open).isTrue()
         assertThat(board.cells[2].open).isFalse()
@@ -116,10 +109,10 @@ class OperationTest {
         val board = board {
             row(`⬜`, `💣`)
         }.build()
-        val operation = board.operation()
-        operation.open(Position(1, 1))
 
-        assertThat(operation.result()).isEqualTo(Operation.Result.END)
+        board.open(Position(1, 1))
+
+        assertThat(board.result).isEqualTo(Result.END)
     }
 
     @Test
@@ -128,10 +121,9 @@ class OperationTest {
             row(`⬜`, `💣`)
         }.build()
 
-        val operation = board.operation()
-        operation.open(Position(10, 10))
+        board.open(Position(10, 10))
 
-        assertThat(operation.result()).isEqualTo(Operation.Result.OUT_OF_MATRIX)
+        assertThat(board.result).isEqualTo(Result.OUT_OF_MATRIX)
     }
 
     @Test

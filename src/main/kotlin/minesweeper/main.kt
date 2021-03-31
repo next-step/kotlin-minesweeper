@@ -1,12 +1,12 @@
 package minesweeper
 
 import minesweeper.domain.BoardFactory
-import minesweeper.domain.Operation
-import minesweeper.domain.Operation.Result.END
-import minesweeper.domain.Operation.Result.EXPLOSION
-import minesweeper.domain.Operation.Result.OPENED
-import minesweeper.domain.Operation.Result.OUT_OF_MATRIX
 import minesweeper.domain.Position
+import minesweeper.domain.Result
+import minesweeper.domain.Result.END
+import minesweeper.domain.Result.EXPLOSION
+import minesweeper.domain.Result.OPENED
+import minesweeper.domain.Result.OUT_OF_MATRIX
 import minesweeper.view.BoardView
 import minesweeper.view.UserInput
 
@@ -19,17 +19,16 @@ fun main() {
     println("지뢰찾기 게임 시작")
     do {
         BoardView(board).show()
-        val operation = board.operation()
         val (x, y) = UserInput.IntArray("\nopen: ").answer()
-        operation.open(Position(x, y))
-        printResult(operation.result())
-    } while (!operation.result().end())
+        board.open(Position(x, y))
+        printResult(board.result)
+    } while (!board.result.end())
 
     board.allOpen()
     BoardView(board).show()
 }
 
-private fun printResult(result: Operation.Result) {
+private fun printResult(result: Result) {
     when (result) {
         OPENED -> println("이미 열려있습니다.")
         EXPLOSION -> println("Lose Game.")
