@@ -23,7 +23,7 @@ internal class PositionTest {
 
     @Test
     fun `x,y가 0 이상만 조회`() {
-        val rounds = Position(NaturalNumber.ZERO, NaturalNumber.ZERO).getRounds()
+        val rounds = Position(NaturalNumber.ZERO, NaturalNumber.ZERO).around
 
         val expect = listOf(
             Position(NaturalNumber(1), NaturalNumber(0)),
@@ -36,7 +36,7 @@ internal class PositionTest {
 
     @Test
     fun `주변 8개 조회`() {
-        val rounds = Position(NaturalNumber(1), NaturalNumber(1)).getRounds()
+        val rounds = Position(NaturalNumber(1), NaturalNumber(1)).around
 
         val expect = listOf(
             Position(NaturalNumber(0), NaturalNumber(0)),

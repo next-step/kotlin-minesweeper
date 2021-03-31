@@ -2,6 +2,7 @@ package minesweeper.view
 
 import minesweeper.domain.BoardSpec
 import minesweeper.domain.NaturalNumber
+import minesweeper.domain.Position
 
 internal class InputView {
     internal fun requestBoardSpec(): BoardSpec {
@@ -10,6 +11,17 @@ internal class InputView {
         val width = requestWidth()
         println()
         return BoardSpec(width, height, requestMineCount())
+    }
+
+    internal fun requestPosition(): Position {
+        print("\nopen:")
+        val line = readLine()!!
+        val numbers = line.split(",").map { it.trim().toInt() }
+        require(numbers.size == 2) {
+            "정확한 값을 입력해 주세요."
+        }
+
+        return Position(numbers[0], numbers[1])
     }
 
     private fun requestHeight(): NaturalNumber {

@@ -5,28 +5,58 @@ import java.util.TreeMap
 
 internal class Board private constructor(private var _cells: SortedMap<Position, Cell>) {
 
+    private val mineCount: Int = _cells.values.filter { it.hasMine }.count()
+
     val cells: Map<Position, Cell>
-        get() {
-            return _cells.toMap()
+        get() = this._cells.toMap()
+
+    internal fun expose(position: Position): GameState {
+        val cell = _cells[position] ?: throw IllegalArgumentException("cell not exist ")
+        if (cell.hasMine) {
+            return GameState.LOSE
         }
 
-    internal fun exposeCells() {
-        _cells.forEach {
-            val position = it.key
-            val cell = it.value
+        val mineCount = cell.expose(findRoundCells(position))
+        if (mineCount != 0) {
+            return findGameState()
+        }
 
-            val cells = findRoundCells(position)
-            cell.expose(cells)
+        expose(position.around)
+        return findGameState()
+    }
+
+    private fun findGameState(): GameState {
+        val uncoveredCount = this._cells.values.filter { !it.covered }.count()
+        if (this.mineCount == uncoveredCount) {
+            return GameState.WIN
+        }
+
+        return GameState.RUNNING
+    }
+
+    private fun expose(positions: List<Position>) {
+        positions.forEach { position ->
+
+            val cell = _cells[position] ?: return@forEach
+            if (cell.covered) {
+                return@forEach
+            }
+
+            if (cell.hasMine) {
+                return@forEach
+            }
+
+            val count = cell.expose(findRoundCells(position))
+            if (count != 0) {
+                return@forEach
+            }
+
+            expose(position.around)
         }
     }
 
     private fun findRoundCells(position: Position): List<Cell> {
-        val cells = mutableListOf<Cell>()
-        position.getRounds().forEach {
-            _cells.get(it)?.let(cells::add)
-        }
-
-        return cells
+        return position.around.mapNotNull { this._cells[it] }
     }
 
     companion object {
@@ -49,9 +79,9 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         private fun randomMinePositions(boardSpec: BoardSpec): List<Position> {
             val range = boardSpec.width * boardSpec.height
 
-            return (0..range.value).shuffled().take(boardSpec.mineCount.value).map {
-                val x = it % boardSpec.height.value
-                val y = it / boardSpec.height.value
+            return (0 until range.value).shuffled().take(boardSpec.mineCount.value).map {
+                val x = it % boardSpec.width.value
+                val y = it / boardSpec.width.value
                 Position(NaturalNumber(x), NaturalNumber(y))
             }
         }

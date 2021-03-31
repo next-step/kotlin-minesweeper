@@ -2,16 +2,30 @@ package minesweeper.view
 
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.GameState
 import minesweeper.domain.NaturalNumber
 
 internal class OutputView {
-    fun render(board: Board) {
-        print("\n지뢰찾기 게임 시작")
+    fun renderStartMessage() {
+        println("\n지뢰찾기 게임 시작")
+    }
 
+    fun renderBoard(board: Board, gameState: GameState) {
+        board.render(gameState)
+    }
+
+    private fun Board.render(gameState: GameState) {
+        if (gameState == GameState.WIN) {
+            println("WIN Game.")
+            return
+        }
+
+        if (gameState == GameState.LOSE) {
+            println("LOSE Game.")
+            return
+        }
         var curY = NaturalNumber.ZERO
-        println()
-
-        board.cells.forEach {
+        this.cells.forEach {
             if (it.key.y != curY) {
                 curY = it.key.y
                 println()
@@ -19,13 +33,11 @@ internal class OutputView {
 
             print("${it.value.display} ")
         }
+        println()
     }
 
     private val Cell.display: String
         get() {
-            if (this.hasMine) {
-                return "*"
-            }
-            return this.roundMineCount?.toString() ?: "C"
+            return this.aroundMineCount?.toString() ?: "C"
         }
 }
