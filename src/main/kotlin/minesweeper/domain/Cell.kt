@@ -1,33 +1,25 @@
 package minesweeper.domain
 
-data class Cell(val bomb: Boolean = false, val count: Int = 0) {
-    lateinit var link: List<Cell>
-    var open: Boolean = false
-        private set
-
-    var exploded: Boolean = false
-        private set
+class Cell(private var cellState: CellState) {
+    val bomb: Boolean = cellState is CellState.Bomb
+    val open: Boolean
+        get() = cellState is CellState.Open
+    val exploded: Boolean
+        get() = open && bomb
+    val count: Int = cellState.count()
+    val done: Boolean
+        get() = open || bomb
 
     fun open() {
-        if (bomb) {
-            exploded = true
-            open = true
+        if (open) {
             return
         }
-
-        open = true
-
-        if (count > 0) {
-            return
-        }
-
-        link.filter { it.canOpen() }
-            .forEach { it.open() }
+        val oldState = cellState
+        cellState = CellState.Open(cellState)
+        oldState.openLinkedCell()
     }
 
     fun quietlyOpen() {
-        open = true
+        cellState = CellState.Open(cellState)
     }
-
-    private fun canOpen(): Boolean = !(bomb || open)
 }

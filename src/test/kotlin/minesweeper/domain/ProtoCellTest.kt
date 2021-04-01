@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test
 class ProtoCellTest {
     @Test
     internal fun `2 x 2 좌상단 코너`() {
-        val bombCell = ProtoCell(bomb = true)
-        val cells = listOf(bombCell, ProtoCell(), ProtoCell(), ProtoCell())
+        val protoCell = ProtoCell(bomb = true)
+        val cells = listOf(protoCell, ProtoCell(), ProtoCell(), ProtoCell())
         for ((index, cell) in cells.withIndex()) {
             cell.sideCells = Matrix(2, 2).around(index).map { cells[it] }
         }
-        assertThat(bombCell.sideCells).contains(cells[1], cells[2], cells[3])
+        assertThat(protoCell.sideCells).contains(cells[1], cells[2], cells[3])
     }
 
     @Test
