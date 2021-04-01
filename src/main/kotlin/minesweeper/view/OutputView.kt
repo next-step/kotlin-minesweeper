@@ -3,7 +3,6 @@ package minesweeper.view
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
 import minesweeper.domain.GameState
-import minesweeper.domain.NaturalNumber
 
 internal class OutputView {
     fun renderStartMessage() {
@@ -14,26 +13,20 @@ internal class OutputView {
         board.render(gameState)
     }
 
-    private fun Board.render(gameState: GameState) {
-        if (gameState == GameState.WIN) {
+    private fun Board.render(gameState: GameState) = when (gameState) {
+        GameState.WIN -> {
             println("WIN Game.")
-            return
         }
-
-        if (gameState == GameState.LOSE) {
-            println("LOSE Game.")
-            return
+        GameState.LOSE -> {
+            println("WIN Game.")
         }
-        var curY = NaturalNumber.ZERO
-        this.cells.forEach {
-            if (it.key.y != curY) {
-                curY = it.key.y
-                println()
-            }
-
-            print("${it.value.display} ")
+        GameState.RUNNING -> {
+            cells.toList()
+                .groupBy({ it.first.y }, { it.second })
+                .forEach { (y, cells) ->
+                    println(cells.joinToString(" ") { it.display })
+                }
         }
-        println()
     }
 
     private val Cell.display: String
