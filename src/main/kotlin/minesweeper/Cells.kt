@@ -11,6 +11,23 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
         return Position.values().filter { isExistMine(it, index) }.count()
     }
 
+    fun enterCell(index: Int): Boolean {
+        if (cells[index].isMine) {
+            return false
+        }
+        val row: Int = index / width
+        val column: Int = index % width
+
+        Position.values().filter { it.isExist(row, column, width, height) }
+            .map { it.getTargetIndex(index, width) }
+            .filter { !cells[it].isMine }
+            .forEach { cells[it].isOpen = true }
+
+        cells[index].isOpen = true
+
+        return true
+    }
+
     private fun isExistMine(position: Position, index: Int): Boolean {
         val row: Int = index / width
         val column: Int = index % width

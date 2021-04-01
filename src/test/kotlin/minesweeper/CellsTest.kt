@@ -6,6 +6,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 import java.lang.IllegalArgumentException
 import java.util.stream.Stream
 
@@ -44,6 +45,32 @@ class CellsTest {
         assertThrows<IllegalArgumentException> {
             Cells(listOf(), width, height)
         }
+    }
+
+    @Test
+    fun `지뢰가 없는 셀을 선택하면 주변의 지뢰가 없는 셀도 열린다`() {
+        assertThat(board.enterCell(8)).isTrue()
+        assertThat(board.cells[2].isOpen).isTrue()
+        assertThat(board.cells[3].isOpen).isTrue()
+        assertThat(board.cells[4].isOpen).isTrue()
+        assertThat(board.cells[7].isOpen).isTrue()
+        assertThat(board.cells[8].isOpen).isTrue()
+        assertThat(board.cells[9].isOpen).isFalse()
+        assertThat(board.cells[12].isOpen).isTrue()
+        assertThat(board.cells[13].isOpen).isTrue()
+        assertThat(board.cells[14].isOpen).isFalse()
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [5, 6, 9, 10, 14, 15, 17, 20, 21, 24])
+    fun `지뢰가 있는 셀을 선택하면 false를 리턴한다`(index: Int) {
+        assertThat(board.enterCell(index)).isFalse()
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 16, 18, 19, 22, 23])
+    fun `지뢰가 없는 셀을 선택하면 true를 리턴한다`(index: Int) {
+        assertThat(board.enterCell(index)).isTrue()
     }
 
     @ParameterizedTest
