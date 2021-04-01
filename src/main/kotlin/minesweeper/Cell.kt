@@ -1,3 +1,5 @@
 package minesweeper
 
-data class Cell(val isMine: Boolean)
+data class Cell(val isMine: Boolean) {
+    var isOpen = false
+}
