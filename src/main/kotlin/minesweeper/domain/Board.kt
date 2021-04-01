@@ -25,6 +25,17 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         return findGameState()
     }
 
+    private fun expose(positions: List<Position>) {
+        this._cells.filterKeys { it in positions }
+            .filterValues { !it.covered }
+            .filterValues { !it.hasMine }
+            .mapNotNull { (position, cell) ->
+                val count = cell.expose(findRoundCells(position))
+                if (count == 0) position else null
+            }
+            .forEach { expose(it.around) }
+    }
+
     private fun findGameState(): GameState {
         val uncoveredCount = this._cells.values.filter { !it.covered }.count()
         if (this.mineCount == uncoveredCount) {
@@ -32,27 +43,6 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         }
 
         return GameState.RUNNING
-    }
-
-    private fun expose(positions: List<Position>) {
-        positions.forEach { position ->
-
-            val cell = _cells[position] ?: return@forEach
-            if (cell.covered) {
-                return@forEach
-            }
-
-            if (cell.hasMine) {
-                return@forEach
-            }
-
-            val count = cell.expose(findRoundCells(position))
-            if (count != 0) {
-                return@forEach
-            }
-
-            expose(position.around)
-        }
     }
 
     private fun findRoundCells(position: Position): List<Cell> {
