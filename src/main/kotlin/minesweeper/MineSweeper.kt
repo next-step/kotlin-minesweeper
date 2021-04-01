@@ -8,5 +8,15 @@ fun main() {
     val boardGenerator = BoardGenerator(width, height, mineCount)
     val cells = Cells(boardGenerator.generateRandomCell(), width, height)
 
-    printCells(cells)
+    printStart()
+    while (!cells.isAllOpen()) {
+        val index = Location.of(inputPosition()).getConvertIndex(width)
+        if (!cells.enterCell(index)) {
+            printLose()
+            return
+        }
+
+        printCells(cells)
+    }
+    printWin()
 }
