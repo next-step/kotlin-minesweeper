@@ -1,7 +1,6 @@
 package minesweeper
 
-const val MINE = "#"
-const val CELL = "O"
+const val CELL = "ㅁ"
 
 fun printCells(cells: Cells) {
     (0 until cells.height).forEach {
@@ -19,7 +18,7 @@ fun printCellLine(cells: Cells, row: Int) {
 }
 
 fun printCellView(cells: Cells, index: Int) {
-    val view = if (cells.cells[index].isMine) MINE else cells.getCellValue(index).toString()
+    val view = if (cells.cells[index].isOpen) cells.getCellValue(index).toString() else CELL
     print("$view ")
 }
 
