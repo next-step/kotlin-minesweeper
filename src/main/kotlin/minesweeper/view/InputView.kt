@@ -6,9 +6,9 @@ import minesweeper.domain.Position
 
 internal class InputView {
     internal fun requestBoardSpec(): BoardSpec {
-        val height = requestHeight()
+        val height = retry(this::requestHeight)
         println()
-        val width = requestWidth()
+        val width = retry(this::requestWidth)
         println()
         return BoardSpec(width, height, requestMineCount())
     }
@@ -17,10 +17,7 @@ internal class InputView {
         print("\nopen:")
         val line = readLine()!!
         val numbers = line.split(",").map { it.trim().toInt() }
-        require(numbers.size == 2) {
-            "정확한 값을 입력해 주세요."
-        }
-
+        require(numbers.size == 2)
         return Position(numbers[0], numbers[1])
     }
 
@@ -37,5 +34,14 @@ internal class InputView {
     private fun requestMineCount(): NaturalNumber {
         println("지뢰는 몇 개인가요?")
         return NaturalNumber(readLine()!!)
+    }
+
+    private fun <T> retry(action: () -> T): T {
+        return try {
+            action()
+        } catch (e: Exception) {
+            println("잘못된 입력 입니다.")
+            return retry(action)
+        }
     }
 }
