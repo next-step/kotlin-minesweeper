@@ -23,10 +23,14 @@ internal class OutputView {
         GameState.RUNNING -> {
             cells.toList()
                 .groupBy({ it.first.y }, { it.second })
-                .forEach { (y, cells) ->
+                .forEach { (_, cells) ->
                     println(cells.joinToString(" ") { it.display })
                 }
         }
+    }
+
+    fun renderMessage(message: String) {
+        println(message)
     }
 
     private val Cell.display: String

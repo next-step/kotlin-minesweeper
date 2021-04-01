@@ -11,7 +11,7 @@ internal class Board private constructor(private var _cells: SortedMap<Position,
         get() = this._cells.toMap()
 
     internal fun expose(position: Position): GameState {
-        val cell = _cells[position] ?: throw IllegalArgumentException("cell not exist ")
+        val cell = _cells[position] ?: throw NotFoundCellException()
         if (cell.hasMine) {
             return GameState.LOSE
         }

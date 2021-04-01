@@ -3,6 +3,7 @@ package minesweeper.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class BoardTest {
 
@@ -16,6 +17,18 @@ internal class BoardTest {
 
         val board = Board.createBoard(boardSpec, listOf(Position(0, 0)))
         assertThat(board.cells.get(Position(0, 0))).isInstanceOf(MineCell::class.java)
+    }
+
+    @Test
+    fun `expose시 존재하지 않는 position이면 예외 발생`() {
+        val boardSpec = BoardSpec(
+            width = NaturalNumber(3),
+            height = NaturalNumber(3),
+            mineCount = NaturalNumber(2)
+        )
+
+        val board = Board.createBoard(boardSpec, listOf(Position(2, 0), Position(2, 1)))
+        assertThrows<NotFoundCellException> { board.expose(Position(3, 3)) }
     }
 
     @Test
