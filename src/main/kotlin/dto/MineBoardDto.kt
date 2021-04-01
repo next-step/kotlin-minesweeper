@@ -1,25 +1,14 @@
 package dto
 
-import domain.Block
 import domain.MineBoard
+import domain.block.Block
 
-data class MineBoardDto(val board: List<List<Char>>) {
-    constructor(mineBoard: MineBoard) : this(mineBoard.toView())
+class MineBoardDto(mineBoard: MineBoard) {
+    val width: Int = mineBoard.width
+    val board: List<BlockDto> = mineBoard.value.toSortedMap().map { it.value }.map(::BlockDto)
 }
 
-private fun MineBoard.toView(): List<List<Char>> {
-    val board = this.value
-    val width = board.keys.maxBy { it.x }!!.x
-
-    return board.toSortedMap()
-        .map { it.value }
-        .map { it.toView() }
-        .windowed(size = width, step = width)
-}
-
-private fun Block.toView(): Char {
-    return when (this) {
-        Block.MINE -> '■'
-        Block.NOTHING -> '□'
-    }
+class BlockDto(block: Block) {
+    val isMine: Boolean = block.isMine()
+    val mineCount: Int? = if (block.isMine()) null else block.surroundingMineCount().value
 }

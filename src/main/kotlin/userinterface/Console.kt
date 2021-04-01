@@ -1,9 +1,11 @@
 package userinterface
 
+import dto.BlockDto
 import dto.MineBoardDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
+
     override fun inputMineSweeperWidthHeightCount(): MineSweeperInitDto {
         val height = inputNaturalNumber("높이를 입력하세요.")
         val width = inputNaturalNumber("너비를 입력하세요.")
@@ -19,8 +21,8 @@ object Console : UserInterface {
 
     override fun outputMineSweeper(mineBoardDto: MineBoardDto) {
         println("지뢰찾기 게임 시작")
-        mineBoardDto.board
-            .map { row -> row.joinToString(separator = " ") }
+        mineBoardDto.board.windowed(size = mineBoardDto.width, step = mineBoardDto.width)
+            .map { row -> row.joinToString(separator = " ") { it.toView() } }
             .forEach(::println)
     }
 
@@ -32,5 +34,12 @@ object Console : UserInterface {
             ?: inputNaturalNumber(message)
 
         return if (input > 0) input else inputNaturalNumber(message)
+    }
+}
+
+private fun BlockDto.toView(): String {
+    return when (this.isMine) {
+        true -> "■"
+        false -> mineCount.toString()
     }
 }

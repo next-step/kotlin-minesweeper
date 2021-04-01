@@ -1,5 +1,6 @@
 package domain
 
+import domain.block.BlockFactory
 import domain.coordinategenerator.BoardCoordinatesGenerator
 import domain.coordinategenerator.CoordinatesGenerator
 
@@ -14,9 +15,13 @@ object MineBoardFactory {
 
         val map = mineBoardCoordinates
             .map { Pair(it, mineCoordinates.contains(it)) }
-            .map { Pair(it.first, Block.from(it.second)) }
+            .map { Pair(it.first, BlockFactory.create(it.second)) }
             .toMap()
 
-        return MineBoard(map)
+        return MineBoard(
+            width = boardCoordinatesGenerator.width,
+            height = boardCoordinatesGenerator.height,
+            value = map
+        )
     }
 }
