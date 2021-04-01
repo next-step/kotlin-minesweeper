@@ -10,6 +10,11 @@ import java.lang.IllegalArgumentException
 import java.util.stream.Stream
 
 class CellsTest {
+    private val mines = listOf(
+        false, false, false, false, false, true, true, false, false, true, true, false,
+        false, false, true, true, false, true, false, false, true, true, false, false, true
+    ).map { Cell(it) }
+    private val board = Cells(mines, 5, 5)
 
     @Test
     fun `cells를 정상적으로 생성한다`() {
@@ -44,12 +49,6 @@ class CellsTest {
     @ParameterizedTest
     @MethodSource("cellValueResultData")
     fun `셀의 숫자를 정상적으로 가져온다`(index: Int, cellValue: Int) {
-        val mines = listOf(
-            false, false, false, false, false, true, true, false, false, true, true, false,
-            false, false, true, true, false, true, false, false, true, true, false, false, true
-        )
-        val board = Cells(mines.map { Cell(it) }, 5, 5)
-
         assertThat(board.getCellValue(index)).isEqualTo(cellValue)
     }
 
