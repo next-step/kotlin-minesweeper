@@ -48,6 +48,19 @@ class CellsTest {
     }
 
     @Test
+    fun `모든 셀이 열리면 true를 반환한다`() {
+        assertThat(board.isAllOpen()).isFalse()
+        board.enterCell(1)
+        assertThat(board.isAllOpen()).isFalse()
+        board.enterCell(3)
+        assertThat(board.isAllOpen()).isFalse()
+        board.enterCell(12)
+        assertThat(board.isAllOpen()).isFalse()
+        board.enterCell(23)
+        assertThat(board.isAllOpen()).isTrue()
+    }
+
+    @Test
     fun `지뢰가 없는 셀을 선택하면 주변의 지뢰가 없는 셀도 열린다`() {
         assertThat(board.enterCell(8)).isTrue()
         assertThat(board.cells[2].isOpen).isTrue()

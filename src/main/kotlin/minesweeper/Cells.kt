@@ -11,6 +11,10 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
         return Position.values().filter { isExistMine(it, index) }.count()
     }
 
+    fun isAllOpen(): Boolean {
+        return cells.none { !it.isMine && !it.isOpen }
+    }
+
     fun enterCell(index: Int): Boolean {
         if (cells[index].isMine) {
             return false
