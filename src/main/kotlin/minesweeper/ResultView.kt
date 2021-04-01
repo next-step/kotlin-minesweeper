@@ -22,3 +22,15 @@ fun printCellView(cells: Cells, index: Int) {
     val view = if (cells.cells[index].isMine) MINE else cells.getCellValue(index).toString()
     print("$view ")
 }
+
+fun printStart() {
+    println("지뢰찾기 게임 시작")
+}
+
+fun printLose() {
+    println("Lose Game")
+}
+
+fun printWin() {
+    println("Win Game")
+}
