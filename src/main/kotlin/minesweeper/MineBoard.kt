@@ -4,17 +4,22 @@ import kotlin.random.Random
 
 class MineBoard(
     val width: Int,
-    val height: Int
+    val height: Int,
+    mineNumber: Int
 ) {
     val board: Array<Array<String>> = Array<Array<String>>(width) { Array<String>(height) { " C " } }
 
-    fun deployMine(mineNumber: Int) {
+    init {
+        deployMine(mineNumber)
+    }
+
+    private fun deployMine(mineNumber: Int) {
         var deployedMine = 0
-        while(deployedMine < mineNumber) {
+        while (deployedMine < mineNumber) {
             val row = Random.nextInt(0, height - 1)
             val column = Random.nextInt(0, width - 1)
 
-            if(deploy(row, column)) deployedMine ++
+            if (deploy(row, column)) deployedMine++
         }
     }
 
@@ -23,7 +28,7 @@ class MineBoard(
     }
 
     private fun deploy(row: Int, column: Int): Boolean {
-        if(!isDuplicateMine(row, column)) {
+        if (!isDuplicateMine(row, column)) {
             board[row][column] = " * "
             return true
         }
