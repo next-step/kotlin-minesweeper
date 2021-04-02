@@ -1,5 +1,9 @@
 package minesweeper
 
+import minesweeper.domain.MineBoard
+import minesweeper.ui.InputView
+import minesweeper.ui.OutputView
+
 fun main() {
     val gameBoard = createGameBoard()
 

@@ -1,4 +1,6 @@
-package minesweeper
+package minesweeper.ui
+
+import minesweeper.domain.MineBoard
 
 object OutputView {
 
