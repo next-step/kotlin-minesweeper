@@ -11,7 +11,7 @@ class MineBoardTest {
         val mineBoard = MineBoard(5, 5, mineNumber)
         var boardMines = 0
         mineBoard.board.forEach {
-            boardMines += it.count { it == " * " }
+            boardMines += it.count { it == MineBoard.MINE }
         }
 
         assertThat(mineNumber).isEqualTo(boardMines)

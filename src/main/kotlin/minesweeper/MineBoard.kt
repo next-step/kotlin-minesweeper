@@ -24,14 +24,19 @@ class MineBoard(
     }
 
     private fun isDuplicateMine(row: Int, column: Int): Boolean {
-        return board[row][column] == " * "
+        return board[row][column] == MINE
     }
 
     private fun deploy(row: Int, column: Int): Boolean {
         if (!isDuplicateMine(row, column)) {
-            board[row][column] = " * "
+            board[row][column] = MINE
             return true
         }
         return false
+    }
+
+    companion object {
+        const val MINE = " * "
+        const val NORMAL = " C "
     }
 }
