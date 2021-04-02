@@ -11,7 +11,7 @@ object OutputView {
         }
     }
 
-    fun drawWidth(mineBoard: Array<Array<String>>, heightIndex: Int, width: Int) {
+    private fun drawWidth(mineBoard: Array<Array<String>>, heightIndex: Int, width: Int) {
         repeat(width) { widthIndex ->
             print(mineBoard[heightIndex][widthIndex])
         }
