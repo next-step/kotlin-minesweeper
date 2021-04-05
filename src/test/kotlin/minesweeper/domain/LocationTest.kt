@@ -1,5 +1,6 @@
-package minesweeper
+package minesweeper.domain
 
+import minesweeper.domain.Location
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class BoardGenerator(private val width: Int, private val height: Int, private val mineCount: Int) {
     init {

@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 enum class Position(
     val isExist: (row: Int, column: Int, width: Int, height: Int) -> Boolean,

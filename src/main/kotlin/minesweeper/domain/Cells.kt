@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
 

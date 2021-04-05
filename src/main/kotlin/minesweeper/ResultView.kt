@@ -1,5 +1,7 @@
 package minesweeper
 
+import minesweeper.domain.Cells
+
 const val CELL = "ㅁ"
 
 fun printCells(cells: Cells) {

@@ -1,5 +1,9 @@
 package minesweeper
 
+import minesweeper.domain.BoardGenerator
+import minesweeper.domain.Cells
+import minesweeper.domain.Location
+
 fun main() {
     val width = inputWidth().parseInt()
     val height = inputHeight().parseInt()

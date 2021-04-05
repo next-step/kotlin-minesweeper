@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class Location private constructor(private val y: Int, private val x: Int) {
 
