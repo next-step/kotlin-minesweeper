@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -66,15 +67,18 @@ class CellsTest {
     @Test
     fun `지뢰가 없는 셀을 선택하면 주변의 지뢰가 없는 셀도 열린다`() {
         assertThat(board.enterCell(8)).isTrue()
-        assertThat(board.cells[2].isOpen).isTrue()
-        assertThat(board.cells[3].isOpen).isTrue()
-        assertThat(board.cells[4].isOpen).isTrue()
-        assertThat(board.cells[7].isOpen).isTrue()
-        assertThat(board.cells[8].isOpen).isTrue()
-        assertThat(board.cells[9].isOpen).isFalse()
-        assertThat(board.cells[12].isOpen).isTrue()
-        assertThat(board.cells[13].isOpen).isTrue()
-        assertThat(board.cells[14].isOpen).isFalse()
+
+        assertAll(
+            { assertThat(board.cells[2].isOpen).isTrue() },
+            { assertThat(board.cells[3].isOpen).isTrue() },
+            { assertThat(board.cells[4].isOpen).isTrue() },
+            { assertThat(board.cells[7].isOpen).isTrue() },
+            { assertThat(board.cells[8].isOpen).isTrue() },
+            { assertThat(board.cells[9].isOpen).isFalse() },
+            { assertThat(board.cells[12].isOpen).isTrue() },
+            { assertThat(board.cells[13].isOpen).isTrue() },
+            { assertThat(board.cells[14].isOpen).isFalse() }
+        )
     }
 
     @ParameterizedTest
