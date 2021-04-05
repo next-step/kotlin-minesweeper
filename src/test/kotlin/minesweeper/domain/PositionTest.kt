@@ -37,7 +37,7 @@ class PositionTest {
 
     companion object {
         @JvmStatic
-        private fun existResultData(): Stream<Arguments?>? {
+        private fun existResultData(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(0, 0, listOf(Position.RIGHT, Position.RIGHT_DOWN, Position.DOWN)),
                 Arguments.of(
