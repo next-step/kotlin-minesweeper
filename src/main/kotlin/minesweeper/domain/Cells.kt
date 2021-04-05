@@ -24,8 +24,7 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
 
         Position.values().filter { it.isExist(row, column, width, height) }
             .map { it.getTargetIndex(index, width) }
-            .filter { !cells[it].isMine }
-            .forEach { cells[it].isOpen = true }
+            .forEach { cells[it].openIfNotMine() }
 
         cells[index].isOpen = true
 
