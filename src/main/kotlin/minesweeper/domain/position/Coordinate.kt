@@ -5,11 +5,11 @@ class Coordinate private constructor(
 ) : Comparable<Coordinate> {
 
     init {
-        require(value >= Minimum_Value) { "최소 $Minimum_Value 이어야 한다. value: $value" }
+        require(value >= MINIMUM_VALUE) { "최소 $MINIMUM_VALUE 이어야 한다. value: $value" }
     }
 
     operator fun plus(value: Int): Coordinate? {
-        return if (value + this.value < Minimum_Value) {
+        return if (value + this.value < MINIMUM_VALUE) {
             null
         } else {
             of(this.value + value)
@@ -36,7 +36,7 @@ class Coordinate private constructor(
     override fun compareTo(other: Coordinate) = value.compareTo(other.value)
 
     companion object {
-        private const val Minimum_Value = 1
+        private const val MINIMUM_VALUE = 1
 
         private val coordinates = mutableMapOf<Int, Coordinate>()
 
