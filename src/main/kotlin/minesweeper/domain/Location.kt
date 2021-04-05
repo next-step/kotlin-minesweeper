@@ -9,7 +9,7 @@ class Location private constructor(private val y: Int, private val x: Int) {
     companion object {
         fun of(location: String?): Location {
             require(location != null && location.isNotBlank()) { "빈 값을 입력하면 안됩니다." }
-            val locationPart = location.filter { !it.isWhitespace() }.split(",")
+            val locationPart = location.split(",").map { it.trim() }
             require(locationPart.size == LOCATION_SIZE) { "숫자 두개를 콤마(,)로 구분하여 입력해주세요" }
             val locations = locationPart.map { it.toInt() }
 
