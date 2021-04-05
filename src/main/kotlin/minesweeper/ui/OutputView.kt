@@ -1,6 +1,7 @@
 package minesweeper.ui
 
 import minesweeper.domain.MineBoard
+import minesweeper.domain.Row
 
 object OutputView {
 
@@ -11,9 +12,9 @@ object OutputView {
         }
     }
 
-    private fun drawWidth(mineBoard: Array<Array<String>>, heightIndex: Int, width: Int) {
+    private fun drawWidth(mineBoard: Array<Row>, heightIndex: Int, width: Int) {
         repeat(width) { widthIndex ->
-            print(mineBoard[heightIndex][widthIndex])
+            print(mineBoard[heightIndex].getColumnValue(widthIndex))
         }
     }
 }

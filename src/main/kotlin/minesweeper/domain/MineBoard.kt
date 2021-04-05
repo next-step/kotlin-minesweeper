@@ -7,9 +7,10 @@ class MineBoard(
     val height: Int,
     mineNumber: Int
 ) {
-    val board: Array<Array<String>> = Array<Array<String>>(width) { Array<String>(height) { " C " } }
+    val board: Array<Row> = Array<Row>(height) { Row(width) }
 
     init {
+        require(mineNumber < width * height) { "마인의 개수가 너무 많습니다." }
         deployMine(mineNumber)
     }
 
@@ -23,16 +24,8 @@ class MineBoard(
         }
     }
 
-    private fun isDuplicateMine(row: Int, column: Int): Boolean {
-        return board[row][column] == MINE
-    }
-
     private fun deploy(row: Int, column: Int): Boolean {
-        if (!isDuplicateMine(row, column)) {
-            board[row][column] = MINE
-            return true
-        }
-        return false
+        return board[row].deploy(column)
     }
 
     companion object {
