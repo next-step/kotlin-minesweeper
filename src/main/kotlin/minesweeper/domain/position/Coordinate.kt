@@ -3,7 +3,15 @@ package minesweeper.domain.position
 class Coordinate private constructor(private val value: Int) {
 
     init {
-        require(value > 0) { "0보다 커야 한다. value: $value" }
+        require(value >= Minimum_Value) { "최소 $Minimum_Value 이어야 한다. value: $value" }
+    }
+
+    operator fun plus(value: Int): Coordinate? {
+        return if (value + this.value < Minimum_Value) {
+            null
+        } else {
+            of(this.value + value)
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -24,6 +32,8 @@ class Coordinate private constructor(private val value: Int) {
     }
 
     companion object {
+        private const val Minimum_Value = 1
+
         private val coordinates = mutableMapOf<Int, Coordinate>()
 
         fun of(value: Int) = coordinates.getOrPut(value) { Coordinate(value) }
