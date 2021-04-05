@@ -7,7 +7,7 @@ class MineBoard(
     val height: Int,
     mineNumber: Int
 ) {
-    val board: Array<Row> = Array<Row>(height) { Row(width) }
+    val board: Array<Row> = Array(height) { Row(width) }
 
     init {
         require(mineNumber < width * height) { "마인의 개수가 너무 많습니다." }
