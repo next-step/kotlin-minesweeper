@@ -15,6 +15,17 @@ object BoardFactory {
 
         val elements = positions.mapIndexed { index, position -> position to tiles[index] }
             .toMap()
+            .toSortedMap()
+
+        elements.filterValues { it.isMine().not() }
+            .forEach {
+                val currentPosition = it.key
+                val nearByMineCount = currentPosition.nearByPositions()
+                    .map { position -> elements[position] ?: Blank() }
+                    .count { tile -> tile.isMine() }
+                elements[currentPosition] = Blank(nearByMineCount)
+            }
+
         return Board(elements)
     }
 
