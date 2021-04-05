@@ -1,6 +1,6 @@
-package minesweeper
+package minesweeper.gameboard
 
-import minesweeper.domain.MineBoard
+import minesweeper.domain.gameboard.MineBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

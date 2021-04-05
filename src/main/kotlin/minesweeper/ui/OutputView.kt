@@ -1,7 +1,7 @@
 package minesweeper.ui
 
-import minesweeper.domain.MineBoard
-import minesweeper.domain.Row
+import minesweeper.domain.gameboard.MineBoard
+import minesweeper.domain.gameboard.Row
 
 object OutputView {
 

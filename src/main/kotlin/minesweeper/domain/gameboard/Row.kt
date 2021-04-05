@@ -1,4 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.gameboard
+
+import minesweeper.domain.gameboard.Block
 
 class Row(
     width: Int

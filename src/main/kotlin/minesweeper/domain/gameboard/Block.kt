@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.gameboard
 
 sealed class Block(var value: String) {
     class Mine() : Block(" * ")

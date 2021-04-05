@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.MineBoard
+import minesweeper.domain.gameboard.MineBoard
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
 
