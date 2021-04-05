@@ -23,7 +23,10 @@ class CellsTest {
         val height = 10
         val cellsDump = (1..width * height).map { Cell(false) }
 
-        Cells(cellsDump, width, height)
+        val cells = Cells(cellsDump, width, height)
+
+        assertThat(cells.width).isEqualTo(width)
+        assertThat(cells.height).isEqualTo(height)
     }
 
     @Test
