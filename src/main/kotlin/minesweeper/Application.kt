@@ -15,5 +15,5 @@ fun main() {
         width = width,
         mineCount = inputMineCount()
     )
-    printBoard(height, width, board)
+    printBoard(width, board)
 }
