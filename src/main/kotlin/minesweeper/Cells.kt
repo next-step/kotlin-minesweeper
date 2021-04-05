@@ -12,7 +12,7 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
     }
 
     fun isAllOpen(): Boolean {
-        return cells.none { !it.isMine && !it.isOpen }
+        return cells.all { it.isMine || it.isOpen }
     }
 
     fun enterCell(index: Int): Boolean {
