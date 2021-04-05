@@ -1,6 +1,8 @@
 package minesweeper.domain.position
 
-class Coordinate private constructor(private val value: Int) {
+class Coordinate private constructor(
+    private val value: Int
+) : Comparable<Coordinate> {
 
     init {
         require(value >= Minimum_Value) { "최소 $Minimum_Value 이어야 한다. value: $value" }
@@ -30,6 +32,8 @@ class Coordinate private constructor(private val value: Int) {
     override fun toString(): String {
         return "Coordinate(value=$value)"
     }
+
+    override fun compareTo(other: Coordinate) = value.compareTo(other.value)
 
     companion object {
         private const val Minimum_Value = 1
