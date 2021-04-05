@@ -1,23 +1,21 @@
 package minesweeper.domain
 
-import minesweeper.domain.MineBoard.Companion.MINE
-
 class Row(
     width: Int
 ) {
-    private val row: Array<String> = Array<String>(width) { " C " }
+    private val row: Array<Block> = Array<Block>(width) { Block.Covered() }
 
-    fun getColumnValue(column: Int): String {
+    fun getColumnBlock(column: Int): Block {
         return row[column]
     }
 
     private fun isDuplicateMine(column: Int): Boolean {
-        return row[column] == MINE
+        return row[column].isMine()
     }
 
-    fun deploy(column: Int): Boolean {
+    fun deployMine(column: Int): Boolean {
         if (!isDuplicateMine(column)) {
-            row[column] = MINE
+            row[column] = Block.Mine()
             return true
         }
         return false

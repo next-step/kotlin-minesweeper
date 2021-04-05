@@ -14,7 +14,8 @@ object OutputView {
 
     private fun drawWidth(mineBoard: Array<Row>, heightIndex: Int, width: Int) {
         repeat(width) { widthIndex ->
-            print(mineBoard[heightIndex].getColumnValue(widthIndex))
+            val block = mineBoard[heightIndex].getColumnBlock(widthIndex)
+            print(block.value)
         }
     }
 }

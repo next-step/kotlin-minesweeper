@@ -1,7 +1,6 @@
 package minesweeper
 
 import minesweeper.domain.MineBoard
-import minesweeper.domain.MineBoard.Companion.MINE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -23,7 +22,7 @@ class MineBoardTest {
         var boardMines = 0
         repeat(height) { row ->
             repeat(width) { col ->
-                if (mineBoard.board[row].getColumnValue(col) == MINE) boardMines++
+                if (mineBoard.board[row].getColumnBlock(col).isMine()) boardMines++
             }
         }
 

@@ -25,11 +25,6 @@ class MineBoard(
     }
 
     private fun deploy(row: Int, column: Int): Boolean {
-        return board[row].deploy(column)
-    }
-
-    companion object {
-        const val MINE = " * "
-        const val NORMAL = " C "
+        return board[row].deployMine(column)
     }
 }
