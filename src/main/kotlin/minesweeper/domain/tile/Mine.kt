@@ -1,3 +1,5 @@
 package minesweeper.domain.tile
 
-class Mine : Tile
+class Mine : Tile {
+    override fun isMine() = true
+}

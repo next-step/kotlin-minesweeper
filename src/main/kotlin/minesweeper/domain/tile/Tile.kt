@@ -1,3 +1,5 @@
 package minesweeper.domain.tile
 
-interface Tile
+interface Tile {
+    fun isMine() = false
+}

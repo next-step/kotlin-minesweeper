@@ -1,3 +1,3 @@
 package minesweeper.domain.tile
 
-class Blank : Tile
+class Blank(var nearByMineCount: Int = 0) : Tile
