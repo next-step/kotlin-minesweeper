@@ -1,9 +1,19 @@
 package minesweeper.domain.position
 
-class Coordinate private constructor(private val value: Int) {
+class Coordinate private constructor(
+    private val value: Int
+) : Comparable<Coordinate> {
 
     init {
-        require(value > 0) { "0보다 커야 한다. value: $value" }
+        require(value >= MINIMUM_VALUE) { "최소 $MINIMUM_VALUE 이어야 한다. value: $value" }
+    }
+
+    operator fun plus(value: Int): Coordinate? {
+        return if (value + this.value < MINIMUM_VALUE) {
+            null
+        } else {
+            of(this.value + value)
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -23,7 +33,11 @@ class Coordinate private constructor(private val value: Int) {
         return "Coordinate(value=$value)"
     }
 
+    override fun compareTo(other: Coordinate) = value.compareTo(other.value)
+
     companion object {
+        private const val MINIMUM_VALUE = 1
+
         private val coordinates = mutableMapOf<Int, Coordinate>()
 
         fun of(value: Int) = coordinates.getOrPut(value) { Coordinate(value) }
