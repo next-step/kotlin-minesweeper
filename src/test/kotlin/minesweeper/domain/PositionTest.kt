@@ -38,6 +38,16 @@ class PositionTest {
         )
     }
 
+    @Test
+    fun `주변에 존재하는 셀의 인덱스를 가져온다`() {
+        val width = 5
+        val height = 5
+        val location = Location(1, 0)
+
+        val indexes = Position.getIndexesNearByLocation(location, width, height)
+        assertThat(indexes).hasSameElementsAs(listOf(0, 1, 6, 10, 11))
+    }
+
     companion object {
         @JvmStatic
         private fun existResultData(): Stream<Arguments> {

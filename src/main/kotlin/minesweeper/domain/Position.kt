@@ -35,5 +35,16 @@ enum class Position(
     RIGHT_DOWN(
         { location, width, height -> location.row < height - 1 && location.column < width - 1 },
         { index, width -> index + width + 1 }
-    )
+    );
+
+    companion object {
+        private fun getNearByLocation(location: Location, width: Int, height: Int): List<Position> {
+            return values().filter { it.isExist(location, width, height) }
+        }
+
+        fun getIndexesNearByLocation(location: Location, width: Int, height: Int): List<Int> {
+            return getNearByLocation(location, width, height)
+                .map { it.getTargetIndex(location.getConvertIndex(width), width) }
+        }
+    }
 }

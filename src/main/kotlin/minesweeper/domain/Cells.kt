@@ -21,11 +21,10 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
             return false
         }
 
-        Position.values().filter { it.isExist(location, width, height) }
-            .map { it.getTargetIndex(index, width) }
+        Position.getIndexesNearByLocation(location, width, height)
             .forEach { cells[it].openIfNotMine() }
 
-        cells[index].isOpen = true
+        cells[index].openIfNotMine()
 
         return true
     }
