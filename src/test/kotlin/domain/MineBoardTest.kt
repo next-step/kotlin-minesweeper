@@ -55,7 +55,7 @@ internal class MineBoardTest {
             )
         )
 
-        val result = underTest.surroundingMineCountedBoard()
+        val result = underTest.getSurroundingMineCountedBoard()
         assertThat(result).isEqualTo(expected)
     }
 }

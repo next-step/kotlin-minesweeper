@@ -5,18 +5,18 @@ import domain.block.Nothing
 
 data class MineBoard(val width: Int, private val height: Int, val value: Map<Coordinate, Block>) {
 
-    fun surroundingMineCountedBoard(): MineBoard {
+    fun getSurroundingMineCountedBoard(): MineBoard {
         val board = this.value.toMutableMap()
 
         board
             .filter { !it.value.isMine() }
-            .forEach { board[it.key] = surroundingMineCount(it.key) }
+            .forEach { board[it.key] = calculateSurroundingMineCount(it.key) }
 
         return MineBoard(width, height, board)
     }
 
-    private fun surroundingMineCount(coordinate: Coordinate): Block {
-        val surroundingMineCount = coordinate.surroundingCoordinates(maxX = width, maxY = height)
+    private fun calculateSurroundingMineCount(coordinate: Coordinate): Block {
+        val surroundingMineCount = coordinate.getSurroundingCoordinates(maxX = width, maxY = height)
             .count { value[it]?.isMine() ?: false }
 
         return Nothing(surroundingMineCount)

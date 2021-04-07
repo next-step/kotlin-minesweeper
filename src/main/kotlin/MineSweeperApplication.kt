@@ -27,7 +27,7 @@ class MineSweeperApplication(private val userInterface: UserInterface) {
             )
         )
 
-        val surroundingMineCountedBoard = mineBoard.surroundingMineCountedBoard()
+        val surroundingMineCountedBoard = mineBoard.getSurroundingMineCountedBoard()
 
         userInterface.outputMineSweeper(MineBoardDto(surroundingMineCountedBoard))
     }

@@ -2,7 +2,7 @@ package domain
 
 data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
-    fun surroundingCoordinates(minX: Int = 1, minY: Int = 1, maxX: Int, maxY: Int): Set<Coordinate> {
+    fun getSurroundingCoordinates(minX: Int = 1, minY: Int = 1, maxX: Int, maxY: Int): Set<Coordinate> {
         val surroundingAllCoordinates = setOf(
             Coordinate(x, y - 1),
             Coordinate(x, y + 1),

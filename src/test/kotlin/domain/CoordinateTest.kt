@@ -24,7 +24,7 @@ internal class CoordinateTest {
     @ParameterizedTest
     @MethodSource("provideSurroundingCoordinates")
     fun `특정 좌표의 둘러싸는 좌표들을 반환한다`(coordinate: Coordinate, dummyMaxValue: Int, expected: Set<Coordinate>) {
-        val result = coordinate.surroundingCoordinates(maxX = dummyMaxValue, maxY = dummyMaxValue)
+        val result = coordinate.getSurroundingCoordinates(maxX = dummyMaxValue, maxY = dummyMaxValue)
         assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
     }
 
@@ -36,7 +36,7 @@ internal class CoordinateTest {
         maxY: Int,
         expected: Set<Coordinate>
     ) {
-        val result = coordinate.surroundingCoordinates(maxX = maxX, maxY = maxY)
+        val result = coordinate.getSurroundingCoordinates(maxX = maxX, maxY = maxY)
         assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
     }
 
