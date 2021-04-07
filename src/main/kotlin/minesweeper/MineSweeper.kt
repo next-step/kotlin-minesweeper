@@ -14,8 +14,7 @@ fun main() {
 
     printStart()
     while (!cells.isAllOpen()) {
-        val index = Location.of(inputPosition()).getConvertIndex(width)
-        if (!cells.enterCell(index)) {
+        if (!cells.enterCell(Location.of(inputPosition()))) {
             printLose()
             return
         }

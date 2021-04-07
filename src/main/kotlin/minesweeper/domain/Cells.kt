@@ -15,7 +15,8 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
         return cells.all { it.isMine || it.isOpen }
     }
 
-    fun enterCell(index: Int): Boolean {
+    fun enterCell(location: Location): Boolean {
+        val index = location.getConvertIndex(width)
         if (cells[index].isMine) {
             return false
         }
