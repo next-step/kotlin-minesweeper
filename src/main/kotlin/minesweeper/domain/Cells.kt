@@ -21,7 +21,7 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
             return false
         }
 
-        Position.values().filter { it.isExist(location.y, location.x, width, height) }
+        Position.values().filter { it.isExist(location.row, location.column, width, height) }
             .map { it.getTargetIndex(index, width) }
             .forEach { cells[it].openIfNotMine() }
 
