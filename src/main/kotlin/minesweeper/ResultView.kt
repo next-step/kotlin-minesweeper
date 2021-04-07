@@ -2,7 +2,7 @@ package minesweeper
 
 import minesweeper.domain.Cells
 
-const val CELL = "ㅁ"
+const val CELL = "#"
 
 fun printCells(cells: Cells) {
     (0 until cells.height).forEach {
