@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Location private constructor(private val y: Int, private val x: Int) {
+class Location private constructor(val y: Int, val x: Int) {
 
     fun getConvertIndex(width: Int): Int {
         return y * width + x

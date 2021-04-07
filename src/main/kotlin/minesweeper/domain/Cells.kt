@@ -20,10 +20,8 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
         if (cells[index].isMine) {
             return false
         }
-        val row: Int = index / width
-        val column: Int = index % width
 
-        Position.values().filter { it.isExist(row, column, width, height) }
+        Position.values().filter { it.isExist(location.y, location.x, width, height) }
             .map { it.getTargetIndex(index, width) }
             .forEach { cells[it].openIfNotMine() }
 
