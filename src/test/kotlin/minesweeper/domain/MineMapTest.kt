@@ -48,6 +48,5 @@ internal class MineMapTest {
         assertThrows<IllegalArgumentException> {
             mineMap.open(BoomPosition(100, 100))
         }
-
     }
 }

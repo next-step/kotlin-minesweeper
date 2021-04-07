@@ -47,6 +47,5 @@ internal class BoomPositionMakerTest {
             BoomPosition(0, 0), BoomPosition(0, 1),
             BoomPosition(1, 0), BoomPosition(1, 1)
         )
-
     }
 }

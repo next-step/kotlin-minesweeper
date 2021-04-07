@@ -21,5 +21,4 @@ class MineMap(private val mineGameConfig: MineGameConfig, boomPositions: List<Bo
     }
 
     fun getMap(): Array<Array<Mine>> = map.copyOf()
-
 }

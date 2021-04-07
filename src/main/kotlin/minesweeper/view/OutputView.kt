@@ -17,5 +17,4 @@ object OutputView {
             Mine.BOOM -> "*"
             Mine.SAFE -> "C"
         }
-
 }
