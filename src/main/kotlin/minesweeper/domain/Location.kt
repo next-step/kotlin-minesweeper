@@ -15,6 +15,7 @@ class Location private constructor(val y: Int, val x: Int) {
 
             return Location(locations[0], locations[1])
         }
+
         private const val LOCATION_SIZE = 2
     }
 }
