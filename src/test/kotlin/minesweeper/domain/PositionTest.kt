@@ -15,7 +15,7 @@ class PositionTest {
         val width = 5
         val height = 5
 
-        val isExists = Position.values().filter { it.isExist(row, column, width, height) }
+        val isExists = Position.values().filter { it.isExist(Location(row, column), width, height) }
 
         assertThat(isExists).hasSameElementsAs(existResult)
     }

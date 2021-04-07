@@ -21,7 +21,7 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
             return false
         }
 
-        Position.values().filter { it.isExist(location.row, location.column, width, height) }
+        Position.values().filter { it.isExist(location, width, height) }
             .map { it.getTargetIndex(index, width) }
             .forEach { cells[it].openIfNotMine() }
 
@@ -30,10 +30,12 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
         return true
     }
 
+    private fun getLocation(index: Int): Location {
+        return Location(index / width, index % width)
+    }
+
     private fun isExistMine(position: Position, index: Int): Boolean {
-        val row: Int = index / width
-        val column: Int = index % width
         val targetIndex = position.getTargetIndex(index, width)
-        return position.isExist(row, column, width, height) && cells[targetIndex].isMine
+        return position.isExist(getLocation(index), width, height) && cells[targetIndex].isMine
     }
 }
