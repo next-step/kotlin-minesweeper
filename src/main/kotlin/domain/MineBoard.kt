@@ -17,8 +17,7 @@ data class MineBoard(val width: Int, private val height: Int, val value: Map<Coo
 
     private fun surroundingMineCount(coordinate: Coordinate): Block {
         val surroundingMineCount = coordinate.surroundingCoordinates(maxX = width, maxY = height)
-            .filter { value[it]?.isMine() ?: false }
-            .count()
+            .count { value[it]?.isMine() ?: false }
 
         return Nothing(surroundingMineCount)
     }
