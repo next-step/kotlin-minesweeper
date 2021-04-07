@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -25,14 +26,16 @@ class PositionTest {
         val index = 11
         val width = 4
 
-        assertThat(Position.LEFT_UP.getTargetIndex(index, width)).isEqualTo(6)
-        assertThat(Position.UP.getTargetIndex(index, width)).isEqualTo(7)
-        assertThat(Position.RIGHT_UP.getTargetIndex(index, width)).isEqualTo(8)
-        assertThat(Position.LEFT.getTargetIndex(index, width)).isEqualTo(10)
-        assertThat(Position.RIGHT.getTargetIndex(index, width)).isEqualTo(12)
-        assertThat(Position.LEFT_DOWN.getTargetIndex(index, width)).isEqualTo(14)
-        assertThat(Position.DOWN.getTargetIndex(index, width)).isEqualTo(15)
-        assertThat(Position.RIGHT_DOWN.getTargetIndex(index, width)).isEqualTo(16)
+        assertAll(
+            { assertThat(Position.LEFT_UP.getTargetIndex(index, width)).isEqualTo(6) },
+            { assertThat(Position.UP.getTargetIndex(index, width)).isEqualTo(7) },
+            { assertThat(Position.RIGHT_UP.getTargetIndex(index, width)).isEqualTo(8) },
+            { assertThat(Position.LEFT.getTargetIndex(index, width)).isEqualTo(10) },
+            { assertThat(Position.RIGHT.getTargetIndex(index, width)).isEqualTo(12) },
+            { assertThat(Position.LEFT_DOWN.getTargetIndex(index, width)).isEqualTo(14) },
+            { assertThat(Position.DOWN.getTargetIndex(index, width)).isEqualTo(15) },
+            { assertThat(Position.RIGHT_DOWN.getTargetIndex(index, width)).isEqualTo(16) }
+        )
     }
 
     companion object {
