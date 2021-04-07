@@ -6,13 +6,13 @@ import domain.block.Nothing
 data class MineBoard(val width: Int, private val height: Int, val value: Map<Coordinate, Block>) {
 
     fun getSurroundingMineCountedBoard(): MineBoard {
-        val board = this.value.toMutableMap()
+        return MineBoard(width, height, value.entries.associate { generateBlock(it) })
+    }
 
-        board
-            .filter { !it.value.isMine() }
-            .forEach { board[it.key] = calculateSurroundingMineCount(it.key) }
-
-        return MineBoard(width, height, board)
+    private fun generateBlock(entry: Map.Entry<Coordinate, Block>): Pair<Coordinate, Block> {
+        val key = entry.key
+        val value = if (entry.value.isMine()) entry.value else calculateSurroundingMineCount(key)
+        return key to value
     }
 
     private fun calculateSurroundingMineCount(coordinate: Coordinate): Block {
