@@ -1,7 +1,7 @@
-package domain
+package model.board
 
 class Row(cells: List<Cell>) {
-    private val cells = cells.toList()
+    val cells = cells.toList()
 
     val width: Int
         get() = cells.size
@@ -11,4 +11,8 @@ class Row(cells: List<Cell>) {
     }
 
     constructor(vararg cells: Cell) : this(cells.toList())
+
+    fun getCell(width: Int): Cell {
+        return cells[width]
+    }
 }

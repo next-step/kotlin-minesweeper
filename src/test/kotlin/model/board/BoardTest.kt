@@ -1,7 +1,7 @@
-package domain
+package model.board
 
-import domain.Contents.MINE
-import domain.State.COVERED
+import model.board.Contents.MINE
+import model.board.State.COVERED
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -37,7 +37,7 @@ internal class BoardTest {
     }
 
     companion object {
-        private val cell = Cell(MINE, COVERED)
+        private val cell = Cell.get(MINE, COVERED)
 
         @JvmStatic
         private fun differentSizeRowsProvider(): List<Arguments> {

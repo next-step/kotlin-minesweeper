@@ -1,7 +1,7 @@
-package domain
+package model.board
 
-import domain.Contents.MINE
-import domain.State.COVERED
+import model.board.Contents.MINE
+import model.board.State.COVERED
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,7 +16,7 @@ internal class RowTest {
         val row = Row(cells)
         Assertions.assertThat(row.width).isEqualTo(cells.size)
 
-        cells.add(Cell(MINE, COVERED))
+        cells.add(Cell.get(MINE, COVERED))
         Assertions.assertThat(row.width).isNotEqualTo(cells.size)
     }
 
@@ -35,7 +35,7 @@ internal class RowTest {
                 Arguments {
                     arrayOf(
                         mutableListOf(
-                            Cell(MINE, COVERED)
+                            Cell.get(MINE, COVERED)
                         )
                     )
                 }
