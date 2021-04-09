@@ -1,3 +1,4 @@
+package minesweeper
 
 fun inputHeight(): String? {
     println("높이를 입력하세요.")
@@ -11,5 +12,10 @@ fun inputWidth(): String? {
 
 fun inputMineCount(): String? {
     println("지뢰는 몇 개인가요?")
+    return readLine()
+}
+
+fun inputPosition(): String? {
+    print("open: ")
     return readLine()
 }

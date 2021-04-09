@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 class BoardGenerator(private val width: Int, private val height: Int, private val mineCount: Int) {
     init {
         require(width > 0 && height > 0 && mineCount > 0) { "너비, 높이, 지뢰 갯수는 0보다 커야합니다" }
