@@ -22,4 +22,11 @@ internal class MineTest {
 
         assertThat(result.message).isEqualTo(expectedMessage)
     }
+
+    @Test
+    fun `지뢰는 둘러싸는지뢰개수가 무조건 0이 아니다`() {
+        val mine = Mine()
+        val result = mine.isZero()
+        assertThat(result).isEqualTo(false)
+    }
 }

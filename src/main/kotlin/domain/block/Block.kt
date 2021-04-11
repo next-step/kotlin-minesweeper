@@ -12,5 +12,6 @@ abstract class Block {
     fun isChecked(): Boolean = isChecked
 
     abstract fun isMine(): Boolean
+    abstract fun isZero(): Boolean
     abstract fun surroundingMineCount(): SurroundingMineCount
 }

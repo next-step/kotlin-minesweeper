@@ -36,5 +36,6 @@ internal class BlockTest {
 
 class DummyBlock : Block() {
     override fun isMine() = throw UnsupportedOperationException("this is dummy")
+    override fun isZero(): Boolean = throw UnsupportedOperationException("this is dummy")
     override fun surroundingMineCount() = throw UnsupportedOperationException("this is dummy")
 }

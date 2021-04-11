@@ -6,5 +6,7 @@ data class Nothing(private val surroundingMineCount: SurroundingMineCount = Surr
 
     override fun isMine() = false
 
+    override fun isZero() = surroundingMineCount == SurroundingMineCount(0)
+
     override fun surroundingMineCount() = surroundingMineCount
 }
