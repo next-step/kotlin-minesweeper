@@ -26,6 +26,11 @@ class MineSweeperApplication(private val userInterface: UserInterface) {
             )
         )
 
-        mineBoard.getSurroundingMineCountedBoard()
+        val game = MineBoardGame(mineBoard.getSurroundingMineCountedBoard())
+
+        while (true) {
+            val (x, y) = userInterface.inputCheckCoordinate()
+            game.check(x, y)
+        }
     }
 }

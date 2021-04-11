@@ -12,6 +12,17 @@ object Console : UserInterface {
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
     }
 
+    override fun inputCheckCoordinate(): Pair<Int, Int> {
+        print("open: ")
+        val input = readLine()
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.mapNotNull { it.toIntOrNull() }
+            ?: throw RuntimeException()
+
+        return if (input.size == 2) (input[0] to input[1]) else inputCheckCoordinate()
+    }
+
     private tailrec fun inputMineCount(message: String, maximumMineCount: Int): Int {
         val mineCount = inputNaturalNumber(message)
         return if (mineCount <= maximumMineCount) mineCount else inputMineCount(message, maximumMineCount)
