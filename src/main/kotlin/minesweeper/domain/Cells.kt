@@ -32,9 +32,4 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
     private fun getLocation(index: Int): Location {
         return Location(index / width, index % width)
     }
-
-    private fun isExistMine(position: Position, index: Int): Boolean {
-        val targetIndex = position.getTargetIndex(index, width)
-        return position.isExist(getLocation(index), width, height) && cells[targetIndex].isMine
-    }
 }
