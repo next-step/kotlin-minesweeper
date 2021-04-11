@@ -1,7 +1,6 @@
 import domain.MineBoardFactory
 import domain.coordinategenerator.BoardCoordinatesGenerator
 import domain.coordinategenerator.RandomCoordinatesGenerator
-import dto.MineBoardDto
 import userinterface.Console
 import userinterface.UserInterface
 
@@ -27,8 +26,6 @@ class MineSweeperApplication(private val userInterface: UserInterface) {
             )
         )
 
-        val surroundingMineCountedBoard = mineBoard.getSurroundingMineCountedBoard()
-
-        userInterface.outputMineSweeper(MineBoardDto(surroundingMineCountedBoard))
+        mineBoard.getSurroundingMineCountedBoard()
     }
 }
