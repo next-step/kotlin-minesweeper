@@ -1,7 +1,7 @@
 package userinterface
 
 import dto.BlockDto
-import dto.MineBoardDto
+import dto.MineGameDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
@@ -14,10 +14,15 @@ object Console : UserInterface {
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
     }
 
-    override fun outputMineSweeper(mineBoardDto: MineBoardDto) {
-        mineBoardDto.board.windowed(size = mineBoardDto.width, step = mineBoardDto.width)
-            .map { row -> row.joinToString(separator = " ") { it.toView() } }
-            .forEach(::println)
+    override fun outputMineSweeper(mineGameDto: MineGameDto) {
+        if (mineGameDto.state == "WIN") println("WIN GAME.")
+        if (mineGameDto.state == "LOSE") println("LOSE GAME.")
+        if (mineGameDto.state == "RUNNING") println(runningMessage(mineGameDto.board, mineGameDto.width))
+    }
+
+    private fun runningMessage(board: List<BlockDto>, width: Int): String {
+        return board.windowed(size = width, step = width)
+            .joinToString(System.lineSeparator()) { row -> row.joinToString(separator = " ") { it.toView() } }
     }
 
     override fun inputCheckCoordinate(): Pair<Int, Int> {

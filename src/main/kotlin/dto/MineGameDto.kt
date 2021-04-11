@@ -1,9 +1,11 @@
 package dto
 
+import domain.GameState
 import domain.MineBoard
 import domain.block.Block
 
-class MineBoardDto(mineBoard: MineBoard) {
+class MineGameDto(gameState: GameState, mineBoard: MineBoard) {
+    val state: String = gameState.toString()
     val width: Int = mineBoard.width
     val board: List<BlockDto> = mineBoard.value.toSortedMap().map { it.value }.map(::BlockDto)
 }

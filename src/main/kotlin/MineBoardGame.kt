@@ -1,7 +1,7 @@
 import domain.Coordinate
 import domain.GameState
 import domain.MineBoard
-import dto.MineBoardDto
+import dto.MineGameDto
 
 class MineBoardGame(private val mineBoard: MineBoard) {
 
@@ -15,8 +15,8 @@ class MineBoardGame(private val mineBoard: MineBoard) {
         if (mineBoard.existsCheckedMine()) gameState = GameState.LOSE
     }
 
-    fun result(): MineBoardDto {
-        return MineBoardDto(mineBoard)
+    fun result(): MineGameDto {
+        return MineGameDto(gameState, mineBoard)
     }
 
     fun isRunning(): Boolean {
