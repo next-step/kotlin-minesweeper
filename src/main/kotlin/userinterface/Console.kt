@@ -1,5 +1,7 @@
 package userinterface
 
+import dto.BlockDto
+import dto.MineBoardDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
@@ -10,6 +12,12 @@ object Console : UserInterface {
         val mineCount = inputMineCount("지뢰는 몇 개인가요?", height * width)
 
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
+    }
+
+    override fun outputMineSweeper(mineBoardDto: MineBoardDto) {
+        mineBoardDto.board.windowed(size = mineBoardDto.width, step = mineBoardDto.width)
+            .map { row -> row.joinToString(separator = " ") { it.toView() } }
+            .forEach(::println)
     }
 
     override fun inputCheckCoordinate(): Pair<Int, Int> {
@@ -36,5 +44,12 @@ object Console : UserInterface {
             ?: inputNaturalNumber(message)
 
         return if (input > 0) input else inputNaturalNumber(message)
+    }
+}
+
+private fun BlockDto.toView(): String {
+    return when (this.isChecked) {
+        true -> if (isMine) "■" else mineCount.toString()
+        false -> "□"
     }
 }

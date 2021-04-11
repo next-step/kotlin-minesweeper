@@ -9,6 +9,7 @@ class MineBoardDto(mineBoard: MineBoard) {
 }
 
 class BlockDto(block: Block) {
+    val isChecked: Boolean = block.isChecked()
     val isMine: Boolean = block.isMine()
-    val mineCount: Int? = if (block.isMine()) null else block.surroundingMineCount().value
+    val mineCount: Int = if (!block.isChecked() || block.isMine()) -1 else block.surroundingMineCount().value
 }
