@@ -17,7 +17,7 @@ internal class MineBoardCheckedTest {
                 Coordinate(1, 2) to Mine(),
                 Coordinate(1, 3) to Nothing()
             )
-        ).getSurroundingMineCountedBoard()
+        )
 
         underTest.check(Coordinate(1, 1))
         underTest.check(Coordinate(1, 3))
@@ -39,7 +39,7 @@ internal class MineBoardCheckedTest {
                 Coordinate(1, 2) to Mine(),
                 Coordinate(1, 3) to Nothing()
             )
-        ).getSurroundingMineCountedBoard()
+        )
 
         underTest.check(Coordinate(1, 1))
 
@@ -60,7 +60,7 @@ internal class MineBoardCheckedTest {
                 Coordinate(1, 2) to Mine(),
                 Coordinate(1, 3) to Nothing()
             )
-        ).getSurroundingMineCountedBoard()
+        )
 
         underTest.check(Coordinate(1, 2))
 
@@ -81,7 +81,7 @@ internal class MineBoardCheckedTest {
                 Coordinate(1, 2) to Mine(),
                 Coordinate(1, 3) to Nothing()
             )
-        ).getSurroundingMineCountedBoard()
+        )
 
         underTest.check(Coordinate(1, 1))
 

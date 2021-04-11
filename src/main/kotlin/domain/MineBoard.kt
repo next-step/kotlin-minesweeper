@@ -3,16 +3,17 @@ package domain
 import domain.block.Block
 import domain.block.Nothing
 
-data class MineBoard(val width: Int, private val height: Int, val value: Map<Coordinate, Block>) {
+class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, Block>) {
 
-    fun getSurroundingMineCountedBoard(): MineBoard {
-        return MineBoard(width, height, value.entries.associate { generateBlock(it) })
-    }
+    private val _value = value.toMutableMap()
 
-    private fun generateBlock(entry: Map.Entry<Coordinate, Block>): Pair<Coordinate, Block> {
-        val key = entry.key
-        val value = if (entry.value.isMine()) entry.value else calculateSurroundingMineCount(key)
-        return key to value
+    val value: Map<Coordinate, Block>
+        get() = _value.toMap()
+
+    init {
+        _value.keys
+            .filterNot { _value[it]!!.isMine() }
+            .forEach { _value[it] = calculateSurroundingMineCount(it) }
     }
 
     private fun calculateSurroundingMineCount(coordinate: Coordinate): Block {
@@ -23,23 +24,23 @@ data class MineBoard(val width: Int, private val height: Int, val value: Map<Coo
     }
 
     fun check(coordinate: Coordinate) {
-        require(value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
-        value[coordinate]!!.check()
+        require(_value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
+        _value[coordinate]!!.check()
 
         if (!isZero(coordinate)) {
             return
         }
 
         coordinate.getFourWayCoordinates(maxX = width, maxY = height)
-            .forEach { if (!value[it]!!.isChecked()) check(it) }
+            .forEach { if (!_value[it]!!.isChecked()) check(it) }
     }
 
     private fun isZero(coordinate: Coordinate): Boolean {
-        require(value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
-        return value[coordinate]!!.isZero()
+        require(_value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
+        return _value[coordinate]!!.isZero()
     }
 
-    fun notExistsToCheck() = value.values.filter { !it.isMine() }.none { !it.isChecked() }
+    fun notExistsToCheck() = _value.values.filter { !it.isMine() }.none { !it.isChecked() }
 
-    fun existsCheckedMine() = value.values.filter { it.isMine() }.any { it.isChecked() }
+    fun existsCheckedMine() = _value.values.filter { it.isMine() }.any { it.isChecked() }
 }

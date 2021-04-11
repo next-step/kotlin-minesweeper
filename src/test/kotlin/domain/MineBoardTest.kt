@@ -41,8 +41,7 @@ internal class MineBoardTest {
             )
         )
 
-        val expected = MineBoard(
-            3, 3,
+        val expected =
             mapOf(
                 Coordinate(1, 1) to Mine(),
                 Coordinate(2, 1) to Nothing(3),
@@ -54,9 +53,8 @@ internal class MineBoardTest {
                 Coordinate(2, 3) to Nothing(1),
                 Coordinate(3, 3) to Nothing(0)
             )
-        )
 
-        val result = underTest.getSurroundingMineCountedBoard()
+        val result = underTest.value
         assertThat(result).isEqualTo(expected)
     }
 
@@ -70,7 +68,7 @@ internal class MineBoardTest {
                 Coordinate(1, 2) to Mine(),
                 Coordinate(2, 2) to Nothing()
             )
-        ).getSurroundingMineCountedBoard()
+        )
         val notExistCoordinate = Coordinate(10, 10)
         val expectedMessage = "해당 좌표가 존재하지 않습니다. 좌표: $notExistCoordinate, width: 2, height: 2"
 
