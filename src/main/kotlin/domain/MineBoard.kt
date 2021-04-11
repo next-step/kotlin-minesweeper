@@ -21,4 +21,9 @@ data class MineBoard(val width: Int, private val height: Int, val value: Map<Coo
 
         return Nothing(surroundingMineCount)
     }
+
+    fun check(coordinate: Coordinate) {
+        require(value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
+        value[coordinate]!!.check()
+    }
 }
