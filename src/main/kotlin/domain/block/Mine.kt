@@ -1,6 +1,10 @@
 package domain.block
 
-class Mine : Block() {
+class Mine(isChecked: Boolean = false) : Block(isChecked) {
+
+    override fun makeCheckedBlock(): Block {
+        return Mine(true)
+    }
 
     override fun isMine() = true
 

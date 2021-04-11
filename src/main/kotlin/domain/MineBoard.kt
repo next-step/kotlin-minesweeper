@@ -25,7 +25,7 @@ class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, 
 
     fun check(coordinate: Coordinate) {
         require(_value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
-        _value[coordinate]!!.check()
+        _value[coordinate] = _value[coordinate]!!.check()
 
         if (!isZero(coordinate)) {
             return
