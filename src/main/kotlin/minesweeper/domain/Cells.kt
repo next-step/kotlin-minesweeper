@@ -8,7 +8,7 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
     }
 
     fun getCellValue(index: Int): Int {
-        return Position.values().filter { isExistMine(it, index) }.count()
+        return Position.getIndexesNearByLocation(getLocation(index), width, height).count { cells[it].isMine }
     }
 
     fun isAllOpen(): Boolean {
@@ -31,10 +31,5 @@ class Cells(val cells: List<Cell>, val width: Int, val height: Int) {
 
     private fun getLocation(index: Int): Location {
         return Location(index / width, index % width)
-    }
-
-    private fun isExistMine(position: Position, index: Int): Boolean {
-        val targetIndex = position.getTargetIndex(index, width)
-        return position.isExist(getLocation(index), width, height) && cells[targetIndex].isMine
     }
 }
