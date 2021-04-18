@@ -1,5 +1,6 @@
 package domain
 
+import domain.position.TestPositionIdFactory
 import domain.square.mine.Mine
 import domain.square.mine.MineFactory
 import model.GameData

@@ -1,6 +1,5 @@
-package domain
+package domain.position
 
-import domain.position.PositionId
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource

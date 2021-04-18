@@ -1,13 +1,11 @@
-package domain
+package domain.position
 
-import domain.position.PositionId
-import domain.position.RandomPositionIdFactory
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.lang.IllegalArgumentException
 
-internal class RandomPositionIdFactoryTest {
+internal class DefaultRandomPositionIdFactoryTest {
 
     @Test
     fun `random으로 position id가 겹치지 않게 생성한다`() {
