@@ -1,6 +1,6 @@
 package controller
 
-import domain.MineFactory
+import domain.mine.MineFactory
 import ui.InputView
 import ui.ResultView
 

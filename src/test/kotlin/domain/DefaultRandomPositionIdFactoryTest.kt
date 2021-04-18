@@ -1,5 +1,7 @@
 package domain
 
+import domain.position.PositionId
+import domain.position.RandomPositionIdFactory
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

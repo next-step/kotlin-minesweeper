@@ -1,4 +1,4 @@
-package domain
+package domain.position
 
 data class Position(
     val row: Int,

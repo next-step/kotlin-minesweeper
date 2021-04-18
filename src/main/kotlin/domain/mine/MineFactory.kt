@@ -1,5 +1,7 @@
-package domain
+package domain.mine
 
+import domain.position.PositionIdFactory
+import domain.position.RandomPositionIdFactory
 import model.GameData
 
 class MineFactory(private val positionIdFactory: PositionIdFactory = RandomPositionIdFactory()) {

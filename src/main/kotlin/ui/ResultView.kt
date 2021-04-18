@@ -1,7 +1,7 @@
 package ui
 
-import domain.Mines
-import domain.Position
+import domain.mine.Mines
+import domain.position.Position
 import model.GameData
 
 class ResultView(
