@@ -2,8 +2,9 @@ package domain.square
 
 import domain.position.Position
 
-open class Square(
+abstract class Square(
     val position: Position
 ) {
-    open val isMine: Boolean = false
+    abstract val isMine: Boolean
+    abstract val mineCountAround: Int
 }
