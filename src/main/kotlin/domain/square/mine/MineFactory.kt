@@ -1,4 +1,4 @@
-package domain.mine
+package domain.square.mine
 
 import domain.position.PositionIdFactory
 import domain.position.RandomPositionIdFactory

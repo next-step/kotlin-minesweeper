@@ -1,6 +1,6 @@
 package ui
 
-import domain.mine.Mines
+import domain.square.mine.Mines
 import domain.position.Position
 import model.GameData
 
