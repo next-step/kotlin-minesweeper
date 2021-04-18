@@ -7,7 +7,7 @@ internal class PositionTest {
 
     @Test
     fun aroundPosition() {
-        val aroundPosition = Position(0, 1).aroundPosition()
+        val aroundPosition = Position(0, 1).aroundPositions()
 
         Assertions.assertThat(aroundPosition).containsExactlyInAnyOrder(
             Position(0, 0), Position(0, 2),

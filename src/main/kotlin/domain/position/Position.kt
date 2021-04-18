@@ -8,7 +8,7 @@ data class Position(
         require(row >= 0 && col >= 0) { "열과 행은 0보다 작을 수 없습니다." }
     }
 
-    fun aroundPosition(): List<Position> {
+    fun aroundPositions(): List<Position> {
         return AroundRelativePosition.values()
             .filter { row + it.relativeRow >= 0 && col + it.relativeCol >= 0 }
             .map { Position(this.row + it.relativeRow, this.col + it.relativeCol) }

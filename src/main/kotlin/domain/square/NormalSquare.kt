@@ -9,5 +9,5 @@ class NormalSquare(
 ) : Square(position) {
     override val isMine: Boolean
         get() = false
-    override val mineCountAround: Int = position.aroundPosition().filter { mines.isMine(it) }.count()
+    override val mineCountAround: Int = position.aroundPositions().filter { mines.isMine(it) }.count()
 }
