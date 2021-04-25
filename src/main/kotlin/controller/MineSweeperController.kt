@@ -1,16 +1,14 @@
 package controller
 
-import domain.MineFactory
+import domain.Board
 import ui.InputView
 import ui.ResultView
 
 object MineSweeperController {
     fun run() {
         val gameData = InputView.askInfo()
+        val board = Board(gameData)
 
-        val mineFactory = MineFactory()
-        val mines = mineFactory.createMines(gameData)
-
-        ResultView(gameData).printMineGameState(mines)
+        ResultView(gameData).printMineGameState(board.squares)
     }
 }

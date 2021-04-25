@@ -1,30 +1,29 @@
 package ui
 
-import domain.Mines
-import domain.Position
+import domain.square.Square
 import model.GameData
 
 class ResultView(
     private val gameData: GameData
 ) {
-    fun printMineGameState(mines: Mines) {
+    fun printMineGameState(squares: List<List<Square>>) {
         println("지뢰찾기 게임 시작")
         repeat(gameData.height) { row ->
-            printRow(row, mines)
+            printRow(squares[row])
             println()
         }
     }
 
-    private fun printRow(row: Int, mines: Mines) {
+    private fun printRow(rowSquares: List<Square>) {
         repeat(gameData.width) { col ->
-            printCell(Position(row, col), mines)
+            printSquare(rowSquares[col])
         }
     }
 
-    private fun printCell(position: Position, mines: Mines) {
-        when (mines.isMine(position)) {
+    private fun printSquare(square: Square) {
+        when (square.isMine) {
             true -> print("* ")
-            false -> print("C ")
+            false -> print("${square.mineCountAround} ")
         }
     }
 }

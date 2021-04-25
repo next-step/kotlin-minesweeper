@@ -1,5 +1,7 @@
-package domain
+package domain.mine
 
+import domain.position.TestPositionIdFactory
+import domain.square.mine.MineFactory
 import model.GameData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

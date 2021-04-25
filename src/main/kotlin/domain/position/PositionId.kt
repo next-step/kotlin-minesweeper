@@ -1,4 +1,4 @@
-package domain
+package domain.position
 
 data class PositionId(private val id: Int) {
     fun position(width: Int): Position {

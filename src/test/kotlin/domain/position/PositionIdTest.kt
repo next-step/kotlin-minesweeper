@@ -1,4 +1,4 @@
-package domain
+package domain.position
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
