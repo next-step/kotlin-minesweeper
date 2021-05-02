@@ -15,9 +15,11 @@ object Console : UserInterface {
     }
 
     override fun outputMineSweeper(mineGameDto: MineGameDto) {
-        if (mineGameDto.state == "WIN") println("WIN GAME.")
-        if (mineGameDto.state == "LOSE") println("LOSE GAME.")
-        if (mineGameDto.state == "RUNNING") println(runningMessage(mineGameDto.board, mineGameDto.width))
+        when (mineGameDto.state) {
+            "WIN" -> println("WIN GAME.")
+            "LOSE" -> println("LOSE GAME.")
+            "RUNNING" -> println(runningMessage(mineGameDto.board, mineGameDto.width))
+        }
     }
 
     private fun runningMessage(board: List<BlockDto>, width: Int): String {
