@@ -23,9 +23,9 @@ class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, 
         return Nothing(surroundingMineCount)
     }
 
-    fun open(coordinate: Coordinate) {
+    fun check(coordinate: Coordinate) {
         require(_value.contains(coordinate)) { "해당 좌표가 존재하지 않습니다. 좌표: $coordinate, width: $width, height: $height" }
-        _value[coordinate] = _value[coordinate]!!.open()
+        _value[coordinate] = _value[coordinate]!!.check()
 
         if (!isZero(coordinate)) {
             return
@@ -33,7 +33,7 @@ class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, 
 
         coordinate.getFourWayCoordinates(maxX = width, maxY = height)
             .filterNot { _value[it]!!.isChecked() }
-            .forEach { open(it) }
+            .forEach { check(it) }
     }
 
     private fun isZero(coordinate: Coordinate): Boolean {

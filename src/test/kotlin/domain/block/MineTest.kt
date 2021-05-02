@@ -33,7 +33,7 @@ internal class MineTest {
     @Test
     fun `체크되지 않은 지뢰를 체크할 수 있다`() {
         val mine = Mine()
-        val result = mine.open()
+        val result = mine.check()
         assertThat(result.isChecked()).isEqualTo(true)
     }
 
@@ -41,7 +41,7 @@ internal class MineTest {
     fun `이미 체크한 지뢰를 체크하는 경우 예외가 발생한다`() {
         val mine = Mine(true)
         val expectedMessage = "이미 체크한 블록은 체크할 수 없습니다"
-        val result = assertThrows<IllegalStateException> { mine.open() }
+        val result = assertThrows<IllegalStateException> { mine.check() }
         assertThat(result.message).isEqualTo(expectedMessage)
     }
 }

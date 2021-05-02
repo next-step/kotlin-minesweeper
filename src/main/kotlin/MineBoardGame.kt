@@ -7,9 +7,9 @@ class MineBoardGame(private val mineBoard: MineBoard) {
 
     private var gameState = GameState.RUNNING
 
-    fun open(x: Int, y: Int) {
+    fun check(x: Int, y: Int) {
         val coordinate = Coordinate(x, y)
-        mineBoard.open(coordinate)
+        mineBoard.check(coordinate)
 
         if (mineBoard.notExistsToCheck()) gameState = GameState.WIN
         if (mineBoard.existsCheckedMine()) gameState = GameState.LOSE

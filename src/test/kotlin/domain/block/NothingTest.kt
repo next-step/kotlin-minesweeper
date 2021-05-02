@@ -28,7 +28,7 @@ internal class NothingTest {
         val dummyCount = SurroundingMineCount(0)
         val nothing = Nothing(dummyCount)
 
-        val result = nothing.open()
+        val result = nothing.check()
 
         assertThat(result.isChecked()).isEqualTo(true)
     }
@@ -39,7 +39,7 @@ internal class NothingTest {
         val nothing = Nothing(dummyCount, true)
         val expectedMessage = "이미 체크한 블록은 체크할 수 없습니다"
 
-        val result = assertThrows<IllegalStateException> { nothing.open() }
+        val result = assertThrows<IllegalStateException> { nothing.check() }
 
         assertThat(result.message).isEqualTo(expectedMessage)
     }
