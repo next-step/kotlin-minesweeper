@@ -3,16 +3,7 @@ package domain
 data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
     fun getSurroundingCoordinates(minX: Int = 1, minY: Int = 1, maxX: Int, maxY: Int): Set<Coordinate> {
-        val surroundingAllCoordinates = setOf(
-            Coordinate(x, y - 1),
-            Coordinate(x, y + 1),
-            Coordinate(x - 1, y),
-            Coordinate(x + 1, y),
-            Coordinate(x - 1, y - 1),
-            Coordinate(x - 1, y + 1),
-            Coordinate(x + 1, y + 1),
-            Coordinate(x + 1, y - 1)
-        )
+        val surroundingAllCoordinates = CoordinateDirection.getSurroundingAllCoordinates(x, y)
 
         return surroundingAllCoordinates
             .filter { it.x in (minX..maxX) }
@@ -21,12 +12,7 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
     }
 
     fun getFourWayCoordinates(minX: Int = 1, minY: Int = 1, maxX: Int, maxY: Int): Set<Coordinate> {
-        val fourWayCoordinates = setOf(
-            Coordinate(x, y - 1),
-            Coordinate(x, y + 1),
-            Coordinate(x - 1, y),
-            Coordinate(x + 1, y)
-        )
+        val fourWayCoordinates = CoordinateDirection.getFourWayCoordinates(x, y)
 
         return fourWayCoordinates
             .filter { it.x in (minX..maxX) }
