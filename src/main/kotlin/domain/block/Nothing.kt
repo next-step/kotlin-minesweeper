@@ -2,12 +2,12 @@ package domain.block
 
 class Nothing(
     private val surroundingMineCount: SurroundingMineCount = SurroundingMineCount(0),
-    isChecked: Boolean = false
-) : Block(isChecked) {
+    isOpened: Boolean = false
+) : Block(isOpened) {
 
     constructor(surroundingMineCount: Int) : this(SurroundingMineCount(surroundingMineCount))
 
-    override fun makeCheckedBlock(): Block {
+    override fun makeOpenedBlock(): Block {
         return Nothing(surroundingMineCount, true)
     }
 

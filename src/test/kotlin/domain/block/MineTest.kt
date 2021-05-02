@@ -31,17 +31,17 @@ internal class MineTest {
     }
 
     @Test
-    fun `체크되지 않은 지뢰를 체크할 수 있다`() {
+    fun `오픈되지 않은 지뢰를 오픈할 수 있다`() {
         val mine = Mine()
-        val result = mine.check()
-        assertThat(result.isChecked()).isEqualTo(true)
+        val result = mine.open()
+        assertThat(result.isOpened()).isEqualTo(true)
     }
 
     @Test
-    fun `이미 체크한 지뢰를 체크하는 경우 예외가 발생한다`() {
+    fun `이미 오픈한 지뢰를 오픈하는 경우 예외가 발생한다`() {
         val mine = Mine(true)
-        val expectedMessage = "이미 체크한 블록은 체크할 수 없습니다"
-        val result = assertThrows<IllegalStateException> { mine.check() }
+        val expectedMessage = "이미 오픈한 블록은 오픈할 수 없습니다"
+        val result = assertThrows<IllegalStateException> { mine.open() }
         assertThat(result.message).isEqualTo(expectedMessage)
     }
 }

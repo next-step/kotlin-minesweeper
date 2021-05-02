@@ -27,7 +27,7 @@ object Console : UserInterface {
             .joinToString(System.lineSeparator()) { row -> row.joinToString(separator = " ") { it.toView() } }
     }
 
-    override fun inputCheckCoordinate(): Pair<Int, Int> {
+    override fun inputOpenCoordinate(): Pair<Int, Int> {
         print("open: ")
         val input = readLine()
             ?.split(",")
@@ -35,7 +35,7 @@ object Console : UserInterface {
             ?.mapNotNull { it.toIntOrNull() }
             ?: throw RuntimeException()
 
-        return if (input.size == 2) (input[0] to input[1]) else inputCheckCoordinate()
+        return if (input.size == 2) (input[0] to input[1]) else inputOpenCoordinate()
     }
 
     private tailrec fun inputMineCount(message: String, maximumMineCount: Int): Int {
@@ -55,7 +55,7 @@ object Console : UserInterface {
 }
 
 private fun BlockDto.toView(): String {
-    return when (this.isChecked) {
+    return when (this.isOpened) {
         true -> if (isMine) "■" else mineCount.toString()
         false -> "□"
     }

@@ -18,7 +18,7 @@ class MineGameDto(gameState: GameState, mineBoard: MineBoard) {
 }
 
 class BlockDto(block: Block) {
-    val isChecked: Boolean = block.isChecked()
+    val isOpened: Boolean = block.isOpened()
     val isMine: Boolean = block.isMine()
-    val mineCount: Int = if (!block.isChecked() || block.isMine()) -1 else block.getSurroundingMineCount()
+    val mineCount: Int = if (!block.isOpened() || block.isMine()) -1 else block.getSurroundingMineCount()
 }

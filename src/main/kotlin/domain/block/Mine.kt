@@ -1,8 +1,8 @@
 package domain.block
 
-class Mine(isChecked: Boolean = false) : Block(isChecked) {
+class Mine(isOpened: Boolean = false) : Block(isOpened) {
 
-    override fun makeCheckedBlock(): Block {
+    override fun makeOpenedBlock(): Block {
         return Mine(true)
     }
 
