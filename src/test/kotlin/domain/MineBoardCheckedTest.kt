@@ -19,8 +19,8 @@ internal class MineBoardCheckedTest {
             )
         )
 
-        underTest.check(Coordinate(1, 1))
-        underTest.check(Coordinate(1, 3))
+        underTest.open(Coordinate(1, 1))
+        underTest.open(Coordinate(1, 3))
 
         // when
         val result = underTest.notExistsToCheck()
@@ -41,7 +41,7 @@ internal class MineBoardCheckedTest {
             )
         )
 
-        underTest.check(Coordinate(1, 1))
+        underTest.open(Coordinate(1, 1))
 
         // when
         val result = underTest.notExistsToCheck()
@@ -62,7 +62,7 @@ internal class MineBoardCheckedTest {
             )
         )
 
-        underTest.check(Coordinate(1, 2))
+        underTest.open(Coordinate(1, 2))
 
         // when
         val result = underTest.existsCheckedMine()
@@ -83,7 +83,7 @@ internal class MineBoardCheckedTest {
             )
         )
 
-        underTest.check(Coordinate(1, 1))
+        underTest.open(Coordinate(1, 1))
 
         // when
         val result = underTest.existsCheckedMine()

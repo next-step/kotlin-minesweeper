@@ -72,7 +72,7 @@ internal class MineBoardTest {
         val notExistCoordinate = Coordinate(10, 10)
         val expectedMessage = "해당 좌표가 존재하지 않습니다. 좌표: $notExistCoordinate, width: 2, height: 2"
 
-        val result = assertThrows<IllegalArgumentException> { underTest.check(notExistCoordinate) }
+        val result = assertThrows<IllegalArgumentException> { underTest.open(notExistCoordinate) }
 
         assertThat(result.message).isEqualTo(expectedMessage)
     }
