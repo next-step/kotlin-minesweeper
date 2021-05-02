@@ -13,15 +13,10 @@ object MineBoardFactory {
         val mineBoardCoordinates = boardCoordinatesGenerator.generate()
         val mineCoordinates = mineCoordinatesGenerator.generate()
 
-        val map = mineBoardCoordinates
-            .map { Pair(it, mineCoordinates.contains(it)) }
-            .map { Pair(it.first, BlockFactory.create(it.second)) }
-            .toMap()
-
         return MineBoard(
             width = boardCoordinatesGenerator.width,
             height = boardCoordinatesGenerator.height,
-            value = map
+            value = mineBoardCoordinates.associateWith { BlockFactory.create(mineCoordinates.contains(it)) }
         )
     }
 }

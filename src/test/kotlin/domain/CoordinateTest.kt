@@ -24,7 +24,7 @@ internal class CoordinateTest {
     @ParameterizedTest
     @MethodSource("provideSurroundingCoordinates")
     fun `특정 좌표의 둘러싸는 좌표들을 반환한다`(coordinate: Coordinate, dummyMaxValue: Int, expected: Set<Coordinate>) {
-        val result = coordinate.surroundingCoordinates(maxX = dummyMaxValue, maxY = dummyMaxValue)
+        val result = coordinate.getSurroundingCoordinates(maxX = dummyMaxValue, maxY = dummyMaxValue)
         assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
     }
 
@@ -36,7 +36,26 @@ internal class CoordinateTest {
         maxY: Int,
         expected: Set<Coordinate>
     ) {
-        val result = coordinate.surroundingCoordinates(maxX = maxX, maxY = maxY)
+        val result = coordinate.getSurroundingCoordinates(maxX = maxX, maxY = maxY)
+        assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFourWayCoordinates")
+    fun `특정 좌표의 동서남들 좌표들을 반환한다`(coordinate: Coordinate, dummyMaxValue: Int, expected: Set<Coordinate>) {
+        val result = coordinate.getFourWayCoordinates(maxX = dummyMaxValue, maxY = dummyMaxValue)
+        assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideRangedFourWayCoordinates")
+    fun `특정 좌표의 동서남북 좌표들 중 지정한 범위 이내의 좌표만 반환할 수 있다`(
+        coordinate: Coordinate,
+        maxX: Int,
+        maxY: Int,
+        expected: Set<Coordinate>
+    ) {
+        val result = coordinate.getFourWayCoordinates(maxX = maxX, maxY = maxY)
         assertThat(result).containsExactlyInAnyOrder(*expected.toTypedArray())
     }
 
@@ -97,6 +116,61 @@ internal class CoordinateTest {
                         Coordinate(1, 1),
                         Coordinate(2, 1),
                         Coordinate(3, 1),
+                        Coordinate(1, 2),
+                        Coordinate(3, 2)
+                    )
+                )
+            )
+        }
+
+        @JvmStatic
+        private fun provideFourWayCoordinates(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    Coordinate(0, 1),
+                    10,
+                    setOf(
+                        Coordinate(1, 1)
+                    )
+                ),
+
+                Arguments.of(
+                    Coordinate(2, 2),
+                    10,
+                    setOf(
+                        Coordinate(1, 2),
+                        Coordinate(2, 1),
+                        Coordinate(2, 3),
+                        Coordinate(3, 2)
+                    )
+                )
+            )
+        }
+
+        @JvmStatic
+        private fun provideRangedFourWayCoordinates(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    Coordinate(2, 2),
+                    2,
+                    2,
+                    setOf(
+                        Coordinate(1, 2),
+                        Coordinate(2, 1)
+                    )
+                ),
+                Arguments.of(
+                    Coordinate(1, 1),
+                    1,
+                    1,
+                    emptySet<Coordinate>()
+                ),
+                Arguments.of(
+                    Coordinate(2, 2),
+                    3,
+                    2,
+                    setOf(
+                        Coordinate(2, 1),
                         Coordinate(1, 2),
                         Coordinate(3, 2)
                     )

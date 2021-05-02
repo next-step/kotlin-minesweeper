@@ -1,7 +1,7 @@
 package userinterface
 
 import dto.BlockDto
-import dto.MineBoardDto
+import dto.MineGameDto
 import dto.MineSweeperInitDto
 
 object Console : UserInterface {
@@ -14,16 +14,33 @@ object Console : UserInterface {
         return (MineSweeperInitDto(height = height, width = width, mineCount = mineCount))
     }
 
+    override fun outputMineSweeper(mineGameDto: MineGameDto) {
+        when (mineGameDto.state) {
+            "WIN" -> println("WIN GAME.")
+            "LOSE" -> println("LOSE GAME.")
+            "RUNNING" -> println(runningMessage(mineGameDto.board, mineGameDto.width))
+        }
+    }
+
+    private fun runningMessage(board: List<BlockDto>, width: Int): String {
+        return board.windowed(size = width, step = width)
+            .joinToString(System.lineSeparator()) { row -> row.joinToString(separator = " ") { it.toView() } }
+    }
+
+    override fun inputOpenCoordinate(): Pair<Int, Int> {
+        print("open: ")
+        val input = readLine()
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.mapNotNull { it.toIntOrNull() }
+            ?: throw RuntimeException()
+
+        return if (input.size == 2) (input[0] to input[1]) else inputOpenCoordinate()
+    }
+
     private tailrec fun inputMineCount(message: String, maximumMineCount: Int): Int {
         val mineCount = inputNaturalNumber(message)
         return if (mineCount <= maximumMineCount) mineCount else inputMineCount(message, maximumMineCount)
-    }
-
-    override fun outputMineSweeper(mineBoardDto: MineBoardDto) {
-        println("지뢰찾기 게임 시작")
-        mineBoardDto.board.windowed(size = mineBoardDto.width, step = mineBoardDto.width)
-            .map { row -> row.joinToString(separator = " ") { it.toView() } }
-            .forEach(::println)
     }
 
     private fun inputNaturalNumber(message: String): Int {
@@ -38,8 +55,8 @@ object Console : UserInterface {
 }
 
 private fun BlockDto.toView(): String {
-    return when (this.isMine) {
-        true -> "■"
-        false -> mineCount.toString()
+    return when (this.isOpened) {
+        true -> if (isMine) "■" else mineCount.toString()
+        false -> "□"
     }
 }

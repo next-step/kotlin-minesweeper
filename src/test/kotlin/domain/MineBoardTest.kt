@@ -5,6 +5,7 @@ import domain.block.Mine
 import domain.block.Nothing
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class MineBoardTest {
 
@@ -40,8 +41,7 @@ internal class MineBoardTest {
             )
         )
 
-        val expected = MineBoard(
-            3, 3,
+        val expected =
             mapOf(
                 Coordinate(1, 1) to Mine(),
                 Coordinate(2, 1) to Nothing(3),
@@ -53,9 +53,27 @@ internal class MineBoardTest {
                 Coordinate(2, 3) to Nothing(1),
                 Coordinate(3, 3) to Nothing(0)
             )
-        )
 
-        val result = underTest.surroundingMineCountedBoard()
+        val result = underTest.value
         assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `존재하지 않는 좌표를 확인하는 경우 예외가 발생한다`() {
+        val underTest = MineBoard(
+            2, 2,
+            mapOf(
+                Coordinate(1, 1) to Mine(),
+                Coordinate(2, 1) to Nothing(),
+                Coordinate(1, 2) to Mine(),
+                Coordinate(2, 2) to Nothing()
+            )
+        )
+        val notExistCoordinate = Coordinate(10, 10)
+        val expectedMessage = "해당 좌표가 존재하지 않습니다. 좌표: $notExistCoordinate, width: 2, height: 2"
+
+        val result = assertThrows<IllegalArgumentException> { underTest.open(notExistCoordinate) }
+
+        assertThat(result.message).isEqualTo(expectedMessage)
     }
 }

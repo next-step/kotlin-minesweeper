@@ -1,9 +1,10 @@
 package userinterface
 
-import dto.MineBoardDto
+import dto.MineGameDto
 import dto.MineSweeperInitDto
 
 interface UserInterface {
     fun inputMineSweeperWidthHeightCount(): MineSweeperInitDto
-    fun outputMineSweeper(mineBoardDto: MineBoardDto)
+    fun outputMineSweeper(mineGameDto: MineGameDto)
+    fun inputOpenCoordinate(): Pair<Int, Int>
 }
