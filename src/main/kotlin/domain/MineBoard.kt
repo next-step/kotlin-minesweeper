@@ -32,8 +32,7 @@ class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, 
         }
 
         coordinate.getFourWayCoordinates(maxX = width, maxY = height)
-            .filterNot { _value[it]!!.isOpened() }
-            .forEach { open(it) }
+            .forEach { if (!_value[it]!!.isOpened()) open(it) }
     }
 
     private fun isZero(coordinate: Coordinate): Boolean {
