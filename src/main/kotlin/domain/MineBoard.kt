@@ -32,7 +32,8 @@ class MineBoard(val width: Int, private val height: Int, value: Map<Coordinate, 
         }
 
         coordinate.getFourWayCoordinates(maxX = width, maxY = height)
-            .forEach { if (!_value[it]!!.isChecked()) check(it) }
+            .filterNot { _value[it]!!.isChecked() }
+            .forEach { check(it) }
     }
 
     private fun isZero(coordinate: Coordinate): Boolean {
