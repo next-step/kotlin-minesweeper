@@ -18,7 +18,7 @@ internal class MineTest {
         val mine = Mine()
         val expectedMessage = "지뢰는 주변지뢰의 개수를 구할 수 없습니다."
 
-        val result = assertThrows<UnsupportedOperationException> { mine.surroundingMineCount() }
+        val result = assertThrows<UnsupportedOperationException> { mine.getSurroundingMineCount() }
 
         assertThat(result.message).isEqualTo(expectedMessage)
     }

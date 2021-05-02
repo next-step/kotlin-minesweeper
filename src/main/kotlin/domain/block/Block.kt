@@ -13,5 +13,5 @@ abstract class Block(private val isChecked: Boolean = false) {
 
     abstract fun isMine(): Boolean
     abstract fun isZero(): Boolean
-    abstract fun surroundingMineCount(): SurroundingMineCount
+    abstract fun getSurroundingMineCount(): Int
 }

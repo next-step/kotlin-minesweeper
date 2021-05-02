@@ -19,11 +19,8 @@ internal class NothingTest {
     @ValueSource(ints = [0, 1, 8])
     fun `주변지뢰개수를 반환한다`(input: Int) {
         val nothing = Nothing(input)
-        val expected = SurroundingMineCount(input)
-
-        val result = nothing.surroundingMineCount()
-
-        assertThat(result).isEqualTo(expected)
+        val result = nothing.getSurroundingMineCount()
+        assertThat(result).isEqualTo(input)
     }
 
     @Test

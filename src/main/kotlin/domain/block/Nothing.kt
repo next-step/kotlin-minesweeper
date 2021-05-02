@@ -15,7 +15,7 @@ class Nothing(
 
     override fun isZero() = surroundingMineCount.isZero()
 
-    override fun surroundingMineCount() = surroundingMineCount
+    override fun getSurroundingMineCount() = surroundingMineCount.value
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
