@@ -13,7 +13,7 @@ class Nothing(
 
     override fun isMine() = false
 
-    override fun isZero() = surroundingMineCount == SurroundingMineCount(0)
+    override fun isZero() = surroundingMineCount.isZero()
 
     override fun surroundingMineCount() = surroundingMineCount
 
