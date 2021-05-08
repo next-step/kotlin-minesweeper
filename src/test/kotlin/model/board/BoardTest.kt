@@ -31,13 +31,11 @@ internal class BoardTest {
 
     @Test
     fun `입력받은 row 의 길이가 다르면 예외 발생`() {
-        val rows = listOf(
-            Row(Cell.get(MINE, COVERED)),
-            Row(Cell.get(MINE, COVERED), Cell.get(MINE, COVERED))
-        )
-
         assertThrows<IllegalArgumentException> {
-            Board(rows)
+            Board(
+                Row(Cell.get(MINE, COVERED)),
+                Row(Cell.get(MINE, COVERED), Cell.get(MINE, COVERED))
+            )
         }
     }
 

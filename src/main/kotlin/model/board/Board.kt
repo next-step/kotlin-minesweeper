@@ -16,6 +16,8 @@ class Board(rows: List<Row>) {
         require(rows.all { it.width == rows.first().width }) { "모든 row 의 길이가 같아야 합니다!" }
     }
 
+    constructor(vararg rows: Row) : this(rows.toList())
+
     fun getCell(position: Position): Cell {
         return rows[position.heightIndex].getCell(position.widthIndex)
     }
