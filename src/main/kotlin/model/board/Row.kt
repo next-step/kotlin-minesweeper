@@ -18,8 +18,8 @@ class Row(cells: List<Cell>) {
     fun isMine(width: Int): Boolean = cells[width].isMine
 
     fun uncover(widthIndex: Int, mineCount: Int) {
-        val mutableCells = cells.toMutableList()
-        mutableCells[widthIndex] = if (mutableCells[widthIndex].isMine) Cell.get(Contents.MINE, State.UNCOVERED) else Cell.get(Contents.mineCountOf(mineCount)!!, State.UNCOVERED)
-        cells = mutableCells.toList()
+        cells = cells.toMutableList().apply {
+            this[widthIndex] = this[widthIndex].asUncovered(mineCount)
+        }.toList()
     }
 }
