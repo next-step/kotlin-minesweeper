@@ -12,7 +12,7 @@ internal class BoardTest {
     fun `보드를 생성한다`() {
         val gameData = GameData(3, 3, 2)
         val mineFactory = MineFactory(TestPositionIdFactory(listOf(0, 4))) // [0, 0]. [1, 1]
-        val board = Board(gameData, mineFactory)
+        val board = Board(mineFactory.createMines(gameData), gameData)
 
         assertThat(board.squares[0][0]).isInstanceOf(Mine::class.java)
         assertThat(board.squares[1][1]).isInstanceOf(Mine::class.java)

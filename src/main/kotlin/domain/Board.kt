@@ -4,16 +4,14 @@ import domain.position.Position
 import domain.square.NormalSquare
 import domain.square.Square
 import domain.square.mine.Mine
-import domain.square.mine.MineFactory
 import domain.square.mine.Mines
 import model.GameData
 
 class Board(
-    private val gameData: GameData,
-    mineFactory: MineFactory = MineFactory()
+    private val mines: Mines,
+    private val gameData: GameData
 ) {
     val squares: List<Row>
-    private val mines: Mines = mineFactory.createMines(gameData)
 
     init {
         squares = (0 until gameData.height).map { row ->
