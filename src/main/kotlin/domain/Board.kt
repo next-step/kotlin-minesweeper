@@ -12,7 +12,7 @@ class Board(
     private val gameData: GameData,
     mineFactory: MineFactory = MineFactory()
 ) {
-    val squares: List<List<Square>>
+    val squares: List<Row>
     private val mines: Mines = mineFactory.createMines(gameData)
 
     init {
@@ -21,10 +21,13 @@ class Board(
         }.toList()
     }
 
-    private fun makeRowSquare(row: Int): List<Square> =
-        (0 until gameData.width).map { col -> Position(row, col) }.map {
+    private fun makeRowSquare(row: Int): Row {
+        val squaresOfRow = (0 until gameData.width).map { col -> Position(row, col) }.map {
             makeSquare(it)
         }.toList()
+        return Row(squaresOfRow)
+    }
+
 
     private fun makeSquare(it: Position): Square = if (mines.isMine(it)) Mine(it) else NormalSquare(it, mines)
 }
