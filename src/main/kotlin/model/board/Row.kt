@@ -13,13 +13,16 @@ class Row(cells: List<Cell>) {
 
     constructor(vararg cells: Cell) : this(cells.toList())
 
-    fun getCell(width: Int): Cell = cells[width]
+    fun getCell(widthIndex: Int): Cell = cells[widthIndex]
 
-    fun isMine(width: Int): Boolean = cells[width].isMine
+    private fun isMine(widthIndex: Int): Boolean = cells[widthIndex].isMine
 
     fun uncover(widthIndex: Int, mineCount: Int) {
         cells = cells.toMutableList().apply {
             this[widthIndex] = this[widthIndex].asUncovered(mineCount)
         }.toList()
     }
+
+    fun countMine(widthRange: IntRange): Int =
+        widthRange.fold(0) { sum, widthIndex -> sum + if (isMine(widthIndex)) 1 else 0 }
 }

@@ -1,5 +1,6 @@
 package model.board
 
+import model.MineScope
 import model.Position
 
 class Board(rows: List<Row>) {
@@ -23,11 +24,6 @@ class Board(rows: List<Row>) {
     }
 
     fun uncover(position: Position) {
-        val heightRange = position.heightMinus(1).heightIndex..(position.heightIndex + 1).coerceAtMost(height - 1)
-        val widthRange = position.widthMinus(1).widthIndex..(position.widthIndex + 1).coerceAtMost(width - 1)
-
-        val mineCount = heightRange.fold(0) { sum, heightIndex -> sum + widthRange.fold(0) { sum, widthIndex -> sum + if (rows[heightIndex].isMine(widthIndex)) 1 else 0 } }
-
-        rows[position.heightIndex].uncover(position.widthIndex, mineCount)
+        rows[position.heightIndex].uncover(position.widthIndex, MineScope(position, height, width).countMine(rows))
     }
 }
