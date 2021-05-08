@@ -1,5 +1,6 @@
 package ui
 
+import domain.position.Position
 import model.GameData
 
 object InputView {
@@ -31,5 +32,16 @@ object InputView {
         val mineNumber = readLine()?.toInt() ?: throw IllegalArgumentException("잘못된 입력 값입니다.")
         println()
         return mineNumber
+    }
+
+    fun askOpenPosition(): Position {
+        print("Open: ")
+        val rowAndCol =
+            readLine()?.split(",")?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException("잘못된 입력 값입니다.") }
+        require(rowAndCol != null && rowAndCol.size == 2) { "잘못된 입력 값입니다." }
+
+        val row = rowAndCol[0]
+        val col = rowAndCol[1]
+        return Position(row, col)
     }
 }

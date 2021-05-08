@@ -17,6 +17,10 @@ data class Position(
     private fun validateAroundPosition(aroundRelativePosition: AroundRelativePosition) =
         row + aroundRelativePosition.relativeRow >= 0 && col + aroundRelativePosition.relativeCol >= 0
 
+    fun isInBoard(height: Int, width: Int): Boolean {
+        return row < height && col < width
+    }
+
     private enum class AroundRelativePosition(
         val relativeRow: Int,
         val relativeCol: Int
