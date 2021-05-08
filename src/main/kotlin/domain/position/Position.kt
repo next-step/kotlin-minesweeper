@@ -10,9 +10,12 @@ data class Position(
 
     fun aroundPositions(): List<Position> {
         return AroundRelativePosition.values()
-            .filter { row + it.relativeRow >= 0 && col + it.relativeCol >= 0 }
+            .filter { validateAroundPosition(it) }
             .map { Position(this.row + it.relativeRow, this.col + it.relativeCol) }
     }
+
+    private fun validateAroundPosition(aroundRelativePosition: AroundRelativePosition) =
+        row + aroundRelativePosition.relativeRow >= 0 && col + aroundRelativePosition.relativeCol >= 0
 
     private enum class AroundRelativePosition(
         val relativeRow: Int,
