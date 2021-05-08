@@ -22,9 +22,11 @@ class ResultView(
     }
 
     private fun printSquare(square: Square) {
-        when (square.isMine) {
-            true -> print("* ")
-            false -> print("${square.mineCountAround} ")
+
+        if (!square.isOpen) {
+            print("C ")
+        } else if (!square.isMine) {
+            print("${square.mineCountAround} ")
         }
     }
 }
