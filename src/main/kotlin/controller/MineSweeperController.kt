@@ -11,11 +11,13 @@ object MineSweeperController {
 
         val resultView = ResultView(gameData)
         resultView.printStart()
-        resultView.printBoard(mineSweeperGame.board)
 
         do {
+            resultView.printBoard(mineSweeperGame.board)
+
             val openPosition = InputView.askOpenPosition()
             mineSweeperGame.open(openPosition)
+
         } while (!mineSweeperGame.hasDone)
 
         if (mineSweeperGame.hasLose) {
