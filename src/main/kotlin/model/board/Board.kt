@@ -23,8 +23,8 @@ class Board(rows: List<Row>) {
     }
 
     fun uncover(position: Position) {
-        val heightRange = (position.heightIndex - 1).coerceAtLeast(0)..(position.heightIndex + 1).coerceAtMost(height - 1)
-        val widthRange = (position.widthIndex - 1).coerceAtLeast(0)..(position.widthIndex + 1).coerceAtMost(width - 1)
+        val heightRange = position.heightMinus(1).heightIndex..(position.heightIndex + 1).coerceAtMost(height - 1)
+        val widthRange = position.widthMinus(1).widthIndex..(position.widthIndex + 1).coerceAtMost(width - 1)
 
         val mineCount = heightRange.fold(0) { sum, heightIndex -> sum + widthRange.fold(0) { sum, widthIndex -> sum + if (rows[heightIndex].isMine(widthIndex)) 1 else 0 } }
 
