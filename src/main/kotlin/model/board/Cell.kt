@@ -1,6 +1,8 @@
 package model.board
 
 data class Cell private constructor(val contents: Contents, val state: State) {
+    val isMine: Boolean
+        get() = contents == Contents.MINE
 
     companion object {
         private val CELLS = Contents.values().flatMap { contents -> State.values().map { state -> Cell(contents, state) } }

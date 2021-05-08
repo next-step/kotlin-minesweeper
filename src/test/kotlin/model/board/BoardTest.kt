@@ -1,12 +1,19 @@
 package model.board
 
-import model.board.Contents.MINE
+import model.Position
+import model.Positions
 import model.board.State.COVERED
+import model.board.Contents.MINE
+import model.board.Contents.ONE
+import model.board.Contents.TWO
+import model.board.Contents.ZERO
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.EmptySource
+import org.junit.jupiter.params.provider.MethodSource
 
 internal class BoardTest {
     @Test
@@ -39,6 +46,56 @@ internal class BoardTest {
     fun `빈 rows 로는 Board 생성 불가`(rows: List<Row>) {
         assertThrows<IllegalArgumentException> {
             Board(rows)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("uncoverProvider")
+    fun `특정 위치 cell 을 open 할 때 contents 결정`(position: Position, contents: Contents) {
+        /*
+         * M 1 0 0
+         * 1 2 1 1
+         * 0 1 M 1
+         * 0 1 1 1
+         */
+        val board = BoardFactory().create(
+            BoardSize(4, 4),
+            Positions(Position.get(0, 0), Position.get(2, 2))
+        )
+
+        board.uncover(position)
+        assertThat(board.getCell(position).contents).isEqualTo(contents)
+    }
+
+    companion object {
+        @JvmStatic
+        fun uncoverProvider(): List<Arguments> {
+            return listOf(
+                Arguments {
+                    arrayOf(
+                        Position.get(0, 3),
+                        ZERO
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Position.get(1, 0),
+                        ONE
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Position.get(0, 0),
+                        MINE
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Position.get(1, 1),
+                        TWO
+                    )
+                }
+            )
         }
     }
 }

@@ -1,7 +1,8 @@
 package model.board
 
 class Row(cells: List<Cell>) {
-    val cells = cells.toList()
+    var cells = cells.toList()
+        private set
 
     val width: Int
         get() = cells.size
@@ -12,7 +13,13 @@ class Row(cells: List<Cell>) {
 
     constructor(vararg cells: Cell) : this(cells.toList())
 
-    fun getCell(width: Int): Cell {
-        return cells[width]
+    fun getCell(width: Int): Cell = cells[width]
+
+    fun isMine(width: Int): Boolean = cells[width].isMine
+
+    fun uncover(widthIndex: Int, mineCount: Int) {
+        val mutableCells = cells.toMutableList()
+        mutableCells[widthIndex] = if (mutableCells[widthIndex].isMine) Cell.get(Contents.MINE, State.UNCOVERED) else Cell.get(Contents.mineCountOf(mineCount)!!, State.UNCOVERED)
+        cells = mutableCells.toList()
     }
 }
