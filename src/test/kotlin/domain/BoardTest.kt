@@ -16,16 +16,16 @@ internal class BoardTest {
         val mineFactory = MineFactory(TestPositionIdFactory(listOf(0, 4))) // [0, 0]. [1, 1]
         val board = Board(mineFactory.createMines(gameData), gameData)
 
-        assertThat(board.squares[0][0]).isInstanceOf(Mine::class.java)
-        assertThat(board.squares[1][1]).isInstanceOf(Mine::class.java)
+        assertThat(board.squares.get(Position(0, 0))).isInstanceOf(Mine::class.java)
+        assertThat(board.squares.get(Position(1, 1))).isInstanceOf(Mine::class.java)
 
-        assertThat(board.squares[0][1].mineCountAround).isEqualTo(2)
-        assertThat(board.squares[0][2].mineCountAround).isEqualTo(1)
-        assertThat(board.squares[1][0].mineCountAround).isEqualTo(2)
-        assertThat(board.squares[1][2].mineCountAround).isEqualTo(1)
-        assertThat(board.squares[2][0].mineCountAround).isEqualTo(1)
-        assertThat(board.squares[2][1].mineCountAround).isEqualTo(1)
-        assertThat(board.squares[2][2].mineCountAround).isEqualTo(1)
+        assertThat(board.squares.get(Position(0, 1)).mineCountAround).isEqualTo(2)
+        assertThat(board.squares.get(Position(0, 2)).mineCountAround).isEqualTo(1)
+        assertThat(board.squares.get(Position(1, 0)).mineCountAround).isEqualTo(2)
+        assertThat(board.squares.get(Position(1, 2)).mineCountAround).isEqualTo(1)
+        assertThat(board.squares.get(Position(2, 0)).mineCountAround).isEqualTo(1)
+        assertThat(board.squares.get(Position(2, 1)).mineCountAround).isEqualTo(1)
+        assertThat(board.squares.get(Position(2, 2)).mineCountAround).isEqualTo(1)
     }
 
     @Test
@@ -39,7 +39,7 @@ internal class BoardTest {
         val resultNotOpened = board.hasOpened(Position(row, col))
         assertThat(resultNotOpened).isFalse()
 
-        board.squares[row][col].open()
+        board.squares.get(Position(row, col)).open()
 
         val resultOpened = board.hasOpened(Position(row, col))
         assertThat(resultOpened).isTrue()
@@ -83,8 +83,8 @@ internal class BoardTest {
         val resultFalse = board.hasAllOpened()
         assertThat(resultFalse).isFalse()
 
-        board.squares[1][0].open()
-        board.squares[1][1].open()
+        board.squares.get(Position(1, 0)).open()
+        board.squares.get(Position(1, 1)).open()
 
         val resultTrue = board.hasAllOpened()
         assertThat(resultTrue).isTrue()
@@ -95,11 +95,11 @@ internal class BoardTest {
         val gameData = GameData(2, 2, 0)
         val board = Board(Mines(listOf()), gameData)
 
-        assertThat(board.squares[0][0].isOpen).isFalse()
+        assertThat(board.squares.get(Position(0, 0)).isOpen).isFalse()
 
         board.openSquare(Position(0, 0))
 
-        assertThat(board.squares[0][0].isOpen).isTrue()
+        assertThat(board.squares.get(Position(0, 0)).isOpen).isTrue()
 
     }
 }

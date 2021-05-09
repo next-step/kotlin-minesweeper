@@ -14,7 +14,7 @@ class ResultView(
 
     fun printBoard(board: Board) {
         repeat(gameData.height) { rowNum ->
-            printRow(board.squares[rowNum])
+            printRow(board.squares.getRow(rowNum))
             println()
         }
     }

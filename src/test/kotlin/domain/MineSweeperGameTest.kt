@@ -40,7 +40,7 @@ internal class MineSweeperGameTest {
 
         mineSweeperGame.open(Position(1, 1))
 
-        assertThat(mineSweeperGame.board.squares[1][1].isOpen).isTrue()
+        assertThat(mineSweeperGame.board.squares.get(Position(1, 1)).isOpen).isTrue()
     }
 
     @Test
@@ -51,9 +51,9 @@ internal class MineSweeperGameTest {
 
         mineSweeperGame.open(Position(0, 2))
 
-        assertThat(mineSweeperGame.board.squares[0][2].isOpen).isTrue()
-        assertThat(mineSweeperGame.board.squares[0][1].isOpen).isTrue()
-        assertThat(mineSweeperGame.board.squares[1][2].isOpen).isTrue()
-        assertThat(mineSweeperGame.board.squares[1][1].isOpen).isTrue()
+        assertThat(mineSweeperGame.board.squares.get(Position(0, 2)).isOpen).isTrue()
+        assertThat(mineSweeperGame.board.squares.get(Position(0, 1)).isOpen).isTrue()
+        assertThat(mineSweeperGame.board.squares.get(Position(1, 2)).isOpen).isTrue()
+        assertThat(mineSweeperGame.board.squares.get(Position(1, 1)).isOpen).isTrue()
     }
 }

@@ -11,18 +11,19 @@ class Board(
     private val mines: Mines,
     private val gameData: GameData
 ) {
-    val squares: List<Row>
+    val squares: Squares
 
     init {
-        squares = (0 until gameData.height).map { row ->
+        val rows = (0 until gameData.height).map { row ->
             makeRowSquare(row)
-        }.toList()
+        }
+        squares = Squares(rows)
     }
 
     private fun makeRowSquare(row: Int): Row {
         val squaresOfRow = (0 until gameData.width).map { col -> Position(row, col) }.map {
             makeSquare(it)
-        }.toList()
+        }
         return Row(squaresOfRow)
     }
 
@@ -30,7 +31,7 @@ class Board(
     private fun makeSquare(it: Position): Square = if (mines.isMine(it)) Mine(it) else NormalSquare(it, mines)
 
     fun hasOpened(openPosition: Position): Boolean {
-        return squares[openPosition.row][openPosition.col].isOpen
+        return squares.get(openPosition).isOpen
     }
 
     fun isMine(openPosition: Position): Boolean {
@@ -38,16 +39,14 @@ class Board(
     }
 
     fun hasNoMineAround(openPosition: Position): Boolean {
-        return squares[openPosition.row][openPosition.col].mineCountAround == 0
+        return squares.get(openPosition).mineCountAround == 0
     }
 
     fun hasAllOpened(): Boolean {
-        return squares.all { row ->
-            row.filter { !it.isMine }.all { it.isOpen }
-        }
+        return squares.hasAllOpened()
     }
 
     fun openSquare(openPosition: Position) {
-        squares[openPosition.row][openPosition.col].open()
+        squares.get(openPosition).open()
     }
 }
