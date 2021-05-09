@@ -100,6 +100,5 @@ internal class BoardTest {
         board.openSquare(Position(0, 0))
 
         assertThat(board.squares.get(Position(0, 0)).isOpen).isTrue()
-
     }
 }

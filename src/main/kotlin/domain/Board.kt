@@ -27,7 +27,6 @@ class Board(
         return Row(squaresOfRow)
     }
 
-
     private fun makeSquare(it: Position): Square = if (mines.isMine(it)) Mine(it) else NormalSquare(it, mines)
 
     fun hasOpened(openPosition: Position): Boolean {

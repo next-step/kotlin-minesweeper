@@ -17,7 +17,6 @@ object MineSweeperController {
 
             val openPosition = InputView.askOpenPosition()
             mineSweeperGame.open(openPosition)
-
         } while (!mineSweeperGame.hasDone)
 
         if (mineSweeperGame.hasLose) {
