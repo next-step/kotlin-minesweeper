@@ -15,9 +15,7 @@ class MineSweeperGame(
         get() = hasWon || hasLose
 
     fun open(openPosition: Position) {
-        // 1. 이미 열렸는지 확인
-        // 2. 지뢰인지 확인
-        // 3. mineCountArount == 0인지 확인
+
         check(!board.hasOpened(openPosition)) { "이미 열려있는 위치입니다. $openPosition" }
 
         if (board.isMine(openPosition)) {
