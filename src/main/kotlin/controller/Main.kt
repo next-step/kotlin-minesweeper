@@ -13,5 +13,8 @@ fun main() {
     val board = BoardFactory().create(boardSize, Positions.random(boardSize, mineCount))
 
     OutputView.printStart()
+
+    board.uncoverAll()
+
     OutputView.printBoard(board)
 }

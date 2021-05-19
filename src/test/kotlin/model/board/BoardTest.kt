@@ -49,48 +49,74 @@ internal class BoardTest {
 
     @ParameterizedTest
     @MethodSource("uncoverProvider")
-    fun `특정 위치 cell 을 open 할 때 contents 결정`(position: Position, contents: Contents) {
+    fun `특정 위치 cell 을 open 할 때 contents 결정`(board: Board, position: Position, contents: Contents) {
+        board.uncover(position)
+        assertThat(board.getCell(position).contents).isEqualTo(contents)
+    }
+
+    @ParameterizedTest
+    @MethodSource("uncoverAllProvider")
+    fun `uncoverAll 은 전체 cell 오픈`(board: Board) {
+        board.uncoverAll()
+        board.rows.forEach { row ->
+            row.cells.forEach {
+                assertThat(it.state).isEqualTo(State.UNCOVERED)
+            }
+        }
+    }
+
+    companion object {
         /*
          * M 1 0 0
          * 1 2 1 1
          * 0 1 M 1
          * 0 1 1 1
          */
-        val board = BoardFactory().create(
+        private val board = BoardFactory().create(
             BoardSize(4, 4),
             Positions(Position.get(0, 0), Position.get(2, 2))
         )
 
-        board.uncover(position)
-        assertThat(board.getCell(position).contents).isEqualTo(contents)
-    }
-
-    companion object {
         @JvmStatic
         fun uncoverProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(
+                        board,
                         Position.get(0, 3),
                         ZERO
                     )
                 },
                 Arguments {
                     arrayOf(
+                        board,
                         Position.get(1, 0),
                         ONE
                     )
                 },
                 Arguments {
                     arrayOf(
+                        board,
                         Position.get(0, 0),
                         MINE
                     )
                 },
                 Arguments {
                     arrayOf(
+                        board,
                         Position.get(1, 1),
                         TWO
+                    )
+                }
+            )
+        }
+
+        @JvmStatic
+        fun uncoverAllProvider(): List<Arguments> {
+            return listOf(
+                Arguments {
+                    arrayOf(
+                        board
                     )
                 }
             )

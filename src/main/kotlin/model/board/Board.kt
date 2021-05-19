@@ -26,4 +26,12 @@ class Board(rows: List<Row>) {
     fun uncover(position: Position) {
         rows[position.heightIndex].uncover(position.widthIndex, MineScope(position, height, width).countMine(rows))
     }
+
+    fun uncoverAll() {
+        (0 until height).forEach { heightIndex ->
+            (0 until width).forEach { widthIndex ->
+                uncover(Position.get(heightIndex, widthIndex))
+            }
+        }
+    }
 }
