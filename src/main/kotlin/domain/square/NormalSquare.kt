@@ -10,4 +10,8 @@ class NormalSquare(
     override val isMine: Boolean
         get() = false
     override val mineCountAround: Int = position.aroundPositions().filter { mines.isMine(it) }.count()
+
+    override fun open() {
+        isOpen = true
+    }
 }

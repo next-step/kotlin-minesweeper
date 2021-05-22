@@ -1,29 +1,44 @@
 package ui
 
+import domain.Board
+import domain.Row
 import domain.square.Square
 import model.GameData
 
 class ResultView(
     private val gameData: GameData
 ) {
-    fun printMineGameState(squares: List<List<Square>>) {
+    fun printStart() {
         println("지뢰찾기 게임 시작")
-        repeat(gameData.height) { row ->
-            printRow(squares[row])
+    }
+
+    fun printBoard(board: Board) {
+        repeat(gameData.height) { rowNum ->
+            printRow(board.squares.getRow(rowNum))
             println()
         }
     }
 
-    private fun printRow(rowSquares: List<Square>) {
-        repeat(gameData.width) { col ->
-            printSquare(rowSquares[col])
+    private fun printRow(row: Row) {
+        repeat(gameData.width) { colNum ->
+            printSquare(row[colNum])
         }
     }
 
     private fun printSquare(square: Square) {
-        when (square.isMine) {
-            true -> print("* ")
-            false -> print("${square.mineCountAround} ")
+
+        if (!square.isOpen) {
+            print("C ")
+        } else if (!square.isMine) {
+            print("${square.mineCountAround} ")
         }
+    }
+
+    fun printLose() {
+        println("Lose Game.")
+    }
+
+    fun printWin() {
+        println("Win Game.")
     }
 }

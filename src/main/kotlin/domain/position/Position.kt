@@ -10,8 +10,15 @@ data class Position(
 
     fun aroundPositions(): List<Position> {
         return AroundRelativePosition.values()
-            .filter { row + it.relativeRow >= 0 && col + it.relativeCol >= 0 }
+            .filter { validateAroundPosition(it) }
             .map { Position(this.row + it.relativeRow, this.col + it.relativeCol) }
+    }
+
+    private fun validateAroundPosition(aroundRelativePosition: AroundRelativePosition) =
+        row + aroundRelativePosition.relativeRow >= 0 && col + aroundRelativePosition.relativeCol >= 0
+
+    fun isInBoard(height: Int, width: Int): Boolean {
+        return row < height && col < width
     }
 
     private enum class AroundRelativePosition(

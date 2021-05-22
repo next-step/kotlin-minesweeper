@@ -12,7 +12,7 @@ internal class DefaultRandomPositionIdFactoryTest {
         val defaultRandomPositionIdFactory = RandomPositionIdFactory()
         val positionIds = defaultRandomPositionIdFactory.positionIds(100, 99)
         assertThat(positionIds).hasSize(100)
-        assertThat(positionIds).containsExactlyInAnyOrderElementsOf((0..99).map { PositionId(it) }.toList())
+        assertThat(positionIds).containsExactlyInAnyOrderElementsOf((0..99).map { PositionId(it) })
         assertThat(positionIds.toSet()).hasSize(100)
     }
 
