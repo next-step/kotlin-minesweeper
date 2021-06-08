@@ -10,7 +10,7 @@ object OutputView {
 
     fun printBoard(board: Board) {
         board.rows.forEach { row ->
-            println(row.cells.joinToString(separator = " ") { if (it.contents == Contents.MINE) "*" else "C" })
+            println(row.cells.joinToString(separator = " ") { if (it.contents == Contents.MINE) "*" else "${it.contents.mineCount}" })
         }
     }
 }
