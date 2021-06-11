@@ -5,7 +5,7 @@ data class Cell private constructor(val contents: Contents, val state: State) {
         get() = contents == Contents.MINE
 
     fun asUncovered(mineCount: Int): Cell {
-        return get(if (isMine) Contents.MINE else Contents.mineCountOf(mineCount)!!, State.UNCOVERED)
+        return get(if (isMine) Contents.MINE else Contents.mineCountOf(mineCount), State.UNCOVERED)
     }
 
     companion object {
