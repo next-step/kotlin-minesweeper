@@ -13,7 +13,7 @@ class Row(cells: List<Cell>) {
 
     constructor(vararg cells: Cell) : this(cells.toList())
 
-    fun getCell(widthIndex: Int): Cell = cells[widthIndex]
+    operator fun get(widthIndex: Int): Cell = cells[widthIndex]
 
     private fun isMine(widthIndex: Int): Boolean = cells[widthIndex].isMine
 
@@ -24,5 +24,5 @@ class Row(cells: List<Cell>) {
     }
 
     fun countMine(widthRange: IntRange): Int =
-        widthRange.fold(0) { sum, widthIndex -> sum + if (isMine(widthIndex)) 1 else 0 }
+        widthRange.sumBy { widthIndex -> if (isMine(widthIndex)) 1 else 0 }
 }

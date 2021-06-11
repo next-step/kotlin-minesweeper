@@ -42,7 +42,7 @@ internal class RowTest {
         val row = Row(Cell.DEFAULT_CELL, Cell.MINE_CELL, Cell.DEFAULT_CELL)
         row.uncover(0, mineCount)
 
-        assertThat(row.getCell(0).contents).isEqualTo(contents)
+        assertThat(row[0].contents).isEqualTo(contents)
     }
 
     @ParameterizedTest
@@ -51,7 +51,7 @@ internal class RowTest {
         val row = Row(Cell.DEFAULT_CELL, Cell.MINE_CELL, Cell.DEFAULT_CELL)
         row.uncover(1, mineCount)
 
-        assertThat(row.getCell(1).contents).isEqualTo(MINE)
+        assertThat(row[1].contents).isEqualTo(MINE)
     }
 
     companion object {

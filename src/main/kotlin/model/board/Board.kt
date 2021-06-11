@@ -20,7 +20,7 @@ class Board(rows: List<Row>) {
     constructor(vararg rows: Row) : this(rows.toList())
 
     fun getCell(position: Position): Cell {
-        return rows[position.heightIndex].getCell(position.widthIndex)
+        return rows[position.heightIndex][position.widthIndex]
     }
 
     fun uncover(position: Position) {
