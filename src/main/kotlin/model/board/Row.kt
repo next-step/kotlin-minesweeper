@@ -1,6 +1,9 @@
 package model.board
 
 class Row(cells: List<Cell>) {
+    val isLose: Boolean
+        get() = cells.any { it.isLose }
+
     var cells = cells.toList()
         private set
 

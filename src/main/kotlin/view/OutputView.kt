@@ -23,4 +23,12 @@ object OutputView {
             cell.isMine -> "*"
             else -> "${cell.contents.mineCount}"
         }
+
+    fun printResult(board: Board) {
+        if (board.isWin) {
+            println("Win Game!")
+            return
+        }
+        println("Lose Game...")
+    }
 }

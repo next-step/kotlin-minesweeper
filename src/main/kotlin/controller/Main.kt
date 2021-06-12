@@ -14,11 +14,13 @@ fun main() {
     val board = BoardFactory().create(boardSize, Positions.random(boardSize, mineCount))
 
     OutputView.printStart()
-    while (true) {
+    while (!board.isGameOver) {
         val (heightIndex, widthIndex) = InputView.readIndexes()
         val targetPosition = Position.get(heightIndex, widthIndex)
 
         board.uncover(targetPosition)
         OutputView.printBoard(board)
     }
+
+    OutputView.printResult(board)
 }
