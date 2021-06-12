@@ -4,7 +4,6 @@ import model.board.Contents.MINE
 import model.board.Contents.ZERO
 import model.board.Contents.ONE
 import model.board.State.COVERED
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

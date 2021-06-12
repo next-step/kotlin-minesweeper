@@ -2,8 +2,6 @@ package view
 
 import model.board.Board
 import model.board.Cell
-import model.board.Contents
-import model.board.State
 
 object OutputView {
     fun printStart() {
