@@ -1,5 +1,6 @@
 package controller
 
+import model.Position
 import model.Positions
 import model.board.BoardFactory
 import model.board.BoardSize
@@ -13,8 +14,15 @@ fun main() {
     val board = BoardFactory().create(boardSize, Positions.random(boardSize, mineCount))
 
     OutputView.printStart()
+    while (true) {
+        var indexes: List<Int>? = null
+        while (indexes == null) {
+            print("open: ")
+            indexes = readLine()?.split(",")?.map { it.toInt() }
+        }
+        val targetPosition = Position.get(indexes.first(), indexes.last())
 
-    board.uncoverAll()
-
-    OutputView.printBoard(board)
+        board.uncover(targetPosition)
+        OutputView.printBoard(board)
+    }
 }
