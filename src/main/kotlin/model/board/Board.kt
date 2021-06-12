@@ -22,7 +22,7 @@ class Board(rows: List<Row>) {
         get() = rows.first().width
 
     private val mineCount: Int
-        get() = MineScope((0..height), (0..width)).countMine(rows)
+        get() = MineScope((0 until height), (0 until width)).countMine(rows)
 
     private val coveredCellCount: Int
         get() = rows.sumBy { row -> row.cells.count { it.isCovered } }
