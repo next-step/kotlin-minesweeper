@@ -24,7 +24,22 @@ class Board(rows: List<Row>) {
     }
 
     fun uncover(position: Position) {
-        rows[position.heightIndex].uncover(position.widthIndex, MineScope(position, height, width).countMine(rows))
+        if (getCell(position).isUncovered) return
+
+        val mineScope = MineScope(position, height, width)
+        rows[position.heightIndex].uncover(position.widthIndex, mineScope.countMine(rows))
+
+        if (getCell(position).isZeroCell) {
+            mineScope.getPositions().forEach {
+                safeUncover(it)
+            }
+        }
+    }
+
+    private fun safeUncover(position: Position) {
+        if (getCell(position).isMine) return
+
+        uncover(position)
     }
 
     fun uncoverAll() {

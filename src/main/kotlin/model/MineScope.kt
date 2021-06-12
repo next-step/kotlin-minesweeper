@@ -11,4 +11,11 @@ data class MineScope(val heightRange: IntRange, val widthRange: IntRange) {
 
     fun countMine(rows: List<Row>): Int =
         heightRange.sumBy { heightIndex -> rows[heightIndex].countMine(widthRange) }
+
+    fun getPositions(): List<Position> =
+        heightRange.flatMap { heightIndex ->
+            widthRange.map { widthIndex ->
+                Position.get(heightIndex, widthIndex)
+            }
+        }
 }

@@ -17,8 +17,10 @@ object OutputView {
     }
 
     private fun convertChar(cell: Cell): CharSequence =
-        if (cell.state == State.COVERED) "C"
-        else if (cell.state == State.FLAGGED) "F"
-        else if (cell.isMine) "*"
-        else "${cell.contents.mineCount}"
+        when {
+            cell.isCovered -> "C"
+            cell.isFlagged -> "F"
+            cell.isMine -> "*"
+            else -> "${cell.contents.mineCount}"
+        }
 }
