@@ -2,7 +2,7 @@ package model
 
 import model.board.Row
 
-data class MineScope(val heightRange: IntRange, val widthRange: IntRange) {
+data class MineScope(private val heightRange: IntRange, private val widthRange: IntRange) {
     constructor(position: Position, height: Int, width: Int) :
         this(
             position.heightMinus(1).heightIndex..(position.heightIndex + 1).coerceAtMost(height - 1),
