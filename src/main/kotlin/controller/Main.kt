@@ -15,12 +15,8 @@ fun main() {
 
     OutputView.printStart()
     while (true) {
-        var indexes: List<Int>? = null
-        while (indexes == null) {
-            print("open: ")
-            indexes = readLine()?.split(",")?.map { it.toInt() }
-        }
-        val targetPosition = Position.get(indexes.first(), indexes.last())
+        val (heightIndex, widthIndex) = InputView.readIndexes()
+        val targetPosition = Position.get(heightIndex, widthIndex)
 
         board.uncover(targetPosition)
         OutputView.printBoard(board)
