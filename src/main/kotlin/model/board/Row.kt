@@ -1,8 +1,8 @@
 package model.board
 
 class Row(cells: List<Cell>) {
-    val isLose: Boolean
-        get() = cells.any { it.isLose }
+    val isExploded: Boolean
+        get() = cells.any { it.isExploded }
 
     var cells = cells.toList()
         private set

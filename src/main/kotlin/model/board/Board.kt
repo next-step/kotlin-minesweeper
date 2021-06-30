@@ -5,7 +5,7 @@ import model.Position
 
 class Board(rows: List<Row>) {
     private val isLose: Boolean
-        get() = rows.any { it.isLose }
+        get() = rows.any { it.isExploded }
 
     val isWin: Boolean
         get() = mineCount == coveredCellCount

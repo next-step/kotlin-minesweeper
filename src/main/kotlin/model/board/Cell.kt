@@ -1,7 +1,7 @@
 package model.board
 
 data class Cell private constructor(val contents: Contents, val state: State) {
-    val isLose: Boolean
+    val isExploded: Boolean
         get() = isUncovered && isMine
 
     val isZeroCell: Boolean
