@@ -13,8 +13,10 @@ enum class Contents(val mineCount: Int) {
     EIGHT(8);
 
     companion object {
-        fun mineCountOf(mineCount: Int): Contents? {
-            return Contents.values().find { it.mineCount == mineCount }
+        fun mineCountOf(mineCount: Int): Contents {
+            require(mineCount in ZERO.mineCount..EIGHT.mineCount)
+
+            return values().find { it.mineCount == mineCount }!!
         }
     }
 }

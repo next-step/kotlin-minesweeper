@@ -4,6 +4,15 @@ import model.MineScope
 import model.Position
 
 class Board(rows: List<Row>) {
+    private val isLose: Boolean
+        get() = rows.any { it.isExploded }
+
+    val isWin: Boolean
+        get() = mineCount == coveredCellCount
+
+    val isGameOver: Boolean
+        get() = isWin || isLose
+
     val rows = rows.toList()
 
     val height: Int
@@ -11,6 +20,12 @@ class Board(rows: List<Row>) {
 
     val width: Int
         get() = rows.first().width
+
+    private val mineCount: Int
+        get() = MineScope((0 until height), (0 until width)).countMine(rows)
+
+    private val coveredCellCount: Int
+        get() = rows.sumBy { row -> row.cells.count { it.isCovered } }
 
     init {
         require(rows.isNotEmpty()) { "빈 rows 로는 Board 를 만들 수 없습니다!" }
@@ -20,11 +35,26 @@ class Board(rows: List<Row>) {
     constructor(vararg rows: Row) : this(rows.toList())
 
     fun getCell(position: Position): Cell {
-        return rows[position.heightIndex].getCell(position.widthIndex)
+        return rows[position.heightIndex][position.widthIndex]
     }
 
     fun uncover(position: Position) {
-        rows[position.heightIndex].uncover(position.widthIndex, MineScope(position, height, width).countMine(rows))
+        if (getCell(position).isUncovered) return
+
+        val mineScope = MineScope(position, height, width)
+        rows[position.heightIndex].uncover(position.widthIndex, mineScope.countMine(rows))
+
+        if (getCell(position).isZeroCell) {
+            mineScope.getPositions().forEach {
+                safeUncover(it)
+            }
+        }
+    }
+
+    private fun safeUncover(position: Position) {
+        if (getCell(position).isMine) return
+
+        uncover(position)
     }
 
     fun uncoverAll() {

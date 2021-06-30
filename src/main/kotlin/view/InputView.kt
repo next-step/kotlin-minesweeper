@@ -23,4 +23,13 @@ object InputView {
     fun readMineCount(): Int {
         return readWhileEmpty("지뢰는 몇 개인가요?").toInt()
     }
+
+    fun readIndexes(): Pair<Int, Int> {
+        var indexes: List<Int>? = null
+        while (indexes == null) {
+            print("open: ")
+            indexes = readLine()?.split(",")?.map { it.toInt() }
+        }
+        return (indexes.first() to indexes.last())
+    }
 }
