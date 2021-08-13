@@ -1,11 +1,11 @@
 package minesweeper
 
-class Ground(height: Int) {
+class Ground(height: Int, vertical: Int) {
     init {
-        require(height > MINIMUM_HEIGHT)
+        require(height > MINIMUM_SIZE && vertical > MINIMUM_SIZE)
     }
 
     companion object {
-        const val MINIMUM_HEIGHT = 0;
+        const val MINIMUM_SIZE = 0
     }
 }

@@ -1,16 +1,18 @@
 package minesweeper
 
+import apple.laf.JRSUIConstants
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class GroundTest {
 
     @ParameterizedTest
-    @ValueSource(ints = [-10, -5, 0])
-    fun `높이가 자연수가 아닌경우 예외처리된다`(input : Int) {
+    @CsvSource(value = ["-10, 2", "0, 5", "2, 0", "5, -10"])
+    fun `높이 및 너비가 자연수가 아닌경우 예외처리된다`(height : Int, vertical: Int) {
         assertThatIllegalArgumentException().isThrownBy {
-            Ground(input)
+            Ground(height, vertical)
         }
     }
 }
