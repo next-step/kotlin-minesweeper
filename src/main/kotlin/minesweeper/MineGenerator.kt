@@ -1,7 +1,7 @@
 package minesweeper
 
 object MineGenerator {
-    fun generateMinePosition(): Position {
-        return Position(1, 2)
+    fun generateMinePosition(generator: PositionGenerator, ground: Ground): Position {
+        return Position(generator.generate(ground.height), ground.vertical)
     }
 }
