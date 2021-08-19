@@ -2,23 +2,24 @@ package minesweeper.controller
 
 import minesweeper.domain.*
 import minesweeper.view.InputView
+import minesweeper.view.Reception
 import minesweeper.view.ResultView
 
 
 fun main() {
 
-    ResultView.printToReceiptHeight()
-    val height = InputView.receiptInt()
+    InputView.printToReceiptHeight()
+    val height = Reception.receiptInt()
 
-    ResultView.printToReceiptVertical()
-    val vertical = InputView.receiptInt()
+    InputView.printToReceiptVertical()
+    val vertical = Reception.receiptInt()
 
     val marker = Marker(height, vertical)
 
-    ResultView.printToReceiptCountOfMine()
-    val countOfMine = InputView.receiptInt()
+    InputView.printToReceiptCountOfMine()
+    val countOfMine = Reception.receiptInt()
 
-    ResultView.printToStartGame()
+    InputView.printToStartGame()
 
     val mineGenerator = MineGenerator(marker)
     val positions = Positions(mineGenerator.generateMinePositions(RandomPositionGenerator(), countOfMine))
