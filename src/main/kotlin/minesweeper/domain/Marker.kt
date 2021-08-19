@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Marker(private val height: Int, private val vertical: Int) {
+class Marker(private val vertical: Int, private val height: Int) {
 
     init {
         require(height > MINIMUM_SIZE && vertical > MINIMUM_SIZE) { "가로와 세로는 자연수만 가능합니다. : $height, $vertical" }
@@ -29,6 +29,8 @@ class Marker(private val height: Int, private val vertical: Int) {
     fun generateMinePosition(generator: PositionGenerator): Position {
         return Position(generator.generate(vertical), generator.generate(height))
     }
+
+    fun size() = vertical * height
 
     companion object {
         private const val MINIMUM_SIZE = 0

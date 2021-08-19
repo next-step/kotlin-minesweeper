@@ -1,7 +1,5 @@
 package minesweeper.domain
 
-import minesweeper.domain.Marker
-import minesweeper.domain.RandomPositionGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -14,7 +12,7 @@ class MarkerTest {
     @CsvSource(value = ["-10, 2", "0, 5", "2, 0", "5, -10"])
     fun `높이 및 너비가 자연수가 아닌경우 예외처리된다`(height: Int, vertical: Int) {
         assertThatIllegalArgumentException().isThrownBy {
-            Marker(height, vertical)
+            Marker(vertical, height)
         }
     }
 
@@ -32,10 +30,17 @@ class MarkerTest {
 
     @Test
     fun `지뢰위치를_생성한다`() {
-        val marker = Marker(3, 5)
+        val marker = Marker(5, 3)
 
         val position = marker.generateMinePosition(MockPositionGenerator())
 
         assertThat(position).isEqualTo(Position(5, 3))
+    }
+
+    @Test
+    fun `땅의_전체크기를_전달한다`() {
+        val marker = Marker(4, 5)
+
+        assertThat(marker.size()).isEqualTo(20)
     }
 }
