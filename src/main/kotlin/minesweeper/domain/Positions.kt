@@ -7,7 +7,8 @@ class Positions(private val positions: HashSet<Position>) {
 
         positions.forEach {
             val column = it.column
-            val rowOfMarkers = markers[column].toMutableList()
+
+            val rowOfMarkers = markersWithMine[column].toMutableList()
             rowOfMarkers[it.row] = MINE_EXPRESSION
 
             markersWithMine[column] = rowOfMarkers
