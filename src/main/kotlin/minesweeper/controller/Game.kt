@@ -1,10 +1,12 @@
 package minesweeper.controller
 
-import minesweeper.domain.*
+import minesweeper.domain.Marker
+import minesweeper.domain.MineGenerator
+import minesweeper.domain.Positions
+import minesweeper.domain.RandomPositionGenerator
 import minesweeper.view.InputView
 import minesweeper.view.Reception
 import minesweeper.view.ResultView
-
 
 fun main() {
 

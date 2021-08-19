@@ -12,7 +12,7 @@ class RandomPositionGeneratorTest {
 
         val randomNumber = generator.generate(5)
 
-        assertThat(randomNumber).isGreaterThan(0)
+        assertThat(randomNumber).isGreaterThanOrEqualTo(0)
         assertThat(randomNumber).isLessThan(5)
     }
 }

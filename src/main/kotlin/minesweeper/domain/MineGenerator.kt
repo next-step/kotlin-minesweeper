@@ -8,6 +8,7 @@ class MineGenerator(private val marker: Marker) {
         while (positions.size < countOfMine) {
             positions.add(generateMinePosition(generator))
         }
+
         return positions
     }
 
