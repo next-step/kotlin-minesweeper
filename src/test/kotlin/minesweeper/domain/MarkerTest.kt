@@ -30,4 +30,12 @@ class MarkerTest {
         )
     }
 
+    @Test
+    fun `지뢰위치를_생성한다`() {
+        val marker = Marker(3, 5)
+
+        val position = marker.generateMinePosition(MockPositionGenerator())
+
+        assertThat(position).isEqualTo(Position(5, 3))
+    }
 }

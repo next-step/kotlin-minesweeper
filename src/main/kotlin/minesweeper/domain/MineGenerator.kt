@@ -6,13 +6,9 @@ class MineGenerator(private val marker: Marker) {
         val positions = HashSet<Position>()
 
         while (positions.size < countOfMine) {
-            positions.add(generateMinePosition(generator))
+            positions.add(marker.generateMinePosition(generator))
         }
 
         return positions
-    }
-
-    private fun generateMinePosition(generator: PositionGenerator): Position {
-        return Position(generator.generate(marker.height), generator.generate(marker.vertical))
     }
 }
