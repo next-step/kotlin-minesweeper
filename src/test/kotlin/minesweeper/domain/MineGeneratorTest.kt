@@ -3,6 +3,8 @@ package minesweeper.domain
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class MineGeneratorTest {
 
@@ -14,12 +16,13 @@ class MineGeneratorTest {
         assertThat(positions.size).isEqualTo(3)
     }
 
-    @Test
-    fun `지뢰의_개수가_땅의_크기보다_큰_경우_예외처리한다`() {
-        val mineGenerator = MineGenerator(Marker(4, 5))
+    @ParameterizedTest
+    @CsvSource(value = ["4, 5, 30", "5, 5, 25", "1, 2, 10"])
+    fun `지뢰의_개수가_땅의_크기보다_큰_경우_예외처리한다`(vertical: Int, height: Int, countOfMine: Int) {
+        val mineGenerator = MineGenerator(Marker(vertical, height))
 
         Assertions.assertThatIllegalArgumentException().isThrownBy {
-            mineGenerator.generateMinePositions(RandomPositionGenerator(), 30)
+            mineGenerator.generateMinePositions(RandomPositionGenerator(), countOfMine)
         }
     }
 }
