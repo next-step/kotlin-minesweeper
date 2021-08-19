@@ -1,8 +1,6 @@
 package minesweeper.controller
 
-import minesweeper.domain.Ground
-import minesweeper.domain.MineGenerator.generateMinePositions
-import minesweeper.domain.Position
+import minesweeper.domain.*
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -20,11 +18,11 @@ fun main() {
     ResultView.printToReceiptCountOfMine()
     val countOfMine = InputView.receiptInt()
 
-    val positions = generateMinePositions(countOfMine, ground)
-
     ResultView.printToStartGame()
 
-    val markersWithMine = generateGroundWithMine(generateDefaultGround(height, vertical), positions)
+    val mineGenerator = MineGenerator(ground)
+    val positions = Positions(mineGenerator.generateMinePositions(RandomPositionGenerator(), countOfMine))
+    val markersWithMine = positions.generateGroundWithMine(generateDefaultGround(height, vertical))
 
     printAllMineGround(markersWithMine)
 }
@@ -40,20 +38,6 @@ private fun printMineGround(markersWithMine: MutableList<List<String>>, x: Int) 
     (markersWithMine[0].indices).map { y ->
         print(markersWithMine[x][y])
     }
-}
-
-private fun generateGroundWithMine(markers: MutableList<List<String>>, positions: HashSet<Position>): MutableList<List<String>> {
-    val markersWithMine = markers.toMutableList()
-
-    positions.forEach {
-        val x = it.x
-        val xOfMarkers = markers[x].toMutableList()
-        xOfMarkers[it.y] = "* "
-
-        markersWithMine[x] = xOfMarkers
-    }
-
-    return markersWithMine
 }
 
 private fun generateDefaultGround(height: Int, vertical: Int): MutableList<List<String>> {
