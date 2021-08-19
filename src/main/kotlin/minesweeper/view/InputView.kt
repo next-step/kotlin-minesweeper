@@ -3,11 +3,11 @@ package minesweeper.view
 object InputView {
 
     fun printToReceiptVertical() {
-        println("높이를 입력하세요.")
+        println("너비를 입력하세요.")
     }
 
     fun printToReceiptHeight() {
-        println("세로를 입력하세요.")
+        println("높이를 입력하세요.")
     }
 
     fun printToReceiptCountOfMine() {

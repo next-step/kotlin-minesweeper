@@ -16,7 +16,7 @@ fun main() {
     InputView.printToReceiptVertical()
     val vertical = Reception.receiptInt()
 
-    val marker = Marker(height, vertical)
+    val marker = Marker(vertical, height)
 
     InputView.printToReceiptCountOfMine()
     val countOfMine = Reception.receiptInt()
