@@ -10,9 +10,9 @@ class MineGeneratorTest {
 
     @Test
     fun `지뢰위치를_생성한다`() {
-        val position = MineGenerator.generateMinePosition(RandomPositionGenerator(), Ground(5, 5))
+        val mineGenerator = MineGenerator(Ground(5, 5))
+        val positions = mineGenerator.generateMinePositions(RandomPositionGenerator(), 3)
 
-        assertThat(position.x).isNotNull()
-        assertThat(position.y).isNotNull()
+        assertThat(positions.size).isEqualTo(3)
     }
 }
