@@ -24,18 +24,5 @@ fun main() {
     val positions = Positions(mineGenerator.generateMinePositions(RandomPositionGenerator(), countOfMine))
     val markersWithMine = positions.generateGroundWithMine(marker.generateAllGround())
 
-    printAllMineGround(markersWithMine)
-}
-
-private fun printAllMineGround(markersWithMine: MutableList<List<String>>) {
-    (markersWithMine.indices).map { x ->
-        printMineGround(markersWithMine, x)
-        println()
-    }
-}
-
-private fun printMineGround(markersWithMine: MutableList<List<String>>, x: Int) {
-    (markersWithMine[0].indices).map { y ->
-        print(markersWithMine[x][y])
-    }
+    ResultView.printAllMineGround(markersWithMine)
 }
