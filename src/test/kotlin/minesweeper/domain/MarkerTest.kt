@@ -1,6 +1,7 @@
-package minesweeper
+package minesweeper.domain
 
 import minesweeper.domain.Marker
+import minesweeper.domain.RandomPositionGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -28,4 +29,5 @@ class MarkerTest {
             listOf("C ", "C ")
         )
     }
+
 }

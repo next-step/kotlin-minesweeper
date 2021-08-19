@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 import minesweeper.domain.RandomPositionGenerator
 import org.assertj.core.api.Assertions.assertThat

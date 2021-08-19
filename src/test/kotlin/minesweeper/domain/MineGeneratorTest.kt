@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 import minesweeper.domain.Marker
 import minesweeper.domain.MineGenerator
