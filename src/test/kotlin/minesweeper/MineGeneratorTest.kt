@@ -1,5 +1,8 @@
 package minesweeper
 
+import minesweeper.domain.Ground
+import minesweeper.domain.MineGenerator
+import minesweeper.domain.RandomPositionGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
