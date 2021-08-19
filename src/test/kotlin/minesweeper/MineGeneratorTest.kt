@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.Ground
+import minesweeper.domain.Marker
 import minesweeper.domain.MineGenerator
 import minesweeper.domain.RandomPositionGenerator
 import org.assertj.core.api.Assertions.assertThat
@@ -10,7 +10,7 @@ class MineGeneratorTest {
 
     @Test
     fun `지뢰위치를_생성한다`() {
-        val mineGenerator = MineGenerator(Ground(5, 5))
+        val mineGenerator = MineGenerator(Marker(5, 5))
         val positions = mineGenerator.generateMinePositions(RandomPositionGenerator(), 3)
 
         assertThat(positions.size).isEqualTo(3)

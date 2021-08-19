@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineGenerator(private val ground: Ground) {
+class MineGenerator(private val marker: Marker) {
 
     fun generateMinePositions(generator: PositionGenerator, countOfMine: Int): HashSet<Position> {
         val positions = HashSet<Position>()
@@ -12,6 +12,6 @@ class MineGenerator(private val ground: Ground) {
     }
 
     private fun generateMinePosition(generator: PositionGenerator): Position {
-        return Position(generator.generate(ground.height), generator.generate(ground.vertical))
+        return Position(generator.generate(marker.height), generator.generate(marker.vertical))
     }
 }

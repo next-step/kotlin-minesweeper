@@ -13,16 +13,16 @@ fun main() {
     ResultView.printToReceiptVertical()
     val vertical = InputView.receiptInt()
 
-    val ground = Ground(height, vertical)
+    val marker = Marker(height, vertical)
 
     ResultView.printToReceiptCountOfMine()
     val countOfMine = InputView.receiptInt()
 
     ResultView.printToStartGame()
 
-    val mineGenerator = MineGenerator(ground)
+    val mineGenerator = MineGenerator(marker)
     val positions = Positions(mineGenerator.generateMinePositions(RandomPositionGenerator(), countOfMine))
-    val markersWithMine = positions.generateGroundWithMine(generateDefaultGround(height, vertical))
+    val markersWithMine = positions.generateGroundWithMine(marker.generateAllGround())
 
     printAllMineGround(markersWithMine)
 }
@@ -38,19 +38,4 @@ private fun printMineGround(markersWithMine: MutableList<List<String>>, x: Int) 
     (markersWithMine[0].indices).map { y ->
         print(markersWithMine[x][y])
     }
-}
-
-private fun generateDefaultGround(height: Int, vertical: Int): MutableList<List<String>> {
-    val markers = mutableListOf<List<String>>()
-
-    (0 until height).map {
-        val marker = mutableListOf<String>()
-        (0 until vertical).map {
-            marker.add("C ")
-        }
-
-        markers.add(marker)
-    }
-
-    return markers
 }
