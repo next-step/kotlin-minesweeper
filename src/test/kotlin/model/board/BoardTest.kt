@@ -55,6 +55,20 @@ internal class BoardTest {
     }
 
     @ParameterizedTest
+    @MethodSource("uncoverPositionsProvider")
+    fun `zero cell 을 open 하면 인접한 mine 이 아닌 셀 모두 open`(board: Board, position: Position, shouldOpen: List<Position>, shouldNotOpen: List<Position>) {
+        board.uncover(position)
+
+        shouldOpen.forEach {
+            assertThat(board.getCell(it).isUncovered).isTrue()
+        }
+
+        shouldNotOpen.forEach {
+            assertThat(board.getCell(it).isCovered).isTrue()
+        }
+    }
+
+    @ParameterizedTest
     @MethodSource("uncoverAllProvider")
     fun `uncoverAll 은 전체 cell 오픈`(board: Board) {
         board.uncoverAll()
@@ -106,6 +120,39 @@ internal class BoardTest {
                         board,
                         Position.get(1, 1),
                         TWO
+                    )
+                }
+            )
+        }
+
+        @JvmStatic
+        fun uncoverPositionsProvider(): List<Arguments> {
+            return listOf(
+                Arguments {
+                    arrayOf(
+                        board,
+                        Position.get(0, 3),
+                        listOf(
+                            Position.get(0, 2),
+                            Position.get(1, 1)
+                        ),
+                        listOf(
+                            Position.get(1, 0),
+                            Position.get(0, 0),
+                            Position.get(2, 3)
+                        )
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        board,
+                        Position.get(3, 1),
+                        listOf(
+                            Position.get(3, 1)
+                        ),
+                        listOf(
+                            Position.get(3, 0)
+                        )
                     )
                 }
             )

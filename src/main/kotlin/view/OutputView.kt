@@ -1,7 +1,7 @@
 package view
 
 import model.board.Board
-import model.board.Contents
+import model.board.Cell
 
 object OutputView {
     fun printStart() {
@@ -10,7 +10,23 @@ object OutputView {
 
     fun printBoard(board: Board) {
         board.rows.forEach { row ->
-            println(row.cells.joinToString(separator = " ") { if (it.contents == Contents.MINE) "*" else "${it.contents.mineCount}" })
+            println(row.cells.joinToString(separator = " ") { convertChar(it) })
         }
+    }
+
+    private fun convertChar(cell: Cell): CharSequence =
+        when {
+            cell.isCovered -> "C"
+            cell.isFlagged -> "F"
+            cell.isMine -> "*"
+            else -> "${cell.contents.mineCount}"
+        }
+
+    fun printResult(board: Board) {
+        if (board.isWin) {
+            println("Win Game!")
+            return
+        }
+        println("Lose Game...")
     }
 }
