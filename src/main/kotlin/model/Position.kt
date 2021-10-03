@@ -15,7 +15,6 @@ data class Position private constructor(val heightIndex: Int, val widthIndex: In
 
     companion object {
         private const val MINIMUM = 0
-
         private const val INITIAL_SIZE = 100
 
         private val POSITIONS = List(INITIAL_SIZE) { it }.flatMap { index -> List(INITIAL_SIZE) { Position(index, it) } }.toSet()

@@ -18,8 +18,6 @@ class Row(cells: List<Cell>) {
 
     operator fun get(widthIndex: Int): Cell = cells[widthIndex]
 
-    private fun isMine(widthIndex: Int): Boolean = cells[widthIndex].isMine
-
     fun uncover(widthIndex: Int, mineCount: Int) {
         cells = cells.toMutableList().apply {
             this[widthIndex] = this[widthIndex].asUncovered(mineCount)
@@ -28,4 +26,6 @@ class Row(cells: List<Cell>) {
 
     fun countMine(widthRange: IntRange): Int =
         widthRange.sumBy { widthIndex -> if (isMine(widthIndex)) 1 else 0 }
+
+    private fun isMine(widthIndex: Int): Boolean = cells[widthIndex].isMine
 }

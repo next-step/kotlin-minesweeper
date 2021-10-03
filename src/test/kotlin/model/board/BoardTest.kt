@@ -23,10 +23,10 @@ internal class BoardTest {
         )
 
         val board = Board(rows)
-        assertThat(board.height).isEqualTo(rows.size)
+        assertThat(board.rows.size).isEqualTo(rows.size)
 
         rows.add(Row(Cell.get(MINE, COVERED)))
-        assertThat(board.height).isNotEqualTo(rows.size)
+        assertThat(board.rows.size).isNotEqualTo(rows.size)
     }
 
     @Test
@@ -51,7 +51,7 @@ internal class BoardTest {
     @MethodSource("uncoverProvider")
     fun `특정 위치 cell 을 open 할 때 contents 결정`(board: Board, position: Position, contents: Contents) {
         board.uncover(position)
-        assertThat(board.getCell(position).contents).isEqualTo(contents)
+        assertThat(board.rows[position.heightIndex][position.widthIndex].contents).isEqualTo(contents)
     }
 
     @ParameterizedTest
@@ -60,22 +60,11 @@ internal class BoardTest {
         board.uncover(position)
 
         shouldOpen.forEach {
-            assertThat(board.getCell(it).isUncovered).isTrue()
+            assertThat(board.rows[it.heightIndex][it.widthIndex].isUncovered).isTrue()
         }
 
         shouldNotOpen.forEach {
-            assertThat(board.getCell(it).isCovered).isTrue()
-        }
-    }
-
-    @ParameterizedTest
-    @MethodSource("uncoverAllProvider")
-    fun `uncoverAll 은 전체 cell 오픈`(board: Board) {
-        board.uncoverAll()
-        board.rows.forEach { row ->
-            row.cells.forEach {
-                assertThat(it.state).isEqualTo(State.UNCOVERED)
-            }
+            assertThat(board.rows[it.heightIndex][it.widthIndex].isCovered).isTrue()
         }
     }
 
@@ -153,17 +142,6 @@ internal class BoardTest {
                         listOf(
                             Position.get(3, 0)
                         )
-                    )
-                }
-            )
-        }
-
-        @JvmStatic
-        fun uncoverAllProvider(): List<Arguments> {
-            return listOf(
-                Arguments {
-                    arrayOf(
-                        board
                     )
                 }
             )

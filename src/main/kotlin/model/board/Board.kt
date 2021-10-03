@@ -4,8 +4,7 @@ import model.MineScope
 import model.Position
 
 class Board(rows: List<Row>) {
-    private val isLose: Boolean
-        get() = rows.any { it.isExploded }
+    val rows = rows.toList()
 
     val isWin: Boolean
         get() = mineCount == coveredCellCount
@@ -13,12 +12,13 @@ class Board(rows: List<Row>) {
     val isGameOver: Boolean
         get() = isWin || isLose
 
-    val rows = rows.toList()
+    private val isLose: Boolean
+        get() = rows.any { it.isExploded }
 
-    val height: Int
+    private val height: Int
         get() = rows.size
 
-    val width: Int
+    private val width: Int
         get() = rows.first().width
 
     private val mineCount: Int
@@ -33,10 +33,6 @@ class Board(rows: List<Row>) {
     }
 
     constructor(vararg rows: Row) : this(rows.toList())
-
-    fun getCell(position: Position): Cell {
-        return rows[position.heightIndex][position.widthIndex]
-    }
 
     fun uncover(position: Position) {
         if (getCell(position).isUncovered) return
@@ -57,11 +53,7 @@ class Board(rows: List<Row>) {
         uncover(position)
     }
 
-    fun uncoverAll() {
-        (0 until height).forEach { heightIndex ->
-            (0 until width).forEach { widthIndex ->
-                uncover(Position.get(heightIndex, widthIndex))
-            }
-        }
+    private fun getCell(position: Position): Cell {
+        return rows[position.heightIndex][position.widthIndex]
     }
 }
