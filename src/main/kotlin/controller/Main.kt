@@ -7,9 +7,9 @@ import view.InputView
 import view.OutputView
 
 fun main() {
-    val boardFactory = BoardFactory(RandomMineStrategy())
     val height = InputView.readHeight()
     val width = InputView.readWidth()
+    val boardFactory = BoardFactory(RandomMineStrategy())
     val board = boardFactory.build(height, width, InputView.readMineCount())
 
     OutputView.printStart()
