@@ -1,26 +1,27 @@
 package controller
 
+import model.BoardFactory
 import model.Position
-import model.Positions
-import model.board.BoardFactory
-import model.board.BoardSize
+import model.RandomMineStrategy
 import view.InputView
 import view.OutputView
 
 fun main() {
-    val boardSize = BoardSize(InputView.readHeight(), InputView.readWidth())
-    val mineCount = InputView.readMineCount()
-
-    val board = BoardFactory().create(boardSize, Positions.random(boardSize, mineCount))
+    val height = InputView.readHeight()
+    val width = InputView.readWidth()
+    val boardFactory = BoardFactory(RandomMineStrategy())
+    val board = boardFactory.build(height, width, InputView.readMineCount())
 
     OutputView.printStart()
-    while (!board.isGameOver) {
-        val (heightIndex, widthIndex) = InputView.readIndexes()
-        val targetPosition = Position.get(heightIndex, widthIndex)
-
-        board.uncover(targetPosition)
-        OutputView.printBoard(board)
+    while (!board.over()) {
+        val position = Position(InputView.readPosition(), maxHeight = height - 1, maxWidth = width - 1)
+        board.open(position)
+        OutputView.printBoard(board.asDTO())
     }
-
-    OutputView.printResult(board)
+    if (board.winning()) {
+        OutputView.printWin()
+    }
+    if (board.lost()) {
+        OutputView.printLose()
+    }
 }

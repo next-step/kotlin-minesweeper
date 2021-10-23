@@ -1,17 +1,6 @@
 package view
 
 object InputView {
-    private fun readWhileEmpty(message: String): String {
-        println(message)
-
-        var input: String? = null
-        while (input.isNullOrBlank()) {
-            input = readLine()
-        }
-
-        return input
-    }
-
     fun readHeight(): Int {
         return readWhileEmpty("높이를 입력하세요.").toInt()
     }
@@ -24,12 +13,20 @@ object InputView {
         return readWhileEmpty("지뢰는 몇 개인가요?").toInt()
     }
 
-    fun readIndexes(): Pair<Int, Int> {
-        var indexes: List<Int>? = null
-        while (indexes == null) {
-            print("open: ")
-            indexes = readLine()?.split(",")?.map { it.toInt() }
+    private fun readWhileEmpty(message: String): String {
+        println(message)
+
+        var raw = readLine()
+        while (raw.isNullOrEmpty()) {
+            raw = readLine()
         }
-        return (indexes.first() to indexes.last())
+        return raw
+    }
+
+    fun readPosition(): Pair<Int, Int> {
+        return readWhileEmpty("open : ").split(",")
+            .map { it.trim().toInt() - 1 }
+            .zipWithNext()
+            .first()
     }
 }
