@@ -2,5 +2,9 @@ package model
 
 enum class State {
     OPEN,
-    CLOSE
+    CLOSE;
+
+    fun closed(): Boolean {
+        return this == CLOSE
+    }
 }

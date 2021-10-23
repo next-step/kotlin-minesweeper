@@ -1,7 +1,5 @@
 package model
 
-import model.position.Position
-import model.position.PositivePosition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,9 +10,9 @@ internal class PositionTest {
     @Test
     fun `width, height, maxWidth, maxHeight 가 같으면 같은 Position 이다`() {
         assertThat(
-            PositivePosition(IndexWithMax(1, 1), IndexWithMax(2, 2))
+            Position(IndexWithMax(1, 1), IndexWithMax(2, 2))
         ).isEqualTo(
-            PositivePosition(IndexWithMax(1, 1), IndexWithMax(2, 2))
+            Position(IndexWithMax(1, 1), IndexWithMax(2, 2))
         )
     }
 
@@ -32,40 +30,40 @@ internal class PositionTest {
             return listOf(
                 Arguments {
                     arrayOf(
-                        PositivePosition(
+                        Position(
                             IndexWithMax(1, 2),
                             IndexWithMax(1, 2)
                         ),
                         listOf(
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(0, 2),
                                 IndexWithMax(0, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(0, 2),
                                 IndexWithMax(1, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(0, 2),
                                 IndexWithMax(2, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(0, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(2, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(2, 2),
                                 IndexWithMax(0, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(2, 2),
                                 IndexWithMax(1, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(2, 2),
                                 IndexWithMax(2, 2)
                             )
@@ -74,20 +72,20 @@ internal class PositionTest {
                 },
                 Arguments {
                     arrayOf(
-                        PositivePosition(
+                        Position(
                             IndexWithMax(2, 2),
                             IndexWithMax(2, 2)
                         ),
                         listOf(
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(2, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(2, 2),
                                 IndexWithMax(1, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(1, 2)
                             )
@@ -96,28 +94,28 @@ internal class PositionTest {
                 },
                 Arguments {
                     arrayOf(
-                        PositivePosition(
+                        Position(
                             IndexWithMax(0, 2),
                             IndexWithMax(1, 2)
                         ),
                         listOf(
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(0, 2),
                                 IndexWithMax(0, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(0, 2),
                                 IndexWithMax(2, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(0, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(2, 2)
                             ),
-                            PositivePosition(
+                            Position(
                                 IndexWithMax(1, 2),
                                 IndexWithMax(1, 2)
                             )
