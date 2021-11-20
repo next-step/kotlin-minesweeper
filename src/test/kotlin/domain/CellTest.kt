@@ -49,11 +49,12 @@ internal class CellTest {
     @DisplayName("Cell 의 mineNumber 를 증가시킬 수 있다.")
     @Test
     fun increaseMineNumber() {
-        cell.increaseMineNumber()
+        val expectedNumber = 7
+        repeat(expectedNumber) { cell.increaseMineNumber() }
         assertAll(
             { assertThat(cell.isOpen()).isFalse },
             { assertThat(cell.isMine()).isFalse },
-            { assertThat(cell.mineNumber()).isEqualTo(1) }
+            { assertThat(cell.mineNumber()).isEqualTo(expectedNumber) }
         )
     }
 }
