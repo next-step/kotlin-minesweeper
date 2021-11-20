@@ -18,7 +18,7 @@ internal class MineLayerTest {
     fun layMines() {
         val mineLayer = MineLayer(fixture.board, fixture.selector)
         mineLayer.layMines(Fixture.mineNumber, Fixture.position)
-        assertThat(fixture.renderedBoard()).isEqualTo(
+        assertThat(fixture.boardMineNumbers()).isEqualTo(
             """
                 0 1 2 * 2 1 1 * 1 0
                 0 1 * 3 * 1 1 1 1 0
