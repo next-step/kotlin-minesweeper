@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class CellTest {
+internal class CellTest {
     private lateinit var cell: Cell
 
     @BeforeEach

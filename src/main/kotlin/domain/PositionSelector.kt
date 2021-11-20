@@ -1,6 +1,6 @@
 package domain
 
-sealed class PositionSelector(private val height: Int, private val width: Int) {
+abstract class PositionSelector(private val height: Int, private val width: Int) {
     abstract fun selectMinePositions(number: Int, excludedPosition: Position): List<Position>
 
     fun adjacentPositions(position: Position): List<Position> {
