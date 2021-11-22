@@ -17,13 +17,13 @@ object Controller {
         val mineLayer = MineLayer(board, selector)
         val mineSweeper = MineSweeper(board, selector)
         layMines(mineLayer, mineSweeper)
-        sweepMines(board, mineSweeper)
+        printBoard(board)
     }
 
     private fun layMines(mineLayer: MineLayer, mineSweeper: MineSweeper) {
         val mineNumber = askMineNumber()
         printStart()
-        val position = askPosition()
+        val position = Position()
         mineLayer.layMines(mineNumber, position)
         mineSweeper.sweepMine(position)
     }
