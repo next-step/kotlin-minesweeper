@@ -8,7 +8,7 @@ data class RowDto private constructor(private val cells: List<CellDto>) : List<C
     fun draw(): String = joinToString(CELL_SEPARATOR) { it.draw() }
     fun mineNumbers(): String = joinToString(CELL_SEPARATOR) { it.mineNumber() }
     fun render(): String = joinToString(CELL_SEPARATOR) { it.render() }
-    override fun toString(): String = "${render()}    ${mineNumbers()}"
+    override fun toString(): String = draw()
 
     companion object {
         private const val CELL_SEPARATOR = " "
