@@ -11,6 +11,6 @@ data class RowDto private constructor(private val cells: List<CellDto>) : List<C
     override fun toString(): String = draw()
 
     companion object {
-        const val CELL_SEPARATOR = " "
+        private const val CELL_SEPARATOR = " "
     }
 }

@@ -11,6 +11,6 @@ data class BoardDto private constructor(private val rows: List<RowDto>) : List<R
     override fun toString(): String = joinToString(ROW_SEPARATOR)
 
     companion object {
-        const val ROW_SEPARATOR = "\n"
+        private const val ROW_SEPARATOR = "\n"
     }
 }

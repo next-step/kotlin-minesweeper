@@ -9,7 +9,7 @@ value class CellDto(private val cell: Cell) {
     fun render(): String = if (!cell.isOpen() || cell.isMine()) CLOSED else mineNumber()
 
     companion object {
-        const val MINE = "*"
-        const val CLOSED = "C"
+        private const val MINE = "*"
+        private const val CLOSED = "C"
     }
 }
