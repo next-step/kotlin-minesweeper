@@ -13,8 +13,8 @@ class Fixture {
     fun renderBoard(): String = BoardDto(board).render()
 
     companion object {
-        const val height = 10
-        const val width = 10
+        private const val height = 10
+        private const val width = 10
         val mineNumber = MineNumber(10)
         val position = Position()
         val minePositions = listOf(
