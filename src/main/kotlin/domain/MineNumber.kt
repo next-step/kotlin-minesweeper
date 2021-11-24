@@ -3,9 +3,9 @@ package domain
 import exception.IllegalMineNumberException
 
 @JvmInline
-value class MineNumber(val number: Int = DEFAULT_NUMBER) {
+value class MineNumber(val number: Int = MIN) {
     init {
-        if (number < DEFAULT_NUMBER) {
+        if (number < MIN) {
             throw IllegalMineNumberException()
         }
     }
@@ -13,7 +13,7 @@ value class MineNumber(val number: Int = DEFAULT_NUMBER) {
     operator fun inc() = MineNumber(number + ONE)
 
     companion object {
-        private const val DEFAULT_NUMBER = 0
+        private const val MIN = 0
         private const val ONE = 1
     }
 }
