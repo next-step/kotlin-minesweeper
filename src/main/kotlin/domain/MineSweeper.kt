@@ -13,15 +13,20 @@ class MineSweeper(
     }
 
     private fun open(position: Position, visited: Set<Position>) {
-        val positions = selector
+        selector
             .adjacentPositions(position)
             .filterNot { getCell(it).isOpen() || visited.contains(it) }
-        positions
-            .forEach { getCell(it).open() }
-        positions
-            .filter { getCell(it).isBlank() }
-            .map { it to visited + setOf(it) }
-            .forEach { (position, visited) -> open(position, visited) }
+            .map {
+                getCell(it).open()
+                it
+            }.filter {
+                getCell(it).isBlank()
+            }.forEach {
+                open(
+                    position = it,
+                    visited = visited + setOf(it)
+                )
+            }
     }
 
     private fun getCell(position: Position): Cell = board.getCell(position)
