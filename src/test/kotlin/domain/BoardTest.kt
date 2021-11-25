@@ -15,22 +15,22 @@ internal class BoardTest {
 
     @BeforeEach
     fun setUp() {
-        board = Board(height, width)
+        board = Board(HEIGHT, WIDTH)
     }
 
     @DisplayName("board 의 height 와 width 정보를 알 수 있어야 한다.")
     @Test
     fun heightWidth() {
         assertAll(
-            { assertThat(board.height()).isEqualTo(height) },
-            { assertThat(board.width()).isEqualTo(width) }
+            { assertThat(board.height()).isEqualTo(HEIGHT) },
+            { assertThat(board.width()).isEqualTo(WIDTH) }
         )
     }
 
     @DisplayName("cell 들이 open 되었는지 여부를 알 수 있어야 한다.")
     @Test
     fun isAllOpen() {
-        val positions = listOf(position, Position(height, width))
+        val positions = listOf(position, Position(HEIGHT, WIDTH))
         assertThat(board.getCell(positions[0]).isOpen()).isFalse
         assertThat(board.getCell(positions[1]).isOpen()).isFalse
         assertThat(board.isAllOpen()).isFalse
@@ -48,14 +48,14 @@ internal class BoardTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9])
     fun illegalPosition(number: Int) {
-        val position = Position(height + number, width + number)
+        val position = Position(HEIGHT + number, WIDTH + number)
         assertThatExceptionOfType(IllegalPositionException::class.java)
             .isThrownBy { board.getCell(position) }
     }
 
     companion object {
-        private const val height = 1
-        private const val width = 2
+        private const val HEIGHT = 1
+        private const val WIDTH = 2
         private val position = Position()
     }
 }

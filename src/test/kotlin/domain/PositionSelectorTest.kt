@@ -61,21 +61,21 @@ internal class PositionSelectorTest {
     @DisplayName("오른쪽 아래 끝점 선택시, 인접한 좌표들을 선택할 수 있어야 한다.")
     @Test
     fun adjacentRightBottom() {
-        val position = Position(height, width)
+        val position = Position(HEIGHT, WIDTH)
         val expectedPositions = listOf(
-            Position(height - 1, width - 1),
-            Position(height - 1, width),
-            Position(height, width - 1),
-            Position(height, width)
+            Position(HEIGHT - 1, WIDTH - 1),
+            Position(HEIGHT - 1, WIDTH),
+            Position(HEIGHT, WIDTH - 1),
+            Position(HEIGHT, WIDTH)
         )
         assertThat(selector.adjacentPositions(position))
             .isEqualTo(expectedPositions)
     }
 
     companion object {
-        private const val height = 5
-        private const val width = 6
-        private val selector = object : PositionSelector(height, width) {
+        private const val HEIGHT = 5
+        private const val WIDTH = 6
+        private val selector = object : PositionSelector(HEIGHT, WIDTH) {
             override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position): List<Position> =
                 emptyList()
         }

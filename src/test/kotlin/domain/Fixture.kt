@@ -3,10 +3,10 @@ package domain
 import dto.BoardDto
 
 class Fixture {
-    private val board = Board(height, width)
+    private val board = Board(HEIGHT, WIDTH)
     operator fun component1(): Board = board
     operator fun component3(): MineNumber = MineNumber(minePositions.size)
-    operator fun component2(): PositionSelector = object : PositionSelector(height, width) {
+    operator fun component2(): PositionSelector = object : PositionSelector(HEIGHT, WIDTH) {
         override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position) = minePositions
     }
 
@@ -15,6 +15,8 @@ class Fixture {
     fun renderBoard(): String = BoardDto(board).render()
 
     companion object {
+        private const val HEIGHT = 10
+        private const val WIDTH = 10
         val minePositions = listOf(
             Position(1, 4),
             Position(1, 8),
@@ -27,7 +29,5 @@ class Fixture {
             Position(8, 7),
             Position(8, 10)
         )
-        private const val height = 10
-        private const val width = 10
     }
 }
