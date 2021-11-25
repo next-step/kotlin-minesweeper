@@ -11,7 +11,7 @@ data class Board(private val rows: List<Row>) : List<Row> by rows {
 
     fun height(): Int = rows.size
 
-    fun width(): Int = rows[ZERO].size
+    fun width(): Int = rows[FIRST_ROW].size
 
     fun isAllOpen(): Boolean = flatten().all { it.isOpen() || it.isMine() }
 
@@ -20,11 +20,11 @@ data class Board(private val rows: List<Row>) : List<Row> by rows {
         if (rowIndex > height() || columnIndex > width()) {
             throw IllegalPositionException()
         }
-        return rows[rowIndex - ONE][columnIndex - ONE]
+        return rows[rowIndex - OFFSET][columnIndex - OFFSET]
     }
 
     companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
+        private const val FIRST_ROW = 0
+        private const val OFFSET = 1
     }
 }

@@ -10,12 +10,12 @@ value class MineNumber(val number: Int = MIN) {
         }
     }
 
-    operator fun inc() = MineNumber(number + ONE)
+    operator fun inc() = MineNumber(number + INCREMENT)
 
     fun isBlank(): Boolean = number == MIN
 
     companion object {
         private const val MIN = 0
-        private const val ONE = 1
+        private const val INCREMENT = 1
     }
 }
