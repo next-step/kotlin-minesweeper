@@ -15,13 +15,14 @@ class MineSweeper(
     private fun open(position: Position, visited: Set<Position>) {
         selector
             .adjacentPositions(position)
+            .asSequence()
             .filterNot { getCell(it).isOpen() || visited.contains(it) }
             .map {
                 getCell(it).open()
                 it
-            }.filter {
-                getCell(it).isBlank()
-            }.forEach {
+            }.filter { getCell(it).isBlank() }
+            .toList()
+            .forEach {
                 open(
                     position = it,
                     visited = visited + setOf(it)
