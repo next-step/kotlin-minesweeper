@@ -31,16 +31,16 @@ internal class BoardTest {
     @Test
     fun isAllOpen() {
         val positions = listOf(position, Position(HEIGHT, WIDTH))
-        assertThat(board.getCell(positions[0]).isOpen()).isFalse
-        assertThat(board.getCell(positions[1]).isOpen()).isFalse
+        assertThat(getCell(positions[0]).isOpen()).isFalse
+        assertThat(getCell(positions[1]).isOpen()).isFalse
         assertThat(board.isAllOpen()).isFalse
-        board.getCell(positions[0]).open()
-        assertThat(board.getCell(positions[0]).isOpen()).isTrue
-        assertThat(board.getCell(positions[1]).isOpen()).isFalse
+        getCell(positions[0]).open()
+        assertThat(getCell(positions[0]).isOpen()).isTrue
+        assertThat(getCell(positions[1]).isOpen()).isFalse
         assertThat(board.isAllOpen()).isFalse
-        board.getCell(positions[1]).open()
-        assertThat(board.getCell(positions[0]).isOpen()).isTrue
-        assertThat(board.getCell(positions[1]).isOpen()).isTrue
+        getCell(positions[1]).open()
+        assertThat(getCell(positions[0]).isOpen()).isTrue
+        assertThat(getCell(positions[1]).isOpen()).isTrue
         assertThat(board.isAllOpen()).isTrue
     }
 
@@ -50,8 +50,10 @@ internal class BoardTest {
     fun illegalPosition(number: Int) {
         val position = Position(HEIGHT + number, WIDTH + number)
         assertThatExceptionOfType(IllegalPositionException::class.java)
-            .isThrownBy { board.getCell(position) }
+            .isThrownBy { getCell(position) }
     }
+
+    private fun getCell(position: Position): Cell = board.getCell(position)
 
     companion object {
         private const val HEIGHT = 1

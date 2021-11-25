@@ -4,6 +4,9 @@ class RandomPositionSelector(board: Board) : PositionSelector(board.height(), bo
     override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position): List<Position> {
         val positions = allPositions().toMutableList()
         positions.remove(excludedPosition)
-        return (1..mineNumber.number).map { positions.removeAt(positions.indices.random()) }
+        return (1..mineNumber.number)
+            .map {
+                positions.removeAt(positions.indices.random())
+            }
     }
 }

@@ -19,7 +19,9 @@ object InputView {
     fun askPosition(): Pair<Int, Int> {
         print("\nopen: ")
         val delimiter = ","
-        val positions = readInput().split(delimiter).map { it.toInt() }
+        val positions = readInput()
+            .split(delimiter)
+            .map { it.toInt() }
         require(positions.size == 2) { "좌표는 ${delimiter}로 구별되는 2개의 숫자를 입력해야 합니다." }
         return positions[0] to positions[1]
     }

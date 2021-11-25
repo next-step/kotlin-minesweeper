@@ -2,21 +2,30 @@ package domain
 
 class Fixture {
     private val board = Board(HEIGHT, WIDTH)
+
     operator fun component1(): Board = board
+
     operator fun component3(): MineNumber = MineNumber(minePositions.size)
+
     operator fun component2(): PositionSelector = object : PositionSelector(HEIGHT, WIDTH) {
         override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position) = minePositions
     }
 
     fun drawnBoard(): String = toString { cell -> drawnCell(cell) }
+
     fun mineNumbers(): String = toString { cell -> mineNumber(cell) }
+
     fun renderedBoard(): String = toString { cell -> renderedCell(cell) }
-    private fun toString(toString: (Cell) -> String): String = board.joinToString(ROW_SEPARATOR) {
-        it.joinToString(CELL_SEPARATOR) { cell -> toString(cell) }
-    }
+
+    private fun toString(toString: (Cell) -> String): String = board
+        .joinToString(ROW_SEPARATOR) {
+            it.joinToString(CELL_SEPARATOR) { cell -> toString(cell) }
+        }
 
     private fun drawnCell(cell: Cell): String = if (cell.isMine()) MINE else CLOSED
+
     private fun mineNumber(cell: Cell): String = if (cell.isMine()) MINE else cell.mineNumber().toString()
+
     private fun renderedCell(cell: Cell): String = if (!cell.isOpen() || cell.isMine()) CLOSED else mineNumber(cell)
 
     companion object {
