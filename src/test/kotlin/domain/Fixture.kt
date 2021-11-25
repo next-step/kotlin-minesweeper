@@ -29,6 +29,12 @@ class Fixture {
     private fun renderedCell(cell: Cell): String = if (!cell.isOpen() || cell.isMine()) CLOSED else mineNumber(cell)
 
     companion object {
+        private const val HEIGHT = 10
+        private const val WIDTH = 10
+        private const val MINE = "*"
+        private const val CLOSED = "C"
+        private const val CELL_SEPARATOR = " "
+        private const val ROW_SEPARATOR = "\n"
         val minePositions = listOf(
             Position(1, 4),
             Position(1, 8),
@@ -41,11 +47,5 @@ class Fixture {
             Position(8, 7),
             Position(8, 10)
         )
-        private const val HEIGHT = 10
-        private const val WIDTH = 10
-        private const val MINE = "*"
-        private const val CLOSED = "C"
-        private const val CELL_SEPARATOR = " "
-        private const val ROW_SEPARATOR = "\n"
     }
 }
