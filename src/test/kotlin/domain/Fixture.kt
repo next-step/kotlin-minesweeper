@@ -22,11 +22,11 @@ class Fixture {
             it.joinToString(CELL_SEPARATOR) { cell -> cellToString(cell) }
         }
 
-    private fun drawnCell(cell: Cell): String = if (cell.isMine()) MINE else CLOSED
+    private fun drawnCell(cell: Cell): String = if (cell.hasMine()) MINE else CLOSED
 
-    private fun mineNumber(cell: Cell): String = if (cell.isMine()) MINE else cell.mineNumber().toString()
+    private fun mineNumber(cell: Cell): String = if (cell.hasMine()) MINE else cell.mineNumber().toString()
 
-    private fun renderedCell(cell: Cell): String = if (!cell.isOpen() || cell.isMine()) CLOSED else mineNumber(cell)
+    private fun renderedCell(cell: Cell): String = if (!cell.isOpen() || cell.hasMine()) CLOSED else mineNumber(cell)
 
     companion object {
         private const val HEIGHT = 10

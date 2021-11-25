@@ -12,7 +12,7 @@ internal class CellStateTest {
         val cellState = CellState()
         assertAll(
             { assertThat(cellState.isOpen()).isFalse },
-            { assertThat(cellState.isMine()).isFalse }
+            { assertThat(cellState.hasMine()).isFalse }
         )
     }
 
@@ -22,7 +22,7 @@ internal class CellStateTest {
         val cellState = CellState().open()
         assertAll(
             { assertThat(cellState.isOpen()).isTrue },
-            { assertThat(cellState.isMine()).isFalse }
+            { assertThat(cellState.hasMine()).isFalse }
         )
     }
 
@@ -32,7 +32,7 @@ internal class CellStateTest {
         val cellState = CellState().layMine()
         assertAll(
             { assertThat(cellState.isOpen()).isFalse },
-            { assertThat(cellState.isMine()).isTrue }
+            { assertThat(cellState.hasMine()).isTrue }
         )
     }
 
@@ -42,7 +42,7 @@ internal class CellStateTest {
         val cellState = CellState().open().layMine()
         assertAll(
             { assertThat(cellState.isOpen()).isTrue },
-            { assertThat(cellState.isMine()).isTrue }
+            { assertThat(cellState.hasMine()).isTrue }
         )
     }
 

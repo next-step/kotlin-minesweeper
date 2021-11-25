@@ -13,7 +13,7 @@ data class Board(private val rows: List<Row>) : List<Row> by rows {
 
     fun width(): Int = rows[FIRST_ROW].size
 
-    fun isAllOpen(): Boolean = flatten().all { it.isOpen() || it.isMine() }
+    fun isAllOpen(): Boolean = flatten().all { it.isOpen() || it.hasMine() }
 
     fun getCell(position: Position): Cell {
         val (rowIndex, columnIndex) = position

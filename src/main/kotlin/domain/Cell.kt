@@ -6,7 +6,7 @@ data class Cell(
 ) {
     fun isOpen(): Boolean = cellState.isOpen()
 
-    fun isMine(): Boolean = cellState.isMine()
+    fun hasMine(): Boolean = cellState.hasMine()
 
     fun isBlank(): Boolean = mineNumber.isBlank()
 

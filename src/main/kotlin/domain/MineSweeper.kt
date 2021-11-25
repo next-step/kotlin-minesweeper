@@ -9,7 +9,7 @@ class MineSweeper(
         if (!cell.isOpen()) {
             open(position, emptySet())
         }
-        return !cell.isMine()
+        return !cell.hasMine()
     }
 
     private fun open(position: Position, visited: Set<Position>) {
