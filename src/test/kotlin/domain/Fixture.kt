@@ -11,15 +11,15 @@ class Fixture {
 
     operator fun component3(): MineNumber = MineNumber(minePositions.size)
 
-    fun drawnBoard(): String = toString { cell -> drawnCell(cell) }
+    fun drawnBoard(): String = boardToString { cell -> drawnCell(cell) }
 
-    fun mineNumbers(): String = toString { cell -> mineNumber(cell) }
+    fun mineNumbers(): String = boardToString { cell -> mineNumber(cell) }
 
-    fun renderedBoard(): String = toString { cell -> renderedCell(cell) }
+    fun renderedBoard(): String = boardToString { cell -> renderedCell(cell) }
 
-    private fun toString(toString: (Cell) -> String): String = board
+    private fun boardToString(cellToString: (Cell) -> String): String = board
         .joinToString(ROW_SEPARATOR) {
-            it.joinToString(CELL_SEPARATOR) { cell -> toString(cell) }
+            it.joinToString(CELL_SEPARATOR) { cell -> cellToString(cell) }
         }
 
     private fun drawnCell(cell: Cell): String = if (cell.isMine()) MINE else CLOSED
