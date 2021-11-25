@@ -1,6 +1,9 @@
 package domain
 
-class MineLayer(private val board: Board, private val selector: PositionSelector) {
+class MineLayer(
+    private val board: Board,
+    private val selector: PositionSelector
+) {
     fun layMines(mineNumber: MineNumber, position: Position = Position()) =
         selector
             .selectMinePositions(mineNumber, position)

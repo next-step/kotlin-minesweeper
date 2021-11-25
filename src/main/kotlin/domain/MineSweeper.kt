@@ -1,6 +1,9 @@
 package domain
 
-class MineSweeper(private val board: Board, private val selector: PositionSelector) {
+class MineSweeper(
+    private val board: Board,
+    private val selector: PositionSelector
+) {
     fun sweepMine(position: Position = Position()): Boolean {
         val cell = getCell(position)
         if (!cell.isOpen()) {

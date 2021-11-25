@@ -1,7 +1,13 @@
 package domain
 
-abstract class PositionSelector(private val height: Int, private val width: Int) {
-    abstract fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position): List<Position>
+abstract class PositionSelector(
+    private val height: Int,
+    private val width: Int
+) {
+    abstract fun selectMinePositions(
+        mineNumber: MineNumber,
+        excludedPosition: Position
+    ): List<Position>
 
     fun adjacentPositions(position: Position): List<Position> {
         val (rowIndex, columnIndex) = position

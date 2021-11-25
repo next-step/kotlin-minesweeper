@@ -1,6 +1,9 @@
 package domain
 
-data class Cell(private var cellState: CellState = CellState(), private var mineNumber: MineNumber = MineNumber()) {
+data class Cell(
+    private var cellState: CellState = CellState(),
+    private var mineNumber: MineNumber = MineNumber()
+) {
     fun isOpen(): Boolean = cellState.isOpen()
 
     fun isMine(): Boolean = cellState.isMine()
