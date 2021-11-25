@@ -12,17 +12,17 @@ import view.OutputView
 
 object Controller {
     fun run() {
-        val board = askBoard()
+        val board = Board(InputView.askHeight(), InputView.askWidth())
         val selector = RandomPositionSelector(board)
         val mineLayer = MineLayer(board, selector)
         val mineSweeper = MineSweeper(board, selector)
         layMines(mineLayer, mineSweeper)
-        printBoard(board)
+        OutputView.printBoard(BoardDto(board))
     }
 
     private fun layMines(mineLayer: MineLayer, mineSweeper: MineSweeper) {
-        val mineNumber = askMineNumber()
-        printStart()
+        val mineNumber = MineNumber(InputView.askMineNumber())
+        OutputView.printStart()
         val position = Position()
         mineLayer.layMines(mineNumber, position)
         mineSweeper.sweepMine(position)
@@ -30,15 +30,8 @@ object Controller {
 
     private fun sweepMines(board: Board, mineSweeper: MineSweeper) {
         do {
-            printBoard(board)
-        } while (!board.isAllOpen() && mineSweeper.sweepMine(askPosition()))
-        printResult(board)
+            OutputView.printBoard(BoardDto(board))
+        } while (!board.isAllOpen() && mineSweeper.sweepMine(Position(InputView.askPosition())))
+        OutputView.printResult(board.isAllOpen())
     }
-
-    private fun askBoard(): Board = Board(InputView.askHeight(), InputView.askWidth())
-    private fun askMineNumber(): MineNumber = MineNumber(InputView.askMineNumber())
-    private fun askPosition(): Position = Position(InputView.askPosition())
-    private fun printStart() = OutputView.printStart()
-    private fun printResult(board: Board) = OutputView.printResult(board.isAllOpen())
-    private fun printBoard(board: Board) = OutputView.printBoard(BoardDto(board))
 }
