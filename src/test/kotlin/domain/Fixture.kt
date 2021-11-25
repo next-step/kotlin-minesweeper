@@ -1,7 +1,5 @@
 package domain
 
-import dto.BoardDto
-
 class Fixture {
     private val board = Board(HEIGHT, WIDTH)
     operator fun component1(): Board = board
@@ -10,13 +8,18 @@ class Fixture {
         override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position) = minePositions
     }
 
-    fun drawnBoard(): String = BoardDto(board).draw()
-    fun mineNumbersOfBoard(): String = BoardDto(board).mineNumbers()
-    fun renderedBoard(): String = BoardDto(board).render()
+    fun drawnBoard(): String = toString { cell -> drawnCell(cell) }
+    fun mineNumbers(): String = toString { cell -> mineNumber(cell) }
+    fun renderedBoard(): String = toString { cell -> renderedCell(cell) }
+    private fun toString(toString: (Cell) -> String): String = board.joinToString(ROW_SEPARATOR) {
+        it.joinToString(CELL_SEPARATOR) { cell -> toString(cell) }
+    }
+
+    private fun drawnCell(cell: Cell): String = if (cell.isMine()) MINE else CLOSED
+    private fun mineNumber(cell: Cell): String = if (cell.isMine()) MINE else cell.mineNumber().toString()
+    private fun renderedCell(cell: Cell): String = if (!cell.isOpen() || cell.isMine()) CLOSED else mineNumber(cell)
 
     companion object {
-        private const val HEIGHT = 10
-        private const val WIDTH = 10
         val minePositions = listOf(
             Position(1, 4),
             Position(1, 8),
@@ -29,5 +32,11 @@ class Fixture {
             Position(8, 7),
             Position(8, 10)
         )
+        private const val HEIGHT = 10
+        private const val WIDTH = 10
+        private const val MINE = "*"
+        private const val CLOSED = "C"
+        private const val CELL_SEPARATOR = " "
+        private const val ROW_SEPARATOR = "\n"
     }
 }
