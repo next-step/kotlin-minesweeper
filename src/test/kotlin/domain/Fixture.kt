@@ -5,11 +5,11 @@ class Fixture {
 
     operator fun component1(): Board = board
 
-    operator fun component3(): MineNumber = MineNumber(minePositions.size)
-
     operator fun component2(): PositionSelector = object : PositionSelector(HEIGHT, WIDTH) {
         override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position) = minePositions
     }
+
+    operator fun component3(): MineNumber = MineNumber(minePositions.size)
 
     fun drawnBoard(): String = toString { cell -> drawnCell(cell) }
 
