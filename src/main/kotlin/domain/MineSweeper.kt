@@ -4,7 +4,7 @@ class MineSweeper(private val board: Board, private val selector: PositionSelect
     fun sweepMine(position: Position = Position()): Boolean {
         val cell = getCell(position)
         if (!cell.isOpen()) {
-            open(position, setOf())
+            open(position, emptySet())
         }
         return !cell.isMine()
     }
