@@ -16,7 +16,7 @@ data class Board(private val rows: List<Row>) : List<Row> by rows {
     fun isAllOpen(): Boolean = flatten().all { it.isOpen() || it.isMine() }
 
     fun getCell(position: Position): Cell {
-        val (rowIndex, columnIndex) = position.pair
+        val (rowIndex, columnIndex) = position
         if (rowIndex > height() || columnIndex > width()) {
             throw IllegalPositionException()
         }

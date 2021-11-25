@@ -2,12 +2,8 @@ package domain
 
 import exception.IllegalPositionException
 
-@JvmInline
-value class Position(val pair: Pair<Int, Int>) {
-    constructor(rowIndex: Int = MIN, columnIndex: Int = MIN) : this(rowIndex to columnIndex)
-
+data class Position(val rowIndex: Int = MIN, val columnIndex: Int = MIN) {
     init {
-        val (rowIndex, columnIndex) = pair
         if (rowIndex < MIN || columnIndex < MIN) {
             throw IllegalPositionException()
         }
