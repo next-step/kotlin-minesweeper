@@ -10,9 +10,9 @@ class Fixture {
         override fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position) = minePositions
     }
 
-    fun drawBoard(): String = BoardDto(board).draw()
-    fun boardMineNumbers(): String = BoardDto(board).mineNumbers()
-    fun renderBoard(): String = BoardDto(board).render()
+    fun drawnBoard(): String = BoardDto(board).draw()
+    fun mineNumbersOfBoard(): String = BoardDto(board).mineNumbers()
+    fun renderedBoard(): String = BoardDto(board).render()
 
     companion object {
         private const val HEIGHT = 10

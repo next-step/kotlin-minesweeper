@@ -22,7 +22,7 @@ internal class MineSweeperTest {
     @DisplayName("MineSweeper 를 통해, board 의 지뢰 제거를 시도할 수 있다.")
     @Test
     fun sweepMine() {
-        assertThat(fixture.renderBoard()).isEqualTo(
+        assertThat(fixture.renderedBoard()).isEqualTo(
             """
                 0 1 C C C C C C C C
                 0 1 C C C C C C C C
@@ -58,7 +58,7 @@ internal class MineSweeperTest {
     @Test
     fun duplicatedSweepMine() {
         mineSweeper.sweepMine(Position(4, 2))
-        assertThat(fixture.renderBoard()).isEqualTo(
+        assertThat(fixture.renderedBoard()).isEqualTo(
             """
                 0 1 C C C C C C C C
                 0 1 C C C C C C C C
