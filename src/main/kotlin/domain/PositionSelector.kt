@@ -4,12 +4,13 @@ abstract class PositionSelector(private val height: Int, private val width: Int)
     abstract fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position): List<Position>
 
     fun adjacentPositions(position: Position): List<Position> {
-        val (i, j) = position.pair
-        val adjacentI = (Integer.max(i - 1, 1)..Integer.min(i + 1, height))
-        val adjacentJ = (Integer.max(j - 1, 1)..Integer.min(j + 1, width))
-        return adjacentI.map { itI -> adjacentJ.map { itJ -> Position(itI, itJ) } }.flatten()
+        val (rowIndex, columnIndex) = position.pair
+        val adjacentRows = (Integer.max(rowIndex - 1, 1)..Integer.min(rowIndex + 1, height))
+        val adjacentColumns = (Integer.max(columnIndex - 1, 1)..Integer.min(columnIndex + 1, width))
+        return adjacentRows.map { rowIndex -> adjacentColumns.map { columnIndex -> Position(rowIndex, columnIndex) } }
+            .flatten()
     }
 
-    fun allPositions(iRange: IntRange = (1..height), jRange: IntRange = (1..width)): List<Position> =
-        iRange.map { i -> jRange.map { j -> Position(i, j) } }.flatten()
+    fun allPositions(rowRange: IntRange = (1..height), columnRange: IntRange = (1..width)): List<Position> =
+        rowRange.map { rowIndex -> columnRange.map { columnIndex -> Position(rowIndex, columnIndex) } }.flatten()
 }

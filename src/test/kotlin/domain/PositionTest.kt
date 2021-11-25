@@ -13,16 +13,16 @@ internal class PositionTest {
     @DisplayName("좌표는 1 보다 작을 수 없다.")
     @ParameterizedTest
     @CsvSource("-1,-3", "0,0", "2,-5", "0,3")
-    fun illegalPosition(i: Int, j: Int) {
+    fun illegalPosition(rowIndex: Int, columnIndex: Int) {
         assertThatExceptionOfType(IllegalPositionException::class.java)
-            .isThrownBy { Position(i, j) }
+            .isThrownBy { Position(rowIndex, columnIndex) }
     }
 
     @DisplayName("좌표가 같다면 같은 Position 으로 인식되어야 한다.")
     @ParameterizedTest
     @CsvSource("1,3", "2,5", "4,8")
-    fun equals(i: Int, j: Int) {
-        assertThat(Position(i, j)).isEqualTo(Position(i, j))
+    fun equals(rowIndex: Int, columnIndex: Int) {
+        assertThat(Position(rowIndex, columnIndex)).isEqualTo(Position(rowIndex, columnIndex))
     }
 
     @DisplayName("default 좌표는 (1,1) 이다.")

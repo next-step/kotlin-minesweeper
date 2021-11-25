@@ -4,11 +4,11 @@ import exception.IllegalPositionException
 
 @JvmInline
 value class Position(val pair: Pair<Int, Int>) {
-    constructor(i: Int = MIN, j: Int = MIN) : this(i to j)
+    constructor(rowIndex: Int = MIN, columnIndex: Int = MIN) : this(rowIndex to columnIndex)
 
     init {
-        val (i, j) = pair
-        if (i < MIN || j < MIN) {
+        val (rowIndex, columnIndex) = pair
+        if (rowIndex < MIN || columnIndex < MIN) {
             throw IllegalPositionException()
         }
     }

@@ -12,10 +12,10 @@ data class Board(private val rows: List<Row>) : List<Row> by rows {
     fun isAllOpen(): Boolean = flatten().all { it.isOpen() || it.isMine() }
 
     fun getCell(position: Position): Cell {
-        val (i, j) = position.pair
-        if (i > height() || j > width()) {
+        val (rowIndex, columnIndex) = position.pair
+        if (rowIndex > height() || columnIndex > width()) {
             throw IllegalPositionException()
         }
-        return rows[i - 1][j - 1]
+        return rows[rowIndex - 1][columnIndex - 1]
     }
 }
