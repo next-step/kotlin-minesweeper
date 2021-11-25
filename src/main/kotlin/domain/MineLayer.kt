@@ -5,7 +5,9 @@ class MineLayer(private val board: Board, private val selector: PositionSelector
         selector.selectMinePositions(mineNumber, position).forEach { layMine(it) }
 
     private fun layMine(position: Position) {
-        board.layMine(position)
-        selector.adjacentPositions(position).forEach { board.increaseMineNumber(it) }
+        board.getCell(position).layMine()
+        selector.adjacentPositions(position)
+            .map { board.getCell(it) }
+            .forEach { it.increaseMineNumber() }
     }
 }
