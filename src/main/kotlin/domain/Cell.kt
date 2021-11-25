@@ -1,7 +1,6 @@
 package domain
 
-data class Cell private constructor(private var cellState: CellState, private var mineNumber: MineNumber) {
-    constructor() : this(CellState(), MineNumber())
+data class Cell(private var cellState: CellState = CellState(), private var mineNumber: MineNumber = MineNumber()) {
 
     fun isOpen(): Boolean = cellState.isOpen()
     fun isMine(): Boolean = cellState.isMine()

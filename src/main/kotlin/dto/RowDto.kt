@@ -2,7 +2,7 @@ package dto
 
 import domain.Row
 
-data class RowDto private constructor(private val cells: List<CellDto>) : List<CellDto> by cells {
+data class RowDto(private val cells: List<CellDto>) : List<CellDto> by cells {
     constructor(row: Row) : this(row.map { CellDto(it) })
 
     fun draw(): String = joinToString(CELL_SEPARATOR) { it.draw() }
