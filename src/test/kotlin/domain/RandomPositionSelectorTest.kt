@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 internal class RandomPositionSelectorTest {
-
     @DisplayName("중복된 좌표가 선택되어서는 안된다.")
     @Test
     fun notDuplicated() {

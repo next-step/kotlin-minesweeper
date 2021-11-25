@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 internal class PositionTest {
-
     @DisplayName("좌표는 1 보다 작을 수 없다.")
     @ParameterizedTest
     @CsvSource("-1,-3", "0,0", "2,-5", "0,3")

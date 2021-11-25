@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 internal class MineNumberTest {
-
     @DisplayName("MineNumber 는 음수가 될 수 없다.")
     @ParameterizedTest
     @ValueSource(ints = [-1, -2, -3, -4, -5, -6, -7, -8, -9])
