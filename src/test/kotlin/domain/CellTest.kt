@@ -19,7 +19,7 @@ internal class CellTest {
     fun initial() {
         assertAll(
             { assertThat(cell.isOpen()).isFalse },
-            { assertThat(cell.isMine()).isFalse },
+            { assertThat(cell.hasMine()).isFalse },
             { assertThat(cell.mineNumber()).isZero }
         )
     }
@@ -30,7 +30,7 @@ internal class CellTest {
         cell.open()
         assertAll(
             { assertThat(cell.isOpen()).isTrue },
-            { assertThat(cell.isMine()).isFalse },
+            { assertThat(cell.hasMine()).isFalse },
             { assertThat(cell.mineNumber()).isZero }
         )
     }
@@ -41,7 +41,7 @@ internal class CellTest {
         cell.layMine()
         assertAll(
             { assertThat(cell.isOpen()).isFalse },
-            { assertThat(cell.isMine()).isTrue },
+            { assertThat(cell.hasMine()).isTrue },
             { assertThat(cell.mineNumber()).isZero }
         )
     }
@@ -53,7 +53,7 @@ internal class CellTest {
         repeat(expectedNumber) { cell.increaseMineNumber() }
         assertAll(
             { assertThat(cell.isOpen()).isFalse },
-            { assertThat(cell.isMine()).isFalse },
+            { assertThat(cell.hasMine()).isFalse },
             { assertThat(cell.mineNumber()).isEqualTo(expectedNumber) }
         )
     }

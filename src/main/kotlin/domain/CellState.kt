@@ -1,11 +1,14 @@
 package domain
 
-data class CellState(private val open: Boolean = false, private val mine: Boolean = false) {
-    fun isOpen(): Boolean = open
+data class CellState(
+    private val isOpen: Boolean = false,
+    private val hasMine: Boolean = false
+) {
+    fun isOpen(): Boolean = isOpen
 
-    fun isMine(): Boolean = mine
+    fun hasMine(): Boolean = hasMine
 
-    fun open(): CellState = CellState(true, mine)
+    fun open(): CellState = CellState(isOpen = true, hasMine = hasMine)
 
-    fun layMine(): CellState = CellState(open, true)
+    fun layMine(): CellState = CellState(isOpen = isOpen, hasMine = true)
 }

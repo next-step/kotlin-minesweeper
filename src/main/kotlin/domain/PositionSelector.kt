@@ -1,12 +1,18 @@
 package domain
 
-abstract class PositionSelector(private val height: Int, private val width: Int) {
-    abstract fun selectMinePositions(mineNumber: MineNumber, excludedPosition: Position): List<Position>
+abstract class PositionSelector(
+    private val height: Int,
+    private val width: Int
+) {
+    abstract fun selectMinePositions(
+        mineNumber: MineNumber,
+        excludedPosition: Position
+    ): List<Position>
 
     fun adjacentPositions(position: Position): List<Position> {
         val (rowIndex, columnIndex) = position
-        val adjacentRows = ((rowIndex - ONE).coerceAtLeast(ONE)..(rowIndex + ONE).coerceAtMost(height))
-        val adjacentColumns = ((columnIndex - ONE).coerceAtLeast(ONE)..(columnIndex + ONE).coerceAtMost(width))
+        val adjacentRows = ((rowIndex - OFFSET).coerceAtLeast(MIN)..(rowIndex + OFFSET).coerceAtMost(height))
+        val adjacentColumns = ((columnIndex - OFFSET).coerceAtLeast(MIN)..(columnIndex + OFFSET).coerceAtMost(width))
         return adjacentRows
             .map { rowIndex ->
                 adjacentColumns.map { columnIndex -> Position(rowIndex, columnIndex) }
@@ -20,6 +26,7 @@ abstract class PositionSelector(private val height: Int, private val width: Int)
             }.flatten()
 
     companion object {
-        private const val ONE = 1
+        private const val OFFSET = 1
+        private const val MIN = 1
     }
 }
