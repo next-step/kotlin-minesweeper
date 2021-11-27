@@ -1,5 +1,7 @@
 package view
 
+import domain.Position
+
 object InputView {
     fun askHeight(): Int {
         println("\n높이를 입력하세요.")
@@ -16,14 +18,15 @@ object InputView {
         return readNumber()
     }
 
-    fun askPosition(): Pair<Int, Int> {
+    fun askPosition(): Position {
         print("\nopen: ")
         val delimiter = ","
-        val positions = readInput()
+        val indices = readInput()
             .split(delimiter)
             .map { it.toInt() }
-        require(positions.size == 2) { "좌표는 $delimiter 로 구별되는 2개의 숫자를 입력해야 합니다." }
-        return positions[0] to positions[1]
+        require(indices.size == 2) { "좌표는 $delimiter 로 구별되는 2개의 숫자를 입력해야 합니다." }
+        val (rowIndex, columnIndex) = indices
+        return Position(rowIndex, columnIndex)
     }
 
     private fun readNumber(): Int = readInput().toInt()
