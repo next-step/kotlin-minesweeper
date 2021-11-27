@@ -2,7 +2,11 @@ package minesweeper.model
 
 sealed class Cell {
 
-    object Blank : Cell()
+    abstract val row: Row
 
-    object Mine : Cell()
+    abstract val column: Column
+
+    data class Blank(override val row: Row, override val column: Column) : Cell()
+
+    data class Mine(override val row: Row, override val column: Column) : Cell()
 }
