@@ -2,10 +2,15 @@ package minesweeper.model
 
 class Board(
     val width: Width,
-    val height: Height
+    val height: Height,
+    val mineCount: MineCount
 ) {
 
     companion object {
-        fun create(width: Width, height: Height): Board = Board(width, height)
+        fun create(
+            width: Width,
+            height: Height,
+            mineCount: MineCount = MineCount.ZERO
+        ): Board = Board(width, height, mineCount)
     }
 }

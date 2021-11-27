@@ -14,4 +14,10 @@ class BoardTest {
             { assertThat(board.height).isEqualTo(Height(10)) },
         )
     }
+
+    @Test
+    fun `보드는 MineCount를 가진다`() {
+        val board = Board(width = 2, height = 2, mineCount = 4)
+        assertThat(board.mineCount).isEqualTo(MineCount(4))
+    }
 }
