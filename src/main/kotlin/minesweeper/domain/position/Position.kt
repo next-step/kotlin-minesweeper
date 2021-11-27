@@ -2,10 +2,8 @@ package minesweeper.domain.position
 
 data class Position(val x: Int, val y: Int) {
 
-    private lateinit var _adjacentPositions: Positions
-
-    val adjacentPositions: Positions
-        get() = Positions.of(_adjacentPositions)
+    lateinit var adjacentPositions: Positions
+        private set
 
     fun updateAdjacentPositions(allPositions: Positions) {
         val value = CompassDirections.values()
@@ -15,7 +13,7 @@ data class Position(val x: Int, val y: Int) {
                 checkValidPosition(it.x, it.y) && it in allPositions
             }
 
-        _adjacentPositions = Positions.of(value)
+        adjacentPositions = Positions.of(value)
     }
 
     companion object {
