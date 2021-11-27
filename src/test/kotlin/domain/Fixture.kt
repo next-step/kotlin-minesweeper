@@ -23,13 +23,29 @@ class Fixture {
         }
 
     private fun drawnCell(cell: Cell): String =
-        if (cell.hasMine()) MINE else CLOSED
+        if (cell.hasMine()) {
+            MINE
+        } else {
+            CLOSED
+        }
 
     private fun mineNumber(cell: Cell): String =
-        if (cell.hasMine()) MINE else cell.mineNumber().toString()
+        if (cell.hasMine()) {
+            MINE
+        } else {
+            cell
+                .mineNumber()
+                .toString()
+        }
 
     private fun renderedCell(cell: Cell): String =
-        if (!cell.isOpen() || cell.hasMine()) CLOSED else cell.mineNumber().toString()
+        if (!cell.isOpen() || cell.hasMine()) {
+            CLOSED
+        } else {
+            cell
+                .mineNumber()
+                .toString()
+        }
 
     companion object {
         private const val HEIGHT = 10
