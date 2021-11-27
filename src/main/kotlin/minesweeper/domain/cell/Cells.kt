@@ -1,15 +1,13 @@
-package minesweeper.domain.board
+package minesweeper.domain.cell
+
+import minesweeper.domain.position.Positions
 
 class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     companion object {
         fun of(positions: Positions, minePositions: Positions): Cells =
             positions.map {
-                if (minePositions.contains(it)) {
-                    Cell.of(it, Mine())
-                } else {
-                    Cell.of(it)
-                }
+                Cell.of(it, minePositions)
             }.run {
                 Cells(this)
             }

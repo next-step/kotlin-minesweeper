@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.dto.MineSweeperDTO
+import minesweeper.dto.MineSweeperDTO
 
 object ResultView {
     fun boardView(mineSweeperDTO: MineSweeperDTO) {

@@ -1,5 +1,8 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Cells
+import minesweeper.domain.position.Positions
+
 @JvmInline
 value class Board(val cells: Cells) {
 

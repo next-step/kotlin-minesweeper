@@ -2,7 +2,7 @@ package minesweeper.controller
 
 import minesweeper.domain.board.Board
 import minesweeper.domain.board.BoardSize
-import minesweeper.domain.dto.MineSweeperDTO
+import minesweeper.dto.MineSweeperDTO
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 

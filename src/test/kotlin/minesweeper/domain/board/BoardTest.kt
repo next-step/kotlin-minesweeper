@@ -15,7 +15,7 @@ class BoardTest {
 
         // when
         val cellCounts = board.cells.size
-        val boardMineCount = board.cells.filter { it.cellType.getValue() == -1 }.size
+        val boardMineCount = board.cells.filter { it.state.getValue() == -1 }.size
 
         // then
         assertAll({

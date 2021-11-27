@@ -1,4 +1,4 @@
-package minesweeper.domain.board
+package minesweeper.domain.position
 
 data class Position(val x: Int, val y: Int) {
 
