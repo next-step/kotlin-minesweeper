@@ -4,7 +4,6 @@ import domain.Board
 import domain.MineLayer
 import domain.MineNumber
 import domain.MineSweeper
-import domain.Position
 import domain.RandomPositionSelector
 import dto.BoardDto
 import view.InputView
@@ -23,7 +22,7 @@ object Controller {
     private fun layMines(mineLayer: MineLayer, mineSweeper: MineSweeper) {
         val mineNumber = MineNumber(InputView.askMineNumber())
         OutputView.printStart()
-        val position = Position(InputView.askPosition())
+        val position = InputView.askPosition()
         mineLayer.layMines(mineNumber, position)
         mineSweeper.sweepMine(position)
     }
@@ -34,7 +33,7 @@ object Controller {
         } while (
             !board.isAllOpen() &&
             mineSweeper.sweepMine(
-                Position(InputView.askPosition())
+                InputView.askPosition()
             )
         )
         OutputView.printResult(board.isAllOpen())
