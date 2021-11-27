@@ -11,6 +11,10 @@ class Board(
             width: Width,
             height: Height,
             mineCount: MineCount = MineCount.ZERO
-        ): Board = Board(width, height, mineCount)
+        ): Board = Board(
+            width,
+            height,
+            mineCount.coerceAtMost(width.value * height.value)
+        )
     }
 }

@@ -20,4 +20,10 @@ class BoardTest {
         val board = Board(width = 2, height = 2, mineCount = 4)
         assertThat(board.mineCount).isEqualTo(MineCount(4))
     }
+
+    @Test
+    fun `지뢰 개수는 Width * Height보다 많을 수 없다`() {
+        val board = Board(width = 2, height = 2, mineCount = 10)
+        assertThat(board.mineCount).isEqualTo(MineCount(4))
+    }
 }
