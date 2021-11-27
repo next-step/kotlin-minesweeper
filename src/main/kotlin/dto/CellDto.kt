@@ -10,14 +10,14 @@ data class CellDto private constructor(
         private const val MINE = "*"
         private const val CLOSED = "C"
         fun from(cell: Cell): CellDto = CellDto(
-            if (!cell.isOpen() || cell.hasMine()) {
+            covered = if (!cell.isOpen() || cell.hasMine()) {
                 CLOSED
             } else {
                 cell
                     .mineNumber()
                     .toString()
             },
-            if (cell.hasMine()) {
+            uncovered = if (cell.hasMine()) {
                 MINE
             } else {
                 cell
