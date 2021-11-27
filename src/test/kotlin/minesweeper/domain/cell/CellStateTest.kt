@@ -15,6 +15,8 @@ class CellStateTest {
         // given
         val position = Position.of(x, y)
         val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val allPositions = Positions(listOf(position) + minePositions)
+        position.updateAdjacentPositions(allPositions)
         val cellState = CellState.from(position, minePositions)
 
         // when
@@ -29,6 +31,8 @@ class CellStateTest {
         // given
         val position = Position.of(1, 4)
         val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val allPositions = Positions(listOf(position) + minePositions)
+        position.updateAdjacentPositions(allPositions)
         val cellState = CellState.from(position, minePositions)
 
         // when
@@ -43,6 +47,8 @@ class CellStateTest {
         // given
         val position = Position.of(1, 1)
         val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val allPositions = Positions(listOf(position) + minePositions)
+        position.updateAdjacentPositions(allPositions)
         val cellState = CellState.from(position, minePositions)
 
         // when

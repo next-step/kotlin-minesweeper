@@ -22,6 +22,10 @@ class Positions(private val positions: List<Position>) : List<Position> by posit
                 acc + list
             }.run {
                 Positions(this)
+            }.apply {
+                this.map {
+                    it.updateAdjacentPositions(this)
+                }
             }
 
         const val OVER_COUNT_MESSAGE = "카운트 수가 전체 수보다 큽니다."

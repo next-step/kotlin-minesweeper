@@ -9,13 +9,4 @@ enum class CompassDirections(val x: Int, val y: Int) {
     SOUTH(0, -1),
     SOUTH_WEST(-1, -1),
     SOUTH_EAST(1, -1);
-
-    companion object {
-        fun of(position: Position): Positions =
-            Positions.of(
-                values().map {
-                    Position.of(position.x + it.x, position.y + it.y)
-                }
-            )
-    }
 }

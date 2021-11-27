@@ -1,6 +1,5 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.position.CompassDirections
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 
@@ -17,8 +16,8 @@ class CellState(private val value: Int = 0, val cellType: CellType) {
         }
 
         private fun countingAdjacentMines(minePositions: Positions, currentPosition: Position) =
-            CompassDirections.of(currentPosition).map {
-                minePositions.contains(it)
+            currentPosition.adjacentPositions.map {
+                it in minePositions
             }.count { it }
 
         private const val IS_MINE_VALUE = -1
