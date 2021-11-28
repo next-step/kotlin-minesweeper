@@ -22,8 +22,8 @@ class BoardTest {
     }
 
     @Test
-    fun `지뢰 개수는 Width * Height보다 많을 수 없다`() {
-        val board = Board(width = 2, height = 2, mineCount = 10)
-        assertThat(board.mineCount).isEqualTo(MineCount(4))
+    fun `Width나 Height가 0이면 보드는 비어있다`() {
+        val board = Board(width = 0, height = 2)
+        assertThat(board).isEqualTo(Board.EMPTY)
     }
 }

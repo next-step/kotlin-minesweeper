@@ -3,7 +3,6 @@ package minesweeper.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 
 class CellsTest {
 
@@ -19,11 +18,6 @@ class CellsTest {
         val cells = Cells(1 to 1, 1 to 2, 1 to 3, 2 to 1, 2 to 2, 2 to 3)
         val actual = cells.maxRow()
         assertThat(actual).isEqualTo(Row(2))
-    }
-
-    @Test
-    fun `동일한 위치의 Cell이 존재하지 않아야 한다`() {
-        assertThrows<RuntimeException> { Cells(1 to 1, 1 to 1) }
     }
 
     @Test
