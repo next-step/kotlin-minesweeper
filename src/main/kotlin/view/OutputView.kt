@@ -1,20 +1,21 @@
 package view
 
 import domain.Board
+import domain.Cell
+import domain.Row
 
 object OutputView {
 
     fun printBoard(board: Board) {
-        board
-            .rows
-            .forEach { row ->
-                row
-                    .cells
-                    .forEach { cell ->
-                        print("${cell.type.label} ")
-                    }
+        board.rows.forEach(::printRow)
+    }
 
-                println()
-            }
+    private fun printRow(row: Row) {
+        row.cells.forEach(::printCell)
+        println()
+    }
+
+    private fun printCell(cell: Cell) {
+        print("${cell.type.label} ")
     }
 }
