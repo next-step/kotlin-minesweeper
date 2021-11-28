@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Height(value: Int) {
+class Height(val value: Int) {
     init {
         require(value > MINIMUM_HEIGHT)
     }

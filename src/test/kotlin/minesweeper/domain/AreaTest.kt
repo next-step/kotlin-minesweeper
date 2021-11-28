@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test
 internal class AreaTest {
 
     @Test
-    fun `넓이 정보를 생성할 수 있다`() {
+    fun `넓이를 리턴한다`() {
         val givenWidth = Width(10)
         val givenHeight = Height(10)
+        val givenArea = Area(givenWidth, givenHeight)
 
-        assertThat(Area(givenWidth, givenHeight)).isNotNull
+        val actual = givenArea.getArea()
+
+        assertThat(actual).isEqualTo(100)
     }
 }

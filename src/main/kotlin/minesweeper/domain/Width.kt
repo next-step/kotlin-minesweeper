@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Width(value: Int) {
+class Width(val value: Int) {
     init {
         require(value > MINIMUM_WIDTH)
     }
