@@ -11,6 +11,8 @@ value class Cells(private val cells: List<Cell>) {
 
     fun get(row: Row, column: Column): Cell? = cells.find { it.row == row && it.column == column }
 
+    operator fun get(position: Position): Cell? = get(position.row, position.column)
+
     companion object {
         val EMPTY: Cells = Cells(emptyList())
     }
