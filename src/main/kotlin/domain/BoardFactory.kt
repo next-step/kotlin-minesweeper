@@ -32,8 +32,8 @@ object BoardFactory {
 
     private fun createCell(position: Position, minesPosition: MinesPosition): Cell {
         return when (minesPosition.contains(position)) {
-            true -> Cell(CellType.MINE)
-            false -> Cell(CellType.GENERAL)
+            true -> MineCell()
+            false -> GeneralCell()
         }
     }
 }

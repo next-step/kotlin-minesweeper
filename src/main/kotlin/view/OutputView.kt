@@ -16,6 +16,6 @@ object OutputView {
     }
 
     private fun printCell(cell: Cell) {
-        print("${cell.type.label} ")
+        print("${cell.getValue()} ")
     }
 }

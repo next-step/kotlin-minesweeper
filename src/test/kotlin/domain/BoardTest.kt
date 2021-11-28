@@ -11,7 +11,7 @@ internal class BoardTest {
         assertThrows<IllegalArgumentException> {
             Board(
                 listOf(
-                    Row(listOf(Cell(CellType.GENERAL))),
+                    Row(listOf(GeneralCell())),
                     Row(emptyList())
                 )
             )
@@ -22,8 +22,8 @@ internal class BoardTest {
     fun `인자로 건낸 Position 의 위치가 지뢰라면 true`() {
         val board = Board(
             listOf(
-                Row(listOf(Cell(CellType.GENERAL))),
-                Row(listOf(Cell(CellType.MINE)))
+                Row(listOf(GeneralCell())),
+                Row(listOf(MineCell()))
             )
         )
 
@@ -36,8 +36,8 @@ internal class BoardTest {
     fun `인자로 건낸 Position 의 위치가 지뢰가 아니라면 false`() {
         val board = Board(
             listOf(
-                Row(listOf(Cell(CellType.GENERAL))),
-                Row(listOf(Cell(CellType.MINE)))
+                Row(listOf(GeneralCell())),
+                Row(listOf(MineCell()))
             )
         )
 

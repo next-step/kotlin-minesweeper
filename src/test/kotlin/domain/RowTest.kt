@@ -8,7 +8,7 @@ internal class RowTest {
     @Test
     fun `Cell 이 지뢰일경우 true`() {
         val row = Row(
-            listOf(Cell(CellType.MINE))
+            listOf(MineCell())
         )
 
         val actual = row.isMine(0)
@@ -19,7 +19,7 @@ internal class RowTest {
     @Test
     fun `Cell 이 지뢰가 아닐경우 false`() {
         val row = Row(
-            listOf(Cell(CellType.GENERAL))
+            listOf(GeneralCell())
         )
 
         val actual = row.isMine(0)

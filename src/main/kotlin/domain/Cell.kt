@@ -1,9 +1,6 @@
 package domain
 
-class Cell(
-    val type: CellType,
-) {
-    fun isMine(): Boolean {
-        return type == CellType.MINE
-    }
+interface Cell {
+    fun getValue(): String
+    fun isMine(): Boolean
 }
