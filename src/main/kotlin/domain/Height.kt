@@ -1,6 +1,7 @@
 package domain
 
-data class Height(
+@JvmInline
+value class Height(
     val value: Int,
 ) {
     init {

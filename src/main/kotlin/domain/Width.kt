@@ -1,6 +1,7 @@
 package domain
 
-data class Width(
+@JvmInline
+value class Width(
     val value: Int,
 ) {
     init {
