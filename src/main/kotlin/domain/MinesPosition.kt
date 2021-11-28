@@ -6,7 +6,7 @@ class MinesPosition(
 
     val size = value.size
 
-    fun contains(position: Position): Boolean {
+    operator fun contains(position: Position): Boolean {
         return value.contains(position)
     }
 }
