@@ -23,18 +23,4 @@ class BoardTest {
 
         assertThrows<IllegalArgumentException> { Board.createBoard(Width(width), Height(height)) }
     }
-
-    @Test
-    fun `높이가 0보다 작은 경우`() {
-        val height = -1
-
-        assertThrows<IllegalArgumentException> { Height(height) }
-    }
-
-    @Test
-    fun `너비가 0보다 작은 경우`() {
-        val width = -1
-
-        assertThrows<IllegalArgumentException> { Width(width) }
-    }
 }
