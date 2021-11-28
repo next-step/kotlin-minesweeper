@@ -3,11 +3,11 @@ package minesweeper.model
 @JvmInline
 value class Cells(private val cells: List<Cell>) {
 
-    fun maxColumn(): Column? = cells.maxByOrNull { it.column.value }?.column
+    fun maxColumnOrNull(): Column? = cells.maxByOrNull { it.column.value }?.column
 
-    fun maxRow(): Row? = cells.maxByOrNull { it.row.value }?.row
+    fun maxRowOrNull(): Row? = cells.maxByOrNull { it.row.value }?.row
 
-    fun mineCount(): MineCount = MineCount(cells.count { it is Cell.Mine })
+    fun mineCount(): MineCount = MineCount.valueOf(cells.count { it is Cell.Mine })
 
     fun get(row: Row, column: Column): Cell? = cells.find { it.row == row && it.column == column }
 

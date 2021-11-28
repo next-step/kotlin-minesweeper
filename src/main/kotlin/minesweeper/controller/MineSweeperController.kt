@@ -14,7 +14,7 @@ class MineSweeperController {
         val width = inputView.getWidth()
         val mineCount = inputView.getMineCount()
 
-        val board = Board.create(width, height, mineCount)
+        val board = Board.shuffled(width, height, mineCount)
         outputView.showGamePlay(board)
     }
 }

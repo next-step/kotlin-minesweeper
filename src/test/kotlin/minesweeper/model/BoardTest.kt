@@ -10,15 +10,15 @@ class BoardTest {
     fun `보드는 Width와 Height를 가진다`() {
         val board = Board(width = 5, height = 10)
         assertAll(
-            { assertThat(board.width).isEqualTo(Width(5)) },
-            { assertThat(board.height).isEqualTo(Height(10)) },
+            { assertThat(board.width).isEqualTo(Width.valueOf(5)) },
+            { assertThat(board.height).isEqualTo(Height.valueOf(10)) },
         )
     }
 
     @Test
     fun `보드는 MineCount를 가진다`() {
         val board = Board(width = 2, height = 2, mineCount = 4)
-        assertThat(board.mineCount).isEqualTo(MineCount(4))
+        assertThat(board.mineCount).isEqualTo(MineCount.valueOf(4))
     }
 
     @Test

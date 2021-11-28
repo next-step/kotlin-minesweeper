@@ -1,28 +1,28 @@
 package minesweeper.model
 
-class Board private constructor(val cells: Cells) {
+class Board(val cells: Cells) {
 
-    val width: Width = cells.maxColumn()?.value?.let { Width(it) } ?: Width.ZERO
-    val height: Height = cells.maxRow()?.value?.let { Height(it) } ?: Height.ZERO
+    val width: Width = Width.valueOf(cells.maxColumnOrNull()?.value)
+
+    val height: Height = Height.valueOf(cells.maxRowOrNull()?.value)
+
     val mineCount: MineCount = cells.mineCount()
 
     companion object {
         val EMPTY = Board(Cells.EMPTY)
 
-        fun create(
+        fun shuffled(
             width: Width,
             height: Height,
             mineCount: MineCount = MineCount.ZERO
         ): Board {
-            if (width == Width.ZERO || height == Height.ZERO) {
-                return EMPTY
-            }
             val size = width.value * height.value
-            require(size >= mineCount.count) { "지뢰의 개수는 보드 크기보다 많을 수 없음" }
-            val positions = Position.list(width, height).shuffled()
+            if (size == 0) return EMPTY
+            require(size >= mineCount.value) { "지뢰의 개수는 보드 크기보다 많을 수 없음" }
 
+            val positions = Position.list(width, height).shuffled()
             val cells = positions.mapIndexed { index, position ->
-                if (index < mineCount.count) {
+                if (index < mineCount.value) {
                     Cell.Mine(position)
                 } else {
                     Cell.Blank(position)
