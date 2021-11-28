@@ -3,8 +3,8 @@ package controller
 import domain.Board
 import domain.BoardFactory
 import domain.Height
+import domain.MinesPosition
 import domain.Width
-import util.MinePositionsGenerator
 
 class BoardController {
     fun create(
@@ -12,7 +12,7 @@ class BoardController {
         height: Height,
         mineCount: Int,
     ): Board {
-        val minesPosition = MinePositionsGenerator.generate(
+        val minesPosition = MinesPosition.generate(
             maxWidth = width,
             maxHeight = height,
             generateCount = mineCount
