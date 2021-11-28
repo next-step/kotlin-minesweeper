@@ -4,7 +4,7 @@ import minesweeper.model.Board
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
-class MineSweeperController {
+object MineSweeperController {
 
     private val inputView = InputView()
     private val outputView = OutputView()

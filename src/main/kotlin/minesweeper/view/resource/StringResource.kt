@@ -1,4 +1,4 @@
-package minesweeper.view.res
+package minesweeper.view.resource
 
 import minesweeper.model.Cell
 

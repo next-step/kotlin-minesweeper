@@ -22,7 +22,7 @@ class BoardTest {
     }
 
     @Test
-    fun `Width나 Height가 0이면 보드는 비어있다`() {
+    fun `Width나 Height이 0이면 보드는 비어있다`() {
         val board = Board(width = 0, height = 2)
         assertThat(board).isEqualTo(Board.EMPTY)
     }
