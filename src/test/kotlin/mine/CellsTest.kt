@@ -12,6 +12,6 @@ class CellsTest {
 
         val cells = Cells.createCells(width, height)
 
-        assertThat(cells.cells.size).isEqualTo(width.value.times(height.value))
+        assertThat(cells.cellList.size).isEqualTo(width.value.times(height.value))
     }
 }
