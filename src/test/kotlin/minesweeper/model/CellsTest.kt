@@ -45,7 +45,7 @@ class CellsTest {
             },
             {
                 assertThat(actual[Position(1, 2)])
-                    .isEqualTo(Cell.Blank(Position(1, 2)))
+                    .isEqualTo(Cell.Zero(Position(1, 2)))
             },
         )
     }

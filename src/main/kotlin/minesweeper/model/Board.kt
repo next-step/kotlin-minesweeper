@@ -18,7 +18,7 @@ class Board(val cells: Cells) {
                 return EMPTY
             }
             val positions = Position.list(width, height)
-            val cells: List<Cell> = positions.map { position -> Cell.Blank(position) }
+            val cells: List<Cell> = positions.map { position -> Cell.Zero(position) }
             return Board(Cells(cells))
         }
 
@@ -36,7 +36,7 @@ class Board(val cells: Cells) {
                 if (index < mineCount.value) {
                     Cell.Mine(position)
                 } else {
-                    Cell.Blank(position)
+                    Cell.Zero(position)
                 }
             }
             return Board(Cells(cells))

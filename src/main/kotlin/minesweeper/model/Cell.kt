@@ -12,7 +12,7 @@ sealed class Cell {
         else -> Mine(position)
     }
 
-    data class Blank(override val position: Position) : Cell()
+    data class Zero(override val position: Position) : Cell()
 
     data class Mine(override val position: Position) : Cell()
 }

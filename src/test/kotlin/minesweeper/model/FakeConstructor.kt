@@ -9,7 +9,7 @@ fun Board(
 ) = Board.shuffled(Width.valueOf(width), Height.valueOf(height), MineCount.valueOf(mineCount))
 
 fun Cells(vararg positions: Pair<Int, Int>): Cells = positions.map { (row, column) ->
-    Cell.Blank(Position(row, column))
+    Cell.Zero(Position(row, column))
 }.let(::Cells)
 
 fun Position(row: Int, column: Int): Position = Position(Row(row), Column(column))
