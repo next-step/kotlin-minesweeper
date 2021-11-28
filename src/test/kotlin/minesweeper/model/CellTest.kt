@@ -14,4 +14,10 @@ class CellTest {
             { assertThat(cell.column).isEqualTo(Column(1)) }
         )
     }
+
+    @Test
+    fun `Number Cell은 주변에 인접한 지뢰의 개수를 가진다`() {
+        val cell = Cell.Number(MineCount.valueOf(1), Position(1, 1))
+        assertThat(cell.adjustMineCount).isEqualTo(MineCount.valueOf(1))
+    }
 }
