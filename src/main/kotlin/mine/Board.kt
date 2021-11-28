@@ -1,6 +1,9 @@
 package mine
 
+import mine.cell.Cells
+
 class Board(
+    val cells: Cells,
     val width: Width,
     val height: Height
 ) {
@@ -8,15 +11,15 @@ class Board(
     // val height: Height
 
     companion object {
-        private const val MINX_MINE_SIZE = 0
         fun createBoard(
-            width: Int,
-            height: Int,
-            mine: Int = MINX_MINE_SIZE
+            width: Width,
+            height: Height,
+            mine: Mine = Mine()
         ): Board {
-            require(mine >= MINX_MINE_SIZE)
+            val size = width.value.times(height.value)
+            require(size >= mine.value)
 
-            return Board(Width(width), Height(height))
+            return Board(Cells.createCells(width, height), width, height)
         }
     }
 }

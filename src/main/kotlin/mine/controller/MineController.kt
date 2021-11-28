@@ -1,12 +1,16 @@
 package mine.controller
 
+import mine.Board
 import mine.view.InputView
 
-class MineController {
+object MineController {
 
-    fun createGame() {
+    fun run() {}
+    fun createGame(): Board {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val mine = InputView.inputMineCount()
+
+        return Board.createBoard(width, height, mine)
     }
 }

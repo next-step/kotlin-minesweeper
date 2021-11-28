@@ -1,9 +1,9 @@
 package mine
 
 @JvmInline
-value class Height(private val height: Int) {
+value class Height(val value: Int) {
     init {
-        require(height >= MIN_VALUE)
+        require(value >= MIN_VALUE)
     }
 
     companion object {

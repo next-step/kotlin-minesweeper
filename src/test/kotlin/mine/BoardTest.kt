@@ -10,19 +10,10 @@ class BoardTest {
     fun `너비와 높이 크기의 게임이 생성`() {
         val width = 10
         val height = 10
-        val board = Board.createBoard(width, height)
+        val board = Board.createBoard(Width(width), Height(height))
 
         assertThat(board.width).isEqualTo(Width.value(width))
         assertThat(board.height).isEqualTo(Height.value(height))
-    }
-
-    @Test
-    fun `지뢰의 개수는 음수이면 안된다`() {
-        val width = 10
-        val height = 10
-        val mine = -39
-
-        assertThrows<IllegalArgumentException> { Board.createBoard(width, height, mine) }
     }
 
     @Test
@@ -30,7 +21,7 @@ class BoardTest {
         val width = -1
         val height = 10
 
-        assertThrows<IllegalArgumentException> { Board.createBoard(width, height) }
+        assertThrows<IllegalArgumentException> { Board.createBoard(Width(width), Height(height)) }
     }
 
     @Test

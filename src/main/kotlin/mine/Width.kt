@@ -1,9 +1,9 @@
 package mine
 
 @JvmInline
-value class Width(private val width: Int) {
+value class Width(val value: Int) {
     init {
-        require(width >= MIN_VALUE)
+        require(value >= MIN_VALUE)
     }
 
     companion object {
