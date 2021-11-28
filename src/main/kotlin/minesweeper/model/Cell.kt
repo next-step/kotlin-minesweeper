@@ -2,11 +2,19 @@ package minesweeper.model
 
 sealed class Cell {
 
-    abstract val row: Row
+    abstract val position: Position
 
-    abstract val column: Column
+    val row: Row get() = position.row
 
-    data class Blank(override val row: Row, override val column: Column) : Cell()
+    val column: Column get() = position.column
 
-    data class Mine(override val row: Row, override val column: Column) : Cell()
+    data class Blank(override val position: Position) : Cell() {
+
+        constructor(row: Row, column: Column) : this(Position(row, column))
+    }
+
+    data class Mine(override val position: Position) : Cell() {
+
+        constructor(row: Row, column: Column) : this(Position(row, column))
+    }
 }
