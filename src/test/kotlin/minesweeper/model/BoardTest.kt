@@ -33,4 +33,13 @@ class BoardTest {
         val board = Board(width = 10, height = 10)
         assertThat(board.cells[position]).isEqualTo(Cell.Blank(position))
     }
+
+    @Test
+    fun `Position의 Cell을 Mine으로 변환할 수 있다`() {
+        val position = Position(1, 1)
+        val board = Board(width = 1, height = 2)
+
+        val actual = board.mine(position)
+        assertThat(actual.cells[position]).isEqualTo(Cell.Mine(position))
+    }
 }

@@ -11,6 +11,14 @@ value class Cells(private val cells: List<Cell>) {
 
     operator fun get(position: Position): Cell? = cells.find { it.row == position.row && it.column == position.column }
 
+    fun mine(position: Position): Cells = cells.map { cell ->
+        if (cell.position == position) {
+            cell.mine()
+        } else {
+            cell
+        }
+    }.let(::Cells)
+
     companion object {
         val EMPTY: Cells = Cells(emptyList())
     }
