@@ -1,12 +1,12 @@
 package minesweeper.view
 
 import minesweeper.model.Board
-import minesweeper.model.Cell
 import minesweeper.model.Column
 import minesweeper.model.Height
 import minesweeper.model.Position
 import minesweeper.model.Row
 import minesweeper.model.Width
+import minesweeper.view.res.getString
 
 class OutputView {
 
@@ -18,7 +18,7 @@ class OutputView {
     private fun printBoard(board: Board) = onRow(board.height) { row ->
         onColumn(board.width) { column ->
             val position = Position(row, column)
-            printCell(board.cells[position])
+            print(getString(board.cells[position]))
             print(" ")
         }
         println()
@@ -30,12 +30,5 @@ class OutputView {
 
     private fun onColumn(width: Width, block: (Column) -> Unit) {
         repeat(width.value) { column -> block(Column(column + 1)) }
-    }
-
-    private fun printCell(cell: Cell?) {
-        when (cell) {
-            is Cell.Blank -> print("C")
-            is Cell.Mine -> print("*")
-        }
     }
 }
