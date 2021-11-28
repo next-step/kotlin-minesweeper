@@ -1,4 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.block
+
+import minesweeper.domain.area.Area
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
     return map {

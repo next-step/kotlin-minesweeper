@@ -1,5 +1,10 @@
 package minesweeper.domain
 
+import minesweeper.domain.area.Area
+import minesweeper.domain.area.Height
+import minesweeper.domain.area.Width
+import minesweeper.domain.block.Mine
+import minesweeper.domain.block.None
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

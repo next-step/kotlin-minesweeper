@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.area
 
 class Height(val value: Int) {
     init {
