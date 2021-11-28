@@ -16,4 +16,19 @@ class Board(
 
         return rows[position.y].isMine(position.x)
     }
+
+    companion object {
+        fun build(
+            width: Width,
+            height: Height,
+            minesPosition: MinesPosition,
+        ): Board {
+            val heightRange = (0 until height.value)
+            val rows = heightRange.map { currentHeight ->
+                Row.build(width.value, currentHeight, minesPosition)
+            }
+
+            return Board(rows)
+        }
+    }
 }

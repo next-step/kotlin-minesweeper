@@ -1,7 +1,6 @@
 package controller
 
 import domain.Board
-import domain.BoardFactory
 import domain.Height
 import domain.MinesPosition
 import domain.Width
@@ -18,7 +17,7 @@ class BoardController {
             generateCount = mineCount
         )
 
-        return BoardFactory.create(
+        return Board.build(
             width,
             height,
             minesPosition,
