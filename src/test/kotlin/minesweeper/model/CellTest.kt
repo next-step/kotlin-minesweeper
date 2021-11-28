@@ -20,4 +20,14 @@ class CellTest {
         val cell = Cell.Number(MineCount.valueOf(1), Position(1, 1))
         assertThat(cell.adjustMineCount).isEqualTo(MineCount.valueOf(1))
     }
+
+    @Test
+    fun `Number Cell의 인접한 지뢰 개수를 증가시킬 수 있다`() {
+        val cell = Cell.Number(MineCount.valueOf(1), Position(1, 1))
+        val actual = cell.increment()
+
+        assertThat(actual).isEqualTo(
+            Cell.Number(MineCount.valueOf(2), Position(1, 1))
+        )
+    }
 }

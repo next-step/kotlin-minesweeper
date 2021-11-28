@@ -15,7 +15,14 @@ sealed class Cell {
     data class Number(
         val adjustMineCount: MineCount,
         override val position: Position
-    ) : Cell()
+    ) : Cell() {
+
+        init {
+            require(adjustMineCount != MineCount.ZERO)
+        }
+
+        fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
+    }
 
     data class Zero(override val position: Position) : Cell()
 
