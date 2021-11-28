@@ -11,7 +11,7 @@ class Cells(val cells: List<Cell>) {
             return List(size) { index: Int ->
                 val x = (index / width.value)
                 val y = (index % height.value)
-                Cell(x, y, "normal")
+                Cell(Position(x, y), "normal")
             }.let(::Cells)
         }
     }
