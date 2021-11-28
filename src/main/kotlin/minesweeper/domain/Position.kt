@@ -23,7 +23,7 @@ data class Position(val row: Row, val column: Column) : Comparable<Position> {
 value class Column(val value: Int) : Comparable<Column> {
 
     init {
-        require(value >= MIN_COLUMN_VALUE)
+        require(value >= START_VALUE)
     }
 
     override fun compareTo(other: Column): Int {
@@ -31,7 +31,7 @@ value class Column(val value: Int) : Comparable<Column> {
     }
 
     companion object {
-        private const val MIN_COLUMN_VALUE = 1
+        const val START_VALUE = 1
     }
 }
 
@@ -39,7 +39,7 @@ value class Column(val value: Int) : Comparable<Column> {
 value class Row(val value: Int) : Comparable<Row> {
 
     init {
-        require(value >= MIN_ROW_VALUE)
+        require(value >= START_VALUE)
     }
 
     override fun compareTo(other: Row): Int {
@@ -47,6 +47,6 @@ value class Row(val value: Int) : Comparable<Row> {
     }
 
     companion object {
-        private const val MIN_ROW_VALUE = 1
+        const val START_VALUE = 1
     }
 }
