@@ -1,9 +1,11 @@
 package minesweeper.model
 
+fun Board(width: Int, height: Int): Board = Board.create(Width.valueOf(width), Height.valueOf(height))
+
 fun Board(
     width: Int,
     height: Int,
-    mineCount: Int = 0
+    mineCount: Int
 ) = Board.shuffled(Width.valueOf(width), Height.valueOf(height), MineCount.valueOf(mineCount))
 
 fun Cells(vararg positions: Pair<Int, Int>): Cells = positions.map { (row, column) ->

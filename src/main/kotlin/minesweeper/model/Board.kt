@@ -11,10 +11,19 @@ class Board(val cells: Cells) {
     companion object {
         val EMPTY = Board(Cells.EMPTY)
 
+        fun create(width: Width, height: Height): Board {
+            if (width == Width.ZERO || height == Height.ZERO) {
+                return EMPTY
+            }
+            val positions = Position.list(width, height)
+            val cells: List<Cell> = positions.map { position -> Cell.Blank(position) }
+            return Board(Cells(cells))
+        }
+
         fun shuffled(
             width: Width,
             height: Height,
-            mineCount: MineCount = MineCount.ZERO
+            mineCount: MineCount
         ): Board {
             val size = width.value * height.value
             if (size == 0) return EMPTY
