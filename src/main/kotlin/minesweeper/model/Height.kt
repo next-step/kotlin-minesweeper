@@ -3,7 +3,7 @@ package minesweeper.model
 @JvmInline
 value class Height(val value: Int) {
 
-    init {
-        require(value > 0)
+    companion object {
+        val ZERO = Height(0)
     }
 }
