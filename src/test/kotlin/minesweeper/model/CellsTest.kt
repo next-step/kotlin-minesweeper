@@ -24,8 +24,8 @@ class CellsTest {
     fun `Row, Column에 해당하는 Cell을 확인할 수 있다`() {
         val cells = Cells(1 to 1, 1 to 2, 1 to 3, 2 to 1, 2 to 2, 2 to 3)
         assertAll(
-            { assertThat(cells.get(Row(1), Column(1))).isNotNull },
-            { assertThat(cells.get(Row(1), Column(10))).isNull() },
+            { assertThat(cells[1 to 1]).isNotNull },
+            { assertThat(cells[1 to 10]).isNull() },
         )
     }
 }
