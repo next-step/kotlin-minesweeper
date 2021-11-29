@@ -1,7 +1,7 @@
 package minesweeper.domain.area
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.assertThrows
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -15,6 +15,7 @@ internal class HeightTest {
     @ParameterizedTest
     @ValueSource(ints = [0, -1, -10])
     fun `0보다 작은 수를 입력하면 예외를 던진다`(value: Int) {
-        assertThrows<IllegalArgumentException> { (Height(value)) }
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { Height(value) }.withMessage("최소 0보다 커야합니다")
     }
 }

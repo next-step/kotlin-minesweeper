@@ -25,8 +25,9 @@ internal class BoardTest {
         val givenWidth = Width(2)
         val givenHeight = Height(2)
         val givenArea = Area(givenWidth, givenHeight)
+        val givenBlocks = listOf(None(), None(), None(), None())
 
-        assertThrows<IllegalArgumentException> { Board(givenArea, listOf(None(), None(), None(), None())) }
+        assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
     }
 
     @Test
