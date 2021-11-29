@@ -14,7 +14,8 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions, minePositions)
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -29,7 +30,8 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions, minePositions)
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -42,7 +44,8 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions, minePositions)
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -55,11 +58,25 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions, minePositions)
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
 
         // then
         assertAll({
             assertThat(cells[1].state.value).isEqualTo(-1)
         })
+    }
+
+    @Test
+    fun `카운트 수가 포지션 수보다 큰 경우 에러`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val cells = Cells.of(positions)
+
+        // when
+        val actual = runCatching { Cells.makeMineCells(cells, 101) }.exceptionOrNull()
+
+        // then
+        assertThat(actual).hasMessageContaining("카운트 수가 전체 수보다 큽니다.")
     }
 }

@@ -17,9 +17,9 @@ class CellStateTest {
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
-        val cellState = CellState.from(position, minePositions)
 
         // when
+        val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
         val adjacentMineCount = cellState.value
 
         // then
@@ -33,9 +33,10 @@ class CellStateTest {
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
-        val cellState = CellState.from(position, minePositions)
+
 
         // when
+        val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
         val cellType = cellState.cellType
 
         // then
@@ -49,9 +50,10 @@ class CellStateTest {
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
-        val cellState = CellState.from(position, minePositions)
+
 
         // when
+        val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
         val cellType = cellState.cellType
 
         // then

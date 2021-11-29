@@ -10,8 +10,9 @@ class MineSweeperController {
 
     fun start(inputView: InputView, resultView: ResultView) {
         val boardSize = BoardSize.of(inputView.inputWidth(), inputView.inputHeight())
+        val realBoard = Board.of(boardSize)
         val mineCount = inputView.inputMine()
-        val realBoard = Board.of(boardSize, mineCount)
+        realBoard.shuffleRandomMines(mineCount)
         resultView.boardView(MineSweeperDTO.of(realBoard.cells))
     }
 }

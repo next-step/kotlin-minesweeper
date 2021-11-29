@@ -1,5 +1,7 @@
 package minesweeper.domain.position
 
+import minesweeper.domain.cell.Cells
+
 data class Position private constructor(val x: Int, val y: Int) {
 
     lateinit var adjacentPositions: Positions
@@ -15,6 +17,8 @@ data class Position private constructor(val x: Int, val y: Int) {
 
         adjacentPositions = Positions.of(value)
     }
+
+    fun countingAdjacentMines(mineCells: Cells): Int = this.adjacentPositions.count { it in mineCells.toPositions() }
 
     companion object {
         fun of(x: Int, y: Int): Position {
