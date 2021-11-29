@@ -4,13 +4,13 @@ sealed class CellType {
 
     abstract fun print(): String
 
-    object MINE: CellType() {
+    object MINE : CellType() {
         override fun print(): String {
             return PRINT_MINE
         }
     }
 
-    object NONE: CellType() {
+    object NONE : CellType() {
         override fun print(): String {
             return PRINT_NONE
         }

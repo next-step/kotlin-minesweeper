@@ -21,7 +21,6 @@ class Board(
             val size = width.value.times(height.value)
             require(size >= mine.value)
 
-
             val cells = Cells.createCells(width, height)
             cells.cellList.shuffled().mapIndexed { index, cell ->
                 if (index < mine.value) {
