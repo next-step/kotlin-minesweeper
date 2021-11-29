@@ -8,6 +8,8 @@ import mine.Width
  * */
 class Cells(val cellList: List<Cell>) {
 
+    fun rowOfCells(row: Int): List<Cell> = cellList.filter { it.position.x == row }.sortedBy { it.position.y }
+
     companion object {
         fun createCells(width: Width, height: Height): Cells {
             val size = width.value * height.value

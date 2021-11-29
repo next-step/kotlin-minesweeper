@@ -11,12 +11,12 @@ object InputView {
     }
 
     fun inputWidth(): Width {
-        println("너비를 입력하세요.")
+        println("\n너비를 입력하세요.")
         return Width.value(readLine()?.toIntOrNull())
     }
 
     fun inputMineCount(): Mine {
-        println("지뢰는 몇 개인가요?")
+        println("\n지뢰는 몇 개인가요?")
         return Mine.value(readLine()?.toIntOrNull())
     }
 }

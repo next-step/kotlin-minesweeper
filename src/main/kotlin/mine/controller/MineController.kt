@@ -2,11 +2,15 @@ package mine.controller
 
 import mine.Board
 import mine.view.InputView
+import mine.view.OutputView
 
 object MineController {
 
-    fun run() {}
-    fun createGame(): Board {
+    fun run() {
+        OutputView.printBoard(createGame())
+    }
+
+    private fun createGame(): Board {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val mine = InputView.inputMineCount()
