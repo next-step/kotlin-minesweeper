@@ -8,9 +8,9 @@ import mine.cell.Cells
  * */
 class Board(
     val cells: Cells,
-    val width: Width,
-    val height: Height
 ) {
+    val width: Width = cells.row().plus(1).let(::Width)
+    val height: Height = cells.column().plus(1).let(::Height)
 
     companion object {
         fun createBoard(
@@ -30,7 +30,7 @@ class Board(
                 cell.typeOf(CellType.NONE)
             }
 
-            return Board(cells, width, height)
+            return Board(cells)
         }
     }
 }
