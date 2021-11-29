@@ -5,6 +5,7 @@ import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
 import minesweeper.domain.block.Mine
 import minesweeper.domain.block.None
+import minesweeper.domain.block.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,8 +17,13 @@ internal class BoardTest {
         val givenWidth = Width(2)
         val givenHeight = Height(2)
         val givenArea = Area(givenWidth, givenHeight)
-
-        assertThat(Board(givenArea, listOf(Mine(), None(), None(), None()))).isNotNull
+        val givenBlocks = listOf(
+            Mine(Position(0, 0)),
+            None(Position(0, 1)),
+            None(Position(1, 0)),
+            None(Position(1, 1))
+        )
+        assertThat(Board(givenArea, givenBlocks)).isNotNull
     }
 
     @Test
@@ -25,8 +31,12 @@ internal class BoardTest {
         val givenWidth = Width(2)
         val givenHeight = Height(2)
         val givenArea = Area(givenWidth, givenHeight)
-        val givenBlocks = listOf(None(), None(), None(), None())
-
+        val givenBlocks = listOf(
+            None(Position(0, 0)),
+            None(Position(0, 1)),
+            None(Position(1, 0)),
+            None(Position(1, 1))
+        )
         assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
     }
 
@@ -35,8 +45,11 @@ internal class BoardTest {
         val givenWidth = Width(2)
         val givenHeight = Height(2)
         val givenArea = Area(givenWidth, givenHeight)
-        val givenBlocks = listOf(Mine(), None(), None())
-
+        val givenBlocks = listOf(
+            None(Position(0, 0)),
+            None(Position(0, 1)),
+            None(Position(1, 0)),
+        )
         assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
     }
 }

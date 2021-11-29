@@ -1,3 +1,3 @@
 package minesweeper.domain.block
 
-class None : Block
+class None(val position: Position) : Block
