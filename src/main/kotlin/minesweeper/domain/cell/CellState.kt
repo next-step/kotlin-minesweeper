@@ -15,9 +15,7 @@ class CellState(val value: Int = 0, val cellType: CellType) {
         }
 
         private fun countingAdjacentMines(minePositions: Positions, currentPosition: Position) =
-            currentPosition.adjacentPositions.map {
-                it in minePositions
-            }.count { it }
+            currentPosition.adjacentPositions.count { it in minePositions }
 
         private const val IS_MINE_VALUE = -1
     }
