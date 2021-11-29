@@ -3,8 +3,7 @@ package minesweeper.domain.cell
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 
-class CellState(private val value: Int = 0, val cellType: CellType) {
-    fun getValue(): Int = value
+class CellState(val value: Int = 0, val cellType: CellType) {
 
     companion object {
         fun from(currentPosition: Position, minePositions: Positions): CellState {

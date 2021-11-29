@@ -13,7 +13,7 @@ class CellsTest {
     fun `100개의 셀에 3개의 지뢰를 넣었을 경우 위치가 정확한지 테스트`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions, minePositions)
 
         // then
@@ -28,12 +28,12 @@ class CellsTest {
     fun `셀에서 지뢰가 아닌 경우 인접한 지뢰가 없다면 값은 0이다`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
-            assertThat(cells[4].state.getValue()).isEqualTo(0)
+            assertThat(cells[4].state.value).isEqualTo(0)
         })
     }
 
@@ -41,12 +41,12 @@ class CellsTest {
     fun `셀에서 지뢰가 아닌 경우 인접한 지뢰가 있다면 인접한 지뢰 갯수를 표시 해준다`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
-            assertThat(cells[3].state.getValue()).isEqualTo(1)
+            assertThat(cells[3].state.value).isEqualTo(1)
         })
     }
 
@@ -54,12 +54,12 @@ class CellsTest {
     fun `셀에서 지뢰인 경우 값은 -1이다`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val minePositions = Positions(listOf(Position(1, 1), Position(1, 2), Position(1, 3)))
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
-            assertThat(cells[1].state.getValue()).isEqualTo(-1)
+            assertThat(cells[1].state.value).isEqualTo(-1)
         })
     }
 }

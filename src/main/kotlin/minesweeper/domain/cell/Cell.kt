@@ -3,7 +3,7 @@ package minesweeper.domain.cell
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 
-class Cell(val position: Position) {
+class Cell private constructor(val position: Position) {
 
     lateinit var state: CellState
         private set

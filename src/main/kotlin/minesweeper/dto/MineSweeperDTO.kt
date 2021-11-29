@@ -11,7 +11,7 @@ class MineSweeperDTO(val rows: List<String>) {
                 it.value.joinToString(BLACK) { cell ->
                     when (cell.state.cellType) {
                         CellType.IS_MINE -> MINE_ICON
-                        CellType.NOT_MINE -> cell.state.getValue().toString()
+                        CellType.NOT_MINE -> cell.state.value.toString()
                     }
                 }
             }
