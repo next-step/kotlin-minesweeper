@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource
 class PositionTest {
     @ParameterizedTest
     @CsvSource("1,1,3", "4,4,8", "1,9,5")
-    fun `각 포지션에 대해서는 인접한 포지션들이 있다` (x:Int, y:Int, count : Int) {
+    fun `각 포지션에 대해서는 인접한 포지션들이 있다`(x: Int, y: Int, count: Int) {
         // given
         val position = Position.of(x, y)
         position.updateAdjacentPositions(Positions.of(BoardSize.of(10, 10)))
@@ -23,7 +23,7 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource("1,4,1", "2,1,2", "2,2,3", "4,4,0")
-    fun `포지션에 대해 인접한 지뢰 갯수를 구한다` (x:Int, y:Int, count : Int) {
+    fun `포지션에 대해 인접한 지뢰 갯수를 구한다`(x: Int, y: Int, count: Int) {
         // given
         val position = Position.of(x, y)
         position.updateAdjacentPositions(Positions.of(BoardSize.of(10, 10)))

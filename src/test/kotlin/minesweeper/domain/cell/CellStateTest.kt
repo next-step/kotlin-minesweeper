@@ -59,4 +59,20 @@ class CellStateTest {
         // then
         assertThat(cellType).isEqualTo(CellType.IS_MINE)
     }
+
+    @Test
+    fun `처음 만들어진 셀은 숨김처리 되어 있다`() {
+        // given
+        val position = Position.of(1, 1)
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
+        val allPositions = Positions(listOf(position) + minePositions)
+        position.updateAdjacentPositions(allPositions)
+
+
+        // when
+        val isHidden = CellState.from(Cell.of(position), Cells.of(minePositions)).isHidden
+
+        // then
+        assertThat(isHidden).isEqualTo(true)
+    }
 }
