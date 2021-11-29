@@ -18,6 +18,17 @@ data class Position(val row: Row, val column: Column) {
 
     fun bottomRight(): Position = Position(row = row.increment(), column = column.increment())
 
+    fun asDirections(): List<Position> = listOf(
+        top(),
+        topRight(),
+        topLeft(),
+        right(),
+        left(),
+        bottom(),
+        bottomRight(),
+        bottomLeft()
+    )
+
     companion object {
         fun list(width: Width, height: Height): List<Position> = List(width.value * height.value) { index ->
             val row = (index / width.value) + 1

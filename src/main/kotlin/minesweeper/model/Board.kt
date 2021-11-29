@@ -8,7 +8,10 @@ class Board(val cells: Cells) {
 
     val mineCount: MineCount = cells.mineCount()
 
-    fun mine(position: Position): Board = Board(cells.mine(position))
+    fun mine(position: Position): Board = cells
+        .mine(position)
+        .incrementAll(position.asDirections())
+        .let { Board(it) }
 
     companion object {
         val EMPTY = Board(Cells.EMPTY)

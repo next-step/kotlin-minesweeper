@@ -12,6 +12,8 @@ sealed class Cell {
         else -> Mine(position)
     }
 
+    abstract fun increment(): Cell
+
     data class Number(
         val adjustMineCount: MineCount,
         override val position: Position
@@ -21,10 +23,16 @@ sealed class Cell {
             require(adjustMineCount != MineCount.ZERO)
         }
 
-        fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
+        override fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
     }
 
-    data class Zero(override val position: Position) : Cell()
+    data class Zero(override val position: Position) : Cell() {
 
-    data class Mine(override val position: Position) : Cell()
+        override fun increment(): Cell = Number(MineCount.valueOf(1), position)
+    }
+
+    data class Mine(override val position: Position) : Cell() {
+
+        override fun increment(): Cell = this
+    }
 }

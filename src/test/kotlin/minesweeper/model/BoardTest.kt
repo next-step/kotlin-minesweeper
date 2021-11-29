@@ -42,4 +42,20 @@ class BoardTest {
         val actual = board.mine(position)
         assertThat(actual.cells[position]).isEqualTo(Cell.Mine(position))
     }
+
+    @Test
+    fun `Position의 Cell에 지뢰를 심으면 주변 Cell의 숫자가 증가한다`() {
+        val board = Board(width = 2, height = 2)
+        val actual = board.mine(Position(2, 2))
+        assertAll(
+            {
+                assertThat(actual.cells[Position(1, 1)])
+                    .isEqualTo(Cell.Number(MineCount.valueOf(1), Position(1, 1)))
+            },
+            {
+                assertThat(actual.cells[Position(1, 2)])
+                    .isEqualTo(Cell.Number(MineCount.valueOf(1), Position(1, 2)))
+            }
+        )
+    }
 }
