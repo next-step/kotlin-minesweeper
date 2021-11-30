@@ -34,13 +34,11 @@ class CellStateTest {
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
 
-
         // when
         val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
-        val cellType = cellState.cellType
 
         // then
-        assertThat(cellType).isEqualTo(CellType.NOT_MINE)
+        assertThat(cellState.isNotMineCell()).isTrue
     }
 
     @Test
@@ -51,13 +49,11 @@ class CellStateTest {
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
 
-
         // when
         val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
-        val cellType = cellState.cellType
 
         // then
-        assertThat(cellType).isEqualTo(CellType.IS_MINE)
+        assertThat(cellState.isNotMineCell()).isFalse
     }
 
     @Test
@@ -68,11 +64,26 @@ class CellStateTest {
         val allPositions = Positions(listOf(position) + minePositions)
         position.updateAdjacentPositions(allPositions)
 
-
         // when
         val isHidden = CellState.from(Cell.of(position), Cells.of(minePositions)).isHidden
 
         // then
         assertThat(isHidden).isEqualTo(true)
+    }
+
+    @Test
+    fun `해당 셀을 보이도록 만듬`() {
+        // given
+        val position = Position.of(1, 1)
+        val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
+        val allPositions = Positions(listOf(position) + minePositions)
+        position.updateAdjacentPositions(allPositions)
+        val cellState = CellState.from(Cell.of(position), Cells.of(minePositions))
+
+        // when
+        cellState.isVisible()
+
+        // then
+        assertThat(cellState.isHidden).isFalse
     }
 }

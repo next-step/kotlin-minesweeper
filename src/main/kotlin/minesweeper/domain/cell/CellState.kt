@@ -6,6 +6,14 @@ class CellState(
     val cellType: CellType
 ) {
 
+    fun isOpenedMine(): Boolean = !isHidden && cellType == CellType.IS_MINE
+
+    fun isNotMineCell(): Boolean = cellType == CellType.NOT_MINE
+
+    fun isVisible() {
+        isHidden = false
+    }
+
     companion object {
         fun from(currentCell: Cell, mineCells: Cells): CellState {
             if (mineCells.contains(currentCell)) {

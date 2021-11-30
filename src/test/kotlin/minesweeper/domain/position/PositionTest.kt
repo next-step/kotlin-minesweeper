@@ -3,10 +3,21 @@ package minesweeper.domain.position
 import minesweeper.domain.board.BoardSize
 import minesweeper.domain.cell.Cells
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class PositionTest {
+
+    @Test
+    fun `포지션의 x,y가 -1인 경우`() {
+        // given
+        val actual = runCatching { Position.of(-1, -1) }.exceptionOrNull()
+
+        // then
+        assertThat(actual).hasMessageContaining("x와 y는 -1 보다 커야 합니다.")
+    }
+
     @ParameterizedTest
     @CsvSource("1,1,3", "4,4,8", "1,9,5")
     fun `각 포지션에 대해서는 인접한 포지션들이 있다`(x: Int, y: Int, count: Int) {

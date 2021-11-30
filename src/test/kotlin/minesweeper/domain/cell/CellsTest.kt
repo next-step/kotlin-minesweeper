@@ -79,4 +79,65 @@ class CellsTest {
         // then
         assertThat(actual).hasMessageContaining("카운트 수가 전체 수보다 큽니다.")
     }
+
+    @Test
+    fun `지뢰를 오픈 했을 경우`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
+
+        // when
+        cells.open(Position.of(1, 1))
+
+        // then
+        assertThat(cells.isOpenedMine()).isTrue
+    }
+
+    @Test
+    fun `지뢰를 제외 한 나머지를 오픈했을 경우`() {
+        // given
+        val positions = Positions.of(BoardSize.of(1, 4))
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
+
+        // when
+        cells.open(Position.of(4, 1))
+
+        // then
+        assertThat(cells.isAllOpenedExcludeMine()).isTrue
+    }
+
+    @Test
+    fun `잘못 된 셀을 오픈했을 경우`() {
+        // given
+        val positions = Positions.of(BoardSize.of(1, 4))
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
+
+        // when
+        val actual = runCatching { cells.open(Position.of(4, 99)) }.exceptionOrNull()
+
+        // then
+        assertThat(actual).hasMessageContaining("해당 셀을 찾을 수 없습니다.")
+    }
+
+    @Test
+    fun `값이 0인 셀을 오픈했을 경우 열리는 셀 갯수 테스트`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions)
+        cells.change(Cells.of(minePositions))
+
+        // when
+        cells.open(Position.of(4, 4))
+
+        // then
+
+        assertThat(cells.count { !it.state.isHidden }).isEqualTo(97)
+    }
 }

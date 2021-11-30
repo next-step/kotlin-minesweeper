@@ -2,7 +2,9 @@ package minesweeper.controller
 
 import minesweeper.domain.board.Board
 import minesweeper.domain.board.BoardSize
+import minesweeper.domain.position.Position
 import minesweeper.dto.MineSweeperDTO
+import minesweeper.utils.StringUtils
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -13,6 +15,18 @@ class MineSweeperController {
         val realBoard = Board.of(boardSize)
         val mineCount = inputView.inputMine()
         realBoard.shuffleRandomMines(mineCount)
-        resultView.boardView(MineSweeperDTO.of(realBoard.cells))
+        resultView.gameStartView()
+        while (!realBoard.isAllOpenedExcludeMine()) {
+            val (x, y) = StringUtils.split(inputView.inputOpenPosition())
+            realBoard.open(Position.of(x, y))
+            if (realBoard.isOpenedMine()) {
+                resultView.loseResultView()
+                break
+            }
+            resultView.boardView(MineSweeperDTO.of(realBoard.cells))
+        }
+        if(realBoard.isAllOpenedExcludeMine()) {
+            resultView.winResultView()
+        }
     }
 }

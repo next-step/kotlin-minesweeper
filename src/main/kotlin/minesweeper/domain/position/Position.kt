@@ -18,6 +18,9 @@ data class Position private constructor(val x: Int, val y: Int) {
         adjacentPositions = Positions.of(value)
     }
 
+    fun containsAdjacentPositions(otherPosition: Position): Boolean =
+        otherPosition in adjacentPositions
+
     fun countingAdjacentMines(mineCells: Cells): Int = this.adjacentPositions.count { it in mineCells.toPositions() }
 
     companion object {

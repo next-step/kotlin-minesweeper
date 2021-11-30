@@ -15,4 +15,9 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         return readLine()!!.toInt()
     }
+
+    fun inputOpenPosition(): String {
+        print("open: ")
+        return readLine()!!
+    }
 }
