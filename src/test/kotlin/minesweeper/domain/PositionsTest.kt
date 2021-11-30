@@ -24,6 +24,19 @@ class PositionsTest {
     }
 
     @Test
+    fun `row와 column의 범위가 주어지면 존재하지 않는 Position은 제외하고 Positions를 만든다`() {
+        val result = Positions.from(rowRange = -1..10, columnRange = -1..5)
+
+        val rows = result.positions.map { it.row.value }.distinct()
+        val columns = result.positions.map { it.column.value }.distinct()
+        assertAll(
+            { assertThat(result.positions).hasSize(10 * 5) },
+            { assertThat(rows).containsExactlyElementsOf(1..10) },
+            { assertThat(columns).containsExactlyElementsOf(1..5) },
+        )
+    }
+
+    @Test
     fun `index들이 주어지면 새로운 Positions를 구한다`() {
         val positions = listOf(
             Position.from(1, 1),

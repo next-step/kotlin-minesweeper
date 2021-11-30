@@ -20,12 +20,14 @@ class Positions(val positions: List<Position>) {
 
     operator fun contains(position: Position) = position in positions
 
+    operator fun minus(position: Position) = Positions(positions - position)
+
     companion object {
 
         fun from(rowRange: IntRange, columnRange: IntRange): Positions {
             val positions = rowRange.flatMap { row ->
-                columnRange.map { column ->
-                    Position.from(row = row, column = column)
+                columnRange.mapNotNull { column ->
+                    findPosition(row, column)
                 }
             }
             return Positions(positions)
@@ -36,6 +38,14 @@ class Positions(val positions: List<Position>) {
                 rowRange = Row.START_VALUE..height.value,
                 columnRange = Column.START_VALUE..width.value,
             )
+        }
+
+        private fun findPosition(row: Int, column: Int): Position? {
+            return try {
+                Position.from(row = row, column = column)
+            } catch (_: Exception) {
+                null
+            }
         }
     }
 }
