@@ -13,7 +13,7 @@ internal class HeightTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @ValueSource(ints = [1, 10, 100, 1000, Integer.MAX_VALUE])
-    fun `1이상의 숫자로 이루어진다`(heightInt: Int) {
+    fun `1이상의 값으로 이루어진다`(heightInt: Int) {
         val height = Height(heightInt)
 
         assertAll(
