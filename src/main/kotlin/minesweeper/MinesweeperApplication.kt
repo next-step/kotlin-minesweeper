@@ -3,6 +3,7 @@ package minesweeper
 import global.strategy.ConsoleInputStrategy
 import global.strategy.ConsoleOutputStrategy
 import minesweeper.domain.Height
+import minesweeper.domain.MinesCount
 import minesweeper.domain.Width
 import minesweeper.ui.ErrorView
 import minesweeper.ui.InputView
@@ -18,13 +19,13 @@ class MinesweeperApplication(
 
         val height = askHeight()
         val width = askWidth()
-        val numberOfMines = inputView.askNumberOfMines()
+        val minesCount = askMinesCount()
 
         val board = (0 until height.height)
             .map { (0 until width.width).map { 99 }.toMutableList() }
             .toMutableList()
 
-        setMine(numberOfMines, width.width, height.height, board)
+        setMine(minesCount.minesCount, width.width, height.height, board)
 
         for ((x, mutableList) in board.withIndex()) {
             for ((y, element) in mutableList.withIndex()) {
@@ -50,23 +51,29 @@ class MinesweeperApplication(
         )
     }
 
-    private fun askHeight(): Height {
-        return try {
+    private fun askMinesCount(): MinesCount =
+        try {
+            MinesCount(inputView.askMinesCount())
+        } catch (e: Exception) {
+            errorView.alert(e.message.toString())
+            askMinesCount()
+        }
+
+    private fun askHeight(): Height =
+        try {
             Height(inputView.askHeight())
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
             askHeight()
         }
-    }
 
-    private fun askWidth(): Width {
-        return try {
+    private fun askWidth(): Width =
+        try {
             Width(inputView.askWidth())
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
             askWidth()
         }
-    }
 
     // 랜덤 값으로 지뢰 주입
     fun setMine(numberOfMines: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
