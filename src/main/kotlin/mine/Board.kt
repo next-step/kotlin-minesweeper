@@ -22,7 +22,7 @@ class Board(
             require(size >= mine.value)
 
             val cells = Cells.createCells(width, height)
-            cells.cellList.shuffled().mapIndexed { index, cell ->
+            cells.values.shuffled().mapIndexed { index, cell ->
                 if (index < mine.value) {
                     cell.typeOf(CellType.MINE)
                     return@mapIndexed
