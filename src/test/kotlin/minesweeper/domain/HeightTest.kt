@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import minesweeper.exception.InvalidHeightRangeException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -23,9 +24,9 @@ internal class HeightTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @ValueSource(ints = [0, -1, -10, -100, Integer.MIN_VALUE])
-    fun `0이하의 값으로 이루어질 수 없다`() {
-        val exception = assertThrows<InvalidHeightRangeException> { Height(0) }
+    fun `0이하의 값으로 이루어질 수 없다`(heightInt: Int) {
+        val exception = assertThrows<InvalidHeightRangeException> { Height(heightInt) }
 
-        assertThat(exception.messgae).isEqualTo("'%s'는 올바른 Height 의 범위가 아닙니다.")
+        assertThat(exception.message).isEqualTo("'%s'는 올바른 Height 의 범위가 아닙니다.".format(heightInt))
     }
 }

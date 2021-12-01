@@ -1,10 +1,12 @@
 package minesweeper.domain
 
+import minesweeper.exception.InvalidHeightRangeException
+
 @JvmInline
 value class Height(val height: Int = DEFAULT_HEIGHT) {
     init {
         if (height < DEFAULT_HEIGHT) {
-            throw IllegalArgumentException()
+            throw InvalidHeightRangeException(height)
         }
     }
 
