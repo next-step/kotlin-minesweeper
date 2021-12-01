@@ -67,7 +67,7 @@ class MinesweeperApplication(
 
     fun setNumber(row: Int, column: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
         if (board[row][column] == 99) {
-            board[row][column] = getMineNumber(row, column, width, height, board);
+            board[row][column] = getMineNumber(row, column, width, height, board)
         }
     }
 
@@ -78,16 +78,16 @@ class MinesweeperApplication(
         height: Int,
         board: MutableList<MutableList<Int>>
     ): Int {
-        var mineCnt = 0;
-        if (isExistMine(row - 1, column - 1, width, height, board)) mineCnt++;
-        if (isExistMine(row - 1, column, width, height, board)) mineCnt++;
-        if (isExistMine(row - 1, column + 1, width, height, board)) mineCnt++;
-        if (isExistMine(row, column - 1, width, height, board)) mineCnt++;
-        if (isExistMine(row, column + 1, width, height, board)) mineCnt++;
-        if (isExistMine(row + 1, column - 1, width, height, board)) mineCnt++;
-        if (isExistMine(row + 1, column, width, height, board)) mineCnt++;
-        if (isExistMine(row + 1, column + 1, width, height, board)) mineCnt++;
-        return mineCnt;
+        var mineCnt = 0
+        if (isExistMine(row - 1, column - 1, width, height, board)) mineCnt++
+        if (isExistMine(row - 1, column, width, height, board)) mineCnt++
+        if (isExistMine(row - 1, column + 1, width, height, board)) mineCnt++
+        if (isExistMine(row, column - 1, width, height, board)) mineCnt++
+        if (isExistMine(row, column + 1, width, height, board)) mineCnt++
+        if (isExistMine(row + 1, column - 1, width, height, board)) mineCnt++
+        if (isExistMine(row + 1, column, width, height, board)) mineCnt++
+        if (isExistMine(row + 1, column + 1, width, height, board)) mineCnt++
+        return mineCnt
     }
 
     private fun isExistMine(
@@ -98,7 +98,7 @@ class MinesweeperApplication(
         board: MutableList<MutableList<Int>>
     ): Boolean {
         if (row < 0 || row >= width || column < 0 || column >= height) {
-            return false;
+            return false
         }
 
         return board[row][column] == -1
