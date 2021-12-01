@@ -3,14 +3,14 @@ package minesweeper.domain
 import minesweeper.exception.InvalidWidthRangeException
 
 @JvmInline
-value class Width(val width: Int) {
+value class Width(val width: Int = DEFAULT_WIDTH) {
     init {
-        if (width < DEFAULT_HEIGHT) {
+        if (width < DEFAULT_WIDTH) {
             throw InvalidWidthRangeException(width)
         }
     }
 
     companion object {
-        const val DEFAULT_HEIGHT = 1
+        const val DEFAULT_WIDTH = 1
     }
 }
