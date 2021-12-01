@@ -14,13 +14,19 @@ class Cells(val values: List<Cell>) {
         values.filter { it.position.x == row }.sortedBy { it.position.y }.let(::Cells)
 
     companion object {
-        fun createCells(width: Width, height: Height): Cells {
+        fun createCells(width: Width, height: Height, mineCount: Int): Cells {
             val size = width.value * height.value
             return List(size) { index: Int ->
                 val x = (index / width.value)
                 val y = (index % height.value)
-                NoneCell(Position(x, y))
-            }.let(::Cells)
+                Position(x, y)
+            }.shuffled()
+                .mapIndexed { index, position ->
+                    when {
+                        index < mineCount -> MineCell(position)
+                        else -> NoneCell(position)
+                    }
+                }.let(::Cells)
         }
     }
 }

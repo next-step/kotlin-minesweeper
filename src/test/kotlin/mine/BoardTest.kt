@@ -12,8 +12,8 @@ class BoardTest {
         val height = 10
         val board = Board.createBoard(Width(width), Height(height))
 
-        assertThat(board.width).isEqualTo(Width.value(width))
-        assertThat(board.height).isEqualTo(Height.value(height))
+        assertThat(board.cells.row()).isEqualTo(width)
+        assertThat(board.cells.column()).isEqualTo(height)
     }
 
     @Test

@@ -10,7 +10,7 @@ class CellsTest {
         val width = Width(10)
         val height = Height(10)
 
-        val cells = Cells.createCells(width, height)
+        val cells = Cells.createCells(width, height, 0)
 
         assertThat(cells.values.size).isEqualTo(100)
     }
