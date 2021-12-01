@@ -17,7 +17,7 @@ class BoardTest {
     }
 
     @Test
-    fun `너비와 높이의 값이 0보다 작은 경우`() {
+    fun `너비와 높이의 값이 0보다 작은 경우 예외가 발생한다`() {
         val width = -1
         val height = 10
 
