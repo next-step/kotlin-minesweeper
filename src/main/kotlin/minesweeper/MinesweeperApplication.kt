@@ -25,13 +25,15 @@ class MinesweeperApplication(
         setMine(numberOfMines, width, height, board)
 
         outputView.startGame()
-        println(board.joinToString(separator = "\n") {
-            it.fold(StringBuilder()) { acc: StringBuilder, i: Int ->
-                acc.append(
-                    if (i == -1) "*" else "C"
-                )
+        println(
+            board.joinToString(separator = "\n") {
+                it.fold(StringBuilder()) { acc: StringBuilder, i: Int ->
+                    acc.append(
+                        if (i == -1) "*" else "C"
+                    )
+                }
             }
-        })
+        )
     }
 
     // 랜덤 값으로 지뢰 주입

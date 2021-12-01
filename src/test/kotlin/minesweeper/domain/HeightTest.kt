@@ -15,7 +15,7 @@ internal class HeightTest {
 
         assertAll(
             { assertThat(height).isNotNull },
-            { assertThat(height).isExactlyInstanceOf(height) },
+            { assertThat(height).isExactlyInstanceOf(Height::class.java) },
         )
     }
 }
