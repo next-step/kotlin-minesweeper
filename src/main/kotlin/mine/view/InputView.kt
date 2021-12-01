@@ -17,6 +17,6 @@ object InputView {
 
     fun inputMineCount(): Mine {
         println("\n지뢰는 몇 개인가요?")
-        return Mine.value(readLine()?.toIntOrNull())
+        return Mine.valueOf(readLine()?.toIntOrNull())
     }
 }

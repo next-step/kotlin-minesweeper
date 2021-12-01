@@ -1,7 +1,7 @@
 package mine
 
-import mine.cell.CellType
 import mine.cell.Cells
+import mine.cell.MineCell
 
 /**
  * 게임 판 관리
@@ -24,10 +24,9 @@ class Board(
             val cells = Cells.createCells(width, height)
             cells.values.shuffled().mapIndexed { index, cell ->
                 if (index < mine.value) {
-                    cell.typeOf(CellType.MINE)
+                    MineCell(cell.position)
                     return@mapIndexed
                 }
-                cell.typeOf(CellType.NONE)
             }
 
             return Board(cells)
