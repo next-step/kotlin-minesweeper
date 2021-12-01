@@ -3,6 +3,7 @@ package minesweeper
 import global.strategy.ConsoleInputStrategy
 import global.strategy.ConsoleOutputStrategy
 import minesweeper.domain.Height
+import minesweeper.domain.Width
 import minesweeper.ui.ErrorView
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
@@ -16,18 +17,18 @@ class MinesweeperApplication(
     fun execute() {
 
         val height = askHeight()
-        val width = inputView.askWidth()
+        val width = askWidth()
         val numberOfMines = inputView.askNumberOfMines()
 
         val board = (0 until height.height)
-            .map { (0 until width).map { 99 }.toMutableList() }
+            .map { (0 until width.width).map { 99 }.toMutableList() }
             .toMutableList()
 
-        setMine(numberOfMines, width, height.height, board)
+        setMine(numberOfMines, width.width, height.height, board)
 
         for ((x, mutableList) in board.withIndex()) {
             for ((y, element) in mutableList.withIndex()) {
-                setNumber(x, y, width, height.height, board)
+                setNumber(x, y, width.width, height.height, board)
             }
         }
 
@@ -47,6 +48,24 @@ class MinesweeperApplication(
                 }
             }
         )
+    }
+
+    private fun askHeight(): Height {
+        return try {
+            Height(inputView.askHeight())
+        } catch (e: Exception) {
+            errorView.alert(e.message.toString())
+            askHeight()
+        }
+    }
+
+    private fun askWidth(): Width {
+        return try {
+            Width(inputView.askWidth())
+        } catch (e: Exception) {
+            errorView.alert(e.message.toString())
+            askWidth()
+        }
     }
 
     // 랜덤 값으로 지뢰 주입
@@ -102,15 +121,6 @@ class MinesweeperApplication(
         }
 
         return board[row][column] == -1
-    }
-
-    private fun askHeight(): Height {
-        return try {
-            Height(inputView.askHeight())
-        } catch (e: Exception) {
-            errorView.alert(e.message.toString())
-            askHeight()
-        }
     }
 }
 
