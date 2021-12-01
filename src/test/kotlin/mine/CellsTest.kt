@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class CellsTest {
     @Test
-    fun `보드 크기의 cell 개수를 생성한다`() {
+    fun `10 * 10의 보드 크기를 만들면 100개의 cell이 생성된다`() {
         val width = Width(10)
         val height = Height(10)
 
