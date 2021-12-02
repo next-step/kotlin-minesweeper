@@ -1,6 +1,9 @@
 package minesweeper.domain
 
-object MineCell : Cell {
+class MineCell : Cell {
+
+    override val aroundMineCount: MineCount
+        get() = throw UnsupportedOperationException()
 
     override fun isMine() = true
 }

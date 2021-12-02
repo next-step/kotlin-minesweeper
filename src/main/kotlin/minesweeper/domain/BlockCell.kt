@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-object BlockCell : Cell {
+class BlockCell(override val aroundMineCount: MineCount) : Cell {
 
     override fun isMine() = false
 }
