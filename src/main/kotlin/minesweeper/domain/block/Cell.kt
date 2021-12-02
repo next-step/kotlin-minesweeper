@@ -1,5 +1,5 @@
 package minesweeper.domain.block
 
-class Cell : Square() {
+class Cell : Block() {
     override fun isMines(): Boolean = false
 }

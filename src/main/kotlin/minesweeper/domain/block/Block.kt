@@ -1,5 +1,5 @@
 package minesweeper.domain.block
 
-sealed class Square {
+sealed class Block {
     abstract fun isMines(): Boolean
 }
