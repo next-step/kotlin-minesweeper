@@ -16,12 +16,6 @@ class BoardTest {
     }
 
     @Test
-    fun `보드는 MineCount를 가진다`() {
-        val board = Board(width = 2, height = 2, mineCount = 4)
-        assertThat(board.mineCount).isEqualTo(MineCount.valueOf(4))
-    }
-
-    @Test
     fun `Width나 Height이 0이면 보드는 비어있다`() {
         val board = Board(width = 0, height = 2)
         assertThat(board).isEqualTo(Board.EMPTY)

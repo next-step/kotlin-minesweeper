@@ -7,8 +7,6 @@ value class Cells(private val cells: List<Cell>) {
 
     fun maxRowOrNull(): Row? = cells.maxByOrNull { it.row.value }?.row
 
-    fun mineCount(): MineCount = MineCount.valueOf(cells.count { it is Cell.Mine })
-
     operator fun get(position: Position): Cell? = cells.find { it.row == position.row && it.column == position.column }
 
     fun mine(position: Position): Cells = update(

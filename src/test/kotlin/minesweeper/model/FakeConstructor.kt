@@ -6,7 +6,19 @@ fun Board(
     width: Int,
     height: Int,
     mineCount: Int
-) = Board.shuffled(Width.valueOf(width), Height.valueOf(height), MineCount.valueOf(mineCount))
+): Board {
+    val size = width * height
+    if (size == 0) return Board.EMPTY
+    val positions = Position.list(Width.valueOf(width), Height.valueOf(height)).shuffled()
+    val cells = positions.mapIndexed { index, position ->
+        if (index < mineCount) {
+            Cell.Mine(position)
+        } else {
+            Cell.Zero(position)
+        }
+    }
+    return Board(Cells(cells))
+}
 
 fun Cells(vararg positions: Pair<Int, Int>): Cells = positions.map { (row, column) ->
     Cell.Zero(Position(row, column))
