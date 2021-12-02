@@ -1,5 +1,6 @@
 package minesweeper.domain.block
 
+import minesweeper.exception.InvalidPositionRangeException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.assertAll
@@ -22,7 +23,7 @@ internal class PositionTest {
     }
 
     @ParameterizedTest(name = "입력 값: {0},{1}")
-    @CsvSource(value = ["-1:0", "-10:0", "0:-10", "-1:-10"], delimiter = ':')
+    @CsvSource(value = ["-10:0", "0:-10", "-1:-10"], delimiter = ':')
     fun `0미만의 값으로 이루어질 수 없다`(x: Int, y: Int) {
         val exception = assertThrows<InvalidPositionRangeException> { Position(x, y) }
 
