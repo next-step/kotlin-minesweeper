@@ -22,7 +22,11 @@ class MinesweeperApplication(
         val minesCount = askMinesCount()
 
         val board = (0 until height.height)
-            .map { (0 until width.width).map { 99 }.toMutableList() }
+            .map { (
+                0 until width.width)
+                .map { 99 }
+                .toMutableList()
+            }
             .toMutableList()
 
         setMine(minesCount.minesCount, width.width, height.height, board)
@@ -137,3 +141,5 @@ fun main() {
     val errorView = ErrorView(ConsoleOutputStrategy)
     MinesweeperApplication(inputView, outputView, errorView).execute()
 }
+
+// 여는 작업
