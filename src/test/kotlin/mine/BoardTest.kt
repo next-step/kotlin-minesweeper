@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 class BoardTest {
 
     @Test
-    fun `너비와 높이 크기의 게임이 생성된다`() {
+    fun `너비가 10, 높이가 10 크기의 게임이 보드가 생성된다`() {
         val width = 10
         val height = 10
         val board = Board.createBoard(Width(width), Height(height))
