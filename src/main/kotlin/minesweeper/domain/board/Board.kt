@@ -4,19 +4,15 @@ import minesweeper.domain.cell.Cells
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 
-@JvmInline
-value class Board(val cells: Cells) {
+class Board(val cells: Cells) {
 
-    fun open(position: Position) {
+    fun open(position: Position): BoardState {
         cells.open(position)
-    }
-
-    fun isOpenedMine(): Boolean {
-        return cells.isOpenedMine()
-    }
-
-    fun isAllOpenedExcludeMine(): Boolean {
-        return cells.isAllOpenedExcludeMine()
+        return when {
+            cells.isOpenedMine() -> BoardState.BOMB
+            cells.isAllOpenedExcludeMine() -> BoardState.NOT_EXIST_MINE
+            else -> BoardState.EXIST_MINE
+        }
     }
 
     companion object {

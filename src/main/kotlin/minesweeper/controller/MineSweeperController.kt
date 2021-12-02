@@ -2,6 +2,7 @@ package minesweeper.controller
 
 import minesweeper.domain.board.Board
 import minesweeper.domain.board.BoardSize
+import minesweeper.domain.board.BoardState
 import minesweeper.domain.position.Position
 import minesweeper.dto.MineSweeperDTO
 import minesweeper.utils.StringUtils
@@ -15,17 +16,18 @@ class MineSweeperController {
         val mineCount = inputView.inputMine()
         val realBoard = Board.of(boardSize, mineCount)
         resultView.gameStartView()
-        while (!realBoard.isAllOpenedExcludeMine()) {
-            val (x, y) = StringUtils.split(inputView.inputOpenPosition())
-            realBoard.open(Position.of(x, y))
-            if (realBoard.isOpenedMine()) {
-                resultView.loseResultView()
-                break
+        gameInProgress(realBoard, resultView)
+    }
+
+    private tailrec fun gameInProgress(board: Board, resultView: ResultView) {
+        val (x, y) = StringUtils.split(InputView.inputOpenPosition())
+        when (board.open(Position.of(x, y))) {
+            BoardState.EXIST_MINE -> {
+                resultView.boardView(MineSweeperDTO.of(board.cells))
+                gameInProgress(board, resultView)
             }
-            resultView.boardView(MineSweeperDTO.of(realBoard.cells))
-        }
-        if (realBoard.isAllOpenedExcludeMine()) {
-            resultView.winResultView()
+            BoardState.BOMB -> resultView.loseResultView()
+            BoardState.NOT_EXIST_MINE -> resultView.winResultView()
         }
     }
 }
