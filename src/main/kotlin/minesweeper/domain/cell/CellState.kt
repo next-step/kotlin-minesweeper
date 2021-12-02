@@ -1,7 +1,7 @@
 package minesweeper.domain.cell
 
 class CellState(
-    val value: Int = 0,
+    val value: Int,
     var isHidden: Boolean = true,
     val cellType: CellType
 ) {
