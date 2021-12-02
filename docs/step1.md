@@ -24,6 +24,7 @@
 * [x] 지뢰 수(minesCount: Int)
     * [x] 0이상의 값만 가능
 * [] 블록 
-    * Point(x: Int, y:Int) -> 추후 X/Y 값으로 Board에서 특정 셀을 찾기 위함 
+    * Position(x: Int, y:Int) -> 추후 X/Y 값으로 Board에서 특정 셀을 찾기 위함 
     * isMines():Boolean 를 가지고 있어야한다.  
-    
+* [] 위치
+    * [] x/y는 0 이상의 값이어야 한다
