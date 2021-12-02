@@ -1,6 +1,7 @@
 package domain
 
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -48,6 +49,25 @@ internal class MinesPositionTest {
             1
         )
 
-        Assertions.assertEquals(1, minesPosition.size)
+        assertEquals(1, minesPosition.size)
+    }
+
+    @Test
+    fun `마인의 주변 8개 사각형에 마인개수를 하나씩 추가한다`() {
+        val minesPosition = MinesPosition(
+            listOf(Position(2, 2))
+        )
+
+        assertAll(
+            "주변 8개 사각형 마인개수 생성 테스트",
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(1, 1))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(1, 2))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(1, 3))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(2, 1))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(2, 3))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(3, 1))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(3, 2))) },
+            { assertEquals(1, minesPosition.getMineCountByPosition(Position(3, 3))) },
+        )
     }
 }
