@@ -15,7 +15,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -31,7 +31,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -45,7 +45,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -59,7 +59,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // then
         assertAll({
@@ -86,7 +86,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // when
         cells.open(Position.of(1, 1))
@@ -101,7 +101,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(1, 4))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // when
         cells.open(Position.of(4, 1))
@@ -116,7 +116,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(1, 4))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // when
         val actual = runCatching { cells.open(Position.of(4, 99)) }.exceptionOrNull()
@@ -131,7 +131,7 @@ class CellsTest {
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
         val cells = Cells.of(positions)
-        cells.change(Cells.of(minePositions))
+        cells.inputMineCells(Cells.of(minePositions))
 
         // when
         cells.open(Position.of(4, 4))

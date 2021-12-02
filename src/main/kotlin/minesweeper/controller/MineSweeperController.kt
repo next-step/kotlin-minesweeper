@@ -12,9 +12,8 @@ class MineSweeperController {
 
     fun start(inputView: InputView, resultView: ResultView) {
         val boardSize = BoardSize.of(inputView.inputWidth(), inputView.inputHeight())
-        val realBoard = Board.of(boardSize)
         val mineCount = inputView.inputMine()
-        realBoard.shuffleRandomMines(mineCount)
+        val realBoard = Board.of(boardSize, mineCount)
         resultView.gameStartView()
         while (!realBoard.isAllOpenedExcludeMine()) {
             val (x, y) = StringUtils.split(inputView.inputOpenPosition())
@@ -25,7 +24,7 @@ class MineSweeperController {
             }
             resultView.boardView(MineSweeperDTO.of(realBoard.cells))
         }
-        if(realBoard.isAllOpenedExcludeMine()) {
+        if (realBoard.isAllOpenedExcludeMine()) {
             resultView.winResultView()
         }
     }

@@ -7,11 +7,6 @@ import minesweeper.domain.position.Positions
 @JvmInline
 value class Board(val cells: Cells) {
 
-    fun shuffleRandomMines(mineCount: Int) {
-        val mineCells = Cells.makeMineCells(cells, mineCount)
-        cells.change(mineCells)
-    }
-
     fun open(position: Position) {
         cells.open(position)
     }
@@ -25,9 +20,13 @@ value class Board(val cells: Cells) {
     }
 
     companion object {
-        fun of(boardSize: BoardSize): Board =
+        fun of(boardSize: BoardSize, mineCount: Int): Board =
             Positions.of(boardSize).run {
-                Board(Cells.of(this))
+                val cells = Cells.of(this).apply {
+                    val mineCells = Cells.makeMineCells(this, mineCount)
+                    this.inputMineCells(mineCells)
+                }
+                Board(cells)
             }
     }
 }

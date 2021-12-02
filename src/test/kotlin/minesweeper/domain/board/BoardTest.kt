@@ -11,10 +11,9 @@ class BoardTest {
         // given
         val boardSize = BoardSize(10, 10)
         val mineCount = 5
-        val board = Board.of(boardSize)
+        val board = Board.of(boardSize, mineCount)
 
         // when
-        board.shuffleRandomMines(mineCount)
         val cellCounts = board.cells.size
         val boardMineCount = board.cells.filter { it.state.value == -1 }.size
 

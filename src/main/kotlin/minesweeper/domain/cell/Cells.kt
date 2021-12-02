@@ -13,7 +13,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
         return cells.count { !it.isHiddenCell() } == cells.count { it.isNotMineCell() }
     }
 
-    fun change(mineCells: Cells) = cells.map { it.updateCellStatus(mineCells) }
+    fun inputMineCells(mineCells: Cells) = cells.map { it.updateCellStatus(mineCells) }
 
     fun open(position: Position) {
         require(cells.any { it.position == position }) { NOT_FOUND_CELL }
