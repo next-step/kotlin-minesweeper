@@ -1,7 +1,14 @@
 package minesweeper.domain.block
 
-class Board(private val blocks: List<Block>) {
+import minesweeper.domain.MinesCount
+import minesweeper.strategy.BoardGenerateStrategy
 
+class Board(val blocks: List<Block>) {
+
+    companion object {
+        fun of(area: Area, minesCount: MinesCount, boardGenerateStrategy: BoardGenerateStrategy): Board =
+            Board(boardGenerateStrategy.generate(area.width(), area.height(), minesCount.minesCount).toList())
+    }
 }
 // for ((x, mutableList) in board.withIndex()) {
 //     for ((y, element) in mutableList.withIndex()) {

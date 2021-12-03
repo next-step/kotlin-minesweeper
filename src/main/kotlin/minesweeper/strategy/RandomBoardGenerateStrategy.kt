@@ -6,16 +6,30 @@ import minesweeper.domain.block.Mines
 import minesweeper.domain.block.Position
 
 object RandomBoardGenerateStrategy : BoardGenerateStrategy {
+    private const val START = 0
+
     override fun generate(width: Int, height: Int, minesCount: Int): List<Block> {
-        val positions: List<Position> = (0 until width).flatMap { x -> (0 until height).map { y -> Position(x, y) } }
-        val minesPositions = (0..minesCount).map { positions.random() }
-        return positions.map { minesOrCell(minesPositions, it) }
+        val positions = positions(width, height)
+        val minesPositions = minesPositions(minesCount, positions)
+        return positions.map { minesOrCell(it, minesPositions) }
     }
 
-    private fun minesOrCell(minesPositions: List<Position>, it: Position): Block {
-        if (minesPositions.contains(it)) {
-            return Mines(it)
+    private fun positions(width: Int, height: Int): List<Position> =
+        (START until width).flatMap { x ->
+            (START until height).map { y ->
+                Position(x, y)
+            }
         }
-        return Cell(it)
+
+    private fun minesPositions(minesCount: Int, positions: List<Position>): List<Position> =
+        (START..minesCount).map {
+            positions.random()
+        }
+
+    private fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
+        if (minesPositions.contains(positions)) {
+            return Mines(positions)
+        }
+        return Cell(positions)
     }
 }
