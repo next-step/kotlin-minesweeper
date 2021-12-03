@@ -1,3 +1,8 @@
 package minesweeper.domain.block
 
-class Mine(val position: Position) : Block
+class Mine(private val position: Position) : Block {
+
+    override fun getPosition(): Position {
+        return position
+    }
+}

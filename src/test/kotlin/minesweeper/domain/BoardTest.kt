@@ -52,4 +52,24 @@ internal class BoardTest {
         )
         assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
     }
+
+    @Test
+    fun `좌표를 입력받아 블록을 찾을 수 있다`() {
+        val givenArea = Area(Width(2), Height(2))
+        val givenMine = Mine(Position(0, 0))
+        val givenNone1 = None(Position(0, 1))
+        val givenNone2 = None(Position(1, 0))
+        val givenNone3 = None(Position(1, 1))
+        val givenBlocks = listOf(
+            givenMine,
+            givenNone1,
+            givenNone2,
+            givenNone3
+        )
+        val givenBoard = Board(givenArea, givenBlocks)
+
+        val actual = givenBoard.findBlock(0, 0)
+
+        assertThat(actual).isEqualTo(givenMine)
+    }
 }
