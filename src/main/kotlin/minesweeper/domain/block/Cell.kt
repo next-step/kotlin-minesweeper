@@ -1,5 +1,5 @@
 package minesweeper.domain.block
 
-class Cell : Block() {
+data class Cell(private val position: Position) : Block(position) {
     override fun isMines(): Boolean = false
 }

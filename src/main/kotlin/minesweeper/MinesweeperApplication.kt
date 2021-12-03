@@ -8,7 +8,6 @@ import minesweeper.domain.Width
 import minesweeper.ui.ErrorView
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
-import kotlin.random.Random
 
 class MinesweeperApplication(
     private val inputView: InputView,
@@ -21,38 +20,28 @@ class MinesweeperApplication(
         val width = askWidth()
         val minesCount = askMinesCount()
 
-        val board = (0 until height.height)
-            .map { (
-                0 until width.width)
-                .map { 99 }
-                .toMutableList()
-            }
-            .toMutableList()
-
-        setMine(minesCount.minesCount, width.width, height.height, board)
-
-        for ((x, mutableList) in board.withIndex()) {
-            for ((y, element) in mutableList.withIndex()) {
-                setNumber(x, y, width.width, height.height, board)
-            }
-        }
-
-        println(
-            board.joinToString(separator = "\n") {
-                it.fold(StringBuilder()) { acc: StringBuilder, i: Int -> acc.append("$i\t") }
-            }
-        )
-
-        outputView.startGame()
-        println(
-            board.joinToString(separator = "\n") {
-                it.fold(StringBuilder()) { acc: StringBuilder, i: Int ->
-                    acc.append(
-                        if (i == -1) "*" else "C"
-                    )
-                }
-            }
-        )
+        // for ((x, mutableList) in board.withIndex()) {
+        //     for ((y, element) in mutableList.withIndex()) {
+        //         setNumber(x, y, width.width, height.height, board)
+        //     }
+        // }
+        //
+        // println(
+        //     board.joinToString(separator = "\n") {
+        //         it.fold(StringBuilder()) { acc: StringBuilder, i: Int -> acc.append("$i\t") }
+        //     }
+        // )
+        //
+        // outputView.startGame()
+        // println(
+        //     board.joinToString(separator = "\n") {
+        //         it.fold(StringBuilder()) { acc: StringBuilder, i: Int ->
+        //             acc.append(
+        //                 if (i == -1) "*" else "C"
+        //             )
+        //         }
+        //     }
+        // )
     }
 
     private fun askMinesCount(): MinesCount =
@@ -80,20 +69,6 @@ class MinesweeperApplication(
         }
 
     // 랜덤 값으로 지뢰 주입
-    fun setMine(numberOfMines: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
-        var numberOfMines = numberOfMines
-        while (numberOfMines-- > 0) {
-            val row = Random.nextInt(height)
-            val column = Random.nextInt(width)
-
-            if (board[row][column] == -1) {
-                numberOfMines++
-            }
-            if (board[row][column] != -1) {
-                board[row][column] = -1
-            }
-        }
-    }
 
     fun setNumber(row: Int, column: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
         if (board[row][column] == 99) {
@@ -141,5 +116,3 @@ fun main() {
     val errorView = ErrorView(ConsoleOutputStrategy)
     MinesweeperApplication(inputView, outputView, errorView).execute()
 }
-
-// 여는 작업
