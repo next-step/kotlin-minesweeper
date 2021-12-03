@@ -37,7 +37,7 @@ class MineMapTest {
             )
         )
 
-        val result = mineMap.getBoards()
+        val result = mineMap.getBoard()
 
         with(result.cells) {
             assertAll(
@@ -91,7 +91,7 @@ class MineMapTest {
             )
         )
 
-        val result = mineMap.getBoards()
+        val result = mineMap.getBoard()
 
         with(result.cells) {
             assertAll(

@@ -2,12 +2,14 @@ package minesweeper.domain
 
 class MineMap(private val mineMap: Map<Position, Boolean>) {
 
-    fun getBoards(): Board {
-        return Board(mineMap.mapValues { (position, _) -> getCell(position) })
+    fun getBoard(): Board {
+        val board = mineMap.mapValues { (position, isMine) ->
+            getCell(position, isMine)
+        }
+        return Board(board)
     }
 
-    private fun getCell(position: Position): Cell {
-        val isMine = mineMap.getValue(position)
+    private fun getCell(position: Position, isMine: Boolean): Cell {
         if (isMine) {
             return MineCell()
         }
