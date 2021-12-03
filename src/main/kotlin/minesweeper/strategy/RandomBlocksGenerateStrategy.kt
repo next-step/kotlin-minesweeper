@@ -14,26 +14,23 @@ object RandomBlocksGenerateStrategy : BlocksGenerateStrategy {
 
     /**
      * (0 until height).map {
-    (0 until width)
-    .map { 99 }
-    .toMutableList()
-    }.toMutableList().shuffle()
-
+     *     (0 until width)
+     * .map { 99 }
+     * .toMutableList()
+     * }.toMutableList().shuffle()
      * */
+    fun setMine(numberOfMines: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
+        var numberOfMines = numberOfMines
+        while (numberOfMines-- > 0) {
+            val row = Random.nextInt(height)
+            val column = Random.nextInt(width)
 
-
-fun setMine(numberOfMines: Int, width: Int, height: Int, board: MutableList<MutableList<Int>>) {
-    var numberOfMines = numberOfMines
-    while (numberOfMines-- > 0) {
-        val row = Random.nextInt(height)
-        val column = Random.nextInt(width)
-
-        if (board[row][column] == -1) {
-            numberOfMines++
-        }
-        if (board[row][column] != -1) {
-            board[row][column] = -1
+            if (board[row][column] == -1) {
+                numberOfMines++
+            }
+            if (board[row][column] != -1) {
+                board[row][column] = -1
+            }
         }
     }
-}
 }
