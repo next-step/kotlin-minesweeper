@@ -16,11 +16,11 @@ internal class AreaTest {
         val width = Width(widthInt)
         val height = Height(heightInt)
 
-        val boardSize = Area(width, height)
+        val area = Area(width, height)
 
         assertAll(
-            { assertThat(boardSize).isNotNull },
-            { assertThat(boardSize).isExactlyInstanceOf(Area::class.java) },
+            { assertThat(area).isNotNull },
+            { assertThat(area).isExactlyInstanceOf(Area::class.java) },
         )
     }
 
@@ -34,5 +34,18 @@ internal class AreaTest {
         val area: Int = boardSize.area()
 
         assertThat(area).isEqualTo(widthInt * heightInt)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
+    @CsvSource(value = ["1:1", "10:1", "1:10", "10:10"], delimiter = ':')
+    fun `가로와 세로를 반환할 수 있다`(widthInt: Int, heightInt: Int) {
+        val width = Width(widthInt)
+        val height = Height(heightInt)
+
+        val area = Area(width, height)
+        assertAll(
+            { assertThat(area.width()).isEqualTo(widthInt) },
+            { assertThat(area.height()).isEqualTo(heightInt) },
+        )
     }
 }

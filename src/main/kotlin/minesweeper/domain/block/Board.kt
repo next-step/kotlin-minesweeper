@@ -3,11 +3,20 @@ package minesweeper.domain.block
 import minesweeper.domain.MinesCount
 import minesweeper.strategy.BoardGenerateStrategy
 
-class Board(val blocks: List<Block>) {
+@JvmInline
+value class Board(val blocks: List<Block>) {
 
     companion object {
-        fun of(area: Area, minesCount: MinesCount, boardGenerateStrategy: BoardGenerateStrategy): Board =
-            Board(boardGenerateStrategy.generate(area.width(), area.height(), minesCount.minesCount).toList())
+        fun of(area: Area, minesCount: MinesCount, boardGenerateStrategy: BoardGenerateStrategy): Board {
+            validateArguments(area, minesCount)
+            return Board(boardGenerateStrategy.generate(area.width(), area.height(), minesCount.minesCount).toList())
+        }
+
+        private fun validateArguments(area: Area, minesCount: MinesCount) {
+            if (area.area() < minesCount.minesCount) {
+                throw IllegalArgumentException()
+            }
+        }
     }
 }
 // for ((x, mutableList) in board.withIndex()) {

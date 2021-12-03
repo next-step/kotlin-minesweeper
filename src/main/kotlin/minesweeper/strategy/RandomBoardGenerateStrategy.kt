@@ -22,7 +22,7 @@ object RandomBoardGenerateStrategy : BoardGenerateStrategy {
         }
 
     private fun minesPositions(minesCount: Int, positions: List<Position>): List<Position> =
-        (START..minesCount).map {
+        (START until minesCount).map {
             positions.random()
         }
 
