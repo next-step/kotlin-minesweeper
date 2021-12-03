@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.area
 
 import minesweeper.exception.InvalidHeightRangeException
 import org.assertj.core.api.Assertions.assertThat

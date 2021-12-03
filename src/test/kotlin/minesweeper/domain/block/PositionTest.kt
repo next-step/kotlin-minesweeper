@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource
 @DisplayName("좌표(Position)")
 internal class PositionTest {
 
-    @ParameterizedTest(name = "입력 값: {0},{1}")
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
     @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
     fun `2개 이상의 정수로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
@@ -22,7 +22,7 @@ internal class PositionTest {
         )
     }
 
-    @ParameterizedTest(name = "입력 값: {0},{1}")
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
     @CsvSource(value = ["-10:0", "0:-10", "-1:-10"], delimiter = ':')
     fun `0미만의 값으로 이루어질 수 없다`(x: Int, y: Int) {
         val exception = assertThrows<InvalidPositionRangeException> { Position(x, y) }

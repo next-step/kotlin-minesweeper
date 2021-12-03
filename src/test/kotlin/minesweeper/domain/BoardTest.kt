@@ -1,8 +1,12 @@
-package minesweeper.domain.block
+package minesweeper.domain
 
-import minesweeper.domain.Height
-import minesweeper.domain.MinesCount
-import minesweeper.domain.Width
+import minesweeper.domain.area.Height
+import minesweeper.domain.area.Width
+import minesweeper.domain.area.Area
+import minesweeper.domain.block.Block
+import minesweeper.domain.block.Cell
+import minesweeper.domain.block.Mines
+import minesweeper.domain.block.Position
 import minesweeper.strategy.BoardGenerateStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
