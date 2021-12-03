@@ -1,6 +1,8 @@
 package minesweeper.domain.block
 
-class Board(private val blocks: List<Block>)
+class Board(private val blocks: List<Block>) {
+
+}
 // for ((x, mutableList) in board.withIndex()) {
 //     for ((y, element) in mutableList.withIndex()) {
 //         setNumber(x, y, width.width, height.height, board)
