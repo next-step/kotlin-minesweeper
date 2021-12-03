@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import minesweeper.domain.area.Area
 import minesweeper.domain.block.Block
+import minesweeper.exception.MinesCountOverAreaException
 import minesweeper.strategy.BoardGenerateStrategy
 
 @JvmInline
@@ -15,7 +16,7 @@ value class Board(val blocks: List<Block>) {
 
         private fun validateArguments(area: Area, minesCount: MinesCount) {
             if (area.area() < minesCount.minesCount) {
-                throw IllegalArgumentException()
+                throw MinesCountOverAreaException(minesCount.minesCount, area.area())
             }
         }
     }

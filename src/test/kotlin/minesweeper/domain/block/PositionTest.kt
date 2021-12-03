@@ -29,4 +29,14 @@ internal class PositionTest {
 
         assertThat(exception.message).isEqualTo("좌표 {x='%s', y='%s'}는 Position 의 범위가 아닙니다.".format(x, y))
     }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
+    @CsvSource(value = ["0:0:true", "10:10:false", "0:10:false", "10:0:true"], delimiter = ':')
+    fun `y가 0이면 가로 시작 지점을 의미한다`(x: Int, y: Int, expected: Boolean) {
+        val position = Position(x, y)
+
+        val actual = position.isStartHorizontal()
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }

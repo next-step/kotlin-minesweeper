@@ -1,8 +1,9 @@
 package minesweeper.ui
 
 import global.strategy.OutputStrategy
-import minesweeper.domain.block.Block
+import global.util.FavoriteStringFixture.NEW_LINE
 import minesweeper.domain.Board
+import minesweeper.domain.block.Block
 import minesweeper.domain.block.Cell
 import minesweeper.domain.block.Mines
 import minesweeper.domain.block.Position
@@ -24,8 +25,8 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         }
 
     private fun calculatePrefixNewLine(position: Position, mark: String): String {
-        if (position.y == 0) {
-            return "\n" + mark
+        if (position.isStartHorizontal()) {
+            return NEW_LINE + mark
         }
         return mark
     }

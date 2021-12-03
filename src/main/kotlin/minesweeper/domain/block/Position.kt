@@ -9,6 +9,8 @@ data class Position(val x: Int = DEFAULT_X, val y: Int = DEFAULT_Y) {
         }
     }
 
+    fun isStartHorizontal(): Boolean = y == DEFAULT_Y
+
     companion object {
         private const val DEFAULT_X = 0
         private const val DEFAULT_Y = 0
