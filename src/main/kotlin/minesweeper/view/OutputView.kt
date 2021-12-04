@@ -6,7 +6,7 @@ import minesweeper.model.Height
 import minesweeper.model.Position
 import minesweeper.model.Row
 import minesweeper.model.Width
-import minesweeper.view.res.getString
+import minesweeper.view.resource.getString
 
 class OutputView {
 
@@ -24,11 +24,9 @@ class OutputView {
         println()
     }
 
-    private fun onRow(height: Height, block: (Row) -> Unit) {
-        repeat(height.value) { row -> block(Row(row + 1)) }
-    }
+    private fun onRow(height: Height, block: (Row) -> Unit) =
+        repeat(height.value) { index -> block(Row(index + 1)) }
 
-    private fun onColumn(width: Width, block: (Column) -> Unit) {
-        repeat(width.value) { column -> block(Column(column + 1)) }
-    }
+    private fun onColumn(width: Width, block: (Column) -> Unit) =
+        repeat(width.value) { index -> block(Column(index + 1)) }
 }

@@ -28,4 +28,25 @@ class CellsTest {
             { assertThat(cells[1 to 10]).isNull() },
         )
     }
+
+    @Test
+    fun `Position의 Cell을 Mine으로 변환할 수 있다`() {
+        // given
+        val cells = Cells(1 to 1, 1 to 2)
+
+        // when
+        val actual = cells.mine(Position(1, 1))
+
+        // then
+        assertAll(
+            {
+                assertThat(actual[Position(1, 1)])
+                    .isEqualTo(Cell.Mine(Position(1, 1)))
+            },
+            {
+                assertThat(actual[Position(1, 2)])
+                    .isEqualTo(Cell.Zero(Position(1, 2)))
+            },
+        )
+    }
 }
