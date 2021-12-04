@@ -2,6 +2,7 @@ package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.CellsState
+import minesweeper.domain.cell.mineCell
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
@@ -19,7 +20,7 @@ class BoardTest {
 
         // when
         val cellCounts = board.cells.size
-        val boardMineCount = board.cells.filter { it.state.value == -1 }.size
+        val boardMineCount = board.cells.filter { it.getCellAdjacentCount() == -1 }.size
 
         // then
         assertAll({
@@ -32,9 +33,8 @@ class BoardTest {
     fun `지뢰를 오픈 했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
+        val cells = Cells.of(positions).inputMineCells(mineCell)
         val board = Board(cells)
 
         // when
@@ -48,9 +48,8 @@ class BoardTest {
     fun `지뢰를 제외 한 나머지를 오픈했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(1, 4))
-        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
+        val cells = Cells.of(positions).inputMineCells(mineCell)
         val board = Board(cells)
 
         // when
@@ -64,9 +63,8 @@ class BoardTest {
     fun `지뢰가 아닌 셀을 오픈했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(1, 5))
-        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
+        val cells = Cells.of(positions).inputMineCells(mineCell)
         val board = Board(cells)
 
         // when

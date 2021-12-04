@@ -1,20 +1,20 @@
 package minesweeper.dto
 
-import minesweeper.domain.cell.CellType
 import minesweeper.domain.cell.Cells
 
 class MineSweeperDTO(val rows: List<String>) {
 
     companion object {
         fun of(cells: Cells): MineSweeperDTO {
-            val value = cells.groupBy { it.position.y }.map {
+            val value = cells.groupBy { it.position().y }.map {
                 it.value.joinToString(BLACK) { cell ->
-                    if (cell.state.isHidden) {
+                    if (cell.isHiddenCell()) {
                         return@joinToString IS_HIDDEN
                     }
-                    when (cell.state.cellType) {
-                        CellType.IS_MINE -> MINE_ICON
-                        CellType.NOT_MINE -> cell.state.value.toString()
+
+                    when (cell.isNotMineCell()) {
+                        false -> MINE_ICON
+                        true -> cell.getCellAdjacentCount().toString()
                     }
                 }
             }
