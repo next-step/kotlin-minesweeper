@@ -9,15 +9,19 @@ class MineSweeperDTO(val rows: List<String>) {
         fun of(cells: Cells): MineSweeperDTO {
             val value = cells.groupBy { it.position.y }.map {
                 it.value.joinToString(BLACK) { cell ->
+                    if (cell.state.isHidden) {
+                        return@joinToString IS_HIDDEN
+                    }
                     when (cell.state.cellType) {
                         CellType.IS_MINE -> MINE_ICON
-                        CellType.NOT_MINE -> cell.state.getValue().toString()
+                        CellType.NOT_MINE -> cell.state.value.toString()
                     }
                 }
             }
             return MineSweeperDTO(value)
         }
 
+        private const val IS_HIDDEN = "C"
         private const val BLACK = " "
         private const val MINE_ICON = "*"
     }
