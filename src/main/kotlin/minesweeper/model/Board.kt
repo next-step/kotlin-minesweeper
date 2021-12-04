@@ -11,6 +11,12 @@ class Board(val cells: Cells) {
         .incrementAll(position.asDirections())
         .let { Board(it) }
 
+    fun isMine(position: Position): Boolean = cells.isMine(position)
+
+    fun tryOpen(position: Position): Board = Board(cells.tryOpen(position))
+
+    fun isAllOpened(): Boolean = cells.isAllOpened()
+
     companion object {
         val EMPTY = Board(Cells.EMPTY)
 
