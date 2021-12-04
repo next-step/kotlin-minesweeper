@@ -49,4 +49,17 @@ class CellsTest {
             },
         )
     }
+
+    @Test
+    fun `Position의 Cell을 열 수 있다`() {
+        // given
+        val position = Position(1, 1)
+        val cells = Cells(1 to 1)
+
+        // when
+        val actual = cells.tryOpen(position)[position]?.isVisible
+
+        // then
+        assertThat(actual).isTrue
+    }
 }

@@ -24,6 +24,11 @@ value class Cells(private val cells: List<Cell>) {
         transform = { it.increment() }
     )
 
+    fun tryOpen(position: Position): Cells = update(
+        predicate = { it.position == position },
+        transform = { it.tryOpen() }
+    )
+
     private fun update(
         predicate: (Cell) -> Boolean,
         transform: (Cell) -> (Cell)
