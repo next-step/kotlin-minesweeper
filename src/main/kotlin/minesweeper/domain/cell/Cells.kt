@@ -7,20 +7,15 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     fun toPositions() = cells.map { it.position }
 
-    fun isOpenedMine(): Boolean = cells.any { it.isOpenedMineCell() }
-
-    fun isAllOpenedExcludeMine(): Boolean {
-        return cells.count { !it.isHiddenCell() } == cells.count { it.isNotMineCell() }
-    }
-
     fun inputMineCells(mineCells: Cells) = cells.map { it.updateCellStatus(mineCells) }
 
-    fun open(position: Position) {
+    fun open(position: Position): CellsState {
         require(cells.any { it.position == position }) { NOT_FOUND_CELL }
         cells.first { it.position == position }.apply {
             this.openCell()
             openAdjacentCells(this)
         }
+        return checkCellsState()
     }
 
     private fun openAdjacentCells(cell: Cell) {
@@ -36,6 +31,18 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     private fun toCells(cell: Cell) = cells.filter {
         cell.isContainsAdjacentPositions(it.position)
+    }
+
+    private fun checkCellsState() = when {
+        isOpenedMine() -> CellsState.BOMB
+        isAllOpenedExcludeMine() -> CellsState.NOT_EXIST_MINE
+        else -> CellsState.EXIST_MINE
+    }
+
+    private fun isOpenedMine(): Boolean = cells.any { it.isOpenedMineCell() }
+
+    private fun isAllOpenedExcludeMine(): Boolean {
+        return cells.count { !it.isHiddenCell() } == cells.count { it.isNotMineCell() }
     }
 
     companion object {

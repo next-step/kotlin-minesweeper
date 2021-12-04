@@ -1,6 +1,7 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.CellsState
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
@@ -40,7 +41,7 @@ class BoardTest {
         val boardState = board.open(Position.of(1, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.BOMB)
+        assertThat(boardState).isEqualTo(CellsState.BOMB)
     }
 
     @Test
@@ -56,7 +57,7 @@ class BoardTest {
         val boardState = board.open(Position.of(4, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.NOT_EXIST_MINE)
+        assertThat(boardState).isEqualTo(CellsState.NOT_EXIST_MINE)
     }
 
     @Test
@@ -72,6 +73,6 @@ class BoardTest {
         val boardState = board.open(Position.of(4, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.EXIST_MINE)
+        assertThat(boardState).isEqualTo(CellsState.EXIST_MINE)
     }
 }

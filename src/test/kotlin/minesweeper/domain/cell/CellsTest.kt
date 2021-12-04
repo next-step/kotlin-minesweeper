@@ -89,10 +89,10 @@ class CellsTest {
         cells.inputMineCells(Cells.of(minePositions))
 
         // when
-        cells.open(Position.of(1, 1))
+        val cellsState = cells.open(Position.of(1, 1))
 
         // then
-        assertThat(cells.isOpenedMine()).isTrue
+        assertThat(cellsState).isEqualTo(CellsState.BOMB)
     }
 
     @Test
@@ -104,10 +104,26 @@ class CellsTest {
         cells.inputMineCells(Cells.of(minePositions))
 
         // when
-        cells.open(Position.of(4, 1))
+        val cellsState = cells.open(Position.of(4, 1))
 
         // then
-        assertThat(cells.isAllOpenedExcludeMine()).isTrue
+        assertThat(cellsState).isEqualTo(CellsState.NOT_EXIST_MINE)
+    }
+
+    @Test
+    fun `지뢰가 아닌 셀을 오픈했을 경우`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val minePositions =
+            Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(4, 1), Position.of(6, 1)))
+        val cells = Cells.of(positions)
+        cells.inputMineCells(Cells.of(minePositions))
+
+        // when
+        val cellsState = cells.open(Position.of(10, 5))
+
+        // then
+        assertThat(cellsState).isEqualTo(CellsState.EXIST_MINE)
     }
 
     @Test

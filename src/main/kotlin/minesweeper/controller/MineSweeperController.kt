@@ -2,7 +2,7 @@ package minesweeper.controller
 
 import minesweeper.domain.board.Board
 import minesweeper.domain.board.BoardSize
-import minesweeper.domain.board.BoardState
+import minesweeper.domain.cell.CellsState
 import minesweeper.domain.position.Position
 import minesweeper.dto.MineSweeperDTO
 import minesweeper.utils.StringUtils
@@ -22,12 +22,12 @@ class MineSweeperController {
     private tailrec fun gameInProgress(board: Board, resultView: ResultView) {
         val (x, y) = StringUtils.split(InputView.inputOpenPosition())
         when (board.open(Position.of(x, y))) {
-            BoardState.EXIST_MINE -> {
+            CellsState.EXIST_MINE -> {
                 resultView.boardView(MineSweeperDTO.of(board.cells))
                 gameInProgress(board, resultView)
             }
-            BoardState.BOMB -> resultView.loseResultView()
-            BoardState.NOT_EXIST_MINE -> resultView.winResultView()
+            CellsState.BOMB -> resultView.loseResultView()
+            CellsState.NOT_EXIST_MINE -> resultView.winResultView()
         }
     }
 }
