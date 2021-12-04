@@ -12,22 +12,33 @@ sealed class Cell {
         else -> Mine(position)
     }
 
+    abstract val isVisible: Boolean
+
     abstract fun increment(): Cell
+
+    abstract fun tryOpen(): Cell
 
     data class Number(
         val adjustMineCount: MineCount,
-        override val position: Position
+        override val position: Position,
+        override val isVisible: Boolean = false,
     ) : Cell() {
 
         override fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
+
+        override fun tryOpen(): Cell = copy(isVisible = true)
     }
 
     data class Mine(override val position: Position) : Cell() {
 
+        override val isVisible: Boolean = false
+
         override fun increment(): Cell = this
+
+        override fun tryOpen(): Cell = this
     }
 
     companion object {
-        fun zero(position: Position): Cell = Number(MineCount.ZERO, position)
+        fun zero(position: Position): Cell = Number(MineCount.ZERO, position, false)
     }
 }
