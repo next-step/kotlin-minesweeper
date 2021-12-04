@@ -84,4 +84,16 @@ class CellsTest {
             { assertThat(actual[3 to 3]!!.isVisible).isTrue },
         )
     }
+
+    @Test
+    fun `지뢰를 제외하고 모든 Cell이 열려 있는지 확인할 수 있다`() {
+        // given
+        val cells = Cells(1 to 1, 1 to 2)
+
+        // when
+        val actual = cells.tryOpen(Position(1, 1)).isAllOpened()
+
+        // then
+        assertThat(actual).isTrue
+    }
 }

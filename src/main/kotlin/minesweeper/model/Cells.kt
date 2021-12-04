@@ -9,6 +9,8 @@ value class Cells(private val cells: List<Cell>) {
 
     operator fun get(position: Position): Cell? = cells.find { it.row == position.row && it.column == position.column }
 
+    fun isMine(position: Position): Boolean = get(position)?.isMine == true
+
     fun mine(position: Position): Cells = update(
         predicate = { it.position == position },
         transform = { it.mine() }
@@ -40,6 +42,10 @@ value class Cells(private val cells: List<Cell>) {
         }
         return Cells(map.values.toList())
     }
+
+    fun isAllOpened(): Boolean = cells.asSequence()
+        .filterIsInstance<Cell.Number>()
+        .all { it.isVisible }
 
     private fun associateByPosition(): Map<Position, Cell> = cells.associateBy { it.position }
 
