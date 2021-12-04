@@ -19,20 +19,15 @@ sealed class Cell {
         override val position: Position
     ) : Cell() {
 
-        init {
-            require(adjustMineCount != MineCount.ZERO)
-        }
-
         override fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
-    }
-
-    data class Zero(override val position: Position) : Cell() {
-
-        override fun increment(): Cell = Number(MineCount.valueOf(1), position)
     }
 
     data class Mine(override val position: Position) : Cell() {
 
         override fun increment(): Cell = this
+    }
+
+    companion object {
+        fun zero(position: Position): Cell = Number(MineCount.ZERO, position)
     }
 }

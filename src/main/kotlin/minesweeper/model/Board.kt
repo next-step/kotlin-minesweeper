@@ -19,7 +19,7 @@ class Board(val cells: Cells) {
                 return EMPTY
             }
             val positions = Position.list(width, height)
-            val cells: List<Cell> = positions.map { position -> Cell.Zero(position) }
+            val cells: List<Cell> = positions.map { position -> Cell.zero(position) }
             return Board(Cells(cells))
         }
     }

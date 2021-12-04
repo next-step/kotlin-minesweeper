@@ -25,7 +25,7 @@ class BoardTest {
     fun `Width * Height 크기의 비어있는 보드를 만들 수 있다`() {
         val position = Position(10, 10)
         val board = Board(width = 10, height = 10)
-        assertThat(board.cells[position]).isEqualTo(Cell.Zero(position))
+        assertThat(board.cells[position]).isEqualTo(Cell.zero(position))
     }
 
     @Test
