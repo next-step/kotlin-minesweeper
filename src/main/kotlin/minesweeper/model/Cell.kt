@@ -14,6 +14,8 @@ sealed class Cell {
 
     abstract val isVisible: Boolean
 
+    abstract val isZero: Boolean
+
     abstract fun increment(): Cell
 
     abstract fun tryOpen(): Cell
@@ -24,6 +26,8 @@ sealed class Cell {
         override val isVisible: Boolean = false,
     ) : Cell() {
 
+        override val isZero: Boolean = adjustMineCount == MineCount.ZERO
+
         override fun increment(): Cell = copy(adjustMineCount = adjustMineCount.increment())
 
         override fun tryOpen(): Cell = copy(isVisible = true)
@@ -32,6 +36,8 @@ sealed class Cell {
     data class Mine(override val position: Position) : Cell() {
 
         override val isVisible: Boolean = false
+
+        override val isZero: Boolean = false
 
         override fun increment(): Cell = this
 

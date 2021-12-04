@@ -53,4 +53,13 @@ class CellTest {
         // then
         assertThat(actual.isVisible).isTrue
     }
+
+    @Test
+    fun `Number의 지뢰 개수가 0개면 Zero다`() {
+        // given
+        val cell = Cell.zero(position)
+
+        // when & then
+        assertThat(cell.isZero).isTrue
+    }
 }
