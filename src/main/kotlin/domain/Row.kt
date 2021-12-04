@@ -22,7 +22,7 @@ class Row(
                 val mineCount = minesPosition.getMineCountByPosition(position)
 
                 when (minesPosition.contains(position)) {
-                    true -> MineCell(mineCount)
+                    true -> MineCell()
                     false -> GeneralCell(mineCount)
                 }
             }

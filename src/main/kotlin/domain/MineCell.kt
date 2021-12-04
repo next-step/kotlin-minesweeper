@@ -1,8 +1,6 @@
 package domain
 
-class MineCell(
-    aroundMineCount: Int = 0
-) : Cell {
+class MineCell : Cell {
 
     override fun getValue(): String = "X"
 
