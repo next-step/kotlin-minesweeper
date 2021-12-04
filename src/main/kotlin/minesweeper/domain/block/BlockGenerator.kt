@@ -12,7 +12,7 @@ object BlockGenerator {
 
     fun generateBlocks(area: Area, mineCount: Int): List<Block> {
         val range = (1..area.getArea())
-        val randomPositions = (1..mineCount).map { range.random() }.toList()
+        val randomPositions = (1..mineCount).map { range.random() - 1 }.toList()
         var blocks: List<Block> =
             (1..area.getArea()).map { None(Position(area.getX(it - 1), area.getY(it - 1))) }.toList()
 
