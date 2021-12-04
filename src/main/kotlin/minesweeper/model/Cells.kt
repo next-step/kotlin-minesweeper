@@ -24,10 +24,24 @@ value class Cells(private val cells: List<Cell>) {
         transform = { it.increment() }
     )
 
-    fun tryOpen(position: Position): Cells = update(
-        predicate = { it.position == position },
-        transform = { it.tryOpen() }
-    )
+    fun tryOpen(targetPosition: Position): Cells {
+        if (get(targetPosition) == null) return this
+
+        val positions = mutableSetOf(targetPosition)
+        val map = associateByPosition().toMutableMap()
+        while (positions.isNotEmpty()) {
+            val position = positions.first()
+            val cell = map[position] ?: break
+            if (cell.isZero) {
+                positions.addAll(position.asDirections())
+            }
+            map[position] = cell.tryOpen()
+            positions.remove(position)
+        }
+        return Cells(map.values.toList())
+    }
+
+    private fun associateByPosition(): Map<Position, Cell> = cells.associateBy { it.position }
 
     private fun update(
         predicate: (Cell) -> Boolean,

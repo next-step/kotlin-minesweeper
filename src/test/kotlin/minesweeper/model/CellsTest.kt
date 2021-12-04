@@ -62,4 +62,26 @@ class CellsTest {
         // then
         assertThat(actual).isTrue
     }
+
+    @Test
+    fun `Position이 Zero Cell이면 주변의 모든 Cell을 연다`() {
+        // given (3X3)
+        val cells = Cells(1 to 1, 1 to 2, 1 to 3, 2 to 1, 2 to 2, 2 to 3, 3 to 1, 3 to 2, 3 to 3)
+
+        // when
+        val actual = cells.tryOpen(Position(2, 2))
+
+        // then
+        assertAll(
+            { assertThat(actual[1 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[1 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[1 to 3]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 3]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 3]!!.isVisible).isTrue },
+        )
+    }
 }
