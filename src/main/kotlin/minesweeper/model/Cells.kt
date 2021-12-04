@@ -34,7 +34,7 @@ value class Cells(private val cells: List<Cell>) {
         while (positions.isNotEmpty()) {
             val position = positions.first()
             val cell = map[position] ?: break
-            if (cell.isZero) {
+            if (!cell.isVisible && cell.isZero) {
                 positions.addAll(position.asDirections())
             }
             map[position] = cell.tryOpen()

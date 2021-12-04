@@ -1,7 +1,10 @@
 package minesweeper.view
 
+import minesweeper.model.Column
 import minesweeper.model.Height
 import minesweeper.model.MineCount
+import minesweeper.model.Position
+import minesweeper.model.Row
 import minesweeper.model.Width
 
 class InputView {
@@ -25,5 +28,14 @@ class InputView {
         val mineCount = MineCount.valueOf(readLine()?.toIntOrNull())
         println()
         return mineCount
+    }
+
+    fun getOpenPosition(): Position {
+        println()
+        print("open: ")
+        val (row, column) = readLine()!!
+            .split(", ")
+            .map { it.toInt() }
+        return Position(Row(row), Column(column))
     }
 }

@@ -27,7 +27,7 @@ data class Position(val row: Row, val column: Column) {
         bottom(),
         bottomRight(),
         bottomLeft()
-    )
+    ).distinct()
 
     companion object {
         fun list(width: Width, height: Height): List<Position> = List(width.value * height.value) { index ->
