@@ -18,7 +18,8 @@ class MineSweepController {
 
         val blocks = BlockGenerator.generateBlocks(area, mineCount)
         val board = Board(area, blocks)
+        val mineScanBoard = board.scanMines()
 
-        OutputView.printBoard(board)
+        OutputView.printBoard(mineScanBoard)
     }
 }

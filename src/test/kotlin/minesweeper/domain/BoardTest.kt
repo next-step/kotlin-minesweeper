@@ -72,4 +72,29 @@ internal class BoardTest {
 
         assertThat(actual).isEqualTo(givenMine)
     }
+
+    @Test
+    fun `보드에 지뢰를 검색하고 검색된 결과를 리턴한다`() {
+        val givenArea = Area(Width(2), Height(2))
+        val givenMine = Mine(Position(0, 0))
+        val givenNone1 = None(Position(0, 1))
+        val givenNone2 = None(Position(1, 0))
+        val givenNone3 = None(Position(1, 1))
+        val givenBlocks = listOf(
+            givenMine,
+            givenNone1,
+            givenNone2,
+            givenNone3
+        )
+        val givenBoard = Board(givenArea, givenBlocks)
+
+        val actual = givenBoard.scanMines()
+
+        assertThat(actual.blocks).containsExactly(
+            Mine(Position(0, 0), 0),
+            None(Position(0, 1), 1),
+            None(Position(1, 0), 1),
+            None(Position(1, 1), 1)
+        )
+    }
 }
