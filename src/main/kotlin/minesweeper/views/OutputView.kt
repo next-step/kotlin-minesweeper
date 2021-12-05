@@ -28,7 +28,7 @@ object OutputView {
     private fun drawNone(board: Board, i: Int, block: String): String {
         var block1 = block
         if (board.blocks[i] is None) {
-            block1 = "C"
+            block1 = board.blocks[i].getMineNearCount().toString()
         }
         return block1
     }
@@ -36,10 +36,11 @@ object OutputView {
     private fun drawMine(board: Board, i: Int, block: String): String {
         var block1 = block
         if (board.blocks[i] is Mine) {
-            block1 = "*"
+            block1 = MINE
         }
         return block1
     }
 
-    const val START_PRINT_BOARD = "지뢰찾기 게임 시작"
+    private const val START_PRINT_BOARD = "지뢰찾기 게임 시작"
+    private const val MINE = "*"
 }

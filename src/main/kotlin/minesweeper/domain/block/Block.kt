@@ -1,3 +1,7 @@
 package minesweeper.domain.block
 
-interface Block
+interface Block {
+    fun getPosition(): Position
+
+    fun getMineNearCount(): Int
+}
