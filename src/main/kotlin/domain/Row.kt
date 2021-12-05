@@ -16,10 +16,14 @@ class Row(
             minesPosition: MinesPosition,
         ): Row {
             val widthRange = (0 until width)
+
             val cells = widthRange.map { x ->
-                when (minesPosition.contains(Position(x, currentHeight))) {
+                val position = Position(x, currentHeight)
+                val mineCount = minesPosition.getMineCountByPosition(position)
+
+                when (minesPosition.contains(position)) {
                     true -> MineCell()
-                    false -> GeneralCell()
+                    false -> GeneralCell(mineCount)
                 }
             }
 

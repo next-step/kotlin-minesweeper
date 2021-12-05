@@ -4,10 +4,33 @@ class MinesPosition(
     private val value: List<Position>,
 ) {
 
+    private val aroundMineCountByPosition: Map<Position, Int>
     val size = value.size
+
+    init {
+        val mineCountByPosition = mutableMapOf<Position, Int>()
+        value.forEach { minePosition ->
+            minePosition
+                .getAroundPositions()
+                .forEach { around ->
+                    val x = minePosition.x - around.x
+                    val y = minePosition.y - around.y
+
+                    if (x >= 0 && y >= 0) {
+                        mineCountByPosition[Position(x, y)] = (mineCountByPosition[Position(x, y)] ?: 0) + 1
+                    }
+                }
+        }
+
+        aroundMineCountByPosition = mineCountByPosition.toMap()
+    }
 
     operator fun contains(position: Position): Boolean {
         return value.contains(position)
+    }
+
+    fun getMineCountByPosition(position: Position): Int {
+        return aroundMineCountByPosition[position] ?: 0
     }
 
     companion object {
