@@ -4,7 +4,10 @@ import minesweeper.domain.board.BoardSettings
 import minesweeper.domain.position.Position
 
 @JvmInline
-value class Cells(private val values: Map<Position, Cell>) {
+value class Cells(private val _values: Map<Position, Cell>) {
+
+    val values: Map<Position, Cell>
+        get() = this._values.toSortedMap()
 
     companion object {
         fun of(settings: BoardSettings, minePositions: List<Position>): Cells {
