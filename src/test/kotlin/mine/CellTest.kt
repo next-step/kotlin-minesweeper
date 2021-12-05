@@ -18,12 +18,17 @@ class CellTest {
 
     @Test
     fun `(1,1) position인 cell의 주변 셀 리스트를 구한다`() {
-        val position = Position(1,1)
+        val position = Position(1, 1)
         val cell = cells.findCell(position)
         val expectedAroundCells = listOf(
-            Position(1,2),
-            Position(2,1),
-            Position(2,2)
+            Position(0, 0),
+            Position(0, 1),
+            Position(0, 2),
+            Position(1, 0),
+            Position(1, 2),
+            Position(2, 0),
+            Position(2, 1),
+            Position(2, 2),
         )
 
         Assertions.assertThat(cell.aroundPosition()).isEqualTo(expectedAroundCells)
@@ -31,17 +36,17 @@ class CellTest {
 
     @Test
     fun `(3,4) position인 cell의 주변 셀 리스트를 구한다`() {
-        val position = Position(3,3)
+        val position = Position(3, 3)
         val cell = cells.findCell(position)
         val expectedAroundCells = listOf(
-            Position(2,2),
-            Position(2,3),
-            Position(2,4),
-            Position(3,2),
-            Position(3,4),
-            Position(4,2),
-            Position(4,3),
-            Position(4,4),
+            Position(2, 2),
+            Position(2, 3),
+            Position(2, 4),
+            Position(3, 2),
+            Position(3, 4),
+            Position(4, 2),
+            Position(4, 3),
+            Position(4, 4),
         )
 
         Assertions.assertThat(cell.aroundPosition()).isEqualTo(expectedAroundCells)

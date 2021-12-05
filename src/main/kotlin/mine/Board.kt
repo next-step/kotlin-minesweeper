@@ -8,6 +8,8 @@ import mine.cell.Cells
 class Board(
     val cells: Cells,
 ) {
+    fun checkMineCount() = cells.checkAroundMineCount()
+
     companion object {
         fun createBoard(
             width: Width,
@@ -18,7 +20,7 @@ class Board(
             require(size >= mine.value)
 
             val cells = Cells.createCells(width, height, mine.value)
-            return Board(cells)
+            return Board(cells).also { it.checkMineCount() }
         }
     }
 }
