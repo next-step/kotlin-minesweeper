@@ -1,3 +1,14 @@
 package minesweeper.domain.position
 
-data class Position(private val row: Int, private val column: Int)
+import minesweeper.domain.board.BoardSettings
+
+data class Position(val row: Int, val column: Int) : Comparable<Position> {
+
+    override fun compareTo(other: Position): Int = compareValuesBy(this, other, { it.row }, { it.column })
+
+    companion object {
+        fun from(index: Int, settings: BoardSettings): Position {
+            return Position(index / settings.width, index % settings.height)
+        }
+    }
+}
