@@ -7,7 +7,7 @@ import minesweeper.domain.MinesCount
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
-import minesweeper.strategy.RandomBoardGenerateStrategy
+import minesweeper.domain.block.strategy.RandomMineBlockGenerateStrategy
 import minesweeper.ui.ErrorView
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
@@ -20,7 +20,7 @@ class MinesweeperApplication(
     fun execute() {
         val area = askArea()
         val minesCount = askMinesCount()
-        val board = Board.of(area, minesCount, RandomBoardGenerateStrategy)
+        val board = Board.of(area, minesCount, RandomMineBlockGenerateStrategy)
         resultView.startGame(board)
     }
 

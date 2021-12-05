@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 @DisplayName("지뢰 갯수(MinesCount)")
-internal class MinesCountTest {
+internal class MineBlockCountTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @ValueSource(ints = [1, 10, 100, 1000, Integer.MAX_VALUE])

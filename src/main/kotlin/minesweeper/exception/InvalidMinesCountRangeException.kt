@@ -1,6 +1,6 @@
 package minesweeper.exception
 
-class InvalidMinesCountRangeException(private val element: Int) : RuntimeException() {
+class InvalidMinesCountRangeException(element: Int) : RuntimeException() {
 
     override val message: String = MESSAGE.format(element)
 

@@ -1,6 +1,6 @@
 package minesweeper.exception
 
-class MinesCountOverAreaException(private val minesCount: Int, private val area: Int) : RuntimeException() {
+class MinesCountOverAreaException(minesCount: Int, area: Int) : RuntimeException() {
 
     override val message: String = MESSAGE.format(minesCount, area)
 

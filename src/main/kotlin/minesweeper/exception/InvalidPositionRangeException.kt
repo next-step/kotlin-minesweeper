@@ -1,6 +1,6 @@
 package minesweeper.exception
 
-class InvalidPositionRangeException(private val x: Int, private val y: Int) : RuntimeException() {
+class InvalidPositionRangeException(x: Int, y: Int) : RuntimeException() {
 
     override val message: String = MESSAGE.format(x, y)
 

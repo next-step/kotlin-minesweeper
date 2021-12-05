@@ -5,7 +5,7 @@ import global.util.FavoriteStringFixture.NEW_LINE
 import minesweeper.domain.Board
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.Cell
-import minesweeper.domain.block.Mines
+import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
 import minesweeper.ui.ResultView.Companion.Mark.CELL
 import minesweeper.ui.ResultView.Companion.Mark.MINES
@@ -20,7 +20,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
 
     private fun blockMapToMark(block: Block): String =
         when (block) {
-            is Mines -> calculatePrefixNewLine(block.position, MINES)
+            is MineBlock -> calculatePrefixNewLine(block.position, MINES)
             is Cell -> calculatePrefixNewLine(block.position, CELL)
         }
 

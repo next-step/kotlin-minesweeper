@@ -1,9 +1,9 @@
 package minesweeper.domain.area
 
-data class Area(private val width: Width, private val height: Height) {
-    fun width(): Int = width.width
+data class Area(private val _width: Width, private val _height: Height) {
+    val width: Int get() = _width.width
 
-    fun height(): Int = height.height
+    val height: Int get() = _height.height
 
-    fun area(): Int = Math.multiplyExact(width.width, height.height)
+    fun area(): Int = Math.multiplyExact(width, height)
 }

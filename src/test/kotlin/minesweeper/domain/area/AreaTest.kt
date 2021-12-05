@@ -43,8 +43,8 @@ internal class AreaTest {
 
         val area = Area(width, height)
         assertAll(
-            { assertThat(area.width()).isEqualTo(widthInt) },
-            { assertThat(area.height()).isEqualTo(heightInt) },
+            { assertThat(area.width).isEqualTo(widthInt) },
+            { assertThat(area.height).isEqualTo(heightInt) },
         )
     }
 }

@@ -6,19 +6,19 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-@DisplayName("지뢰(Mines)")
-internal class MinesTest {
+@DisplayName("지뢰(MineBlock)")
+internal class MineBlockTest {
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
     @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
     fun `위치로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = Mines(position)
+        val mines = MineBlock(position)
 
         assertAll(
             { Assertions.assertThat(mines).isNotNull },
-            { Assertions.assertThat(mines).isExactlyInstanceOf(Mines::class.java) },
+            { Assertions.assertThat(mines).isExactlyInstanceOf(MineBlock::class.java) },
         )
     }
 
@@ -27,7 +27,7 @@ internal class MinesTest {
     fun `지뢰가 아니다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = Mines(position)
+        val mines = MineBlock(position)
 
         Assertions.assertThat(mines.isMines()).isTrue
     }

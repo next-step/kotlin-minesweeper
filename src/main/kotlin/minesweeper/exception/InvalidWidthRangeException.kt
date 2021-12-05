@@ -1,6 +1,6 @@
 package minesweeper.exception
 
-class InvalidWidthRangeException(private val element: Int) : RuntimeException() {
+class InvalidWidthRangeException(element: Int) : RuntimeException() {
 
     override val message: String = MESSAGE.format(element)
 
