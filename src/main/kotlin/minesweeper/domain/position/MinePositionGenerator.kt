@@ -4,5 +4,5 @@ import minesweeper.domain.board.BoardSettings
 
 interface MinePositionGenerator {
 
-    fun generate(settings: BoardSettings) : List<Position>
+    fun generate(settings: BoardSettings): List<Position>
 }

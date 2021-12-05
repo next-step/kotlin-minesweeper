@@ -11,5 +11,3 @@ sealed class Cell {
 object Block : Cell()
 
 object Mine : Cell()
-
-
