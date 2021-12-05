@@ -1,60 +1,64 @@
 package minesweeper.model
 
-@JvmInline
-value class Cells(private val cells: List<Cell>) {
+class Cells(cells: Map<Position, Cell>) {
 
-    fun maxColumnOrNull(): Column? = cells.maxByOrNull { it.column.value }?.column
+    private val cells = cells.toMap()
 
-    fun maxRowOrNull(): Row? = cells.maxByOrNull { it.row.value }?.row
+    constructor(cells: List<Cell>) : this(cells.associateBy { it.position })
 
-    operator fun get(position: Position): Cell? = cells.find { it.row == position.row && it.column == position.column }
+    fun maxColumnOrNull(): Column? = cells.maxByOrNull { (position, _) -> position.column.value }
+        ?.value
+        ?.column
+
+    fun maxRowOrNull(): Row? = cells.maxByOrNull { (position, _) -> position.row.value }
+        ?.value
+        ?.row
+
+    operator fun get(position: Position): Cell? = cells[position]
 
     fun isMine(position: Position): Boolean = get(position)?.isMine == true
 
-    fun mine(position: Position): Cells = update(
-        predicate = { it.position == position },
-        transform = { it.mine() }
-    )
-
-    fun increment(position: Position): Cells = update(
-        predicate = { it.position == position },
-        transform = { it.increment() }
-    )
-
-    fun incrementAll(positions: List<Position>): Cells = update(
-        predicate = { it.position in positions },
-        transform = { it.increment() }
-    )
-
-    fun tryOpen(targetPosition: Position): Cells {
-        if (get(targetPosition) == null) return this
-
-        val positions = mutableSetOf(targetPosition)
-        val map = associateByPosition().toMutableMap()
-        while (positions.isNotEmpty()) {
-            val position = positions.first()
-            val cell = map[position] ?: break
-            if (!cell.isVisible && cell.isZero) {
-                positions.addAll(position.asDirections())
-            }
-            map[position] = cell.tryOpen()
-            positions.remove(position)
-        }
-        return Cells(map.values.toList())
+    fun mine(position: Position): Cells {
+        val cell = get(position) ?: return this
+        return Cells(toMutableMap() + mapOf(position to cell.mine()))
     }
 
-    fun isAllOpened(): Boolean = cells.asSequence()
-        .filterIsInstance<Cell.Number>()
-        .all { it.isVisible }
+    fun incrementAll(positions: List<Position>): Cells {
+        val result = toMutableMap()
+        positions.forEach { position ->
+            val cell = result[position] ?: return@forEach
+            result[position] = cell.increment()
+        }
+        return Cells(result)
+    }
 
-    private fun associateByPosition(): Map<Position, Cell> = cells.associateBy { it.position }
+    fun tryOpen(targetPosition: Position): Cells {
+        if (!cells.containsKey(targetPosition)) {
+            return this
+        }
+        return Cells(cells.tryOpen(targetPosition))
+    }
 
-    private fun update(
-        predicate: (Cell) -> Boolean,
-        transform: (Cell) -> (Cell)
-    ): Cells = cells
-        .map { cell -> if (predicate(cell)) transform(cell) else cell }
-        .let(::Cells)
+    private fun Map<Position, Cell>.tryOpen(targetPosition: Position): Map<Position, Cell> {
+        val positions = mutableSetOf(targetPosition)
+        val result = toMutableMap()
+        while (positions.isNotEmpty()) {
+            val position = positions.first()
+            val cell = result[position] ?: break
+            if (cell.isZero) {
+                position.asDirections()
+                    .filter { result[it]?.isVisible == false }
+                    .let(positions::addAll)
+            }
+            result[position] = cell.tryOpen()
+            positions.remove(position)
+        }
+        return result
+    }
+
+    fun isAllOpened(): Boolean = cells.all { (_, cell) -> cell.isVisible }
+
+    private fun toMutableMap(): MutableMap<Position, Cell> = cells.toMutableMap()
 
     companion object {
         val EMPTY: Cells = Cells(emptyList())
