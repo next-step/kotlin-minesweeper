@@ -7,13 +7,6 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     fun toPositions() = cells.map { it.position() }
 
-    fun inputMineCells(mineCells: Cells): Cells = Cells(cells.map { cell ->
-        (mineCells.firstOrNull { it.position() == cell.position() } ?: cell)
-            .apply {
-                this.countingAdjacentMines(mineCells)
-            }
-    })
-
     fun open(position: Position): CellsState {
         require(cells.any { it.position() == position }) { NOT_FOUND_CELL }
         cells.first { it.position() == position }.apply {
@@ -51,20 +44,21 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
     }
 
     companion object {
-        fun makeMineCells(cells: Cells, mineCount: Int): Cells {
-            require(cells.size >= mineCount) { OVER_COUNT_MESSAGE }
-            val randomMineCells = cells.shuffled().take(mineCount).map { MineCell(it.position()) }
-            return Cells(randomMineCells)
+
+        fun of(positions: Positions, minePositions: Positions): Cells {
+            val cells = Cells(positions.map { Cell.of(it) })
+            val mineCells = Cells(minePositions.map { Cell.of(it, true) })
+            return Cells(cells.inputMineCell(mineCells))
         }
 
-        fun of(positions: Positions): Cells =
-            positions.map {
-                Cell.of(it)
-            }.run {
-                Cells(this)
+        private fun Cells.inputMineCell(mineCells: Cells) =
+            this.map { cell ->
+                (mineCells.firstOrNull { it.position() == cell.position() } ?: cell)
+                    .apply {
+                        this.countingAdjacentMines(mineCells)
+                    }
             }
 
-        private const val OVER_COUNT_MESSAGE = "카운트 수가 전체 수보다 큽니다."
         private const val NOT_FOUND_CELL = "해당 셀을 찾을 수 없습니다."
         private const val BLANK_COUNT = 0
     }

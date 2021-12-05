@@ -22,6 +22,10 @@ interface Cell {
     fun countingAdjacentMines(mineCells: Cells)
 
     companion object {
-        fun of(position: Position): NormalCell = NormalCell(position)
+        fun of(position: Position, isMineCell: Boolean = false): Cell =
+            when (isMineCell) {
+                true -> MineCell(position)
+                false -> NormalCell(position)
+            }
     }
 }

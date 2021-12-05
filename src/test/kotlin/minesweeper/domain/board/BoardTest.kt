@@ -2,7 +2,6 @@ package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.CellsState
-import minesweeper.domain.cell.mineCell
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
@@ -33,8 +32,8 @@ class BoardTest {
     fun `지뢰를 오픈 했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
-        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
-        val cells = Cells.of(positions).inputMineCells(mineCell)
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when
@@ -48,8 +47,8 @@ class BoardTest {
     fun `지뢰를 제외 한 나머지를 오픈했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(1, 4))
-        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
-        val cells = Cells.of(positions).inputMineCells(mineCell)
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when
@@ -63,8 +62,8 @@ class BoardTest {
     fun `지뢰가 아닌 셀을 오픈했을 경우`() {
         // given
         val positions = Positions.of(BoardSize.of(1, 5))
-        val mineCell = mineCell(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)), positions)
-        val cells = Cells.of(positions).inputMineCells(mineCell)
+        val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when

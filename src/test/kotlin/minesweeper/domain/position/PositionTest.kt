@@ -1,6 +1,7 @@
 package minesweeper.domain.position
 
 import minesweeper.domain.board.BoardSize
+import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -38,7 +39,11 @@ class PositionTest {
         // given
         val position = Position.of(x, y)
         position.updateAdjacentPositions(Positions.of(BoardSize.of(10, 10)))
-        val minePositions = Cells.of(Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3))))
+        val minePositions = Cells(
+            Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3))).map {
+                Cell.of(it)
+            }
+        )
 
         // when
         val adjacentMinesCount = position.countingAdjacentMines(minePositions)

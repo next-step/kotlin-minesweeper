@@ -12,10 +12,8 @@ class Board(val cells: Cells) {
     companion object {
         fun of(boardSize: BoardSize, mineCount: Int): Board =
             Positions.of(boardSize).run {
-                val cells = Cells.of(this).run {
-                    val mineCells = Cells.makeMineCells(this, mineCount)
-                    this.inputMineCells(mineCells)
-                }
+                val minePositions = this.createMinePosition(mineCount)
+                val cells = Cells.of(this, minePositions)
                 Board(cells)
             }
     }
