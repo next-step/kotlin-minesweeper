@@ -2,24 +2,14 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.position.Position
 
-data class NormalCell(
-    val position: Position,
-    private var isHidden: Boolean = true,
-) : Cell {
+class NormalCell(override val position: Position, override val hiddenState: HiddenState = HiddenState()) : Cell {
 
-    private lateinit var cellValue: CellValue
+    override lateinit var cellValue: CellValue
+        private set
 
     override fun isOpenedMineCell(): Boolean = false
 
     override fun isNotMineCell(): Boolean = true
-
-    override fun position(): Position = position
-
-    override fun isHiddenCell(): Boolean = isHidden
-
-    override fun openCell() {
-        isHidden = false
-    }
 
     override fun getCellAdjacentCount(): Int = cellValue.value
 

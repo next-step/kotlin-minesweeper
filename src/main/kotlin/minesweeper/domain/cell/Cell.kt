@@ -4,11 +4,20 @@ import minesweeper.domain.position.Position
 
 interface Cell {
 
+    val position: Position
+    val hiddenState: HiddenState
+    val cellValue: CellValue
+
+    fun position(): Position = position
+
+    fun isHiddenCell(): Boolean = hiddenState.isHidden
+
+    fun openCell() {
+        hiddenState.changeVisible()
+    }
+
     fun isOpenedMineCell(): Boolean
     fun isNotMineCell(): Boolean
-    fun position(): Position
-    fun isHiddenCell(): Boolean
-    fun openCell()
     fun getCellAdjacentCount(): Int
     fun isContainsAdjacentPositions(otherPosition: Position): Boolean
     fun countingAdjacentMines(mineCells: Cells)
