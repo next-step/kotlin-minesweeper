@@ -3,13 +3,16 @@ package minesweeper.model
 class Board(val cells: Cells) {
 
     val width: Width = Width.valueOf(cells.maxColumnOrNull()?.value)
-
     val height: Height = Height.valueOf(cells.maxRowOrNull()?.value)
 
-    fun mine(position: Position): Board = cells
-        .mine(position)
-        .incrementAll(position.asDirections())
-        .let { Board(it) }
+    fun mine(position: Position): Board {
+        if (cells.isMine(position)) {
+            return this
+        }
+        return cells.mine(position)
+            .incrementAll(position.asDirections())
+            .let { Board(it) }
+    }
 
     fun isMine(position: Position): Boolean = cells.isMine(position)
 
