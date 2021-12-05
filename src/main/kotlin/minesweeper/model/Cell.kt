@@ -10,10 +10,7 @@ sealed class Cell {
     val row: Row get() = position.row
     val column: Column get() = position.column
 
-    fun mine(): Cell = when (this) {
-        is Mine -> this
-        else -> Mine(position)
-    }
+    fun mine(): Cell = if (this is Mine) this else Mine(position)
 
     abstract fun increment(): Cell
     abstract fun tryOpen(): Cell
