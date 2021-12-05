@@ -9,6 +9,10 @@ data class NormalCell(
 
     private lateinit var cellValue: CellValue
 
+    override fun isOpenedMineCell(): Boolean = false
+
+    override fun isNotMineCell(): Boolean = true
+
     override fun position(): Position = position
 
     override fun isHiddenCell(): Boolean = isHidden

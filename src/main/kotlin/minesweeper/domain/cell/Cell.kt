@@ -3,17 +3,9 @@ package minesweeper.domain.cell
 import minesweeper.domain.position.Position
 
 interface Cell {
-    fun isOpenedMineCell(): Boolean {
-        if (this is MineCell) {
-            return !isHiddenCell()
-        }
-        return false
-    }
 
-    fun isNotMineCell(): Boolean {
-        return this is NormalCell
-    }
-
+    fun isOpenedMineCell(): Boolean
+    fun isNotMineCell(): Boolean
     fun position(): Position
     fun isHiddenCell(): Boolean
     fun openCell()
