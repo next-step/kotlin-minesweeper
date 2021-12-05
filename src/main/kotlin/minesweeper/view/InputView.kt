@@ -36,6 +36,6 @@ class InputView {
         val (row, column) = readLine()!!
             .split(", ")
             .map { it.toInt() }
-        return Position(Row(row), Column(column))
+        return Position.of(Row(row), Column(column))
     }
 }

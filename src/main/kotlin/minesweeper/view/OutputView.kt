@@ -35,7 +35,7 @@ class OutputView {
 
     private fun showBoard(board: Board) = onRow(board.height) { row ->
         onColumn(board.width) { column ->
-            val position = Position(row, column)
+            val position = Position.of(row, column)
             print(getString(board.cells[position]))
             print(" ")
         }
