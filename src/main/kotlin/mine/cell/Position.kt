@@ -17,7 +17,13 @@ data class Position(val x: Int, val y: Int) {
 
     companion object {
         private const val MIN_POSITION = 0
+        private const val DELIMITER = ","
 
         fun Position.ofNullable(): Position? = if (x >= MIN_POSITION && y >= MIN_POSITION) Position(x, y) else null
+        fun String?.ofPosition(): Position {
+            require(this != null)
+            val ints = this.split(DELIMITER).mapNotNull { it.toIntOrNull() }
+            return Position(ints[0], ints[1])
+        }
     }
 }

@@ -4,6 +4,7 @@ import mine.Height
 import mine.Mine
 import mine.Width
 import mine.cell.Position
+import mine.cell.Position.Companion.ofPosition
 
 object InputView {
     fun inputHeight(): Height {
@@ -21,7 +22,8 @@ object InputView {
         return Mine.valueOf(readLine()?.toIntOrNull())
     }
 
-    fun inputPosition(position: Position) {
-        println("open: ${position.x}, ${position.y}")
+    fun inputPosition(): Position {
+        println("open: ")
+        return readLine().ofPosition()
     }
 }
