@@ -6,6 +6,8 @@ import minesweeper.domain.block.Mine
 import minesweeper.domain.block.None
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.replace
+import minesweeper.domain.game.GameResult
+import minesweeper.domain.game.State
 
 data class Board(val area: Area, val blocks: List<Block>) {
     init {
@@ -21,17 +23,22 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return Board(area, blocksResult)
     }
 
-    fun scanMine(x: Int, y: Int): Board {
-        findBlock(x, y) ?: return this
+    fun scanMine(x: Int, y: Int): GameResult {
+        val targetBlock = findBlock(x, y) ?: return GameResult(State.PLAY, this)
+        if (targetBlock.isMine()) return GameResult(State.LOSE, this)
         var blockResult = blocks
-
         for (position in MOVABLE_POSITION) {
             val newX = x + position.x
             val newY = y + position.y
             blockResult = updateBlocks(blockResult, newX, newY)
         }
-
-        return Board(area, blockResult)
+        val mineCount = blocks.count { it is Mine }
+        val hasVisitedCount = blockResult.count() { it.hasVisited() }
+        val remainCount = blocks.size - hasVisitedCount
+        if (mineCount == remainCount) {
+            return GameResult(State.WIN, Board(area, blockResult))
+        }
+        return GameResult(State.PLAY, Board(area, blockResult))
     }
 
     private fun updateBlocks(

@@ -13,4 +13,8 @@ data class None(private val position: Position, private val mineNearCount: Int? 
     fun updateBlock(mineNearCount: Int): None {
         return None(position, mineNearCount)
     }
+
+    override fun hasVisited(): Boolean {
+        return mineNearCount != null
+    }
 }

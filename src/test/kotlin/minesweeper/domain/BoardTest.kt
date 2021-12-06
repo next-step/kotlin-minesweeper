@@ -175,7 +175,7 @@ internal class BoardTest {
 
         val actual = givenBoard.scanMine(0, 1)
 
-        assertThat(actual.blocks).containsExactly(
+        assertThat(actual.board.blocks).containsExactly(
             Mine(Position(0, 0), null),
             None(Position(0, 1), 1),
             None(Position(0, 2), 0),

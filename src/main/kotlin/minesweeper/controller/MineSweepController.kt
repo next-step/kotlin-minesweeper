@@ -5,6 +5,8 @@ import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
 import minesweeper.domain.block.BlockGenerator
+import minesweeper.domain.game.GameResult
+import minesweeper.domain.game.State
 import minesweeper.views.InputView
 import minesweeper.views.OutputView
 
@@ -18,8 +20,12 @@ class MineSweepController {
 
         val blocks = BlockGenerator.generateBlocks(area, mineCount)
         val board = Board(area, blocks)
-        val mineScanBoard = board.scanMines()
+        var gameResult = GameResult(State.PLAY, board)
 
-        OutputView.printBoard(board)
+        while (!gameResult.endGame()) {
+            val position = InputView.askTarget()
+            gameResult = gameResult.board.scanMine(position.x, position.y)
+            OutputView.printBoard(gameResult)
+        }
     }
 }

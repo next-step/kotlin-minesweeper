@@ -9,4 +9,8 @@ data class Mine(private val position: Position, private val mineNearCount: Int? 
     override fun getMineNearCount(): Int? {
         return mineNearCount
     }
+
+    override fun hasVisited(): Boolean {
+        return false
+    }
 }
