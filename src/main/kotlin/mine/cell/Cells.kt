@@ -13,6 +13,20 @@ class Cells(val values: List<Cell>) {
     fun rowOfCells(row: Int): Cells =
         values.filter { it.position.x == row }.sortedBy { it.position.y }.let(::Cells)
 
+    fun findCell(position: Position): Cell = values.first { it.position == position }
+
+    private fun isMineCell(position: Position): Boolean = values.filterIsInstance<MineCell>().any {
+        it.isSamePosition(position)
+    }
+
+    private fun findMineCell(cell: Cell): Int = cell.aroundPosition().map { isMineCell(it) }.count { it }
+
+    fun checkAroundMineCount() = values
+        .filterIsInstance<NoneCell>()
+        .forEach { cell ->
+            cell.changeAroundCount(findMineCell(cell))
+        }
+
     companion object {
         fun createCells(width: Width, height: Height, mineCount: Int): Cells {
             val size = width.value * height.value
