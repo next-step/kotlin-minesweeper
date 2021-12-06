@@ -82,7 +82,7 @@ internal class BoardTest {
      * 1 1
      */
     @Test
-    fun `보드에 지뢰를 검색하고 검색된 결과를 리턴한다`() {
+    fun `보드에 지뢰를 전체 검색하고 검색된 결과를 리턴한다`() {
         val givenArea = Area(Width(2), Height(2))
         val givenMine = Mine(Position(0, 0))
         val givenNone1 = None(Position(0, 1))
@@ -107,7 +107,7 @@ internal class BoardTest {
     }
 
     /**
-     *  0 1 0
+     *  * 1 0
      *  1 1 0
      *  0 0 0
      */
@@ -140,5 +140,51 @@ internal class BoardTest {
         val actual = givenBoard.findNearMineCount(2, 2)
 
         assertThat(actual).isEqualTo(0)
+    }
+
+    /**
+     *  * 1 0
+     *  1 1 0
+     *  0 0 0
+     */
+    @Test
+    fun `지뢰 검색을 시도한 보드를 리턴한다`() {
+        val givenArea = Area(Width(3), Height(3))
+        val givenMine = Mine(Position(0, 0))
+        val givenNone1 = None(Position(0, 1))
+        val givenNone2 = None(Position(0, 2))
+        val givenNone3 = None(Position(1, 0))
+        val givenNone4 = None(Position(1, 1))
+        val givenNone5 = None(Position(1, 2))
+        val givenNone6 = None(Position(2, 0))
+        val givenNone7 = None(Position(2, 1))
+        val givenNone8 = None(Position(2, 2))
+
+        val givenBlocks = listOf(
+            givenMine,
+            givenNone1,
+            givenNone2,
+            givenNone3,
+            givenNone4,
+            givenNone5,
+            givenNone6,
+            givenNone7,
+            givenNone8,
+        )
+        val givenBoard = Board(givenArea, givenBlocks)
+
+        val actual = givenBoard.scanMine(0, 1)
+
+        assertThat(actual.blocks).containsExactly(
+            Mine(Position(0, 0), null),
+            None(Position(0, 1), 1),
+            None(Position(0, 2), 0),
+            None(Position(1, 0), 1),
+            None(Position(1, 1), 1),
+            None(Position(1, 2), 0),
+            None(Position(2, 0), null),
+            None(Position(2, 1), null),
+            None(Position(2, 2), null),
+        )
     }
 }

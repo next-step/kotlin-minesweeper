@@ -5,6 +5,7 @@ import minesweeper.domain.block.Block
 import minesweeper.domain.block.Mine
 import minesweeper.domain.block.None
 import minesweeper.domain.block.Position
+import minesweeper.domain.block.replace
 
 data class Board(val area: Area, val blocks: List<Block>) {
     init {
@@ -18,6 +19,33 @@ data class Board(val area: Area, val blocks: List<Block>) {
             addBlocks(block, blocksResult)
         }
         return Board(area, blocksResult)
+    }
+
+    fun scanMine(x: Int, y: Int): Board {
+        findBlock(x, y) ?: return this
+        var blockResult = blocks
+
+        for (position in MOVABLE_POSITION) {
+            val newX = x + position.x
+            val newY = y + position.y
+            blockResult = updateBlocks(blockResult, newX, newY)
+        }
+
+        return Board(area, blockResult)
+    }
+
+    private fun updateBlocks(
+        blockResult: List<Block>,
+        newX: Int,
+        newY: Int
+    ): List<Block> {
+        var blockResult1 = blockResult
+        val nearBlock = findBlock(newX, newY)
+        if (nearBlock != null && nearBlock is None) {
+            blockResult1 =
+                blockResult1.replace(nearBlock.updateBlock(findNearMineCount(newX, newY))) { it == nearBlock }
+        }
+        return blockResult1
     }
 
     private fun addBlocks(
@@ -44,10 +72,10 @@ data class Board(val area: Area, val blocks: List<Block>) {
 
     fun findNearMineCount(x: Int, y: Int): Int {
         var count = 0
-        val findBlock = findBlock(x, y) ?: return 0
+        val foundBlock = findBlock(x, y) ?: return 0
 
         for (position in MOVABLE_POSITION) {
-            count = countsMines(findBlock, position, count)
+            count = countsMines(foundBlock, position, count)
         }
         return count
     }
@@ -81,7 +109,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
         private const val AREA_BLOCK_SIZE_SHOULD_SAME = "면적과 블록의 갯수는 같아야 합니다."
 
         private val MOVABLE_POSITION = listOf(
-            Position(-1, 1), Position(0, 1), Position(1, 1), Position(1, 0),
+            Position(-1, 1), Position(0, 1), Position(1, 1), Position(1, 0), Position(0, 0),
             Position(1, -1), Position(0, -1), Position(-1, -1), Position(-1, 0)
         )
     }
