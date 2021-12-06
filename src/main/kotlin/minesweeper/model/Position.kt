@@ -45,12 +45,8 @@ class Position private constructor(val row: Row, val column: Column) {
 
         fun of(row: Row, column: Column): Position {
             val key = row to column
-            var position = POSITION_POOL[key]
-            if (position != null) {
-                return position
-            }
-            position = Position(row, column)
-            return position.also { POSITION_POOL[key] = position }
+            return POSITION_POOL[key]
+                ?: Position(row, column).also { POSITION_POOL[key] = it }
         }
 
         fun list(width: Width, height: Height): List<Position> = List(width.value * height.value) { index ->
