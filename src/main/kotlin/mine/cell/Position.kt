@@ -23,6 +23,7 @@ data class Position(val x: Int, val y: Int) {
         fun String?.ofPosition(): Position {
             require(this != null)
             val ints = this.split(DELIMITER).mapNotNull { it.toIntOrNull() }
+            require(ints.size == 2 && ints.isNotEmpty())
             return Position(ints[0], ints[1])
         }
     }
