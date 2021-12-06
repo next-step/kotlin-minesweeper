@@ -8,8 +8,8 @@ import minesweeper.domain.block.Position
 
 data class Board(val area: Area, val blocks: List<Block>) {
     init {
-        require(blocks.count { it is Mine } > MINIMUM_MINE_COUNT)
-        require(area.getArea() == blocks.size)
+        require(blocks.count { it is Mine } > MINIMUM_MINE_COUNT) { MINIMUM_MINE_REQUIRED }
+        require(area.getArea() == blocks.size) { AREA_BLOCK_SIZE_SHOULD_SAME }
     }
 
     fun scanMines(): Board {
@@ -82,6 +82,8 @@ data class Board(val area: Area, val blocks: List<Block>) {
         private const val MINIMUM_MINE_COUNT = 0
         private const val X_POSITION = 0
         private const val Y_POSITION = 1
+        private const val MINIMUM_MINE_REQUIRED = "최소 1개 이상 지뢰가 있어야합니다."
+        private const val AREA_BLOCK_SIZE_SHOULD_SAME = "면적과 블록의 갯수는 같아야 합니다."
 
         private val MOVABLE_POSITION = listOf(
             listOf(-1, 1), listOf(0, 1), listOf(1, 1), listOf(1, 0),

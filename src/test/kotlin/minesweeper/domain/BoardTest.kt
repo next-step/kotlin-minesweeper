@@ -7,6 +7,7 @@ import minesweeper.domain.block.Mine
 import minesweeper.domain.block.None
 import minesweeper.domain.block.Position
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -38,6 +39,8 @@ internal class BoardTest {
             None(Position(1, 1))
         )
         assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { Board(givenArea, givenBlocks) }.withMessage("최소 1개 이상 지뢰가 있어야합니다.")
     }
 
     @Test
@@ -46,11 +49,12 @@ internal class BoardTest {
         val givenHeight = Height(2)
         val givenArea = Area(givenWidth, givenHeight)
         val givenBlocks = listOf(
-            None(Position(0, 0)),
+            Mine(Position(0, 0)),
             None(Position(0, 1)),
             None(Position(1, 0)),
         )
-        assertThrows<IllegalArgumentException> { Board(givenArea, givenBlocks) }
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { Board(givenArea, givenBlocks) }.withMessage("면적과 블록의 갯수는 같아야 합니다.")
     }
 
     @Test
