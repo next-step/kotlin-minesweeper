@@ -99,7 +99,7 @@ internal class BoardTest {
         val actual = givenBoard.scanMines()
 
         assertThat(actual.blocks).containsExactly(
-            Mine(Position(0, 0), 0),
+            Mine(Position(0, 0), null),
             None(Position(0, 1), 1),
             None(Position(1, 0), 1),
             None(Position(1, 1), 1)
@@ -137,7 +137,7 @@ internal class BoardTest {
         )
         val givenBoard = Board(givenArea, givenBlocks)
 
-        val actual = givenBoard.findMineCount(2, 2)
+        val actual = givenBoard.findNearMineCount(2, 2)
 
         assertThat(actual).isEqualTo(0)
     }

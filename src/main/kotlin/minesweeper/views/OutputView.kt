@@ -28,7 +28,7 @@ object OutputView {
     private fun drawNone(board: Board, i: Int, block: String): String {
         var block1 = block
         if (board.blocks[i] is None) {
-            block1 = board.blocks[i].getMineNearCount().toString()
+            block1 = board.blocks[i].getMineNearCount()?.toString() ?: "C"
         }
         return block1
     }

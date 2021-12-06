@@ -24,9 +24,8 @@ data class Board(val area: Area, val blocks: List<Block>) {
         block: Block,
         blocksResult: MutableList<Block>
     ) {
-
         if (block is None) {
-            val mineCount = findMineCount(block)
+            val mineCount = findNearMineCount(block)
             blocksResult.add(block.updateBlock(mineCount))
         }
         if (block.isMine()) {
@@ -43,7 +42,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return this is Mine
     }
 
-    fun findMineCount(x: Int, y: Int): Int {
+    fun findNearMineCount(x: Int, y: Int): Int {
         var count = 0
         val findBlock = findBlock(x, y) ?: return 0
 
@@ -53,7 +52,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return count
     }
 
-    private fun findMineCount(block: Block): Int {
+    private fun findNearMineCount(block: Block): Int {
         var count = 0
         for (position in MOVABLE_POSITION) {
             count = countsMines(block, position, count)
