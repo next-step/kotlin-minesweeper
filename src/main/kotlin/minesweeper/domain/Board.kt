@@ -63,12 +63,12 @@ data class Board(val area: Area, val blocks: List<Block>) {
 
     private fun countsMines(
         block: Block,
-        position: List<Int>,
+        position: Position,
         mineCount: Int
     ): Int {
         var count = mineCount
-        val targetPositionX = block.getPosition().x + position[X_POSITION]
-        val targetPositionY = block.getPosition().y + position[Y_POSITION]
+        val targetPositionX = block.getPosition().x + position.x
+        val targetPositionY = block.getPosition().y + position.y
 
         if (findBlock(targetPositionX, targetPositionY).isMine()) {
             count++
@@ -78,14 +78,12 @@ data class Board(val area: Area, val blocks: List<Block>) {
 
     companion object {
         private const val MINIMUM_MINE_COUNT = 0
-        private const val X_POSITION = 0
-        private const val Y_POSITION = 1
         private const val MINIMUM_MINE_REQUIRED = "최소 1개 이상 지뢰가 있어야합니다."
         private const val AREA_BLOCK_SIZE_SHOULD_SAME = "면적과 블록의 갯수는 같아야 합니다."
 
         private val MOVABLE_POSITION = listOf(
-            listOf(-1, 1), listOf(0, 1), listOf(1, 1), listOf(1, 0),
-            listOf(1, -1), listOf(0, -1), listOf(-1, -1), listOf(-1, 0)
+            Position(-1, 1), Position(0, 1), Position(1, 1), Position(1, 0),
+            Position(1, -1), Position(0, -1), Position(-1, -1), Position(-1, 0)
         )
     }
 }
