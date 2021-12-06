@@ -13,25 +13,25 @@ data class Board(val area: Area, val blocks: List<Block>) {
     }
 
     fun scanMines(): Board {
-        var blocksResult = emptyList<Block>()
+        val blocksResult = mutableListOf<Block>()
         for (block in blocks) {
-            var mineCount = 0
-            mineCount = findMineCount(mineCount, block)
-            blocksResult = addNoneBlock(block, blocksResult, mineCount)
-            blocksResult = addMineBlock(block, blocksResult)
+            addBlocks(block, blocksResult)
         }
         return Board(area, blocksResult)
     }
 
-    private fun addMineBlock(
+    private fun addBlocks(
         block: Block,
-        blockResult: List<Block>
-    ): List<Block> {
-        var blocks = blockResult
-        if (block is Mine) {
-            blocks = blocks + block
+        blocksResult: MutableList<Block>
+    ) {
+
+        if (block is None) {
+            val mineCount = findMineCount(block)
+            blocksResult.add(block.updateBlock(mineCount))
         }
-        return blocks
+        if (block.isMine()) {
+            blocksResult.add(block)
+        }
     }
 
     fun findBlock(x: Int, y: Int): Block? {
@@ -39,24 +39,12 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return blocks.find { it.getPosition() == targetPosition }
     }
 
-    fun Block?.isMine(): Boolean {
+    private fun Block?.isMine(): Boolean {
         return this is Mine
     }
 
-    private fun addNoneBlock(
-        block: Block,
-        blockResult: List<Block>,
-        mineCount: Int
-    ): List<Block> {
-        var blocks = blockResult
-        if (block is None) {
-            blocks = blocks + block.updateBlock(mineCount)
-        }
-        return blocks
-    }
-
-    private fun findMineCount(mineCount: Int, block: Block): Int {
-        var count = mineCount
+    private fun findMineCount(block: Block): Int {
+        var count = 0
         for (position in MOVABLE_POSITION) {
             count = findMines(block, position, count)
         }
