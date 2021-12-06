@@ -36,12 +36,12 @@ class Cells(cells: Map<Position, Cell>) {
         if (!cells.containsKey(targetPosition)) {
             return this
         }
-        return Cells(cells.tryOpen(targetPosition))
+        return Cells(tryOpen(cells, targetPosition))
     }
 
-    private fun Map<Position, Cell>.tryOpen(targetPosition: Position): Map<Position, Cell> {
+    private fun tryOpen(cells: Map<Position, Cell>, targetPosition: Position): Map<Position, Cell> {
         val positions = mutableSetOf(targetPosition)
-        val result = toMutableMap()
+        val result = cells.toMutableMap()
         while (positions.isNotEmpty()) {
             val position = positions.first()
             val cell = result[position] ?: break
