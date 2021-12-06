@@ -39,8 +39,8 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return blocks.find { it.getPosition() == targetPosition }
     }
 
-    private fun findIsMine(block: Block?): Boolean {
-        return block is Mine
+    fun Block?.isMine(): Boolean {
+        return this is Mine
     }
 
     private fun addNoneBlock(
@@ -72,7 +72,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
         val targetPositionX = block.getPosition().x + position[X_POSITION]
         val targetPositionY = block.getPosition().y + position[Y_POSITION]
 
-        if (findIsMine(findBlock(targetPositionX, targetPositionY))) {
+        if (findBlock(targetPositionX, targetPositionY).isMine()) {
             count++
         }
         return count
