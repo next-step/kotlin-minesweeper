@@ -43,15 +43,25 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return this is Mine
     }
 
-    private fun findMineCount(block: Block): Int {
+    fun findMineCount(x: Int, y: Int): Int {
         var count = 0
+        val findBlock = findBlock(x, y) ?: return 0
+
         for (position in MOVABLE_POSITION) {
-            count = findMineCounts(block, position, count)
+            count = countsMines(findBlock, position, count)
         }
         return count
     }
 
-    private fun findMineCounts(
+    private fun findMineCount(block: Block): Int {
+        var count = 0
+        for (position in MOVABLE_POSITION) {
+            count = countsMines(block, position, count)
+        }
+        return count
+    }
+
+    private fun countsMines(
         block: Block,
         position: List<Int>,
         mineCount: Int
