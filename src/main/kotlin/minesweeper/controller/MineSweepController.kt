@@ -21,6 +21,7 @@ class MineSweepController {
         val blocks = BlockGenerator.generateBlocks(area, mineCount)
         val board = Board(area, blocks)
         var gameResult = GameResult(State.PLAY, board)
+        OutputView.printStart()
 
         while (!gameResult.endGame()) {
             val position = InputView.askTarget()

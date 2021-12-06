@@ -41,6 +41,11 @@ data class Board(val area: Area, val blocks: List<Block>) {
         return GameResult(State.PLAY, Board(area, blockResult))
     }
 
+    fun findBlock(x: Int, y: Int): Block? {
+        val targetPosition = Position(x, y)
+        return blocks.find { it.getPosition() == targetPosition }
+    }
+
     private fun updateBlocks(
         blockResult: List<Block>,
         newX: Int,
@@ -53,6 +58,16 @@ data class Board(val area: Area, val blocks: List<Block>) {
                 blockResult1.replace(nearBlock.updateBlock(findNearMineCount(newX, newY))) { it == nearBlock }
         }
         return blockResult1
+    }
+
+    fun findNearMineCount(x: Int, y: Int): Int {
+        var count = 0
+        val foundBlock = findBlock(x, y) ?: return 0
+
+        for (position in MOVABLE_POSITION) {
+            count = countsMines(foundBlock, position, count)
+        }
+        return count
     }
 
     private fun addBlocks(
@@ -68,23 +83,8 @@ data class Board(val area: Area, val blocks: List<Block>) {
         }
     }
 
-    fun findBlock(x: Int, y: Int): Block? {
-        val targetPosition = Position(x, y)
-        return blocks.find { it.getPosition() == targetPosition }
-    }
-
     private fun Block?.isMine(): Boolean {
         return this is Mine
-    }
-
-    fun findNearMineCount(x: Int, y: Int): Int {
-        var count = 0
-        val foundBlock = findBlock(x, y) ?: return 0
-
-        for (position in MOVABLE_POSITION) {
-            count = countsMines(foundBlock, position, count)
-        }
-        return count
     }
 
     private fun findNearMineCount(block: Block): Int {
