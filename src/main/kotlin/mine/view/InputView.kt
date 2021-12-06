@@ -3,6 +3,7 @@ package mine.view
 import mine.Height
 import mine.Mine
 import mine.Width
+import mine.cell.Position
 
 object InputView {
     fun inputHeight(): Height {
@@ -18,5 +19,9 @@ object InputView {
     fun inputMineCount(): Mine {
         println("\n지뢰는 몇 개인가요?")
         return Mine.valueOf(readLine()?.toIntOrNull())
+    }
+
+    fun inputPosition(position: Position) {
+        println("open: ${position.x}, ${position.y}")
     }
 }

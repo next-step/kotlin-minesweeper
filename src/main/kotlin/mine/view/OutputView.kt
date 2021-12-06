@@ -17,4 +17,12 @@ object OutputView {
             println()
         }
     }
+
+    fun printLoseGame() {
+        println("Lose Game.")
+    }
+
+    fun printWinGame() {
+        println("Win Game.")
+    }
 }
