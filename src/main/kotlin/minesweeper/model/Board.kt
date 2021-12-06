@@ -18,7 +18,7 @@ class Board(val cells: Cells) {
 
     fun tryOpen(position: Position): Board = Board(cells.tryOpen(position))
 
-    fun isAllOpened(): Boolean = cells.isAllOpened()
+    fun isAllOpened(): Boolean = cells.isAllOpenedWithoutMine()
 
     companion object {
         val EMPTY = Board(Cells.EMPTY)

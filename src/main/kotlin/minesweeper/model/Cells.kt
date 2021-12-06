@@ -56,7 +56,9 @@ class Cells(cells: Map<Position, Cell>) {
         return result
     }
 
-    fun isAllOpened(): Boolean = cells.all { (_, cell) -> cell.isVisible }
+    fun isAllOpenedWithoutMine(): Boolean = cells
+        .filterValues { !it.isMine }
+        .all { (_, cell) -> cell.isVisible }
 
     private fun toMutableMap(): MutableMap<Position, Cell> = cells.toMutableMap()
 
