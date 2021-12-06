@@ -41,8 +41,15 @@ class PositionTest {
     }
 
     @Test
-    fun `문자열에 빈 값이면 Position으로 변환시 에러를 발생시킨다`() {
+    fun `문자열이 빈 값이면 Position으로 변환시 에러를 발생시킨다`() {
         val input = ""
+
+        assertThrows<IllegalArgumentException> { input.ofPosition() }
+    }
+
+    @Test
+    fun `문자열아 null 값이면 Position으로 변환시 에러를 발생시킨다`() {
+        val input = null
 
         assertThrows<IllegalArgumentException> { input.ofPosition() }
     }
