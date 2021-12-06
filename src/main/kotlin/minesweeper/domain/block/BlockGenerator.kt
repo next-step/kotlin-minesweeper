@@ -17,14 +17,9 @@ object BlockGenerator {
             (1..area.getArea()).map { None(Position(area.getX(it - 1), area.getY(it - 1))) }.toList()
 
         randomPositions.forEach { randomPosition ->
-            blocks = blocks.replace(
-                Mine(
-                    Position(
-                        area.getX(randomPosition),
-                        area.getY(randomPosition)
-                    )
-                )
-            ) { it == blocks[randomPosition] }
+            val position = Position(area.getX(randomPosition), area.getY(randomPosition))
+            val mine = Mine(position)
+            blocks = blocks.replace(mine) { it == blocks[randomPosition] }
         }
         return blocks
     }
