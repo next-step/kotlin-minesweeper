@@ -16,7 +16,7 @@ data class Position(val x: Int, val y: Int) {
     }
 
     companion object {
-        const val MIN_POSITION = 0
+        private const val MIN_POSITION = 0
 
         fun Position.ofNullable(): Position? = if (x >= MIN_POSITION && y >= MIN_POSITION) Position(x, y) else null
     }
