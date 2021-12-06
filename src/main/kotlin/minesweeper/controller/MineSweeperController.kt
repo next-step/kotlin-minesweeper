@@ -40,8 +40,8 @@ object MineSweeperController {
             .shuffled()
             .take(mineCount.value.coerceAtMost(size))
 
-        var result = Board.create(width, height)
-        positions.forEach { position -> result = result.mine(position) }
-        return result
+        var board = Board.create(width, height)
+        positions.forEach { position -> board = board.mine(position) }
+        return board
     }
 }

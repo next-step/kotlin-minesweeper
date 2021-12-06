@@ -24,12 +24,12 @@ class Cells(cells: Map<Position, Cell>) {
     }
 
     fun incrementAll(positions: List<Position>): Cells {
-        val result = toMutableMap()
+        val cells = toMutableMap()
         positions.forEach { position ->
-            val cell = result[position] ?: return@forEach
-            result[position] = cell.increment()
+            val cell = cells[position] ?: return@forEach
+            cells[position] = cell.increment()
         }
-        return Cells(result)
+        return Cells(cells)
     }
 
     fun tryOpen(targetPosition: Position): Cells {
