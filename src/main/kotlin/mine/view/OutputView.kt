@@ -10,7 +10,7 @@ object OutputView {
         for (i in 0..board.cells.column()) {
             board.cells.rowOfCells(i).values.forEach {
                 when (it) {
-                    is NoneCell -> print("${it.aroundMineCount} ")
+                    is NoneCell -> print("${it.mineCount} ")
                     is MineCell -> print("${it.name()} ")
                 }
             }

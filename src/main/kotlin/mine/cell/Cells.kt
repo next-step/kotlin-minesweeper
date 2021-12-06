@@ -15,32 +15,32 @@ class Cells(val values: List<Cell>) {
 
     fun findCell(position: Position): Cell = values.first { it.position == position }
 
-    private fun isMineCell(position: Position): Boolean = values.filterIsInstance<MineCell>().any {
-        it.isSamePosition(position)
-    }
-
-    private fun findMineCell(cell: Cell): Int = cell.aroundPosition().map { isMineCell(it) }.count { it }
-
-    fun checkAroundMineCount() = values
-        .filterIsInstance<NoneCell>()
-        .forEach { cell ->
-            cell.changeAroundCount(findMineCell(cell))
+    companion object {
+        private fun List<Cell>.isMineCell(position: Position): Boolean = this.any {
+            it.isSamePosition(position)
         }
 
-    companion object {
-        fun createCells(width: Width, height: Height, mineCount: Int): Cells {
+        private fun Position.isAroundCell(mineList: List<Cell>): Int =
+            this.aroundPosition()
+                .map { mineList.isMineCell(it) }
+                .count { it }
+
+        private fun createList(width: Width, height: Height): List<Position> {
             val size = width.value * height.value
             return List(size) { index: Int ->
                 val x = (index / width.value)
                 val y = (index % height.value)
                 Position(x, y)
             }.shuffled()
-                .mapIndexed { index, position ->
-                    when {
-                        index < mineCount -> MineCell(position)
-                        else -> NoneCell(position)
-                    }
-                }.let(::Cells)
+        }
+
+        fun createCells(width: Width, height: Height, mineCount: Int): Cells {
+            val positions = createList(width, height)
+            val mines = positions.take(mineCount).map { MineCell(it) }
+            val nones = positions
+                .filterIndexed { index, _ -> index >= mineCount }
+                .map { NoneCell(it, it.isAroundCell(mines)) }
+            return (mines + nones).let(::Cells)
         }
     }
 }
