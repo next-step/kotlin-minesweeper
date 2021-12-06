@@ -20,11 +20,11 @@ class Cells(cells: Map<Position, Cell>) {
 
     fun mine(position: Position): Cells {
         val cell = get(position) ?: return this
-        return Cells(toMutableMap() + mapOf(position to cell.mine()))
+        return Cells(cells.toMutableMap() + mapOf(position to cell.mine()))
     }
 
     fun incrementAll(positions: List<Position>): Cells {
-        val cells = toMutableMap()
+        val cells = cells.toMutableMap()
         positions.forEach { position ->
             val cell = cells[position] ?: return@forEach
             cells[position] = cell.increment()
@@ -59,8 +59,6 @@ class Cells(cells: Map<Position, Cell>) {
     fun isAllOpenedWithoutMine(): Boolean = cells
         .filterValues { !it.isMine }
         .all { (_, cell) -> cell.isVisible }
-
-    private fun toMutableMap(): MutableMap<Position, Cell> = cells.toMutableMap()
 
     companion object {
         val EMPTY: Cells = Cells(emptyList())
