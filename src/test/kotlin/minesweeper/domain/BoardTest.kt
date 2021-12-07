@@ -4,7 +4,7 @@ import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.Cell
+import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
@@ -65,6 +65,6 @@ internal class BoardTest {
         if (minesPositions.contains(positions)) {
             return MineBlock(positions)
         }
-        return Cell(positions)
+        return EmptyBlock(positions)
     }
 }

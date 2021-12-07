@@ -7,18 +7,18 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 @DisplayName("일반 셀(Cell)")
-internal class CellTest {
+internal class EmptyBlockTest {
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
     @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
     fun `위치로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val cell = Cell(position)
+        val cell = EmptyBlock(position)
 
         assertAll(
             { assertThat(cell).isNotNull },
-            { assertThat(cell).isExactlyInstanceOf(Cell::class.java) },
+            { assertThat(cell).isExactlyInstanceOf(EmptyBlock::class.java) },
         )
     }
 
@@ -27,7 +27,7 @@ internal class CellTest {
     fun `지뢰가 아니다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val cell = Cell(position)
+        val cell = EmptyBlock(position)
 
         assertThat(cell.isMines()).isFalse
     }
