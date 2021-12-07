@@ -6,7 +6,7 @@ class BoardFactory(private val randomGenerator: RandomGenerator) {
         val mineIndexes = getRandomIndexes(height, width, mineCount)
         val positions = Positions.from(height, width)
         val mineMap = MineMap.from(positions, mineIndexes)
-        return mineMap.getBoard()
+        return Board(mineMap.getCells())
     }
 
     private fun getRandomIndexes(height: Height, width: Width, mineCount: MineCount): List<Int> {

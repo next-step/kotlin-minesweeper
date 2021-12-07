@@ -1,7 +1,9 @@
 package minesweeper.view
 
+import minesweeper.domain.BlockCell
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.MineCell
 
 data class BoardDto(val rows: List<RowDto>) {
 
@@ -30,8 +32,8 @@ private fun Board.toRows(): List<RowDto> {
 }
 
 private fun Cell.getAroundMineCount(): Int? {
-    if (isMine()) {
-        return null
+    return when(this) {
+        is MineCell -> null
+        is BlockCell -> aroundMineCount.value
     }
-    return aroundMineCount.value
 }

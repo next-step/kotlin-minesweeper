@@ -24,8 +24,8 @@ class PositionsTest {
     }
 
     @Test
-    fun `row와 column의 범위가 주어지면 존재하지 않는 Position은 제외하고 Positions를 만든다`() {
-        val result = Positions.from(rowRange = -1..10, columnRange = -1..5)
+    fun `row와 column의 범위가 주어지면 Positions를 만든다`() {
+        val result = Positions.from(rowRange = 1..10, columnRange = 1..5)
 
         val rows = result.positions.map { it.row.value }.distinct()
         val columns = result.positions.map { it.column.value }.distinct()
@@ -34,6 +34,13 @@ class PositionsTest {
             { assertThat(rows).containsExactlyElementsOf(1..10) },
             { assertThat(columns).containsExactlyElementsOf(1..5) },
         )
+    }
+
+    @Test
+    fun `row 또는 column의 범위가 유효하지 않으면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Positions.from(rowRange = 0..10, columnRange = 1..5)
+        }
     }
 
     @Test

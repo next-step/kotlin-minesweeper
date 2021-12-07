@@ -2,24 +2,15 @@ package minesweeper.domain
 
 class MineMap(private val mineMap: Map<Position, Boolean>) {
 
-    fun getBoard(): Board {
-        val board = mineMap.mapValues { (position, isMine) ->
+    fun getCells(): Map<Position, Cell> {
+        return mineMap.mapValues { (position, isMine) ->
             getCell(position, isMine)
         }
-        return Board(board)
     }
 
     private fun getCell(position: Position, isMine: Boolean): Cell {
-        if (isMine) {
-            return MineCell()
-        }
-        return getCellByAround(position)
-    }
-
-    private fun getCellByAround(position: Position): Cell {
-        val around = position.around()
-        val aroundCount = MineCount(around.count(::isMine))
-        return BlockCell(aroundCount)
+        val aroundMineCount = position.around().count(::isMine)
+        return CellFactory.getCell(isMine, MineCount(aroundMineCount))
     }
 
     private fun isMine(position: Position) = (mineMap[position] == true)
