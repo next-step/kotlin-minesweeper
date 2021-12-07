@@ -14,11 +14,11 @@ internal class EmptyBlockTest {
     fun `위치로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val cell = EmptyBlock(position)
+        val emptyBlock = EmptyBlock(position)
 
         assertAll(
-            { assertThat(cell).isNotNull },
-            { assertThat(cell).isExactlyInstanceOf(EmptyBlock::class.java) },
+            { assertThat(emptyBlock).isNotNull },
+            { assertThat(emptyBlock).isExactlyInstanceOf(EmptyBlock::class.java) },
         )
     }
 
@@ -27,8 +27,19 @@ internal class EmptyBlockTest {
     fun `지뢰가 아니다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val cell = EmptyBlock(position)
+        val emptyBlock = EmptyBlock(position)
 
-        assertThat(cell.isMines()).isFalse
+        assertThat(emptyBlock.isMines()).isFalse
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
+    @CsvSource(value = ["0:0:0", "10:10:1", "0:10:4", "10:0:8"], delimiter = ':')
+    fun `지뢰개수를 반환한다`(x: Int, y: Int, count: Int) {
+        val position = Position(x, y)
+        val adjacentMineCount = AdjacentMineCount.from(count)
+
+        val emptyBlock = EmptyBlock(position, adjacentMineCount)
+
+        assertThat(emptyBlock.adjacentMineCount()).isEqualTo(count)
     }
 }
