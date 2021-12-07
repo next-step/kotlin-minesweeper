@@ -5,6 +5,8 @@ import minesweeper.model.Height
 import minesweeper.model.MineCount
 import minesweeper.model.Position
 import minesweeper.model.Width
+import minesweeper.state.Running
+import minesweeper.state.State
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -14,12 +16,22 @@ object MineSweeperController {
     private val outputView = OutputView()
 
     fun play() {
+        var state = createInitialState()
+        outputView.showGamePlay()
+        while (!state.isFinished()) {
+            val position = inputView.getOpenPosition()
+            state = state.tryOpen(position)
+            outputView.showGameState(state)
+        }
+    }
+
+    private fun createInitialState(): State {
         val height = inputView.getHeight()
         val width = inputView.getWidth()
         val mineCount = inputView.getMineCount()
 
         val board = createBoard(width, height, mineCount)
-        outputView.showGamePlay(board)
+        return Running(board)
     }
 
     private fun createBoard(width: Width, height: Height, mineCount: MineCount): Board {
@@ -28,7 +40,8 @@ object MineSweeperController {
             .shuffled()
             .take(mineCount.value.coerceAtMost(size))
 
-        return positions
-            .fold(Board.create(width, height)) { acc, position -> acc.mine(position) }
+        var board = Board.create(width, height)
+        positions.forEach { position -> board = board.mine(position) }
+        return board
     }
 }

@@ -14,16 +14,16 @@ fun Board(
         if (index < mineCount) {
             Cell.Mine(position)
         } else {
-            Cell.Zero(position)
+            Cell.zero(position)
         }
     }
     return Board(Cells(cells))
 }
 
 fun Cells(vararg positions: Pair<Int, Int>): Cells = positions.map { (row, column) ->
-    Cell.Zero(Position(row, column))
+    Cell.zero(Position(row, column))
 }.let(::Cells)
 
-fun Position(row: Int, column: Int): Position = Position(Row(row), Column(column))
+fun Position(row: Int, column: Int): Position = Position.of(Row(row), Column(column))
 
-operator fun Cells.get(position: Pair<Int, Int>): Cell? = get(Position(Row(position.first), Column(position.second)))
+operator fun Cells.get(position: Pair<Int, Int>): Cell? = get(Position.of(Row(position.first), Column(position.second)))

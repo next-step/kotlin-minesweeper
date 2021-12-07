@@ -45,8 +45,60 @@ class CellsTest {
             },
             {
                 assertThat(actual[Position(1, 2)])
-                    .isEqualTo(Cell.Zero(Position(1, 2)))
+                    .isEqualTo(Cell.zero(Position(1, 2)))
             },
         )
+    }
+
+    @Test
+    fun `Position의 Cell을 열 수 있다`() {
+        // given
+        val position = Position(1, 1)
+        val cells = Cells(1 to 1)
+
+        // when
+        val actual = cells.tryOpen(position)[position]?.isVisible
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    fun `Position이 Zero Cell이면 주변의 모든 Cell을 연다`() {
+        // given (3X3)
+        val cells = Cells(1 to 1, 1 to 2, 1 to 3, 2 to 1, 2 to 2, 2 to 3, 3 to 1, 3 to 2, 3 to 3)
+
+        // when
+        val actual = cells.tryOpen(Position(2, 2))
+
+        // then
+        assertAll(
+            { assertThat(actual[1 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[1 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[1 to 3]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[2 to 3]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 1]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 2]!!.isVisible).isTrue },
+            { assertThat(actual[3 to 3]!!.isVisible).isTrue },
+        )
+    }
+
+    @Test
+    fun `지뢰를 제외하고 모든 Cell이 열려 있는지 확인할 수 있다`() {
+        // given
+        val cells = Cells(
+            listOf(
+                Cell.Mine(Position(1, 1)),
+                Cell.Number(MineCount.valueOf(1), Position(1, 2), true)
+            )
+        )
+
+        // when
+        val actual = cells.tryOpen(Position(1, 1)).isAllOpenedWithoutMine()
+
+        // then
+        assertThat(actual).isTrue
     }
 }
