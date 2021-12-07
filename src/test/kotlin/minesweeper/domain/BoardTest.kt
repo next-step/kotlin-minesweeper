@@ -3,6 +3,7 @@ package minesweeper.domain
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
+import minesweeper.domain.block.AdjacentMineCount
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
@@ -53,18 +54,19 @@ internal class BoardTest {
             }
         }
 
-    private fun createBoardGenerateStrategy(positions: List<Position>, minesCount: Int): List<Position> {
-        val mutablePositions = positions.toMutableList()
-        for (i in 0 until minesCount) {
-            mutablePositions[i] = mutablePositions[i]
-        }
-        return mutablePositions
-    }
+    private fun createBoardGenerateStrategy(positions: List<Position>, mineCount: Int): List<Position> =
+        positions.subList(0, mineCount)
 
     private fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
         if (minesPositions.contains(positions)) {
             return MineBlock(positions)
         }
-        return EmptyBlock(positions)
+        return EmptyBlock(positions, AdjacentMineCount.from(calculateMinesCount(positions, minesPositions)))
     }
+
+    private fun calculateMinesCount(position: Position, minesPositions: List<Position>): Int =
+        Directions.values()
+            .map { directions -> directions.nextCoordinate(position.x, position.y) }
+            .filter { it.first >= 0 && it.second >= 0 }
+            .count { Position(it.first, it.second) in minesPositions }
 }
