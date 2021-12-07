@@ -29,4 +29,12 @@ internal class AdjacentMineCountTest {
 
         assertThat(exception.message).isEqualTo("'%s'는 올바른 AdjacentMineCount 의 범위가 아닙니다.".format(adjacentMineCountInt))
     }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @ValueSource(ints = [9, 10, 100, Integer.MAX_VALUE])
+    fun `지뢰 개수는 8초과의 수로 이루어지지 않는다`(adjacentMineCountInt: Int) {
+        val exception = assertThrows<InvalidAdjacentMineCountRangeException> { AdjacentMineCount.from(adjacentMineCountInt) }
+
+        assertThat(exception.message).isEqualTo("'%s'는 올바른 AdjacentMineCount 의 범위가 아닙니다.".format(adjacentMineCountInt))
+    }
 }
