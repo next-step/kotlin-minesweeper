@@ -22,14 +22,27 @@ class PositionsTest {
     }
 
     @Test
-    fun `카운트 수가 포지션 수보다 큰 경우 에러`() {
+    fun `마인 수가 포지션 수보다 큰 경우 에러`() {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
 
         // when
-        val actual = runCatching { positions.createMinePosition(101) }.exceptionOrNull()
+        val actual = runCatching { Positions.createMinePositions(positions, 101) }.exceptionOrNull()
 
         // then
         assertThat(actual).hasMessageContaining("카운트 수가 전체 수보다 큽니다.")
+    }
+
+    @Test
+    fun `마인 포지션 크기 체크`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val minePositions = Positions.createMinePositions(positions, 99)
+
+        // when
+        val mineCount = minePositions.size
+
+        // then
+        assertThat(mineCount).isEqualTo(99)
     }
 }

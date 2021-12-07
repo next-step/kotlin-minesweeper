@@ -4,11 +4,6 @@ import minesweeper.domain.board.BoardSize
 
 class Positions(private val positions: List<Position>) : List<Position> by positions {
 
-    fun createMinePosition(mineCount: Int): Positions {
-        require(positions.size >= mineCount) { OVER_COUNT_MESSAGE }
-        return of(positions.shuffled().take(mineCount))
-    }
-
     companion object {
         fun of(positions: List<Position>): Positions =
             Positions(positions)
@@ -27,6 +22,11 @@ class Positions(private val positions: List<Position>) : List<Position> by posit
                     it.updateAdjacentPositions(this)
                 }
             }
+
+        fun createMinePositions(positions: Positions, mineCount: Int): Positions {
+            require(positions.size >= mineCount) { OVER_COUNT_MESSAGE }
+            return of(positions.shuffled().take(mineCount))
+        }
 
         private const val OVER_COUNT_MESSAGE = "카운트 수가 전체 수보다 큽니다."
     }
