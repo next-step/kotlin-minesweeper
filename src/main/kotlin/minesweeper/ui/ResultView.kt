@@ -7,7 +7,6 @@ import minesweeper.domain.block.Block
 import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
-import minesweeper.ui.ResultView.Companion.Mark.CELL
 import minesweeper.ui.ResultView.Companion.Mark.MINES
 
 class ResultView(private val outputStrategy: OutputStrategy) {
@@ -21,7 +20,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
     private fun blockMapToMark(block: Block): String =
         when (block) {
             is MineBlock -> calculatePrefixNewLine(block.position, MINES)
-            is EmptyBlock -> calculatePrefixNewLine(block.position, CELL)
+            is EmptyBlock -> calculatePrefixNewLine(block.position, block.adjacentMineCount().toString())
         }
 
     private fun calculatePrefixNewLine(position: Position, mark: String): String {
