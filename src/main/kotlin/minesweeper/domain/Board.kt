@@ -16,8 +16,8 @@ value class Board(val blocks: List<Block>) {
 
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
-            val minesPositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
-            return Board(positions.map { minesOrCell(it, minesPositions) })
+            val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
+            return Board(positions.map { minesOrCell(it, minePositions) })
         }
 
         private fun positions(width: Int, height: Int): List<Position> =
@@ -27,17 +27,17 @@ value class Board(val blocks: List<Block>) {
                 }
             }
 
-        private fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
-            if (minesPositions.contains(positions)) {
-                return MineBlock(positions)
+        private fun minesOrCell(position: Position, minePositions: List<Position>): Block {
+            if (minePositions.contains(position)) {
+                return MineBlock(position)
             }
-            return EmptyBlock(positions, AdjacentMineCount.from(calculateMinesCount(positions, minesPositions)))
+            return EmptyBlock(position, AdjacentMineCount.from(calculateMinesCount(position, minePositions)))
         }
 
-        private fun calculateMinesCount(position: Position, minesPositions: List<Position>): Int =
+        private fun calculateMinesCount(position: Position, minePositions: List<Position>): Int =
             Directions.values()
                 .map { directions -> directions.nextCoordinate(position.x, position.y) }
                 .filter { it.first >= START && it.second >= START }
-                .count { Position(it.first, it.second) in minesPositions }
+                .count { Position(it.first, it.second) in minePositions }
     }
 }

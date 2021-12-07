@@ -35,7 +35,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
 
         object Mark {
             const val MINES = "*"
-            const val CELL = "C"
+            const val CELL = "C" // 다음 미션을 위해 남기겠습니다
         }
     }
 }

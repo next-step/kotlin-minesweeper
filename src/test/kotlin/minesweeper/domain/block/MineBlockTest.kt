@@ -31,7 +31,7 @@ internal class MineBlockTest {
 
         val mineBlock = MineBlock(position)
 
-        assertThat(mineBlock.isMines()).isTrue
+        assertThat(mineBlock.isMine()).isTrue
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")

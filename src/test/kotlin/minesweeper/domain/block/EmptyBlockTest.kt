@@ -29,7 +29,7 @@ internal class EmptyBlockTest {
 
         val emptyBlock = EmptyBlock(position)
 
-        assertThat(emptyBlock.isMines()).isFalse
+        assertThat(emptyBlock.isMine()).isFalse
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")

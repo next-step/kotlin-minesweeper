@@ -19,8 +19,8 @@ class MinesweeperApplication(
 ) {
     fun execute() {
         val area = askArea()
-        val minesCount = askMinesCount()
-        val board = Board.of(area, minesCount, RandomMineBlockGenerateStrategy)
+        val mineCount = askMineCount()
+        val board = Board.of(area, mineCount, RandomMineBlockGenerateStrategy)
         resultView.startGame(board)
     }
 
@@ -48,12 +48,12 @@ class MinesweeperApplication(
             askWidth()
         }
 
-    private fun askMinesCount(): MineCount =
+    private fun askMineCount(): MineCount =
         try {
-            MineCount(inputView.askMinesCount())
+            MineCount(inputView.askMineCount())
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
-            askMinesCount()
+            askMineCount()
         }
 }
 
