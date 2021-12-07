@@ -1,5 +1,6 @@
 package minesweeper.domain.block
 
+import minesweeper.exception.NotCalculateAdjacentMineCountException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -41,6 +42,6 @@ internal class MineBlockTest {
 
         val exception = assertThrows<NotCalculateAdjacentMineCountException> { mineBlock.adjacentMineCount() }
 
-        assertThat(exception.message).isEqualTo("클래스 '%s'는 주변 지뢰 개수를 계산할 수 없습니다".format(mineBlock::class.java))
+        assertThat(exception.message).isEqualTo("'%s' 타입은 주변 지뢰 개수를 계산할 수 없습니다".format(mineBlock::class.java.toString()))
     }
 }
