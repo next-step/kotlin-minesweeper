@@ -3,7 +3,7 @@ package minesweeper
 import global.strategy.ConsoleInputStrategy
 import global.strategy.ConsoleOutputStrategy
 import minesweeper.domain.Board
-import minesweeper.domain.MinesCount
+import minesweeper.domain.MineCount
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
@@ -48,9 +48,9 @@ class MinesweeperApplication(
             askWidth()
         }
 
-    private fun askMinesCount(): MinesCount =
+    private fun askMinesCount(): MineCount =
         try {
-            MinesCount(inputView.askMinesCount())
+            MineCount(inputView.askMinesCount())
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
             askMinesCount()

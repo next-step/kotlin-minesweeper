@@ -13,9 +13,9 @@ value class Board(val blocks: List<Block>) {
     companion object {
         private const val START = 0
 
-        fun of(area: Area, minesCount: MinesCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
+        fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
-            val minesPositions = mineBlockGenerateStrategy.generate(positions, minesCount.minesCount)
+            val minesPositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
             return Board(positions.map { minesOrCell(it, minesPositions) })
         }
 
@@ -30,7 +30,13 @@ value class Board(val blocks: List<Block>) {
             if (minesPositions.contains(positions)) {
                 return MineBlock(positions)
             }
-            return EmptyBlock(positions)
+            return EmptyBlock(positions, calculateMinesCount(positions, minesPositions))
         }
+
+        private fun calculateMinesCount(position: Position, minesPositions: List<Position>): Int =
+            Directions.values()
+                .map { directions -> directions.nextCoordinate(position.x, position.y) }
+                .filter { it.first >= START && it.second >= START }
+                .count { Position(it.first, it.second) in minesPositions }
     }
 }
