@@ -1,5 +1,6 @@
 package minesweeper.domain.block
 
+import minesweeper.exception.InvalidAdjacentMineCountRangeException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.assertAll

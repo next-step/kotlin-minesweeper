@@ -1,5 +1,7 @@
 package minesweeper.domain.block
 
+import minesweeper.exception.InvalidAdjacentMineCountRangeException
+
 @JvmInline
 value class AdjacentMineCount private constructor(private val adjacentMineCount: Int) {
 
@@ -8,6 +10,15 @@ value class AdjacentMineCount private constructor(private val adjacentMineCount:
         private const val MAXIMUM_COUNT = 8
         private val CACHE = (MINIMUM_COUNT..MAXIMUM_COUNT).associateWith { AdjacentMineCount(it) }
 
-        fun from(mineCount: Int): AdjacentMineCount = CACHE.getValue(mineCount)
+        fun from(adjacentMineCount: Int): AdjacentMineCount {
+            validateRange(adjacentMineCount)
+            return CACHE.getValue(adjacentMineCount)
+        }
+
+        private fun validateRange(adjacentMineCount: Int) {
+            if (adjacentMineCount !in (MAXIMUM_COUNT..MAXIMUM_COUNT)) {
+                throw InvalidAdjacentMineCountRangeException(adjacentMineCount)
+            }
+        }
     }
 }
