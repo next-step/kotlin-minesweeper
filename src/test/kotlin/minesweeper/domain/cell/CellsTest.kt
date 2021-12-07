@@ -27,9 +27,9 @@ class CellsTest {
 
         // then
         assertAll({
-            assertThat(cells[0].position()).isEqualTo(minePositions[0])
-            assertThat(cells[1].position()).isEqualTo(minePositions[1])
-            assertThat(cells[2].position()).isEqualTo(minePositions[2])
+            assertThat(cells[0].position).isEqualTo(minePositions[0])
+            assertThat(cells[1].position).isEqualTo(minePositions[1])
+            assertThat(cells[2].position).isEqualTo(minePositions[2])
         })
     }
 
@@ -139,7 +139,7 @@ class CellsTest {
 
         // then
 
-        assertThat(cells.count { !it.isHiddenCell() }).isEqualTo(97)
+        assertThat(cells.count { !it.isHiddenCell }).isEqualTo(97)
     }
 
     @Test
@@ -148,7 +148,7 @@ class CellsTest {
         val cell = Cell.of(Position.of(1, 1))
 
         // then
-        assertThat(cell.isHiddenCell()).isTrue
+        assertThat(cell.isHiddenCell).isTrue
     }
 
     @Test
@@ -160,6 +160,6 @@ class CellsTest {
         cell.openCell()
 
         // then
-        assertThat(cell.isHiddenCell()).isFalse
+        assertThat(cell.isHiddenCell).isFalse
     }
 }

@@ -5,11 +5,11 @@ import minesweeper.domain.position.Positions
 
 class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
-    fun toPositions() = cells.map { it.position() }
+    fun toPositions() = cells.map { it.position }
 
     fun open(position: Position): CellsState {
-        require(cells.any { it.position() == position }) { NOT_FOUND_CELL }
-        cells.first { it.position() == position }.apply {
+        require(cells.any { it.position == position }) { NOT_FOUND_CELL }
+        cells.first { it.position == position }.apply {
             this.openCell()
             openAdjacentCells(this)
         }
@@ -19,7 +19,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
     private fun openAdjacentCells(cell: Cell) {
         if (cell.getCellAdjacentCount() == BLANK_COUNT) {
             toCells(cell).forEach {
-                if (it.isNotMineCell() && it.isHiddenCell()) {
+                if (it.isNotMineCell() && it.isHiddenCell) {
                     it.openCell()
                     openAdjacentCells(it)
                 }
@@ -28,7 +28,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun toCells(cell: Cell) = cells.filter {
-        cell.isContainsAdjacentPositions(it.position())
+        cell.isContainsAdjacentPositions(it.position)
     }
 
     private fun checkCellsState() = when {
@@ -40,7 +40,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
     private fun isOpenedMine(): Boolean = cells.any { it.isOpenedMineCell() }
 
     private fun isAllOpenedExcludeMine(): Boolean {
-        return cells.count { !it.isHiddenCell() } == cells.count { it.isNotMineCell() }
+        return cells.count { !it.isHiddenCell } == cells.count { it.isNotMineCell() }
     }
 
     companion object {
@@ -53,7 +53,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
         private fun Cells.inputMineCell(mineCells: Cells) =
             this.map { cell ->
-                (mineCells.firstOrNull { it.position() == cell.position() } ?: cell)
+                (mineCells.firstOrNull { it.position == cell.position } ?: cell)
                     .apply {
                         this.countingAdjacentMines(mineCells)
                     }

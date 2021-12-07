@@ -2,10 +2,7 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.position.Position
 
-class NormalCell(override val position: Position, override val hiddenState: HiddenState = HiddenState()) : Cell {
-
-    override lateinit var cellValue: CellValue
-        private set
+class NormalCell(position: Position) : Cell(position) {
 
     override fun isOpenedMineCell(): Boolean = false
 

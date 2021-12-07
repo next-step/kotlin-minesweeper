@@ -6,9 +6,9 @@ class MineSweeperDTO(val rows: List<String>) {
 
     companion object {
         fun of(cells: Cells): MineSweeperDTO {
-            val value = cells.groupBy { it.position().y }.map {
+            val value = cells.groupBy { it.position.y }.map {
                 it.value.joinToString(BLACK) { cell ->
-                    if (cell.isHiddenCell()) {
+                    if (cell.isHiddenCell) {
                         return@joinToString IS_HIDDEN
                     }
 

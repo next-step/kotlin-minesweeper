@@ -14,6 +14,7 @@ class Board(val cells: Cells) {
             Positions.of(boardSize).run {
                 val minePositions = this.createMinePosition(mineCount)
                 val cells = Cells.of(this, minePositions)
+
                 Board(cells)
             }
     }
