@@ -1,8 +1,9 @@
 package minesweeper.domain.block
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -14,11 +15,11 @@ internal class MineBlockTest {
     fun `위치로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = MineBlock(position)
+        val mineBlock = MineBlock(position)
 
         assertAll(
-            { Assertions.assertThat(mines).isNotNull },
-            { Assertions.assertThat(mines).isExactlyInstanceOf(MineBlock::class.java) },
+            { assertThat(mineBlock).isNotNull },
+            { assertThat(mineBlock).isExactlyInstanceOf(MineBlock::class.java) },
         )
     }
 
@@ -27,8 +28,19 @@ internal class MineBlockTest {
     fun `지뢰가 아니다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = MineBlock(position)
+        val mineBlock = MineBlock(position)
 
-        Assertions.assertThat(mines.isMines()).isTrue
+        assertThat(mineBlock.isMines()).isTrue
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
+    fun `지뢰 개수를 반환할 수 없다`(x: Int, y: Int) {
+        val position = Position(x, y)
+        val mineBlock = MineBlock(position)
+
+        val exception = assertThrows<NotCalculateAdjacentMineCountException> { mineBlock.adjacentMineCount() }
+
+        assertThat(exception.message).isEqualTo("클래스 '%s'는 주변 지뢰 개수를 계산할 수 없습니다".format(mineBlock::class.java))
     }
 }
