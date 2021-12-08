@@ -4,11 +4,9 @@ class NoneCell(
     position: Position,
     val mineCount: Int,
 ) : Cell(position) {
-    override fun name(): String {
-        return NAME
-    }
+    var isClicked: Boolean = false
 
-    companion object {
-        const val NAME = "*"
+    override fun name(): String {
+        return if (isClicked) mineCount.toString() else super.name()
     }
 }
