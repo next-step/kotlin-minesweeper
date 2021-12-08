@@ -26,12 +26,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
     fun scanMine(x: Int, y: Int): GameResult {
         val targetBlock = findBlock(x, y) ?: return GameResult(State.PLAY, this)
         if (targetBlock.isMine()) return GameResult(State.LOSE, this)
-        var blockResult = blocks
-        for (position in MOVABLE_POSITION) {
-            val newX = x + position.x
-            val newY = y + position.y
-            blockResult = updateBlocks(blockResult, newX, newY)
-        }
+        val blockResult = updateBlocksByPosition(x, y)
         val mineCount = blocks.count { it is Mine }
         val hasVisitedCount = blockResult.count() { it.hasVisited() }
         val remainCount = blocks.size - hasVisitedCount
@@ -42,22 +37,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
     }
 
     fun findBlock(x: Int, y: Int): Block? {
-        val targetPosition = Position(x, y)
-        return blocks.find { it.getPosition() == targetPosition }
-    }
-
-    private fun updateBlocks(
-        blockResult: List<Block>,
-        newX: Int,
-        newY: Int
-    ): List<Block> {
-        var blockResult1 = blockResult
-        val nearBlock = findBlock(newX, newY)
-        if (nearBlock != null && nearBlock is None) {
-            blockResult1 =
-                blockResult1.replace(nearBlock.updateBlock(findNearMineCount(newX, newY))) { it == nearBlock }
-        }
-        return blockResult1
+        return blocks.find { it.getPosition() == Position(x, y) }
     }
 
     fun findNearMineCount(x: Int, y: Int): Int {
@@ -68,6 +48,29 @@ data class Board(val area: Area, val blocks: List<Block>) {
             count = countsMines(foundBlock, position, count)
         }
         return count
+    }
+
+    private fun updateBlocksByPosition(
+        x: Int,
+        y: Int,
+    ): List<Block> {
+        var blockResult = blocks
+        MOVABLE_POSITION.forEach {
+            blockResult = updateBlocks(blockResult, it.plusXposition(x), it.plusYposition(y))
+        }
+        return blockResult
+    }
+
+    private fun updateBlocks(
+        blockResult: List<Block>,
+        newX: Int,
+        newY: Int
+    ): List<Block> {
+        val nearBlock = findBlock(newX, newY)
+        if (nearBlock != null && nearBlock is None) {
+            return blockResult.replace(nearBlock.updateBlock(findNearMineCount(newX, newY))) { it == nearBlock }
+        }
+        return blockResult
     }
 
     private fun addBlocks(
@@ -88,11 +91,7 @@ data class Board(val area: Area, val blocks: List<Block>) {
     }
 
     private fun findNearMineCount(block: Block): Int {
-        var count = 0
-        for (position in MOVABLE_POSITION) {
-            count = countsMines(block, position, count)
-        }
-        return count
+        return MOVABLE_POSITION.fold(0) { count, position -> countsMines(block, position, count) }
     }
 
     private fun countsMines(
@@ -101,8 +100,8 @@ data class Board(val area: Area, val blocks: List<Block>) {
         mineCount: Int
     ): Int {
         var count = mineCount
-        val targetPositionX = block.getPosition().x + position.x
-        val targetPositionY = block.getPosition().y + position.y
+        val targetPositionX = position.plusXposition(block.getPosition())
+        val targetPositionY = position.plusYposition(block.getPosition())
 
         if (findBlock(targetPositionX, targetPositionY).isMine()) {
             count++

@@ -40,19 +40,17 @@ object OutputView {
     }
 
     private fun drawNone(board: Board, i: Int, block: String): String {
-        var block1 = block
         if (board.blocks[i] is None) {
-            block1 = board.blocks[i].getMineNearCount()?.toString() ?: NONE
+            return board.blocks[i].getMineNearCount()?.toString() ?: NONE
         }
-        return block1
+        return block
     }
 
     private fun drawMine(board: Board, i: Int, block: String): String {
-        var block1 = block
         if (board.blocks[i] is Mine) {
-            block1 = NONE
+            return NONE
         }
-        return block1
+        return block
     }
 
     private const val START_PRINT_BOARD = "지뢰찾기 게임 시작"
