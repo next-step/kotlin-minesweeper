@@ -1,6 +1,7 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.CellsState
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
@@ -18,7 +19,7 @@ class BoardTest {
 
         // when
         val cellCounts = board.cells.size
-        val boardMineCount = board.cells.filter { it.state.value == -1 }.size
+        val boardMineCount = board.cells.filter { it.getCellAdjacentCount() == -1 }.size
 
         // then
         assertAll({
@@ -32,15 +33,14 @@ class BoardTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when
         val boardState = board.open(Position.of(1, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.BOMB)
+        assertThat(boardState).isEqualTo(CellsState.BOMB)
     }
 
     @Test
@@ -48,15 +48,14 @@ class BoardTest {
         // given
         val positions = Positions.of(BoardSize.of(1, 4))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when
         val boardState = board.open(Position.of(4, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.NOT_EXIST_MINE)
+        assertThat(boardState).isEqualTo(CellsState.NOT_EXIST_MINE)
     }
 
     @Test
@@ -64,14 +63,13 @@ class BoardTest {
         // given
         val positions = Positions.of(BoardSize.of(1, 5))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
         val board = Board(cells)
 
         // when
         val boardState = board.open(Position.of(4, 1))
 
         // then
-        assertThat(boardState).isEqualTo(BoardState.EXIST_MINE)
+        assertThat(boardState).isEqualTo(CellsState.EXIST_MINE)
     }
 }

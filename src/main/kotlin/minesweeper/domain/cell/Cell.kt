@@ -2,33 +2,30 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.position.Position
 
-data class Cell constructor(val position: Position) {
+abstract class Cell(
+    val position: Position
+) {
+    private val hiddenState: HiddenState = HiddenState()
+    protected lateinit var cellValue: CellValue
 
-    lateinit var state: CellState
-        private set
-
-    fun isOpenedMineCell(): Boolean = state.isOpenedMine()
-
-    fun isHiddenCell(): Boolean = state.isHidden
-
-    fun isNotMineCell(): Boolean = state.isNotMineCell()
+    val isHiddenCell: Boolean
+        get() = hiddenState.isHidden
 
     fun openCell() {
-        state.isVisible()
+        hiddenState.changeVisible()
     }
 
-    fun getCellAdjacentCount(): Int = state.value
-
-    fun updateCellStatus(mineCells: Cells) {
-        state = CellState.from(this, mineCells)
-    }
-
-    fun isContainsAdjacentPositions(otherPosition: Position): Boolean =
-        this.position.containsAdjacentPositions(otherPosition)
-
-    fun countingAdjacentMines(mineCells: Cells) = position.countingAdjacentMines(mineCells)
+    abstract fun isOpenedMineCell(): Boolean
+    abstract fun isNotMineCell(): Boolean
+    abstract fun getCellAdjacentCount(): Int
+    abstract fun isContainsAdjacentPositions(otherPosition: Position): Boolean
+    abstract fun countingAdjacentMines(mineCells: Cells)
 
     companion object {
-        fun of(position: Position): Cell = Cell(position)
+        fun of(position: Position, isMineCell: Boolean = false): Cell =
+            when (isMineCell) {
+                true -> MineCell(position)
+                false -> NormalCell(position)
+            }
     }
 }

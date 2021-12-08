@@ -7,6 +7,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
+fun mineCell(positions: List<Position>, allPositions: Positions): Cells {
+    val value = Positions(positions).onEach {
+        it.updateAdjacentPositions(allPositions)
+    }.map {
+        MineCell(it)
+    }
+    return Cells(value)
+}
+
 class CellsTest {
 
     @Test
@@ -14,8 +23,7 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
@@ -30,12 +38,11 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
-            assertThat(cells[4].state.value).isEqualTo(0)
+            assertThat(cells[4].getCellAdjacentCount()).isEqualTo(0)
         })
     }
 
@@ -44,12 +51,11 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // then
         assertAll({
-            assertThat(cells[3].state.value).isEqualTo(1)
+            assertThat(cells[3].getCellAdjacentCount()).isEqualTo(1)
         })
     }
 
@@ -58,26 +64,10 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(1, 1), Position.of(1, 2), Position.of(1, 3)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // then
-        assertAll({
-            assertThat(cells[1].state.value).isEqualTo(-1)
-        })
-    }
-
-    @Test
-    fun `카운트 수가 포지션 수보다 큰 경우 에러`() {
-        // given
-        val positions = Positions.of(BoardSize.of(10, 10))
-        val cells = Cells.of(positions)
-
-        // when
-        val actual = runCatching { Cells.makeMineCells(cells, 101) }.exceptionOrNull()
-
-        // then
-        assertThat(actual).hasMessageContaining("카운트 수가 전체 수보다 큽니다.")
+        assertThat(cells[1].getCellAdjacentCount()).isEqualTo(-1)
     }
 
     @Test
@@ -85,14 +75,13 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // when
-        cells.open(Position.of(1, 1))
+        val cellsState = cells.open(Position.of(1, 1))
 
         // then
-        assertThat(cells.isOpenedMine()).isTrue
+        assertThat(cellsState).isEqualTo(CellsState.BOMB)
     }
 
     @Test
@@ -100,14 +89,28 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(1, 4))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // when
-        cells.open(Position.of(4, 1))
+        val cellsState = cells.open(Position.of(4, 1))
 
         // then
-        assertThat(cells.isAllOpenedExcludeMine()).isTrue
+        assertThat(cellsState).isEqualTo(CellsState.NOT_EXIST_MINE)
+    }
+
+    @Test
+    fun `지뢰가 아닌 셀을 오픈했을 경우`() {
+        // given
+        val positions = Positions.of(BoardSize.of(10, 10))
+        val minePositions =
+            Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(4, 1), Position.of(6, 1)))
+        val cells = Cells.of(positions, minePositions)
+
+        // when
+        val cellsState = cells.open(Position.of(10, 5))
+
+        // then
+        assertThat(cellsState).isEqualTo(CellsState.EXIST_MINE)
     }
 
     @Test
@@ -115,8 +118,7 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(1, 4))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // when
         val actual = runCatching { cells.open(Position.of(4, 99)) }.exceptionOrNull()
@@ -130,14 +132,34 @@ class CellsTest {
         // given
         val positions = Positions.of(BoardSize.of(10, 10))
         val minePositions = Positions(listOf(Position.of(3, 1), Position.of(2, 1), Position.of(1, 1)))
-        val cells = Cells.of(positions)
-        cells.inputMineCells(Cells.of(minePositions))
+        val cells = Cells.of(positions, minePositions)
 
         // when
         cells.open(Position.of(4, 4))
 
         // then
 
-        assertThat(cells.count { !it.state.isHidden }).isEqualTo(97)
+        assertThat(cells.count { !it.isHiddenCell }).isEqualTo(97)
+    }
+
+    @Test
+    fun `처음 만들어진 셀은 숨김처리 되어 있다`() {
+        // given
+        val cell = Cell.of(Position.of(1, 1))
+
+        // then
+        assertThat(cell.isHiddenCell).isTrue
+    }
+
+    @Test
+    fun `해당 셀을 보이도록 만듬`() {
+        // given
+        val cell = Cell.of(Position.of(1, 1))
+
+        // when
+        cell.openCell()
+
+        // then
+        assertThat(cell.isHiddenCell).isFalse
     }
 }
