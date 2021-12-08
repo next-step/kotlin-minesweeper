@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-interface Cell {
+sealed interface Cell {
 
     fun isMine(): Boolean
 }

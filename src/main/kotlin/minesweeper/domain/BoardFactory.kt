@@ -2,32 +2,15 @@ package minesweeper.domain
 
 class BoardFactory(private val randomGenerator: RandomGenerator) {
 
-    fun createBy(height: Int, width: Int, mineCount: Int): Board {
-        val positions = createPositions(height, width)
-        val minePositions = getRandomPositions(height, width, mineCount).map { positions[it] }
-        val positionWithCells = positions.associateWith {
-            createCell(it, minePositions)
-        }
-        return Board(positionWithCells)
+    fun createBy(height: Height, width: Width, mineCount: MineCount): Board {
+        val mineIndexes = getRandomIndexes(height, width, mineCount)
+        val positions = Positions.from(height, width)
+        val mineMap = MineMap.from(positions, mineIndexes)
+        return Board(mineMap.getCells())
     }
 
-    private fun createPositions(height: Int, width: Int): List<Position> {
-        return (Row.START_VALUE..height).flatMap { row ->
-            (Column.START_VALUE..width).map { column ->
-                Position.from(row = row, column = column)
-            }
-        }
-    }
-
-    private fun getRandomPositions(height: Int, width: Int, mineCount: Int): List<Int> {
-        return randomGenerator.generate(until = height * width, count = mineCount)
-    }
-
-    private fun createCell(position: Position, minePositions: List<Position>): Cell {
-        return if (position in minePositions) {
-            MineCell
-        } else {
-            BlockCell
-        }
+    private fun getRandomIndexes(height: Height, width: Width, mineCount: MineCount): List<Int> {
+        val cellCount = height.value * width.value
+        return randomGenerator.generate(until = cellCount, count = mineCount.value)
     }
 }

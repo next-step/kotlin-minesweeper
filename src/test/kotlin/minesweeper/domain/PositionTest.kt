@@ -54,4 +54,47 @@ class PositionTest {
             )
         )
     }
+
+    /**
+     *   C  C  C
+     *   C  T  C
+     *   C  C  C
+     */
+    @Test
+    fun `자신을 둘러싼 Positions를 구한다 - 주위 모두 존재`() {
+        val position = Position.from(row = 2, column = 2)
+
+        val result = position.around()
+
+        assertThat(result.positions).containsExactlyInAnyOrder(
+            Position.from(row = 1, column = 1),
+            Position.from(row = 1, column = 2),
+            Position.from(row = 1, column = 3),
+            Position.from(row = 2, column = 1),
+            Position.from(row = 2, column = 3),
+            Position.from(row = 3, column = 1),
+            Position.from(row = 3, column = 2),
+            Position.from(row = 3, column = 3),
+        )
+    }
+
+    /**
+     *   C  C
+     *   T  C
+     *   C  C
+     */
+    @Test
+    fun `자신을 둘러싼 Positions를 구한다 - 주위 일부 존재`() {
+        val position = Position.from(row = 2, column = 1)
+
+        val result = position.around()
+
+        assertThat(result.positions).containsExactlyInAnyOrder(
+            Position.from(row = 1, column = 1),
+            Position.from(row = 1, column = 2),
+            Position.from(row = 2, column = 2),
+            Position.from(row = 3, column = 1),
+            Position.from(row = 3, column = 2),
+        )
+    }
 }

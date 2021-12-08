@@ -21,7 +21,7 @@ object OutputView {
         return if (mine) {
             "*"
         } else {
-            "C"
+            aroundMineCount.toString()
         }
     }
 }

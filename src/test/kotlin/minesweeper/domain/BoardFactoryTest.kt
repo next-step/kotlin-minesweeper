@@ -10,10 +10,10 @@ class BoardFactoryTest {
     @Test
     fun `height, width로 Board를 생성하면 height X width 갯수만큼 Cell이 생성된다`() {
         val factory = BoardFactory(RangeFromZeroGenerator)
-        val height = 3
-        val width = 3
+        val height = Height(3)
+        val width = Width(3)
 
-        val result = factory.createBy(height = height, width = width, mineCount = 3)
+        val result = factory.createBy(height, width, MineCount(3))
 
         assertThat(result.cells).hasSize(9)
     }
@@ -21,10 +21,11 @@ class BoardFactoryTest {
     @Test
     fun `mineCount 갯수만큼 MineCell이 생성되고, 나머지는 BlockCell로 생성된다`() {
         val factory = BoardFactory(RangeFromZeroGenerator)
-        val height = 3
-        val width = 3
+        val height = Height(3)
+        val width = Width(3)
+        val mineCount = MineCount(3)
 
-        val result = factory.createBy(height = height, width = width, mineCount = 3)
+        val result = factory.createBy(height, width, mineCount)
 
         val cells = result.cells.toSortedMap().values.toList()
         assertAll(
