@@ -40,14 +40,14 @@ object OutputView {
     }
 
     private fun drawNone(board: Board, i: Int, block: String): String {
-        if (board.blocks[i] is None) {
-            return board.blocks[i].getMineNearCount()?.toString() ?: NONE
+        if (board.blocks.getBlockByIndex(i) is None) {
+            return board.blocks.getBlockByIndex(i).getMineNearCount()?.toString() ?: NONE
         }
         return block
     }
 
     private fun drawMine(board: Board, i: Int, block: String): String {
-        if (board.blocks[i] is Mine) {
+        if (board.blocks.getBlockByIndex(i) is Mine) {
             return NONE
         }
         return block
