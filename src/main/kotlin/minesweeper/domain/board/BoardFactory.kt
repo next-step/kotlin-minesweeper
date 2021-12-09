@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.board
+
+import minesweeper.domain.RandomGenerator
+import minesweeper.domain.position.Positions
 
 class BoardFactory(private val randomGenerator: RandomGenerator) {
 

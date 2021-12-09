@@ -1,5 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
+import minesweeper.domain.RandomGenerator
+import minesweeper.domain.cell.BlockCell
+import minesweeper.domain.cell.MineCell
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test

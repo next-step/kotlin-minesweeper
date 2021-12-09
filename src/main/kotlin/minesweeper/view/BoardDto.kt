@@ -1,9 +1,9 @@
 package minesweeper.view
 
-import minesweeper.domain.BlockCell
-import minesweeper.domain.Board
-import minesweeper.domain.Cell
-import minesweeper.domain.MineCell
+import minesweeper.domain.cell.BlockCell
+import minesweeper.domain.board.Board
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.MineCell
 
 data class BoardDto(val rows: List<RowDto>) {
 

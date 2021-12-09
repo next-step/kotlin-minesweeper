@@ -1,6 +1,10 @@
 package minesweeper.controller
 
 import minesweeper.domain.*
+import minesweeper.domain.board.BoardFactory
+import minesweeper.domain.board.Height
+import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.Width
 import minesweeper.view.BoardDto
 import minesweeper.view.InputView
 import minesweeper.view.OutputView

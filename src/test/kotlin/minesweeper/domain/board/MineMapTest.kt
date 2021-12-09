@@ -1,5 +1,10 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
+import minesweeper.domain.Position
+import minesweeper.domain.cell.BlockCell
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.MineCell
+import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest

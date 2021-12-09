@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.position
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

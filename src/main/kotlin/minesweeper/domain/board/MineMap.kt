@@ -1,4 +1,11 @@
-package minesweeper.domain
+package minesweeper.domain.board
+
+import minesweeper.domain.Position
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.CellFactory
+import minesweeper.domain.position.Positions
+import minesweeper.domain.position.count
+import minesweeper.domain.position.slice
 
 class MineMap(private val mineMap: Map<Position, Boolean>) {
 

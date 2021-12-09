@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.board
+
+import minesweeper.domain.Position
+import minesweeper.domain.cell.Cell
 
 class Board(cells: Map<Position, Cell>) {
 

@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 private const val ZERO = 0
 

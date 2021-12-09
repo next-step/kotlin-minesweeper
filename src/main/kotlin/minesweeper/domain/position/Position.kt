@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.position
 
 data class Position(val row: Row, val column: Column) : Comparable<Position> {
 
