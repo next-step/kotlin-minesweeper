@@ -3,19 +3,10 @@ package minesweeper.domain
 data class Position(val row: Row, val column: Column) : Comparable<Position> {
 
     fun around(): Positions {
-        val rowRange = (row.value - AROUND_VALUE)..(row.value + AROUND_VALUE)
-        val columnRange = (column.value - AROUND_VALUE)..(column.value + AROUND_VALUE)
-        val aroundPositions = getAroundPositions(rowRange, columnRange)
-        return Positions(aroundPositions)
-    }
-
-    private fun getAroundPositions(rowRange: IntRange, columnRange: IntRange): List<Position> {
-        val positions = rowRange.flatMap { row ->
-            columnRange.mapNotNull { column ->
-                fromOrNull(row = row, column = column)
-            }
+        val aroundPositions = CHANGES.mapNotNull { (rowChange, columnChange) ->
+            fromOrNull(row.value + rowChange, column.value + columnChange)
         }
-        return positions - this
+        return Positions(aroundPositions)
     }
 
     override fun compareTo(other: Position): Int {
@@ -24,7 +15,16 @@ data class Position(val row: Row, val column: Column) : Comparable<Position> {
 
     companion object {
 
-        private const val AROUND_VALUE = 1
+        private val CHANGES = listOf(
+            -1 to -1,
+            -1 to 0,
+            -1 to 1,
+            0 to -1,
+            0 to 1,
+            1 to -1,
+            1 to 0,
+            1 to 1,
+        )
 
         fun from(row: Int, column: Int): Position {
             return Position(Row(row), Column(column))
