@@ -20,7 +20,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
     private fun blockMapToMark(block: Block): String =
         when (block) {
             is MineBlock -> calculatePrefixNewLine(block.position, MINES)
-            is EmptyBlock -> calculatePrefixNewLine(block.position, block.adjacentMineCount().toString())
+            is EmptyBlock -> calculatePrefixNewLine(block.position, block.adjacentMineCount.toString())
         }
 
     private fun calculatePrefixNewLine(position: Position, mark: String): String {

@@ -1,7 +1,6 @@
 package minesweeper.domain
 
 import minesweeper.domain.area.Area
-import minesweeper.domain.block.AdjacentMineCount
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
@@ -31,13 +30,7 @@ value class Board(val blocks: List<Block>) {
             if (minePositions.contains(position)) {
                 return MineBlock(position)
             }
-            return EmptyBlock(position, AdjacentMineCount.from(calculateMinesCount(position, minePositions)))
+            return EmptyBlock.of(position, minePositions)
         }
-
-        private fun calculateMinesCount(position: Position, minePositions: List<Position>): Int =
-            Directions.values()
-                .map { directions -> directions.nextCoordinate(position.x, position.y) }
-                .filter { it.first >= START && it.second >= START }
-                .count { Position(it.first, it.second) in minePositions }
     }
 }
