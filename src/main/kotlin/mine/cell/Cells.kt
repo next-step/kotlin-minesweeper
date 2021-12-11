@@ -13,6 +13,7 @@ class Cells(val values: List<Cell>) {
     private fun clickCell(position: Position) =
         findCell(position)
             .aroundAllPosition()
+            .asSequence()
             .filterNot { isMineCell(it) }
             .map { it.aroundAllPosition() }
             .flatten()
