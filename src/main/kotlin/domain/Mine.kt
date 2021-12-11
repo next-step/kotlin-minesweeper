@@ -1,5 +1,5 @@
 package domain
 
-class Mine(isChecked: Boolean) : Slot(isChecked) {
+class Mine(isChecked: Boolean = false) : Slot(isChecked) {
     override fun isMine() = true
 }

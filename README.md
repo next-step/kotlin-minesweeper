@@ -5,7 +5,7 @@
 ### 기능 구현 목록
 
 - [x] 지뢰 객체 mine 구현
-- [ ] 지뢰 지대 mineField 구현
+- [x] 지뢰 지대 mineField 구현
 - [ ] input output 구현
 
 ## 기능 요구사항
