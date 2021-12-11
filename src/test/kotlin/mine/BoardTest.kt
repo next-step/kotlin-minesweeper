@@ -33,16 +33,16 @@ class BoardTest {
         val board = Board(
             Cells(
                 listOf(
-                    MineCell(Position(0,0)),
-                    NoneCell(Position(1,0), 0),
-                    NoneCell(Position(2,0), 0),
-                    NoneCell(Position(3,0), 0),
-                    NoneCell(Position(0,1), 0),
-                    NoneCell(Position(0,2), 0),
-                    NoneCell(Position(0,3), 0),
-                    NoneCell(Position(1,1), 0),
-                    NoneCell(Position(1,2), 0),
-                    NoneCell(Position(1,3), 0),
+                    MineCell(Position(0, 0)),
+                    NoneCell(Position(1, 0), 0),
+                    NoneCell(Position(2, 0), 0),
+                    NoneCell(Position(3, 0), 0),
+                    NoneCell(Position(0, 1), 0),
+                    NoneCell(Position(0, 2), 0),
+                    NoneCell(Position(0, 3), 0),
+                    NoneCell(Position(1, 1), 0),
+                    NoneCell(Position(1, 2), 0),
+                    NoneCell(Position(1, 3), 0),
                 )
             )
         )
@@ -52,7 +52,7 @@ class BoardTest {
             position.clickedCell()
         }
 
-            assertThat(status).isEqualTo(GameStatus.GAMEOVER)
+        assertThat(status).isEqualTo(GameStatus.GAMEOVER)
     }
 
     @Test
@@ -60,17 +60,17 @@ class BoardTest {
         val board = Board(
             Cells(
                 listOf(
-                    NoneCell(Position(0,0), 0),
-                    NoneCell(Position(0,1), 0).apply { isClicked = true },
-                    NoneCell(Position(0,2), 0).apply { isClicked = true },
-                    NoneCell(Position(0,3), 0).apply { isClicked = true },
-                    NoneCell(Position(1,0), 0).apply { isClicked = true },
-                    NoneCell(Position(1,1), 0).apply { isClicked = true },
-                    NoneCell(Position(1,2), 0).apply { isClicked = true },
-                    NoneCell(Position(1,3), 0).apply { isClicked = true },
-                    NoneCell(Position(2,0), 0).apply { isClicked = true },
-                    NoneCell(Position(2,1), 0).apply { isClicked = true },
-                    NoneCell(Position(2,2), 0).apply { isClicked = true },
+                    NoneCell(Position(0, 0), 0),
+                    NoneCell(Position(0, 1), 0).apply { isClicked = true },
+                    NoneCell(Position(0, 2), 0).apply { isClicked = true },
+                    NoneCell(Position(0, 3), 0).apply { isClicked = true },
+                    NoneCell(Position(1, 0), 0).apply { isClicked = true },
+                    NoneCell(Position(1, 1), 0).apply { isClicked = true },
+                    NoneCell(Position(1, 2), 0).apply { isClicked = true },
+                    NoneCell(Position(1, 3), 0).apply { isClicked = true },
+                    NoneCell(Position(2, 0), 0).apply { isClicked = true },
+                    NoneCell(Position(2, 1), 0).apply { isClicked = true },
+                    NoneCell(Position(2, 2), 0).apply { isClicked = true },
                 )
             )
         )
@@ -88,17 +88,17 @@ class BoardTest {
         val board = Board(
             Cells(
                 listOf(
-                    NoneCell(Position(0,0), 0),
-                    NoneCell(Position(0,1), 0),
-                    NoneCell(Position(0,2), 0),
-                    NoneCell(Position(0,3), 0),
-                    NoneCell(Position(1,0), 0),
-                    NoneCell(Position(1,1), 0),
-                    NoneCell(Position(1,2), 0),
-                    NoneCell(Position(1,3), 0),
-                    NoneCell(Position(2,0), 0),
-                    NoneCell(Position(2,1), 0),
-                    NoneCell(Position(2,2), 0),
+                    NoneCell(Position(0, 0), 0),
+                    NoneCell(Position(0, 1), 0),
+                    NoneCell(Position(0, 2), 0),
+                    NoneCell(Position(0, 3), 0),
+                    NoneCell(Position(1, 0), 0),
+                    NoneCell(Position(1, 1), 0),
+                    NoneCell(Position(1, 2), 0),
+                    NoneCell(Position(1, 3), 0),
+                    NoneCell(Position(2, 0), 0),
+                    NoneCell(Position(2, 1), 0),
+                    NoneCell(Position(2, 2), 0),
                 )
             )
         )
