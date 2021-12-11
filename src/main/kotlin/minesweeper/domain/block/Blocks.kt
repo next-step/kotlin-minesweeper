@@ -20,6 +20,10 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
         return blocks.find { it.getPosition() == Position(x, y) }
     }
 
+    fun findBlock(position: Position): Block? {
+        return blocks.find { it.getPosition() == position }
+    }
+
     fun isWinGame(): Boolean {
         return mineCount == remainCount
     }
@@ -30,7 +34,7 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
     ): Blocks {
         var blockResult = blocks
         MOVABLE_POSITION.forEach {
-            blockResult = updateBlocks(blockResult, it.plusXposition(x), it.plusYposition(y))
+            blockResult = updateBlocks(blockResult, it.moveTo(Position(x, y)))
         }
         return Blocks(blockResult)
     }
@@ -51,12 +55,12 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
 
     private fun updateBlocks(
         blockResult: List<Block>,
-        newX: Int,
-        newY: Int,
+        position: Position,
     ): List<Block> {
-        val nearBlock = findBlock(newX, newY)
+        val nearBlock = findBlock(position.x, position.y)
         if (nearBlock != null && nearBlock is None) {
-            return blockResult.replace(nearBlock.updateBlock(findNearMineCount(newX, newY))) { it == nearBlock }
+            return blockResult.replace(nearBlock.updateBlock(findNearMineCount(position.x,
+                position.y))) { it == nearBlock }
         }
         return blockResult
     }
@@ -71,10 +75,9 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
         mineCount: Int,
     ): Int {
         var count = mineCount
-        val targetPositionX = position.plusXposition(block.getPosition())
-        val targetPositionY = position.plusYposition(block.getPosition())
+        val targetPosition = position.moveTo(block.getPosition())
 
-        if (findBlock(targetPositionX, targetPositionY).isMine()) {
+        if (findBlock(targetPosition).isMine()) {
             count++
         }
         return count

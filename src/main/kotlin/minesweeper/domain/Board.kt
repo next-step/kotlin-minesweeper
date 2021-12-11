@@ -29,4 +29,3 @@ data class Board(val area: Area, val blocks: Blocks) {
         private const val AREA_BLOCK_SIZE_SHOULD_SAME = "면적과 블록의 갯수는 같아야 합니다."
     }
 }
-
