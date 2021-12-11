@@ -1,5 +1,6 @@
 package mine
 
+import mine.cell.Cell
 import mine.cell.Cells
 import mine.cell.NoneCell
 import mine.cell.Position
@@ -51,6 +52,24 @@ class CellTest {
         )
 
         Assertions.assertThat(cell.aroundPosition()).isEqualTo(expectedAroundCells)
+    }
+
+    @Test
+    fun `지뢰가 아닌 셀이 open되었다면 이름은 지뢰와 같은 이름으로 표시된다`() {
+        val cell = NoneCell(Position(0,0), 2)
+
+        cell.isClicked = false
+
+        Assertions.assertThat(cell.name()).isEqualTo(Cell.NAME)
+    }
+
+    @Test
+    fun `지뢰가 아닌 셀이 open되었다면 이름은 주위 지뢰 개수로 표시된다`() {
+        val cell = NoneCell(Position(0,0), 2)
+
+        cell.open()
+
+        Assertions.assertThat(cell.name()).isEqualTo("2")
     }
 
     @Test
