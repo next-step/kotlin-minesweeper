@@ -2,5 +2,9 @@ package minesweeper.domain.cell
 
 sealed interface Cell {
 
-    fun isMine(): Boolean
+    val isOpen: Boolean
+
+    val isMine: Boolean
+
+    fun open(): Cell
 }

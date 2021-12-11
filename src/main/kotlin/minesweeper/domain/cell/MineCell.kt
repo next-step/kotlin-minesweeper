@@ -1,6 +1,8 @@
 package minesweeper.domain.cell
 
-object MineCell : Cell {
+class MineCell(override val isOpen: Boolean = false) : Cell {
 
-    override fun isMine() = true
+    override val isMine = true
+
+    override fun open() = MineCell(isOpen = true)
 }
