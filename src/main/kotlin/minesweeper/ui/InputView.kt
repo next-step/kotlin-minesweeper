@@ -20,7 +20,7 @@ class InputView(
         return Integer.valueOf(inputData)
     }
 
-    fun askMinesCount(): Int {
+    fun askMineCount(): Int {
         outputStrategy.execute(ASK_NUMBER_OF_MINES)
         val inputData = inputStrategy.execute()
         return Integer.valueOf(inputData)

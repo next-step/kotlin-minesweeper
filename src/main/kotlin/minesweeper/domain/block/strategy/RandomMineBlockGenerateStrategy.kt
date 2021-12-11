@@ -8,6 +8,6 @@ object RandomMineBlockGenerateStrategy : MineBlockGenerateStrategy {
     override fun execute(positions: List<Position>, minesCount: Int): List<Position> =
         minesPositions(minesCount, positions)
 
-    private fun minesPositions(minesCount: Int, positions: List<Position>): List<Position> =
-        (START..minesCount).map { positions.random() }
+    private fun minesPositions(mineCount: Int, positions: List<Position>): List<Position> =
+        positions.shuffled().subList(START, mineCount)
 }

@@ -3,8 +3,9 @@ package minesweeper.domain
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
+import minesweeper.domain.block.AdjacentMineCount
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.Cell
+import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
@@ -22,7 +23,7 @@ internal class BoardTest {
     @CsvSource(value = ["1:1:1", "10:1:10", "1:10:1", "10:10:1"], delimiter = ':')
     fun `넓이와 지뢰수 그리고 생성 전략을 통해 생성할 수 있다`(widthInt: Int, heightInt: Int, minesCountInt: Int) {
         val area = Area(Width(widthInt), Height(heightInt))
-        val minesCount = MinesCount(minesCountInt)
+        val minesCount = MineCount(minesCountInt)
         val strategy = MineBlockGenerateStrategy(this::createBoardGenerateStrategy)
 
         val positions = createPositions(area.width, area.height)
@@ -37,7 +38,7 @@ internal class BoardTest {
     @CsvSource(value = ["1:1:2", "10:1:11", "1:10:11", "10:10:101"], delimiter = ':')
     fun `지뢰수가 넓이 보다 클 수 없다`(widthInt: Int, heightInt: Int, minesCountInt: Int) {
         val area = Area(Width(widthInt), Height(heightInt))
-        val minesCount = MinesCount(minesCountInt)
+        val minesCount = MineCount(minesCountInt)
         val strategy = MineBlockGenerateStrategy(this::createBoardGenerateStrategy)
 
         val exception = assertThrows<MinesCountOverAreaException> { Board.of(area, minesCount, strategy) }
@@ -53,18 +54,19 @@ internal class BoardTest {
             }
         }
 
-    private fun createBoardGenerateStrategy(positions: List<Position>, minesCount: Int): List<Position> {
-        val mutablePositions = positions.toMutableList()
-        for (i in 0 until minesCount) {
-            mutablePositions[i] = mutablePositions[i]
-        }
-        return mutablePositions
-    }
+    private fun createBoardGenerateStrategy(positions: List<Position>, mineCount: Int): List<Position> =
+        positions.subList(0, mineCount)
 
     private fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
         if (minesPositions.contains(positions)) {
             return MineBlock(positions)
         }
-        return Cell(positions)
+        return EmptyBlock(positions, AdjacentMineCount.from(calculateMinesCount(positions, minesPositions)))
     }
+
+    private fun calculateMinesCount(position: Position, minesPositions: List<Position>): Int =
+        Directions.values()
+            .map { directions -> directions.nextCoordinate(position.x, position.y) }
+            .filter { it.first >= 0 && it.second >= 0 }
+            .count { Position(it.first, it.second) in minesPositions }
 }

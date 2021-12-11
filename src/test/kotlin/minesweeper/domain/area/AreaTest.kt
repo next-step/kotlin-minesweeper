@@ -23,18 +23,6 @@ internal class AreaTest {
         )
     }
 
-    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
-    @CsvSource(value = ["1:1:1", "10:1:10", "1:10:10", "10:10:10"], delimiter = ':')
-    fun `넓이를 반환할 수 있다`(widthInt: Int, heightInt: Int) {
-        val width = Width(widthInt)
-        val height = Height(heightInt)
-
-        val boardSize = Area(width, height)
-        val area: Int = boardSize.area()
-
-        assertThat(area).isEqualTo(widthInt * heightInt)
-    }
-
     @ParameterizedTest(name = "입력 값: {0}, {1}")
     @CsvSource(value = ["1:1", "10:1", "1:10", "10:10"], delimiter = ':')
     fun `가로와 세로를 반환할 수 있다`(widthInt: Int, heightInt: Int) {

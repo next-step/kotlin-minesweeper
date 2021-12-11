@@ -1,6 +1,6 @@
 package minesweeper.domain.block
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,11 +14,11 @@ internal class MineBlockTest {
     fun `위치로 이루어진다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = MineBlock(position)
+        val mineBlock = MineBlock(position)
 
         assertAll(
-            { Assertions.assertThat(mines).isNotNull },
-            { Assertions.assertThat(mines).isExactlyInstanceOf(MineBlock::class.java) },
+            { assertThat(mineBlock).isNotNull },
+            { assertThat(mineBlock).isExactlyInstanceOf(MineBlock::class.java) },
         )
     }
 
@@ -27,8 +27,8 @@ internal class MineBlockTest {
     fun `지뢰가 아니다`(x: Int, y: Int) {
         val position = Position(x, y)
 
-        val mines = MineBlock(position)
+        val mineBlock = MineBlock(position)
 
-        Assertions.assertThat(mines.isMines()).isTrue
+        assertThat(mineBlock.isMine).isTrue
     }
 }

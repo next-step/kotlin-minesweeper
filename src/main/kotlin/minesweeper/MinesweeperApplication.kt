@@ -3,7 +3,7 @@ package minesweeper
 import global.strategy.ConsoleInputStrategy
 import global.strategy.ConsoleOutputStrategy
 import minesweeper.domain.Board
-import minesweeper.domain.MinesCount
+import minesweeper.domain.MineCount
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
@@ -19,8 +19,8 @@ class MinesweeperApplication(
 ) {
     fun execute() {
         val area = askArea()
-        val minesCount = askMinesCount()
-        val board = Board.of(area, minesCount, RandomMineBlockGenerateStrategy)
+        val mineCount = askMineCount()
+        val board = Board.of(area, mineCount, RandomMineBlockGenerateStrategy)
         resultView.startGame(board)
     }
 
@@ -48,12 +48,12 @@ class MinesweeperApplication(
             askWidth()
         }
 
-    private fun askMinesCount(): MinesCount =
+    private fun askMineCount(): MineCount =
         try {
-            MinesCount(inputView.askMinesCount())
+            MineCount(inputView.askMineCount())
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
-            askMinesCount()
+            askMineCount()
         }
 }
 

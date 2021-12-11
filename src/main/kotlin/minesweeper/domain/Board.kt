@@ -2,7 +2,7 @@ package minesweeper.domain
 
 import minesweeper.domain.area.Area
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.Cell
+import minesweeper.domain.block.EmptyBlock
 import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
@@ -13,10 +13,10 @@ value class Board(val blocks: List<Block>) {
     companion object {
         private const val START = 0
 
-        fun of(area: Area, minesCount: MinesCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
+        fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
-            val minesPositions = mineBlockGenerateStrategy.generate(positions, minesCount.minesCount)
-            return Board(positions.map { minesOrCell(it, minesPositions) })
+            val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
+            return Board(positions.map { minesOrCell(it, minePositions) })
         }
 
         private fun positions(width: Int, height: Int): List<Position> =
@@ -26,11 +26,11 @@ value class Board(val blocks: List<Block>) {
                 }
             }
 
-        private fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
-            if (minesPositions.contains(positions)) {
-                return MineBlock(positions)
+        private fun minesOrCell(position: Position, minePositions: List<Position>): Block {
+            if (minePositions.contains(position)) {
+                return MineBlock(position)
             }
-            return Cell(positions)
+            return EmptyBlock.of(position, minePositions)
         }
     }
 }
