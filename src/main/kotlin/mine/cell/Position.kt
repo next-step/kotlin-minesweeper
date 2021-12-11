@@ -15,6 +15,8 @@ data class Position(val x: Int, val y: Int) {
             .filterNot { it.x == x && it.y == y }
     }
 
+    fun aroundAllPosition(): List<Position> = aroundPosition() + this
+
     companion object {
         private const val MIN_POSITION = 0
         private const val DELIMITER = ","

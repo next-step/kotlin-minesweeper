@@ -2,11 +2,11 @@ package mine.cell
 
 class NoneCell(
     position: Position,
-    val mineCount: Int,
+    private val mineCount: Int,
 ) : Cell(position) {
-    var isClicked: Boolean = false
+    override fun name(): String = if (isClicked) mineCount.toString() else super.name()
 
-    override fun name(): String {
-        return if (isClicked) mineCount.toString() else super.name()
-    }
+    override fun isNearMine(): Boolean = mineCount > 0
+
+    override fun isMineCell(): Boolean = false
 }
