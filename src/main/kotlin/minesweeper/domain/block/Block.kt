@@ -6,4 +6,6 @@ interface Block {
     fun getMineNearCount(): Int?
 
     fun hasVisited(): Boolean
+
+    fun isMine(): Boolean
 }

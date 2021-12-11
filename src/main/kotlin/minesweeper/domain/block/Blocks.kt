@@ -65,10 +65,6 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
         return blockResult
     }
 
-    private fun Block?.isMine(): Boolean {
-        return this is Mine
-    }
-
     private fun countsMines(
         block: Block,
         position: Position,
@@ -77,7 +73,7 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
         var count = mineCount
         val targetPosition = position.moveTo(block.getPosition())
 
-        if (findBlock(targetPosition).isMine()) {
+        if (findBlock(targetPosition)?.isMine()!!) {
             count++
         }
         return count

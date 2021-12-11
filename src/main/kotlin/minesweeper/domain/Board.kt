@@ -1,9 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.domain.area.Area
-import minesweeper.domain.block.Block
 import minesweeper.domain.block.Blocks
-import minesweeper.domain.block.Mine
 import minesweeper.domain.game.GameResult
 import minesweeper.domain.game.State
 
@@ -22,9 +20,6 @@ data class Board(val area: Area, val blocks: Blocks) {
         return GameResult(State.PLAY, Board(area, blockResult))
     }
 
-    private fun Block.isMine(): Boolean {
-        return this is Mine
-    }
     companion object {
         private const val AREA_BLOCK_SIZE_SHOULD_SAME = "면적과 블록의 갯수는 같아야 합니다."
     }
