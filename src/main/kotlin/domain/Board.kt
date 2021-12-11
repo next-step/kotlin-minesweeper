@@ -17,6 +17,28 @@ class Board(
         return rows[position.y].isMine(position.x)
     }
 
+    fun open(position: Position) {
+        if(isMine(position)) return
+        if(!rows[position.y].cells[position.x].open()) return
+
+        val heap = mutableListOf<Position>()
+
+        position
+            .getAroundPositions()
+            .forEach { heap.add(it) }
+
+        while (heap.isNotEmpty()) {
+            val tmp = heap.removeAt(0)
+            if(tmp.x < width && tmp.y < height && !rows[tmp.y].cells[tmp.x].isOpen()) {
+                if(!isMine(tmp) && rows[tmp.y].cells[tmp.x].open()) {
+                    tmp
+                        .getAroundPositions()
+                        .forEach { heap.add(it) }
+                }
+            }
+        }
+    }
+
     companion object {
         fun build(
             width: Width,

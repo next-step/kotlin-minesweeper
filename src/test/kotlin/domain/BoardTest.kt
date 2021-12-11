@@ -70,4 +70,25 @@ internal class BoardTest {
             { assertTrue(board.isMine(Position(1, 2))) },
         )
     }
+
+    @Test
+    fun `지뢰가 없는 인접한 칸이 모두 열리게 된다`() {
+        val board = Board(
+            listOf(
+                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
+                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
+                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
+                Row(listOf(GeneralCell(1), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
+                Row(listOf(GeneralCell(3), GeneralCell(3), GeneralCell(3), GeneralCell(3), GeneralCell(3)))
+            )
+        )
+
+        board.open(Position(1, 1))
+
+        board.rows.forEach { row ->
+            val cells = row.cells
+            cells.forEach { print("${it.isOpen()} ") }
+            println()
+        }
+    }
 }

@@ -9,6 +9,10 @@ class Row(
         return cells[position].isMine()
     }
 
+    fun open(position: Int): Boolean {
+        return cells[position].open()
+    }
+
     companion object {
         fun build(
             width: Int,
