@@ -1,7 +1,7 @@
 package minesweeper.view
 
-import minesweeper.domain.cell.BlockCell
 import minesweeper.domain.board.Board
+import minesweeper.domain.cell.BlockCell
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCell
 
@@ -16,13 +16,13 @@ fun RowDto(cells: List<Cell>): RowDto {
     return RowDto(cells.map(::CellDto))
 }
 
-data class CellDto(val mine: Boolean, val aroundMineCount: Int?) {
+data class CellDto(val mine: Boolean, val aroundMineCount: Int?, val isOpen: Boolean) {
 
-    constructor(cell: Cell) : this(cell.isMine(), cell.getAroundMineCount())
+    constructor(cell: Cell) : this(cell.isMine, cell.getAroundMineCount(), cell.isOpen)
 }
 
 private fun Board.toRows(): List<RowDto> {
-    val cellsSortedByPosition = cells.toSortedMap()
+    val cellsSortedByPosition = cells.cells.toSortedMap()
         .toList()
     val cellsGroupByRow = cellsSortedByPosition
         .groupBy(keySelector = { (position, _) -> position.row }, valueTransform = { (_, cell) -> cell })

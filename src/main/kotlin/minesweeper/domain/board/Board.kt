@@ -1,13 +1,15 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.Position
-import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Cells
+import minesweeper.domain.position.Position
 
-class Board(cells: Map<Position, Cell>) {
+sealed interface Board {
 
-    private val _cells: MutableMap<Position, Cell> = cells.toMutableMap()
+    val cells: Cells
 
-    val cells: Map<Position, Cell>
-        get() = _cells.toMap()
+    val isFinish: Boolean
+
+    fun getResult(): BoardResult
+
+    fun open(position: Position): Board
 }
-
