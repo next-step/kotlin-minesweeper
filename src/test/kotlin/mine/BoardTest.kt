@@ -1,5 +1,9 @@
 package mine
 
+import mine.cell.Cells
+import mine.cell.MineCell
+import mine.cell.NoneCell
+import mine.cell.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -22,5 +26,88 @@ class BoardTest {
         val height = 10
 
         assertThrows<IllegalArgumentException> { Board.createBoard(Width(width), Height(height)) }
+    }
+
+    @Test
+    fun `지뢰인 칸을 클릭한 경우 게임 끝난다`() {
+        val board = Board(
+            Cells(
+                listOf(
+                    MineCell(Position(0,0)),
+                    NoneCell(Position(1,0), 0),
+                    NoneCell(Position(2,0), 0),
+                    NoneCell(Position(3,0), 0),
+                    NoneCell(Position(0,1), 0),
+                    NoneCell(Position(0,2), 0),
+                    NoneCell(Position(0,3), 0),
+                    NoneCell(Position(1,1), 0),
+                    NoneCell(Position(1,2), 0),
+                    NoneCell(Position(1,3), 0),
+                )
+            )
+        )
+
+        val position = Position(0, 0)
+        val status = board.run {
+            position.clickedCell()
+        }
+
+            assertThat(status).isEqualTo(GameStatus.GAMEOVER)
+    }
+
+    @Test
+    fun `마지막 칸을 클릭한 경우 게임에서 승리한다`() {
+        val board = Board(
+            Cells(
+                listOf(
+                    NoneCell(Position(0,0), 0),
+                    NoneCell(Position(0,1), 0).apply { isClicked = true },
+                    NoneCell(Position(0,2), 0).apply { isClicked = true },
+                    NoneCell(Position(0,3), 0).apply { isClicked = true },
+                    NoneCell(Position(1,0), 0).apply { isClicked = true },
+                    NoneCell(Position(1,1), 0).apply { isClicked = true },
+                    NoneCell(Position(1,2), 0).apply { isClicked = true },
+                    NoneCell(Position(1,3), 0).apply { isClicked = true },
+                    NoneCell(Position(2,0), 0).apply { isClicked = true },
+                    NoneCell(Position(2,1), 0).apply { isClicked = true },
+                    NoneCell(Position(2,2), 0).apply { isClicked = true },
+                )
+            )
+        )
+
+        val position = Position(0, 0)
+        val status = board.run {
+            position.clickedCell()
+        }
+
+        assertThat(status).isEqualTo(GameStatus.WIN)
+    }
+
+    @Test
+    fun `지뢰가 아닌 칸을 클릭한 경우 게임이 계속 진행된다`() {
+        val board = Board(
+            Cells(
+                listOf(
+                    NoneCell(Position(0,0), 0),
+                    NoneCell(Position(0,1), 0),
+                    NoneCell(Position(0,2), 0),
+                    NoneCell(Position(0,3), 0),
+                    NoneCell(Position(1,0), 0),
+                    NoneCell(Position(1,1), 0),
+                    NoneCell(Position(1,2), 0),
+                    NoneCell(Position(1,3), 0),
+                    NoneCell(Position(2,0), 0),
+                    NoneCell(Position(2,1), 0),
+                    NoneCell(Position(2,2), 0),
+                )
+            )
+        )
+
+        val position = Position(0, 0)
+        val status = board.run {
+            position.clickedCell()
+        }
+
+        assertThat(status).isEqualTo(GameStatus.CONTINUE)
     }
 }
