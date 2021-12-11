@@ -25,15 +25,17 @@ class BoardController {
         )
     }
 
-    fun open(
+    fun isMine(
         board: Board,
         position: Position,
     ): Boolean {
-        val isMine = board.isMine(position)
-        if (!isMine) {
+        return board.isMine(position)
+    }
 
-        }
-
-        return isMine
+    fun open(
+        board: Board,
+        position: Position,
+    ) {
+        board.open(position)
     }
 }
