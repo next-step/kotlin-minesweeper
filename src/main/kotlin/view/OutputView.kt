@@ -18,4 +18,8 @@ object OutputView {
     private fun printCell(cell: Cell) {
         print("${cell.getValue()} ")
     }
+
+    fun printLose() {
+        println("Lose Game.")
+    }
 }

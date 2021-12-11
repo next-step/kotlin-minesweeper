@@ -17,26 +17,36 @@ class Board(
         return rows[position.y].isMine(position.x)
     }
 
-    fun open(position: Position) {
-        if(isMine(position)) return
-        if(!rows[position.y].cells[position.x].open()) return
+    fun open(inputPosition: Position) {
+        if (isMine(inputPosition)) return
+        val cell = rows[inputPosition.y][inputPosition.x]
+        cell.open()
 
-        val heap = mutableListOf<Position>()
+        openAroundCell(cell)
+    }
 
-        position
-            .getAroundPositions()
-            .forEach { heap.add(it) }
+    private fun openAroundCell(inputCell: Cell) {
+        val canOpenAroundCell = mutableListOf<Position>()
 
-        while (heap.isNotEmpty()) {
-            val tmp = heap.removeAt(0)
-            if(tmp.x < width && tmp.y < height && !rows[tmp.y].cells[tmp.x].isOpen()) {
-                if(!isMine(tmp) && rows[tmp.y].cells[tmp.x].open()) {
-                    tmp
-                        .getAroundPositions()
-                        .forEach { heap.add(it) }
-                }
+        canOpenAroundCell.addAll(inputCell.getOpenableAroundPosition())
+
+        while (canOpenAroundCell.isNotEmpty()) {
+            val aroundCellPosition = canOpenAroundCell.removeAt(0)
+
+            if (canOpen(aroundCellPosition)) {
+                val aroundCell = rows[aroundCellPosition.y][aroundCellPosition.x]
+                aroundCell.open()
+
+                canOpenAroundCell.addAll(aroundCell.getOpenableAroundPosition())
             }
         }
+    }
+
+    private fun canOpen(position: Position): Boolean {
+        return position.x < width &&
+            position.y < height &&
+            !isMine(position) &&
+            !rows[position.y][position.x].isOpen()
     }
 
     companion object {

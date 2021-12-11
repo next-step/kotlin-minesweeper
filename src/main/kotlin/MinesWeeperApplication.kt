@@ -14,10 +14,18 @@ fun main() {
 
     val board = boardCreateController.create(Width(width), Height(height), mineCount)
 
-    OutputView.printBoard(board)
-
     while (true) {
-        val openPosition = InputView.inputOpenPosition()
-        val input = OpenPositionParser.parse(openPosition)
+        val inputPosition = InputView.inputOpenPosition()
+        val position = OpenPositionParser.parse(inputPosition)
+
+        val isMine = board.isMine(position)
+
+        if (isMine) {
+            OutputView.printLose()
+            break
+        }
+
+        board.open(position)
+        OutputView.printBoard(board)
     }
 }

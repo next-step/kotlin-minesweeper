@@ -13,6 +13,10 @@ class Row(
         return cells[position].open()
     }
 
+    operator fun get(index: Int): Cell {
+        return cells[index]
+    }
+
     companion object {
         fun build(
             width: Int,
@@ -27,7 +31,7 @@ class Row(
 
                 when (minesPosition.contains(position)) {
                     true -> MineCell()
-                    false -> GeneralCell(mineCount)
+                    false -> GeneralCell(mineCount, position)
                 }
             }
 

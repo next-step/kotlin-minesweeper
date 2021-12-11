@@ -5,4 +5,5 @@ interface Cell {
     fun isMine(): Boolean
     fun open(): Boolean
     fun isOpen(): Boolean
+    fun getOpenableAroundPosition(): List<Position>
 }

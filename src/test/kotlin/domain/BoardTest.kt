@@ -72,23 +72,42 @@ internal class BoardTest {
     }
 
     @Test
-    fun `지뢰가 없는 인접한 칸이 모두 열리게 된다`() {
+    fun `지뢰가 없는 인접한 칸이 모두 열리게 된다 - 인접한 칸에 지회가 있다면 선택한 칸만 열린다`() {
         val board = Board(
             listOf(
-                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
-                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
-                Row(listOf(GeneralCell(0), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
-                Row(listOf(GeneralCell(1), GeneralCell(1), GeneralCell(3), GeneralCell(3), GeneralCell(3))),
-                Row(listOf(GeneralCell(3), GeneralCell(3), GeneralCell(3), GeneralCell(3), GeneralCell(3)))
+                Row(listOf(GeneralCell(0), GeneralCell(1))),
+                Row(listOf(GeneralCell(0), GeneralCell(1))),
             )
         )
 
         board.open(Position(1, 1))
 
-        board.rows.forEach { row ->
-            val cells = row.cells
-            cells.forEach { print("${it.isOpen()} ") }
-            println()
-        }
+        assertAll(
+            "지뢰가 없는 인접한 칸이 모두 열리게 된다.",
+            { assertFalse(board.rows[0][0].isOpen()) },
+            { assertFalse(board.rows[0][1].isOpen()) },
+            { assertFalse(board.rows[1][0].isOpen()) },
+            { assertTrue(board.rows[1][1].isOpen()) },
+        )
+    }
+
+    @Test
+    fun `지뢰가 없는 인접한 칸이 모두 열리게 된다 - 인접한 칸에 지뢰가 없다면 주변 칸들도 모두 열리게 된다 `() {
+        val board = Board(
+            listOf(
+                Row(listOf(GeneralCell(0), GeneralCell(1))),
+                Row(listOf(GeneralCell(0), GeneralCell(1))),
+            )
+        )
+
+        board.open(Position(0, 0))
+
+        assertAll(
+            "지뢰가 없는 인접한 칸이 모두 열리게 된다.",
+            { assertTrue(board.rows[0][0].isOpen()) },
+            { assertTrue(board.rows[0][1].isOpen()) },
+            { assertTrue(board.rows[1][0].isOpen()) },
+            { assertTrue(board.rows[1][1].isOpen()) },
+        )
     }
 }

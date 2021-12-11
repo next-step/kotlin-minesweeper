@@ -9,8 +9,9 @@ class MineCell : Cell {
     }
 
     override fun isOpen(): Boolean = open
+    override fun getOpenableAroundPosition(): List<Position> = emptyList()
 
-    override fun getValue(): String = "X"
+    override fun getValue(): String = "C"
 
     override fun isMine(): Boolean {
         return true
