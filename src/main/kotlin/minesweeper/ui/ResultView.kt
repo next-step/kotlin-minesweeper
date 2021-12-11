@@ -4,10 +4,7 @@ import global.strategy.OutputStrategy
 import global.util.FavoriteStringFixture.NEW_LINE
 import minesweeper.domain.Board
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.EmptyBlock
-import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
-import minesweeper.ui.ResultView.Companion.Mark.MINES
 
 class ResultView(private val outputStrategy: OutputStrategy) {
 
@@ -17,11 +14,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         outputStrategy.execute(stringBuilder.toString())
     }
 
-    private fun blockMapToMark(block: Block): String =
-        when (block) {
-            is MineBlock -> calculatePrefixNewLine(block.position, MINES)
-            is EmptyBlock -> calculatePrefixNewLine(block.position, block.adjacentMineCount.toString())
-        }
+    private fun blockMapToMark(block: Block): String = calculatePrefixNewLine(block.position, block.display)
 
     private fun calculatePrefixNewLine(position: Position, mark: String): String {
         if (position.isStartHorizontal()) {
@@ -32,10 +25,14 @@ class ResultView(private val outputStrategy: OutputStrategy) {
 
     companion object {
         private const val START_GAME = "지뢰찾기 게임 시작"
+        private const val MINE = "*"
 
-        object Mark {
-            const val MINES = "*"
-            const val CELL = "C" // 다음 미션을 위해 남기겠습니다
-        }
+        private val Block.display: String
+            get() {
+                if (isMine) {
+                    return MINE
+                }
+                return adjacentMineCount.adjacentMineCount.toString()
+            }
     }
 }

@@ -40,6 +40,6 @@ internal class EmptyBlockTest {
 
         val emptyBlock = EmptyBlock(position, adjacentMineCount)
 
-        assertThat(emptyBlock.adjacentMineCount).isEqualTo(count)
+        assertThat(emptyBlock.adjacentMineCount).isEqualTo(AdjacentMineCount.from(count))
     }
 }

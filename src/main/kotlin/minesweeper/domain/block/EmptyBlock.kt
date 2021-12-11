@@ -7,11 +7,9 @@ import minesweeper.domain.block.Position.Companion.DEFAULT_Y
 
 data class EmptyBlock(
     override val position: Position,
-    private val _adjacentMineCount: AdjacentMineCount = DEFAULT_ADJACENT_MINE_COUNT
+    override val adjacentMineCount: AdjacentMineCount = DEFAULT_ADJACENT_MINE_COUNT
 ) : Block(position) {
     override val isMine: Boolean = false
-
-    val adjacentMineCount: Int = _adjacentMineCount.adjacentMineCount
 
     companion object {
         fun of(position: Position, minePositions: List<Position>): Block {
