@@ -37,21 +37,4 @@ internal class BlocksTest {
 
         assertThat(actual).isEqualTo(givenMine)
     }
-
-    @Test
-    fun `게임 종료여부를 리턴한다`() {
-        val givenMine = Mine(Position(0, 0))
-        val givenNone1 = None(Position(0, 1))
-        val givenNone2 = None(Position(1, 0))
-        val givenNone3 = None(Position(1, 1))
-        val givenBlocks = listOf(
-            givenMine,
-            givenNone1,
-            givenNone2,
-            givenNone3
-        )
-        val blocks = Blocks(givenBlocks)
-
-        assertThat(blocks.isWinGame()).isFalse
-    }
 }
