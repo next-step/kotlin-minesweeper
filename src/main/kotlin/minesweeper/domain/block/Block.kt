@@ -7,9 +7,9 @@ sealed class Block(open val position: Position, open val openState: OpenState) {
 
     abstract val adjacentMineCount: AdjacentMineCount
 
-    val isOpened: Boolean = openState.isOpened
-
     abstract fun open(): Block
+
+    fun isOpened(): Boolean = openState.isOpened
 
     companion object {
         fun minesOrCell(position: Position, minePositions: List<Position>): Block {
