@@ -51,7 +51,7 @@ internal class BoardTest {
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
-    @CsvSource(value = ["0:0", "0:1", "0:2"], delimiter = ':')
+    @CsvSource(value = ["1:1", "1:2", "1:3"], delimiter = ':')
     fun `지뢰를 클릭하면 null을 반환한다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val clickPosition = Position(clickX, clickY)
@@ -61,7 +61,7 @@ internal class BoardTest {
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
-    @CsvSource(value = ["1:0", "1:1", "1:2", "2:0", "2:1", "2:2"], delimiter = ':')
+    @CsvSource(value = ["2:1", "2:2", "2:3", "3:1", "3:2", "3:3"], delimiter = ':')
     fun `지뢰가 아닌 영역을 클릭하면 변환된 Board를 반환한다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val clickPosition = Position(clickX, clickY)
@@ -69,15 +69,15 @@ internal class BoardTest {
 
         val expected = Board(
             listOf(
-                MineBlock(Position(0, 0)),
-                MineBlock(Position(0, 1)),
-                MineBlock(Position(0, 2)),
-                EmptyBlock(Position(1, 0), Opened),
-                EmptyBlock(Position(1, 1), Opened),
-                EmptyBlock(Position(1, 2), Opened),
-                EmptyBlock(Position(2, 0), Opened),
+                MineBlock(Position(1, 1)),
+                MineBlock(Position(1, 2)),
+                MineBlock(Position(1, 3)),
                 EmptyBlock(Position(2, 1), Opened),
                 EmptyBlock(Position(2, 2), Opened),
+                EmptyBlock(Position(2, 3), Opened),
+                EmptyBlock(Position(3, 1), Opened),
+                EmptyBlock(Position(3, 2), Opened),
+                EmptyBlock(Position(3, 3), Opened),
             )
         )
         assertThat(actual).isEqualTo(expected)

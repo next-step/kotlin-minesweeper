@@ -2,17 +2,18 @@ package minesweeper.domain.block
 
 import minesweeper.exception.InvalidPositionRangeException
 
-data class Position(val x: Int = DEFAULT_X, val y: Int = DEFAULT_Y) {
+data class Position(val x: Int = MINIMUM_X, val y: Int = MINIMUM_Y) {
     init {
-        if (x < DEFAULT_X || y < DEFAULT_Y) {
+        if (x < MINIMUM_X || y < MINIMUM_Y) {
             throw InvalidPositionRangeException(x, y)
         }
     }
 
-    fun isStartHorizontal(): Boolean = y == DEFAULT_Y
+    fun isStartHorizontal(): Boolean = y == START
 
     companion object {
-        const val DEFAULT_X = 0
-        const val DEFAULT_Y = 0
+        const val MINIMUM_X = 0
+        const val MINIMUM_Y = 0
+        private const val START = 1
     }
 }

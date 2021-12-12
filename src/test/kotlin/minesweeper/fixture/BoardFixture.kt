@@ -19,8 +19,8 @@ object BoardFixture {
     }
 
     fun createPositions(width: Int, height: Int): List<Position> =
-        (0 until width).flatMap { x ->
-            (0 until height).map { y ->
+        (1..width).flatMap { x ->
+            (1..height).map { y ->
                 Position(x, y)
             }
         }

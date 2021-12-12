@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-@DisplayName("일반 셀(Cell)")
+@DisplayName("일반 블록(EmptyBlock)")
 internal class EmptyBlockTest {
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
@@ -34,7 +34,7 @@ internal class EmptyBlockTest {
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
-    @CsvSource(value = ["1:0:2", "1:1:3", "1:2:2", "2:0:0", "2:1:0", "2:2:0"], delimiter = ':')
+    @CsvSource(value = ["2:1:2", "2:2:3", "2:3:2", "3:1:0", "3:2:0", "3:3:0"], delimiter = ':')
     fun `지뢰 개수를 반환한다`(blockX: Int, blockY: Int, expected: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val position = Position(blockX, blockY)

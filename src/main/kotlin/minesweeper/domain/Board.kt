@@ -26,7 +26,6 @@ value class Board(val blocks: List<Block>) {
             bfsBlocks = bfsBlocks.map { if (it.position == nowPosition) it.open() else it }
             OpenDirections.values()
                 .map { it.nextCoordinate(nowPosition.x, nowPosition.y) }
-                .filter { it.first >= Position.DEFAULT_X && it.second >= Position.DEFAULT_Y }
                 .map { Position(it.first, it.second) }
                 .filter { isOpenable(it, bfsBlocks) }
                 .forEach { queue.offer(it) }
@@ -52,7 +51,7 @@ value class Board(val blocks: List<Block>) {
     }
 
     companion object {
-        private const val START = 0
+        private const val START = 1
 
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
@@ -61,8 +60,8 @@ value class Board(val blocks: List<Block>) {
         }
 
         private fun positions(width: Int, height: Int): List<Position> =
-            (START until width).flatMap { x ->
-                (START until height).map { y ->
+            (START..width).flatMap { x ->
+                (START..height).map { y ->
                     Position(x, y)
                 }
             }
