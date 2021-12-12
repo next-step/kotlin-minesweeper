@@ -1,7 +1,7 @@
 package minesweeper.ui
 
-import global.strategy.InputStrategy
-import global.strategy.OutputStrategy
+import global.strategy.ui.InputStrategy
+import global.strategy.ui.OutputStrategy
 
 class InputView(
     private val inputStrategy: InputStrategy,

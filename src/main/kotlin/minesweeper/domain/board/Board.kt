@@ -13,7 +13,7 @@ import java.util.Queue
 
 data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
 
-    fun isFinish(): Boolean = gameState.isFinished()
+    fun isFinish(): Boolean = gameState.isFinished
 
     fun open(position: Position): Board {
         if (blocks.isMinePosition(position)) {
@@ -23,24 +23,24 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
     }
 
     private fun openBlocks(position: Position): Board {
-        var mutableBlocks = blocks.toMutableList()
+        var openedBlocks = blocks.toMutableList()
         val queue: Queue<Position> = LinkedList(listOf(position))
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
-            val nowIndex = mutableBlocks.indexToPosition(nowPosition)
-            mutableBlocks[nowIndex] = mutableBlocks[nowIndex].open()
-            val nowBlock = mutableBlocks[nowIndex]
+            val nowIndex = openedBlocks.indexToPosition(nowPosition)
+            openedBlocks[nowIndex] = openedBlocks[nowIndex].open()
+            val nowBlock = openedBlocks[nowIndex]
             if (!nowBlock.isMine && nowBlock.adjacentMineCount(this).isEmpty()) {
                 OpenDirections.values()
                     .map { nextPosition(it, nowPosition) }
-                    .filter { isOpenable(it, mutableBlocks) }
+                    .filter { isOpenable(it, openedBlocks) }
                     .forEach { queue.offer(it) }
             }
         }
-        if (mutableBlocks.filter { !it.isMine }.all { it.isOpened() }) {
-            return Board(mutableBlocks.toList(), Win)
+        if (openedBlocks.filter { !it.isMine }.all { it.isOpened() }) {
+            return Board(openedBlocks.toList(), Win)
         }
-        return Board(mutableBlocks.toList())
+        return Board(openedBlocks.toList())
     }
 
     private fun nextPosition(openDirection: OpenDirections, nowPosition: Position): Position {
@@ -54,6 +54,14 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
         }
         return !openedBlocks.findByPosition(position).isOpened()
     }
+
+    private fun List<Block>.isMinePosition(position: Position): Boolean = findByPosition(position).isMine
+
+    private fun List<Block>.findByPosition(position: Position): Block = first { it.position == position }
+
+    private fun List<Block>.indexToPosition(position: Position): Int = map { it.position }.indexOf(position)
+
+    private fun List<Block>.notContainsPosition(position: Position): Boolean = position !in map { it.position }
 
     companion object {
         private const val START = 1
@@ -72,11 +80,3 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
             }
     }
 }
-
-private fun List<Block>.isMinePosition(position: Position): Boolean = findByPosition(position).isMine
-
-private fun List<Block>.findByPosition(position: Position): Block = first { it.position == position }
-
-private fun List<Block>.indexToPosition(position: Position): Int = map { it.position }.indexOf(position)
-
-private fun List<Block>.notContainsPosition(position: Position): Boolean = position !in map { it.position }

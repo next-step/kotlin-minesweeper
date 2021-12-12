@@ -1,7 +1,9 @@
 package minesweeper
 
-import global.strategy.ConsoleInputStrategy
-import global.strategy.ConsoleOutputStrategy
+import global.strategy.split.SingleCommaSplitStrategy
+import global.strategy.split.SplitStrategy
+import global.strategy.ui.ConsoleInputStrategy
+import global.strategy.ui.ConsoleOutputStrategy
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
@@ -21,24 +23,11 @@ class MinesweeperApplication(
     fun execute() {
         val area = askArea()
         val mineCount = askMineCount()
-        val board = Board.of(area, mineCount, RandomMineBlockGenerateStrategy)
-        resultView.startGame(board)
-        while (true) {
-            val openPosition = askOpenPosition()
-            val openedBoard = board.open(openPosition)
-            openedBoard?.let { resultView.startGame(it) }
-            break
-        }
+        var board = Board.of(area, mineCount, RandomMineBlockGenerateStrategy)
+        resultView.startGame()
+        board = open(board, SingleCommaSplitStrategy)
+        resultView.showResult(board)
     }
-
-    private fun askOpenPosition(): Position =
-        try {
-            val openPosition = inputView.askOpenPosition().split(", ")
-            Position(Integer.valueOf(openPosition[0]), Integer.valueOf(openPosition[1]))
-        } catch (e: Exception) {
-            errorView.alert(e.message.toString())
-            askOpenPosition()
-        }
 
     private fun askArea(): Area =
         try {
@@ -70,6 +59,25 @@ class MinesweeperApplication(
         } catch (e: Exception) {
             errorView.alert(e.message.toString())
             askMineCount()
+        }
+
+    private fun open(board: Board, splitStrategy: SplitStrategy): Board {
+        val openPosition = askOpenPosition(splitStrategy)
+        val board = board.open(openPosition)
+        if (board.isFinish()) {
+            return board
+        }
+        resultView.showBoard(board)
+        return open(board, splitStrategy)
+    }
+
+    private fun askOpenPosition(splitStrategy: SplitStrategy): Position =
+        try {
+            val openPosition = splitStrategy.split(inputView.askOpenPosition())
+            Position(openPosition.first(), openPosition.last())
+        } catch (e: Exception) {
+            errorView.alert(e.message.toString())
+            askOpenPosition(splitStrategy)
         }
 }
 
