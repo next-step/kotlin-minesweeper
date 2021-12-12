@@ -82,4 +82,14 @@ internal class BoardTest {
         )
         assertThat(actual).isEqualTo(expected)
     }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["3:1", "3:2", "3:3"], delimiter = ':')
+    fun `지뢰가 아닌 영역을 모두 오픈했다면 종료 상태가 된다`(clickX: Int, clickY: Int) {
+        val board = BoardFixture.createBoard(3, 3, 3)
+        val clickPosition = Position(clickX, clickY)
+        val actual = board.open(clickPosition)
+
+        assertThat(actual.isFinish()).isTrue
+    }
 }

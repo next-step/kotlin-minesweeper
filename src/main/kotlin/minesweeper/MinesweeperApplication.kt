@@ -2,13 +2,13 @@ package minesweeper
 
 import global.strategy.ConsoleInputStrategy
 import global.strategy.ConsoleOutputStrategy
-import minesweeper.domain.board.Board
-import minesweeper.domain.board.MineCount
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.RandomMineBlockGenerateStrategy
+import minesweeper.domain.board.Board
+import minesweeper.domain.board.MineCount
 import minesweeper.ui.ErrorView
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
@@ -23,13 +23,12 @@ class MinesweeperApplication(
         val mineCount = askMineCount()
         val board = Board.of(area, mineCount, RandomMineBlockGenerateStrategy)
         resultView.startGame(board)
-        val openPosition = askOpenPosition()
-        val openedBoard = board.open(openPosition)
-        openedBoard?.let { resultView.startGame(it) }
-
-        val openPosition2 = askOpenPosition()
-        val openedBoard2 = openedBoard!!.open(openPosition2)
-        openedBoard2?.let { resultView.startGame(it) }
+        while (true) {
+            val openPosition = askOpenPosition()
+            val openedBoard = board.open(openPosition)
+            openedBoard?.let { resultView.startGame(it) }
+            break
+        }
     }
 
     private fun askOpenPosition(): Position =
