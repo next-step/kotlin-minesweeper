@@ -4,12 +4,18 @@ import minesweeper.domain.Directions
 import minesweeper.domain.block.AdjacentMineCount.Companion.DEFAULT_ADJACENT_MINE_COUNT
 import minesweeper.domain.block.Position.Companion.DEFAULT_X
 import minesweeper.domain.block.Position.Companion.DEFAULT_Y
+import minesweeper.domain.block.state.OpenState
+import minesweeper.domain.block.state.Opened
+import minesweeper.domain.block.state.UnOpened
 
 data class EmptyBlock(
     override val position: Position,
-    override val adjacentMineCount: AdjacentMineCount = DEFAULT_ADJACENT_MINE_COUNT
-) : Block(position) {
+    override val adjacentMineCount: AdjacentMineCount = DEFAULT_ADJACENT_MINE_COUNT,
+    override val openState: OpenState = UnOpened
+) : Block(position, openState) {
     override val isMine: Boolean = false
+
+    override fun open(): Block = EmptyBlock(position, adjacentMineCount, Opened)
 
     companion object {
         fun of(position: Position, minePositions: List<Position>): Block {

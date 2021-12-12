@@ -12,43 +12,19 @@
 
 ## 클래스 설계
 
-* [] 열린 상태
-    * 열린 상태인지 아닌지를 나타낸 상태를 가진다.
+* [] OpenState : 열린 상태인지 아닌지를 나타낸 상태를 가진다.
     * isOpen(): Boolean
+    * open(): Opened 상태 반환 
+* [] Opened : 열린 상태 
+    * isOpen(): Boolean = true
+    * open(): Opened = 예외처리 -> 이미 열려있으므로  
+* [] UnOpened : 안열린 상태
+    * isOpen(): Boolean = false
+    * open(): Opened = Opened() 반환  
+  
+  
 
-## 하드 코딩
+  
 
-```kotlin
-// private fun getMineNumber(
-//     row: Int,
-//     column: Int,
-//     width: Int,
-//     height: Int,
-//     board: MutableList<MutableList<Int>>
-// ): Int {
-//     var mineCnt = 0
-//     if (isExistMine(row - 1, column - 1, width, height, board)) mineCnt++
-//     if (isExistMine(row - 1, column, width, height, board)) mineCnt++
-//     if (isExistMine(row - 1, column + 1, width, height, board)) mineCnt++
-//     if (isExistMine(row, column - 1, width, height, board)) mineCnt++
-//     if (isExistMine(row, column + 1, width, height, board)) mineCnt++
-//     if (isExistMine(row + 1, column - 1, width, height, board)) mineCnt++
-//     if (isExistMine(row + 1, column, width, height, board)) mineCnt++
-//     if (isExistMine(row + 1, column + 1, width, height, board)) mineCnt++
-//     return mineCnt
-// }
-//
-// private fun isExistMine(
-//     row: Int,
-//     column: Int,
-//     width: Int,
-//     height: Int,
-//     board: MutableList<MutableList<Int>>
-// ): Boolean {
-//     if (row < 0 || row >= width || column < 0 || column >= height) {
-//         return false
-//     }
-//
-//     return board[row][column] == -1
-// }
-```
+
+
