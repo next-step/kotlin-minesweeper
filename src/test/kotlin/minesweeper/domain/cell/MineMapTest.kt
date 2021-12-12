@@ -1,5 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.cell
 
+import minesweeper.domain.board.MineCount
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -80,7 +83,7 @@ class MineMapTest {
 
     private fun Int.toCell(): Cell {
         return when (this) {
-            M -> MineCell
+            M -> MineCell()
             else -> BlockCell(MineCount(this))
         }
     }

@@ -1,5 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
+import minesweeper.domain.RandomGenerator
+import minesweeper.domain.cell.BlockCell
+import minesweeper.domain.cell.MineCell
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
@@ -15,7 +18,7 @@ class BoardFactoryTest {
 
         val result = factory.createBy(height, width, MineCount(3))
 
-        assertThat(result.cells).hasSize(9)
+        assertThat(result.cells.cells).hasSize(9)
     }
 
     @Test
@@ -27,7 +30,7 @@ class BoardFactoryTest {
 
         val result = factory.createBy(height, width, mineCount)
 
-        val cells = result.cells.toSortedMap().values.toList()
+        val cells = result.cells.cells.toSortedMap().values.toList()
         assertAll(
             { assertThat(cells.slice(0..2)).hasOnlyElementsOfType(MineCell::class.java) },
             { assertThat(cells.slice(3..8)).hasOnlyElementsOfType(BlockCell::class.java) },

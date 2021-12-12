@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.position
+
+import minesweeper.domain.board.Height
+import minesweeper.domain.board.Width
 
 class Positions(val positions: List<Position>) {
 

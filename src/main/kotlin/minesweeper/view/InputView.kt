@@ -17,7 +17,15 @@ object InputView {
         return getInt()
     }
 
+    fun getPosition(): Position {
+        print("open: ")
+        val rowWithColumn = getInput().split(",").map { it.trim() }
+        return Position(rowWithColumn[0].toInt(), rowWithColumn[1].toInt())
+    }
+
     private fun getInt() = getInput().toInt()
 
     private fun getInput() = readLine()!!
+
+    data class Position(val row: Int, val column: Int)
 }

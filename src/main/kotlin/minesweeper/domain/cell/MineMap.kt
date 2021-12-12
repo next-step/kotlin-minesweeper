@@ -1,4 +1,10 @@
-package minesweeper.domain
+package minesweeper.domain.cell
+
+import minesweeper.domain.board.MineCount
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
+import minesweeper.domain.position.count
+import minesweeper.domain.position.slice
 
 class MineMap(private val mineMap: Map<Position, Boolean>) {
 
@@ -14,13 +20,4 @@ class MineMap(private val mineMap: Map<Position, Boolean>) {
     }
 
     private fun isMine(position: Position) = (mineMap[position] == true)
-
-    companion object {
-
-        fun from(positions: Positions, mineIndexes: List<Int>): MineMap {
-            val minePositions = positions.slice(mineIndexes)
-            val mineMap = positions.mapToIsIn(minePositions)
-            return MineMap(mineMap)
-        }
-    }
 }

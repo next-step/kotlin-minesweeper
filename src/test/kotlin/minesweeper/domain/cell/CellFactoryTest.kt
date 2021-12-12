@@ -1,5 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.cell
 
+import minesweeper.domain.board.MineCount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
