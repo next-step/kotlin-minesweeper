@@ -10,44 +10,41 @@ import java.util.Queue
 @JvmInline
 value class Board(val blocks: List<Block>) {
 
-    fun openBlock(position: Position): Board? {
-        if (isMineBlock(position)) {
+    fun open(position: Position): Board? {
+        if (blocks.isMinePosition(position)) {
             return null
         }
-        return calculateBlocks(position)
+        return openBlocks(position)
     }
 
-    private fun calculateBlocks(position: Position): Board {
-        var bfsBlocks = blocks.toList()
-        val queue: Queue<Position> = LinkedList()
-        queue.offer(position)
+    private fun openBlocks(position: Position): Board {
+        var mutableBlocks = blocks.toMutableList()
+        val queue: Queue<Position> = LinkedList(listOf(position))
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
-            bfsBlocks = bfsBlocks.map { if (it.position == nowPosition) it.open() else it }
-            OpenDirections.values()
-                .map { it.nextCoordinate(nowPosition.x, nowPosition.y) }
-                .map { Position(it.first, it.second) }
-                .filter { isOpenable(it, bfsBlocks) }
-                .forEach { queue.offer(it) }
+            val nowIndex = mutableBlocks.indexToPosition(nowPosition)
+            mutableBlocks[nowIndex] = mutableBlocks[nowIndex].open()
+            val nowBlock = mutableBlocks[nowIndex]
+            if (!nowBlock.isMine && nowBlock.adjacentMineCount(this).isEmpty()) {
+                OpenDirections.values()
+                    .map { nextPosition(it, nowPosition) }
+                    .filter { isOpenable(it, mutableBlocks) }
+                    .forEach { queue.offer(it) }
+            }
         }
-        return Board(bfsBlocks.toList())
+        return Board(mutableBlocks.toList())
     }
 
-    private fun isOpenable(position: Position, bfsBlocks: List<Block>): Boolean {
-        if (!bfsBlocks.map { it.position }.contains(position)) {
-            return false
-        }
-        if (bfsBlocks.first { it.position == Position(position.x, position.y) }.isMine) {
-            return false
-        }
-        return !bfsBlocks.first { it.position == Position(position.x, position.y) }.isOpened()
+    private fun nextPosition(openDirection: OpenDirections, nowPosition: Position): Position {
+        val nextCoordinate = openDirection.nextCoordinate(nowPosition.x, nowPosition.y)
+        return Position(nextCoordinate.first, nextCoordinate.second)
     }
 
-    private fun isMineBlock(position: Position): Boolean {
-        if (blocks.find { it.position == position } == null) {
+    private fun isOpenable(position: Position, openedBlocks: List<Block>): Boolean {
+        if (openedBlocks.notContainsPosition(position) || openedBlocks.isMinePosition(position)) {
             return false
         }
-        return blocks.first { it.position == position }.isMine
+        return !openedBlocks.findByPosition(position).isOpened()
     }
 
     companion object {
@@ -67,3 +64,11 @@ value class Board(val blocks: List<Block>) {
             }
     }
 }
+
+private fun List<Block>.isMinePosition(position: Position): Boolean = findByPosition(position).isMine
+
+private fun List<Block>.findByPosition(position: Position): Block = first { it.position == position }
+
+private fun List<Block>.indexToPosition(position: Position): Int = map { it.position }.indexOf(position)
+
+private fun List<Block>.notContainsPosition(position: Position): Boolean = position !in map { it.position }

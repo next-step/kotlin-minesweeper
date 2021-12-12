@@ -26,9 +26,15 @@ class ResultView(private val outputStrategy: OutputStrategy) {
 
     companion object {
         private const val START_GAME = "지뢰찾기 게임 시작"
+        private const val WIN_GAME = "WIN Game."
+        private const val LOSE_GAME = "Lose Game."
         private const val MINE = "*"
+        private const val COVERED = "C"
 
         private fun Block.display(board: Board): String {
+            if (!isOpened()) {
+                return COVERED
+            }
             if (isMine) {
                 return MINE
             }

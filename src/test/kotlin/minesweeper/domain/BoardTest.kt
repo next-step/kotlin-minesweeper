@@ -55,17 +55,17 @@ internal class BoardTest {
     fun `지뢰를 클릭하면 null을 반환한다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val clickPosition = Position(clickX, clickY)
-        val actual = board.openBlock(clickPosition)
+        val actual = board.open(clickPosition)
 
         assertThat(actual).isNull()
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
-    @CsvSource(value = ["2:1", "2:2", "2:3", "3:1", "3:2", "3:3"], delimiter = ':')
-    fun `지뢰가 아닌 영역을 클릭하면 변환된 Board를 반환한다`(clickX: Int, clickY: Int) {
+    @CsvSource(value = ["3:1", "3:2", "3:3"], delimiter = ':')
+    fun `주변 지뢰개수가 0인 영역을 클릭하면 영역 주변이 열린다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val clickPosition = Position(clickX, clickY)
-        val actual = board.openBlock(clickPosition)
+        val actual = board.open(clickPosition)
 
         val expected = Board(
             listOf(

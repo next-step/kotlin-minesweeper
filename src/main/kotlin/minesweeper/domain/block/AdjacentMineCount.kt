@@ -5,6 +5,8 @@ import minesweeper.exception.InvalidAdjacentMineCountRangeException
 @JvmInline
 value class AdjacentMineCount private constructor(val adjacentMineCount: Int) {
 
+    fun isEmpty(): Boolean = adjacentMineCount == MINIMUM_COUNT
+
     companion object {
         private const val MINIMUM_COUNT = 0
         private const val MAXIMUM_COUNT = 8

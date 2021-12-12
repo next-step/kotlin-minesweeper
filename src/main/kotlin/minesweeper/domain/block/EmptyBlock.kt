@@ -17,7 +17,7 @@ data class EmptyBlock(
             .filter { it.isMine }
             .map { it.position }
         return AdjacentMineCount.from(MineSearchDirections.values()
-            .map { directions -> directions.nextCoordinate(position.x, position.y) }
+            .map { it.nextCoordinate(position.x, position.y) }
             .count { Position(it.first, it.second) in minePositions })
     }
 

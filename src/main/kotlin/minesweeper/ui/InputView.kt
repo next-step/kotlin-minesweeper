@@ -26,9 +26,15 @@ class InputView(
         return Integer.valueOf(inputData)
     }
 
+    fun askOpenPosition(): String {
+        outputStrategy.execute(ASK_OPEN_POSITION)
+        return inputStrategy.execute()
+    }
+
     companion object {
         private const val ASK_HEIGHT = "높이를 입력하세요."
         private const val ASK_WIDTH = "너비를 입력하세요."
         private const val ASK_NUMBER_OF_MINES = "지뢰는 몇 개인가요?"
+        private const val ASK_OPEN_POSITION = "open: "
     }
 }
