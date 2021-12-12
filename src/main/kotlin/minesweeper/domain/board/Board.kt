@@ -4,17 +4,20 @@ import minesweeper.domain.area.Area
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
+import minesweeper.domain.board.state.GameState
+import minesweeper.domain.board.state.Lose
+import minesweeper.domain.board.state.Running
+import minesweeper.domain.board.state.Win
 import java.util.LinkedList
 import java.util.Queue
 
-@JvmInline
-value class Board(val blocks: List<Block>) {
+data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
 
-    fun isFinish(): Boolean = true
+    fun isFinish(): Boolean = gameState.isFinished()
 
-    fun open(position: Position): Board? {
+    fun open(position: Position): Board {
         if (blocks.isMinePosition(position)) {
-            return null
+            return Board(blocks, Lose)
         }
         return openBlocks(position)
     }
@@ -33,6 +36,9 @@ value class Board(val blocks: List<Block>) {
                     .filter { isOpenable(it, mutableBlocks) }
                     .forEach { queue.offer(it) }
             }
+        }
+        if (mutableBlocks.filter { !it.isMine }.all { it.isOpened() }) {
+            return Board(mutableBlocks.toList(), Win)
         }
         return Board(mutableBlocks.toList())
     }

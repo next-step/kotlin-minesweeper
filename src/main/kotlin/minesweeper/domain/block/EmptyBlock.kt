@@ -1,9 +1,9 @@
 package minesweeper.domain.block
 
-import minesweeper.domain.board.Board
 import minesweeper.domain.block.state.OpenState
 import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.state.UnOpened
+import minesweeper.domain.board.Board
 
 data class EmptyBlock(
     override val position: Position,
@@ -17,8 +17,9 @@ data class EmptyBlock(
             .map { it.position }
         return AdjacentMineCount.from(
             MineSearchDirections.values()
-            .map { it.nextCoordinate(position.x, position.y) }
-            .count { Position(it.first, it.second) in minePositions })
+                .map { it.nextCoordinate(position.x, position.y) }
+                .count { Position(it.first, it.second) in minePositions }
+        )
     }
 
     override fun open(): Block = EmptyBlock(position, Opened)
