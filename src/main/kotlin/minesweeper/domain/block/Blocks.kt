@@ -8,24 +8,16 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
     val size: Int
         get() = blocks.size
 
-    private val remainCount = blocks.size - hasVisitedCount
-
-    private val mineCount: Int
+    val mineCount: Int
         get() = blocks.count { it is Mine }
+
+    val remainCount = blocks.size - hasVisitedCount
 
     private val hasVisitedCount: Int
         get() = blocks.count() { it.hasVisited() }
 
     fun findBlock(x: Int, y: Int): Block? {
         return blocks.find { it.getPosition() == Position(x, y) }
-    }
-
-    fun findBlock(position: Position): Block? {
-        return blocks.find { it.getPosition() == position }
-    }
-
-    fun isWinGame(): Boolean {
-        return mineCount == remainCount
     }
 
     fun updateBlocksByPosition(
@@ -41,6 +33,11 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
 
     fun getBlockByIndex(index: Int): Block {
         return blocks[index]
+    }
+
+    private fun findBlock(position: Position): Block {
+        return blocks.find { it.getPosition() == position }
+            ?: throw IllegalArgumentException(NOT_FOUND_BLOCK)
     }
 
     private fun findNearMineCount(x: Int, y: Int): Int {
@@ -59,8 +56,8 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
     ): List<Block> {
         val nearBlock = findBlock(position.x, position.y)
         if (nearBlock != null && nearBlock is None) {
-            return blockResult.replace(nearBlock.updateBlock(findNearMineCount(position.x,
-                position.y))) { it == nearBlock }
+            val mineNearCount = findNearMineCount(position.x, position.y)
+            return blockResult.replace(nearBlock.updateBlock(mineNearCount)) { it == nearBlock }
         }
         return blockResult
     }
@@ -73,7 +70,7 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
         var count = mineCount
         val targetPosition = position.moveTo(block.getPosition())
 
-        if (findBlock(targetPosition)?.isMine()!!) {
+        if (findBlock(targetPosition).isMine()) {
             count++
         }
         return count
@@ -82,6 +79,7 @@ data class Blocks(val blocks: List<Block> = emptyList()) {
     companion object {
         private const val MINIMUM_MINE_COUNT = 0
         private const val MINIMUM_MINE_REQUIRED = "최소 1개 이상 지뢰가 있어야합니다."
+        private const val NOT_FOUND_BLOCK = "찾을 수 없는 블록"
 
         private val MOVABLE_POSITION = listOf(
             Position(-1, 1), Position(0, 1), Position(1, 1), Position(1, 0), Position(0, 0),

@@ -14,10 +14,14 @@ data class Board(val area: Area, val blocks: Blocks) {
         val targetBlock = blocks.findBlock(x, y) ?: return GameResult(State.PLAY, this)
         if (targetBlock.isMine()) return GameResult(State.LOSE, this)
         val blockResult = blocks.updateBlocksByPosition(x, y)
-        if (blockResult.isWinGame()) {
+        if (isWinGame()) {
             return GameResult(State.WIN, Board(area, blockResult))
         }
         return GameResult(State.PLAY, Board(area, blockResult))
+    }
+
+    private fun isWinGame(): Boolean {
+        return blocks.mineCount == blocks.remainCount
     }
 
     companion object {
