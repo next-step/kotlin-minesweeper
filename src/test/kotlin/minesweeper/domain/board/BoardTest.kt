@@ -90,6 +90,6 @@ internal class BoardTest {
         val clickPosition = Position(clickX, clickY)
         val actual = board.open(clickPosition)
 
-        assertThat(actual.isFinish()).isTrue
+        assertThat(actual!!.isFinish()).isTrue
     }
 }

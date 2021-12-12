@@ -10,6 +10,8 @@ import java.util.Queue
 @JvmInline
 value class Board(val blocks: List<Block>) {
 
+    fun isFinish(): Boolean = true
+
     fun open(position: Position): Board? {
         if (blocks.isMinePosition(position)) {
             return null
