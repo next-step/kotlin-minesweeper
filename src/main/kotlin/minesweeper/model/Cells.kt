@@ -36,24 +36,40 @@ class Cells(cells: Map<Position, Cell>) {
         if (!cells.containsKey(targetPosition)) {
             return this
         }
-        return Cells(tryOpen(cells, targetPosition))
+        val openPositions = getOpenPositions(targetPosition)
+        return cells.mapValues { (position, cell) ->
+            if (position in openPositions) {
+                cell.tryOpen()
+            } else {
+                cell
+            }
+        }.let(::Cells)
     }
 
-    private fun tryOpen(cells: Map<Position, Cell>, targetPosition: Position): Map<Position, Cell> {
-        val positions = mutableSetOf(targetPosition)
-        val result = cells.toMutableMap()
-        while (positions.isNotEmpty()) {
-            val position = positions.first()
-            val cell = result[position] ?: break
-            if (cell.isZero) {
-                position.asDirections()
-                    .filter { result[it]?.isVisible == false }
-                    .let(positions::addAll)
-            }
-            result[position] = cell.tryOpen()
-            positions.remove(position)
+    private fun getOpenPositions(targetPosition: Position): List<Position> {
+        val visit = cells.mapValues { false }.toMutableMap()
+        return getOpenPositions(visit, targetPosition)
+    }
+
+    private fun getOpenPositions(visit: MutableMap<Position, Boolean>, position: Position): List<Position> {
+        if (visit[position] == true) {
+            return emptyList()
         }
-        return result
+        visit[position] = true
+
+        val cell = cells[position] ?: return emptyList()
+        val positions = mutableListOf<Position>()
+        if (cell.isZero) {
+            val directions = position.asDirections()
+                .asSequence()
+                .filter { visit[it] == false }
+                .flatMap { getOpenPositions(visit, it) }
+            positions.addAll(directions.toList())
+        }
+        if (!cell.isVisible) {
+            positions.add(position)
+        }
+        return positions
     }
 
     fun isAllOpenedWithoutMine(): Boolean = cells
