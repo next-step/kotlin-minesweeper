@@ -37,10 +37,7 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
                     .forEach { queue.offer(it) }
             }
         }
-        if (openedBlocks.filter { !it.isMine }.all { it.isOpened() }) {
-            return Board(openedBlocks.toList(), Win)
-        }
-        return Board(openedBlocks.toList())
+        return calculateGameState(openedBlocks)
     }
 
     private fun nextPosition(openDirection: OpenDirections, nowPosition: Position): Position {
@@ -55,6 +52,13 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
         return !openedBlocks.findByPosition(position).isOpened()
     }
 
+    private fun calculateGameState(openedBlocks: MutableList<Block>): Board {
+        if (openedBlocks.isEmptyBlocksAllOpened()) {
+            return Board(openedBlocks.toList(), Win)
+        }
+        return Board(openedBlocks.toList())
+    }
+
     private fun List<Block>.isMinePosition(position: Position): Boolean = findByPosition(position).isMine
 
     private fun List<Block>.findByPosition(position: Position): Block = first { it.position == position }
@@ -62,6 +66,8 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
     private fun List<Block>.indexToPosition(position: Position): Int = map { it.position }.indexOf(position)
 
     private fun List<Block>.notContainsPosition(position: Position): Boolean = position !in map { it.position }
+
+    private fun List<Block>.isEmptyBlocksAllOpened(): Boolean = filter { !it.isMine }.all { it.isOpened() }
 
     companion object {
         private const val START = 1
