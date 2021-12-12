@@ -11,8 +11,6 @@ value class AdjacentMineCount private constructor(val adjacentMineCount: Int) {
 
         private val CACHE = (MINIMUM_COUNT..MAXIMUM_COUNT).associateWith { AdjacentMineCount(it) }
 
-        val DEFAULT_ADJACENT_MINE_COUNT = CACHE.getValue(MINIMUM_COUNT)
-
         fun from(adjacentMineCount: Int): AdjacentMineCount {
             validateRange(adjacentMineCount)
             return CACHE.getValue(adjacentMineCount)

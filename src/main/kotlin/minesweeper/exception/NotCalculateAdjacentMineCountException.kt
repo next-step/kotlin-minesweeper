@@ -1,6 +1,6 @@
 package minesweeper.exception
 
-class NotCalculateAdjacentMineCountException(element: String): RuntimeException() {
+class NotCalculateAdjacentMineCountException(element: String) : RuntimeException() {
 
     override val message: String = MESSAGE.format(element)
 

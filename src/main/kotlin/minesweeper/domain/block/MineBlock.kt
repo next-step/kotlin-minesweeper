@@ -1,5 +1,6 @@
 package minesweeper.domain.block
 
+import minesweeper.domain.Board
 import minesweeper.domain.block.state.OpenState
 import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.state.UnOpened
@@ -11,7 +12,8 @@ data class MineBlock(
 ) : Block(position, openState) {
     override val isMine: Boolean = true
 
-    override val adjacentMineCount: AdjacentMineCount get() = throw NotCalculateAdjacentMineCountException(this::class.java.toString())
+    override fun adjacentMineCount(board: Board): AdjacentMineCount =
+        throw NotCalculateAdjacentMineCountException(this::class.java.toString())
 
     override fun open(): Block = MineBlock(position, Opened)
 }

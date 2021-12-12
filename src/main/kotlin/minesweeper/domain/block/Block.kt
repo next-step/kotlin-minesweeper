@@ -1,11 +1,12 @@
 package minesweeper.domain.block
 
+import minesweeper.domain.Board
 import minesweeper.domain.block.state.OpenState
 
 sealed class Block(open val position: Position, open val openState: OpenState) {
     abstract val isMine: Boolean
 
-    abstract val adjacentMineCount: AdjacentMineCount
+    abstract fun adjacentMineCount(board: Board): AdjacentMineCount
 
     abstract fun open(): Block
 
@@ -16,7 +17,7 @@ sealed class Block(open val position: Position, open val openState: OpenState) {
             if (minePositions.contains(position)) {
                 return MineBlock(position)
             }
-            return EmptyBlock.of(position, minePositions)
+            return EmptyBlock(position)
         }
     }
 }
