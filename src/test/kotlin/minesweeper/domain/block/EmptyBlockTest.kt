@@ -60,6 +60,7 @@ internal class EmptyBlockTest {
         val adjacentMineCount = AdjacentMineCount.from(count)
 
         val emptyBlock = EmptyBlock(position, adjacentMineCount)
-        assertThat(emptyBlock.isOpened()).isFalse
+        val actual = emptyBlock.open()
+        assertThat(actual.isOpened()).isTrue
     }
 }
