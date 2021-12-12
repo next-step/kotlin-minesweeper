@@ -2,7 +2,7 @@ package minesweeper.ui
 
 import global.strategy.OutputStrategy
 import global.util.FavoriteStringFixture.NEW_LINE
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.Position
 

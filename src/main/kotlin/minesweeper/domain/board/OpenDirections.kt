@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 enum class OpenDirections(private val x: Int, private val y: Int) {
     NORTH(0, -1),

@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 import minesweeper.domain.area.Area
 import minesweeper.domain.block.Block

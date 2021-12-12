@@ -1,6 +1,6 @@
 package minesweeper.domain.block
 
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.domain.block.state.OpenState
 
 sealed class Block(open val position: Position, open val openState: OpenState) {

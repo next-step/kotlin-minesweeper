@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.block
 
 import java.lang.Math.addExact
 

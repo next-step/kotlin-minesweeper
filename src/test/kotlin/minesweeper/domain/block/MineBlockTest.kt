@@ -1,6 +1,6 @@
 package minesweeper.domain.block
 
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.exception.NotCalculateAdjacentMineCountException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll

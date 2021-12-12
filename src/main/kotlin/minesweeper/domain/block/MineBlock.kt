@@ -1,6 +1,6 @@
 package minesweeper.domain.block
 
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.domain.block.state.OpenState
 import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.state.UnOpened

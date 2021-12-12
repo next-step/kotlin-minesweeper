@@ -1,6 +1,6 @@
 package minesweeper.fixture
 
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width

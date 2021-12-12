@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 import minesweeper.exception.InvalidMineCountRangeException
 import org.assertj.core.api.Assertions
