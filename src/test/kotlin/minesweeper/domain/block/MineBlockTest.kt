@@ -45,4 +45,23 @@ internal class MineBlockTest {
         assertThat(exception.message).isEqualTo("'%s' 타입은 주변 지뢰 개수를 계산할 수 없습니다".format(mineBlock::class.java.toString()))
         assertThat(mineBlock.isMine).isTrue
     }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
+    fun `안열린 상태 여부를 반환한다`(x: Int, y: Int, count: Int) {
+        val position = Position(x, y)
+
+        val mineBlock = MineBlock(position)
+        assertThat(mineBlock.isOpened()).isFalse
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
+    fun `열린 상태 여부를 반환한다`(x: Int, y: Int) {
+        val position = Position(x, y)
+
+        val mineBlock = MineBlock(position)
+        val actual = mineBlock.open()
+        assertThat(actual.isOpened()).isTrue
+    }
 }
