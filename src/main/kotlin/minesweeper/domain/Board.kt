@@ -20,18 +20,9 @@ value class Board(val blocks: List<Block>) {
     }
 
     private fun calculateBlocks(position: Position): Board {
-        val DX = listOf(0, 0, 1, -1)
-        val DY = listOf(1, -1, 0, 0)
-
-        // 현재 오픈 -> 이 함수에 들어오면 무조건 열 수 있다는 것을 의미 -> DFS로 푼다.
-        // 주변에 지뢰가 있다면 재귀 종료
-        // 주변에 지뢰가 없다면 재귀 다시 진행
-        // 0 미만의 값은 그냥 컨티뉴
         var bfsBlocks = blocks.toList()
-
         val queue: Queue<Position> = LinkedList()
         queue.offer(position)
-
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
             bfsBlocks = bfsBlocks.map { if (it.position == nowPosition) it.open() else it }
@@ -60,6 +51,9 @@ value class Board(val blocks: List<Block>) {
     }
 
     companion object {
+        private val DX = listOf(0, 0, 1, -1)
+        private val DY = listOf(1, -1, 0, 0)
+
         private const val START = 0
 
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
