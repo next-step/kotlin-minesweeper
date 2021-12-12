@@ -3,7 +3,10 @@ package minesweeper.domain
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
+import minesweeper.domain.block.EmptyBlock
+import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
+import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
 import minesweeper.exception.MinesCountOverAreaException
 import minesweeper.fixture.BoardFixture
@@ -47,13 +50,36 @@ internal class BoardTest {
         )
     }
 
-    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
-    @CsvSource(value = ["0:0", "0:1", "0:2:"], delimiter = ':')
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "0:1", "0:2"], delimiter = ':')
     fun `지뢰를 클릭하면 null을 반환한다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
         val clickPosition = Position(clickX, clickY)
         val actual = board.openBlock(clickPosition)
 
         assertThat(actual).isNull()
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["1:0", "1:1", "1:2", "2:0", "2:1", "2:2"], delimiter = ':')
+    fun `지뢰가 아닌 영역을 클릭하면 변환된 Board를 반환한다`(clickX: Int, clickY: Int) {
+        val board = BoardFixture.createBoard(3, 3, 3)
+        val clickPosition = Position(clickX, clickY)
+        val actual = board.openBlock(clickPosition)
+
+        val expected = Board(
+            listOf(
+                MineBlock(Position(0, 0)),
+                MineBlock(Position(0, 1)),
+                MineBlock(Position(0, 2)),
+                EmptyBlock(Position(1, 0), Opened),
+                EmptyBlock(Position(1, 1), Opened),
+                EmptyBlock(Position(1, 2), Opened),
+                EmptyBlock(Position(2, 0), Opened),
+                EmptyBlock(Position(2, 1), Opened),
+                EmptyBlock(Position(2, 2), Opened),
+            )
+        )
+        assertThat(actual).isEqualTo(expected)
     }
 }
