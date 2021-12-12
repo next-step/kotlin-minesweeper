@@ -2,7 +2,7 @@ package minesweeper.domain
 
 import java.lang.Math.addExact
 
-enum class Directions(private val x: Int, private val y: Int) {
+enum class MineSearchDirections(private val x: Int, private val y: Int) {
     NORTH(0, -1),
     NORTH_EAST(1, -1),
     EAST(1, 0),

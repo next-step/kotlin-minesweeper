@@ -1,8 +1,6 @@
 package minesweeper.domain
 
 import minesweeper.domain.area.Area
-import minesweeper.domain.area.Height
-import minesweeper.domain.area.Width
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
@@ -26,21 +24,24 @@ value class Board(val blocks: List<Block>) {
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
             bfsBlocks = bfsBlocks.map { if (it.position == nowPosition) it.open() else it }
-            for (i in 0 until 4) {
-                val nx = nowPosition.x + DX[i]
-                val ny = nowPosition.y + DY[i]
-                if (nx < Height.DEFAULT_HEIGHT - 1 || ny < Width.DEFAULT_WIDTH - 1 || isMineBlock(Position(nx, ny))) {
-                    continue
-                }
-                if (bfsBlocks.find { it.position == Position(nx, ny) } == null) {
-                    continue
-                }
-                if (!bfsBlocks.first { it.position == Position(nx, ny) }.isOpened()) {
-                    queue.offer(Position(nx, ny))
-                }
-            }
+            OpenDirections.values()
+                .map { it.nextCoordinate(nowPosition.x, nowPosition.y) }
+                .filter { it.first >= Position.DEFAULT_X && it.second >= Position.DEFAULT_Y }
+                .map { Position(it.first, it.second) }
+                .filter { isOpenable(it, bfsBlocks) }
+                .forEach { queue.offer(it) }
         }
         return Board(bfsBlocks.toList())
+    }
+
+    private fun isOpenable(position: Position, bfsBlocks: List<Block>): Boolean {
+        if (!bfsBlocks.map { it.position }.contains(position)) {
+            return false
+        }
+        if (bfsBlocks.first { it.position == Position(position.x, position.y) }.isMine) {
+            return false
+        }
+        return !bfsBlocks.first { it.position == Position(position.x, position.y) }.isOpened()
     }
 
     private fun isMineBlock(position: Position): Boolean {
@@ -51,9 +52,6 @@ value class Board(val blocks: List<Block>) {
     }
 
     companion object {
-        private val DX = listOf(0, 0, 1, -1)
-        private val DY = listOf(1, -1, 0, 0)
-
         private const val START = 0
 
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
