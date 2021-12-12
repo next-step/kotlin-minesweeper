@@ -38,6 +38,6 @@ object OutputView {
             return COVERED_SLOT
         if (slot.isMine())
             return MINE
-        return GROUND_FORMAT.format(slot.numberOfNearMines)
+        return GROUND_FORMAT.format(slot.numberOfNearMines())
     }
 }

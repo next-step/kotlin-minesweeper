@@ -13,7 +13,7 @@ fun main() {
     val mineSweeperGame = requestForMakeNewSweeperGame()
 
     displayGameStartTitle()
-    displayMineField(mineSweeperGame.mines)
+    displayMineField(mineSweeperGame.mineField)
 }
 
 fun requestForMakeNewSweeperGame(): MineSweeperGame {

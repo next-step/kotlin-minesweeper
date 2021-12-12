@@ -1,62 +1,33 @@
 package domain
 
-class MineField(private val mines: List<Array<Slot>>) {
+class MineField(private val lines: List<MineLine>) {
 
-    fun isMine(x: Int, y: Int) = mines[x][y].isMine()
+    fun isMine(point: Point) = lines[point.y].isMineAt(point.x)
 
-    fun isChecked(x: Int, y: Int) = mines[x][y].isChecked
+    fun isChecked(point: Point) = lines[point.y].isCheckedAt(point.x)
 
-    fun allSlots() = mines.map { it.toList() }
+    fun allSlots() = lines.map { it.toList() }
 
-    fun nearMinesNumberAt(x: Int, y: Int) = mines[y][x].numberOfNearMines
+    private fun changeToMineAt(point: Point) = lines[point.y].changeToMineAt(point)
 
-    private fun findIndexsForNearMinesNums(size: FieldSize, x: Int, y: Int) {
-        val startPoints = PointContainer(x.toStartPoint(), y.toStartPoint())
-        val endPoints = PointContainer(x.toEndPoint(size.width - 1), y.toEndPoint(size.height - 1))
-        setNearMineNums(startPoints, endPoints)
-    }
-
-    private fun setNearMineNums(
-        startPoints: PointContainer,
-        endPoints: PointContainer
-    ) {
-        (startPoints.x..endPoints.x)
-            .flatMap { pointX -> makePointLists(pointX, startPoints.y, endPoints.y) }
-            .forEach { setNumberOfNearMinesAtPoint(it) }
-    }
-
-    private fun setNumberOfNearMinesAtPoint(point: PointContainer) {
-        if (!mines[point.y][point.x].isMine())
-            mines[point.y][point.x] = Ground(nearMines = mines[point.y][point.x].numberOfNearMines + 1)
-    }
-
-    private fun makePointLists(pointX: Int, startPointY: Int, endPointY: Int) =
-        (startPointY..endPointY).map { pointY -> PointContainer(pointX, pointY) }
-
-    private fun Int.toStartPoint(): Int {
-        if (this == 0)
-            return this
-        return this - 1
-    }
-
-    private fun Int.toEndPoint(lastIndex: Int): Int {
-        if (this == lastIndex)
-            return this
-        return this + 1
-    }
+    fun nearMinesNumberAt(point: Point) = lines[point.y].numberOfNearMinesAt(point.x)
 
     companion object {
-        fun createByIndexs(indexsForMines: List<Int>, size: FieldSize): MineField {
-            val newMineField = MineField(List(size.height) { getRowFilledWithGround(size.width) })
-            indexsForMines.forEach {
-                val x = it % size.width
-                val y = it / size.width
-                newMineField.mines[y][x] = Mine()
-                newMineField.findIndexsForNearMinesNums(size, x, y)
-            }
+        fun createByIndexs(indexsForMines: List<Point>, size: FieldSize): MineField {
+            val newMineField = MineField(List(size.height) { createMineLine(it, size.width) })
+            indexsForMines.forEach(newMineField::changeToMineAt)
+
+            val allSlot = newMineField.allSlots()
+                .flatten()
+            val mines = allSlot.filter { it.isMine() }
+            allSlot.filter { !it.isMine() }
+                .forEach {
+                    it.setNumberOfNearMines(mines)
+                }
             return newMineField
         }
 
-        private fun getRowFilledWithGround(width: Int) = Array<Slot>(width) { Ground() }
+        private fun createMineLine(height: Int, width: Int) =
+            MineLine(Array(width) { Ground(point = Point(it, height)) })
     }
 }
