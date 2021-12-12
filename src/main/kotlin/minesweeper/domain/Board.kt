@@ -8,6 +8,17 @@ import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
 @JvmInline
 value class Board(val blocks: List<Block>) {
 
+    fun openBlock(position: Position): Board? {
+        if (blocks.first { it.position == position }.isMine) {
+            return null
+        }
+        return calculateBlocks(position)
+    }
+
+    private fun calculateBlocks(position: Position): Board {
+        return this
+    }
+
     companion object {
         private const val START = 0
 
