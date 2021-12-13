@@ -5,8 +5,6 @@ abstract class Cell(
 ) {
     var isClicked: Boolean = false
 
-    open fun name(): String = NAME
-
     open fun isNearMine(): Boolean = false
 
     open fun isMineCell(): Boolean = true
@@ -20,9 +18,5 @@ abstract class Cell(
     fun open() {
         if (isMineCell() || isClicked) return
         isClicked = true
-    }
-
-    companion object {
-        const val NAME = "E"
     }
 }
