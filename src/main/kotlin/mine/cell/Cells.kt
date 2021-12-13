@@ -68,7 +68,7 @@ class Cells(val values: List<Cell>) {
             val nones = positions
                 .filterIndexed { index, _ -> index >= mineCount }
                 .map { NoneCell(it, it.isAroundCell(mines)) }
-            return (mines + nones).let(::Cells)
+            return Cells(mines + nones)
         }
     }
 }
