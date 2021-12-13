@@ -1,7 +1,7 @@
 package minesweeper.domain.block
 
-import minesweeper.domain.board.Board
 import minesweeper.domain.block.state.OpenState
+import minesweeper.domain.board.Board
 
 sealed class Block(open val position: Position, open val openState: OpenState) {
     abstract val isMine: Boolean
@@ -13,7 +13,7 @@ sealed class Block(open val position: Position, open val openState: OpenState) {
     fun isOpened(): Boolean = openState.isOpened
 
     companion object {
-        fun minesOrCell(position: Position, minePositions: List<Position>): Block {
+        fun create(position: Position, minePositions: List<Position>): Block {
             if (minePositions.contains(position)) {
                 return MineBlock(position)
             }
