@@ -8,6 +8,8 @@ import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
+import minesweeper.domain.board.state.Lose
+import minesweeper.domain.board.state.Win
 import minesweeper.exception.MinesCountOverAreaException
 import minesweeper.fixture.BoardFixture
 import minesweeper.fixture.BoardFixture.createBoardGenerateStrategy
@@ -54,10 +56,11 @@ internal class BoardTest {
     @CsvSource(value = ["1:1", "1:2", "1:3"], delimiter = ':')
     fun `지뢰를 클릭하면 null을 반환한다`(clickX: Int, clickY: Int) {
         val board = BoardFixture.createBoard(3, 3, 3)
+        val expected = Board(board.blocks, Lose)
         val clickPosition = Position(clickX, clickY)
         val actual = board.open(clickPosition)
 
-        assertThat(actual).isNull()
+        assertThat(actual).isEqualTo(expected)
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}")
@@ -78,7 +81,8 @@ internal class BoardTest {
                 EmptyBlock(Position(3, 1), Opened),
                 EmptyBlock(Position(3, 2), Opened),
                 EmptyBlock(Position(3, 3), Opened),
-            )
+            ),
+            Win
         )
         assertThat(actual).isEqualTo(expected)
     }
