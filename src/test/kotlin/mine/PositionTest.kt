@@ -14,7 +14,7 @@ class PositionTest {
         val x = -1
         val y = 2
 
-        val position = Position(x, y).ofNullable()
+        val position = ofNullable(x, y)
 
         assertThat(position).isEqualTo(null)
     }
