@@ -15,11 +15,8 @@ class Cells(val values: List<Cell>) {
             .aroundAllPosition()
             .asSequence()
             .filterNot { isMineCell(it) }
-            .map { it.aroundAllPosition() }
-            .flatten()
-            .forEach {
-                open(it)
-            }
+            .flatMap(Position::aroundAllPosition)
+            .forEach(::open)
 
     private fun open(position: Position) = findCell(position).open()
 
