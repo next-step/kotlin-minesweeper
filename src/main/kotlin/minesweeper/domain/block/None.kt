@@ -17,4 +17,8 @@ data class None(private val position: Position, private val mineNearCount: Int? 
     override fun hasVisited(): Boolean {
         return mineNearCount != null
     }
+
+    override fun isMine(): Boolean {
+        return false
+    }
 }

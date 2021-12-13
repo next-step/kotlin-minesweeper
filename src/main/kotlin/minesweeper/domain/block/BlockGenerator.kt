@@ -10,7 +10,7 @@ fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
 
 object BlockGenerator {
 
-    fun generateBlocks(area: Area, mineCount: Int): List<Block> {
+    fun generateBlocks(area: Area, mineCount: Int): Blocks {
         val range = (1..area.getArea())
         val randomPositions = (1..mineCount).map { range.random() - 1 }.toList()
         var blocks: List<Block> =
@@ -21,6 +21,6 @@ object BlockGenerator {
             val mine = Mine(position)
             blocks = blocks.replace(mine) { it == blocks[randomPosition] }
         }
-        return blocks
+        return Blocks(blocks)
     }
 }
