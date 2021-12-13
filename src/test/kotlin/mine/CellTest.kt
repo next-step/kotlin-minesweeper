@@ -1,9 +1,10 @@
 package mine
 
-import mine.cell.Cell
 import mine.cell.Cells
 import mine.cell.NoneCell
 import mine.cell.Position
+import mine.view.OutputView
+import mine.view.OutputView.name
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -60,7 +61,7 @@ class CellTest {
 
         cell.isClicked = false
 
-        Assertions.assertThat(cell.name()).isEqualTo(Cell.NAME)
+        Assertions.assertThat(cell.name()).isEqualTo(OutputView.CELL_NAME)
     }
 
     @Test

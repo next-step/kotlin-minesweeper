@@ -5,7 +5,7 @@ import mine.cell.Cell
 import mine.cell.NoneCell
 
 object OutputView {
-    private const val CELL_NAME = "E"
+    const val CELL_NAME = "E"
     fun startGame() {
         println("\n지뢰찾기 게임 시작")
     }
