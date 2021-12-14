@@ -1,4 +1,4 @@
-package global.strategy
+package global.strategy.ui
 
 import global.exception.ReadLineNullPointerException
 

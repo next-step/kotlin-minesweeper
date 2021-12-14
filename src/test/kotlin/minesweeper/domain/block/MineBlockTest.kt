@@ -31,4 +31,23 @@ internal class MineBlockTest {
 
         assertThat(mineBlock.isMine).isTrue
     }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
+    fun `안열린 상태 여부를 반환한다`(x: Int, y: Int) {
+        val position = Position(x, y)
+
+        val mineBlock = MineBlock(position)
+        assertThat(mineBlock.isOpened()).isFalse
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}, {1}")
+    @CsvSource(value = ["0:0", "10:10", "0:10", "10:0"], delimiter = ':')
+    fun `열린 상태 여부를 반환한다`(x: Int, y: Int) {
+        val position = Position(x, y)
+
+        val mineBlock = MineBlock(position)
+        val actual = mineBlock.open()
+        assertThat(actual.isOpened()).isTrue
+    }
 }

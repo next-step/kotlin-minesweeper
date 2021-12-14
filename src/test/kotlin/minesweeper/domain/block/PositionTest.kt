@@ -31,8 +31,8 @@ internal class PositionTest {
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
-    @CsvSource(value = ["0:0:true", "10:10:false", "0:10:false", "10:0:true"], delimiter = ':')
-    fun `y가 0이면 가로 시작 지점을 의미한다`(x: Int, y: Int, expected: Boolean) {
+    @CsvSource(value = ["0:1:true", "10:10:false", "0:10:false", "10:1:true"], delimiter = ':')
+    fun `y가 1이면 가로 시작 지점을 의미한다`(x: Int, y: Int, expected: Boolean) {
         val position = Position(x, y)
 
         val actual = position.isStartHorizontal()
