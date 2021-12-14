@@ -1,12 +1,9 @@
 package minesweeper.domain.block
 
 import minesweeper.domain.block.state.OpenState
-import minesweeper.domain.board.Board
 
 sealed class Block(open val position: Position, open val openState: OpenState) {
     abstract val isMine: Boolean
-
-    abstract fun adjacentMineCount(board: Board): AdjacentMineCount
 
     abstract fun open(): Block
 

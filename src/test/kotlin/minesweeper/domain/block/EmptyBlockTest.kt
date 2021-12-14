@@ -1,6 +1,5 @@
 package minesweeper.domain.block
 
-import minesweeper.fixture.BoardFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -31,17 +30,6 @@ internal class EmptyBlockTest {
         val emptyBlock = EmptyBlock(position)
 
         assertThat(emptyBlock.isMine).isFalse
-    }
-
-    @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
-    @CsvSource(value = ["2:1:2", "2:2:3", "2:3:2", "3:1:0", "3:2:0", "3:3:0"], delimiter = ':')
-    fun `지뢰 개수를 반환한다`(blockX: Int, blockY: Int, expected: Int) {
-        val board = BoardFixture.createBoard(3, 3, 3)
-        val position = Position(blockX, blockY)
-
-        val emptyBlock = EmptyBlock(position)
-        val actual = emptyBlock.adjacentMineCount(board)
-        assertThat(actual).isEqualTo(AdjacentMineCount.from(expected))
     }
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")

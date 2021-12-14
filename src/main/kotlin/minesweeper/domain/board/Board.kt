@@ -2,6 +2,7 @@ package minesweeper.domain.board
 
 import minesweeper.domain.area.Area
 import minesweeper.domain.block.Block
+import minesweeper.domain.block.Blocks
 import minesweeper.domain.block.Position
 import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
 import minesweeper.domain.board.state.GameState
@@ -11,7 +12,7 @@ import minesweeper.domain.board.state.Win
 import java.util.LinkedList
 import java.util.Queue
 
-data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
+data class Board(val blocks: Blocks, val gameState: GameState = Running) {
 
     fun isFinish(): Boolean = gameState.isFinished
 
@@ -23,21 +24,19 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
     }
 
     private fun openBlocks(position: Position): Board {
-        var openedBlocks = blocks.toMutableList()
         val queue: Queue<Position> = LinkedList(listOf(position))
+        var blocks = blocks.copy()
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
-            val nowIndex = openedBlocks.indexToPosition(nowPosition)
-            openedBlocks[nowIndex] = openedBlocks[nowIndex].open()
-            val nowBlock = openedBlocks[nowIndex]
-            if (!nowBlock.isMine && nowBlock.adjacentMineCount(this).isEmpty()) {
+            blocks = blocks.open(nowPosition)
+            if (!blocks.isMinePosition(nowPosition) && blocks.adjacentMineCount(nowPosition).isEmpty()) {
                 OpenDirections.values()
                     .map { nextPosition(it, nowPosition) }
-                    .filter { isOpenable(it, openedBlocks) }
+                    .filter { isOpenable(it, blocks) }
                     .forEach { queue.offer(it) }
             }
         }
-        return calculateGameState(openedBlocks)
+        return calculateGameState(blocks)
     }
 
     private fun nextPosition(openDirection: OpenDirections, nowPosition: Position): Position {
@@ -45,29 +44,19 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
         return Position(nextCoordinate.first, nextCoordinate.second)
     }
 
-    private fun isOpenable(position: Position, openedBlocks: List<Block>): Boolean {
-        if (openedBlocks.notContainsPosition(position) || openedBlocks.isMinePosition(position)) {
+    private fun isOpenable(position: Position, blocks: Blocks): Boolean {
+        if (!blocks.containsPosition(position) || blocks.isMinePosition(position)) {
             return false
         }
-        return !openedBlocks.findByPosition(position).isOpened()
+        return !blocks.findBlockByPosition(position).isOpened()
     }
 
-    private fun calculateGameState(openedBlocks: MutableList<Block>): Board {
-        if (openedBlocks.isEmptyBlocksAllOpened()) {
-            return Board(openedBlocks.toList(), Win)
+    private fun calculateGameState(blocks: Blocks): Board {
+        if (blocks.isEmptyBlocksAllOpened()) {
+            return Board(blocks, Win)
         }
-        return Board(openedBlocks.toList())
+        return Board(blocks)
     }
-
-    private fun List<Block>.isMinePosition(position: Position): Boolean = findByPosition(position).isMine
-
-    private fun List<Block>.findByPosition(position: Position): Block = first { it.position == position }
-
-    private fun List<Block>.indexToPosition(position: Position): Int = map { it.position }.indexOf(position)
-
-    private fun List<Block>.notContainsPosition(position: Position): Boolean = position !in map { it.position }
-
-    private fun List<Block>.isEmptyBlocksAllOpened(): Boolean = filter { !it.isMine }.all { it.isOpened() }
 
     companion object {
         private const val START = 1
@@ -75,7 +64,7 @@ data class Board(val blocks: List<Block>, val gameState: GameState = Running) {
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
             val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
-            return Board(positions.map { Block.create(it, minePositions) })
+            return Board(Blocks(positions.map { Block.create(it, minePositions) }))
         }
 
         private fun positions(width: Int, height: Int): List<Position> =

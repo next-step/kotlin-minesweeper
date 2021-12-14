@@ -14,7 +14,8 @@ class ResultView(private val outputStrategy: OutputStrategy) {
     fun startGame() = outputStrategy.execute(START_GAME)
 
     fun showBoard(board: Board) {
-        val stringBuilder = board.blocks.fold(StringBuilder()) { sb, block -> sb.append(blockMapToMark(block, board)) }
+        val stringBuilder =
+            board.blocks.blocks.fold(StringBuilder()) { sb, block -> sb.append(blockMapToMark(block, board)) }
         outputStrategy.execute(stringBuilder.toString())
     }
 
@@ -48,7 +49,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             if (isMine) {
                 return MINE
             }
-            return adjacentMineCount(board).adjacentMineCount.toString()
+            return board.blocks.adjacentMineCount(position).adjacentMineCount.toString()
         }
     }
 }

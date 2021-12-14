@@ -1,21 +1,30 @@
 package minesweeper.fixture
 
-import minesweeper.domain.board.Board
 import minesweeper.domain.area.Area
 import minesweeper.domain.area.Height
 import minesweeper.domain.area.Width
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.EmptyBlock
-import minesweeper.domain.block.MineBlock
+import minesweeper.domain.block.Blocks
 import minesweeper.domain.block.Position
+import minesweeper.domain.block.strategy.MineBlockGenerateStrategy
+import minesweeper.domain.board.Board
 
 object BoardFixture {
 
-    fun createBoard(widthInt: Int, heightInt: Int, minesCountInt: Int): Board {
+    val TEST_MINE_BLOCK_GENERATE_STRATEGY = MineBlockGenerateStrategy { positions, mineCount -> positions.subList(0, mineCount) }
+
+    fun createBoard(widthInt: Int, heightInt: Int, minesCountInt: Int, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
         val area = Area(Width(widthInt), Height(heightInt))
         val positions = createPositions(area.width, area.height)
-        val minesPositions = createBoardGenerateStrategy(positions, minesCountInt)
-        return Board(positions.map { minesOrCell(it, minesPositions) })
+        val minePositions = mineBlockGenerateStrategy.generate(positions, minesCountInt)
+        return Board(createBlocks(positions, minePositions))
+    }
+
+    fun createBlocks(widthInt: Int, heightInt: Int, minesCountInt: Int, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Blocks {
+        val area = Area(Width(widthInt), Height(heightInt))
+        val positions = createPositions(area.width, area.height)
+        val minePositions = mineBlockGenerateStrategy.generate(positions, minesCountInt)
+        return createBlocks(positions, minePositions)
     }
 
     fun createPositions(width: Int, height: Int): List<Position> =
@@ -25,13 +34,6 @@ object BoardFixture {
             }
         }
 
-    fun createBoardGenerateStrategy(positions: List<Position>, mineCount: Int): List<Position> =
-        positions.subList(0, mineCount)
-
-    fun minesOrCell(positions: Position, minesPositions: List<Position>): Block {
-        if (minesPositions.contains(positions)) {
-            return MineBlock(positions)
-        }
-        return EmptyBlock(positions)
-    }
+    fun createBlocks(positions: List<Position>, minesPositions: List<Position>): Blocks =
+        Blocks(positions.map { Block.create(it, minesPositions) })
 }
