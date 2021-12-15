@@ -1,7 +1,7 @@
 package minesweeper.controller
 
 import minesweeper.domain.Height
-import minesweeper.domain.board.Width
+import minesweeper.domain.Width
 import minesweeper.view.InputView
 
 object MinesweeperController {
