@@ -3,8 +3,7 @@ package minesweeper.domain
 @JvmInline
 value class Positions(private val _positions: List<Position>) {
 
-    val position: List<Position>
-        get() = _positions.toList()
+    fun shuffled() = _positions.shuffled()
 
     companion object {
         fun of(width: Width, height: Height): Positions {
