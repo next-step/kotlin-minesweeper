@@ -1,3 +1,6 @@
 package minesweeper.domain
 
-class Cell
+sealed class Cell {
+    object MineCell : Cell()
+    object SafetyCell : Cell()
+}
