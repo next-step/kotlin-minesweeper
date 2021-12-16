@@ -105,7 +105,9 @@ internal class BlocksTest {
         val blocks = createBlocks(3, 3, 3, TEST_MINE_BLOCK_GENERATE_STRATEGY)
         val position = Position(x, y)
 
-        val actual = blocks.adjacentMineCount(position)
+        val block = blocks.findBlockByPosition(position)
+        val adjacentBlocks = blocks.adjacentBlocks(position)
+        val actual = block.adjacentMineCount(adjacentBlocks)
         assertThat(actual).isEqualTo(AdjacentMineCount.from(expected))
     }
 }

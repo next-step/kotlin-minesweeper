@@ -33,7 +33,7 @@ internal class BoardTest {
 
         val positions = createPositions(area.width, area.height)
         val minesPositions = strategy.generate(positions, minesCountInt)
-        val expected = Blocks(positions.map { Block.create(it, minesPositions) })
+        val expected = Blocks(positions.associateWith { Block.create(it, minesPositions) })
 
         val board = Board.of(area, minesCount, strategy)
         assertThat(board.blocks).isEqualTo((expected))
@@ -72,16 +72,16 @@ internal class BoardTest {
 
         val expected = Board(
             Blocks(
-                listOf(
-                    MineBlock(Position(1, 1)),
-                    MineBlock(Position(1, 2)),
-                    MineBlock(Position(1, 3)),
-                    EmptyBlock(Position(2, 1), Opened),
-                    EmptyBlock(Position(2, 2), Opened),
-                    EmptyBlock(Position(2, 3), Opened),
-                    EmptyBlock(Position(3, 1), Opened),
-                    EmptyBlock(Position(3, 2), Opened),
-                    EmptyBlock(Position(3, 3), Opened),
+                mapOf(
+                    Position(1, 1) to MineBlock(Position(1, 1)),
+                    Position(1, 2) to MineBlock(Position(1, 2)),
+                    Position(1, 3) to MineBlock(Position(1, 3)),
+                    Position(2, 1) to EmptyBlock(Position(2, 1), Opened),
+                    Position(2, 2) to EmptyBlock(Position(2, 2), Opened),
+                    Position(2, 3) to EmptyBlock(Position(2, 3), Opened),
+                    Position(3, 1) to EmptyBlock(Position(3, 1), Opened),
+                    Position(3, 2) to EmptyBlock(Position(3, 2), Opened),
+                    Position(3, 3) to EmptyBlock(Position(3, 3), Opened),
                 )
             ),
             Win

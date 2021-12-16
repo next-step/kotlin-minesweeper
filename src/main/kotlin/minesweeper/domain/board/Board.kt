@@ -29,7 +29,9 @@ data class Board(val blocks: Blocks, val gameState: GameState = Running) {
         while (queue.isNotEmpty()) {
             val nowPosition = queue.poll()
             blocks = blocks.open(nowPosition)
-            if (!blocks.isMinePosition(nowPosition) && blocks.adjacentMineCount(nowPosition).isEmpty()) {
+            val adjacentBlocks = blocks.adjacentBlocks(nowPosition)
+            val block = blocks.findBlockByPosition(nowPosition)
+            if (!block.isMine && block.adjacentMineCount(adjacentBlocks).isEmpty()) {
                 OpenDirections.values()
                     .map { nextPosition(it, nowPosition) }
                     .filter { isOpenable(it, blocks) }
@@ -64,7 +66,7 @@ data class Board(val blocks: Blocks, val gameState: GameState = Running) {
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
             val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
-            return Board(Blocks(positions.map { Block.create(it, minePositions) }))
+            return Board(Blocks(positions.associateWith { Block.create(it, minePositions) }.toMutableMap()))
         }
 
         private fun positions(width: Int, height: Int): List<Position> =

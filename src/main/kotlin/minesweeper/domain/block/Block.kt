@@ -9,6 +9,11 @@ sealed class Block(open val position: Position, open val openState: OpenState) {
 
     fun isOpened(): Boolean = openState.isOpened
 
+    fun adjacentMineCount(adjacentBlocks: List<Block>): AdjacentMineCount {
+        val test = adjacentBlocks.count(Block::isMine)
+        return AdjacentMineCount.from(test)
+    }
+
     companion object {
         fun create(position: Position, minePositions: List<Position>): Block {
             if (minePositions.contains(position)) {
