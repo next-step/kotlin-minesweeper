@@ -1,7 +1,10 @@
 package minesweeper.domain
 
 @JvmInline
-value class Positions(private val _positions: List<Position>) {
+value class Positions private constructor(private val _positions: List<Position>) {
+
+    val positions: List<Position>
+        get() = _positions.toList()
 
     fun shuffled() = _positions.shuffled()
 
