@@ -42,7 +42,7 @@ class BoardTest {
     fun `Width, Height, MineCount를 가지고 Board를 만들 때 mineCount의 갯수는 width * height 이하여야 한다`() {
         val width = Width.from(7)
         val height = Height.from(7)
-        val mineCount = MineCount.from(7)
+        val mineCount = MineCount.from(50)
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
