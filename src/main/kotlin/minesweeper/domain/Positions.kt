@@ -9,10 +9,11 @@ value class Positions private constructor(private val _positions: List<Position>
     fun shuffled() = _positions.shuffled()
 
     companion object {
+        private const val START_INDEX = 0
         fun of(width: Width, height: Height): Positions {
             return from(
-                (0 until width.value).flatMap { x ->
-                    (0 until height.value).map { y ->
+                (START_INDEX until width.value).flatMap { x ->
+                    (START_INDEX until height.value).map { y ->
                         Position(Row.from(x), Column.from(y))
                     }
                 }
