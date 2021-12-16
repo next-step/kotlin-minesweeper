@@ -13,7 +13,7 @@ class MineFieldTest {
         val mineField = MineField(
             listOf(
                 MineLine(
-                    arrayOf(
+                    listOf(
                         Mine(point = Point(0, 0)),
                         Mine(point = Point(1, 0)),
                         Mine(point = Point(2, 0)),
@@ -34,7 +34,7 @@ class MineFieldTest {
         val mineField = MineField(
             listOf(
                 MineLine(
-                    arrayOf(
+                    listOf(
                         Mine(point = Point(0, 0)),
                         Mine(point = Point(1, 0)),
                         Mine(point = Point(2, 0)),
@@ -54,7 +54,7 @@ class MineFieldTest {
     fun `Mine이 아닌 Slot은 주변 지뢰따라 slot의 numberOfNearMines 값이 설정 된다`() {
         val fieldSize = FieldSize(5, 3)
         val mineField = MineField.createByIndexs(
-            listOf(
+            setOf(
                 Point(0, 0),
                 Point(2, 0),
                 Point(4, 0),

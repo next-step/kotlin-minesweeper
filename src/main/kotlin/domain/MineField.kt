@@ -8,26 +8,31 @@ class MineField(private val lines: List<MineLine>) {
 
     fun allSlots() = lines.map { it.toList() }
 
-    private fun changeToMineAt(point: Point) = lines[point.y].changeToMineAt(point)
-
     fun nearMinesNumberAt(point: Point) = lines[point.y].numberOfNearMinesAt(point.x)
 
-    companion object {
-        fun createByIndexs(indexsForMines: List<Point>, size: FieldSize): MineField {
-            val newMineField = MineField(List(size.height) { createMineLine(it, size.width) })
-            indexsForMines.forEach(newMineField::changeToMineAt)
+    private fun setNearMines() {
+        val allSlot = allSlots().flatten()
+        val mines = allSlot.filter { it.isMine() }
+        allSlot.filter { !it.isMine() }
+            .forEach { it.setNumberOfNearMines(mines) }
+    }
 
-            val allSlot = newMineField.allSlots()
-                .flatten()
-            val mines = allSlot.filter { it.isMine() }
-            allSlot.filter { !it.isMine() }
-                .forEach {
-                    it.setNumberOfNearMines(mines)
-                }
+    companion object {
+        fun createByIndexs(indexsForMines: Set<Point>, size: FieldSize): MineField {
+            val newMineField = MineField(List(size.height) { createMineLine(it, size.width, indexsForMines) })
+            newMineField.setNearMines()
             return newMineField
         }
 
-        private fun createMineLine(height: Int, width: Int) =
-            MineLine(Array(width) { Ground(point = Point(it, height)) })
+        private fun createMineLine(yIndex: Int, width: Int, indexsForMines: Set<Point>): MineLine {
+            val line = List(width) { setSlotType(Point(it, yIndex), indexsForMines) }
+            return MineLine(line)
+        }
+
+        private fun setSlotType(currentPoint: Point, indexsForMines: Set<Point>): Slot {
+            if (indexsForMines.contains(currentPoint))
+                return Mine(point = currentPoint)
+            return Ground(point = currentPoint)
+        }
     }
 }
