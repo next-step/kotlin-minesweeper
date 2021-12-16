@@ -1,20 +1,36 @@
 package mine.view
 
 import mine.Board
-import mine.cell.MineCell
+import mine.cell.Cell
 import mine.cell.NoneCell
 
 object OutputView {
+    const val CELL_NAME = "E"
+    fun startGame() {
+        println("\n지뢰찾기 게임 시작")
+    }
+
     fun printBoard(board: Board) {
-        println("\n지뢰찾기 게임 시작\n")
         for (i in 0..board.cells.column()) {
             board.cells.rowOfCells(i).values.forEach {
-                when (it) {
-                    is NoneCell -> print("${it.aroundMineCount} ")
-                    is MineCell -> print("${it.name()} ")
-                }
+                print("${it.name()} ")
             }
             println()
+        }
+    }
+
+    fun printLoseGame() {
+        println("Lose Game.")
+    }
+
+    fun printWinGame() {
+        println("Win Game.")
+    }
+
+    fun Cell.name(): String {
+        return when (this) {
+            is NoneCell -> if (this.isClicked) getNearMineCount().toString() else CELL_NAME
+            else -> CELL_NAME
         }
     }
 }

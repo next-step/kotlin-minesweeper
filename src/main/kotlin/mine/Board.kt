@@ -1,6 +1,7 @@
 package mine
 
 import mine.cell.Cells
+import mine.cell.Position
 
 /**
  * 게임 판 관리
@@ -8,7 +9,9 @@ import mine.cell.Cells
 class Board(
     val cells: Cells,
 ) {
-    fun checkMineCount() = cells.checkAroundMineCount()
+    fun Position.clickedCell(): GameStatus {
+        return cells.clickedCell(this)
+    }
 
     companion object {
         fun createBoard(
@@ -20,7 +23,7 @@ class Board(
             require(size >= mine.value)
 
             val cells = Cells.createCells(width, height, mine.value)
-            return Board(cells).also { it.checkMineCount() }
+            return Board(cells)
         }
     }
 }

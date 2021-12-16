@@ -2,18 +2,11 @@ package mine.cell
 
 class NoneCell(
     position: Position,
+    private val mineCount: Int,
 ) : Cell(position) {
-    var aroundMineCount: Int = 0
+    override fun isNearMine(): Boolean = mineCount > 0
 
-    fun changeAroundCount(count: Int) {
-        aroundMineCount = count
-    }
+    override fun isMineCell(): Boolean = false
 
-    override fun name(): String {
-        return NAME
-    }
-
-    companion object {
-        const val NAME = "*"
-    }
+    fun getNearMineCount(): Int = mineCount
 }

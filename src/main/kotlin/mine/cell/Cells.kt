@@ -1,5 +1,6 @@
 package mine.cell
 
+import mine.GameStatus
 import mine.Height
 import mine.Width
 
@@ -7,40 +8,64 @@ import mine.Width
  * 셀 전체 관리
  * */
 class Cells(val values: List<Cell>) {
+    private fun isMineCell(position: Position): Boolean = findCell(position).isMineCell()
+
+    private fun clickCell(position: Position) =
+        findCell(position)
+            .aroundAllPosition()
+            .asSequence()
+            .filterNot { isMineCell(it) }
+            .flatMap(Position::aroundAllPosition)
+            .forEach(::open)
+
+    private fun open(position: Position) = findCell(position).open()
+
+    private fun isLastCell(): Boolean = values.count { !it.isClicked } == 0
+
     fun row(): Int = values.maxOf { it.position.x }
     fun column(): Int = values.maxOf { it.position.y }
 
     fun rowOfCells(row: Int): Cells =
         values.filter { it.position.x == row }.sortedBy { it.position.y }.let(::Cells)
 
-    fun findCell(position: Position): Cell = values.first { it.position == position }
-
-    private fun isMineCell(position: Position): Boolean = values.filterIsInstance<MineCell>().any {
-        it.isSamePosition(position)
+    fun findCell(position: Position): Cell {
+        require(position.x <= row() && position.y <= column())
+        return values.first { it.position == position }
     }
 
-    private fun findMineCell(cell: Cell): Int = cell.aroundPosition().map { isMineCell(it) }.count { it }
-
-    fun checkAroundMineCount() = values
-        .filterIsInstance<NoneCell>()
-        .forEach { cell ->
-            cell.changeAroundCount(findMineCell(cell))
-        }
+    fun clickedCell(position: Position): GameStatus {
+        if (isMineCell(position)) return GameStatus.GAMEOVER
+        clickCell(position)
+        if (isLastCell()) return GameStatus.WIN
+        return GameStatus.CONTINUE
+    }
 
     companion object {
-        fun createCells(width: Width, height: Height, mineCount: Int): Cells {
+        private fun List<Cell>.isMineCell(position: Position): Boolean = this.any {
+            it.isSamePosition(position)
+        }
+
+        private fun Position.isAroundCell(mineList: List<Cell>): Int =
+            this.aroundPosition()
+                .map { mineList.isMineCell(it) }
+                .count { it }
+
+        private fun createList(width: Width, height: Height): List<Position> {
             val size = width.value * height.value
             return List(size) { index: Int ->
                 val x = (index / width.value)
                 val y = (index % height.value)
                 Position(x, y)
             }.shuffled()
-                .mapIndexed { index, position ->
-                    when {
-                        index < mineCount -> MineCell(position)
-                        else -> NoneCell(position)
-                    }
-                }.let(::Cells)
+        }
+
+        fun createCells(width: Width, height: Height, mineCount: Int): Cells {
+            val positions = createList(width, height)
+            val mines = positions.take(mineCount).map { MineCell(it) }
+            val nones = positions
+                .filterIndexed { index, _ -> index >= mineCount }
+                .map { NoneCell(it, it.isAroundCell(mines)) }
+            return Cells(mines + nones)
         }
     }
 }
