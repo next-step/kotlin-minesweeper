@@ -4,6 +4,7 @@ class MinesPosition(
     private val value: List<Position>,
 ) {
 
+    val size = value.size
     private val aroundMineCountByPosition: Map<Position, Int> = value
         .flatMap(Position::getAroundPositions)
         .fold(emptyMap()) { acc, (x, y) ->
@@ -11,7 +12,6 @@ class MinesPosition(
             val mineCount = (acc[position] ?: 0) + 1
             acc + (position to mineCount)
         }
-    val size = value.size
 
     operator fun contains(position: Position): Boolean {
         return value.contains(position)
