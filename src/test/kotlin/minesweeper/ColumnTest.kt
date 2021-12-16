@@ -17,7 +17,7 @@ class ColumnTest {
 
     @ParameterizedTest
     @ValueSource(ints = [-1, -2, -3, -4, -5])
-    fun `Column에 0미만을 입력했을 때 IllegalArgumentsException을 던진다`(input: Int) {
+    fun `Column에 음의 정수를 입력했을 때 IllegalArgumentsException을 던진다`(input: Int) {
         Assertions
             .assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
