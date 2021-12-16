@@ -9,10 +9,6 @@ class Row(
         return cells[position].isMine()
     }
 
-    fun open(position: Int): Boolean {
-        return cells[position].open()
-    }
-
     operator fun get(index: Int): Cell {
         return cells[index]
     }
