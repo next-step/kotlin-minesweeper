@@ -7,12 +7,7 @@ class GeneralCell(
 
     private var open = false
 
-    override fun getValue(): String {
-        return when (open) {
-            true -> aroundMineCount.toString()
-            false -> "C"
-        }
-    }
+    override fun getValue(): String = aroundMineCount.toString()
 
     override fun isMine(): Boolean {
         return false
