@@ -1,6 +1,25 @@
 package domain
 
-class MineSweeperGame(val mineField: MineField) {
+class MineSweeperGame(private val mineField: MineField) {
+
+    fun allSlots() = mineField.allSlots()
+
+    fun checkIsMineAt(point: Point): Boolean {
+        if (mineField.isMine(point)) {
+            mineField.changeChecked(point)
+            return true
+        }
+        mineField.changeNearZeroSlots(point)
+        return false
+    }
+
+    fun allGroundChecked(): Boolean {
+        val leftNotCheckedGround = mineField.allSlots()
+            .flatten()
+            .filter { !it.isMine() && !it.isChecked() }
+            .size
+        return leftNotCheckedGround == 0
+    }
 
     companion object {
         fun newGame(size: FieldSize, numberOfMines: Int): MineSweeperGame {

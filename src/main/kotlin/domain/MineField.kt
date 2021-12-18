@@ -1,12 +1,31 @@
 package domain
 
-class MineField(private val lines: List<MineLine>) {
+class MineField(
+    private val lines: List<MineLine>,
+    private val fieldSize: FieldSize = FieldSize(lines.first().size(), lines.size)
+) {
 
     fun isMine(point: Point) = lines[point.y].isMineAt(point.x)
 
     fun isChecked(point: Point) = lines[point.y].isCheckedAt(point.x)
 
+    fun changeChecked(point: Point) = lines[point.y].changeCheckedAt(point.x)
+
     fun allSlots() = lines.map { it.toList() }
+
+    fun changeNearZeroSlots(point: Point) {
+        if (isChecked(point) || isMine(point))
+            return
+        changeChecked(point)
+        if (point.y - 1 >= 0)
+            changeNearZeroSlots(Point(point.x, point.y - 1))
+        if (point.y + 1 < fieldSize.height)
+            changeNearZeroSlots(Point(point.x, point.y + 1))
+        if (point.x - 1 >= 0)
+            changeNearZeroSlots(Point(point.x - 1, point.y))
+        if (point.x + 1 < fieldSize.width)
+            changeNearZeroSlots(Point(point.x + 1, point.y))
+    }
 
     fun nearMinesNumberAt(point: Point) = lines[point.y].numberOfNearMinesAt(point.x)
 
