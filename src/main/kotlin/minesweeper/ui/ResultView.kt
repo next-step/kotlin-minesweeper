@@ -3,7 +3,6 @@ package minesweeper.ui
 import global.strategy.ui.OutputStrategy
 import global.util.FavoriteStringFixture.NEW_LINE
 import minesweeper.domain.block.Block
-import minesweeper.domain.block.Blocks
 import minesweeper.domain.block.Position
 import minesweeper.domain.board.Board
 import minesweeper.domain.board.state.Finish
@@ -17,7 +16,7 @@ class ResultView(private val outputStrategy: OutputStrategy) {
     fun showBoard(board: Board) {
         val stringBuilder = board.blocks
             .blocks
-            .values.fold(StringBuilder()) { sb, block -> sb.append(blockMapToMark(block, board)) }
+            .keys.fold(StringBuilder()) { sb, position -> sb.append(blockMapToMark(position, board)) }
         outputStrategy.execute(stringBuilder.toString())
     }
 
@@ -27,10 +26,9 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             is Win -> outputStrategy.execute(WIN_GAME)
         }
 
-    private fun blockMapToMark(block: Block, board: Board): String = ""
-        // calculatePrefixNewLine(block.position, block.display(board.blocks))
-
-    private fun calculatePrefixNewLine(position: Position, mark: String): String {
+    private fun blockMapToMark(position: Position, board: Board): String {
+        val block = board.findBlock(position)
+        val mark = block.display()
         if (position.isStartHorizontal()) {
             return NEW_LINE + mark
         }
@@ -44,17 +42,14 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val MINE = 0x1F4A3
         private const val COVERED = 0x25FB
 
-        private fun Block.display(blocks: Blocks): String {
+        private fun Block.display(): String {
             if (!isOpened()) {
                 return COVERED.emoji()
             }
             if (isMine) {
                 return MINE.emoji()
             }
-            return ""
-            // val block = blocks.findBlockByPosition(position)
-            // val adjacentBlocks = blocks.adjacentBlocks(position)
-            // return block.adjacentMineCount(adjacentBlocks).adjacentMineCount.toString()
+            return adjacentMineCount?.adjacentMineCount.toString()
         }
     }
 }

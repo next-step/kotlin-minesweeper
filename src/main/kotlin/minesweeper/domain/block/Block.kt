@@ -3,6 +3,8 @@ package minesweeper.domain.block
 import minesweeper.domain.block.state.OpenState
 
 sealed class Block(open val openState: OpenState) {
+    var adjacentMineCount: AdjacentMineCount? = null
+
     abstract val isMine: Boolean
 
     abstract fun open(): Block
@@ -10,8 +12,9 @@ sealed class Block(open val openState: OpenState) {
     fun isOpened(): Boolean = openState.isOpened
 
     fun adjacentMineCount(adjacentBlocks: List<Block>): AdjacentMineCount {
-        val test = adjacentBlocks.count(Block::isMine)
-        return AdjacentMineCount.from(test)
+        val count = adjacentBlocks.count(Block::isMine)
+        adjacentMineCount = AdjacentMineCount.from(count)
+        return adjacentMineCount as AdjacentMineCount
     }
 
     companion object {
