@@ -11,7 +11,7 @@ class MineLine(private val row: List<Slot>) {
 
     fun isCheckedAt(position: Int): Boolean {
         checkIsRequestedPositionInRange(position)
-        return row[position].isChecked
+        return row[position].isChecked()
     }
 
     fun toList() = row.toList()
