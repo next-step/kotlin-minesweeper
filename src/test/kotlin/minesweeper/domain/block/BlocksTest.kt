@@ -36,23 +36,6 @@ internal class BlocksTest {
         ],
         delimiter = ':'
     )
-    fun `특정 위치의 블록을 찾는다`(x: Int, y: Int) {
-        val blocks = createBlocks(3, 3, 3, TEST_MINE_BLOCK_GENERATE_STRATEGY)
-        val position = Position(x, y)
-        val block = blocks.findBlockByPosition(position)
-
-        assertThat(block.position).isEqualTo(position)
-    }
-
-    @ParameterizedTest(name = "입력값 {0}, {1}")
-    @CsvSource(
-        value = [
-            "1:1", "1:2", "1:3",
-            "2:1", "2:2", "2:3",
-            "3:1", "3:2", "3:3"
-        ],
-        delimiter = ':'
-    )
     fun `특정 위치의 블록을 연다`(x: Int, y: Int) {
         val blocks = createBlocks(3, 3, 3, TEST_MINE_BLOCK_GENERATE_STRATEGY)
         val position = Position(x, y)

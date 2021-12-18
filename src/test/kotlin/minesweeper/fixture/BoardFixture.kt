@@ -11,17 +11,28 @@ import minesweeper.domain.board.Board
 
 object BoardFixture {
 
-    val TEST_MINE_BLOCK_GENERATE_STRATEGY = MineBlockGenerateStrategy { positions, mineCount -> positions.subList(0, mineCount) }
+    val TEST_MINE_BLOCK_GENERATE_STRATEGY =
+        MineBlockGenerateStrategy { positions, mineCount -> positions.subList(0, mineCount) }
 
-    fun createBoard(widthInt: Int, heightInt: Int, minesCountInt: Int, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
-        val area = Area(Width(widthInt), Height(heightInt))
+    fun createBoard(
+        width: Int,
+        height: Int,
+        minesCountInt: Int,
+        mineBlockGenerateStrategy: MineBlockGenerateStrategy
+    ): Board {
+        val area = Area(Width(width), Height(height))
         val positions = createPositions(area.width, area.height)
         val minePositions = mineBlockGenerateStrategy.generate(positions, minesCountInt)
         return Board(createBlocks(positions, minePositions))
     }
 
-    fun createBlocks(widthInt: Int, heightInt: Int, minesCountInt: Int, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Blocks {
-        val area = Area(Width(widthInt), Height(heightInt))
+    fun createBlocks(
+        width: Int,
+        height: Int,
+        minesCountInt: Int,
+        mineBlockGenerateStrategy: MineBlockGenerateStrategy
+    ): Blocks {
+        val area = Area(Width(width), Height(height))
         val positions = createPositions(area.width, area.height)
         val minePositions = mineBlockGenerateStrategy.generate(positions, minesCountInt)
         return createBlocks(positions, minePositions)

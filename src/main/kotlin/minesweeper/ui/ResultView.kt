@@ -27,8 +27,8 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             is Win -> outputStrategy.execute(WIN_GAME)
         }
 
-    private fun blockMapToMark(block: Block, board: Board): String =
-        calculatePrefixNewLine(block.position, block.display(board.blocks))
+    private fun blockMapToMark(block: Block, board: Board): String = ""
+        // calculatePrefixNewLine(block.position, block.display(board.blocks))
 
     private fun calculatePrefixNewLine(position: Position, mark: String): String {
         if (position.isStartHorizontal()) {
@@ -51,9 +51,10 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             if (isMine) {
                 return MINE.emoji()
             }
-            val block = blocks.findBlockByPosition(position)
-            val adjacentBlocks = blocks.adjacentBlocks(position)
-            return block.adjacentMineCount(adjacentBlocks).adjacentMineCount.toString()
+            return ""
+            // val block = blocks.findBlockByPosition(position)
+            // val adjacentBlocks = blocks.adjacentBlocks(position)
+            // return block.adjacentMineCount(adjacentBlocks).adjacentMineCount.toString()
         }
     }
 }

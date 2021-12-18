@@ -73,15 +73,15 @@ internal class BoardTest {
         val expected = Board(
             Blocks(
                 mapOf(
-                    Position(1, 1) to MineBlock(Position(1, 1)),
-                    Position(1, 2) to MineBlock(Position(1, 2)),
-                    Position(1, 3) to MineBlock(Position(1, 3)),
-                    Position(2, 1) to EmptyBlock(Position(2, 1), Opened),
-                    Position(2, 2) to EmptyBlock(Position(2, 2), Opened),
-                    Position(2, 3) to EmptyBlock(Position(2, 3), Opened),
-                    Position(3, 1) to EmptyBlock(Position(3, 1), Opened),
-                    Position(3, 2) to EmptyBlock(Position(3, 2), Opened),
-                    Position(3, 3) to EmptyBlock(Position(3, 3), Opened),
+                    Position(1, 1) to MineBlock(),
+                    Position(1, 2) to MineBlock(),
+                    Position(1, 3) to MineBlock(),
+                    Position(2, 1) to EmptyBlock(Opened),
+                    Position(2, 2) to EmptyBlock(Opened),
+                    Position(2, 3) to EmptyBlock(Opened),
+                    Position(3, 1) to EmptyBlock(Opened),
+                    Position(3, 2) to EmptyBlock(Opened),
+                    Position(3, 3) to EmptyBlock(Opened),
                 )
             ),
             Win
