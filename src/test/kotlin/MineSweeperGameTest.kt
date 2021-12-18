@@ -75,11 +75,11 @@ class MineSweeperGameTest {
         )
         val game = MineSweeperGame(mineField)
 
-        val actualNotAllCheckedResult = game.allGroundChecked()
+        val actualNotAllCheckedResult = game.isAllGroundChecked()
         assertThat(actualNotAllCheckedResult).isFalse
 
         game.checkIsMineAt(Point(1, 0))
-        val actualAllCheckedResult = game.allGroundChecked()
+        val actualAllCheckedResult = game.isAllGroundChecked()
         assertThat(actualAllCheckedResult).isTrue
     }
 }

@@ -13,7 +13,7 @@ class MineSweeperGame(private val mineField: MineField) {
         return false
     }
 
-    fun allGroundChecked(): Boolean {
+    fun isAllGroundChecked(): Boolean {
         val leftNotCheckedGround = mineField.allSlots()
             .flatten()
             .filter { !it.isMine() && !it.isChecked() }
