@@ -34,7 +34,7 @@ class CellTest {
             Position(2, 2),
         )
 
-        Assertions.assertThat(cell.aroundPosition()).isEqualTo(expectedAroundCells)
+        Assertions.assertThat(cell?.aroundPosition()).isEqualTo(expectedAroundCells)
     }
 
     @Test
@@ -52,7 +52,7 @@ class CellTest {
             Position(4, 4),
         )
 
-        Assertions.assertThat(cell.aroundPosition()).isEqualTo(expectedAroundCells)
+        Assertions.assertThat(cell?.aroundPosition()).isEqualTo(expectedAroundCells)
     }
 
     @Test
