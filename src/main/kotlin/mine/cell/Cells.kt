@@ -15,7 +15,7 @@ class Cells(val values: List<Cell>) {
         if (cell.isNearMine()) open(position)
         else {
             cell
-            .aroundAllPosition()
+                .aroundAllPosition()
                 .asSequence()
                 .filterNot { isMineCell(it) }
                 .flatMap(Position::aroundAllPosition)
@@ -25,7 +25,7 @@ class Cells(val values: List<Cell>) {
 
     private fun searchNearCell(position: Position) =
         findCell(position)
-                .takeIf { it?.isNearMine() == false }?.aroundAllPosition()?.forEach(::open)
+            .takeIf { it?.isNearMine() == false }?.aroundAllPosition()?.forEach(::open)
 
     private fun open(position: Position) = findCell(position)?.open()
 

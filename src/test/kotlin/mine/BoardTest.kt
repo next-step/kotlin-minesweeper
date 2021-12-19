@@ -112,7 +112,6 @@ class BoardTest {
         assertThat(status).isEqualTo(GameStatus.CONTINUE)
     }
 
-
     @Test
     fun `지뢰가 없는 인접한 칸은 모두 open된다`() {
         val board = Board(
