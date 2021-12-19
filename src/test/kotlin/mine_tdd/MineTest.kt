@@ -1,5 +1,7 @@
 package mine_tdd
 
+import mine_tdd.Board.Companion.findMineCount
+import mine_tdd.cell.MineCell
 import mine_tdd.cell.Position
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -79,5 +81,19 @@ class MineTest {
         val cells = board.getColumnCells(column)
 
         Assertions.assertThat(cells.size()).isEqualTo(height)
+    }
+
+    @Test
+    fun `Positiion(1,1) 주변 Position의 지뢰 개수를 구할 수 있다`() {
+        val position = Position(1, 1)
+        val mineCellList = listOf(
+            MineCell(Position(0, 0)),
+            MineCell(Position(1, 0)),
+            MineCell(Position(4, 0)),
+        )
+
+        val count = position.findMineCount(mineCellList)
+
+        Assertions.assertThat(count).isEqualTo(2)
     }
 }

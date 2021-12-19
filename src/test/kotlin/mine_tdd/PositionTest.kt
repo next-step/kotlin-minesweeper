@@ -35,4 +35,19 @@ class PositionTest {
         Assertions.assertThat(nearPositions.size).isEqualTo(8)
         Assertions.assertThat(nearPositions).isEqualTo(expectList)
     }
+
+    @Test
+    fun `Position(0,0)의 주변 Position 리스트를 가져온다`() {
+        val position = Position(0, 0)
+        val expectList = listOf(
+            Position(0, 1),
+            Position(1, 0),
+            Position(1, 1),
+        )
+
+        val nearPositions = position.findNearPosition()
+
+        Assertions.assertThat(nearPositions.size).isEqualTo(3)
+        Assertions.assertThat(nearPositions).isEqualTo(expectList)
+    }
 }

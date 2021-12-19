@@ -12,8 +12,8 @@ data class Position(
         private const val MIN = 0
 
         fun Position.findNearPosition(): List<Position> {
-            val x = listOf(this.x - 1, this.x, this.x + 1)
-            val y = listOf(this.y - 1, this.y, this.y + 1)
+            val x = listOf(this.x - 1, this.x, this.x + 1).filter { it >= MIN }
+            val y = listOf(this.y - 1, this.y, this.y + 1).filter { it >= MIN }
             return x.map { positionX ->
                 y.map { Position(positionX, it) }
             }.flatten().filterNot { it == this }

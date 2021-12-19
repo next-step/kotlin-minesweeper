@@ -13,7 +13,7 @@ object OutputView {
             board.getRowCells(i).values().forEachIndexed { index, i ->
                 when (i) {
                     is MineCell -> print("$MINE_CELL_NAME ")
-                    else -> print("$CELL_NAME ")
+                    else -> print("${i.nearMineCount} ")
                 }
             }
             println()
