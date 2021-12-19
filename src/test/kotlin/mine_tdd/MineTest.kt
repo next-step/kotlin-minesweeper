@@ -60,15 +60,6 @@ class MineTest {
     }
 
     @Test
-    fun `생성되지 않은 셀의 위치를 찾을 경우 null을 반환한다`() {
-        val position = Position(6, 0)
-
-        val board = Board.createBoard(Width(5), Height(5))
-
-        Assertions.assertThat(board.findCell(position)).isNull()
-    }
-
-    @Test
     fun `첫 번째 열에 해당하는 cell들을 가져올 수 있다`() {
         val row = 1
         val width = 5
