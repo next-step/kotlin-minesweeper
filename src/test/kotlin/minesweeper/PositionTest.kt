@@ -2,9 +2,12 @@ package minesweeper
 
 import minesweeper.domain.Column
 import minesweeper.domain.Column.Companion.COLUMN_ILLEGAL_ARGUMENTS_EXCEPTION
+import minesweeper.domain.Height
 import minesweeper.domain.Position
+import minesweeper.domain.Positions
 import minesweeper.domain.Row
 import minesweeper.domain.Row.Companion.ROW_ILLEGAL_ARGUMENTS_EXCEPTION
+import minesweeper.domain.Width
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -16,12 +19,10 @@ class PositionTest {
     @ParameterizedTest
     @ValueSource(ints = [-1, -2, -3, -4, -5])
     fun `Position에 Row를 음의 정수를 입력하였을 경우 IllegalArgumentsException을 던진다`(row: Int) {
-        val rowInstance = Row.from(row)
-
         Assertions
             .assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
-                Position.from(rowInstance, Column.from(8))
+                Row.from(row)
             }
             .withMessage(ROW_ILLEGAL_ARGUMENTS_EXCEPTION)
     }
@@ -29,12 +30,10 @@ class PositionTest {
     @ParameterizedTest
     @ValueSource(ints = [-1, -2, -3, -4, -5])
     fun `Position에 Column에 음의 정수를 입력하였을 경우 IllegalArgumentsException을 던진다`(column: Int) {
-        val columnInstance = Column.from(column)
-
         Assertions
             .assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
-                Position.from(Row.from(8), columnInstance)
+                Column.from(column)
             }
             .withMessage(COLUMN_ILLEGAL_ARGUMENTS_EXCEPTION)
     }
@@ -108,5 +107,19 @@ class PositionTest {
         )
 
         assertThat(sortedPositions).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Position의 aroundPositionList들이 인자로 들어온 PositionList과 같은 Position 갯수를 알 수 있다`() {
+        val positionList = Positions.of(Width.from(3), Height.Companion.from(3)).positions
+
+        val otherPositionList = listOf(
+            Position(Row.from(1), Column.from(1)),
+            Position(Row.from(0), Column.from(1)),
+            Position(Row.from(1), Column.from(0)),
+        )
+        val position0to0ContainsOthersCount = positionList[0].countAroundPositionsContainOthers(otherPositionList)
+
+        assertThat(position0to0ContainsOthersCount).isEqualTo(3)
     }
 }
