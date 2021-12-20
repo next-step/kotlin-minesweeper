@@ -48,4 +48,23 @@ class CellTest {
 
         Assertions.assertThat(count).isEqualTo(1)
     }
+
+    @Test
+    fun `셀을 open 할 수 있다`() {
+        val cell = NoneCell(Position(0, 0), 0)
+
+        cell.open()
+
+        Assertions.assertThat(cell.isOpen).isEqualTo(true)
+    }
+
+    @Test
+    fun `한번 open된 셀을 계속 open 되어 있다`() {
+        val cell = NoneCell(Position(0, 0), 0)
+
+        cell.open()
+        cell.open()
+
+        Assertions.assertThat(cell.isOpen).isEqualTo(true)
+    }
 }
