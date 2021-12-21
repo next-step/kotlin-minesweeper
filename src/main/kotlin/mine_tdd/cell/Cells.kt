@@ -53,7 +53,7 @@ class Cells(private val cells: List<Cell>) {
     fun clickedItem(position: Position): GameStatus {
         val cell = findCell(position) ?: return GameStatus.OVER
         if (cell is MineCell) return GameStatus.OVER
-        getZeroMineCellList(position).forEach { open(it) }
+        getOpenCellList(position).forEach { open(it) }
         if (isAllOpen()) return GameStatus.WIN
         return GameStatus.CONTINUE
     }
