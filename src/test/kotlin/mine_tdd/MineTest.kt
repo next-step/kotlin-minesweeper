@@ -1,7 +1,9 @@
 package mine_tdd
 
 import mine_tdd.Board.Companion.findMineCount
+import mine_tdd.cell.Cells
 import mine_tdd.cell.MineCell
+import mine_tdd.cell.NoneCell
 import mine_tdd.cell.Position
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -95,5 +97,70 @@ class MineTest {
         val count = position.findMineCount(mineCellList)
 
         Assertions.assertThat(count).isEqualTo(2)
+    }
+
+    @Test
+    fun `지뢰를 클릭하면 게임이 끝난다`() {
+        val position = Position(2, 2)
+        val board = Board(
+            Width(2),
+            Height(2),
+            Cells(
+                listOf(
+                    NoneCell(Position(0, 0), 0),
+                    NoneCell(Position(0, 1), 0),
+                    MineCell(Position(2, 2)),
+                )
+            )
+        )
+        val expected = GameStatus.OVER
+
+        val status = board.clickedItem(position)
+
+        Assertions.assertThat(status).isEqualTo(expected)
+    }
+
+    @Test
+    fun `일반 셀을 클릭하고, 지뢰를 제외한 모든 셀이 열린 경우 게임에서 승리한다`() {
+        val position = Position(0, 0)
+        val board = Board(
+            Width(2),
+            Height(2),
+            Cells(
+                listOf(
+                    NoneCell(Position(0, 0), 0),
+                    NoneCell(Position(0, 1), 0),
+                    MineCell(Position(2, 2)),
+                )
+            )
+        )
+        val expected = GameStatus.WIN
+
+        val status = board.clickedItem(position)
+
+        Assertions.assertThat(status).isEqualTo(expected)
+    }
+
+    @Test
+    fun `일반 셀을 클릭하고, 지뢰를 제외한 모든 셀이 열라지 않은 경우 게임은 계속된다`() {
+        val position = Position(0, 0)
+        val board = Board(
+            Width(2),
+            Height(2),
+            Cells(
+                listOf(
+                    NoneCell(Position(0, 0), 0),
+                    MineCell(Position(1, 1)),
+                    NoneCell(Position(0, 1), 0),
+                    MineCell(Position(2, 2)),
+                    NoneCell(Position(2, 4), 0),
+                )
+            )
+        )
+        val expected = GameStatus.CONTINUE
+
+        val status = board.clickedItem(position)
+
+        Assertions.assertThat(status).isEqualTo(expected)
     }
 }

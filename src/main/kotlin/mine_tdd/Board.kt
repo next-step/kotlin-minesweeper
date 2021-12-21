@@ -21,6 +21,8 @@ class Board(
     fun getRowCells(row: Int): Cells = cells.getRowCells(row)
     fun getColumnCells(column: Int): Cells = cells.getColumnCells(column)
 
+    fun clickedItem(position: Position): GameStatus = cells.clickedItem(position)
+
     companion object {
         private fun randomPosition(width: Width, height: Height): List<Position> {
             return List(width.value() * height.value()) { index ->

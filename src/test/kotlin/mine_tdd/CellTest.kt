@@ -31,17 +31,19 @@ class CellTest {
     @Test
     fun `Position(1,1)인 셀의 주변 지뢰 개수를 얻을 수 있다`() {
         val position = Position(1, 1)
-        val cells = Cells(listOf(
-            NoneCell(Position(0, 0), 0),
-            NoneCell(Position(0, 1), 0),
-            NoneCell(Position(0, 2), 0),
-            NoneCell(Position(1, 0), 0),
-            NoneCell(Position(1, 1), 1),
-            NoneCell(Position(1, 2), 1),
-            NoneCell(Position(2, 0), 0),
-            NoneCell(Position(2, 1), 1),
-            MineCell(Position(2, 2)),
-        ))
+        val cells = Cells(
+            listOf(
+                NoneCell(Position(0, 0), 0),
+                NoneCell(Position(0, 1), 0),
+                NoneCell(Position(0, 2), 0),
+                NoneCell(Position(1, 0), 0),
+                NoneCell(Position(1, 1), 1),
+                NoneCell(Position(1, 2), 1),
+                NoneCell(Position(2, 0), 0),
+                NoneCell(Position(2, 1), 1),
+                MineCell(Position(2, 2)),
+            )
+        )
 
         val cell = cells.findCell(position)
         val count = cell?.nearMineCount

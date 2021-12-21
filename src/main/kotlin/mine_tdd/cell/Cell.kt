@@ -7,6 +7,7 @@ abstract class Cell(val position: Position, val nearMineCount: Int = DEFAULT_MIN
     fun open() {
         isOpen = true
     }
+    fun isZeroMine(): Boolean = nearMineCount == 0
 
     companion object {
         private const val DEFAULT_MINE_COUNT = -1
