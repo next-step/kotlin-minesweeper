@@ -1,9 +1,12 @@
 package mine_tdd
 
+import mine_tdd.Board.Companion.findMineCount
+import mine_tdd.cell.MineCell
 import mine_tdd.cell.Position
 import mine_tdd.cell.Position.Companion.findNearPosition
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PositionTest {
 
@@ -49,5 +52,27 @@ class PositionTest {
 
         Assertions.assertThat(nearPositions.size).isEqualTo(3)
         Assertions.assertThat(nearPositions).isEqualTo(expectList)
+    }
+
+    @Test
+    fun `Positiion(1,1) 주변 Position의 지뢰 개수를 구할 수 있다`() {
+        val position = Position(1, 1)
+        val mineCellList = listOf(
+            MineCell(Position(0, 0)),
+            MineCell(Position(1, 0)),
+            MineCell(Position(4, 0)),
+        )
+
+        val count = position.findMineCount(mineCellList)
+
+        Assertions.assertThat(count).isEqualTo(2)
+    }
+
+    @Test
+    fun `Position()에는 음수를 입력할 수 없다`() {
+        val x = -1
+        val y = 0
+
+        assertThrows<IllegalArgumentException> { Position(x, y) }
     }
 }
