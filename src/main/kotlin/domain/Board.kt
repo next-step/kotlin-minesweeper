@@ -17,6 +17,38 @@ class Board(
         return rows[position.y].isMine(position.x)
     }
 
+    fun open(inputPosition: Position) {
+        if (isMine(inputPosition)) return
+        val cell = rows[inputPosition.y][inputPosition.x]
+        cell.open()
+
+        openAroundCell(cell)
+    }
+
+    private fun openAroundCell(inputCell: Cell) {
+        val canOpenAroundCell = mutableListOf<Position>()
+
+        canOpenAroundCell.addAll(inputCell.getOpenableAroundPosition())
+
+        while (canOpenAroundCell.isNotEmpty()) {
+            val aroundCellPosition = canOpenAroundCell.removeAt(0)
+
+            if (canOpen(aroundCellPosition)) {
+                val aroundCell = rows[aroundCellPosition.y][aroundCellPosition.x]
+                aroundCell.open()
+
+                canOpenAroundCell.addAll(aroundCell.getOpenableAroundPosition())
+            }
+        }
+    }
+
+    private fun canOpen(position: Position): Boolean {
+        return position.x < width &&
+            position.y < height &&
+            !isMine(position) &&
+            !rows[position.y][position.x].isOpen()
+    }
+
     companion object {
         fun build(
             width: Width,

@@ -16,6 +16,15 @@ object OutputView {
     }
 
     private fun printCell(cell: Cell) {
-        print("${cell.getValue()} ")
+        val value = when (cell.isOpen()) {
+            true -> cell.getValue()
+            else -> "C"
+        }
+
+        print("$value ")
+    }
+
+    fun printLose() {
+        println("Lose Game.")
     }
 }

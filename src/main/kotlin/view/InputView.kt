@@ -20,4 +20,10 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         return (readLine() ?: DEFAULT_MINE_COUNT).toInt()
     }
+
+    fun inputOpenPosition(): String {
+        println("open: ")
+
+        return readLine() ?: throw RuntimeException("open position is not null")
+    }
 }
