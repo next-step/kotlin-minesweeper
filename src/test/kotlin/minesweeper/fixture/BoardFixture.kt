@@ -46,5 +46,5 @@ object BoardFixture {
         }
 
     fun createBlocks(positions: List<Position>, minesPositions: List<Position>): Blocks =
-        Blocks(positions.associateWith { Block.create(it, minesPositions) })
+        Blocks(positions.associateWith { Block.create(it in minesPositions) })
 }

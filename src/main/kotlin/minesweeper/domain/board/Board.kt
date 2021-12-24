@@ -41,7 +41,7 @@ data class Board(val blocks: Blocks, val gameState: GameState = Running) {
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
             val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
-            return Board(Blocks(positions.associateWith { Block.create(it, minePositions) }.toMutableMap()))
+            return Board(Blocks(positions.associateWith { Block.create(it in minePositions) }.toMutableMap()))
         }
 
         private fun positions(width: Int, height: Int): List<Position> =

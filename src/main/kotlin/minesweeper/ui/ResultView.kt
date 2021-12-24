@@ -8,6 +8,7 @@ import minesweeper.domain.board.Board
 import minesweeper.domain.board.state.Finish
 import minesweeper.domain.board.state.Lose
 import minesweeper.domain.board.state.Win
+import java.util.Objects.isNull
 
 class ResultView(private val outputStrategy: OutputStrategy) {
 
@@ -43,13 +44,14 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val COVERED = 0x25FB
 
         private fun Block.display(): String {
-            if (!isOpened()) {
+            val mineCount = adjacentMineCount?.adjacentMineCount
+            if (isNull(mineCount) || !isOpened()) {
                 return COVERED.emoji()
             }
             if (isMine) {
                 return MINE.emoji()
             }
-            return adjacentMineCount?.adjacentMineCount.toString()
+            return mineCount.toString()
         }
     }
 }

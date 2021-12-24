@@ -21,7 +21,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-@DisplayName("블록들(Blocks)")
+@DisplayName("보드(Board)")
 internal class BoardTest {
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
@@ -33,7 +33,7 @@ internal class BoardTest {
 
         val positions = createPositions(area.width, area.height)
         val minesPositions = strategy.generate(positions, minesCountInt)
-        val expected = Blocks(positions.associateWith { Block.create(it, minesPositions) })
+        val expected = Blocks(positions.associateWith { Block.create(it in minesPositions) })
 
         val board = Board.of(area, minesCount, strategy)
         assertThat(board.blocks).isEqualTo((expected))
