@@ -3,7 +3,6 @@ import domain.Height
 import domain.Width
 import util.OpenPositionParser
 import view.InputView
-import view.OutputView
 
 fun main() {
     val boardController = BoardController()
@@ -21,12 +20,9 @@ fun main() {
         val isMine = boardController.isMine(board, position)
 
         if (isMine) {
-            OutputView.printLose()
             break
         }
 
         boardController.open(board, position)
-
-        OutputView.printBoard(board)
     }
 }
