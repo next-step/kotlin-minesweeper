@@ -1,0 +1,13 @@
+package minesweeper.controller
+
+import minesweeper.domain.AskType
+import minesweeper.domain.Board
+import minesweeper.view.InputView
+
+fun main() {
+    val board = Board(
+        InputView.askBoardInfo(AskType.HEIGHT),
+        InputView.askBoardInfo(AskType.WIDTH),
+        InputView.askBoardInfo(AskType.MINE_COUNT)
+    )
+}
