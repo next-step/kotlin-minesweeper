@@ -14,7 +14,7 @@ value class Board private constructor(private val _cells: Cells) {
             return Board(cells)
         }
 
-        fun of(width: Width, height: Height, mineCount: MineCount): Board {
+        fun ofSizeAndMineCount(width: Width, height: Height, mineCount: MineCount): Board {
             require(width.value * height.value >= mineCount.count) { MINE_COUNT_ILLEGAL_ARGUMENTS_EXCEPTION }
             val positions = Positions.of(width, height)
             val minePositions = minePositions(positions, mineCount)

@@ -35,7 +35,7 @@ class BoardTest {
         val mineCount = MineCount.from(7)
 
         val size = width.value * height.value
-        val board = Board.of(width, height, mineCount)
+        val board = Board.ofSizeAndMineCount(width, height, mineCount)
 
         assertThat(board.cellList.size).isEqualTo(size)
     }
@@ -48,7 +48,7 @@ class BoardTest {
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
-                Board.of(width, height, mineCount)
+                Board.ofSizeAndMineCount(width, height, mineCount)
             }
             .withMessage(MINE_COUNT_ILLEGAL_ARGUMENTS_EXCEPTION)
     }
