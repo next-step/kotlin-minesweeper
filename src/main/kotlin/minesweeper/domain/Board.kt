@@ -5,10 +5,11 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
     val board: List<Cell> = init()
 
     private fun init(): List<Cell> {
+        require(height > 0 && width > 0 && mineCount > 0) { INVALID_BOARD_INFO }
         return setMinesAndBlocks(getMinesPosition())
     }
 
-    private fun getMinesPosition(): List<Int> {
+    fun getMinesPosition(): List<Int> {
         return positionRange.shuffled().take(mineCount)
     }
 
@@ -26,5 +27,9 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
 
     override fun toString(): String {
         return board.toString()
+    }
+
+    companion object {
+        private const val INVALID_BOARD_INFO = "높이, 너비, 지뢰 개수는 모두 양의 정수이어야 합니다."
     }
 }
