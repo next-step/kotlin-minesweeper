@@ -28,4 +28,11 @@ internal class BoardTest {
         assertThat(board[2]).isInstanceOf(Mine::class.java)
         assertThat(board[3]).isInstanceOf(Block::class.java)
     }
+
+    @Test
+    fun `설치할 지뢰 위치의 개수가 초기에 설정한 지뢰 개수와 일치하지 않는 경우`() {
+        val minesPosition = listOf(0)
+        val board = Board(3, 3, 2)
+        assertThrows<IllegalArgumentException> { board.setMinesAndBlocks(minesPosition) }
+    }
 }

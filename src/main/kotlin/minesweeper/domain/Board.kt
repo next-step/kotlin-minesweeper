@@ -14,6 +14,7 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
     }
 
     fun setMinesAndBlocks(minesPosition: List<Int>): List<Cell> {
+        require(minesPosition.size == mineCount) { INVALID_MINE_COUNT }
         val board = mutableListOf<Cell>()
         for (position in positionRange) {
             if (minesPosition.contains(position)) {
@@ -30,7 +31,7 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
         return aroundPosition.count { minesPosition.contains(it) }
     }
 
-    fun getAroundPosition(position: Int): List<Int> {
+    private fun getAroundPosition(position: Int): List<Int> {
         val cellsPosition = mutableListOf<Int>()
         val x = position / width
         val y = position % width
@@ -55,6 +56,7 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
 
     companion object {
         private const val INVALID_BOARD_INFO = "높이, 너비, 지뢰 개수는 모두 양의 정수이어야 합니다."
+        private const val INVALID_MINE_COUNT = "설치할 지뢰 개수가 맞지 않습니다."
         private val dx = listOf(-1, -1, -1, 0, 0, 1, 1, 1)
         private val dy = listOf(-1, 0, 1, -1, 1, -1, 0, 1)
     }
