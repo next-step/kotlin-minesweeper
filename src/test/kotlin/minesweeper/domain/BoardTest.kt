@@ -35,4 +35,23 @@ internal class BoardTest {
         val board = Board(3, 3, 2)
         assertThrows<IllegalArgumentException> { board.setMinesAndBlocks(minesPosition) }
     }
+
+    @Test
+    fun `주변의 지뢰 개수를 옳게 구하는지 테스트`() {
+        val minesPosition = listOf(0, 1)
+        val board = Board(3, 3, 2)
+        board.setMinesAndBlocks(minesPosition)
+        // 설정한 게임 보드
+        //     * * 1
+        //     2 2 1
+        //     0 0 0
+
+        assertThat(board.getAroundMineCount(2, minesPosition)).isEqualTo(1)
+        assertThat(board.getAroundMineCount(3, minesPosition)).isEqualTo(2)
+        assertThat(board.getAroundMineCount(4, minesPosition)).isEqualTo(2)
+        assertThat(board.getAroundMineCount(5, minesPosition)).isEqualTo(1)
+        assertThat(board.getAroundMineCount(6, minesPosition)).isEqualTo(0)
+        assertThat(board.getAroundMineCount(7, minesPosition)).isEqualTo(0)
+        assertThat(board.getAroundMineCount(8, minesPosition)).isEqualTo(0)
+    }
 }

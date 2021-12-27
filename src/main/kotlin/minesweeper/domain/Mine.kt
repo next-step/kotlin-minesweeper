@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Mine : Cell() {
+class Mine() : Cell() {
     override fun toString(): String {
         return MARK
     }
