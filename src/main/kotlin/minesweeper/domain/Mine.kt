@@ -1,8 +1,11 @@
 package minesweeper.domain
 
-object Mine : Cell() {
-    private const val MARK = "*"
+class Mine : Cell() {
     override fun toString(): String {
         return MARK
+    }
+
+    companion object {
+        private const val MARK = "*"
     }
 }

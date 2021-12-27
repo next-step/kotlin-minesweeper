@@ -1,8 +1,7 @@
 package minesweeper.domain
 
-object Block : Cell() {
-    private const val MARK = "C"
+class Block(private val aroundMineCount: Int) : Cell() {
     override fun toString(): String {
-        return MARK
+        return aroundMineCount.toString()
     }
 }

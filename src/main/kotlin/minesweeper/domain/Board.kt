@@ -17,12 +17,36 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
         val board = mutableListOf<Cell>()
         for (position in positionRange) {
             if (minesPosition.contains(position)) {
-                board.add(Mine)
+                board.add(Mine())
             } else {
-                board.add(Block)
+                board.add(Block(getAroundMineCount(position, minesPosition)))
             }
         }
         return board
+    }
+
+    fun getAroundMineCount(position: Int, minesPosition: List<Int>): Int {
+        val aroundPosition = getAroundPosition(position)
+        return aroundPosition.count { minesPosition.contains(it) }
+    }
+
+    fun getAroundPosition(position: Int): List<Int> {
+        val cellsPosition = mutableListOf<Int>()
+        val x = position / width
+        val y = position % width
+        for (i in dx.indices) {
+            val nx = x + dx[i]
+            val ny = y + dy[i]
+            if (isWithinBoundary(nx, ny)) {
+                cellsPosition.add(nx * width + ny)
+            }
+        }
+
+        return cellsPosition
+    }
+
+    private fun isWithinBoundary(x: Int, y: Int): Boolean {
+        return x in 0 until height && y in 0 until width
     }
 
     override fun toString(): String {
@@ -31,5 +55,7 @@ data class Board(val height: Int, val width: Int, val mineCount: Int) {
 
     companion object {
         private const val INVALID_BOARD_INFO = "높이, 너비, 지뢰 개수는 모두 양의 정수이어야 합니다."
+        private val dx = listOf(-1, -1, -1, 0, 0, 1, 1, 1)
+        private val dy = listOf(-1, 0, 1, -1, 1, -1, 0, 1)
     }
 }
