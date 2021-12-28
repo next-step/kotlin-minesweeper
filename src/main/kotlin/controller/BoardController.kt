@@ -5,6 +5,7 @@ import domain.Height
 import domain.MinesPosition
 import domain.Position
 import domain.Width
+import view.OutputView
 
 class BoardController {
     fun create(
@@ -29,7 +30,11 @@ class BoardController {
         board: Board,
         position: Position,
     ): Boolean {
-        return board.isMine(position)
+        return board
+            .isMine(position)
+            .takeIf { it }
+            ?.also { OutputView.printLose() }
+            ?: false
     }
 
     fun open(
@@ -37,5 +42,7 @@ class BoardController {
         position: Position,
     ) {
         board.open(position)
+
+        OutputView.printBoard(board)
     }
 }
