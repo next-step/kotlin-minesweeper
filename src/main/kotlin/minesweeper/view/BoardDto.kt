@@ -3,6 +3,7 @@ package minesweeper.view
 import minesweeper.domain.board.Board
 import minesweeper.domain.cell.BlockCell
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.FlagCell
 import minesweeper.domain.cell.MineCell
 
 data class BoardDto(val rows: List<RowDto>) {
@@ -16,9 +17,9 @@ fun RowDto(cells: List<Cell>): RowDto {
     return RowDto(cells.map(::CellDto))
 }
 
-data class CellDto(val mine: Boolean, val aroundMineCount: Int?, val isOpen: Boolean) {
+data class CellDto(val mine: Boolean, val flag: Boolean, val aroundMineCount: Int?, val isOpen: Boolean) {
 
-    constructor(cell: Cell) : this(cell.isMine, cell.getAroundMineCount(), cell.isOpen)
+    constructor(cell: Cell) : this(cell.isMine, cell is FlagCell, cell.getAroundMineCount(), cell.isOpen)
 }
 
 private fun Board.toRows(): List<RowDto> {
@@ -33,7 +34,7 @@ private fun Board.toRows(): List<RowDto> {
 
 private fun Cell.getAroundMineCount(): Int? {
     return when(this) {
-        is MineCell -> null
         is BlockCell -> aroundMineCount.value
+        else -> null
     }
 }

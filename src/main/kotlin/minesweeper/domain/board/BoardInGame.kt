@@ -18,4 +18,10 @@ class BoardInGame(override val cells: Cells) : Board {
             else -> this
         }
     }
+
+    override fun flag(position: Position): Board {
+        cells.flag(position)
+
+        return this
+    }
 }

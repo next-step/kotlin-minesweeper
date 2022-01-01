@@ -10,7 +10,11 @@ sealed class BoardResult(override val cells: Cells) : Board {
     final override fun getResult() = this
 
     final override fun open(position: Position): Board {
-        throw IllegalStateException()
+        throw IllegalStateException("완료된 게임입니다.")
+    }
+
+    final override fun flag(position: Position): Board {
+        throw IllegalStateException("완료된 게임입니다.")
     }
 
     class Win(cells: Cells) : BoardResult(cells)

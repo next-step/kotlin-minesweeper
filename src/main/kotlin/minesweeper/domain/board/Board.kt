@@ -12,4 +12,6 @@ sealed interface Board {
     fun getResult(): BoardResult
 
     fun open(position: Position): Board
+
+    fun flag(position: Position): Board
 }
