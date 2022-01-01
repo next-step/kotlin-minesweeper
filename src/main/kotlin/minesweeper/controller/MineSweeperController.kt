@@ -1,10 +1,7 @@
 package minesweeper.controller
 
 import minesweeper.domain.DefaultRandomGenerator
-import minesweeper.domain.board.BoardFactory
-import minesweeper.domain.board.Height
-import minesweeper.domain.board.MineCount
-import minesweeper.domain.board.Width
+import minesweeper.domain.board.*
 import minesweeper.domain.position.Position
 import minesweeper.view.BoardDto
 import minesweeper.view.InputView
@@ -24,11 +21,21 @@ object MineSweeperController {
         OutputView.printStart(BoardDto(board))
 
         while (!board.isFinish) {
+            val action = InputView.getAction()
             val (row, column) = InputView.getPosition()
-            board = board.open(Position.from(row = row, column = column))
+            val position = Position.from(row = row, column = column)
+            board = action(action, board, position)
             OutputView.printBoard(BoardDto(board))
         }
 
         OutputView.printResult(board.getResult())
+    }
+
+    private fun action(action: String, board: Board, position: Position): Board {
+        return when(action) {
+            "open" -> board.open(position)
+            "flag" -> board.flag(position)
+            else -> throw IllegalArgumentException("not valid action")
+        }
     }
 }

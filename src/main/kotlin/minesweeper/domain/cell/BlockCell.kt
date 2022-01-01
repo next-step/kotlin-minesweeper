@@ -9,11 +9,18 @@ class BlockCell(
 
     override val isMine = false
 
-    val hasNoMineAround = (aroundMineCount.value == MineCount.ZERO_COUNT)
+    val hasNoMineAround = (aroundMineCount == MineCount.ZERO)
 
     override fun open(): Cell {
         check(!isOpen) { "이미 open된 Cell입니다." }
 
         return BlockCell(aroundMineCount, isOpen = true)
     }
+
+    override fun flag(): Cell {
+        check(!isOpen) { "이미 open된 Cell입니다." }
+
+        return FlagCell(this)
+    }
 }
+

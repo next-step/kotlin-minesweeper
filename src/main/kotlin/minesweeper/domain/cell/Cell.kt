@@ -7,4 +7,6 @@ sealed interface Cell {
     val isMine: Boolean
 
     fun open(): Cell
+
+    fun flag(): Cell
 }

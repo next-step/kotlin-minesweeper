@@ -123,6 +123,68 @@ class CellsTest {
         assertThat(given.isAllOpen()).isTrue
     }
 
+    /**
+     *
+     * F 1 *
+     * 0 1 1
+     */
+    @Test
+    fun `BlockCell을 flag 처리하면 해당 Cell만 Flag로 바뀐다`() {
+        val given = Cells(cells)
+
+        given.flag(Position.from(row = 1, column = 1))
+
+        assertThat(given.cells.get(1, 1)).isInstanceOf(FlagCell::class.java)
+    }
+
+    /**
+     *
+     * F 1 *
+     * 0 1 1
+     */
+    @Test
+    fun `기존에 BlockCell인 FlagCell을 flag 처리하면 다시 BlockCell로 바뀐다`() {
+        val cells = cells.toMutableMap().apply {
+            computeIfPresent(Position.from(row = 1, column = 1)) { _, cell -> FlagCell(cell) }
+        }
+        val given = Cells(cells)
+
+        given.flag(Position.from(row = 1, column = 1))
+
+        assertThat(given.cells.get(1, 1)).isInstanceOf(BlockCell::class.java)
+    }
+
+    /**
+     *
+     * 0 1 F
+     * 0 1 1
+     */
+    @Test
+    fun `MineCell을 flag 처리하면 해당 Cell만 Flag로 바뀐다`() {
+        val given = Cells(cells)
+
+        given.flag(Position.from(row = 1, column = 3))
+
+        assertThat(given.cells.get(1, 3)).isInstanceOf(FlagCell::class.java)
+    }
+
+    /**
+     *
+     * 0 1 F
+     * 0 1 1
+     */
+    @Test
+    fun `기존에 MineCell인 FlagCell을 flag 처리하면 다시 MineCell로 바뀐다`() {
+        val cells = cells.toMutableMap().apply {
+            computeIfPresent(Position.from(row = 1, column = 3)) { _, cell -> FlagCell(cell) }
+        }
+        val given = Cells(cells)
+
+        given.flag(Position.from(row = 1, column = 3))
+
+        assertThat(given.cells.get(1, 3)).isInstanceOf(MineCell::class.java)
+    }
+
     private fun Map<Position, Cell>.get(row: Int, column: Int): Cell {
         return getValue(Position.from(row = row, column = column))
     }

@@ -7,6 +7,7 @@ value class MineCount(val value: Int) {
     }
 
     companion object {
-        const val ZERO_COUNT = 0
+        private const val ZERO_COUNT = 0
+        val ZERO = MineCount(ZERO_COUNT)
     }
 }

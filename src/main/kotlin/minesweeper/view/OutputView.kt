@@ -32,6 +32,7 @@ object OutputView {
 
     private fun CellDto.toView(): String {
         return when {
+            flag -> "F"
             !isOpen -> "C"
             mine -> "*"
             else -> aroundMineCount.toString()

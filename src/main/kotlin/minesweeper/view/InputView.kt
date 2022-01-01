@@ -17,8 +17,13 @@ object InputView {
         return getInt()
     }
 
+    fun getAction(): String {
+        print("action type (open or flag) : ")
+        return getInput()
+    }
+
     fun getPosition(): Position {
-        print("open: ")
+        print("position: ")
         val rowWithColumn = getInput().split(",").map { it.trim() }
         return Position(rowWithColumn[0].toInt(), rowWithColumn[1].toInt())
     }
