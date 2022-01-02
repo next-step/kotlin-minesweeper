@@ -8,14 +8,16 @@ import minesweeper.domain.board.Board
 import minesweeper.domain.board.state.Finish
 import minesweeper.domain.board.state.Lose
 import minesweeper.domain.board.state.Win
+import java.util.Objects.isNull
 
 class ResultView(private val outputStrategy: OutputStrategy) {
 
     fun startGame() = outputStrategy.execute(START_GAME)
 
     fun showBoard(board: Board) {
-        val stringBuilder =
-            board.blocks.blocks.fold(StringBuilder()) { sb, block -> sb.append(blockMapToMark(block, board)) }
+        val stringBuilder = board.blocks
+            .blocks
+            .keys.fold(StringBuilder()) { sb, position -> sb.append(blockMapToMark(position, board)) }
         outputStrategy.execute(stringBuilder.toString())
     }
 
@@ -25,10 +27,9 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             is Win -> outputStrategy.execute(WIN_GAME)
         }
 
-    private fun blockMapToMark(block: Block, board: Board): String =
-        calculatePrefixNewLine(block.position, block.display(board))
-
-    private fun calculatePrefixNewLine(position: Position, mark: String): String {
+    private fun blockMapToMark(position: Position, board: Board): String {
+        val block = board.findBlock(position)
+        val mark = block.display()
         if (position.isStartHorizontal()) {
             return NEW_LINE + mark
         }
@@ -39,17 +40,20 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val START_GAME = "지뢰찾기 게임 시작"
         private const val WIN_GAME = "WIN Game."
         private const val LOSE_GAME = "LOSE Game."
-        private const val MINE = "*"
-        private const val COVERED = "C"
+        private const val MINE = 0x1F4A3
+        private const val COVERED = 0x25FB
 
-        private fun Block.display(board: Board): String {
-            if (!isOpened()) {
-                return COVERED
+        private fun Block.display(): String {
+            val mineCount = adjacentMineCount?.adjacentMineCount
+            if (isNull(mineCount) || !isOpened()) {
+                return COVERED.emoji()
             }
             if (isMine) {
-                return MINE
+                return MINE.emoji()
             }
-            return board.blocks.adjacentMineCount(position).adjacentMineCount.toString()
+            return mineCount.toString()
         }
     }
 }
+
+private fun Int.emoji(): String = String(Character.toChars(this))

@@ -9,8 +9,6 @@ import minesweeper.domain.board.state.GameState
 import minesweeper.domain.board.state.Lose
 import minesweeper.domain.board.state.Running
 import minesweeper.domain.board.state.Win
-import java.util.LinkedList
-import java.util.Queue
 
 data class Board(val blocks: Blocks, val gameState: GameState = Running) {
 
@@ -24,31 +22,8 @@ data class Board(val blocks: Blocks, val gameState: GameState = Running) {
     }
 
     private fun openBlocks(position: Position): Board {
-        val queue: Queue<Position> = LinkedList(listOf(position))
-        var blocks = blocks.copy()
-        while (queue.isNotEmpty()) {
-            val nowPosition = queue.poll()
-            blocks = blocks.open(nowPosition)
-            if (!blocks.isMinePosition(nowPosition) && blocks.adjacentMineCount(nowPosition).isEmpty()) {
-                OpenDirections.values()
-                    .map { nextPosition(it, nowPosition) }
-                    .filter { isOpenable(it, blocks) }
-                    .forEach { queue.offer(it) }
-            }
-        }
-        return calculateGameState(blocks)
-    }
-
-    private fun nextPosition(openDirection: OpenDirections, nowPosition: Position): Position {
-        val nextCoordinate = openDirection.nextCoordinate(nowPosition.x, nowPosition.y)
-        return Position(nextCoordinate.first, nextCoordinate.second)
-    }
-
-    private fun isOpenable(position: Position, blocks: Blocks): Boolean {
-        if (!blocks.containsPosition(position) || blocks.isMinePosition(position)) {
-            return false
-        }
-        return !blocks.findBlockByPosition(position).isOpened()
+        val openedBlocks = blocks.open(position)
+        return calculateGameState(openedBlocks)
     }
 
     private fun calculateGameState(blocks: Blocks): Board {
@@ -58,13 +33,15 @@ data class Board(val blocks: Blocks, val gameState: GameState = Running) {
         return Board(blocks)
     }
 
+    fun findBlock(position: Position): Block = blocks.findBlock(position)
+
     companion object {
         private const val START = 1
 
         fun of(area: Area, mineCount: MineCount, mineBlockGenerateStrategy: MineBlockGenerateStrategy): Board {
             val positions = positions(area.width, area.height)
             val minePositions = mineBlockGenerateStrategy.generate(positions, mineCount.mineCount)
-            return Board(Blocks(positions.map { Block.create(it, minePositions) }))
+            return Board(Blocks(positions.associateWith { Block.create(it in minePositions) }.toMutableMap()))
         }
 
         private fun positions(width: Int, height: Int): List<Position> =

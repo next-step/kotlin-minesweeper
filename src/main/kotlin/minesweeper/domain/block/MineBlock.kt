@@ -5,10 +5,9 @@ import minesweeper.domain.block.state.Opened
 import minesweeper.domain.block.state.UnOpened
 
 data class MineBlock(
-    override val position: Position,
-    override val openState: OpenState = UnOpened
-) : Block(position, openState) {
+    private val openState: OpenState = UnOpened
+) : Block(openState) {
     override val isMine: Boolean = true
 
-    override fun open(): Block = MineBlock(position, Opened)
+    override fun open(): Block = MineBlock(Opened)
 }

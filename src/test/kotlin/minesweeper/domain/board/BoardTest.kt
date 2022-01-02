@@ -21,7 +21,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-@DisplayName("블록들(Blocks)")
+@DisplayName("보드(Board)")
 internal class BoardTest {
 
     @ParameterizedTest(name = "입력 값: {0}, {1}, {2}")
@@ -33,7 +33,7 @@ internal class BoardTest {
 
         val positions = createPositions(area.width, area.height)
         val minesPositions = strategy.generate(positions, minesCountInt)
-        val expected = Blocks(positions.map { Block.create(it, minesPositions) })
+        val expected = Blocks(positions.associateWith { Block.create(it in minesPositions) })
 
         val board = Board.of(area, minesCount, strategy)
         assertThat(board.blocks).isEqualTo((expected))
@@ -72,16 +72,16 @@ internal class BoardTest {
 
         val expected = Board(
             Blocks(
-                listOf(
-                    MineBlock(Position(1, 1)),
-                    MineBlock(Position(1, 2)),
-                    MineBlock(Position(1, 3)),
-                    EmptyBlock(Position(2, 1), Opened),
-                    EmptyBlock(Position(2, 2), Opened),
-                    EmptyBlock(Position(2, 3), Opened),
-                    EmptyBlock(Position(3, 1), Opened),
-                    EmptyBlock(Position(3, 2), Opened),
-                    EmptyBlock(Position(3, 3), Opened),
+                mapOf(
+                    Position(1, 1) to MineBlock(),
+                    Position(1, 2) to MineBlock(),
+                    Position(1, 3) to MineBlock(),
+                    Position(2, 1) to EmptyBlock(Opened),
+                    Position(2, 2) to EmptyBlock(Opened),
+                    Position(2, 3) to EmptyBlock(Opened),
+                    Position(3, 1) to EmptyBlock(Opened),
+                    Position(3, 2) to EmptyBlock(Opened),
+                    Position(3, 3) to EmptyBlock(Opened),
                 )
             ),
             Win
