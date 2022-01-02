@@ -28,7 +28,11 @@ object OutputView {
 
     fun displayRequestPointForCheck() = print(REQUEST_INPUT_POINT_FOR_CHECK)
 
-    fun displayMineField(allSlots: List<List<Slot>>) = allSlots.forEach(::printSlotLine)
+    fun displayMineField(allSlots: List<Slot>) =
+        allSlots
+            .groupBy { it.point().y }
+            .map { it.value }
+            .forEach(::printSlotLine)
 
     private fun printSlotLine(slotList: List<Slot>) {
         with(StringBuilder()) {

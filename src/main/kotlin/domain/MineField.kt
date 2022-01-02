@@ -1,17 +1,21 @@
 package domain
 
+import domain.ExceptionTypes.SLOT_NOT_FOUND_AT_POINT
+
 class MineField(
-    private val lines: List<MineLine>,
+    private val mineMap: Map<Point, Slot>,
     private val fieldSize: FieldSize
 ) {
 
-    fun isMine(point: Point) = lines[point.y].isMineAt(point.x)
+    fun isMine(point: Point) = getSlotByPoint(point).isMine()
 
-    fun isChecked(point: Point) = lines[point.y].isCheckedAt(point.x)
+    fun isChecked(point: Point) = getSlotByPoint(point).isChecked()
 
-    fun changeChecked(point: Point) = lines[point.y].changeCheckedAt(point.x)
+    fun changeChecked(point: Point) = getSlotByPoint(point).changeChecked()
 
-    fun allSlots() = lines.map { it.toList() }
+    fun nearMinesNumberAt(point: Point) = getSlotByPoint(point).numberOfNearMines()
+
+    fun allSlots() = mineMap.map { it.value }
 
     fun changeNearZeroSlots(point: Point) {
         if (isChecked(point) || isMine(point))
@@ -27,24 +31,34 @@ class MineField(
             changeNearZeroSlots(Point(point.x + 1, point.y))
     }
 
-    fun nearMinesNumberAt(point: Point) = lines[point.y].numberOfNearMinesAt(point.x)
-
     fun setNearMines() {
-        val allSlot = allSlots().flatten()
+        val allSlot = allSlots()
         val mines = allSlot.filter { it.isMine() }
         allSlot.filter { !it.isMine() }
             .forEach { it.setNumberOfNearMines(mines) }
     }
 
+    private fun getSlotByPoint(point: Point): Slot {
+        checkPointOverSize(point)
+        val currentSlot = mineMap[point]
+        require(currentSlot != null) { SLOT_NOT_FOUND_AT_POINT }
+        return currentSlot
+    }
+
+    private fun checkPointOverSize(point: Point) {
+        require(point.x < fieldSize.width) { ExceptionTypes.SLOT_CHECK_REQUEST_NOT_OVER_SIZE }
+        require(point.y < fieldSize.height) { ExceptionTypes.SLOT_CHECK_REQUEST_NOT_OVER_SIZE }
+    }
+
     companion object {
         fun createByIndexs(indexsForMines: Set<Point>, size: FieldSize): MineField {
-            return MineField(List(size.height) { createMineLine(it, size.width, indexsForMines) }, size)
+            return MineField(createMineMap(indexsForMines, size), size)
         }
 
-        private fun createMineLine(yIndex: Int, width: Int, indexsForMines: Set<Point>): MineLine {
-            val line = List(width) { setSlotType(Point(it, yIndex), indexsForMines) }
-            return MineLine(line)
-        }
+        private fun createMineMap(indexsForMines: Set<Point>, size: FieldSize): Map<Point, Slot> =
+            (0 until size.width * size.height)
+                .map { Point(it % size.width, it / size.width) }
+                .associateWith { setSlotType(it, indexsForMines) }
 
         private fun setSlotType(currentPoint: Point, indexsForMines: Set<Point>): Slot {
             if (indexsForMines.contains(currentPoint))

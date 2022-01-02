@@ -9,4 +9,5 @@ object ExceptionTypes {
     const val INPUT_MUST_INT = "입력 값은 정수여야 합니다."
     const val INPUT_NUMBER_OF_MINES_MUST_NOT_OVER_LIMIT = "지뢰 갯수는 최개 갯수 %d를 초과 할 수 없습니다."
     const val SLOT_CHECK_REQUEST_NOT_OVER_SIZE = "위치 정보 확인 요청은 최대 크기를 넘길 수 없습니다."
+    const val SLOT_NOT_FOUND_AT_POINT = "해당 위치에는 SLOT이 존재 하지 않습니다."
 }
