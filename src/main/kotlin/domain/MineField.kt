@@ -21,6 +21,8 @@ class MineField(
         if (isChecked(point) || isMine(point))
             return
         changeChecked(point)
+        if (nearMinesNumberAt(point) != 0)
+            return
         if (point.y - 1 >= 0)
             changeNearZeroSlots(Point(point.x, point.y - 1))
         if (point.y + 1 < fieldSize.height)
