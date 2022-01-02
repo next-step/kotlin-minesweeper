@@ -4,6 +4,14 @@ class MineSweeperGame(private val mineField: MineField) {
 
     fun allSlots() = mineField.allSlots()
 
+    fun checkAt(point: Point): GamesStates {
+        if (checkIsMineAt(point))
+            return GamesStates.LOSE
+        if (isAllGroundChecked())
+            return GamesStates.WIN
+        return GamesStates.PLAYABLE
+    }
+
     fun checkIsMineAt(point: Point): Boolean {
         if (mineField.isMine(point)) {
             mineField.changeChecked(point)

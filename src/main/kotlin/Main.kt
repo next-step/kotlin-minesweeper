@@ -1,4 +1,5 @@
 import domain.FieldSize
+import domain.GamesStates
 import domain.MineSweeperGame
 import domain.Point
 import ui.InputView.readInputForHeight
@@ -22,15 +23,13 @@ fun main() {
 }
 
 fun MineSweeperGame.play() {
-    var mineSelected = false
-    var allGroundCheck = false
-    while (!allGroundCheck && !mineSelected) {
+    var gamesState = GamesStates.PLAYABLE
+    while (gamesState == GamesStates.PLAYABLE) {
         val requestPoint = requestMineCheckPoint()
-        mineSelected = checkIsMineAt(requestPoint)
+        gamesState = checkAt(requestPoint)
         displayMineField(allSlots())
-        allGroundCheck = isAllGroundChecked()
     }
-    displayGameResult(allGroundCheck)
+    displayGameResult(gamesState)
 }
 
 fun requestMineCheckPoint(): Point {
@@ -38,8 +37,8 @@ fun requestMineCheckPoint(): Point {
     return readInputForRequestPointForCheck()
 }
 
-fun displayGameResult(gameResult: Boolean) {
-    if (gameResult) {
+fun displayGameResult(gameState: GamesStates) {
+    if (gameState == GamesStates.WIN) {
         displayWinGame()
         return
     }
