@@ -16,11 +16,19 @@ class SlotTest {
     }
 
     @Test
+    fun `Slot이 주어졌을 때, changeChecked호출시 isChecked가 변경 됨을 확인 할 수 있다`() {
+        val mineSlot: Slot = Mine(false, Point(0, 0))
+        assertThat(mineSlot.isChecked()).isFalse
+        mineSlot.changeChecked()
+        assertThat(mineSlot.isChecked()).isTrue
+    }
+
+    @Test
     fun `Slot이 주어졌을 때 확인 여부를 알 수 있다`() {
         val mineSlot: Slot = Mine(false, Point(0, 0))
-        assertThat(mineSlot.isChecked).isFalse
+        assertThat(mineSlot.isChecked()).isFalse
         val groundSlot: Slot = Ground(true, Point(0, 0))
-        assertThat(groundSlot.isChecked).isTrue
+        assertThat(groundSlot.isChecked()).isTrue
     }
 
     @Test

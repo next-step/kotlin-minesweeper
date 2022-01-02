@@ -1,6 +1,5 @@
 package ui
 
-import domain.MineField
 import domain.Slot
 
 object OutputView {
@@ -11,6 +10,13 @@ object OutputView {
     private const val COVERED_SLOT = "c "
     private const val MINE = "* "
     private const val GROUND_FORMAT = "%d "
+    private const val REQUEST_INPUT_POINT_FOR_CHECK = "open: "
+    private const val LOSE_GAME = "Lose Game. "
+    private const val WIN_GAME = "Win Game. "
+
+    fun displayLoseGame() = println(LOSE_GAME)
+
+    fun displayWinGame() = println(WIN_GAME)
 
     fun displayRequestHeight() = println(REQUEST_HEIGHT)
 
@@ -20,10 +26,13 @@ object OutputView {
 
     fun displayGameStartTitle() = println(TITLE_START_GAME)
 
-    fun displayMineField(mineField: MineField) {
-        val allSlots = mineField.allSlots()
-        allSlots.forEach(::printSlotLine)
-    }
+    fun displayRequestPointForCheck() = print(REQUEST_INPUT_POINT_FOR_CHECK)
+
+    fun displayMineField(allSlots: List<Slot>) =
+        allSlots
+            .groupBy { it.point().y }
+            .map { it.value }
+            .forEach(::printSlotLine)
 
     private fun printSlotLine(slotList: List<Slot>) {
         with(StringBuilder()) {
@@ -34,7 +43,7 @@ object OutputView {
     }
 
     private fun slotToDisplay(slot: Slot): String {
-        if (!slot.isChecked)
+        if (!slot.isChecked())
             return COVERED_SLOT
         if (slot.isMine())
             return MINE
