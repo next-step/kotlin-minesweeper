@@ -26,6 +26,7 @@ class MineSweeperGame(private val mineField: MineField) {
             val randomIndexs = createRandomIndexsForMine(size, numberOfMines)
                 .map { Point(it % size.width, it / size.width) }.toSet()
             val mineField = MineField.createByIndexs(randomIndexs, size)
+            mineField.setNearMines()
             return MineSweeperGame(mineField)
         }
 

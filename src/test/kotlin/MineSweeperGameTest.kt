@@ -38,7 +38,7 @@ class MineSweeperGameTest {
                         Ground(point = Point(4, 0))
                     )
                 )
-            )
+            ), FieldSize(5, 1)
         )
         val game = MineSweeperGame(mineField)
 
@@ -71,7 +71,7 @@ class MineSweeperGameTest {
                         Mine(point = Point(4, 1))
                     )
                 )
-            )
+            ), FieldSize(5, 2)
         )
         val game = MineSweeperGame(mineField)
 

@@ -2,7 +2,7 @@ package domain
 
 class MineField(
     private val lines: List<MineLine>,
-    private val fieldSize: FieldSize = FieldSize(lines.first().size(), lines.size)
+    private val fieldSize: FieldSize
 ) {
 
     fun isMine(point: Point) = lines[point.y].isMineAt(point.x)
@@ -29,7 +29,7 @@ class MineField(
 
     fun nearMinesNumberAt(point: Point) = lines[point.y].numberOfNearMinesAt(point.x)
 
-    private fun setNearMines() {
+    fun setNearMines() {
         val allSlot = allSlots().flatten()
         val mines = allSlot.filter { it.isMine() }
         allSlot.filter { !it.isMine() }
@@ -38,9 +38,7 @@ class MineField(
 
     companion object {
         fun createByIndexs(indexsForMines: Set<Point>, size: FieldSize): MineField {
-            val newMineField = MineField(List(size.height) { createMineLine(it, size.width, indexsForMines) })
-            newMineField.setNearMines()
-            return newMineField
+            return MineField(List(size.height) { createMineLine(it, size.width, indexsForMines) }, size)
         }
 
         private fun createMineLine(yIndex: Int, width: Int, indexsForMines: Set<Point>): MineLine {

@@ -21,7 +21,8 @@ class MineFieldTest {
                         Ground(true, Point(4, 0))
                     )
                 )
-            )
+            ),
+            FieldSize(5, 1)
         )
         val actualMineResult = mineField.isMine(Point(1, 0))
         val actualGroundResult = mineField.isMine(Point(4, 0))
@@ -42,7 +43,8 @@ class MineFieldTest {
                         Ground(true, Point(4, 0))
                     )
                 )
-            )
+            ),
+            FieldSize(5, 1)
         )
         val actualCheckedResult = mineField.isChecked(Point(1, 0))
         val actualUnCheckedResult = mineField.isChecked(Point(4, 0))
@@ -62,6 +64,7 @@ class MineFieldTest {
             ),
             fieldSize
         )
+        mineField.setNearMines()
         val actualResult = mineField.nearMinesNumberAt(Point(1, 0))
         assertThat(actualResult).isEqualTo(3)
     }
