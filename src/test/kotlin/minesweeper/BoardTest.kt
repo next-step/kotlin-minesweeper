@@ -6,7 +6,6 @@ import minesweeper.domain.Cell
 import minesweeper.domain.Cells
 import minesweeper.domain.Height
 import minesweeper.domain.MineCount
-import minesweeper.domain.Position
 import minesweeper.domain.Positions
 import minesweeper.domain.Width
 import org.assertj.core.api.Assertions
@@ -18,7 +17,10 @@ class BoardTest {
     @Test
     fun `Cells를 가지고 Board를 생성할 수 있다`() {
         val positions = Positions.of(Width.from(7), Height.Companion.from(7))
-        val map: Map<Position, Cell> = positions.positions.associateWith { Cell.SafetyCell }
+        val map: List<Cell> = positions.positions
+            .map {
+                Cell.MineCell(it)
+            }
 
         val cells = Cells.from(map)
         val board = Board.from(cells)
@@ -33,7 +35,7 @@ class BoardTest {
         val mineCount = MineCount.from(7)
 
         val size = width.value * height.value
-        val board = Board.of(width, height, mineCount)
+        val board = Board.ofSizeAndMineCount(width, height, mineCount)
 
         assertThat(board.cellList.size).isEqualTo(size)
     }
@@ -46,7 +48,7 @@ class BoardTest {
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
-                Board.of(width, height, mineCount)
+                Board.ofSizeAndMineCount(width, height, mineCount)
             }
             .withMessage(MINE_COUNT_ILLEGAL_ARGUMENTS_EXCEPTION)
     }

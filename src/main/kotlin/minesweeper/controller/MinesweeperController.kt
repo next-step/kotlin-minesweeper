@@ -13,7 +13,7 @@ object MinesweeperController {
         val width = Width.from(InputView.inputWidth())
         val height = Height.from(InputView.inputHeight())
         val mineCount = MineCount.from(InputView.inputMineCount())
-        val board = Board.of(width, height, mineCount)
+        val board = Board.ofSizeAndMineCount(width, height, mineCount)
 
         OutputView.printMineSweeper(board)
     }

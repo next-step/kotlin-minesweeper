@@ -3,7 +3,7 @@ package minesweeper.domain
 @JvmInline
 value class Board private constructor(private val _cells: Cells) {
 
-    val cellList: List<Pair<Position, Cell>>
+    val cellList: List<Cell>
         get() = _cells.cells.toList()
 
     companion object {
@@ -14,21 +14,14 @@ value class Board private constructor(private val _cells: Cells) {
             return Board(cells)
         }
 
-        fun of(width: Width, height: Height, mineCount: MineCount): Board {
-            val positions = Positions.of(width, height)
+        fun ofSizeAndMineCount(width: Width, height: Height, mineCount: MineCount): Board {
             require(width.value * height.value >= mineCount.count) { MINE_COUNT_ILLEGAL_ARGUMENTS_EXCEPTION }
-            val cells = positions
-                .shuffled()
-                .mapIndexed { index, position ->
-                    if (index < mineCount.count) {
-                        position to Cell.MineCell
-                    } else {
-                        position to Cell.SafetyCell
-                    }
-                }
-                .toMap()
+            val positions = Positions.of(width, height)
+            val minePositions = minePositions(positions, mineCount)
 
-            return from(Cells.from(cells))
+            return from(Cells.of(positions.positions, minePositions))
         }
+
+        private fun minePositions(positions: Positions, mineCount: MineCount) = positions.shuffled().take(mineCount.count)
     }
 }
