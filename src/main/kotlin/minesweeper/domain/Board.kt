@@ -6,6 +6,18 @@ value class Board private constructor(private val _cells: Cells) {
     val cellList: List<Cell>
         get() = _cells.cells.toList()
 
+    fun isMine(position: Position): Boolean = _cells.isMine(position)
+
+    fun open(position: Position): Board {
+        return from(_cells.open(position))
+    }
+
+    fun allOpen(): Board {
+        return from(_cells.allOpen())
+    }
+
+    fun isAllOpen(): Boolean = _cells.isAllOpen()
+
     companion object {
 
         const val MINE_COUNT_ILLEGAL_ARGUMENTS_EXCEPTION = "지뢰의 숫자는 Cell의 갯수와 같거나 작아야 합니다."
