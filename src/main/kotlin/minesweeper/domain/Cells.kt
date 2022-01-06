@@ -20,32 +20,31 @@ value class Cells private constructor(private val _cells: List<Cell>) {
         return openEmptyCells(position)
     }
 
-    fun allOpen(): Cells = from(_cells.map { it.open() })
+    fun cellAllOpen(): Cells = from(_cells.map { it.open() })
 
-    fun isAllOpen(): Boolean = _cells.filter { !it.isMine() }.all { it.isOpen }
+    fun isSafetyCellAllOpen(): Boolean = _cells.filter { !it.isMine() }.all { it.openState == OpenState.OPENED }
 
     private fun openEmptyCells(position: Position): Cells {
         val queue: Queue<Position> = LinkedList(listOf(position))
         val cellsMap = cells.associateBy { it.position }.toMutableMap()
         while (queue.isNotEmpty()) {
             var nowCell = cellsMap[queue.poll()]
-            if (nowCell!!.isOpen) {
+            if (nowCell!!.isOpen()) {
                 continue
             }
-            nowCell = (nowCell as Cell.SafetyCell).open()
+            nowCell = nowCell.open()
             cellsMap[nowCell.position] = nowCell
-            val aroundSafetyCells = nowCell.aroundSafetyCells()
-            if (aroundSafetyCells.isEmpty()) {
+            if (nowCell.aroundSafetyCells(safetyCells()).isEmpty()) {
                 continue
             }
-            val aroundSafetyCellPositions = nowCell.aroundSafetyCellPositions()
-            val aroundMineCells = nowCell.aroundMineCells()
+            val aroundSafetyCellPositions = nowCell.filterAroundCellPositions(safetyCellPositions())
+            val aroundMineCells = nowCell.aroundMineCells(mineCells())
             if (aroundMineCells.isEmpty()) {
                 for (i in aroundSafetyCellPositions.indices) {
-                    if (!cellsMap[aroundSafetyCellPositions[i]]!!.isOpen && (cellsMap[aroundSafetyCellPositions[i]] as Cell.SafetyCell).isNotContainAroundMine()) {
+                    if (cellsMap[aroundSafetyCellPositions[i]]!!.openState == OpenState.CLOSED && (cellsMap[aroundSafetyCellPositions[i]] as SafetyCell).isNotContainAroundMine()) {
                         queue.offer(aroundSafetyCellPositions[i])
                     }
-                    if (cellsMap[aroundSafetyCellPositions[i]]!!.aroundMineCells().isNotEmpty()) {
+                    if (cellsMap[aroundSafetyCellPositions[i]]!!.aroundMineCells(mineCells()).isNotEmpty()) {
                         cellsMap[aroundSafetyCellPositions[i]] = cellsMap[aroundSafetyCellPositions[i]]!!.open()
                     }
                 }
@@ -54,28 +53,8 @@ value class Cells private constructor(private val _cells: List<Cell>) {
         return from(cellsMap.values.toList())
     }
 
-    private fun Cell.aroundMineCells(): List<Cell.MineCell> {
-        return mineCells().filter { aroundMineCellPositions().contains(it.position) }
-    }
-
-    private fun Cell.aroundMineCellPositions(): List<Position> {
-        return aroundPositions().filter { mineCellPositions().contains(it) }
-    }
-
-    private fun mineCellPositions(): List<Position> {
-        return mineCells().map { it.position }
-    }
-
-    private fun mineCells(): List<Cell.MineCell> {
-        return _cells.filterIsInstance<Cell.MineCell>()
-    }
-
-    private fun Cell.aroundSafetyCells(): List<Cell> {
-        return _cells.filter { aroundSafetyCellPositions().contains(it.position) }
-    }
-
-    private fun Cell.aroundSafetyCellPositions(): List<Position> {
-        return aroundPositions().filter { safetyCellPositions().contains(it) }
+    private fun mineCells(): List<MineCell> {
+        return _cells.filterIsInstance<MineCell>()
     }
 
     private fun safetyCellPositions(): List<Position> {
@@ -83,8 +62,8 @@ value class Cells private constructor(private val _cells: List<Cell>) {
             .map { it.position }
     }
 
-    private fun safetyCells(): List<Cell.SafetyCell> {
-        return _cells.filterIsInstance<Cell.SafetyCell>()
+    private fun safetyCells(): List<SafetyCell> {
+        return _cells.filterIsInstance<SafetyCell>()
     }
 
     private fun getCell(position: Position): Cell {
@@ -99,9 +78,9 @@ value class Cells private constructor(private val _cells: List<Cell>) {
             return from(
                 positions.map {
                     if (minePositions.contains(it)) {
-                        Cell.MineCell(it)
+                        MineCell(it)
                     } else {
-                        Cell.SafetyCell(it, it.countAroundPositionsContainOthers(minePositions), false)
+                        SafetyCell(it, it.countAroundPositionsContainOthers(minePositions))
                     }
                 }
             )

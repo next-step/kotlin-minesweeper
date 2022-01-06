@@ -2,9 +2,12 @@ package minesweeper.view
 
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.MineCell
+import minesweeper.domain.OpenState
+import minesweeper.domain.SafetyCell
 import minesweeper.domain.state.Finished
 import minesweeper.domain.state.Lose
-import minesweeper.domain.state.State
+import minesweeper.domain.state.GameState
 import minesweeper.domain.state.Win
 
 object OutputView {
@@ -30,8 +33,8 @@ object OutputView {
         println()
     }
 
-    fun printResult(state: State) {
-        (state as Finished).printResult()
+    fun printResult(gameState: GameState) {
+        (gameState as Finished).printResult()
     }
 
     private fun Finished.printResult() {
@@ -53,15 +56,15 @@ object OutputView {
     }
 
     private fun Cell.toDisplayName(): String = when (this) {
-        is Cell.MineCell -> {
-            if (this.isOpen) {
+        is MineCell -> {
+            if (this.openState == OpenState.OPENED) {
                 OPEN_MINE_CELL
             } else {
                 NOT_OPEN_CELL_DISPLAY_NAME
             }
         }
-        is Cell.SafetyCell -> {
-            if (this.isOpen) {
+        is SafetyCell -> {
+            if (this.openState == OpenState.OPENED) {
                 "$mineCount"
             } else {
                 NOT_OPEN_CELL_DISPLAY_NAME

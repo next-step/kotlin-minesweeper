@@ -47,6 +47,7 @@ data class Position(val row: Row, val column: Column) : Comparable<Position> {
         private const val MINUS_COORDINATE = -1
         private const val PLUS_COORDINATE = 1
         private const val DELIMITER = ","
+        private const val POSITION_MINUS_VALUE = 1
 
         const val INPUT_NUMBER_FORMAT_EXCEPTION = "입력값은 Int여야 합니다."
         const val INPUT_ILLEGAL_ARGUMENTS_EXCEPTION = "입력값의 Size는 2개여야 합니다. 현재 갯수 == %s"
@@ -60,10 +61,10 @@ data class Position(val row: Row, val column: Column) : Comparable<Position> {
                     it.trim().toIntOrNull() ?: throw IllegalArgumentException(INPUT_NUMBER_FORMAT_EXCEPTION)
                 }
             require(coordinates.size == 2) { INPUT_ILLEGAL_ARGUMENTS_EXCEPTION.format(coordinates.size) }
-            return from(Row.from(coordinates[0]), Column.from(coordinates[1]))
+            return of(Row.from(coordinates[0] - POSITION_MINUS_VALUE), Column.from(coordinates[1] - POSITION_MINUS_VALUE))
         }
 
-        fun from(row: Row, column: Column): Position {
+        fun of(row: Row, column: Column): Position {
             return Position(row, column)
         }
     }

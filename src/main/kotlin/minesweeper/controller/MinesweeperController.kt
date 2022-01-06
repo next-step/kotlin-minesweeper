@@ -6,7 +6,7 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.Position
 import minesweeper.domain.Width
 import minesweeper.domain.state.Running
-import minesweeper.domain.state.State
+import minesweeper.domain.state.GameState
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -22,12 +22,12 @@ object MinesweeperController {
     private fun startGame(width: Width, height: Height, mineCount: MineCount) {
         OutputView.printStartGame()
         val board = Board.ofSizeAndMineCount(width, height, mineCount)
-        var state: State = Running(board)
-        OutputView.printMineSweeper(state.board)
-        while (!state.isFinished()) {
-            state = state.open(Position.from(InputView.inputOpen()))
-            OutputView.printMineSweeper(state.board)
+        var gameState: GameState = Running(board)
+        OutputView.printMineSweeper(gameState.board)
+        while (!gameState.isFinished()) {
+            gameState = gameState.open(Position.from(InputView.inputOpen()))
+            OutputView.printMineSweeper(gameState.board)
         }
-        OutputView.printResult(state)
+        OutputView.printResult(gameState)
     }
 }

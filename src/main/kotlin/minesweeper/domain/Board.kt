@@ -12,11 +12,11 @@ value class Board private constructor(private val _cells: Cells) {
         return from(_cells.open(position))
     }
 
-    fun allOpen(): Board {
-        return from(_cells.allOpen())
+    fun endGame(): Board {
+        return from(_cells.cellAllOpen())
     }
 
-    fun isAllOpen(): Boolean = _cells.isAllOpen()
+    fun isSafetyCellAllOpen(): Boolean = _cells.isSafetyCellAllOpen()
 
     companion object {
 

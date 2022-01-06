@@ -3,12 +3,12 @@ package minesweeper.domain
 @JvmInline
 value class Column(val value: Int) : Comparable<Column> {
 
-    override fun compareTo(other: Column): Int {
-        return compareValues(value, other.value)
-    }
-
     init {
         require(value >= 0) { COLUMN_ILLEGAL_ARGUMENTS_EXCEPTION }
+    }
+
+    override fun compareTo(other: Column): Int {
+        return compareValues(value, other.value)
     }
 
     companion object {
