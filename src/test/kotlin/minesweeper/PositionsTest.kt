@@ -24,12 +24,12 @@ class PositionsTest {
     @Test
     fun `Position List를 통해 Positions를 생성할 수 있다`() {
         val positionList = listOf(
-            Position.from(Row.from(0), Column.from(0)),
-            Position.from(Row.from(1), Column.from(0)),
-            Position.from(Row.from(0), Column.from(1)),
-            Position.from(Row.from(2), Column.from(1)),
-            Position.from(Row.from(1), Column.from(2)),
-            Position.from(Row.from(2), Column.from(2)),
+            Position.of(Row.from(0), Column.from(0)),
+            Position.of(Row.from(1), Column.from(0)),
+            Position.of(Row.from(0), Column.from(1)),
+            Position.of(Row.from(2), Column.from(1)),
+            Position.of(Row.from(1), Column.from(2)),
+            Position.of(Row.from(2), Column.from(2)),
         )
 
         val positions = Positions.from(positionList)
