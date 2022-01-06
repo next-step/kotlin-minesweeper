@@ -72,7 +72,7 @@ value class Cells private constructor(private val _cells: List<Cell>) {
 
     companion object {
 
-        const val CELL_POSITION_NULL_POINTER_EXCEPTION_MESSAGE = "해당 위치에 CELL이 존재하지 않습니다."
+        private const val CELL_POSITION_NULL_POINTER_EXCEPTION_MESSAGE = "해당 위치에 CELL이 존재하지 않습니다."
 
         fun of(positions: List<Position>, minePositions: List<Position>): Cells {
             return from(

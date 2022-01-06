@@ -49,10 +49,10 @@ data class Position(val row: Row, val column: Column) : Comparable<Position> {
         private const val DELIMITER = ","
         private const val POSITION_MINUS_VALUE = 1
 
-        const val INPUT_NUMBER_FORMAT_EXCEPTION = "입력값은 Int여야 합니다."
-        const val INPUT_ILLEGAL_ARGUMENTS_EXCEPTION = "입력값의 Size는 2개여야 합니다. 현재 갯수 == %s"
-
+        private const val INPUT_ILLEGAL_ARGUMENTS_EXCEPTION = "입력값의 Size는 2개여야 합니다. 현재 갯수 == %s"
         private val AROUND_COORDINATES = listOf(MINUS_COORDINATE, START_COORDINATE, PLUS_COORDINATE)
+
+        const val INPUT_NUMBER_FORMAT_EXCEPTION = "입력값은 Int여야 합니다."
 
         fun from(input: String): Position {
             val coordinates: List<Int> = input
