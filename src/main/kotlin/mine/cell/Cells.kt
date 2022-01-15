@@ -8,33 +8,43 @@ import mine.Width
  * 셀 전체 관리
  * */
 class Cells(val values: List<Cell>) {
-    private fun isMineCell(position: Position): Boolean = findCell(position).isMineCell()
+    private fun isMineCell(position: Position): Boolean = findCell(position)?.isMineCell() ?: false
 
-    private fun clickCell(position: Position) =
+    private fun clickCell(position: Position) {
+        val cell = findCell(position) ?: return
+        if (cell.isNearMine()) open(position)
+        else {
+            cell
+                .aroundAllPosition()
+                .asSequence()
+                .filterNot { isMineCell(it) }
+                .flatMap(Position::aroundAllPosition)
+                .forEach(::searchNearCell)
+        }
+    }
+
+    private fun searchNearCell(position: Position) =
         findCell(position)
-            .aroundAllPosition()
-            .asSequence()
-            .filterNot { isMineCell(it) }
-            .flatMap(Position::aroundAllPosition)
-            .forEach(::open)
+            .takeIf { it?.isNearMine() == false }?.aroundAllPosition()?.forEach(::open)
 
-    private fun open(position: Position) = findCell(position).open()
+    private fun open(position: Position) = findCell(position)?.open()
 
     private fun isLastCell(): Boolean = values.count { !it.isClicked } == 0
 
-    fun row(): Int = values.maxOf { it.position.x }
-    fun column(): Int = values.maxOf { it.position.y }
+    fun row(): Int = values.maxOf { it.position.x }.plus(1)
+    fun column(): Int = values.maxOf { it.position.y }.plus(1)
 
     fun rowOfCells(row: Int): Cells =
         values.filter { it.position.x == row }.sortedBy { it.position.y }.let(::Cells)
 
-    fun findCell(position: Position): Cell {
-        require(position.x <= row() && position.y <= column())
-        return values.first { it.position == position }
+    fun findCell(position: Position): Cell? {
+        if (position.x >= row() || position.y >= column()) return null
+        return values.firstOrNull { it.position.x == position.x && it.position.y == position.y }
     }
 
     fun clickedCell(position: Position): GameStatus {
         if (isMineCell(position)) return GameStatus.GAMEOVER
+        println("poisiotion (${position.x}, ${position.y}")
         clickCell(position)
         if (isLastCell()) return GameStatus.WIN
         return GameStatus.CONTINUE

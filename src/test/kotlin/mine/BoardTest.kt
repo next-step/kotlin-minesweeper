@@ -99,6 +99,7 @@ class BoardTest {
                     NoneCell(Position(2, 0), 0),
                     NoneCell(Position(2, 1), 0),
                     NoneCell(Position(2, 2), 0),
+                    MineCell(Position(2, 3)),
                 )
             )
         )
@@ -109,5 +110,45 @@ class BoardTest {
         }
 
         assertThat(status).isEqualTo(GameStatus.CONTINUE)
+    }
+
+    @Test
+    fun `지뢰가 없는 인접한 칸은 모두 open된다`() {
+        val board = Board(
+            Cells(
+                listOf(
+                    NoneCell(Position(0, 0), 0),
+                    NoneCell(Position(0, 1), 0),
+                    NoneCell(Position(0, 2), 0),
+                    NoneCell(Position(0, 3), 0),
+                    NoneCell(Position(1, 0), 0),
+                    NoneCell(Position(1, 1), 0),
+                    NoneCell(Position(1, 2), 1),
+                    NoneCell(Position(1, 3), 1),
+                    NoneCell(Position(2, 0), 0),
+                    NoneCell(Position(2, 1), 1),
+                    NoneCell(Position(2, 2), 3),
+                    MineCell(Position(2, 3)),
+                    NoneCell(Position(3, 0), 0),
+                    NoneCell(Position(3, 1), 1),
+                    MineCell(Position(3, 2)),
+                    MineCell(Position(3, 3))
+                )
+            )
+        )
+
+        val position = Position(0, 0)
+        board.run {
+            position.clickedCell()
+        }
+
+        assertThat(board.cells.findCell(Position(0, 0))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(0, 1))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(0, 2))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(0, 3))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(1, 0))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(1, 1))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(2, 1))?.isClicked).isEqualTo(true)
+        assertThat(board.cells.findCell(Position(3, 0))?.isClicked).isEqualTo(true)
     }
 }
