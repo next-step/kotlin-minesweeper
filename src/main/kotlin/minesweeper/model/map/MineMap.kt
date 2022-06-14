@@ -14,14 +14,10 @@ class MineMap private constructor(private val mapArea: MapArea, private val cell
 
     companion object {
 
-        fun build(mapArea: MapArea, isMineCell: (Position) -> Boolean): MineMap {
-
-            val cells = List(mapArea.area) { index ->
-                val position = mapArea[index]
-                createCell(position, isMineCell(position))
-            }
-            return MineMap(mapArea, cells)
-        }
+        fun build(mapArea: MapArea, isMineCell: (Position) -> Boolean) = MineMap(
+            mapArea = mapArea,
+            cellList = mapArea.map { position -> createCell(position, isMineCell(position)) }
+        )
 
         fun randomMap(mapArea: MapArea, mineCount: Int): MineMap {
             require(mineCount in 1..mapArea.area)
