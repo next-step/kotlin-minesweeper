@@ -10,19 +10,19 @@ open class IntInputParser(private val range: IntRange = Int.MIN_VALUE..Int.MAX_V
             is ParseResult.Value -> validateResult(parsedInputResult)
         }
 
-    private fun validateResult(parsedIntValue: ParseResult.Value<Int>): ParseResult<Int> =
+    private fun validateResult(parsedIntValue: ParseResult.Value<Int>): ParseResult<Int> {
         if (parsedIntValue.value in range) {
-            parsedIntValue
-        } else {
-            ParseResult.Error(makeErrorMessage(range))
+            return parsedIntValue
         }
 
+        return ParseResult.Error(makeErrorMessage(range))
+    }
+
     private fun makeErrorMessage(range: IntRange): String {
-        return if (range.last == Int.MAX_VALUE) {
-            "최소 ${range.first} 이상 값을 입력해 주세요. "
-        } else {
-            "${range.first} ~ ${range.last} 사이 값을 입력해 주세요."
+        if (range.last == Int.MAX_VALUE) {
+            return "최소 ${range.first} 이상 값을 입력해 주세요. "
         }
+        return "${range.first} ~ ${range.last} 사이 값을 입력해 주세요."
     }
 
     companion object {

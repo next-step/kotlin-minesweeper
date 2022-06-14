@@ -1,9 +1,10 @@
 package minesweeper.model.map
 
-import minesweeper.model.map.coordinate.MapSize
+import minesweeper.model.map.coordinate.MapArea
 import minesweeper.model.map.coordinate.Position
+import minesweeper.utils.toInt
 
-class MineMap private constructor(val mapSize: MapSize, private val cellList: List<Cell>) : List<Cell> by cellList {
+class MineMap private constructor(val mapArea: MapArea, private val cellList: List<Cell>) : List<Cell> by cellList {
 
     val cellCount: Int by lazy { this.count() }
     val mineCount: Int by lazy { this.count { it is Cell.MineCell } }
@@ -11,23 +12,21 @@ class MineMap private constructor(val mapSize: MapSize, private val cellList: Li
 
     companion object {
 
-        fun build(mapSize: MapSize, isMineCell: (Position) -> Boolean): MineMap {
-            val cells = List(mapSize.area) { index ->
-                val position = mapSize[index]
+        fun build(mapArea: MapArea, isMineCell: (Position) -> Boolean): MineMap {
 
-                if (isMineCell(position)) {
-                    Cell.MineCell(position)
-                } else {
-                    Cell.SafeCell(position)
-                }
+            val cellConstructorList = listOf(Cell::SafeCell, Cell::MineCell)
+            val cells = List(mapArea.area) { index ->
+                val position = mapArea[index]
+                val isThisCellMine = isMineCell(position)
+                cellConstructorList[isThisCellMine.toInt()](position)
             }
-            return MineMap(mapSize, cells)
+            return MineMap(mapArea, cells)
         }
 
-        fun randomMap(mapSize: MapSize, mineCount: Int): MineMap {
-            require(mineCount in 1..mapSize.area)
-            val mineIndices = (0 until mapSize.area).shuffled().subList(0, mineCount)
-            return build(mapSize) { position -> mapSize.indexOf(position) in mineIndices }
+        fun randomMap(mapArea: MapArea, mineCount: Int): MineMap {
+            require(mineCount in 1..mapArea.area)
+            val mineIndices = (0 until mapArea.area).shuffled().subList(0, mineCount)
+            return build(mapArea) { position -> mapArea.indexOf(position) in mineIndices }
         }
     }
 }

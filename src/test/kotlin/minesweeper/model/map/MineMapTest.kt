@@ -1,6 +1,6 @@
 package minesweeper.model.map
 
-import minesweeper.model.map.coordinate.MapSize
+import minesweeper.model.map.coordinate.MapArea
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
@@ -19,10 +19,10 @@ internal class MineMapTest {
     fun `높이 x 너비를 갖는 맵 생성 테스트`(width: Int, height: Int, expectedMineCount: Int) {
 
         // given
-        val mapSize = MapSize(width, height)
+        val mapArea = MapArea(width, height)
 
         // when
-        val actualMap = MineMap.build(mapSize) { position -> mapSize.indexOf(position) < expectedMineCount }
+        val actualMap = MineMap.build(mapArea) { position -> mapArea.indexOf(position) < expectedMineCount }
         val expectedCellCount = width * height
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
@@ -41,7 +41,7 @@ internal class MineMapTest {
         "0,0"
     )
     fun `맵 크기가 0 이면 에러`(width: Int, height: Int) {
-        assertThrows<IllegalArgumentException> { MineMap.build(MapSize(width, height)) { true } }
+        assertThrows<IllegalArgumentException> { MineMap.build(MapArea(width, height)) { true } }
     }
 
     @ParameterizedTest
@@ -53,10 +53,10 @@ internal class MineMapTest {
     )
     fun `랜던 맵 생성 테스트`(width: Int, height: Int, expectedMineCount: Int) {
         // given
-        val mapSize = MapSize(width, height)
+        val mapArea = MapArea(width, height)
 
         // when
-        val actualMap = MineMap.randomMap(mapSize, expectedMineCount)
+        val actualMap = MineMap.randomMap(mapArea, expectedMineCount)
         val expectedCellCount = width * height
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
@@ -77,7 +77,7 @@ internal class MineMapTest {
     )
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(width: Int, height: Int, expectedMineCount: Int) {
         // given
-        val mapSize = MapSize(width, height)
-        assertThrows<IllegalArgumentException> { MineMap.randomMap(mapSize, expectedMineCount) }
+        val mapArea = MapArea(width, height)
+        assertThrows<IllegalArgumentException> { MineMap.randomMap(mapArea, expectedMineCount) }
     }
 }

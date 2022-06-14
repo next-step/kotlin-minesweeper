@@ -25,10 +25,10 @@ object ConsoleReader {
     private fun <T> tryToRead(inputParser: InputParser<T>): ParseResult<T> =
         parseString(readLine(), inputParser)
 
-    private fun <T> parseString(inputString: String?, inputParser: InputParser<T>): ParseResult<T> =
+    private fun <T> parseString(inputString: String?, inputParser: InputParser<T>): ParseResult<T> {
         if (inputString.isNullOrBlank()) {
-            ParseResult.Error("빈 문자열이 입력되었습니다.")
-        } else {
-            inputParser.parseValue(inputString)
+            return ParseResult.Error("빈 문자열이 입력되었습니다.")
         }
+        return inputParser.parseValue(inputString)
+    }
 }

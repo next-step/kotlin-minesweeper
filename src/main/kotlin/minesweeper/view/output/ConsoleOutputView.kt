@@ -13,7 +13,7 @@ object ConsoleOutputView : OutputView {
 
     private fun MineMap.print() {
         this.forEach { cell ->
-            val isEndOfRow = (cell.position.column + 1) % mapSize.width == 0
+            val isEndOfRow = (cell.position.column + 1) % mapArea.width == 0
             cell.print(isEndOfRow)
         }
         println()

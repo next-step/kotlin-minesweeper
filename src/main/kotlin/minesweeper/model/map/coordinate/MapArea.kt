@@ -1,6 +1,6 @@
 package minesweeper.model.map.coordinate
 
-data class MapSize(val width: Int, val height: Int) {
+data class MapArea(val width: Int, val height: Int) {
 
     val area: Int = width * height
 

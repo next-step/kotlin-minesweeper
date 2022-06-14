@@ -2,7 +2,7 @@ package minesweeper.view.input
 
 import minesweeper.model.MineMapBuilder
 import minesweeper.model.map.MineMap
-import minesweeper.model.map.coordinate.MapSize
+import minesweeper.model.map.coordinate.MapArea
 import minesweeper.view.input.parser.IntInputParser
 
 object ConsoleMineMapBuilder : MineMapBuilder {
@@ -24,6 +24,6 @@ object ConsoleMineMapBuilder : MineMapBuilder {
         val mineCountRange = MIN_MINE_COUNT..maxMineCount
 
         val mineCount = ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
-        return MineMap.randomMap(MapSize(with, height), mineCount)
+        return MineMap.randomMap(MapArea(with, height), mineCount)
     }
 }
