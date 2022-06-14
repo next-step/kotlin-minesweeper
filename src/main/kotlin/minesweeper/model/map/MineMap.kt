@@ -13,7 +13,8 @@ class MineMap private constructor(val mapSize: MapSize, private val cellList: Li
 
         fun build(mapSize: MapSize, isMineCell: (Position) -> Boolean): MineMap {
             val cells = List(mapSize.area) { index ->
-                val position = Position(row = index / mapSize.width, column = index % mapSize.width)
+                val position = mapSize[index]
+
                 if (isMineCell(position)) {
                     Cell.MineCell(position)
                 } else {

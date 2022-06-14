@@ -16,17 +16,17 @@ internal class MineMapTest {
         "10,10,10",
         "5,5,5"
     )
-    fun `높이 x 너비를 갖는 맵 생성 테스트`(width: Int, height: Int, mineCount: Int) {
+    fun `높이 x 너비를 갖는 맵 생성 테스트`(width: Int, height: Int, expectedMineCount: Int) {
 
-        val actualMap = MineMap.build(MapSize(width, height)) { position ->
-            val index = position.row * width + position.column
-            index < mineCount
-        }
+        // given
+        val mapSize = MapSize(width, height)
 
+        // when
+        val actualMap = MineMap.build(mapSize) { position -> mapSize.indexOf(position) < expectedMineCount }
         val expectedCellCount = width * height
-        val expectedMineCount = mineCount
-        val expectedSafeCellCount = expectedCellCount - mineCount
+        val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
+        // then
         assertAll(
             { assertThat(actualMap.cellCount).isEqualTo(expectedCellCount) },
             { assertThat(actualMap.mineCount).isEqualTo(expectedMineCount) },
