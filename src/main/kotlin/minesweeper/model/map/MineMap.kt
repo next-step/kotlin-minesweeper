@@ -23,5 +23,11 @@ class MineMap private constructor(val mapSize: MapSize, private val cellList: Li
             }
             return MineMap(mapSize, cells)
         }
+
+        fun randomMap(mapSize: MapSize, mineCount: Int): MineMap {
+            require(mineCount in 1..mapSize.area)
+            val mineIndices = (0 until mapSize.area).shuffled().subList(0, mineCount)
+            return build(mapSize) { position -> mapSize.indexOf(position) in mineIndices }
+        }
     }
 }
