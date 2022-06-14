@@ -1,7 +1,10 @@
 package domain
 
-class BoardInfo(val height: Int, val width: Int, private val mines: Mines) {
-    fun isMineAt(row: Int, col: Int): Boolean {
-        return mines.contains(row, col)
+class BoardInfo(val boardHeight: Int, boardWidth: Int, private val mines: Mines) {
+
+    val boardItems = List(boardHeight) { row ->
+        BoardRow(List(boardWidth) { col ->
+            BoardItem.getItemType(mines.contains(row, col))
+        })
     }
 }
