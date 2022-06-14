@@ -30,7 +30,9 @@ open class IntInputParser(private val range: IntRange = Int.MIN_VALUE..Int.MAX_V
 
         private fun String?.parseToInt(): ParseResult<Int> {
             return try {
-                val intValue = this?.toInt() ?: return ParseResult.Error("null String")
+                val intValue = this?.trim()
+                    ?.toInt()
+                    ?: return ParseResult.Error("null String")
                 ParseResult.Value(intValue)
             } catch (e: NumberFormatException) {
                 ParseResult.Error(e.message ?: "Not a number")
