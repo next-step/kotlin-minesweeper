@@ -1,3 +1,3 @@
 package domain
 
-data class MinePosition(private val row: Int, private val col: Int)
+data class MinePosition(val row: Int, val col: Int)

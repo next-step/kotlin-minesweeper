@@ -1,6 +1,7 @@
 package view
 
 import domain.BoardInfo
+import domain.ItemType
 
 object PrintView {
     private const val MESSAGE_FOR_HEIGHT = "높이를 입력하세요"
@@ -24,15 +25,21 @@ object PrintView {
 
     fun printMineBoard(boardInfo: BoardInfo) {
         repeat(boardInfo.height) { height ->
-            repeat(boardInfo.width) { width ->
-                if (boardInfo.mines.contains(height, width)) {
-                    print(MINE_CHAR)
-                } else {
-                    print(NORMAL_CHAR)
-                }
-                print(BLANK)
-            }
+            printRowInfo(boardInfo, height)
+
             println()
         }
+    }
+
+    private fun printRowInfo(boardInfo: BoardInfo, row: Int) {
+        repeat(boardInfo.width) {
+            printMineOrNormal(boardInfo.isMineAt(row, it))
+
+            print(BLANK)
+        }
+    }
+
+    private fun printMineOrNormal(isMine: Boolean) {
+        print(ItemType.getDisplay(isMine))
     }
 }
