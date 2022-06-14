@@ -1,3 +1,4 @@
+import domain.MinePosition
 import view.InputView
 import view.PrintView
 import kotlin.random.Random
@@ -15,19 +16,18 @@ class MineController {
 
     //TODO 지뢰 위치를담는 클래스 만들기
     //TODO 지뢰들을 담는 클래스 만들기
-    //TODO 지뢰 위치를 만드는 역할 분리
-    private fun makeMinePosition(height: Int, width: Int, mineCount: Int): Set<Pair<Int, Int>> {
+    private fun makeMinePosition(height: Int, width: Int, mineCount: Int): Set<MinePosition> {
         return List(mineCount) {
             val row = Random.nextInt(height)
             val col = Random.nextInt(width)
-            row to col
+            MinePosition(row, col)
         }.toSet()
     }
 
-    private fun printMineBoard(boardHeight: Int, boardWidth: Int, mines: Set<Pair<Int, Int>>) {
+    private fun printMineBoard(boardHeight: Int, boardWidth: Int, mines: Set<MinePosition>) {
         repeat(boardHeight) { height ->
             repeat(boardWidth) { width ->
-                if (mines.contains(height to width)) {
+                if (mines.contains(MinePosition(height, width))) {
                     print("X")
                 } else {
                     print("O")
