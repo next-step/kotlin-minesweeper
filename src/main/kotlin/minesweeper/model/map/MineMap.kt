@@ -5,7 +5,7 @@ import minesweeper.model.map.coordinate.MapArea
 import minesweeper.model.map.coordinate.Position
 import minesweeper.utils.toInt
 
-class MineMap private constructor(val mapArea: MapArea, private val cellList: List<Cell>) :
+class MineMap private constructor(private val mapArea: MapArea, private val cellList: List<Cell>) :
     List<Cell> by cellList, Area by mapArea {
 
     val cellCount: Int by lazy { this.count() }
@@ -16,11 +16,9 @@ class MineMap private constructor(val mapArea: MapArea, private val cellList: Li
 
         fun build(mapArea: MapArea, isMineCell: (Position) -> Boolean): MineMap {
 
-            val cellConstructorList = listOf(Cell::Safe, Cell::Mine)
             val cells = List(mapArea.area) { index ->
                 val position = mapArea[index]
-                val isThisCellMine = isMineCell(position)
-                cellConstructorList[isThisCellMine.toInt()](position)
+                createCell(position, isMineCell(position))
             }
             return MineMap(mapArea, cells)
         }
@@ -29,6 +27,12 @@ class MineMap private constructor(val mapArea: MapArea, private val cellList: Li
             require(mineCount in 1..mapArea.area)
             val mineIndices = (0 until mapArea.area).shuffled().subList(0, mineCount)
             return build(mapArea) { position -> mapArea.indexOf(position) in mineIndices }
+        }
+
+        private fun createCell(position: Position, isMineCell: Boolean): Cell {
+            val cellConstructorList = listOf(Cell::Safe, Cell::Mine)
+            val constructorIndex = isMineCell.toInt()
+            return cellConstructorList[constructorIndex](position)
         }
     }
 }
