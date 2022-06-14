@@ -18,9 +18,11 @@ class MineController(private val mineGenerator: MineGenerator) {
     }
 
     private fun makeMinePosition(height: Int, width: Int, mineCount: Int): Mines {
-        return Mines(List(mineCount) {
-            mineGenerator.generateMine(height, width)
-        }.toSet())
+        return Mines(
+            List(mineCount) {
+                mineGenerator.generateMine(height, width)
+            }.toSet()
+        )
     }
 
     private fun getHeightFromUser(): Int {
