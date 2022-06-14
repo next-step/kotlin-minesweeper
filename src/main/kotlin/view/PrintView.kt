@@ -30,7 +30,7 @@ object PrintView {
 
     private fun printRowInfo(boardInfo: BoardInfo, row: Int) {
         val eachRow = boardInfo.boardItems[row]
-        val rowInfoFormat = eachRow.joinToString(BLANK) { it.display }
+        val rowInfoFormat = eachRow.boardRow.joinToString(BLANK) { it.display }
         print(rowInfoFormat)
     }
 }

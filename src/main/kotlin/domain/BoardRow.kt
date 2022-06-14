@@ -1,3 +1,7 @@
 package domain
 
-class BoardRow(private val boardItems: List<BoardItem>): List<BoardItem> by boardItems
+class BoardRow(height: Int, width: Int, mines: Mines) {
+    val boardRow = List(width) { col ->
+        BoardItem.getItemType(mines.contains(height, col))
+    }
+}
