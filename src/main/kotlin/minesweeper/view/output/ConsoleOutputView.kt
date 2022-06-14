@@ -13,18 +13,19 @@ object ConsoleOutputView : OutputView {
 
     private fun MineMap.print() {
         this.forEach { cell ->
-            val isEndOfRow = (cell.position.column + 1) % mapArea.width == 0
-            cell.print(isEndOfRow)
+            cell.print(this)
         }
         println()
     }
 
-    private fun Cell.print(isEdgeOfRow: Boolean = false) {
+    private fun Cell.isAtTheEndOfRow(mineMap: MineMap): Boolean = (this.column + 1) % mineMap.width == 0
+
+    private fun Cell.print(mineMap: MineMap) {
         when (this) {
             is Cell.MineCell -> print("*")
             is Cell.SafeCell -> print("C")
         }
-        if (isEdgeOfRow) {
+        if (this.isAtTheEndOfRow(mineMap)) {
             println()
         }
     }

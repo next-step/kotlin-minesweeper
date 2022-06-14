@@ -1,3 +1,8 @@
 package minesweeper.model.map.coordinate
 
-data class Position(val row: Int, val column: Int)
+interface CellCoordinate {
+    val row: Int
+    val column: Int
+}
+
+data class Position(override val row: Int, override val column: Int) : CellCoordinate

@@ -1,12 +1,11 @@
 package minesweeper.model.map
 
+import minesweeper.model.map.coordinate.CellCoordinate
 import minesweeper.model.map.coordinate.Position
 
-sealed interface Cell {
+sealed class Cell(open val position: Position) : CellCoordinate by position {
 
-    val position: Position
+    data class MineCell(override val position: Position) : Cell(position)
 
-    data class MineCell(override val position: Position) : Cell
-
-    data class SafeCell(override val position: Position) : Cell
+    data class SafeCell(override val position: Position) : Cell(position)
 }
