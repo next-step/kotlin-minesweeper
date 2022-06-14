@@ -1,11 +1,10 @@
 import domain.BoardInfo
-import domain.MinePosition
+import domain.MineGenerator
 import domain.Mines
 import view.InputView
 import view.PrintView
-import kotlin.random.Random
 
-class MineController {
+class MineController(private val mineGenerator: MineGenerator) {
 
     fun run() {
         val height = getHeightFromUser()
@@ -13,16 +12,14 @@ class MineController {
         val mine = getMineCountFromUser()
         val mines = makeMinePosition(height, width, mine)
 
-        val boardInfo = BoardInfo(height,width, mines)
+        val boardInfo = BoardInfo(height, width, mines)
 
         PrintView.printMineBoard(boardInfo)
     }
 
     private fun makeMinePosition(height: Int, width: Int, mineCount: Int): Mines {
         return Mines(List(mineCount) {
-            val row = Random.nextInt(height)
-            val col = Random.nextInt(width)
-            MinePosition(row, col)
+            mineGenerator.generateMine(height, width)
         }.toSet())
     }
 
