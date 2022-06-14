@@ -22,8 +22,8 @@ object ConsoleOutputView : OutputView {
 
     private fun Cell.print(mineMap: MineMap) {
         when (this) {
-            is Cell.MineCell -> print("*")
-            is Cell.SafeCell -> print("C")
+            is Cell.Mine -> print("*")
+            is Cell.Safe -> print("C")
         }
         if (this.isAtTheEndOfRow(mineMap)) {
             println()
