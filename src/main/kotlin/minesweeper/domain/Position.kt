@@ -1,6 +1,3 @@
 package minesweeper.domain
 
-class Position(
-    private val width: Int,
-    private val height: Int
-)
+class Position(val width: Int, val height: Int)
