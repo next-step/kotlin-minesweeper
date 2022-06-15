@@ -1,8 +1,8 @@
 package minesweeper.model.map.coordinate
 
 interface Area {
-    val width: Int
-    val height: Int
-    val area: Int
-        get() = width * height
+    val columnCount: Int
+    val rowCount: Int
+    val cellCount: Int
+        get() = columnCount * rowCount
 }

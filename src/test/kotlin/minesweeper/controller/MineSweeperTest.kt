@@ -15,7 +15,7 @@ internal class MineSweeperTest {
 
         // given
         val mapSize = MapArea(10, 10)
-        val expectedOutput = "*".repeat(mapSize.area)
+        val expectedOutput = "*".repeat(mapSize.cellCount)
 
         val map = MineMap.build(mapSize) { true } // 10* 10 , map filled with mines
 

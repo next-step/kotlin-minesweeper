@@ -18,7 +18,7 @@ object ConsoleOutputView : OutputView {
         println()
     }
 
-    private fun Cell.isAtTheEndOfRow(mineMap: MineMap): Boolean = (this.column + 1) % mineMap.width == 0
+    private fun Cell.isAtTheEndOfRow(mineMap: MineMap): Boolean = (this.column + 1) % mineMap.columnCount == 0
 
     private fun Cell.print(mineMap: MineMap) {
         when (this) {

@@ -8,7 +8,6 @@ import minesweeper.utils.toInt
 class MineMap private constructor(private val mapArea: MapArea, private val cellList: List<Cell>) :
     List<Cell> by cellList, Area by mapArea {
 
-    val cellCount: Int by lazy { this.count() }
     val mineCount: Int by lazy { this.count { it is Cell.Mine } }
     val safeCellCount: Int by lazy { this.count { it is Cell.Safe } }
 
@@ -20,8 +19,8 @@ class MineMap private constructor(private val mapArea: MapArea, private val cell
         )
 
         fun randomMap(mapArea: MapArea, mineCount: Int): MineMap {
-            require(mineCount in 1..mapArea.area)
-            val mineIndices = (0 until mapArea.area).shuffled().subList(0, mineCount)
+            require(mineCount in 1..mapArea.cellCount)
+            val mineIndices = (0 until mapArea.cellCount).shuffled().subList(0, mineCount)
             return build(mapArea) { position -> mapArea.indexOf(position) in mineIndices }
         }
 
