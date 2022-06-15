@@ -1,6 +1,7 @@
 package minesweeper.domain.board
 
 import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -22,6 +23,11 @@ internal class MineBoardTest {
         assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("number of mines can't exceed the size of board.")
+    }
+
+    @Test
+    fun `지뢰 보드는 지뢰와 빈 공간으로 모두 채워진다`() {
+        TODO()
     }
 
     companion object {
