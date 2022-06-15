@@ -1,6 +1,7 @@
 package controller
 
-import domain.MineField
+import domain.field.FieldInfo
+import domain.field.Field
 import view.InputView
 import view.OutputView
 
@@ -10,9 +11,13 @@ class MineSweeper {
         val fieldWidth = InputView.inputWidth()
         val mineCount = InputView.inputMineCount()
 
-        val fieldInfo = MineField.FieldInfo(fieldHeight, fieldWidth, mineCount)
-        val mineField = MineField().buildField(fieldInfo)
+        val fieldInfo = FieldInfo(fieldHeight, fieldWidth, mineCount)
+        val mineField = Field().buildField(fieldInfo)
         OutputView.printMineField(mineField)
     }
+}
+
+fun main(){
+    val a = MineSweeper().start()
 }
 
