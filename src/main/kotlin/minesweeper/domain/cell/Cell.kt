@@ -5,6 +5,6 @@ sealed class Cell(
     y: Int
 ) {
     init {
-        require(x > 0 && y > 0) { "cell position must be positive." }
+        require(x >= 0 && y >= 0) { "cell position must be zero or positive." }
     }
 }

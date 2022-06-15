@@ -13,11 +13,11 @@ internal class CellTest {
     fun `모든 공간의 위치 x, y 는 음수일 수 없다`(x: Int, y: Int) {
         assertThatThrownBy { Empty(x, y) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("cell position must be positive.")
+            .hasMessage("cell position must be zero or positive.")
 
         assertThatThrownBy { Mine(x, y) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("cell position must be positive.")
+            .hasMessage("cell position must be zero or positive.")
     }
 
     companion object {
@@ -25,7 +25,9 @@ internal class CellTest {
         fun `위치 좌표에 음수가 존재하는 케이스`() = Stream.of(
             Arguments.of(1, -1),
             Arguments.of(-1, 1),
-            Arguments.of(-1, -1)
+            Arguments.of(-1, -1),
+            Arguments.of(0, -1),
+            Arguments.of(-1, 0),
         )
     }
 }
