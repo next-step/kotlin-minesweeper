@@ -1,9 +1,11 @@
 package domain
 
-import kotlin.random.Random
+class RandomMineGenerator(private val height: Int, private val width: Int) : MineGenerator {
+    private val allMines = List(height * width) {
+        MinePosition(it / width, it % width)
+    }.shuffled().toMutableList()
 
-class RandomMineGenerator : MineGenerator {
-    override fun generateMine(height: Int, width: Int): MinePosition {
-        return MinePosition(Random.nextInt(height), Random.nextInt(width))
+    override fun generateMine(): MinePosition {
+        return allMines.removeLast()
     }
 }

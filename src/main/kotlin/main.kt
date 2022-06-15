@@ -1,8 +1,5 @@
-import domain.RandomMineGenerator
-
 fun main() {
-    val randomMineGenerator = RandomMineGenerator()
-    val mineController = MineController(randomMineGenerator)
+    val mineController = MineController()
 
     mineController.run()
 }
