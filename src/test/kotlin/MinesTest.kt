@@ -1,4 +1,5 @@
-import domain.*
+import domain.MinePosition
+import domain.Mines
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

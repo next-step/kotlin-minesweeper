@@ -6,7 +6,7 @@ import view.PrintView
 
 class MineController {
 
-    private lateinit var mineGenerator : RandomMineGenerator
+    private lateinit var mineGenerator: RandomMineGenerator
 
     fun run() {
         val height = getHeightFromUser()
@@ -22,8 +22,6 @@ class MineController {
     }
 
     private fun makeMinePosition(mineCount: Int): Mines {
-
-
         return Mines(
             List(mineCount) {
                 mineGenerator.generateMine()
