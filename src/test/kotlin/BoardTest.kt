@@ -1,10 +1,6 @@
 import domain.Board
-import domain.BoardItem
-import domain.BoardRow
-import domain.BoardRows
 import domain.MinePosition
 import domain.Mines
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
