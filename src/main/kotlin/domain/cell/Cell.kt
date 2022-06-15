@@ -1,4 +1,4 @@
-package domain.Cell
+package domain.cell
 
 interface Cell {
     val row: Int

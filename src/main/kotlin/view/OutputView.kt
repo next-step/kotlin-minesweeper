@@ -1,6 +1,6 @@
 package view
 
-import domain.Cell.Cell
+import domain.cell.Cell
 
 object OutputView {
     fun printMineField(mineField: List<List<Cell>>) {
