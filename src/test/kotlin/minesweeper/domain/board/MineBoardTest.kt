@@ -1,5 +1,8 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Empty
+import minesweeper.domain.cell.Mine
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,7 +30,20 @@ internal class MineBoardTest {
 
     @Test
     fun `지뢰 보드는 지뢰와 빈 공간으로 모두 채워진다`() {
-        TODO()
+        // given
+        val width = 2
+        val height = 5
+        val numberOfMines = 5
+        val expectedNumberOfEmpty = width * height - numberOfMines
+
+        // when
+        val mineBoard = MineBoard.of(width, height, numberOfMines)
+        val countOfEmpty = mineBoard.board.count { it is Empty }
+        val countOfMine = mineBoard.board.count { it is Mine }
+
+        // then
+        assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
+        assertThat(countOfMine).isEqualTo(numberOfMines)
     }
 
     companion object {
