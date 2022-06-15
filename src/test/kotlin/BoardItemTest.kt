@@ -8,7 +8,7 @@ class BoardItemTest {
         val isMine = true
         val retrieve = BoardItem.getItemType(isMine)
 
-        assertThat(retrieve).isEqualTo(BoardItem.MINE)
+        assertThat(retrieve is BoardItem.Mine).isTrue
     }
 
     @Test
@@ -16,6 +16,6 @@ class BoardItemTest {
         val isMine = false
         val retrieve = BoardItem.getItemType(isMine)
 
-        assertThat(retrieve).isEqualTo(BoardItem.NORMAL)
+        assertThat(retrieve is BoardItem.Normal).isTrue
     }
 }
