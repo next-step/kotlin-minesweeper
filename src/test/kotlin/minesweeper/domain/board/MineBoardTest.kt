@@ -11,7 +11,7 @@ internal class MineBoardTest {
     @ParameterizedTest
     @MethodSource("지뢰 보드의 높이, 너비, 지뢰 개수 중 음수가 존재하는 케이스")
     fun `지뢰 보드의 높이와 너비, 지뢰 개수는 음수일 수 없다`(width: Int, height: Int, numberOfMines: Int) {
-        assertThatThrownBy { MineBoard(width, height, numberOfMines) }
+        assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("width, height and number of mines must be positive.")
     }
@@ -19,7 +19,7 @@ internal class MineBoardTest {
     @ParameterizedTest
     @MethodSource("지뢰 개수가 지뢰 보드의 사이즈를 초과하는 케이스")
     fun `지뢰 보드의 사이즈를 초과하는 지뢰 개수를 가질 수 없다`(width: Int, height: Int, numberOfMines: Int) {
-        assertThatThrownBy { MineBoard(width, height, numberOfMines) }
+        assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("number of mines can't exceed the size of board.")
     }
