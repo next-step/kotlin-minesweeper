@@ -14,8 +14,8 @@ class MineBoard private constructor(
         private set
 
     init {
-        require(width > 0 && height > 0 && numberOfMines > 0) { "width, height and number of mines must be positive." }
-        require(size >= numberOfMines) { "number of mines can't exceed the size of board." }
+        require(width > 0 && height > 0) { "width and height must be positive." }
+        require(numberOfMines in (0..size)) { "number of mines must be within range of 0 ~ $size" }
         build()
     }
 

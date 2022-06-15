@@ -13,19 +13,20 @@ import java.util.stream.Stream
 internal class MineBoardTest {
 
     @ParameterizedTest
-    @MethodSource("지뢰 보드의 높이, 너비, 지뢰 개수 중 음수가 존재하는 케이스")
-    fun `지뢰 보드의 높이와 너비, 지뢰 개수는 음수일 수 없다`(width: Int, height: Int, numberOfMines: Int) {
-        assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
+    @MethodSource("지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스")
+    fun `지뢰 보드의 높이와 너비는 음수일 수 없다`(width: Int, height: Int) {
+        assertThatThrownBy { MineBoard.of(width, height, DEFAULT_NUMBER_OF_MINES) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("width, height and number of mines must be positive.")
+            .hasMessage("width and height must be positive.")
     }
 
     @ParameterizedTest
-    @MethodSource("지뢰 개수가 지뢰 보드의 사이즈를 초과하는 케이스")
-    fun `지뢰 보드의 사이즈를 초과하는 지뢰 개수를 가질 수 없다`(width: Int, height: Int, numberOfMines: Int) {
+    @MethodSource("지뢰 개수가 지뢰 보드의 범위를 벗어나는 케이스")
+    fun `지뢰 개수는 지뢰 보드의 사이즈 범위 내에 있어야 한다`(width: Int, height: Int, numberOfMines: Int) {
+        val size = width * height
         assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("number of mines can't exceed the size of board.")
+            .hasMessage("number of mines must be within range of 0 ~ $size")
     }
 
     @Test
@@ -47,22 +48,21 @@ internal class MineBoardTest {
     }
 
     companion object {
+        private const val DEFAULT_NUMBER_OF_MINES = 10
+
         @JvmStatic
-        fun `지뢰 보드의 높이, 너비, 지뢰 개수 중 음수가 존재하는 케이스`() = Stream.of(
-            Arguments.of(-10, 10, 10),
-            Arguments.of(10, -10, 10),
-            Arguments.of(10, 10, -10),
-            Arguments.of(-10, -10, 10),
-            Arguments.of(10, -10, -10),
-            Arguments.of(-10, 10, -10),
-            Arguments.of(-10, -10, -10)
+        fun `지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스`() = Stream.of(
+            Arguments.of(-10, 10),
+            Arguments.of(10, -10),
+            Arguments.of(-10, -10)
         )
 
         @JvmStatic
-        fun `지뢰 개수가 지뢰 보드의 사이즈를 초과하는 케이스`() = Stream.of(
+        fun `지뢰 개수가 지뢰 보드의 범위를 벗어나는 케이스`() = Stream.of(
             Arguments.of(1, 1, 2),
             Arguments.of(5, 5, 50),
             Arguments.of(10, 10, 101),
+            Arguments.of(10, 10, -1),
         )
     }
 }
