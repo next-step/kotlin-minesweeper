@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 
 class BoardItemTest {
     @Test
-    fun `지뢰일때 지뢰타입이 맞는지 테스트`() {
+    fun `지뢰값을 true로 줬을때 지뢰 enum값이 넘어와야함`() {
         val isMine = true
         val retrieve = BoardItem.getItemType(isMine)
 
@@ -12,7 +12,7 @@ class BoardItemTest {
     }
 
     @Test
-    fun `지뢰가 아닐때 일반타입이 맞는지 테스트`() {
+    fun `지뢰값을 false로 줬을때 일반 enum값이 넘어와야함`() {
         val isMine = false
         val retrieve = BoardItem.getItemType(isMine)
 
