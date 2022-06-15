@@ -11,19 +11,19 @@ internal class MineMapTest {
 
     @ParameterizedTest
     @CsvSource(
-        "1,1,1", // width, height, mineCount
+        "1,1,1", // rowCount, columnCount, mineCount
         "1,2,2",
         "10,10,10",
         "5,5,5"
     )
-    fun `높이 x 너비를 갖는 맵 생성 테스트`(width: Int, height: Int, expectedMineCount: Int) {
+    fun `높이 x 너비를 갖는 맵 생성 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
 
         // given
-        val mapArea = MapArea(width, height)
+        val mapArea = MapArea(rowCount, columnCount)
 
         // when
         val actualMap = MineMap.build(mapArea) { position -> mapArea.indexOf(position) < expectedMineCount }
-        val expectedCellCount = width * height
+        val expectedCellCount = rowCount * columnCount
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
         // then
@@ -36,28 +36,28 @@ internal class MineMapTest {
 
     @ParameterizedTest
     @CsvSource(
-        "0,100",
+        "0,100", // rowCount, columnCount,
         "100,0",
         "0,0"
     )
-    fun `맵 크기가 0 이면 에러`(width: Int, height: Int) {
-        assertThrows<IllegalArgumentException> { MineMap.build(MapArea(width, height)) { true } }
+    fun `맵 크기가 0 이면 에러`(rowCount: Int, columnCount: Int) {
+        assertThrows<IllegalArgumentException> { MineMap.build(MapArea(rowCount, columnCount)) { true } }
     }
 
     @ParameterizedTest
     @CsvSource(
-        "1,1,1", // width, height, mineCount
+        "1,1,1", // rowCount, columnCount, mineCount
         "1,2,2",
         "10,10,10",
         "5,5,5"
     )
-    fun `랜던 맵 생성 테스트`(width: Int, height: Int, expectedMineCount: Int) {
+    fun `랜던 맵 생성 테스트`(rowCount: Int, height: Int, expectedMineCount: Int) {
         // given
-        val mapArea = MapArea(width, height)
+        val mapArea = MapArea(rowCount, height)
 
         // when
         val actualMap = MineMap.randomMap(mapArea, expectedMineCount)
-        val expectedCellCount = width * height
+        val expectedCellCount = rowCount * height
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
         // then
@@ -70,14 +70,14 @@ internal class MineMapTest {
 
     @ParameterizedTest
     @CsvSource(
-        "1,1,0", // width, height, mineCount
+        "1,1,0", // rowCount, columnCount, mineCount
         "1,2,-1",
         "10,10,101",
         "5,5,1000"
     )
-    fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(width: Int, height: Int, expectedMineCount: Int) {
+    fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
         // given
-        val mapArea = MapArea(width, height)
+        val mapArea = MapArea(rowCount, columnCount)
         assertThrows<IllegalArgumentException> { MineMap.randomMap(mapArea, expectedMineCount) }
     }
 }

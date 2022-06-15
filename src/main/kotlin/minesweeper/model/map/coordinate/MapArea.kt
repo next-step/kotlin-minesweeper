@@ -1,10 +1,10 @@
 package minesweeper.model.map.coordinate
 
-data class MapArea(override val columnCount: Int, override val rowCount: Int) : Area, Iterable<Position> {
+data class MapArea(override val rowCount: Int, override val columnCount: Int) : Area, Iterable<Position> {
 
     init {
-        require(columnCount > 0)
         require(rowCount > 0)
+        require(columnCount > 0)
     }
 
     operator fun get(index: Int): Position = Position(row = index / this.columnCount, column = index % this.columnCount)

@@ -25,6 +25,6 @@ object ConsoleMineMapBuilder : MineMapBuilder {
         val mineCountRange = MIN_COUNT_OF_MINE..maxMineCount
 
         val mineCount = ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
-        return MineMap.randomMap(MapArea(columnCount, rowCount), mineCount)
+        return MineMap.randomMap(MapArea(rowCount, columnCount), mineCount)
     }
 }
