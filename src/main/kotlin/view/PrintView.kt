@@ -1,6 +1,6 @@
 package view
 
-import domain.BoardInfo
+import domain.Board
 
 object PrintView {
     private const val MESSAGE_FOR_HEIGHT = "높이를 입력하세요"
@@ -20,7 +20,7 @@ object PrintView {
         println(MESSAGE_FOR_MINE)
     }
 
-    fun printMineBoard(boardInfo: BoardInfo) {
+    fun printMineBoard(boardInfo: Board) {
         repeat(boardInfo.boardHeight) { height ->
             printRowInfo(boardInfo, height)
 
@@ -28,9 +28,9 @@ object PrintView {
         }
     }
 
-    private fun printRowInfo(boardInfo: BoardInfo, row: Int) {
-        val eachRow = boardInfo.boardItems[row]
-        val rowInfoFormat = eachRow.boardRow.joinToString(BLANK) { it.display }
+    private fun printRowInfo(boardInfo: Board, row: Int) {
+        val eachRow = boardInfo.rows[row]
+        val rowInfoFormat = eachRow.cells.joinToString(BLANK) { it.display }
         print(rowInfoFormat)
     }
 }

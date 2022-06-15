@@ -20,7 +20,7 @@ class BoardRowsTest {
             listOf(row0, row1, row2)
         )
 
-        assertThat(rows[0].boardRow[3]).isEqualTo(BoardItem.MINE)
-        assertThat(rows[2].boardRow[7]).isEqualTo(BoardItem.MINE)
+        assertThat(rows[0].cells[3]).isEqualTo(BoardItem.MINE)
+        assertThat(rows[2].cells[7]).isEqualTo(BoardItem.MINE)
     }
 }

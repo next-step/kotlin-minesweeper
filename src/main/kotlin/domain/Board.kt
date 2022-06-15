@@ -1,8 +1,8 @@
 package domain
 
-class BoardInfo(val boardHeight: Int, boardWidth: Int, private val mines: Mines) {
+class Board(val boardHeight: Int, boardWidth: Int, private val mines: Mines) {
 
-    val boardItems = BoardRows(
+    val rows = BoardRows(
         List(boardHeight) { row ->
             BoardRow(row, boardWidth, mines)
         }

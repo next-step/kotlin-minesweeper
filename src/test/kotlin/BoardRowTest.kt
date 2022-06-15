@@ -16,7 +16,7 @@ class BoardRowTest {
         )
 
         val row = BoardRow(0, 10, mines)
-        assertThat(row.boardRow[3]).isEqualTo(BoardItem.MINE)
-        assertThat(row.boardRow[7]).isEqualTo(BoardItem.MINE)
+        assertThat(row.cells[3]).isEqualTo(BoardItem.MINE)
+        assertThat(row.cells[7]).isEqualTo(BoardItem.MINE)
     }
 }

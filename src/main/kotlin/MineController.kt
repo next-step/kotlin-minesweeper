@@ -1,4 +1,4 @@
-import domain.BoardInfo
+import domain.Board
 import domain.MineGenerator
 import domain.Mines
 import view.InputView
@@ -12,7 +12,7 @@ class MineController(private val mineGenerator: MineGenerator) {
         val mine = getMineCountFromUser()
         val mines = makeMinePosition(height, width, mine)
 
-        val boardInfo = BoardInfo(height, width, mines)
+        val boardInfo = Board(height, width, mines)
 
         PrintView.printMineBoard(boardInfo)
     }
