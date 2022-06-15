@@ -1,6 +1,6 @@
 package minesweeper.game
 
-import minesweeper.domain.board.MineBoard
+import minesweeper.domain.board.mineBoard
 import minesweeper.view.ViewResolver
 
 class MineSweeperController(
@@ -8,12 +8,12 @@ class MineSweeperController(
 ) {
 
     fun start() {
-        val mineBoardRequest = viewResolver.inputMineBoardRequest()
-        val mineBoard = MineBoard.of(
-            width = mineBoardRequest.width,
-            height = mineBoardRequest.height,
-            numberOfMines = mineBoardRequest.numberOfMines
-        )
+        val request = viewResolver.inputMineBoardRequest()
+        val mineBoard = mineBoard {
+            width(request.width)
+            height(request.height)
+            numberOfMines(request.numberOfMines)
+        }
         viewResolver.printStartOfGame(mineBoard)
     }
 }

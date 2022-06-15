@@ -15,7 +15,7 @@ internal class MineBoardTest {
     @ParameterizedTest
     @MethodSource("지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스")
     fun `지뢰 보드의 높이와 너비는 음수일 수 없다`(width: Int, height: Int) {
-        assertThatThrownBy { MineBoard.of(width, height, DEFAULT_NUMBER_OF_MINES) }
+        assertThatThrownBy { newMineBoard(width, height, DEFAULT_NUMBER_OF_MINES) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("width and height must be positive.")
     }
@@ -24,7 +24,7 @@ internal class MineBoardTest {
     @MethodSource("지뢰 개수가 지뢰 보드의 범위를 벗어나는 케이스")
     fun `지뢰 개수는 지뢰 보드의 사이즈 범위 내에 있어야 한다`(width: Int, height: Int, numberOfMines: Int) {
         val size = width * height
-        assertThatThrownBy { MineBoard.of(width, height, numberOfMines) }
+        assertThatThrownBy { newMineBoard(width, height, numberOfMines) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("number of mines must be within range of 0 ~ $size")
     }
@@ -38,7 +38,7 @@ internal class MineBoardTest {
         val expectedNumberOfEmpty = width * height - numberOfMines
 
         // when
-        val mineBoard = MineBoard.of(width, height, numberOfMines)
+        val mineBoard = newMineBoard(width, height, numberOfMines)
         val countOfEmpty = mineBoard.board.count { it is Empty }
         val countOfMine = mineBoard.board.count { it is Mine }
 
@@ -49,6 +49,12 @@ internal class MineBoardTest {
 
     companion object {
         private const val DEFAULT_NUMBER_OF_MINES = 10
+
+        private fun newMineBoard(width: Int, height: Int, numberOfMines: Int) = mineBoard {
+            width(width)
+            height(height)
+            numberOfMines(numberOfMines)
+        }
 
         @JvmStatic
         fun `지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스`() = Stream.of(

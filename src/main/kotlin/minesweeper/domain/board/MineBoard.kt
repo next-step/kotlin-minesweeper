@@ -4,7 +4,7 @@ import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 
-class MineBoard private constructor(
+class MineBoard(
     val width: Int,
     val height: Int,
     val numberOfMines: Int
@@ -33,8 +33,8 @@ class MineBoard private constructor(
     }
 
     private fun Int.toShuffledMineIndices(numberOfMines: Int) = (0 until this).shuffled().subList(0, numberOfMines)
+}
 
-    companion object {
-        fun of(width: Int, height: Int, numberOfMines: Int) = MineBoard(width, height, numberOfMines)
-    }
+fun mineBoard(block: MineBoardBuilder.() -> Unit): MineBoard {
+    return MineBoardBuilder().apply(block).build()
 }
