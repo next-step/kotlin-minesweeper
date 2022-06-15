@@ -1,36 +1,40 @@
 package domain
 
+import domain.Cell.Cell
+import domain.Cell.Empty
+import domain.Cell.Mine
+
 class MineField {
     data class FieldInfo(val height: Int, val width: Int, val mineCount: Int)
-    data class MinePosition(val mineRow: Int, val mineColumn: Int)
 
-    fun buildField(fieldInfo: FieldInfo): List<List<String>> {
-        val mineField = List(fieldInfo.height) { MutableList(fieldInfo.width) { EMPTY } }
-        val minePositions: MutableList<MinePosition> = mutableListOf()
+    fun buildField(fieldInfo: FieldInfo): List<List<Cell>> {
+        val field: List<MutableList<Cell>> = List(fieldInfo.height) { MutableList(fieldInfo.width) { Empty(0, 0) } }
+        val mines: List<Mine> = buildMines(mutableListOf(), fieldInfo)
 
-        while (minePositions.size != fieldInfo.mineCount) {
-            val mineRow = (1..fieldInfo.height).random()
-            val mineColumn = (1..fieldInfo.width).random()
-            val newMinePosition = MinePosition(mineRow, mineColumn)
-            if (newMinePosition !in minePositions) {
-                minePositions.add(newMinePosition)
-            }
-        }
-
-        mineField.forEachIndexed { i, row ->
-            row.forEachIndexed { j, column ->
-                if (MinePosition(i + 1, j + 1) in minePositions) {
-                    mineField[i][j] = MINE
+        return field.onEachIndexed { row, line ->
+            line.forEachIndexed { column, _ ->
+                if (Mine(row, column) in mines) {
+                    field[row][column] = Mine(row, column)
                 }
+                field[row][column] = Empty(row, column)
             }
-            row.toList()
+            line.toList()
         }
-
-        return mineField
     }
-    
-    companion object {
-        const val EMPTY = "C"
-        const val MINE = "*"
+
+    private fun buildMines(mines: MutableList<Mine>, fieldInfo: FieldInfo): List<Mine> {
+        while (mines.size != fieldInfo.mineCount) {
+            val mine = mineBuilder(fieldInfo.height, fieldInfo.width)
+            if (mine !in mines) {
+                mines.add(mine)
+            }
+        }
+        return mines.toList()
+    }
+
+    private fun mineBuilder(height: Int, width: Int): Mine {
+        val mineRow = (0 until height).random()
+        val mineColumn = (0 until width).random()
+        return Mine(mineRow, mineColumn)
     }
 }
