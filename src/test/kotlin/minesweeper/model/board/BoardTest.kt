@@ -1,13 +1,13 @@
-package minesweeper.model.map
+package minesweeper.model.board
 
-import minesweeper.model.map.coordinate.MapArea
+import minesweeper.model.board.coordinate.BoardArea
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-internal class MineMapTest {
+internal class BoardTest {
 
     @ParameterizedTest
     @CsvSource(
@@ -19,10 +19,10 @@ internal class MineMapTest {
     fun `높이 x 너비를 갖는 맵 생성 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
 
         // given
-        val mapArea = MapArea(rowCount, columnCount)
+        val boardArea = BoardArea(rowCount, columnCount)
 
         // when
-        val actualCells = MineMap.build(mapArea) { position -> mapArea.indexOf(position) < expectedMineCount }
+        val actualCells = Board.build(boardArea) { position -> boardArea.indexOf(position) < expectedMineCount }
             .cells
         val expectedCellCount = rowCount * columnCount
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
@@ -42,7 +42,7 @@ internal class MineMapTest {
         "0,0"
     )
     fun `맵 크기가 0 이면 에러`(rowCount: Int, columnCount: Int) {
-        assertThrows<IllegalArgumentException> { MineMap.build(MapArea(rowCount, columnCount)) { true } }
+        assertThrows<IllegalArgumentException> { Board.build(BoardArea(rowCount, columnCount)) { true } }
     }
 
     @ParameterizedTest
@@ -54,10 +54,10 @@ internal class MineMapTest {
     )
     fun `랜던 맵 생성 테스트`(rowCount: Int, height: Int, expectedMineCount: Int) {
         // given
-        val mapArea = MapArea(rowCount, height)
+        val boardArea = BoardArea(rowCount, height)
 
         // when
-        val actualCells = MineMap.randomMap(mapArea, expectedMineCount).cells
+        val actualCells = Board.randomBoard(boardArea, expectedMineCount).cells
         val expectedCellCount = rowCount * height
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
@@ -78,7 +78,7 @@ internal class MineMapTest {
     )
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
         // given
-        val mapArea = MapArea(rowCount, columnCount)
-        assertThrows<IllegalArgumentException> { MineMap.randomMap(mapArea, expectedMineCount) }
+        val boardArea = BoardArea(rowCount, columnCount)
+        assertThrows<IllegalArgumentException> { Board.randomBoard(boardArea, expectedMineCount) }
     }
 }

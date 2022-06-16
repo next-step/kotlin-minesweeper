@@ -1,11 +1,11 @@
 package minesweeper.view.input
 
-import minesweeper.model.MineMapBuilder
-import minesweeper.model.map.MineMap
-import minesweeper.model.map.coordinate.MapArea
+import minesweeper.model.BoardBuilder
+import minesweeper.model.board.Board
+import minesweeper.model.board.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
 
-object ConsoleMineMapBuilder : MineMapBuilder {
+object ConsoleBoardBuilder : BoardBuilder {
 
     private const val MESSAGE_FOR_INPUT_ROW_COUNT = "높이를 입력하세요."
     private const val MESSAGE_FOR_INPUT_COLUMN_COUNT = "너비를 입력하세요."
@@ -15,7 +15,7 @@ object ConsoleMineMapBuilder : MineMapBuilder {
     private const val MIN_COUNT_OF_COLUMN = 3
     private const val MIN_COUNT_OF_MINE = 1
 
-    override fun createNewMap(): MineMap {
+    override fun createNewBoard(): Board {
 
         val rowCount = ConsoleReader.read(MESSAGE_FOR_INPUT_ROW_COUNT, IntInputParser(minValue = MIN_COUNT_OF_ROW))
         val columnCount =
@@ -25,6 +25,6 @@ object ConsoleMineMapBuilder : MineMapBuilder {
         val mineCountRange = MIN_COUNT_OF_MINE..maxMineCount
 
         val mineCount = ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
-        return MineMap.randomMap(MapArea(rowCount, columnCount), mineCount)
+        return Board.randomBoard(BoardArea(rowCount, columnCount), mineCount)
     }
 }

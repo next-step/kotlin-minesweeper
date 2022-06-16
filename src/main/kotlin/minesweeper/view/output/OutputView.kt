@@ -1,8 +1,8 @@
 package minesweeper.view.output
 
-import minesweeper.model.map.MineMap
+import minesweeper.model.board.Board
 
 interface OutputView {
     fun printInitialMessage() {}
-    fun printMap(mineMap: MineMap)
+    fun printBoard(board: Board)
 }

@@ -1,6 +1,6 @@
-package minesweeper.model.map.coordinate
+package minesweeper.model.board.coordinate
 
-data class MapArea(override val rowCount: Int, override val columnCount: Int) : Area, Iterable<Position> {
+data class BoardArea(override val rowCount: Int, override val columnCount: Int) : Area, Iterable<Position> {
 
     init {
         require(rowCount > 0)
@@ -13,8 +13,8 @@ data class MapArea(override val rowCount: Int, override val columnCount: Int) : 
     override fun iterator() = object : Iterator<Position> {
         private var offset = 0
 
-        override fun hasNext(): Boolean = offset < this@MapArea.cellCount
+        override fun hasNext(): Boolean = offset < this@BoardArea.cellCount
 
-        override fun next(): Position = this@MapArea[offset++]
+        override fun next(): Position = this@BoardArea[offset++]
     }
 }

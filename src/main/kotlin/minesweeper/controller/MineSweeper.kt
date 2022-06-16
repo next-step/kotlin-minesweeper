@@ -1,16 +1,16 @@
 package minesweeper.controller
 
-import minesweeper.model.MineMapBuilder
+import minesweeper.model.BoardBuilder
 import minesweeper.view.output.OutputView
 
 class MineSweeper(
-    private val mineMapBuilder: MineMapBuilder,
+    private val boardBuilder: BoardBuilder,
     private val outputView: OutputView? = null
 ) {
 
     fun run() {
-        val map = mineMapBuilder.createNewMap()
+        val board = boardBuilder.createNewBoard()
         outputView?.printInitialMessage()
-        outputView?.printMap(map)
+        outputView?.printBoard(board)
     }
 }

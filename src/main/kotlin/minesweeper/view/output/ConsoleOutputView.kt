@@ -1,8 +1,8 @@
 package minesweeper.view.output
 
-import minesweeper.model.map.Cell
-import minesweeper.model.map.Cells
-import minesweeper.model.map.MineMap
+import minesweeper.model.board.Board
+import minesweeper.model.board.Cell
+import minesweeper.model.board.Cells
 
 object ConsoleOutputView : OutputView {
 
@@ -10,13 +10,13 @@ object ConsoleOutputView : OutputView {
 
     override fun printInitialMessage() = println(initialMessage)
 
-    override fun printMap(mineMap: MineMap) {
-        println(mineMap.toPrintableString())
+    override fun printBoard(board: Board) {
+        println(board.toPrintableString())
     }
 
-    private fun MineMap.toPrintableString(): String {
-        val mapArea = this.mapArea
-        return (0..mapArea.rowCount).mapNotNull(::cellsAtRowOrNull)
+    private fun Board.toPrintableString(): String {
+        val boardArea = this.boardArea
+        return (0..boardArea.rowCount).mapNotNull(::cellsAtRowOrNull)
             .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
     }
 
