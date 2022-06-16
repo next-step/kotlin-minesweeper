@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class MinesTest {
     @Test
-    fun `Mines에 넣어준 지뢰의 위치를 가지는지 체크하면 true가 나와야함`() {
+    fun `가진 지뢰의 위치가 일치하면 참값이 나온다`() {
         val mines = Mines(
             listOf(
                 MinePosition(0, 3),

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class BoardRowsTest {
     @Test
-    fun `넣어줬던 지뢰의 위치가 있는 곳을 꺼냈을때는 MINE 타입이 나와야함`() {
+    fun `지뢰의 위치를 지정하면 Mine이 나온다`() {
         val mines = Mines(
             listOf(
                 MinePosition(0, 3),

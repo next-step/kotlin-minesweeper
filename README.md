@@ -39,4 +39,4 @@
 - [x] sealed class에는 data클래스 적용
 - [x] 마인 클래스는 nearMineCount가 의미가 없으니 object로 활용
 - [x] BoardRow에 미사용 변수 제거
-- [ ] 테스트에는 로직을 노출하지 않기
+- [x] 테스트에는 로직을 노출하지 않기

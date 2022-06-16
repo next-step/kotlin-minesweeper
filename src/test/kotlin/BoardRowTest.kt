@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class BoardRowTest {
     @Test
-    fun `지뢰의 col위치와 같은 값을 가져왔을 때 MINE이 나와야함`() {
+    fun `Row에서 지뢰의 위치를 지정하면 Mine이 나온다`() {
         val mines = Mines(
             listOf(
                 MinePosition(0, 3),
