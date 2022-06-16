@@ -1,8 +1,8 @@
 package domain
 
-sealed class BoardItem(private var nearMineCount: Int) {
-    class Normal : BoardItem(0)
-    class Mine : BoardItem(0)
+sealed class BoardItem(private var nearMineCount: Int = 0) {
+    class Normal : BoardItem()
+    object Mine : BoardItem()
 
     fun increaseCount() {
         nearMineCount++
@@ -15,7 +15,7 @@ sealed class BoardItem(private var nearMineCount: Int) {
     companion object {
         fun getItemType(isMine: Boolean): BoardItem {
             return when (isMine) {
-                true -> Mine()
+                true -> Mine
                 false -> Normal()
             }
         }

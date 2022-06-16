@@ -36,7 +36,7 @@
 - [ ] MineController에 멤버변수 제거해보기
 - [x] 누락된 리뷰 (변수명 보드 제거) 반영하기
 - [x] 복잡한 조건문 따로 명명하여 이해하기 쉽게하기
-- [ ] sealed class에는 data클래스 적용
+- [x] sealed class에는 data클래스 적용
 - [ ] 마인 클래스는 nearMineCount가 의미가 없으니 object로 활용
 - [ ] BoardRow에 미사용 변수 제거
 - [ ] 테스트에는 로직을 노출하지 않기
