@@ -1,5 +1,6 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.board.random.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import org.assertj.core.api.Assertions.assertThat
@@ -15,7 +16,7 @@ internal class MineBoardTest {
     @ParameterizedTest
     @MethodSource("지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스")
     fun `지뢰 보드의 높이와 너비는 음수일 수 없다`(width: Int, height: Int) {
-        assertThatThrownBy { newMineBoard(width, height, DEFAULT_NUMBER_OF_MINES) }
+        assertThatThrownBy { newMineBoard(width, height, NUMBER_OF_MINES) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("width and height must be positive.")
     }
@@ -39,16 +40,34 @@ internal class MineBoardTest {
 
         // when
         val mineBoard = newMineBoard(width, height, numberOfMines)
-        val countOfEmpty = mineBoard.mines.count { it is Empty }
-        val countOfMine = mineBoard.mines.count { it is Mine }
+        val countOfEmpty = mineBoard.cells.count { it is Empty }
+        val countOfMine = mineBoard.cells.count { it is Mine }
 
         // then
         assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
         assertThat(countOfMine).isEqualTo(numberOfMines)
     }
 
+    @Test
+    fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
+        // given
+        val strategy = DefaultRandomMineStrategy().strategy()
+        val mineIndices = strategy(NUMBER_OF_CELLS, NUMBER_OF_MINES)
+
+        // when
+        val mineBoard = MineBoard(Board(WIDTH, HEIGHT), mineIndices)
+
+        // then
+        mineIndices.forEach { index ->
+            assertThat(mineBoard.cells[index]).isInstanceOf(Mine::class.java)
+        }
+    }
+
     companion object {
-        private const val DEFAULT_NUMBER_OF_MINES = 10
+        private const val WIDTH = 10
+        private const val HEIGHT = 10
+        private const val NUMBER_OF_CELLS = WIDTH * HEIGHT
+        private const val NUMBER_OF_MINES = 10
 
         private fun newMineBoard(width: Int, height: Int, numberOfMines: Int) = mineBoard {
             board {
@@ -56,6 +75,7 @@ internal class MineBoardTest {
                 height(height)
             }
             numberOfMines(numberOfMines)
+            mineStrategy(DefaultRandomMineStrategy().strategy())
         }
 
         @JvmStatic
