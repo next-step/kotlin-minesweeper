@@ -3,7 +3,6 @@ package minesweeper.model.board
 import minesweeper.model.board.coordinate.Area
 import minesweeper.model.board.coordinate.BoardArea
 import minesweeper.model.board.coordinate.Position
-import minesweeper.utils.toInt
 
 class Board private constructor(val boardArea: BoardArea, val cells: Cells) : Area by boardArea {
 
@@ -27,9 +26,10 @@ class Board private constructor(val boardArea: BoardArea, val cells: Cells) : Ar
         }
 
         private fun createCell(position: Position, isMineCell: Boolean): Cell {
-            val cellConstructorList = listOf(Cell::Safe, Cell::Mine)
-            val constructorIndex = isMineCell.toInt()
-            return cellConstructorList[constructorIndex](position)
+            if (isMineCell) {
+                return Cell.Mine(position)
+            }
+            return Cell.Safe(position)
         }
     }
 }
