@@ -28,15 +28,12 @@ open class IntInputParser(private val range: IntRange = Int.MIN_VALUE..Int.MAX_V
     companion object {
         private const val ERROR_MESSAGE_NO_NUMBER = "숫자로 입력해 주세요."
 
-        private fun String?.parseToInt(): ParseResult<Int> {
-            return try {
-                val intValue = this?.trim()
-                    ?.toInt()
-                    ?: return ParseResult.Error("null String")
-                ParseResult.Value(intValue)
-            } catch (e: NumberFormatException) {
-                ParseResult.Error(e.message ?: "Not a number")
-            }
+        private fun String?.parseToInt(): ParseResult<Int> = runCatching {
+            val intValue = this?.trim()?.toInt()
+            require(intValue != null)
+            ParseResult.Value(intValue)
+        }.getOrElse {
+            ParseResult.Error(it.message ?: ERROR_MESSAGE_NO_NUMBER)
         }
     }
 }
