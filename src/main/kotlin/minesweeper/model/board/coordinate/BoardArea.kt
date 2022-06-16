@@ -2,6 +2,8 @@ package minesweeper.model.board.coordinate
 
 data class BoardArea(override val rowCount: Int, override val columnCount: Int) : Area, Iterable<Position> {
 
+    val cellCount = this.rowCount * this.columnCount
+
     init {
         require(rowCount > 0)
         require(columnCount > 0)
