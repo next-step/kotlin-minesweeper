@@ -33,7 +33,7 @@
 
 ### todo list
 - [x] 투두리스트 구체적으로 작성하기
-- [ ] MineController에 멤버변수 제거해보기
+- [x] MineController에 멤버변수 제거해보기
 - [x] 누락된 리뷰 (변수명 보드 제거) 반영하기
 - [x] 복잡한 조건문 따로 명명하여 이해하기 쉽게하기
 - [x] sealed class에는 data클래스 적용
