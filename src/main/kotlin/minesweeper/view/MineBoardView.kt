@@ -13,8 +13,8 @@ object MineBoardView {
     }
 
     fun printMineBoard(mineBoard: MineBoard) {
-        mineBoard.board.forEachIndexed { index, cell ->
-            if (index % mineBoard.width == 0) {
+        mineBoard.mines.forEachIndexed { index, cell ->
+            if (index % mineBoard.board.width == 0) {
                 print("\n${cell.shape()} ")
             } else {
                 print("${cell.shape()} ")

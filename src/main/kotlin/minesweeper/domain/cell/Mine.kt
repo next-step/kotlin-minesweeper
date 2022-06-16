@@ -1,6 +1,5 @@
 package minesweeper.domain.cell
 
-data class Mine(
-    val x: Int,
-    val y: Int
-) : Cell(x, y)
+import minesweeper.domain.common.Position
+
+class Mine(position: Position) : Cell(position)

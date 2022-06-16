@@ -1,10 +1,14 @@
 package minesweeper.domain.cell
 
+import minesweeper.domain.common.Position
+
 sealed class Cell(
-    x: Int,
-    y: Int
+    private val position: Position
 ) {
+    val x get() = position.x
+    val y get() = position.y
+
     init {
-        require(x >= 0 && y >= 0) { "cell position must be zero or positive." }
+        require(position.x >= 0 && position.y >= 0) { "cell position must be zero or positive." }
     }
 }

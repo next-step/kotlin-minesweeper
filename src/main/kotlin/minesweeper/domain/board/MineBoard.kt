@@ -3,31 +3,29 @@ package minesweeper.domain.board
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.Position
 
 class MineBoard(
-    val width: Int,
-    val height: Int,
-    val numberOfMines: Int
+    val board: Board,
+    private val numberOfMines: Int
 ) {
-    val size = width * height
-    lateinit var board: List<Cell>
+    lateinit var mines: List<Cell>
         private set
 
     init {
-        require(width > 0 && height > 0) { "width and height must be positive." }
-        require(numberOfMines in (0..size)) { "number of mines must be within range of 0 ~ $size" }
+        require(numberOfMines in (0..board.size)) { "number of mines must be within range of 0 ~ ${board.size}" }
         build()
     }
 
     private fun build() {
-        val mineIndices = size.toShuffledMineIndices(numberOfMines)
-        board = List(size) {
-            val x = it % width
-            val y = it / width
+        val mineIndices = board.size.toShuffledMineIndices(numberOfMines) // TODO - 랜덤 값을 제공하는 클래스로 분리 & 관련 테스트 추가
+        mines = List(board.size) {
+            val x = it % board.width
+            val y = it / board.width
             if (it in mineIndices) {
-                Mine(x, y)
+                Mine(Position(x, y))
             } else {
-                Empty(x, y)
+                Empty(Position(x, y))
             }
         }
     }

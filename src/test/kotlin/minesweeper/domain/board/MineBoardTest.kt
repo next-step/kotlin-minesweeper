@@ -39,8 +39,8 @@ internal class MineBoardTest {
 
         // when
         val mineBoard = newMineBoard(width, height, numberOfMines)
-        val countOfEmpty = mineBoard.board.count { it is Empty }
-        val countOfMine = mineBoard.board.count { it is Mine }
+        val countOfEmpty = mineBoard.mines.count { it is Empty }
+        val countOfMine = mineBoard.mines.count { it is Mine }
 
         // then
         assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
@@ -51,8 +51,10 @@ internal class MineBoardTest {
         private const val DEFAULT_NUMBER_OF_MINES = 10
 
         private fun newMineBoard(width: Int, height: Int, numberOfMines: Int) = mineBoard {
-            width(width)
-            height(height)
+            board {
+                width(width)
+                height(height)
+            }
             numberOfMines(numberOfMines)
         }
 
