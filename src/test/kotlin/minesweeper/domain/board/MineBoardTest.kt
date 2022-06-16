@@ -3,6 +3,7 @@ package minesweeper.domain.board
 import minesweeper.domain.board.random.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.NumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -55,7 +56,7 @@ internal class MineBoardTest {
         val mineIndices = strategy(NUMBER_OF_CELLS, NUMBER_OF_MINES)
 
         // when
-        val mineBoard = MineBoard(Board(WIDTH, HEIGHT), mineIndices)
+        val mineBoard = MineBoard(Board(WIDTH, HEIGHT), NumberSet.of(mineIndices))
 
         // then
         mineIndices.forEach { index ->

@@ -12,3 +12,5 @@ sealed class Cell(
         require(position.x >= 0 && position.y >= 0) { "cell position must be zero or positive." }
     }
 }
+
+data class CellList(private val cells: List<Cell>) : List<Cell> by cells

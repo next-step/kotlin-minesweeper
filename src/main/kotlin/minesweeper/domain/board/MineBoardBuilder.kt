@@ -1,5 +1,6 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.common.NumberSet
 import kotlin.properties.Delegates
 
 class MineBoardBuilder {
@@ -20,5 +21,5 @@ class MineBoardBuilder {
         mineIndices = strategy(board.size, numberOfMines)
     }
 
-    fun build() = MineBoard(board, mineIndices)
+    fun build() = MineBoard(board, NumberSet.of(mineIndices))
 }
