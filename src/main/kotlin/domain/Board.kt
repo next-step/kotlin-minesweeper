@@ -1,10 +1,10 @@
 package domain
 
-class Board(val boardHeight: Int, private val boardWidth: Int, private val mines: Mines) {
+class Board(val height: Int, private val width: Int, private val mines: Mines) {
 
     val rows = BoardRows(
-        List(boardHeight) { row ->
-            BoardRow(row, boardWidth, mines)
+        List(height) { row ->
+            BoardRow(row, width, mines)
         }
     )
 
@@ -13,8 +13,8 @@ class Board(val boardHeight: Int, private val boardWidth: Int, private val mines
     }
 
     private fun fillNearMineCount() {
-        repeat(boardHeight) { row ->
-            repeat(boardWidth) { col ->
+        repeat(height) { row ->
+            repeat(width) { col ->
                 calcNearCount(row, col)
             }
         }
@@ -40,6 +40,6 @@ class Board(val boardHeight: Int, private val boardWidth: Int, private val mines
     }
 
     private fun isInside(row: Int, col: Int): Boolean {
-        return (row < 0 || row >= boardHeight || col < 0 || col >= boardWidth).not()
+        return (row < 0 || row >= height || col < 0 || col >= width).not()
     }
 }

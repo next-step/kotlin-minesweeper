@@ -23,7 +23,7 @@ object PrintView {
     }
 
     fun printMineBoard(boardInfo: Board) {
-        repeat(boardInfo.boardHeight) { height ->
+        repeat(boardInfo.height) { height ->
             printRowInfo(boardInfo, height)
 
             println()
