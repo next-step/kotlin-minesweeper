@@ -1,8 +1,8 @@
 package minesweeper.view.output
 
 import minesweeper.model.map.Cell
+import minesweeper.model.map.Cells
 import minesweeper.model.map.MineMap
-import minesweeper.model.map.coordinate.MapArea
 
 object ConsoleOutputView : OutputView {
 
@@ -10,23 +10,21 @@ object ConsoleOutputView : OutputView {
 
     override fun printInitialMessage() = println(initialMessage)
 
-    override fun printMap(mineMap: MineMap) = mineMap.print()
-
-    private fun MineMap.print() {
-        val cells = this.cells
-        cells.forEach { cell -> cell.print(this.mapArea) }
-        println()
+    override fun printMap(mineMap: MineMap) {
+        println(mineMap.toPrintableString())
     }
 
-    private fun Cell.isAtTheEndOfRow(mapArea: MapArea): Boolean = (this.column + 1) % mapArea.columnCount == 0
+    private fun MineMap.toPrintableString(): String {
+        val mapArea = this.mapArea
+        return (0..mapArea.rowCount).mapNotNull(::cellsAtRowOrNull)
+            .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
+    }
 
-    private fun Cell.print(mapArea: MapArea) {
-        when (this) {
-            is Cell.Mine -> print("*")
-            is Cell.Safe -> print("C")
-        }
-        if (this.isAtTheEndOfRow(mapArea)) {
-            println()
-        }
+    private fun Cells.toPrintableString(): String =
+        this.joinToString(separator = "") { cell -> cell.toPrintableString() }
+
+    private fun Cell.toPrintableString(): String = when (this) {
+        is Cell.Mine -> "*"
+        is Cell.Safe -> "C"
     }
 }

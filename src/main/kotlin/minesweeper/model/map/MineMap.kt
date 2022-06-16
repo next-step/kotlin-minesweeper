@@ -7,6 +7,11 @@ import minesweeper.utils.toInt
 
 class MineMap private constructor(val mapArea: MapArea, val cells: Cells) : Area by mapArea {
 
+    fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
+        require(Position(row, 0) in mapArea)
+        Cells(this.cells.filter { it.row == row })
+    }.getOrNull()
+
     companion object {
 
         fun build(mapArea: MapArea, isMineCell: (Position) -> Boolean) = MineMap(
