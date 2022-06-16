@@ -21,7 +21,7 @@ class Board private constructor(val boardArea: BoardArea, val cells: Cells) : Ar
         fun randomBoard(boardArea: BoardArea, mineCount: Int): Board {
             val cellCount = boardArea.columnCount * boardArea.rowCount
             require(mineCount in 1..cellCount)
-            val mineIndices = (0 until cellCount).shuffled().subList(0, mineCount)
+            val mineIndices = (0 until cellCount).shuffled().take(mineCount)
             return build(boardArea) { position -> boardArea.indexOf(position) in mineIndices }
         }
 
