@@ -23,7 +23,8 @@ internal class MineSweeperTest {
         val outputView = object : OutputView {
 
             override fun printMap(mineMap: MineMap) {
-                actualOutput = mineMap.joinToString(separator = "") { if (it is Cell.Mine) "*" else "C" }
+                val cells = mineMap.cells
+                actualOutput = cells.joinToString(separator = "") { if (it is Cell.Mine) "*" else "C" }
             }
         }
 

@@ -22,15 +22,16 @@ internal class MineMapTest {
         val mapArea = MapArea(rowCount, columnCount)
 
         // when
-        val actualMap = MineMap.build(mapArea) { position -> mapArea.indexOf(position) < expectedMineCount }
+        val actualCells = MineMap.build(mapArea) { position -> mapArea.indexOf(position) < expectedMineCount }
+            .cells
         val expectedCellCount = rowCount * columnCount
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
         // then
         assertAll(
-            { assertThat(actualMap.cellCount).isEqualTo(expectedCellCount) },
-            { assertThat(actualMap.mineCount).isEqualTo(expectedMineCount) },
-            { assertThat(actualMap.safeCellCount).isEqualTo(expectedSafeCellCount) }
+            { assertThat(actualCells.count()).isEqualTo(expectedCellCount) },
+            { assertThat(actualCells.mineCount).isEqualTo(expectedMineCount) },
+            { assertThat(actualCells.safeCellCount).isEqualTo(expectedSafeCellCount) }
         )
     }
 
@@ -56,15 +57,15 @@ internal class MineMapTest {
         val mapArea = MapArea(rowCount, height)
 
         // when
-        val actualMap = MineMap.randomMap(mapArea, expectedMineCount)
+        val actualCells = MineMap.randomMap(mapArea, expectedMineCount).cells
         val expectedCellCount = rowCount * height
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
         // then
         assertAll(
-            { assertThat(actualMap.cellCount).isEqualTo(expectedCellCount) },
-            { assertThat(actualMap.mineCount).isEqualTo(expectedMineCount) },
-            { assertThat(actualMap.safeCellCount).isEqualTo(expectedSafeCellCount) }
+            { assertThat(actualCells.count()).isEqualTo(expectedCellCount) },
+            { assertThat(actualCells.mineCount).isEqualTo(expectedMineCount) },
+            { assertThat(actualCells.safeCellCount).isEqualTo(expectedSafeCellCount) }
         )
     }
 

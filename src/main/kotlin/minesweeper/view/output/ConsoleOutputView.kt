@@ -2,6 +2,7 @@ package minesweeper.view.output
 
 import minesweeper.model.map.Cell
 import minesweeper.model.map.MineMap
+import minesweeper.model.map.coordinate.MapArea
 
 object ConsoleOutputView : OutputView {
 
@@ -12,20 +13,19 @@ object ConsoleOutputView : OutputView {
     override fun printMap(mineMap: MineMap) = mineMap.print()
 
     private fun MineMap.print() {
-        this.forEach { cell ->
-            cell.print(this)
-        }
+        val cells = this.cells
+        cells.forEach { cell -> cell.print(this.mapArea) }
         println()
     }
 
-    private fun Cell.isAtTheEndOfRow(mineMap: MineMap): Boolean = (this.column + 1) % mineMap.columnCount == 0
+    private fun Cell.isAtTheEndOfRow(mapArea: MapArea): Boolean = (this.column + 1) % mapArea.columnCount == 0
 
-    private fun Cell.print(mineMap: MineMap) {
+    private fun Cell.print(mapArea: MapArea) {
         when (this) {
             is Cell.Mine -> print("*")
             is Cell.Safe -> print("C")
         }
-        if (this.isAtTheEndOfRow(mineMap)) {
+        if (this.isAtTheEndOfRow(mapArea)) {
             println()
         }
     }
