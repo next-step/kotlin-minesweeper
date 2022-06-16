@@ -40,6 +40,11 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
     }
 
     private fun isInside(row: Int, col: Int): Boolean {
-        return (row < 0 || row >= height || col < 0 || col >= width).not()
+        val overUp = row < 0
+        val overDown = row >= height
+        val overLeft = col < 0
+        val overRight = col >= width
+
+        return (overUp || overDown || overLeft || overRight).not()
     }
 }
