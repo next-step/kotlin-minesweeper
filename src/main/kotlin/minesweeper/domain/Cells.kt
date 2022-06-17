@@ -1,6 +1,10 @@
 package minesweeper.domain
 
-class Cells(val cells: List<Cell>) {
+class Cells(val cells: List<Cell>) : List<Cell> by cells {
+
+    fun groupByPositionX(): List<List<Cell>> {
+        return cells.groupBy { it.position.y }.map { it.value }
+    }
 
     companion object {
         fun of(positions: List<Position>, minePositions: List<Position>): Cells {

@@ -1,14 +1,14 @@
 package minesweeper.view
 
 import minesweeper.domain.CellType
-import minesweeper.domain.GameBoard
+import minesweeper.domain.Cells
 
 object OutputView {
 
-    fun printGameBoard(gameBoard: GameBoard) {
+    fun printGameBoard(cells: Cells) {
         println("지뢰찾기 게임 시작")
-        gameBoard.cells.cells.groupBy { it.position.y }.forEach {
-            println(it.value.joinToString(" ") { cell -> cell.cellType.toPoint() })
+        cells.groupByPositionX().forEach {
+            println(it.joinToString(" ") { cell -> cell.cellType.toPoint() })
         }
     }
 
