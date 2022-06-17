@@ -7,9 +7,10 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     companion object {
-        fun of(positions: List<Position>, minePositions: List<Position>): Cells {
+        fun of(positions: Positions, minePositions: Positions): Cells {
             return positions.map { position ->
-                Cell.of(position, minePositions.cellType(position))
+                position.setNearPositions(positions)
+                Cell.of(position, minePositions, minePositions.cellType(position))
             }.let { Cells(it) }
         }
 

@@ -12,6 +12,6 @@ class MineSweeperController {
         val height = InputView.height()
         val mineCount = InputView.mine()
         val gameBoard = GameBoard.of(GameBoardSize(width, height), mineCount)
-        OutputView.printGameBoard(gameBoard)
+        OutputView.printGameBoard(gameBoard.cells)
     }
 }

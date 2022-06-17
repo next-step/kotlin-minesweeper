@@ -18,4 +18,22 @@ class PositionsTest {
         val minePositions = positions.createRandomMinePosition(10)
         assertThat(minePositions.size).isEqualTo(10)
     }
+
+    @Test
+    fun `각 셀의 주변 셀들을 세팅한다`() {
+        val allBoardPosition = Positions(
+            listOf(
+                Position(0, 0),
+                Position(0, 1),
+                Position(1, 0),
+                Position(1, 1)
+            )
+        )
+
+        allBoardPosition.forEach {
+            it.setNearPositions(allBoardPosition)
+        }
+
+        assertThat(allBoardPosition.positions.first().nearCellPositions.size).isEqualTo(3)
+    }
 }

@@ -1,13 +1,15 @@
 package minesweeper.domain
 
 data class Cell(
-    val position: Position,
-    val cellType: CellType
+    val position: Position
 ) {
+    lateinit var cellState: CellState
 
     companion object {
-        fun of(position: Position, cellType: CellType): Cell {
-            return Cell(position, cellType)
+        fun of(position: Position, minePositions: Positions, cellType: CellType): Cell {
+            return Cell(position).apply {
+                this.cellState = CellState.of(position, minePositions, cellType)
+            }
         }
     }
 }
