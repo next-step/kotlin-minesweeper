@@ -63,11 +63,11 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
             val newCol = col + direction.col
 
             if (isInside(newRow, newCol).not()) {
-                return
+                continue
             }
 
             if (rows[row][col] is BoardItem.Mine) {
-                return
+                continue
             }
 
             val isMine = rows[newRow][newCol] is BoardItem.Mine
