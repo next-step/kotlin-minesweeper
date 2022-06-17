@@ -35,24 +35,19 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
 
         val boardItem = rows[row][col]
 
-        if (boardItem is BoardItem.Mine) {
-            return
-        }
-
         if (boardItem is BoardItem.Normal) {
             if (boardItem.isOpened()) {
                 return
             }
-        }
-
-        if (boardItem is BoardItem.Normal) {
             boardItem.open()
 
-            for (direction in Directions.getOnlyExis()) {
-                val newRow = row + direction.row
-                val newCol = col + direction.col
+            if (boardItem.nearMineCount == 0) {
+                for (direction in Directions.getOnlyExis()) {
+                    val newRow = row + direction.row
+                    val newCol = col + direction.col
 
-                openNearIfZero(newRow, newCol)
+                    openNearIfZero(newRow, newCol)
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 package domain
 
-sealed class BoardItem() {
-    data class Normal(var nearMineCount: Int = 0) : BoardItem() {
+sealed class BoardItem {
+    class Normal(var nearMineCount: Int = 0) : BoardItem() {
         private var opened = false
 
         fun increaseCount() {
@@ -18,7 +18,6 @@ sealed class BoardItem() {
     }
 
     object Mine : BoardItem()
-
 
     companion object {
         fun getItemType(isMine: Boolean): BoardItem {

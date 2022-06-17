@@ -14,7 +14,8 @@ fun main() {
         height = height,
         width = width,
         mine = mine,
-        mineGenerator = mineGenerator)
+        mineGenerator = mineGenerator
+    )
 
     mineController.run()
 }
