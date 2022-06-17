@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CellsTest {
     @Test
     fun `게임판(5*5)에 꽂을 셀과 지뢰 5개를 생성한다`() {
-        val positions = Positions(GameBoardSize(5, 5).createPositions())
+        val positions = Positions(FixtureMineSweeper.positions2x2)
         val minePositions = positions.createRandomMinePosition(5)
         val cells = Cells.of(positions, minePositions)
 
