@@ -31,7 +31,7 @@
 - [x] 근처 지뢰개수가 알맞게 반영되는지 테스트
 
 
-### todo list
+### todo list 2
 - [x] 투두리스트 구체적으로 작성하기
 - [x] MineController에 멤버변수 제거해보기
 - [x] 누락된 리뷰 (변수명 보드 제거) 반영하기
@@ -40,3 +40,6 @@
 - [x] 마인 클래스는 nearMineCount가 의미가 없으니 object로 활용
 - [x] BoardRow에 미사용 변수 제거
 - [x] 테스트에는 로직을 노출하지 않기
+
+### todo list 3
+- [x] increaseIfMine으로 Mine체크로직 옮기기

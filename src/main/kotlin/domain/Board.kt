@@ -25,15 +25,16 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
             val newRow = row + direction.row
             val newCol = col + direction.col
 
-            increaseIfMine(
-                row,
-                col,
-                isInside(newRow, newCol) && rows[newRow][newCol] is BoardItem.Mine
-            )
+            if (isInside(newRow, newCol).not()) {
+                return
+            }
+
+            increaseIfMine(row, col)
         }
     }
 
-    private fun increaseIfMine(row: Int, col: Int, isMine: Boolean) {
+    private fun increaseIfMine(row: Int, col: Int) {
+        val isMine = rows[row][col] is BoardItem.Mine
         if (isMine) {
             rows[row][col].increaseCount()
         }
