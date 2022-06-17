@@ -7,6 +7,6 @@ value class Height(
     val value: Int
 ) {
     init {
-        require(value.isPositive()) { "높이는 음수가 될수 없습니다." }
+        require(value.isPositive()) { "높이는 양수만 입력 가능합니다." }
     }
 }
