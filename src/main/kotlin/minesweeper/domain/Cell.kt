@@ -6,8 +6,8 @@ data class Cell(
 ) {
 
     companion object {
-        fun of(position: Position, isMine: Boolean): Cell {
-            return Cell(position, if (isMine) CellType.MINE else CellType.NON_MINE)
+        fun of(position: Position, cellType: CellType): Cell {
+            return Cell(position, cellType)
         }
     }
 }
