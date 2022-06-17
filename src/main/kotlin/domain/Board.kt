@@ -24,19 +24,14 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
         for (direction in Directions.values()) {
             val newRow = row + direction.row
             val newCol = col + direction.col
+            val isMine = rows[newRow][newCol] is BoardItem.Mine
 
-            if (isInside(newRow, newCol).not()) {
+            if (isInside(newRow, newCol).not() && isMine.not()) {
                 return
             }
 
-            increaseIfMine(row, col)
-        }
-    }
-
-    private fun increaseIfMine(row: Int, col: Int) {
-        val isMine = rows[row][col] is BoardItem.Mine
-        if (isMine) {
-            rows[row][col].increaseCount()
+            val boardItemAt = rows[row][col] as BoardItem.Normal
+            boardItemAt.increaseCount()
         }
     }
 
