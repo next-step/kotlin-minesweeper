@@ -15,7 +15,7 @@ class MineController {
 
         val boardInfo = Board(height, width, mines)
 
-        PrintView.printMineBoard(boardInfo)
+//        PrintView.printMineBoard(boardInfo)
     }
 
     private fun makeMinePosition(mineCount: Int, mineGenerator: MineGenerator): Mines {
