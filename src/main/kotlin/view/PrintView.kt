@@ -44,9 +44,15 @@ object PrintView {
     }
 
     private fun takeItemItemDisplay(boardItem: BoardItem): String {
-        return when (boardItem.opened) {
-            true -> boardItem.nearMineCount.toString()
-            false -> "C"
+        return when (boardItem) {
+            is BoardItem.Normal -> {
+                if (boardItem.isOpened()) {
+                    boardItem.nearMineCount.toString()
+                } else {
+                    "C"
+                }
+            }
+            is BoardItem.Mine -> "C"
         }
     }
 }
