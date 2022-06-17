@@ -25,7 +25,30 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
     }
 
     fun openAt(row: Int, col: Int) {
-        rows[row][col].opened = true
+        openNearIfZero(row, col)
+    }
+
+    private fun openNearIfZero(row: Int, col: Int) {
+        if (isInside(row, col).not()) {
+            return
+        }
+
+        val boardItem = rows[row][col]
+
+        if (boardItem.opened || boardItem is BoardItem.Mine || boardItem.nearMineCount != 0) {
+            return
+        }
+
+        if (boardItem is BoardItem.Normal) {
+            boardItem.opened = true
+
+            for (direction in Directions.getOnlyExis()) {
+                val newRow = row + direction.row
+                val newCol = col + direction.col
+
+                openNearIfZero(newRow, newCol)
+            }
+        }
     }
 
     private fun calcNearCount(row: Int, col: Int) {
