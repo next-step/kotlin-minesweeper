@@ -1,10 +1,11 @@
-import domain.*
+import domain.MinePosition
+import domain.Mines
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class MinesTest {
     @Test
-    fun `지뢰의 집합에서 지뢰가 있는 위치가 맞게 찾는지 테스트`() {
+    fun `가진 지뢰의 위치가 일치하면 참값이 나온다`() {
         val mines = Mines(
             listOf(
                 MinePosition(0, 3),
