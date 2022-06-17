@@ -1,6 +1,10 @@
 package minesweeper.domain
 
-import minesweeper.domain.field.*
+import minesweeper.domain.field.Coordinate
+import minesweeper.domain.field.CoordinateValue
+import minesweeper.domain.field.Field
+import minesweeper.domain.field.Mine
+import minesweeper.domain.field.NonMine
 import minesweeper.domain.vo.Height
 import minesweeper.domain.vo.Width
 
