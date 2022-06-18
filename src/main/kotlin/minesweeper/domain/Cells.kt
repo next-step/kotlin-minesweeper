@@ -14,7 +14,7 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
             }.let { Cells(it) }
         }
 
-        private fun List<Position>.cellType(position: Position): CellType {
+        private fun Positions.cellType(position: Position): CellType {
             return if (contains(position)) CellType.MINE else CellType.NON_MINE
         }
     }
