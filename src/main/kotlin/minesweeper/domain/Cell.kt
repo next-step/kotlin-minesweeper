@@ -6,9 +6,9 @@ data class Cell(
     lateinit var cellState: CellState
 
     companion object {
-        fun of(position: Position, minePositions: Positions, cellType: CellType): Cell {
+        fun of(position: Position, minePositions: Positions): Cell {
             return Cell(position).apply {
-                this.cellState = CellState.of(position, minePositions, cellType)
+                this.cellState = CellState.of(position, minePositions)
             }
         }
     }

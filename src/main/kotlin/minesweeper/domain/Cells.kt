@@ -8,14 +8,10 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
 
     companion object {
         fun of(positions: Positions, minePositions: Positions): Cells {
-            return positions.map { position ->
-                position.setNearPositions(positions)
-                Cell.of(position, minePositions, minePositions.cellType(position))
-            }.let { Cells(it) }
-        }
-
-        private fun Positions.cellType(position: Position): CellType {
-            return if (contains(position)) CellType.MINE else CellType.NON_MINE
+            return positions
+                .onEach { it.setNearPositions(positions) }
+                .map { Cell.of(it, minePositions) }
+                .let { Cells(it) }
         }
     }
 }
