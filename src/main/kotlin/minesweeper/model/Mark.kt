@@ -6,6 +6,8 @@ value class Mark private constructor(
 ) {
     fun isMine() = mark == MINE_MARK
 
+    override fun toString() = "$mark"
+
     companion object {
         private const val MINE_MARK = '*'
         private const val CLOSE_MARK = 'C'
