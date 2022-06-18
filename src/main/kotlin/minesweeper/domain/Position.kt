@@ -4,8 +4,8 @@ data class Position(val x: Int, val y: Int) {
 
     lateinit var nearCellPositions: Positions
     fun setNearPositions(boardPositions: Positions) {
-        val positions = around()
-        nearCellPositions = Positions(positions.filter { it in boardPositions })
+        val aroundPositions = around()
+        nearCellPositions = boardPositions.include(aroundPositions)
     }
 
     fun getNearMineCount(minePositions: Positions): Int {
