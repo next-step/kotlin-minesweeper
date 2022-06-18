@@ -1,7 +1,7 @@
 package minesweeper.model
 
 @JvmInline
-value class Mark private constructor(
+value class Cell private constructor(
     private val mark: Char
 ) {
     fun isMine() = mark == MINE_MARK
@@ -12,8 +12,8 @@ value class Mark private constructor(
         private const val MINE_MARK = '*'
         private const val CLOSE_MARK = 'C'
 
-        fun mine() = Mark(MINE_MARK)
+        fun mine() = Cell(MINE_MARK)
 
-        fun close() = Mark(CLOSE_MARK)
+        fun close() = Cell(CLOSE_MARK)
     }
 }

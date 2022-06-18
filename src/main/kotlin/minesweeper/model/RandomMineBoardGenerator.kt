@@ -1,29 +1,29 @@
 package minesweeper.model
 
-object RandomMineFieldGenerator {
+object RandomMineBoardGenerator {
     private const val MIN_WIDTH = 1
     private const val MIN_HEIGHT = 1
     private const val MIN_MINE_COUNT = 1
 
-    fun generate(width: Int, height: Int, mineCount: Int): List<Marks> {
+    fun generate(width: Int, height: Int, mineCount: Int): List<Cells> {
         validate(width, height, mineCount)
 
-        val mineMarks = List(mineCount) {
-            Mark.mine()
+        val mineCells = List(mineCount) {
+            Cell.mine()
         }
 
-        val closeMarkCount = width * height - mineCount
-        val closeMarks = List(closeMarkCount) {
-            Mark.close()
+        val closeCellCount = width * height - mineCount
+        val closeCells = List(closeCellCount) {
+            Cell.close()
         }
 
-        val mergedMarks = mineMarks.plus(closeMarks)
+        val mergedCells = mineCells.plus(closeCells)
             .shuffled()
 
         return List(height) {
             val startIndex = it * width
             val endIndex = startIndex + width
-            Marks(mergedMarks.subList(startIndex, endIndex))
+            Cells(mergedCells.subList(startIndex, endIndex))
         }
     }
 

@@ -1,10 +1,10 @@
 package minesweeper.view
 
-import minesweeper.model.MineField
+import minesweeper.model.MineBoard
 
 object ConsoleResultView : ResultView {
-    override fun printMineField(field: MineField) {
+    override fun printMineBoard(board: MineBoard) {
         println("\n지뢰찾기 게임 시작")
-        println(field)
+        println(board)
     }
 }
