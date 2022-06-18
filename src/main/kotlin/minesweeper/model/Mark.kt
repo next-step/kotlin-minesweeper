@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.model
 
 @JvmInline
 value class Mark private constructor(

@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.model
 
 class Marks(
     private val marks: List<Mark>

@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.model
 
 object RandomMineFieldGenerator {
     fun generate(width: Int, height: Int, mineCount: Int): List<Marks> {
