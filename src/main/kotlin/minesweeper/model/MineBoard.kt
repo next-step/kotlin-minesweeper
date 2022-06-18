@@ -27,13 +27,7 @@ class MineBoard private constructor(
             val mergedCells = mineCells.plus(closeCells)
                 .shuffled()
 
-            val board = List(height) {
-                val startIndex = it * width
-                val endIndex = startIndex + width
-                Cells(mergedCells.subList(startIndex, endIndex))
-            }
-
-            return MineBoard(board)
+            return mergedCellsToBoard(mergedCells, width, height)
         }
 
         private fun validate(width: Int, height: Int, mineCount: Int) {
@@ -53,6 +47,16 @@ class MineBoard private constructor(
 
             val maxMineCount = width * height
             require(mineCount <= maxMineCount) { "지뢰 개수는 ${maxMineCount}개를 초과할 수 없습니다." }
+        }
+
+        private fun mergedCellsToBoard(mergedCells: List<Cell>, width: Int, height: Int): MineBoard {
+            val board = List(height) {
+                val startIndex = it * width
+                val endIndex = startIndex + width
+                Cells(mergedCells.subList(startIndex, endIndex))
+            }
+
+            return MineBoard(board)
         }
     }
 }
