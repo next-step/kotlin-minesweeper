@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-enum class CellType(val point: String) {
-    MINE("*"),
-    NON_MINE("C")
+enum class CellType() {
+    MINE,
+    NON_MINE
 }

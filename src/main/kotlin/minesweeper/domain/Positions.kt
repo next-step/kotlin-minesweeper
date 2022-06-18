@@ -1,20 +1,8 @@
 package minesweeper.domain
 
-class Positions(val positions: List<Position>) {
+class Positions(val positions: List<Position>) : List<Position> by positions {
 
-    fun createRandomMinePosition(mineCount: Int): List<Position> {
-        return positions.shuffled().take(mineCount)
-    }
-
-    companion object {
-        fun of(gameBoardSize: GameBoardSize): Positions {
-            val positions = ArrayList<Position>()
-            repeat(gameBoardSize.height) { height ->
-                repeat(gameBoardSize.width) { width ->
-                    positions.add(Position(height, width))
-                }
-            }
-            return Positions(positions)
-        }
+    fun createRandomMinePosition(mineCount: Int): Positions {
+        return Positions(positions.shuffled().take(mineCount))
     }
 }
