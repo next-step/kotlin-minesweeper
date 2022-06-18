@@ -6,7 +6,7 @@ class Marks(
     val size
         get() = marks.size
 
-    val mineSize
+    val mineCount
         get() = marks.count { it.isMine() }
 
     override fun toString() = marks.joinToString(MARK_SEPARATOR)

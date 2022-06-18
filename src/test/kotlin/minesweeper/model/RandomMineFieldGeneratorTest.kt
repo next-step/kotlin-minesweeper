@@ -44,6 +44,6 @@ class RandomMineFieldGeneratorTest {
         // then
         mineField.forEach { assertThat(it.size).isEqualTo(5) }
         assertThat(mineField.size).isEqualTo(4)
-        assertThat(mineField.sumOf { it.mineSize }).isEqualTo(3)
+        assertThat(mineField.sumOf { it.mineCount }).isEqualTo(3)
     }
 }
