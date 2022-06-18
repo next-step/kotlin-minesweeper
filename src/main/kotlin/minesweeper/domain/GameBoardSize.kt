@@ -6,10 +6,10 @@ class GameBoardSize(private val width: Int, private val height: Int) {
     }
 
     fun createPositions(): List<Position> {
-        return (0..width).flatMap { getWidthPositions(it) }
+        return (0 until width).flatMap { getWidthPositions(it) }
     }
 
     private fun getWidthPositions(x: Int): List<Position> {
-        return (0..height).map { Position(x, it) }
+        return (0 until height).map { Position(x, it) }
     }
 }
