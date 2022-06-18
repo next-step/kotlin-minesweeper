@@ -8,6 +8,10 @@ data class Position(val x: Int, val y: Int) {
         nearCellPositions = Positions(positions.filter { it in boardPositions })
     }
 
+    fun getNearMineCount(minePositions: Positions): Int {
+        return nearCellPositions.count { it in minePositions }
+    }
+
     private fun SearchDirection.toPosition(): Position? {
         val position = Position(x + this.addX, y + addY)
         return if (position.x < 0 || position.y < 0) null else position

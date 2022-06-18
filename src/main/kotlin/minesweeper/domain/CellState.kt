@@ -7,13 +7,9 @@ class CellState(
     companion object {
         fun of(position: Position, minePositions: Positions, cellType: CellType): CellState {
             val mineCount =
-                if (cellType == CellType.NON_MINE) getNearMineCount(position.nearCellPositions, minePositions) else 0
+                if (cellType == CellType.NON_MINE) position.getNearMineCount(minePositions) else 0
 
             return CellState(mineCount, cellType)
-        }
-
-        private fun getNearMineCount(nearPositions: Positions, minePositions: Positions): Int {
-            return nearPositions.count { it in minePositions }
         }
     }
 }
