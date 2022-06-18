@@ -1,7 +1,6 @@
 package minesweeper
 
 import minesweeper.model.MineBoard
-import minesweeper.model.RandomMineBoardGenerator
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -16,7 +15,7 @@ object MinesweeperApplication {
         inputView.printMineCountInputMessage()
         val mineCount = inputView.inputMineCount()
 
-        val mineBoard = MineBoard(RandomMineBoardGenerator.generate(width, height, mineCount))
+        val mineBoard = MineBoard.of(width = width, height = height, mineCount = mineCount)
         resultView.printMineBoard(mineBoard)
     }
 }
