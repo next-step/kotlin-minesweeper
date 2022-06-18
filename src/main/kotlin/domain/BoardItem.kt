@@ -1,16 +1,23 @@
 package domain
 
-sealed class BoardItem(private var nearMineCount: Int = 0) {
-    class Normal : BoardItem()
+sealed class BoardItem {
+    class Normal(var nearMineCount: Int = 0) : BoardItem() {
+        private var opened = false
+
+        fun increaseCount() {
+            nearMineCount++
+        }
+
+        fun open() {
+            opened = true
+        }
+
+        fun isOpened(): Boolean {
+            return opened
+        }
+    }
+
     object Mine : BoardItem()
-
-    fun increaseCount() {
-        nearMineCount++
-    }
-
-    fun getNearMineCount(): Int {
-        return nearMineCount
-    }
 
     companion object {
         fun getItemType(isMine: Boolean): BoardItem {

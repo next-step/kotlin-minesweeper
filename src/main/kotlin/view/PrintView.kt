@@ -8,7 +8,8 @@ object PrintView {
     private const val MESSAGE_FOR_WIDTH = "너비를 입력하세요"
     private const val MESSAGE_FOR_MINE = "지뢰는 몇개 인가요?"
     private const val BLANK = " "
-    private const val MINE_DISPLAY = "X"
+    private const val CLOSED_DISPLAY = "X"
+    private const val GAME_OVER_MSG = "Lose Game."
 
     fun printHeightMessage() {
         println(MESSAGE_FOR_HEIGHT)
@@ -22,12 +23,16 @@ object PrintView {
         println(MESSAGE_FOR_MINE)
     }
 
-    fun printMineBoard(boardInfo: Board) {
-        repeat(boardInfo.height) { height ->
-            printRowInfo(boardInfo, height)
+    fun printMineBoard(board: Board) {
+        repeat(board.height) { height ->
+            printRowInfo(board, height)
 
             println()
         }
+    }
+
+    fun printGameOver() {
+        println(GAME_OVER_MSG)
     }
 
     private fun printRowInfo(boardInfo: Board, row: Int) {
@@ -40,8 +45,14 @@ object PrintView {
 
     private fun takeItemItemDisplay(boardItem: BoardItem): String {
         return when (boardItem) {
-            is BoardItem.Mine -> MINE_DISPLAY
-            is BoardItem.Normal -> boardItem.getNearMineCount().toString()
+            is BoardItem.Normal -> {
+                if (boardItem.isOpened()) {
+                    boardItem.nearMineCount.toString()
+                } else {
+                    "C"
+                }
+            }
+            is BoardItem.Mine -> "C"
         }
     }
 }

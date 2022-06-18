@@ -1,4 +1,5 @@
 import domain.Board
+import domain.BoardItem
 import domain.MinePosition
 import domain.Mines
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +18,13 @@ class BoardTest {
 
         val board = Board(3, 10, mines)
 
-        assertThat(board.rows[1][4].getNearMineCount()).isEqualTo(2)
-        assertThat(board.rows[2][8].getNearMineCount()).isEqualTo(1)
+        assertThat(board.rows[1][4] is BoardItem.Normal).isTrue
+        assertThat(board.rows[2][8] is BoardItem.Normal).isTrue
+
+        val first = board.rows[1][4] as BoardItem.Normal
+        assertThat(first.nearMineCount).isEqualTo(2)
+
+        val second = board.rows[2][8] as BoardItem.Normal
+        assertThat(second.nearMineCount).isEqualTo(1)
     }
 }

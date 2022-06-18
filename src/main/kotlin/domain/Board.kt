@@ -20,22 +20,57 @@ class Board(val height: Int, private val width: Int, private val mines: Mines) {
         }
     }
 
+    fun isMineAt(row: Int, col: Int): Boolean {
+        return rows[row][col] is BoardItem.Mine
+    }
+
+    fun openAt(row: Int, col: Int) {
+        openNearIfZero(row, col)
+    }
+
+    private fun openNearIfZero(row: Int, col: Int) {
+        if (isInside(row, col).not()) {
+            return
+        }
+
+        val boardItem = rows[row][col]
+
+        if (boardItem is BoardItem.Normal) {
+            if (boardItem.isOpened()) {
+                return
+            }
+            boardItem.open()
+
+            if (boardItem.nearMineCount == 0) {
+                for (direction in Directions.getOnlyExis()) {
+                    val newRow = row + direction.row
+                    val newCol = col + direction.col
+
+                    openNearIfZero(newRow, newCol)
+                }
+            }
+        }
+    }
+
     private fun calcNearCount(row: Int, col: Int) {
         for (direction in Directions.values()) {
             val newRow = row + direction.row
             val newCol = col + direction.col
 
-            increaseIfMine(
-                row,
-                col,
-                isInside(newRow, newCol) && rows[newRow][newCol] is BoardItem.Mine
-            )
-        }
-    }
+            if (isInside(newRow, newCol).not()) {
+                continue
+            }
 
-    private fun increaseIfMine(row: Int, col: Int, isMine: Boolean) {
-        if (isMine) {
-            rows[row][col].increaseCount()
+            if (rows[row][col] is BoardItem.Mine) {
+                continue
+            }
+
+            val isMine = rows[newRow][newCol] is BoardItem.Mine
+
+            if (isMine) {
+                val boardItemAt = rows[row][col] as BoardItem.Normal
+                boardItemAt.increaseCount()
+            }
         }
     }
 

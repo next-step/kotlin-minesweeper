@@ -1,21 +1,39 @@
 import domain.Board
 import domain.MineGenerator
 import domain.Mines
+import view.InputView
 import view.PrintView
 
-class MineController {
+class MineController(
+    height: Int,
+    width: Int,
+    mine: Int,
+    mineGenerator: MineGenerator
+) {
 
-    fun run(
-        height: Int,
-        width: Int,
-        mine: Int,
-        mineGenerator: MineGenerator
-    ) {
+    private val board: Board
+
+    init {
         val mines = makeMinePosition(mine, mineGenerator)
 
-        val boardInfo = Board(height, width, mines)
+        board = Board(height, width, mines)
+    }
 
-        PrintView.printMineBoard(boardInfo)
+    fun run() {
+        while (true) {
+            val openPosition = InputView.getPositionWithPositionDesc()
+
+            val isGameOver = board.isMineAt(openPosition.row, openPosition.col)
+
+            if (isGameOver) {
+                PrintView.printGameOver()
+                break
+            }
+
+            board.openAt(openPosition.row, openPosition.col)
+
+            PrintView.printMineBoard(board)
+        }
     }
 
     private fun makeMinePosition(mineCount: Int, mineGenerator: MineGenerator): Mines {

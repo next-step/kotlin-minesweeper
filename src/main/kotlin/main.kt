@@ -8,15 +8,16 @@ fun main() {
     val width = getWidthFromUser()
     val mine = getMineCountFromUser()
 
-    val mineController = MineController()
     val mineGenerator = RandomMineGenerator(height, width)
 
-    mineController.run(
+    val mineController = MineController(
         height = height,
         width = width,
         mine = mine,
         mineGenerator = mineGenerator
     )
+
+    mineController.run()
 }
 
 private fun getHeightFromUser(): Int {

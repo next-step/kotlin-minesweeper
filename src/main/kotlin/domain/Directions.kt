@@ -8,5 +8,11 @@ enum class Directions(val row: Int, val col: Int) {
     LEFT_UP(-1, -1),
     LEFT_DOWN(1, -1),
     RIGHT_UP(-1, 1),
-    RIGHT_DOWN(1, 1)
+    RIGHT_DOWN(1, 1);
+
+    companion object {
+        fun getOnlyExis(): List<Directions> {
+            return listOf(UP, DOWN, LEFT, RIGHT)
+        }
+    }
 }
