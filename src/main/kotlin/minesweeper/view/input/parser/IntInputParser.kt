@@ -2,6 +2,8 @@ package minesweeper.view.input.parser
 
 open class IntInputParser(private val range: IntRange = Int.MIN_VALUE..Int.MAX_VALUE) : InputParser<Int> {
 
+    private val isMaxValueNotDefined = this.range.last == Int.MAX_VALUE
+
     constructor(minValue: Int) : this(minValue..Int.MAX_VALUE)
 
     override fun parseValue(inputString: String?): ParseResult<Int> =
@@ -15,11 +17,11 @@ open class IntInputParser(private val range: IntRange = Int.MIN_VALUE..Int.MAX_V
             return parsedIntValue
         }
 
-        return ParseResult.Error(makeErrorMessage(range))
+        return ParseResult.Error(makeErrorMessageForOutOfRange(range))
     }
 
-    private fun makeErrorMessage(range: IntRange): String {
-        if (range.last == Int.MAX_VALUE) {
+    private fun makeErrorMessageForOutOfRange(range: IntRange): String {
+        if (this.isMaxValueNotDefined) {
             return "최소 ${range.first} 이상 값을 입력해 주세요. "
         }
         return "${range.first} ~ ${range.last} 사이 값을 입력해 주세요."
