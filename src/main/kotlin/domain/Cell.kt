@@ -1,6 +1,6 @@
 package domain
 
-sealed class Cell(val coordinate: Coordinate) {
+sealed class Cell(coordinate: Coordinate) {
     val x = coordinate.x
     val y = coordinate.y
 }

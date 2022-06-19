@@ -7,8 +7,6 @@ import vo.Point
 
 internal class RowTest : FreeSpec({
 
-    fun createCell(x: Int, y: Int) = Mine(Coordinate(Point(x), Point(y)))
-
     "인스턴스 생성 불가능" - {
         "빈 리스트" {
             shouldThrow<IllegalArgumentException> {
