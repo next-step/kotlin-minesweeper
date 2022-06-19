@@ -11,11 +11,9 @@ class BoardFieldTest : DescribeSpec({
             val coordinate = Coordinate(CoordinateIndex(0), CoordinateIndex(0))
 
             assertSoftly {
-                BoardField(coordinate, true).isMine shouldBe true
-                BoardField(coordinate, false).isMine shouldBe false
+                BoardField.mine(coordinate).isMine shouldBe true
+                BoardField.nonMine(coordinate).isMine shouldBe false
             }
         }
     }
 })
-
-data class BoardField(val coordinate: Coordinate, val isMine: Boolean)
