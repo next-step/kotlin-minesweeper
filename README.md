@@ -29,7 +29,8 @@
   - [X] 높이, 너비, 지뢰 개수를 입력 받아 지뢰 판을 만든다.
 
 - `지뢰 좌표 전략(MineCoordinateStrategy)`
-  - [ ] 좌표 목록과 지뢰 개수를 입력 받아 지뢰 개수만큼 좌표를 반환한다.
+  - `랜덤 좌표 전략(RandomMineCoordinateStrategyTest)` 
+    - [X] 좌표 목록과 지뢰 개수를 입력 받아 지뢰 개수만큼 랜덤한 좌표를 반환한다.
 
 - `지뢰 판(MineBoard)`
   - 지뢰 판 필드들을 가진다.

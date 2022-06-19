@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-data class MineSweeper(val mineCoordinateStrategy: MineCoordinateStrategy) {
+data class MineSweeper(val mineCoordinateStrategy: MineCoordinateStrategy = RandomMineCoordinateStrategy) {
 
     fun mineBoard(height: Int, width: Int, mineCount: Int): MineBoard {
         val coordinates = Coordinate.listOf(height, width)
