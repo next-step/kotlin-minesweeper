@@ -1,6 +1,6 @@
 package domain
 
-data class CellGroup(private val cells: List<Cell>) {
+data class Row(private val cells: List<Cell>) {
 
     val size: Int = cells.size
 

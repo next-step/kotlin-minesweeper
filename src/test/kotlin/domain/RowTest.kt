@@ -5,13 +5,13 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import vo.Point
 
-internal class CellGroupTest : StringSpec({
+internal class RowTest : StringSpec({
 
     fun coordinate(x: Int, y: Int) = Coordinate(Point(x), Point(y))
 
     "빈 리스트로는 인스턴스 생성할 수 없다" {
         shouldThrow<IllegalArgumentException> {
-            CellGroup(emptyList())
+            Row(emptyList())
         }
     }
 
@@ -21,7 +21,7 @@ internal class CellGroupTest : StringSpec({
                 Mine(coordinate(1, 1)),
                 Empty(coordinate(1, 1))
             )
-            CellGroup(cells)
+            Row(cells)
         }
     }
 
@@ -31,7 +31,7 @@ internal class CellGroupTest : StringSpec({
             Empty(coordinate(1, 2))
         )
 
-        val cellGroup = CellGroup(cells)
-        cellGroup.size shouldBe 2
+        val row = Row(cells)
+        row.size shouldBe 2
     }
 })

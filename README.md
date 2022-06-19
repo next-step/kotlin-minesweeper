@@ -55,5 +55,5 @@ C C C C C C C C C C
 - Coordinate: Cell 의 위치
 - Mine: 지뢰를 가진 Cell
 - Empty: 지뢰가 없는 Cell
-- CellGroup: Cell 의 묶음
+- Row: Cell 들을 가진 행
 - Game: Board 를 만드는 역할
