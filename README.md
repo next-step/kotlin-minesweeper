@@ -53,6 +53,7 @@ C C C C C C C C C C
 - Cell: 보드 안의 각 항목
 - Point: 점 위치정보
 - Coordinate: Cell 의 위치
-- Min: 지뢰를 가진 Cell
+- Mine: 지뢰를 가진 Cell
 - Empty: 지뢰가 없는 Cell
+- CellGroup: Cell 의 묶음
 - Game: Board 를 만드는 역할
