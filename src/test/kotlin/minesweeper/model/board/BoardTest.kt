@@ -1,5 +1,6 @@
 package minesweeper.model.board
 
+import minesweeper.fixture.randomBoard
 import minesweeper.model.board.coordinate.BoardArea
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll

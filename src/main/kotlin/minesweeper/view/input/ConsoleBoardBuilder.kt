@@ -1,6 +1,7 @@
 package minesweeper.view.input
 
 import minesweeper.model.BoardBuilder
+import minesweeper.model.RandomBoardBuilder
 import minesweeper.model.board.Board
 import minesweeper.model.board.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
@@ -16,15 +17,21 @@ object ConsoleBoardBuilder : BoardBuilder {
     private const val MIN_COUNT_OF_MINE = 1
 
     override fun createNewBoard(): Board {
+        val boardArea = inputBoardArea()
+        val mineCount = inputMineCount(boardArea)
+        return RandomBoardBuilder(boardArea, mineCount).createNewBoard()
+    }
 
+    private fun inputBoardArea(): BoardArea {
         val rowCount = ConsoleReader.read(MESSAGE_FOR_INPUT_ROW_COUNT, IntInputParser(minValue = MIN_COUNT_OF_ROW))
         val columnCount =
             ConsoleReader.read(MESSAGE_FOR_INPUT_COLUMN_COUNT, IntInputParser(minValue = MIN_COUNT_OF_COLUMN))
+        return BoardArea(rowCount, columnCount)
+    }
 
-        val maxMineCount = rowCount * columnCount
+    private fun inputMineCount(boardArea: BoardArea): Int {
+        val maxMineCount = boardArea.cellCount
         val mineCountRange = MIN_COUNT_OF_MINE..maxMineCount
-
-        val mineCount = ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
-        return Board.randomBoard(BoardArea(rowCount, columnCount), mineCount)
+        return ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
     }
 }

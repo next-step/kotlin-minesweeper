@@ -18,13 +18,6 @@ class Board private constructor(val boardArea: BoardArea, val cells: Cells) : Ar
             cells = Cells(boardArea.map { position -> createCell(position, isMineCell(position)) })
         )
 
-        fun randomBoard(boardArea: BoardArea, mineCount: Int): Board {
-            val cellCount = boardArea.columnCount * boardArea.rowCount
-            require(mineCount in 1..cellCount)
-            val mineIndices = (0 until cellCount).shuffled().take(mineCount)
-            return build(boardArea) { position -> boardArea.indexOf(position) in mineIndices }
-        }
-
         private fun createCell(position: Position, isMineCell: Boolean): Cell {
             if (isMineCell) {
                 return Cell.Mine(position)
