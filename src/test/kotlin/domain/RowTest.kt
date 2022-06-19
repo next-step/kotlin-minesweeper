@@ -10,7 +10,7 @@ internal class RowTest : FreeSpec({
     "인스턴스 생성 불가능" - {
         "빈 리스트" {
             shouldThrow<IllegalArgumentException> {
-                Row(emptyList())
+                Row.of(emptyList())
             }
         }
 
@@ -20,7 +20,7 @@ internal class RowTest : FreeSpec({
                     createCell(1, 1),
                     createCell(3, 1),
                 )
-                Row(cells)
+                Row.of(cells)
             }
         }
 
@@ -30,7 +30,7 @@ internal class RowTest : FreeSpec({
                     createCell(1, 1),
                     createCell(2, 2),
                 )
-                Row(cells)
+                Row.of(cells)
             }
         }
     }
@@ -41,7 +41,7 @@ internal class RowTest : FreeSpec({
             createCell(2, 2),
         )
 
-        val row = Row(cells)
+        val row = Row.of(cells)
         row.size shouldBe 2
     }
 
@@ -53,7 +53,7 @@ internal class RowTest : FreeSpec({
             createCell(2, 1),
         )
 
-        val row = Row(cells)
+        val row = Row.of(cells)
 
         row.cells.map { it.x } shouldBe listOf(1, 2, 3, 4).map(::Point)
     }
