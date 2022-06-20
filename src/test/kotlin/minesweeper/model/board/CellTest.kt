@@ -40,9 +40,9 @@ internal class CellTest {
 
         // given
         val cellList = listOf(
-            Cell.Safe(Position(1, 1), 0),
-            Cell.Safe(Position(2, 1), 0),
-            Cell.Safe(Position(3, 1), 0)
+            Cell.Safe(Position(1, 1), SurroundMineCount(0)),
+            Cell.Safe(Position(2, 1), SurroundMineCount(0)),
+            Cell.Safe(Position(3, 1), SurroundMineCount(0))
         )
 
         val expectedMineCount = 0
@@ -73,7 +73,7 @@ internal class CellTest {
         }
 
         repeat(expectedSafeCellCount) {
-            cellList.add(Cell.Safe(Position(cellList.count(), 1), 0))
+            cellList.add(Cell.Safe(Position(cellList.count(), 1), SurroundMineCount(0)))
         }
 
         // when
@@ -91,9 +91,9 @@ internal class CellTest {
     fun `Cell Safe 생성 실패 테스트`() {
 
         assertAll(
-            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), -1) } },
-            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), 9) } },
-            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), 100) } }
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), SurroundMineCount(-1)) } },
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), SurroundMineCount(9)) } },
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), SurroundMineCount(100)) } }
         )
     }
 
@@ -102,7 +102,7 @@ internal class CellTest {
     fun `Cell Safe 생성 성공 테스트`(surroundMineCount: Int) {
 
         assertThat(
-            Cell.Safe(Position(10, 10), surroundMineCount)
+            Cell.Safe(Position(10, 10), SurroundMineCount(surroundMineCount))
                 .surroundMineCount
         ).isEqualTo(surroundMineCount)
     }
