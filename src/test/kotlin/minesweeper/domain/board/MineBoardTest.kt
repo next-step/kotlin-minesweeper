@@ -1,7 +1,7 @@
 package minesweeper.domain.board
 
 import io.mockk.boxedClass
-import minesweeper.domain.board.random.DefaultRandomMineStrategy
+import minesweeper.domain.board.strategy.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import minesweeper.domain.common.PositiveInt

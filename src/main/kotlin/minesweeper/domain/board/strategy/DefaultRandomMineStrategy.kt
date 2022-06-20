@@ -1,9 +1,9 @@
-package minesweeper.domain.board.random
+package minesweeper.domain.board.strategy
 
 import minesweeper.domain.common.PositiveInt
 import minesweeper.domain.common.until
 
-class DefaultRandomMineStrategy : RandomMineStrategy {
+class DefaultRandomMineStrategy : MineStrategy {
 
     override fun strategy(): (numberOfCells: PositiveInt, numberOfMines: PositiveInt) -> List<Int> {
         return { numberOfCells, numberOfMines ->
