@@ -2,5 +2,5 @@ package domain.strategy
 
 interface MineAllocationStrategy {
 
-    fun calculate(totalPlaceNumber: Int, numberToAllocate: Int): Set<Int>
+    fun getAssignMineLocation(totalPlaceNumber: Int, numberToAllocate: Int): Set<Int>
 }

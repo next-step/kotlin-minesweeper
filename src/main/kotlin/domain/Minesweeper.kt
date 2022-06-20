@@ -8,7 +8,7 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
         Array(minesweeperProperty.height) { Array(minesweeperProperty.width) { Place(PlaceType.NOT_MINE) } }
 
     init {
-        val assignedMineLocation = mineAllocationStrategy.calculate(
+        val assignedMineLocation = mineAllocationStrategy.getAssignMineLocation(
             totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height,
             numberToAllocate = minesweeperProperty.mineCount
         )
