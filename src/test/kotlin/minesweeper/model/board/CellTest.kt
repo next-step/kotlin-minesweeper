@@ -4,8 +4,10 @@ import minesweeper.model.board.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 
 internal class CellTest {
 
@@ -38,9 +40,9 @@ internal class CellTest {
 
         // given
         val cellList = listOf(
-            Cell.Safe(Position(1, 1)),
-            Cell.Safe(Position(2, 1)),
-            Cell.Safe(Position(3, 1))
+            Cell.Safe(Position(1, 1), 0),
+            Cell.Safe(Position(2, 1), 0),
+            Cell.Safe(Position(3, 1), 0)
         )
 
         val expectedMineCount = 0
@@ -71,7 +73,7 @@ internal class CellTest {
         }
 
         repeat(expectedSafeCellCount) {
-            cellList.add(Cell.Safe(Position(cellList.count(), 1)))
+            cellList.add(Cell.Safe(Position(cellList.count(), 1), 0))
         }
 
         // when
@@ -83,5 +85,25 @@ internal class CellTest {
             { assertThat(cells.safeCellCount).isEqualTo(expectedSafeCellCount) },
             { assertThat(cells.count()).isEqualTo(expectedMineCount + expectedSafeCellCount) }
         )
+    }
+
+    @Test
+    fun `Cell Safe 생성 실패 테스트`() {
+
+        assertAll(
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), -1) } },
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), 9) } },
+            { assertThrows<RuntimeException> { Cell.Safe(Position(10, 10), 100) } }
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [0, 1, 2, 3, 4, 5, 6, 7, 8])
+    fun `Cell Safe 생성 성공 테스트`(surroundMineCount: Int) {
+
+        assertThat(
+            Cell.Safe(Position(10, 10), surroundMineCount)
+                .surroundMineCount
+        ).isEqualTo(surroundMineCount)
     }
 }

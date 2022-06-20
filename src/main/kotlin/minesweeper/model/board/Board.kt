@@ -21,7 +21,7 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
             if (isMineCell) {
                 return Cell.Mine(position)
             }
-            return Cell.Safe(position)
+            return Cell.Safe(position, 0)
         }
     }
 }
