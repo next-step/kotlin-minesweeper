@@ -5,6 +5,10 @@ class SurroundMineCount(private val value: Int) : Comparable<Int> {
         require(value in RANGE_OF_SURROUND_MINE_COUNT)
     }
 
+    override fun toString(): String {
+        return this.value.toString()
+    }
+
     override fun compareTo(other: Int): Int = this.value.compareTo(other)
     override fun equals(other: Any?): Boolean {
         if (other is Int) {
