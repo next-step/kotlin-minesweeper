@@ -1,23 +1,15 @@
 package minesweeper.domain
 
-class GameBoardSize(val x: Int, val y: Int) {
+class GameBoardSize(private val width: Int, private val height: Int) {
     init {
-        require(x > 0 && y > 0) { "넓이와 높이는 모두 0보다 커야합니다." }
+        require(width > 0 && height > 0) { "넓이와 높이는 모두 0보다 커야합니다." }
     }
 
     fun createPositions(): List<Position> {
-        val positions = ArrayList<Position>()
-        repeat(x) {
-            positions.addAll(getXPositions(it))
-        }
-        return positions.toList()
+        return (0 until width).flatMap { getWidthPositions(it) }
     }
 
-    private fun getXPositions(x: Int): ArrayList<Position> {
-        val positions = ArrayList<Position>()
-        repeat(y) {
-            positions.add(Position(x, it))
-        }
-        return positions
+    private fun getWidthPositions(x: Int): List<Position> {
+        return (0 until height).map { Position(x, it) }
     }
 }

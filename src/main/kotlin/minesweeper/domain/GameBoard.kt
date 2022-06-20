@@ -2,6 +2,11 @@ package minesweeper.domain
 
 class GameBoard(val cells: Cells) {
 
+    fun click(position: Position): BoardState {
+        cells.click(position)
+        return cells.state()
+    }
+
     companion object {
         fun of(gameBoardSize: GameBoardSize, mineCount: Int): GameBoard {
             val cellPositions = Positions(gameBoardSize.createPositions())
