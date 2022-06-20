@@ -60,7 +60,7 @@ internal class MineBoardTest {
             val y = index / width
             val cell = mineBoard.board.cells[index]
             assertThat(cell.boxedClass()).isEqualTo(Mine::class)
-            assertThat(cell).extracting("x", "y").containsExactly(x, y)
+            assertThat(cell).extracting("position.x.value", "position.y.value").containsExactly(x, y)
         }
     }
 
