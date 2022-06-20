@@ -3,7 +3,6 @@ package minesweeper.domain.board
 import minesweeper.domain.board.random.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
-import minesweeper.domain.common.NumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -50,14 +49,15 @@ internal class MineBoardTest {
     @Test
     fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
         // given
+        val board = Board(WIDTH, HEIGHT)
+        val numberOfMines = NUMBER_OF_MINES
         val strategy = DefaultRandomMineStrategy().strategy()
-        val mineIndices = strategy(NUMBER_OF_CELLS, NUMBER_OF_MINES)
 
         // when
-        val mineBoard = MineBoard(Board(WIDTH, HEIGHT), NumberSet.of(mineIndices))
+        val mineBoard = MineBoard(board, numberOfMines, strategy)
 
         // then
-        mineIndices.forEach { index ->
+        mineBoard.mineIndices.forEach { index ->
             assertThat(mineBoard.cells[index]).isInstanceOf(Mine::class.java)
         }
     }
@@ -65,7 +65,6 @@ internal class MineBoardTest {
     companion object {
         private const val WIDTH = 10
         private const val HEIGHT = 10
-        private const val NUMBER_OF_CELLS = WIDTH * HEIGHT
         private const val NUMBER_OF_MINES = 10
 
         private fun newMineBoard(width: Int, height: Int, numberOfMines: Int) = mineBoard {

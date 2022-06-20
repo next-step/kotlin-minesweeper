@@ -8,12 +8,16 @@ import minesweeper.domain.common.Position
 
 class MineBoard(
     val board: Board,
-    val mineIndices: NumberSet
+    numberOfMines: Int,
+    randomMineStrategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>
 ) {
+    var mineIndices: NumberSet
     lateinit var cells: CellList
         private set
 
     init {
+        require(numberOfMines in (0..board.size)) { "number of mines must be within range of 0 ~ ${board.size}" }
+        mineIndices = NumberSet.of(randomMineStrategy(board.size, numberOfMines))
         build(mineIndices)
     }
 
