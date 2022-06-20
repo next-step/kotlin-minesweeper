@@ -10,7 +10,6 @@ class MineBoard(
     val board: Board,
     val mineIndices: NumberSet
 ) {
-    val size = mineIndices.size
     lateinit var cells: CellList
         private set
 
