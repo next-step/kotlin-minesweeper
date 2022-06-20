@@ -10,10 +10,11 @@ class CellBuilder(private val boardArea: BoardArea, private val isMineCell: (Pos
             return Cell.Mine(position)
         }
 
-        val surroundMineCount = position.surroundPositions
+        return Cell.Safe(position, surroundMineCountOf(position))
+    }
+
+    private fun surroundMineCountOf(position: Position): Int =
+        position.surroundPositions
             .filter { it in boardArea }
             .count(isMineCell)
-
-        return Cell.Safe(position, surroundMineCount)
-    }
 }
