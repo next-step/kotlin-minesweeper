@@ -18,4 +18,4 @@ operator fun Int.rem(other: PositiveInt) = this % other.value
 operator fun Int.rangeTo(other: PositiveInt) = rangeTo(other.value)
 operator fun IntRange.contains(other: PositiveInt) = contains(other.value)
 
-infix fun Int.until(other: PositiveInt) = rangeTo(other.value)
+infix fun Int.until(other: PositiveInt) = until(other.value)

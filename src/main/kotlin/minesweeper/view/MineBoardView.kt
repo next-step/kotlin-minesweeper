@@ -26,6 +26,6 @@ object MineBoardView {
     private fun Cell.shape() =
         when (this) {
             is Mine -> "*"
-            is Empty -> "C"
+            is Empty -> this.numberOfNearbyMines
         }
 }
