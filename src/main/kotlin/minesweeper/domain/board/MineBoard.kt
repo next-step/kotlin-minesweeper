@@ -5,14 +5,15 @@ import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import minesweeper.domain.common.NumberSet
 import minesweeper.domain.common.Position
+import minesweeper.domain.common.Rectangle
 import minesweeper.domain.common.div
 import minesweeper.domain.common.rem
 
 class MineBoard(
-    val board: Board,
+    board: Board,
     numberOfMines: Int,
     randomMineStrategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>
-) {
+) : Rectangle by board {
     var mineIndices: NumberSet
     lateinit var cells: Cells
         private set
@@ -25,9 +26,9 @@ class MineBoard(
 
     private fun build(mineIndices: NumberSet) {
         cells = Cells(
-            List(board.size) {
-                val x = it % board.width
-                val y = it / board.width
+            List(this.size) {
+                val x = it % this.width
+                val y = it / this.width
                 if (it in mineIndices) {
                     Mine(Position.of(x, y))
                 } else {
