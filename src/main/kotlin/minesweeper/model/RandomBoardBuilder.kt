@@ -11,7 +11,7 @@ class RandomBoardBuilder(private val boardArea: BoardArea, private val mineCount
     override fun createNewBoard(): Board {
         val cellCount = boardArea.columnCount * boardArea.rowCount
         require(mineCount in 1..cellCount)
-        val mineIndices = (0 until cellCount).shuffled().take(mineCount)
-        return Board.build(boardArea) { position -> boardArea.indexOf(position) in mineIndices }
+        val minePositions = boardArea.shuffled().take(mineCount)
+        return Board.build(boardArea) { position -> position in minePositions }
     }
 }
