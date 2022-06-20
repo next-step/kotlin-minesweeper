@@ -9,6 +9,9 @@ data class BoardArea(override val rowCount: PositiveInt, override val columnCoun
     operator fun get(index: Int): Position = Position(row = index / this.columnCount, column = index % this.columnCount)
     fun indexOf(position: Position): Int = position.row * this.columnCount + position.column
 
+    fun surroundPositionsOf(position: Position): List<Position> =
+        position.surroundPositions.filter { it in this }
+
     override fun iterator() = object : Iterator<Position> {
         private var offset = 0
 

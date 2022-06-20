@@ -14,8 +14,7 @@ class CellBuilder(private val boardArea: BoardArea, private val isMineCell: (Pos
     }
 
     private fun surroundMineCountOf(position: Position) = SurroundMineCount(
-        position.surroundPositions
-            .filter { it in boardArea }
+        boardArea.surroundPositionsOf(position)
             .count(isMineCell)
     )
 }
