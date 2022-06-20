@@ -1,6 +1,6 @@
 package domain
 
-import FixtureBuilder.Companion.MineAllocator
+import FixtureBuilder.Companion.MineAllocatorFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,9 +13,9 @@ class MinesweeperTest {
         val mineCount = 1
         val place = setOf(Place(0, PlaceType.MINE))
 
-        val mineAllocator = MineAllocator(place)
+        val mineAllocatorFixture = MineAllocatorFixture(place)
         val minesweeper =
-            Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
+            Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
         assertThat(minesweeper.board[0][0].placeType).isEqualTo(PlaceType.MINE)
     }
@@ -27,9 +27,9 @@ class MinesweeperTest {
         val mineCount = 1
         val place = setOf(Place(0, PlaceType.NOT_MINE))
 
-        val mineAllocator = MineAllocator(place)
+        val mineAllocatorFixture = MineAllocatorFixture(place)
         val minesweeper =
-            Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
+            Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
         assertThat(minesweeper.board[2][2].placeType).isEqualTo(PlaceType.NOT_MINE)
     }
