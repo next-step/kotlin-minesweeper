@@ -48,19 +48,14 @@ class MineBoardBuilder {
     }
 
     private fun createBoard(width: PositiveInt, height: PositiveInt, mineIndices: NumberSet): Board {
-        var mine = 0
-        var empty = 0
-
         val size = (width * height).value
         val cells = Cells(
             List(size) {
                 val x = it % width
                 val y = it / width
                 if (it in mineIndices) {
-                    mine += 1
                     Mine(Position.of(x, y))
                 } else {
-                    empty += 1
                     Empty(Position.of(x, y))
                 }
             }
