@@ -12,10 +12,8 @@ class MineSweeperController(
     fun start() {
         val request = viewResolver.inputMineBoardRequest()
         val mineBoard = mineBoard {
-            board {
-                width(request.width)
-                height(request.height)
-            }
+            width(request.width)
+            height(request.height)
             numberOfMines(request.numberOfMines)
             mineStrategy(randomMineStrategy.strategy())
         }

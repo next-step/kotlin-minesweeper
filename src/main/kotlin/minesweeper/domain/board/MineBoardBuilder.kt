@@ -1,23 +1,29 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.common.PositiveInt
 import kotlin.properties.Delegates
 
 class MineBoardBuilder {
-    private var numberOfMines: Int by Delegates.notNull()
-    private lateinit var board: Board
-    private lateinit var mineStrategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>
+    private var width: PositiveInt by Delegates.notNull()
+    private var height: PositiveInt by Delegates.notNull()
+    private var numberOfMines: PositiveInt by Delegates.notNull()
+    private lateinit var mineStrategy: (numberOfCells: PositiveInt, numberOfMines: PositiveInt) -> List<Int>
 
-    fun board(block: BoardBuilder.() -> Unit) {
-        board = BoardBuilder().apply(block).build()
+    fun width(value: Int) {
+        width = PositiveInt(value)
+    }
+
+    fun height(value: Int) {
+        height = PositiveInt(value)
     }
 
     fun numberOfMines(value: Int) {
-        numberOfMines = value
+        numberOfMines = PositiveInt(value)
     }
 
-    fun mineStrategy(strategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>) {
+    fun mineStrategy(strategy: (numberOfCells: PositiveInt, numberOfMines: PositiveInt) -> List<Int>) {
         mineStrategy = strategy
     }
 
-    fun build() = MineBoard(board, numberOfMines, mineStrategy)
+    fun build() = MineBoard(width, height, numberOfMines, mineStrategy)
 }

@@ -4,6 +4,7 @@ import io.mockk.boxedClass
 import minesweeper.domain.board.random.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.PositiveInt
 import minesweeper.domain.common.div
 import minesweeper.domain.common.rem
 import org.assertj.core.api.Assertions.assertThat
@@ -38,8 +39,8 @@ internal class MineBoardTest {
 
         // when
         val mineBoard = newMineBoard(WIDTH, HEIGHT, NUMBER_OF_MINES)
-        val countOfEmpty = mineBoard.cells.count { it is Empty }
-        val countOfMine = mineBoard.cells.count { it is Mine }
+        val countOfEmpty = mineBoard.board.cells.count { it is Empty }
+        val countOfMine = mineBoard.board.cells.count { it is Mine }
 
         // then
         assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
@@ -49,18 +50,19 @@ internal class MineBoardTest {
     @Test
     fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
         // given
-        val board = Board.of(WIDTH, HEIGHT)
-        val numberOfMines = NUMBER_OF_MINES
+        val width = PositiveInt(WIDTH)
+        val height = PositiveInt(HEIGHT)
+        val numberOfMines = PositiveInt(NUMBER_OF_MINES)
         val strategy = DefaultRandomMineStrategy().strategy()
 
         // when
-        val mineBoard = MineBoard(board, numberOfMines, strategy)
+        val mineBoard = MineBoard(width, height, numberOfMines, strategy)
 
         // then
         mineBoard.mineIndices.forEach { index ->
-            val x = index % board.width
-            val y = index / board.width
-            val cell = mineBoard.cells[index]
+            val x = index % width
+            val y = index / width
+            val cell = mineBoard.board.cells[index]
             assertThat(cell.boxedClass()).isEqualTo(Mine::class)
             assertThat(cell).extracting("x", "y").containsExactly(x, y)
         }
@@ -72,10 +74,8 @@ internal class MineBoardTest {
         private const val NUMBER_OF_MINES = 10
 
         private fun newMineBoard(width: Int, height: Int, numberOfMines: Int) = mineBoard {
-            board {
-                width(width)
-                height(height)
-            }
+            width(width)
+            height(height)
             numberOfMines(numberOfMines)
             mineStrategy(DefaultRandomMineStrategy().strategy())
         }
@@ -92,7 +92,6 @@ internal class MineBoardTest {
             Arguments.of(1, 1, 2),
             Arguments.of(5, 5, 50),
             Arguments.of(10, 10, 101),
-            Arguments.of(10, 10, -1),
         )
     }
 }
