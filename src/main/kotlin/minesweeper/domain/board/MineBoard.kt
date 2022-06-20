@@ -29,9 +29,9 @@ class MineBoard(
     }
 
     private fun buildBoard(width: PositiveInt, height: PositiveInt, mineIndices: NumberSet) {
-        val size = width * height
+        val size = (width * height).value
         val cells = Cells(
-            List(size.value) {
+            List(size) {
                 val x = it % width
                 val y = it / width
                 if (it in mineIndices) {
