@@ -11,9 +11,9 @@ class MinesweeperTest {
         val minesweeperWidth = 5
         val minesweeperHeight = 5
         val mineCount = 1
-        val allocatedMine = setOf(0)
+        val place = setOf(Place(0, PlaceType.MINE))
 
-        val mineAllocator = MineAllocator(allocatedMine)
+        val mineAllocator = MineAllocator(place)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
 
@@ -25,9 +25,9 @@ class MinesweeperTest {
         val minesweeperWidth = 5
         val minesweeperHeight = 5
         val mineCount = 1
-        val allocatedMine = setOf(0)
+        val place = setOf(Place(0, PlaceType.NOT_MINE))
 
-        val mineAllocator = MineAllocator(allocatedMine)
+        val mineAllocator = MineAllocator(place)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
 

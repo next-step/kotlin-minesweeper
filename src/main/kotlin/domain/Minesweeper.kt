@@ -5,18 +5,22 @@ import domain.strategy.MineAllocationStrategy
 class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrategy: MineAllocationStrategy) {
 
     val board: Array<Array<Place>> =
-        Array(minesweeperProperty.height) { Array(minesweeperProperty.width) { Place(PlaceType.NOT_MINE) } }
+        Array(minesweeperProperty.height) { row ->
+            Array(minesweeperProperty.width) { col ->
+                val number = (row * minesweeperProperty.width) + col
+                Place(number, PlaceType.NOT_MINE)
+            }
+        }
 
     init {
-        val assignedMineLocation = mineAllocationStrategy.getAssignMineLocation(
-            totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height,
-            numberToAllocate = minesweeperProperty.mineCount
-        )
+        val totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height
+        val numberToAllocate = minesweeperProperty.mineCount
+        val assignedMineLocations = mineAllocationStrategy
+            .getAssignMineLocation(totalPlaceNumber, numberToAllocate)
+            .map { it.number }
 
-        assignedMineLocation.map {
-            val row = it / minesweeperProperty.height
-            val col = it % minesweeperProperty.width
-            board[row][col].placeType = PlaceType.MINE
-        }
+        board.flatten()
+            .filter { assignedMineLocations.contains(it.number) }
+            .map { it.placeType = PlaceType.MINE }
     }
 }
