@@ -3,6 +3,7 @@ package minesweeper.view.output
 import minesweeper.model.board.Board
 import minesweeper.model.board.Cell
 import minesweeper.model.board.Cells
+import minesweeper.model.board.coordinate.rangeTo
 
 object ConsoleOutputView : OutputView {
 
@@ -15,8 +16,8 @@ object ConsoleOutputView : OutputView {
     }
 
     private fun Board.toPrintableString(): String {
-        val boardArea = this.boardArea
-        return boardArea.rowCount.toRange().mapNotNull(::cellsAtRowOrNull)
+        val rowCount = this.boardArea.rowCount
+        return (0..rowCount).mapNotNull(::cellsAtRowOrNull)
             .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
     }
 

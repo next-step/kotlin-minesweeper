@@ -6,8 +6,6 @@ value class PositiveInt(val value: Int) {
         require(value > 0)
     }
 
-    fun toRange() = 0..value
-
     operator fun plus(other: PositiveInt): Int = this.value + other.value
     operator fun times(other: PositiveInt): Int = this.value * other.value
     operator fun div(other: PositiveInt): Int = this.value / other.value
@@ -23,3 +21,4 @@ operator fun Int.plus(other: PositiveInt): Int = this + other.value
 operator fun Int.times(other: PositiveInt): Int = this * other.value
 operator fun Int.div(other: PositiveInt): Int = this / other.value
 operator fun Int.rem(other: PositiveInt): Int = this % other.value
+operator fun Int.rangeTo(other: PositiveInt): IntRange = this..other.value
