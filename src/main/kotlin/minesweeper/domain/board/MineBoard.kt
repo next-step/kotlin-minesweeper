@@ -5,6 +5,8 @@ import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import minesweeper.domain.common.NumberSet
 import minesweeper.domain.common.Position
+import minesweeper.domain.common.div
+import minesweeper.domain.common.rem
 
 class MineBoard(
     val board: Board,
@@ -27,9 +29,9 @@ class MineBoard(
                 val x = it % board.width
                 val y = it / board.width
                 if (it in mineIndices) {
-                    Mine(Position(x, y))
+                    Mine(Position.of(x, y))
                 } else {
-                    Empty(Position(x, y))
+                    Empty(Position.of(x, y))
                 }
             }
         )

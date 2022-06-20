@@ -1,12 +1,16 @@
 package minesweeper.domain.board
 
-data class Board(
-    val width: Int,
-    val height: Int
-) {
-    val size get() = width * height
+import minesweeper.domain.common.PositiveInt
 
-    init {
-        require(width > 0 && height > 0) { "width and height must be positive." }
+data class Board(
+    val width: PositiveInt,
+    val height: PositiveInt
+) {
+    val size: Int get() = width * height
+
+    companion object {
+        fun of(width: Int, height: Int): Board {
+            return Board(PositiveInt(width), PositiveInt(height))
+        }
     }
 }

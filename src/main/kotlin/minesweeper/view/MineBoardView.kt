@@ -4,6 +4,7 @@ import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.rem
 
 object MineBoardView {
 

@@ -4,6 +4,8 @@ import io.mockk.boxedClass
 import minesweeper.domain.board.random.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.div
+import minesweeper.domain.common.rem
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -18,7 +20,7 @@ internal class MineBoardTest {
     @MethodSource("지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스")
     fun `지뢰 보드의 높이와 너비는 음수일 수 없다`(width: Int, height: Int) {
         val exception = assertThrows<IllegalArgumentException> { newMineBoard(width, height, NUMBER_OF_MINES) }
-        assertThat(exception.message).isEqualTo("width and height must be positive.")
+        assertThat(exception.message).isEqualTo("property must be zero or positive.")
     }
 
     @ParameterizedTest
@@ -47,7 +49,7 @@ internal class MineBoardTest {
     @Test
     fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
         // given
-        val board = Board(WIDTH, HEIGHT)
+        val board = Board.of(WIDTH, HEIGHT)
         val numberOfMines = NUMBER_OF_MINES
         val strategy = DefaultRandomMineStrategy().strategy()
 

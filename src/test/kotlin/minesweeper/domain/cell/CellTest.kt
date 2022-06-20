@@ -13,11 +13,11 @@ internal class CellTest {
     @ParameterizedTest
     @MethodSource("위치 좌표에 음수가 존재하는 케이스")
     fun `모든 공간의 위치 x, y 는 음수일 수 없다`(x: Int, y: Int) {
-        val exceptionByEmpty = assertThrows<IllegalArgumentException> { Empty(Position(x, y)) }
-        assertThat(exceptionByEmpty.message).isEqualTo("cell position must be zero or positive.")
+        val exceptionByEmpty = assertThrows<IllegalArgumentException> { Empty(Position.of(x, y)) }
+        assertThat(exceptionByEmpty.message).isEqualTo("property must be zero or positive.")
 
-        val exceptionByMine = assertThrows<IllegalArgumentException> { Mine(Position(x, y)) }
-        assertThat(exceptionByMine.message).isEqualTo("cell position must be zero or positive.")
+        val exceptionByMine = assertThrows<IllegalArgumentException> { Mine(Position.of(x, y)) }
+        assertThat(exceptionByMine.message).isEqualTo("property must be zero or positive.")
     }
 
     companion object {

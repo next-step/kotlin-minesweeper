@@ -14,5 +14,5 @@ class BoardBuilder {
         height = value
     }
 
-    fun build() = Board(width, height)
+    fun build() = Board.of(width, height)
 }
