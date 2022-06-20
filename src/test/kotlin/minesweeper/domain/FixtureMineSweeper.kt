@@ -11,4 +11,8 @@ object FixtureMineSweeper {
     )
 
     val positions10x10 = Positions(GameBoardSize(10, 10).createPositions())
+
+    val mockPositions5x5 = MockPositions(GameBoardSize(5, 5).createPositions())
+
+    val mockPositions2x2 = MockPositions(GameBoardSize(2, 2).createPositions())
 }
