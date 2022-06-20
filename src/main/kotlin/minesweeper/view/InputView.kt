@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.board.MineBoardRequest
+import minesweeper.domain.board.dto.MineBoardRequest
 
 object InputView {
 
