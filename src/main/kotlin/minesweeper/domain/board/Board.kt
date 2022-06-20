@@ -5,14 +5,14 @@ import minesweeper.domain.common.Area
 import minesweeper.domain.common.PositiveInt
 import minesweeper.domain.common.Rectangle
 
-data class Board(
-    val area: Area,
+class Board private constructor(
+    private val area: Area,
     val cells: Cells
 ) : Rectangle by area {
 
     companion object {
         fun of(width: PositiveInt, height: PositiveInt, cells: Cells = Cells(emptyList())): Board {
-            return Board(Area.of(width, height), cells)
+            return Board(Area(width, height), cells)
         }
     }
 }

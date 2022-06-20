@@ -4,9 +4,6 @@ import io.mockk.boxedClass
 import minesweeper.domain.board.strategy.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
-import minesweeper.domain.common.PositiveInt
-import minesweeper.domain.common.div
-import minesweeper.domain.common.rem
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -50,13 +47,12 @@ internal class MineBoardTest {
     @Test
     fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
         // given
-        val width = PositiveInt(WIDTH)
-        val height = PositiveInt(HEIGHT)
-        val numberOfMines = PositiveInt(NUMBER_OF_MINES)
-        val strategy = DefaultRandomMineStrategy().strategy()
+        val width = WIDTH
+        val height = HEIGHT
+        val numberOfMines = NUMBER_OF_MINES
 
         // when
-        val mineBoard = MineBoard(width, height, numberOfMines, strategy)
+        val mineBoard = newMineBoard(width, height, numberOfMines)
 
         // then
         mineBoard.mineIndices.forEach { index ->
