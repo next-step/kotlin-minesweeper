@@ -4,7 +4,7 @@ import minesweeper.model.board.coordinate.Area
 import minesweeper.model.board.coordinate.BoardArea
 import minesweeper.model.board.coordinate.Position
 
-class Board private constructor(val boardArea: BoardArea, val cells: Cells) : Area by boardArea {
+class Board private constructor(private val boardArea: BoardArea, val cells: Cells) : Area by boardArea {
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         require(Position(row, 0) in boardArea)
