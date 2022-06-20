@@ -14,7 +14,7 @@ internal class MineSweeperTest {
     fun `컨트롤러 Headless 테스트`() {
 
         // given
-        val boardArea = BoardArea(10, 10)
+        val boardArea = BoardArea.of(10, 10)
         val expectedOutput = "*".repeat(boardArea.cellCount)
 
         val board = Board.build(boardArea) { true } // 10* 10 , board filled with mines

@@ -20,7 +20,7 @@ internal class BoardTest {
     fun `높이 x 너비를 갖는 맵 생성 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
 
         // given
-        val boardArea = BoardArea(rowCount, columnCount)
+        val boardArea = BoardArea.of(rowCount, columnCount)
 
         // when
         val actualCells = Board.build(boardArea) { position -> boardArea.indexOf(position) < expectedMineCount }
@@ -43,7 +43,7 @@ internal class BoardTest {
         "0,0"
     )
     fun `맵 크기가 0 이면 에러`(rowCount: Int, columnCount: Int) {
-        assertThrows<IllegalArgumentException> { Board.build(BoardArea(rowCount, columnCount)) { true } }
+        assertThrows<IllegalArgumentException> { Board.build(BoardArea.of(rowCount, columnCount)) { true } }
     }
 
     @ParameterizedTest
@@ -55,7 +55,7 @@ internal class BoardTest {
     )
     fun `랜던 맵 생성 테스트`(rowCount: Int, height: Int, expectedMineCount: Int) {
         // given
-        val boardArea = BoardArea(rowCount, height)
+        val boardArea = BoardArea.of(rowCount, height)
 
         // when
         val actualCells = Board.randomBoard(boardArea, expectedMineCount).cells
@@ -79,7 +79,7 @@ internal class BoardTest {
     )
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
         // given
-        val boardArea = BoardArea(rowCount, columnCount)
+        val boardArea = BoardArea.of(rowCount, columnCount)
         assertThrows<IllegalArgumentException> { Board.randomBoard(boardArea, expectedMineCount) }
     }
 }

@@ -1,13 +1,10 @@
 package minesweeper.model.board.coordinate
 
-data class BoardArea(override val rowCount: Int, override val columnCount: Int) : Area, Iterable<Position> {
+data class BoardArea(override val rowCount: PositiveInt, override val columnCount: PositiveInt) :
+    Area,
+    Iterable<Position> {
 
     val cellCount = this.rowCount * this.columnCount
-
-    init {
-        require(rowCount > 0)
-        require(columnCount > 0)
-    }
 
     operator fun get(index: Int): Position = Position(row = index / this.columnCount, column = index % this.columnCount)
     fun indexOf(position: Position): Int = position.row * this.columnCount + position.column
@@ -18,5 +15,12 @@ data class BoardArea(override val rowCount: Int, override val columnCount: Int) 
         override fun hasNext(): Boolean = offset < this@BoardArea.cellCount
 
         override fun next(): Position = this@BoardArea[offset++]
+    }
+
+    companion object {
+        fun of(rowCount: Int, columnCount: Int) = BoardArea(
+            rowCount = PositiveInt(rowCount),
+            columnCount = PositiveInt(columnCount)
+        )
     }
 }

@@ -16,7 +16,7 @@ object ConsoleOutputView : OutputView {
 
     private fun Board.toPrintableString(): String {
         val boardArea = this.boardArea
-        return (0..boardArea.rowCount).mapNotNull(::cellsAtRowOrNull)
+        return boardArea.rowCount.toRange().mapNotNull(::cellsAtRowOrNull)
             .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
     }
 

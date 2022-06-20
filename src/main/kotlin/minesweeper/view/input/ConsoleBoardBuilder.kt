@@ -26,7 +26,7 @@ object ConsoleBoardBuilder : BoardBuilder {
         val rowCount = ConsoleReader.read(MESSAGE_FOR_INPUT_ROW_COUNT, IntInputParser(minValue = MIN_COUNT_OF_ROW))
         val columnCount =
             ConsoleReader.read(MESSAGE_FOR_INPUT_COLUMN_COUNT, IntInputParser(minValue = MIN_COUNT_OF_COLUMN))
-        return BoardArea(rowCount, columnCount)
+        return BoardArea.of(rowCount, columnCount)
     }
 
     private fun inputMineCount(boardArea: BoardArea): Int {
