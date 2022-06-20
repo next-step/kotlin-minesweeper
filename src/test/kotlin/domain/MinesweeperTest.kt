@@ -17,7 +17,7 @@ class MinesweeperTest {
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
 
-        assertThat(minesweeper.board[0][0]).isEqualTo('*')
+        assertThat(minesweeper.board[0][0].placeType).isEqualTo(PlaceType.MINE)
     }
 
     @Test
@@ -31,6 +31,6 @@ class MinesweeperTest {
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocator)
 
-        assertThat(minesweeper.board[2][2]).isEqualTo('B')
+        assertThat(minesweeper.board[2][2].placeType).isEqualTo(PlaceType.NOT_MINE)
     }
 }

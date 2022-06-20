@@ -4,10 +4,10 @@ import domain.strategy.MineAllocationStrategy
 
 class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrategy: MineAllocationStrategy) {
 
-    private val _board: Array<CharArray> =
-        Array(minesweeperProperty.height) { CharArray(minesweeperProperty.width) { PLACE_NOT_MINE } }
+    private val _board: Array<Array<Place>> =
+        Array(minesweeperProperty.height) { Array(minesweeperProperty.width) { Place(PlaceType.NOT_MINE) } }
 
-    val board: Array<CharArray>
+    val board: Array<Array<Place>>
         get() {
             return _board
         }
@@ -21,12 +21,7 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
         assignedMineLocation.map {
             val row = it / minesweeperProperty.height
             val col = it % minesweeperProperty.width
-            _board[row][col] = PLACE_MINE
+            _board[row][col].placeType = PlaceType.MINE
         }
-    }
-
-    companion object {
-        private const val PLACE_MINE = '*'
-        private const val PLACE_NOT_MINE = 'B'
     }
 }
