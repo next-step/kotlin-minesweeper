@@ -32,19 +32,16 @@ internal class MineBoardTest {
     @Test
     fun `지뢰 보드는 지뢰와 빈 공간으로 모두 채워진다`() {
         // given
-        val width = 2
-        val height = 5
-        val numberOfMines = 5
-        val expectedNumberOfEmpty = width * height - numberOfMines
+        val expectedNumberOfEmpty = WIDTH * HEIGHT - NUMBER_OF_MINES
 
         // when
-        val mineBoard = newMineBoard(width, height, numberOfMines)
+        val mineBoard = newMineBoard(WIDTH, HEIGHT, NUMBER_OF_MINES)
         val countOfEmpty = mineBoard.cells.count { it is Empty }
         val countOfMine = mineBoard.cells.count { it is Mine }
 
         // then
         assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
-        assertThat(countOfMine).isEqualTo(numberOfMines)
+        assertThat(countOfMine).isEqualTo(NUMBER_OF_MINES)
     }
 
     @Test
