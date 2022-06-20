@@ -13,4 +13,4 @@ sealed class Cell(
     }
 }
 
-data class CellList(private val cells: List<Cell>) : List<Cell> by cells
+data class Cells(private val cells: List<Cell>) : List<Cell> by cells

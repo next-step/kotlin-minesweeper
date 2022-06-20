@@ -1,6 +1,6 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.cell.CellList
+import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import minesweeper.domain.common.NumberSet
@@ -12,7 +12,7 @@ class MineBoard(
     randomMineStrategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>
 ) {
     var mineIndices: NumberSet
-    lateinit var cells: CellList
+    lateinit var cells: Cells
         private set
 
     init {
@@ -22,7 +22,7 @@ class MineBoard(
     }
 
     private fun build(mineIndices: NumberSet) {
-        cells = CellList(
+        cells = Cells(
             List(board.size) {
                 val x = it % board.width
                 val y = it / board.width
