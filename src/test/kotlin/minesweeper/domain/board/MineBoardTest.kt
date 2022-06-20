@@ -5,8 +5,8 @@ import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import minesweeper.domain.common.NumberSet
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -17,18 +17,16 @@ internal class MineBoardTest {
     @ParameterizedTest
     @MethodSource("지뢰 보드의 높이와 너비 중 음수가 존재하는 케이스")
     fun `지뢰 보드의 높이와 너비는 음수일 수 없다`(width: Int, height: Int) {
-        assertThatThrownBy { newMineBoard(width, height, NUMBER_OF_MINES) }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("width and height must be positive.")
+        val exception = assertThrows<IllegalArgumentException> { newMineBoard(width, height, NUMBER_OF_MINES) }
+        assertThat(exception.message).isEqualTo("width and height must be positive.")
     }
 
     @ParameterizedTest
     @MethodSource("지뢰 개수가 지뢰 보드의 범위를 벗어나는 케이스")
     fun `지뢰 개수는 지뢰 보드의 사이즈 범위 내에 있어야 한다`(width: Int, height: Int, numberOfMines: Int) {
         val size = width * height
-        assertThatThrownBy { newMineBoard(width, height, numberOfMines) }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("number of mines must be within range of 0 ~ $size")
+        val exception = assertThrows<IllegalArgumentException> { newMineBoard(width, height, numberOfMines) }
+        assertThat(exception.message).isEqualTo("number of mines must be within range of 0 ~ $size")
     }
 
     @Test
