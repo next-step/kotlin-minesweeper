@@ -13,7 +13,7 @@ object OutputView {
 
     private fun printRow(row: Row) {
         val rowString = row.value.map {
-            when(it) {
+            when (it) {
                 is Mine -> "*"
                 is NonMine -> it.mineCount
             }
