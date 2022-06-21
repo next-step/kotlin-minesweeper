@@ -11,12 +11,29 @@ class CoordinateTest : DescribeSpec({
                 val coordinates = Coordinate.listOf(2, 2)
 
                 coordinates shouldContainAll listOf(
-                    Coordinate(CoordinateIndex(0), CoordinateIndex(0)),
-                    Coordinate(CoordinateIndex(1), CoordinateIndex(0)),
-                    Coordinate(CoordinateIndex(0), CoordinateIndex(1)),
-                    Coordinate(CoordinateIndex(1), CoordinateIndex(1)),
+                    Coordinate(0, 0),
+                    Coordinate(1, 0),
+                    Coordinate(0, 1),
+                    Coordinate(1, 1),
                 )
             }
+        }
+    }
+
+    describe("nearCoordinate") {
+        it("주변 8개의 좌표들을 구할 수 있다.") {
+            val coordinate = Coordinate(2, 2)
+
+            coordinate.nearCoordinate() shouldContainAll listOf(
+                Coordinate(1, 1),
+                Coordinate(1, 2),
+                Coordinate(1, 3),
+                Coordinate(2, 1),
+                Coordinate(2, 3),
+                Coordinate(3, 1),
+                Coordinate(3, 2),
+                Coordinate(3, 3),
+            )
         }
     }
 })

@@ -8,7 +8,7 @@ class BoardFieldTest : DescribeSpec({
 
     describe("isMine") {
         it("지뢰 유무를 확인할 수 있다") {
-            val coordinate = Coordinate(CoordinateIndex(0), CoordinateIndex(0))
+            val coordinate = Coordinate(0, 0)
 
             assertSoftly {
                 BoardField.mine(coordinate).isMine shouldBe true
