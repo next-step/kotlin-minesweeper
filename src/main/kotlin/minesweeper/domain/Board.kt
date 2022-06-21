@@ -7,7 +7,7 @@ value class Board(val map: MutableMap<Coordinate, Cell>) {
 
     companion object {
         private fun emptyMap(boardSize: BoardSize) = mutableMapOf<Coordinate, Cell>().also { board ->
-            Coordinate.coordinatesInArea(boardSize.height, boardSize.width).map {
+            Coordinates.coordinatesInArea(boardSize.height, boardSize.width).map {
                 board[it] = Cell.None
             }
         }
