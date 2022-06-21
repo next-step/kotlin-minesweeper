@@ -1,7 +1,6 @@
 package minesweeper.model.board
 
 import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.BoardArea
 import minesweeper.model.board.coordinate.Position
 
 class Board private constructor(private val area: Area, val cells: Cells) : Area by area {
@@ -12,11 +11,11 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
 
     companion object {
 
-        fun build(boardArea: BoardArea, isMineCell: (Position) -> Boolean): Board {
-            val cellBuilder = CellBuilder(boardArea, isMineCell)
+        fun build(area: Area, isMineCell: (Position) -> Boolean): Board {
+            val cellBuilder = CellBuilder(area, isMineCell)
             return Board(
-                area = boardArea,
-                cells = Cells(boardArea.map(cellBuilder::createCell))
+                area = area,
+                cells = Cells(area.map(cellBuilder::createCell))
             )
         }
     }

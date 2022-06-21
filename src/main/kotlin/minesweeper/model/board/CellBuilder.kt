@@ -1,9 +1,9 @@
 package minesweeper.model.board
 
-import minesweeper.model.board.coordinate.BoardArea
+import minesweeper.model.board.coordinate.Area
 import minesweeper.model.board.coordinate.Position
 
-class CellBuilder(private val boardArea: BoardArea, private val isMineCell: (Position) -> Boolean) {
+class CellBuilder(private val area: Area, private val isMineCell: (Position) -> Boolean) {
 
     fun createCell(position: Position): Cell {
         if (isMineCell(position)) {
@@ -14,7 +14,7 @@ class CellBuilder(private val boardArea: BoardArea, private val isMineCell: (Pos
     }
 
     private fun surroundMineCountOf(position: Position) = SurroundMineCount(
-        boardArea.surroundPositionsOf(position)
+        area.surroundPositionsOf(position)
             .count(isMineCell)
     )
 }
