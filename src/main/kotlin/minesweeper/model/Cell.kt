@@ -2,18 +2,13 @@ package minesweeper.model
 
 @JvmInline
 value class Cell private constructor(
-    private val mark: Char
+    private val type: CellType,
 ) {
-    fun isMine() = mark == MINE_MARK
-
-    override fun toString() = "$mark"
+    fun isMine() = type.isMine()
 
     companion object {
-        private const val MINE_MARK = '*'
-        private const val CLOSE_MARK = 'C'
+        fun mine() = Cell(CellType.MINE)
 
-        fun mine() = Cell(MINE_MARK)
-
-        fun close() = Cell(CLOSE_MARK)
+        fun close() = Cell(CellType.NON_MINE)
     }
 }
