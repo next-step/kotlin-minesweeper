@@ -21,6 +21,10 @@ data class Cell(
         return cellState.isNonMine()
     }
 
+    fun isOpen(): Boolean {
+        return cellState.isOpen
+    }
+
     companion object {
         fun of(position: Position, minePositions: Positions): Cell {
             return Cell(position).apply {

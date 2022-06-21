@@ -24,7 +24,7 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun avoidAllMine(): Boolean {
-        return cells.count { it.cellState.isOpen && it.cellState.cellType == CellType.NON_MINE } == cells.count { it.cellState.cellType == CellType.NON_MINE }
+        return cells.all { it.isNonMine() && it.isOpen() }
     }
 
     private fun openNearCell(cell: Cell) {
