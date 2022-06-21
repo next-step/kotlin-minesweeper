@@ -25,6 +25,10 @@ data class Cell(
         return cellState.isOpen
     }
 
+    fun nearCellContain(cell: Cell): Boolean {
+        return this.position.nearCellPositions.contains(cell.position)
+    }
+
     companion object {
         fun of(position: Position, minePositions: Positions): Cell {
             return Cell(position).apply {

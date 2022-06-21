@@ -47,7 +47,7 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun getNearCells(cell: Cell): List<Cell> {
-        return cells.filter { it.position.nearCellPositions.contains(cell.position) }
+        return cells.filter { it.nearCellContain(cell) }
     }
 
     fun groupByPositionX(): List<List<Cell>> {
