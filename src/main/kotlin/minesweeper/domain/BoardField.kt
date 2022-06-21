@@ -1,14 +1,25 @@
 package minesweeper.domain
 
-data class BoardField(val coordinate: Coordinate, val isMine: Boolean) {
+sealed interface BoardField {
+    val coordinate: Coordinate
 
     companion object {
         fun nonMine(coordinate: Coordinate): BoardField {
-            return BoardField(coordinate, false)
+            return NumberField(coordinate)
         }
 
         fun mine(coordinate: Coordinate): BoardField {
-            return BoardField(coordinate, true)
+            return MineField(coordinate)
         }
+    }
+}
+
+data class MineField(override val coordinate: Coordinate) : BoardField
+
+data class NumberField(override val coordinate: Coordinate) : BoardField {
+
+    fun number(boardFields: BoardFields): Int {
+        val nearFields = boardFields.nearFields(coordinate)
+        return nearFields.mineCount()
     }
 }
