@@ -2,7 +2,12 @@ package minesweeper.domain.field
 
 @JvmInline
 value class CoordinateValue(val value: Int) {
-    init {
-        require(value >= 0) { "좌표를 나타내는 값은 음수가 될수 없습니다." }
+
+    operator fun plus(other: CoordinateValue): CoordinateValue = CoordinateValue(value + other.value)
+
+    operator fun minus(other: CoordinateValue): CoordinateValue = CoordinateValue(value - other.value)
+
+    companion object {
+        fun move(): CoordinateValue = CoordinateValue(1)
     }
 }
