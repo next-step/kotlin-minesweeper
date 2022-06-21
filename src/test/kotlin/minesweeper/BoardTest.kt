@@ -6,8 +6,11 @@ import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Board
 import minesweeper.domain.BoardSize
+import minesweeper.domain.Cell
 import minesweeper.domain.Coordinate
+import minesweeper.domain.Coordinates
 import minesweeper.domain.MineCount
+import minesweeper.domain.MineSpawner
 
 class BoardTest : DescribeSpec({
 
@@ -36,5 +39,23 @@ class BoardTest : DescribeSpec({
                 board.remainMineCount() shouldBe 2
             }
         }
+
+        context("지정된 위치에") {
+            it("지뢰를 배치한다.") {
+                val mineSpawner = TestMineSpawner(listOf(Coordinate(0, 0), Coordinate(1, 1)))
+                val board = Board.generate(BoardSize(2, 2), MineCount(2), mineSpawner)
+
+                board.map[Coordinate(0, 0)] shouldBe Cell.Mine
+                board.map[Coordinate(0, 1)] shouldBe Cell.None
+                board.map[Coordinate(1, 0)] shouldBe Cell.None
+                board.map[Coordinate(1, 1)] shouldBe Cell.Mine
+            }
+        }
     }
 })
+
+class TestMineSpawner(private val coordinates: List<Coordinate>) : MineSpawner {
+    override fun spawn(boardSize: BoardSize, count: MineCount): Coordinates {
+        return Coordinates(coordinates.toSet())
+    }
+}
