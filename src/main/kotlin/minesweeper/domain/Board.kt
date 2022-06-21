@@ -1,13 +1,27 @@
 package minesweeper.domain
 
 @JvmInline
-value class Board(val board: List<List<Cell>>) {
+value class Board(val map: MutableMap<Coordinate, Cell>) {
+
+    fun remainMineCount() = map.count { (_, value) -> value == Cell.Mine }
 
     companion object {
-        fun generate(boardSize: BoardSize, mineCount: MineCount): Board {
+        private fun emptyMap(boardSize: BoardSize) = mutableMapOf<Coordinate, Cell>().also { board ->
+            Coordinate.coordinatesInArea(boardSize.height, boardSize.width).map {
+                board[it] = Cell.None
+            }
+        }
+
+        fun generate(boardSize: BoardSize, mineCount: MineCount, mineSpawner: MineSpawner = RandomMineSpawner): Board {
             val maxCellCount = boardSize.height * boardSize.width
             if (mineCount > maxCellCount) throw IllegalArgumentException()
-            return Board(List(boardSize.height) { List(boardSize.width) { Cell.None } })
+
+            val minePositions = mineSpawner.spawn(boardSize, mineCount)
+            val map = emptyMap(boardSize).also { board ->
+                minePositions.forEach { board[it] = Cell.Mine }
+            }
+
+            return Board(map)
         }
     }
 }
