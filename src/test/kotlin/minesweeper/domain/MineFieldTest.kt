@@ -8,6 +8,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.domain.field.Coordinate
 import minesweeper.domain.field.CoordinateValue
 import minesweeper.domain.field.Mine
+import minesweeper.domain.field.NonMine
 import minesweeper.domain.vo.Height
 import minesweeper.domain.vo.NumberOfMine
 import minesweeper.domain.vo.Width
@@ -71,5 +72,37 @@ class MineFieldTest : StringSpec({
             mineField.fields[it] shouldBe Mine
         }
         mineField.fields.values.count { it == Mine } shouldBe numberOfMine.value
+    }
+
+    "지뢰가 아닌 필드는 주변 필드의 지뢰 개수를 가진다." {
+        val height = Height(5)
+        val width = Width(5)
+        val numberOfMine = NumberOfMine(1)
+        val mineCoordinate = Coordinate(
+            CoordinateValue(0),
+            CoordinateValue(0)
+        )
+        val mineCoordinates = listOf(mineCoordinate)
+        val mineAroundCoordinates = listOf(
+            Coordinate(
+                CoordinateValue(1),
+                CoordinateValue(0)
+            ),
+            Coordinate(
+                CoordinateValue(0),
+                CoordinateValue(1)
+            ),
+            Coordinate(
+                CoordinateValue(1),
+                CoordinateValue(1)
+            )
+        )
+
+        val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
+
+        mineAroundCoordinates.forAll {
+            mineField.fields[it] shouldBe NonMine(0)
+            (mineField.fields[it] as NonMine).mineCount shouldBe 1
+        }
     }
 })
