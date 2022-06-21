@@ -7,8 +7,9 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
     }
 
     override fun compareTo(other: Coordinate): Int {
-        val compareY = y.compareTo(other.y)
-        return if (compareY == 0) x.compareTo(other.x)
-        else compareY
+        return when (val compareY = y.compareTo(other.y)) {
+            0 -> x.compareTo(other.x)
+            else -> compareY
+        }
     }
 }

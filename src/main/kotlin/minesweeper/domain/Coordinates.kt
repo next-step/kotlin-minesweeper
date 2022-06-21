@@ -8,11 +8,9 @@ data class Coordinates(private val set: Set<Coordinate> = setOf()) : Set<Coordin
 
     companion object {
         fun coordinatesInArea(height: Int, width: Int): Coordinates =
-            Coordinates(
-                (0 until height).map { y ->
-                    coordinatesInColumn(y, width)
-                }.reduce(Coordinates::plus).toCoordinates()
-            )
+            (0 until height).map { y ->
+                coordinatesInColumn(y, width)
+            }.reduce(Coordinates::plus).toCoordinates()
 
         private fun coordinatesInColumn(column: Int, length: Int): Coordinates =
             (0 until length).map { x ->

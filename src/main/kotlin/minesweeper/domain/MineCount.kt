@@ -7,6 +7,7 @@ value class MineCount(private val count: Int) {
     }
 
     fun toInt() = count
+
     operator fun compareTo(value: Int): Int {
         return count.compareTo(value)
     }

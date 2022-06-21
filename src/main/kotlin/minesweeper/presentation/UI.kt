@@ -10,7 +10,7 @@ object UI {
     }
 
     fun drawBoard(board: Board) {
-        board.groupByRow().forEach { (_, row) ->
+        board.groupByColumn().forEach { (_, row) ->
             println(row.joinToString(" ") { convertCellMark(it) })
         }
     }
