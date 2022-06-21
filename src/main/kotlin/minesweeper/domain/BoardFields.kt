@@ -10,6 +10,6 @@ data class BoardFields(val boardFields: List<BoardField>) {
     }
 
     fun mineCount(): Int {
-        return boardFields.count { it.isMine }
+        return boardFields.count { it is MineField }
     }
 }
