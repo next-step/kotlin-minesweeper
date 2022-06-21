@@ -46,6 +46,5 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
                 .map { Cell.of(it, minePositions) }
                 .let { Cells(it) }
         }
-
     }
 }
