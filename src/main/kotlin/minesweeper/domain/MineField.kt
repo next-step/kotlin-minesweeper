@@ -29,7 +29,7 @@ class MineField(
                 if (it in mineCoordinates) {
                     it to Mine
                 } else {
-                    it to NonMine
+                    it to NonMine.init()
                 }
             }.let(::MineField)
         }

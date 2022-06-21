@@ -4,4 +4,9 @@ sealed interface Dot
 
 object Mine : Dot
 
-object NonMine : Dot
+data class NonMine(val mineCount: Int) : Dot {
+    companion object {
+        private const val DEFAULT_MINE_COUNT = 0
+        fun init(): NonMine = NonMine(DEFAULT_MINE_COUNT)
+    }
+}
