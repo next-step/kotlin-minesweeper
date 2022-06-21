@@ -1,5 +1,5 @@
 package minesweeper.domain
 
 data class MineBoard(
-    val boardFields: List<BoardField>
+    val boardFields: BoardFields
 )

@@ -8,7 +8,7 @@ class MineBoardResponse(
 ) {
     companion object {
         fun of(mineBoard: MineBoard, width: Int): MineBoardResponse {
-            val boardFields = mineBoard.boardFields
+            val boardFields = mineBoard.boardFields.boardFields
             val boardRowResponses = boardFields.chunked(width)
                 .map(::BoardRowResponse)
             return MineBoardResponse(boardRowResponses)
