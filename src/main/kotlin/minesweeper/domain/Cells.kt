@@ -28,7 +28,7 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun openNearCell(cell: Cell) {
-        if (cell.getNearMineCount() == ZERO) {
+        if (cell.isNearMineExist()) {
             openNearCells(cell)
         }
     }
@@ -62,6 +62,5 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
                 .let { Cells(it) }
         }
 
-        private const val ZERO = 0
     }
 }

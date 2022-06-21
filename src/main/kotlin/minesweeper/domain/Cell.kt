@@ -13,8 +13,8 @@ data class Cell(
         return !cellState.isOpen
     }
 
-    fun getNearMineCount(): Int {
-        return this.cellState.mineCount
+    fun isNearMineExist(): Boolean {
+        return this.cellState.mineCount > ZERO
     }
 
     fun isNonMine(): Boolean {
@@ -27,5 +27,7 @@ data class Cell(
                 this.cellState = CellState.of(position, minePositions)
             }
         }
+
+        private const val ZERO = 0
     }
 }
