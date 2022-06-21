@@ -3,6 +3,7 @@ package minesweeper.ui
 import minesweeper.application.dto.MineFieldView
 import minesweeper.application.dto.Row
 import minesweeper.domain.field.Mine
+import minesweeper.domain.field.NonMine
 
 object OutputView {
     fun printMineField(mineFieldView: MineFieldView) {
@@ -12,10 +13,9 @@ object OutputView {
 
     private fun printRow(row: Row) {
         val rowString = row.value.map {
-            if (it == Mine) {
-                "*"
-            } else {
-                "C"
+            when(it) {
+                is Mine -> "*"
+                is NonMine -> it.mineCount
             }
         }
 
