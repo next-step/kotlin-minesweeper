@@ -13,8 +13,8 @@ data class Cell(
         return !cellState.isOpen
     }
 
-    fun isNearMineExist(): Boolean {
-        return this.cellState.mineCount > ZERO
+    fun isNearMineNotExist(): Boolean {
+        return this.cellState.getNearMineCount() == ZERO
     }
 
     fun isNonMine(): Boolean {

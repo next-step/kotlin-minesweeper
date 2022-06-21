@@ -24,11 +24,11 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun avoidAllMine(): Boolean {
-        return cells.all { it.isNonMine() && it.isOpen() }
+        return cells.filter { it.isNonMine() }.all { it.isOpen() }
     }
 
     private fun openNearCell(cell: Cell) {
-        if (cell.isNearMineExist()) {
+        if (cell.isNearMineNotExist()) {
             openNearCells(cell)
         }
     }

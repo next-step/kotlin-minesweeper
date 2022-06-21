@@ -1,27 +1,23 @@
 package minesweeper.domain
 
-class CellState(
-    val mineCount: Int = 0,
+abstract class CellState(
     val cellType: CellType,
     var isOpen: Boolean = false
 ) {
-    fun isBomb() = cellType == CellType.MINE && isOpen
+    abstract fun isBomb(): Boolean
+
+    abstract fun isNonMine(): Boolean
+
+    abstract fun getNearMineCount(): Int
 
     fun click() {
         isOpen = true
     }
 
-    fun isNonMine(): Boolean {
-        return cellType == CellType.NON_MINE
-    }
-
     companion object {
         fun of(position: Position, minePositions: Positions): CellState {
             val cellType = minePositions.cellType(position)
-            val mineCount =
-                if (cellType == CellType.NON_MINE) position.getNearMineCount(minePositions) else 0
-
-            return CellState(mineCount, cellType)
+            return if (cellType == CellType.NON_MINE) NonMineCellState(position.getNearMineCount(minePositions)) else MineCellState()
         }
 
         private fun Positions.cellType(position: Position): CellType {

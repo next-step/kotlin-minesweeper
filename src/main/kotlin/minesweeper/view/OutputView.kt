@@ -25,7 +25,7 @@ object OutputView {
 
     private fun Cell.toPoint(): String {
         return when (cellState.isOpen) {
-            true -> cellState.mineCount.toString()
+            true -> cellState.getNearMineCount().toString()
             false -> "C"
         }
     }
