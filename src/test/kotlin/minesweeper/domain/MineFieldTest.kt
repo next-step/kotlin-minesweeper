@@ -101,7 +101,6 @@ class MineFieldTest : StringSpec({
         val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
 
         mineAroundCoordinates.forAll {
-            mineField.fields[it] shouldBe NonMine(0)
             (mineField.fields[it] as NonMine).mineCount shouldBe 1
         }
     }

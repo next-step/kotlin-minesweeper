@@ -13,4 +13,10 @@ class NonMineTest : StringSpec({
         val nonMine = NonMine(3)
         nonMine.mineCount shouldBe 3
     }
+
+    "주변 지뢰 갯수를 더할수 있다." {
+        val nonMine = NonMine.init()
+
+        nonMine.addCount().mineCount shouldBe 1
+    }
 })

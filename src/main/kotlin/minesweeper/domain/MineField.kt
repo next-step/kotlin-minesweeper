@@ -25,13 +25,10 @@ class MineField(
             val coordinates = generateCoordinates(height, width)
             val mineCoordinates = mineCoordinateGenerator.generate(coordinates, numberOfMine)
 
-            return coordinates.associate {
-                if (it in mineCoordinates) {
-                    it to Mine
-                } else {
-                    it to NonMine.init()
-                }
-            }.let(::MineField)
+            val fields = generateFields(coordinates, mineCoordinates)
+            initMineCount(mineCoordinates, coordinates, fields)
+
+            return MineField(fields.toMap())
         }
 
         private fun generateCoordinates(
@@ -39,6 +36,33 @@ class MineField(
             width: Width
         ): List<Coordinate> = (START_INDEX until height.value).flatMap { x ->
             (START_INDEX until width.value).map { y -> Coordinate(CoordinateValue(y), CoordinateValue(x)) }
+        }
+
+        private fun generateFields(
+            coordinates: List<Coordinate>,
+            mineCoordinates: List<Coordinate>
+        ): MutableMap<Coordinate, Dot> = coordinates.associate {
+            if (it in mineCoordinates) {
+                it to Mine
+            } else {
+                it to NonMine.init()
+            }
+        }.toMutableMap()
+
+        private fun initMineCount(
+            mineCoordinates: List<Coordinate>,
+            coordinates: List<Coordinate>,
+            mineMap: MutableMap<Coordinate, Dot>
+        ) {
+            mineCoordinates.flatMap { it.findAround() }
+                .filter { it in coordinates }
+                .forEach {
+                    val dot = mineMap[it] ?: throw IllegalArgumentException("지뢰를 찾을수 없습니다.")
+                    mineMap[it] = when (dot) {
+                        is NonMine -> dot.addCount()
+                        is Mine -> dot
+                    }
+                }
         }
     }
 }
