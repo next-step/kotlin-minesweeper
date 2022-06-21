@@ -2,7 +2,7 @@ package minesweeper.domain
 
 import minesweeper.domain.field.Coordinate
 import minesweeper.domain.field.CoordinateValue
-import minesweeper.domain.field.Field
+import minesweeper.domain.field.Dot
 import minesweeper.domain.field.Mine
 import minesweeper.domain.field.NonMine
 import minesweeper.domain.vo.Height
@@ -10,7 +10,7 @@ import minesweeper.domain.vo.NumberOfMine
 import minesweeper.domain.vo.Width
 
 class MineField(
-    val fields: List<Field>
+    val fields: Map<Coordinate, Dot>
 ) {
     init {
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
@@ -25,11 +25,11 @@ class MineField(
             val coordinates = generateCoordinates(height, width)
             val mineCoordinates = mineCoordinateGenerator.generate(coordinates, numberOfMine)
 
-            return coordinates.map {
+            return coordinates.associate {
                 if (it in mineCoordinates) {
-                    Field(it, Mine)
+                    it to Mine
                 } else {
-                    Field(it, NonMine)
+                    it to NonMine
                 }
             }.let(::MineField)
         }
