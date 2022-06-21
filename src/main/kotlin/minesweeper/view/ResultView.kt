@@ -16,10 +16,9 @@ object ResultView {
     }
 
     private fun convertBoardField(boardField: BoardField): String {
-        return if (boardField.isMine) {
-            "*"
-        } else {
-            "C"
+        return when (boardField.isMine) {
+            true -> "*"
+            false -> "C"
         }
     }
 }

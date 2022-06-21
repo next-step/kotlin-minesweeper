@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
@@ -24,9 +25,16 @@ class MineSweeperTest : DescribeSpec({
             }
 
             it("배열된 지뢰를 확인할 수 있다") {
-                mineBoard.boardFields.filter { it.isMine } shouldBe listOf(
+                mineBoard.boardFields.filter { it.isMine } shouldContainAll listOf(
                     BoardField(Coordinate(CoordinateIndex(0), CoordinateIndex(0)), true),
                     BoardField(Coordinate(CoordinateIndex(1), CoordinateIndex(1)), true),
+                )
+            }
+
+            it("지뢰가 아닌 필드를 확인할 수 있다") {
+                mineBoard.boardFields.filterNot { it.isMine } shouldContainAll listOf(
+                    BoardField(Coordinate(CoordinateIndex(0), CoordinateIndex(1)), false),
+                    BoardField(Coordinate(CoordinateIndex(1), CoordinateIndex(0)), false),
                 )
             }
         }
