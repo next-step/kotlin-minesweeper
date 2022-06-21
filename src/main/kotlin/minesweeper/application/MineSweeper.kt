@@ -16,7 +16,7 @@ class MineSweeper {
             RandomMineCoordinateGenerator
         )
 
-        return mineField.fields.map { it.dot }
+        return mineField.fields.values
             .chunked(width.value)
             .map { Row(it) }
             .let(::MineFieldView)
