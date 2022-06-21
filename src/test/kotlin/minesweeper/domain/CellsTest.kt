@@ -55,6 +55,25 @@ class CellsTest {
         cells.click(Position(1, 1))
         cells.click(Position(0, 1))
 
+        assertThat(cells.count{it.isOpen()}).isEqualTo(3)
+        assertThat(cells.state()).isEqualTo(BoardState.WIN)
+    }
+
+    @Test
+    fun `게임판(5*5)에 꽂을 셀과 지뢰 1개 중 하나의 셀을 선택한 경우 open`() {
+        val mockPositions = MockPositions(FixtureMineSweeper.mockPositions5x5)
+        val positions = Positions(mockPositions)
+        val minePositions = mockPositions.createRandomMinePosition(6)
+        val cells = Cells.of(positions, minePositions)
+
+        cells.click(Position(2, 0))
+        assertThat(cells.count{it.isOpen()}).isEqualTo(1)
+        cells.click(Position(1, 1))
+        assertThat(cells.count{it.isOpen()}).isEqualTo(2)
+        cells.click(Position(2, 1))
+        assertThat(cells.count{it.isOpen()}).isEqualTo(3)
+        cells.click(Position(2, 2))
+        assertThat(cells.count{it.isOpen()}).isEqualTo(19)
         assertThat(cells.state()).isEqualTo(BoardState.WIN)
     }
 

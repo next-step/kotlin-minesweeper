@@ -28,26 +28,11 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     }
 
     private fun openNearCell(cell: Cell) {
-        if (cell.isNearMineNotExist()) {
-            openNearCells(cell)
-        }
-    }
-
-    private fun openNearCells(cell: Cell) {
-        getNearCells(cell).forEach {
-            openCellAndNearCells(it)
-        }
-    }
-
-    private fun openCellAndNearCells(cell: Cell) {
-        if (cell.isNonMine() && !cell.cellState.isOpen) {
-            cell.click()
-            openNearCell(cell)
-        }
-    }
-
-    private fun getNearCells(cell: Cell): List<Cell> {
-        return cells.filter { it.nearCellContain(cell) }
+        cells.takeIf { cell.isNearMineNotExist() }
+            ?.asSequence()
+            ?.filter { it.nearCellContain(cell) && it.isNonMine() && it.isNotClicked() }
+            ?.onEach { it.click() }
+            ?.forEach { openNearCell(it) }
     }
 
     fun groupByPositionX(): List<List<Cell>> {
