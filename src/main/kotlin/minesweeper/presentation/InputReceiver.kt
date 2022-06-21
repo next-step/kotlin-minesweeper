@@ -1,6 +1,7 @@
 package minesweeper.presentation
 
 import minesweeper.domain.BoardSize
+import minesweeper.domain.MineCount
 
 object InputReceiver {
 
@@ -20,5 +21,10 @@ object InputReceiver {
     private fun receiverWidth(): Int {
         println("너비를 입력하세요.")
         return readln().toInt()
+    }
+
+    fun receiveMineCount(): MineCount {
+        println("지뢰는 몇 개인가요?")
+        return MineCount(readln().toInt())
     }
 }
