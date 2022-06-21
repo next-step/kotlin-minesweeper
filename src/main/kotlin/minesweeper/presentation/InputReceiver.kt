@@ -9,6 +9,7 @@ object InputReceiver {
         val height = receiverHeight()
         println()
         val width = receiverWidth()
+        println()
 
         return BoardSize(height, width)
     }
