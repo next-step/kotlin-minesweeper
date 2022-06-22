@@ -1,6 +1,5 @@
 package minesweeper.domain.board
 
-import io.mockk.boxedClass
 import minesweeper.domain.board.strategy.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
@@ -55,13 +54,7 @@ internal class MineBoardTest {
         val mineBoard = newMineBoard(width, height, numberOfMines)
 
         // then
-        mineBoard.cells.mineIndices.forEach { index ->
-            val x = index % width
-            val y = index / width
-            val cell = mineBoard.cells[index]
-            assertThat(cell.boxedClass()).isEqualTo(Mine::class)
-            assertThat(cell).extracting("position.x.value", "position.y.value").containsExactly(x, y)
-        }
+        assertThat(mineBoard.cells.mineIndices).hasSize(numberOfMines)
     }
 
     companion object {
