@@ -25,7 +25,7 @@ class NearbyMineCounter {
                 if (nearbyX.isBetweenRange(mineBoard.width) && nearbyY.isBetweenRange(mineBoard.width) && nearbyIndex < mineBoard.size) {
                     val cell = mineBoard.cells[nearbyIndex]
                     if (cell is Empty) {
-                        cell.numberOfNearbyMines += 1
+                        cell.accNumberOfNearbyMines()
                     }
                 }
             }
