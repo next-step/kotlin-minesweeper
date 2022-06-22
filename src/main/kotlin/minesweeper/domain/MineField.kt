@@ -12,11 +12,13 @@ import minesweeper.domain.vo.Width
 class MineField(
     val fields: Map<Coordinate, Dot>
 ) {
+
     init {
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
     }
 
-    fun open(coordinate: Coordinate): Dot = fields[coordinate]
+    fun open(input: Coordinate): Dot =
+        fields[input]?.apply { open() }
         ?: throw IllegalArgumentException("지뢰 판을 벗어난 좌표는 입력할수 없습니다.")
 
     companion object {
@@ -44,7 +46,7 @@ class MineField(
             mineCoordinates: List<Coordinate>
         ): Map<Coordinate, Dot> = coordinates.associate {
             if (it in mineCoordinates) {
-                it to Mine
+                it to Mine()
             } else {
                 it to NonMine.DEFAULT
             }
