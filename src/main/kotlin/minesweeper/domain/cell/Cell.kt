@@ -1,13 +1,12 @@
 package minesweeper.domain.cell
 
 import minesweeper.domain.board.strategy.MineStrategy
-import minesweeper.domain.common.NumberSet
 
 sealed class Cell(val position: Position)
 
 class Cells private constructor(
     private val cells: List<Cell>,
-    val mineIndices: NumberSet
+    val mineIndices: List<Int>
 ) : List<Cell> by cells {
 
     companion object {
@@ -19,7 +18,7 @@ class Cells private constructor(
             return createCells(size, width, mineIndices)
         }
 
-        private fun createCells(size: Int, width: Int, mineIndices: NumberSet): Cells {
+        private fun createCells(size: Int, width: Int, mineIndices: List<Int>): Cells {
             val cells = List(size) {
                 val x = it % width
                 val y = it / width
