@@ -145,15 +145,22 @@ class MineFieldTest : StringSpec({
         val height = Height(3)
         val width = Width(3)
         val numberOfMine = NumberOfMine(1)
-        val mineCoordinate = Coordinate(
+        val mineCoordinates = listOf(Coordinate(
             CoordinateValue(0),
             CoordinateValue(0)
+        ),
+            Coordinate(
+                CoordinateValue(1),
+                CoordinateValue(0)
+            )
         )
-        val mineCoordinates = listOf(mineCoordinate)
         val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
-        val nonMineCoordinates = mineField.fields.keys.filterNot { it == mineCoordinate }
+        val nonMineCoordinates = mineField.fields.keys.filterNot { it in mineCoordinates }
 
-        mineField.open(mineCoordinate)
+        mineField.open(Coordinate(
+            CoordinateValue(1),
+            CoordinateValue(1)
+        ))
 
         nonMineCoordinates.forAll {
             mineField.fields[it]?.status shouldBe DotStatus.OPEN

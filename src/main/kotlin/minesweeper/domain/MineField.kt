@@ -17,14 +17,38 @@ class MineField(
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
     }
 
-    fun open(input: Coordinate): Dot =
-        fields[input]?.apply { open() }
-        ?: throw IllegalArgumentException("지뢰 판을 벗어난 좌표는 입력할수 없습니다.")
+    fun open(input: Coordinate): Dot = fields[input]?.let { dot ->
+        when (dot) {
+            is Mine -> dot
+            is NonMine -> dot.apply {
+                open()
+                input.findAround().forEach(::openAroundCoordinate)
+            }
+        }
+    } ?: throw IllegalArgumentException("지뢰 판을 벗어난 좌표는 입력할수 없습니다.")
+
+    private tailrec fun openAroundCoordinate(coordinate: Coordinate): Unit =
+        fields[coordinate].let { dot ->
+            when (dot) {
+                is Mine -> return
+                is NonMine -> if (dot.isOpen) {
+                    return
+                } else {
+                    dot.open()
+                    coordinate.findAround().forEach(::openAroundCoordinate)
+                }
+            }
+        }
 
     companion object {
         private const val START_INDEX = 0
 
-        fun create(height: Height, width: Width, numberOfMine: NumberOfMine, mineCoordinateGenerator: MineCoordinateGenerator): MineField {
+        fun create(
+            height: Height,
+            width: Width,
+            numberOfMine: NumberOfMine,
+            mineCoordinateGenerator: MineCoordinateGenerator
+        ): MineField {
             require(height.value * width.value >= numberOfMine.value) { "지뢰 판 크기보다 지뢰 수가 많을수 없습니다." }
 
             val coordinates = generateCoordinates(height, width)
@@ -51,7 +75,7 @@ class MineField(
                 it to NonMine.DEFAULT
             }
         }.mapValues { (coordinate, dot) ->
-            when(dot) {
+            when (dot) {
                 is Mine -> dot
                 is NonMine -> NonMine(
                     coordinate.findAround().count(mineCoordinates::contains)

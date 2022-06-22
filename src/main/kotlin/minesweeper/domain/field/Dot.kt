@@ -1,6 +1,9 @@
 package minesweeper.domain.field
 
 sealed interface Dot {
+    val isOpen: Boolean
+        get() = status == DotStatus.OPEN
+
     var status: DotStatus
 
     fun open() {
