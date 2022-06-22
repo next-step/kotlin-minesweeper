@@ -26,6 +26,6 @@ object ConsoleOutputView : OutputView {
 
     private fun Cell.toPrintableString(): String = when (this) {
         is Cell.Mine -> "*"
-        is Cell.Safe -> "C"
+        is Cell.Safe -> "${this.surroundMineCount}"
     }
 }
