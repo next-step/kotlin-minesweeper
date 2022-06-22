@@ -1,6 +1,7 @@
 package domain
 
 import domain.geometric.Dimension
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -22,6 +23,14 @@ class MatrixTest : DescribeSpec({
                 )
                 val matrix = Matrix(dimension, numberOfMines, locationSelector)
                 matrix.cells.values.count { it is Cell.Mine } shouldBe numberOfMines.value
+            }
+        }
+
+        it("지뢰 개수가 전체 칸 수보다 많을 수 없다") {
+            val numberOfMines = NumberOfMines(26)
+            val dimension = Dimension(5, 5)
+            shouldThrowExactly<IllegalArgumentException> {
+                Matrix(dimension, numberOfMines)
             }
         }
     }
