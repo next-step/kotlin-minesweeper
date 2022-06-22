@@ -4,6 +4,7 @@ import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
+import minesweeper.domain.common.rem
 
 object MineBoardView {
 
@@ -14,7 +15,7 @@ object MineBoardView {
 
     private fun printMineBoard(mineBoard: MineBoard) {
         mineBoard.cells.forEachIndexed { index, cell ->
-            if (index % mineBoard.board.width == 0) {
+            if (index % mineBoard.width == 0) {
                 print("\n${cell.shape()} ")
             } else {
                 print("${cell.shape()} ")
@@ -25,6 +26,6 @@ object MineBoardView {
     private fun Cell.shape() =
         when (this) {
             is Mine -> "*"
-            is Empty -> "C"
+            is Empty -> this.numberOfNearbyMines
         }
 }

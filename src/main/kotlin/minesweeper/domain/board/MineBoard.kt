@@ -1,35 +1,36 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.cell.CellList
-import minesweeper.domain.cell.Empty
-import minesweeper.domain.cell.Mine
-import minesweeper.domain.common.NumberSet
-import minesweeper.domain.common.Position
+import minesweeper.domain.board.strategy.MineStrategy
+import minesweeper.domain.cell.Cells
+import minesweeper.domain.common.PositiveInt
+import minesweeper.domain.common.contains
+import minesweeper.domain.common.rangeTo
 
-class MineBoard(
-    val board: Board,
-    val mineIndices: NumberSet
+class MineBoard private constructor(
+    val width: PositiveInt,
+    val height: PositiveInt,
+    numberOfMines: PositiveInt,
+    mineStrategy: MineStrategy
 ) {
-    val size = mineIndices.size
-    lateinit var cells: CellList
-        private set
+    var cells: Cells
+
+    val size get() = width * height
 
     init {
-        build(mineIndices)
+        require(numberOfMines in (0..size)) { "number of mines must be within range of 0 ~ $size" }
+        cells = Cells.of(width, height, numberOfMines, mineStrategy)
+        NearbyMineCounter.count(this)
     }
 
-    private fun build(mineIndices: NumberSet) {
-        cells = CellList(
-            List(board.size) {
-                val x = it % board.width
-                val y = it / board.width
-                if (it in mineIndices) {
-                    Mine(Position(x, y))
-                } else {
-                    Empty(Position(x, y))
-                }
-            }
-        )
+    companion object {
+        fun of(
+            width: PositiveInt,
+            height: PositiveInt,
+            numberOfMines: PositiveInt,
+            mineStrategy: MineStrategy
+        ): MineBoard {
+            return MineBoard(width, height, numberOfMines, mineStrategy)
+        }
     }
 }
 

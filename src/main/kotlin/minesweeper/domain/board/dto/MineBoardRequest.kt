@@ -1,4 +1,4 @@
-package minesweeper.domain.board
+package minesweeper.domain.board.dto
 
 data class MineBoardRequest(
     val width: Int,

@@ -1,25 +1,32 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.common.NumberSet
+import minesweeper.domain.board.strategy.MineStrategy
+import minesweeper.domain.common.PositiveInt
 import kotlin.properties.Delegates
 
 class MineBoardBuilder {
-    private var numberOfMines: Int by Delegates.notNull()
-    private lateinit var board: Board
-    private lateinit var mineIndices: List<Int>
+    private var width: PositiveInt by Delegates.notNull()
+    private var height: PositiveInt by Delegates.notNull()
+    private var numberOfMines: PositiveInt by Delegates.notNull()
+    private lateinit var mineStrategy: MineStrategy
 
-    fun board(block: BoardBuilder.() -> Unit) {
-        board = BoardBuilder().apply(block).build()
+    fun width(value: Int) {
+        width = PositiveInt(value)
+    }
+
+    fun height(value: Int) {
+        height = PositiveInt(value)
     }
 
     fun numberOfMines(value: Int) {
-        numberOfMines = value
+        numberOfMines = PositiveInt(value)
     }
 
-    fun mineStrategy(strategy: (numberOfCells: Int, numberOfMines: Int) -> List<Int>) {
-        require(numberOfMines in (0..board.size)) { "number of mines must be within range of 0 ~ ${board.size}" }
-        mineIndices = strategy(board.size, numberOfMines)
+    fun mineStrategy(mineStrategy: MineStrategy) {
+        this.mineStrategy = mineStrategy
     }
 
-    fun build() = MineBoard(board, NumberSet.of(mineIndices))
+    fun build(): MineBoard {
+        return MineBoard.of(width, height, numberOfMines, mineStrategy)
+    }
 }
