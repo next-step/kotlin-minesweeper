@@ -22,12 +22,15 @@ class NearbyMineCounter {
                 val nearbyY = direction.y + mineCell.position.y
                 val nearbyIndex = nearbyY * mineBoard.width + nearbyX
 
-                if (nearbyX.isBetweenRange(mineBoard.width) && nearbyY.isBetweenRange(mineBoard.width) && nearbyIndex < mineBoard.size) {
-                    val cell = mineBoard.cells[nearbyIndex]
-                    if (cell is Empty) {
-                        cell.accNumberOfNearbyMines()
-                    }
-                }
+                accNearbyMine(mineBoard, nearbyX, nearbyY, nearbyIndex)
+            }
+        }
+
+        private fun accNearbyMine(mineBoard: MineBoard, nearbyX: Int, nearbyY: Int, nearbyIndex: Int) {
+            if (nearbyX.isBetweenRange(mineBoard.width) && nearbyY.isBetweenRange(mineBoard.width) && nearbyIndex < mineBoard.size) {
+                mineBoard.cells[nearbyIndex]
+                    .takeIf { it is Empty }
+                    ?.let { (it as Empty).accNumberOfNearbyMines() }
             }
         }
 
