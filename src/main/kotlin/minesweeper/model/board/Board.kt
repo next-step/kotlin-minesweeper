@@ -34,8 +34,22 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
     }
 
     private fun openSafeCell(cell: Cell.Safe) {
-        cell.open()
-        //  TODO open surround cell if( cell.surroundMineCount == 0)
+        openSafeCell(mutableSetOf(cell))
+    }
+
+    private tailrec fun openSafeCell(cellsToOpen: MutableSet<Cell>) {
+
+        val targetCell = cellsToOpen.firstOrNull() ?: return
+        cellsToOpen.remove(targetCell)
+        targetCell.open()
+
+        if (targetCell is Cell.Safe && targetCell.isNoSurroundMine) {
+            val surroundCellsToOpen = area.surroundPositionsOf(targetCell.position)
+                .mapNotNull(::cellAtOrNull)
+                .filter { !it.isOpen }
+            cellsToOpen.addAll(surroundCellsToOpen)
+        }
+        openSafeCell(cellsToOpen)
     }
 
     private fun openAllCells() {
