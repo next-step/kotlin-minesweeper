@@ -1,11 +1,12 @@
 package minesweeper.model
 
-import minesweeper.model.board.RandomMineBoard
-import minesweeper.model.board.coordinate.BoardArea
+import minesweeper.model.board.RandomBoard
+import minesweeper.model.board.RandomBoard.Companion.maxMineCountInRandomBoard
+import minesweeper.model.board.coordinate.Area
 
-class RandomBoardBuilder(private val boardArea: BoardArea, mineCount: Int) : BoardBuilder {
+class RandomBoardBuilder(private val area: Area, mineCount: Int) : BoardBuilder {
 
-    private val mineCount: Int = mineCount.coerceIn(1, boardArea.cellCount)
+    private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard())
 
-    override fun createNewBoard() = RandomMineBoard(boardArea, mineCount)
+    override fun createNewBoard() = RandomBoard(area, mineCount)
 }
