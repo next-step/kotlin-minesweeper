@@ -5,6 +5,12 @@ data class BoardArea(override val rowCount: PositiveInt, override val columnCoun
     override val cellCount: Int
         get() = this.rowCount * this.columnCount
 
+    override val rowRange: IntRange
+        get() = 0 until this.rowCount.value
+
+    override val columnRange: IntRange
+        get() = 0 until this.columnCount.value
+
     operator fun get(index: Int): Position = Position(row = index / this.columnCount, column = index % this.columnCount)
 
     fun indexOf(position: Position): Int = position.row * this.columnCount + position.column
