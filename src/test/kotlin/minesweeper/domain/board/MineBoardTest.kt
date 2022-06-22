@@ -36,8 +36,8 @@ internal class MineBoardTest {
 
         // when
         val mineBoard = newMineBoard(WIDTH, HEIGHT, NUMBER_OF_MINES)
-        val countOfEmpty = mineBoard.board.cells.count { it is Empty }
-        val countOfMine = mineBoard.board.cells.count { it is Mine }
+        val countOfEmpty = mineBoard.cells.count { it is Empty }
+        val countOfMine = mineBoard.cells.count { it is Mine }
 
         // then
         assertThat(countOfEmpty).isEqualTo(expectedNumberOfEmpty)
@@ -55,10 +55,10 @@ internal class MineBoardTest {
         val mineBoard = newMineBoard(width, height, numberOfMines)
 
         // then
-        mineBoard.mineIndices.forEach { index ->
+        mineBoard.cells.mineIndices.forEach { index ->
             val x = index % width
             val y = index / width
-            val cell = mineBoard.board.cells[index]
+            val cell = mineBoard.cells[index]
             assertThat(cell.boxedClass()).isEqualTo(Mine::class)
             assertThat(cell).extracting("position.x.value", "position.y.value").containsExactly(x, y)
         }
@@ -73,7 +73,7 @@ internal class MineBoardTest {
             width(width)
             height(height)
             numberOfMines(numberOfMines)
-            mineStrategy(DefaultRandomMineStrategy().strategy())
+            mineStrategy(DefaultRandomMineStrategy())
         }
 
         @JvmStatic

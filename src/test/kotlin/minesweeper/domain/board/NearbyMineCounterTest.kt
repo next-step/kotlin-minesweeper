@@ -2,6 +2,7 @@ package minesweeper.domain.board
 
 import minesweeper.domain.board.strategy.MineStrategy
 import minesweeper.domain.cell.Empty
+import minesweeper.domain.common.NumberSet
 import minesweeper.domain.common.PositiveInt
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
@@ -24,11 +25,11 @@ internal class NearbyMineCounterTest {
             width(width)
             height(height)
             numberOfMines(numberOfMines)
-            mineStrategy(FirstIndicesMineStrategy().strategy())
+            mineStrategy(FirstIndicesMineStrategy())
         }
 
         // when
-        val result = mineBoard.board.cells.map {
+        val result = mineBoard.cells.map {
             if (it is Empty) it.numberOfNearbyMines else 0
         }
 
@@ -47,10 +48,9 @@ internal class NearbyMineCounterTest {
     }
 
     inner class FirstIndicesMineStrategy : MineStrategy {
-        override fun strategy(): (numberOfCells: PositiveInt, numberOfMines: PositiveInt) -> List<Int> {
-            return { _, numberOfMines ->
-                (0 until numberOfMines.value).toList()
-            }
+        override fun getMineIndices(numberOfCells: PositiveInt, numberOfMines: PositiveInt): NumberSet {
+            val mineIndices = (0 until numberOfMines.value).toList()
+            return NumberSet.of(mineIndices)
         }
     }
 }

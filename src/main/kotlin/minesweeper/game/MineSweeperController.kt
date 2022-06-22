@@ -15,7 +15,7 @@ class MineSweeperController(
             width(request.width)
             height(request.height)
             numberOfMines(request.numberOfMines)
-            mineStrategy(mineStrategy.strategy())
+            mineStrategy(mineStrategy)
         }
         viewResolver.printStartOfGame(mineBoard)
     }

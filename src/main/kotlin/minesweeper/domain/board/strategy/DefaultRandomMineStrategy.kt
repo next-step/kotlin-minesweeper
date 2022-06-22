@@ -1,14 +1,14 @@
 package minesweeper.domain.board.strategy
 
+import minesweeper.domain.common.NumberSet
 import minesweeper.domain.common.PositiveInt
 import minesweeper.domain.common.until
 
 class DefaultRandomMineStrategy : MineStrategy {
 
-    override fun strategy(): (numberOfCells: PositiveInt, numberOfMines: PositiveInt) -> List<Int> {
-        return { numberOfCells, numberOfMines ->
-            numberOfCells.toShuffledMineIndices(numberOfMines)
-        }
+    override fun getMineIndices(numberOfCells: PositiveInt, numberOfMines: PositiveInt): NumberSet {
+        val mineIndices = numberOfCells.toShuffledMineIndices(numberOfMines)
+        return NumberSet.of(mineIndices)
     }
 
     private fun PositiveInt.toShuffledMineIndices(numberOfMines: PositiveInt): List<Int> {
