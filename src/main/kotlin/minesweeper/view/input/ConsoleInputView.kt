@@ -9,9 +9,13 @@ class ConsoleInputView : InputView {
 
         val positionInputParser = PositionInputParser(board)
         return ConsoleReader.read(
-            message = "open:",
+            message = INPUT_GUIDE_MESSAGE,
             inputAtNewLine = false,
             parser = positionInputParser
         )
+    }
+
+    companion object {
+        private const val INPUT_GUIDE_MESSAGE = "Open cell(row,column): "
     }
 }
