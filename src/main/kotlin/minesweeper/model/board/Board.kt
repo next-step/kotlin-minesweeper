@@ -14,14 +14,10 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         get() = this._state
 
     val isFinished: Boolean
-        get() = when (this.state) {
-            BoardState.COMPLETED,
-            BoardState.MINE_EXPLODED -> true
-            else -> false
-        }
+        get() = this.state.isFinished
 
     private val isAllSafeCellOpen: Boolean
-        get() = this.cells.none { !it.isOpen && it is Cell.Safe }
+        get() = this.cells.none { it is Cell.Safe && !it.isOpen }
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         Cells(this.cells.filter { it.row == row })
@@ -37,9 +33,13 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         }
 
         when (targetCell) {
+            is Cell.Mine -> onMineCellOpen()
             is Cell.Safe -> openSafeCell(targetCell)
-            is Cell.Mine -> changeState(BoardState.MINE_EXPLODED)
         }
+    }
+
+    private fun onMineCellOpen() {
+        changeState(BoardState.MINE_EXPLODED)
     }
 
     private fun openSafeCell(cell: Cell.Safe) {
@@ -56,6 +56,10 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         }
     }
 
+    private fun openAllCells() {
+        this.cells.forEach { it.open() }
+    }
+
     private tailrec fun openSafeCells(cellsToOpen: MutableSet<Cell>) {
 
         val targetCell = cellsToOpen.firstOrNull() ?: return
@@ -69,10 +73,6 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
             cellsToOpen.addAll(surroundCellsToOpen)
         }
         openSafeCells(cellsToOpen)
-    }
-
-    private fun openAllCells() {
-        this.cells.forEach { it.open() }
     }
 
     companion object {
