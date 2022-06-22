@@ -1,7 +1,6 @@
 package minesweeper.model
 
 import minesweeper.model.board.coordinate.BoardArea
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -44,9 +43,9 @@ internal class RandomBoardBuilderTest {
 
         // then
         assertAll(
-            { Assertions.assertThat(actualCells.count()).isEqualTo(expectedCellCount) },
-            { Assertions.assertThat(actualCells.mineCount).isEqualTo(expectedMineCount) },
-            { Assertions.assertThat(actualCells.safeCellCount).isEqualTo(expectedSafeCellCount) }
+            { assertThat(actualCells.count()).isEqualTo(expectedCellCount) },
+            { assertThat(actualCells.mineCount).isEqualTo(expectedMineCount) },
+            { assertThat(actualCells.safeCellCount).isEqualTo(expectedSafeCellCount) }
         )
     }
 }
