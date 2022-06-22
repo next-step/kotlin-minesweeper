@@ -5,9 +5,7 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
     fun click(position: Position) {
         require(position in cells.map { it.position }) { "유효하지 않은 좌표 입니다." }
         cells.first { it.position == position }.apply {
-            require(this.isNotClicked()) { "이미 클릭된 좌표 입니다." }
-            this.click()
-            openNearCell(this)
+            this.openNearCells(cells)
         }
     }
 
@@ -25,14 +23,6 @@ class Cells(val cells: List<Cell>) : List<Cell> by cells {
 
     private fun avoidAllMine(): Boolean {
         return cells.filter { it.isNonMine() }.all { it.isOpen() }
-    }
-
-    private fun openNearCell(cell: Cell) {
-        cells.takeIf { cell.isNearMineNotExist() }
-            ?.asSequence()
-            ?.filter { it.nearCellContain(cell) && it.isNonMine() && it.isNotClicked() }
-            ?.onEach { it.click() }
-            ?.forEach { openNearCell(it) }
     }
 
     fun groupByPositionX(): List<List<Cell>> {

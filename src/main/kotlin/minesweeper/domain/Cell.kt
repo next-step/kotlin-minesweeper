@@ -5,16 +5,9 @@ data class Cell(
 ) {
     lateinit var cellState: CellState
 
-    fun click() {
-        this.cellState.click()
-    }
-
-    fun isNotClicked(): Boolean {
-        return !cellState.isOpen
-    }
-
-    fun isNearMineNotExist(): Boolean {
-        return this.cellState.getNearMineCount() == ZERO
+    fun openNearCells(cells: List<Cell>) {
+        this.click()
+        if (isNearMineNotExist()) openNearCell(cells)
     }
 
     fun isNonMine(): Boolean {
@@ -25,7 +18,28 @@ data class Cell(
         return cellState.isOpen
     }
 
-    fun nearCellContain(cell: Cell): Boolean {
+    private fun openNearCell(cells: List<Cell>) {
+        cells
+            .filter { it.nearCellContain(this) && it.isNonMine() && it.isNotClicked() }
+            .onEach { it.click() }
+            .filter { it.isNearMineNotExist() }
+            .forEach { it.openNearCell(cells) }
+    }
+
+    private fun click() {
+        require(isNotClicked()) { "이미 클릭된 좌표 입니다." }
+        this.cellState.click()
+    }
+
+    private fun isNotClicked(): Boolean {
+        return !cellState.isOpen
+    }
+
+    private fun isNearMineNotExist(): Boolean {
+        return this.cellState.getNearMineCount() == ZERO
+    }
+
+    private fun nearCellContain(cell: Cell): Boolean {
         return this.position.nearCellPositions.contains(cell.position)
     }
 
