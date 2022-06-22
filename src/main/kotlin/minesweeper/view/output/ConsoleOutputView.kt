@@ -1,6 +1,7 @@
 package minesweeper.view.output
 
 import minesweeper.model.board.Board
+import minesweeper.model.board.BoardState
 import minesweeper.model.board.Cell
 import minesweeper.model.board.Cells
 import minesweeper.model.board.coordinate.rangeTo
@@ -8,11 +9,19 @@ import minesweeper.model.board.coordinate.rangeTo
 object ConsoleOutputView : OutputView {
 
     private const val initialMessage = "지뢰찾기 게임 시작"
+    private const val PRINTABLE_STRING_FOR_CLOSE_CELL = "C"
 
     override fun printInitialMessage() = println(initialMessage)
 
     override fun printBoard(board: Board) {
         println(board.toPrintableString())
+    }
+
+    override fun printFinalMessage(board: Board) {
+        when (board.state) {
+            BoardState.MINE_EXPLODED -> println("Lose Game")
+            BoardState.COMPLETED -> println("Win Game")
+        }
     }
 
     private fun Board.toPrintableString(): String {
@@ -25,7 +34,13 @@ object ConsoleOutputView : OutputView {
         this.joinToString(separator = "") { cell -> cell.toPrintableString() }
 
     private fun Cell.toPrintableString(): String = when (this) {
-        is Cell.Mine -> "*"
-        is Cell.Safe -> "${this.surroundMineCount}"
+        is Cell.Mine -> this.toPrintableString()
+        is Cell.Safe -> this.toPrintableString()
     }
+
+    private fun Cell.Mine.toPrintableString(): String =
+        if (this.isOpen) "*" else PRINTABLE_STRING_FOR_CLOSE_CELL
+
+    private fun Cell.Safe.toPrintableString(): String =
+        if (this.isOpen) "${this.surroundMineCount}" else PRINTABLE_STRING_FOR_CLOSE_CELL
 }

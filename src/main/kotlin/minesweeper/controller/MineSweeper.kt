@@ -1,7 +1,6 @@
 package minesweeper.controller
 
 import minesweeper.model.BoardBuilder
-import minesweeper.model.board.BoardState
 import minesweeper.view.input.InputView
 import minesweeper.view.output.OutputView
 
@@ -19,6 +18,9 @@ class MineSweeper(
         do {
             val positionToOpen = inputView.postionToOpen(board)
             board.openCell(positionToOpen)
-        } while (board.state == BoardState.RUNNING)
+            outputView?.printBoard(board)
+        } while (!board.isFinished)
+
+        outputView?.printFinalMessage(board)
     }
 }

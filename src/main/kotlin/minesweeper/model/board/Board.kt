@@ -5,9 +5,19 @@ import minesweeper.model.board.coordinate.Position
 
 class Board private constructor(private val area: Area, val cells: Cells) : Area by area {
 
-    private var _state = BoardState.MINE_EXPLODED
+    private var _state = BoardState.RUNNING
     val state: BoardState
         get() = this._state
+
+    val isFinished: Boolean
+        get() = when (this.state) {
+            BoardState.COMPLETED,
+            BoardState.MINE_EXPLODED -> true
+            else -> false
+        }
+
+    private val isAllSafeCellOpen: Boolean
+        get() = this.cells.none { !it.isOpen && it is Cell.Safe }
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         Cells(this.cells.filter { it.row == row })
@@ -23,21 +33,26 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
         }
 
         when (targetCell) {
-            is Cell.Mine -> openMineCell(targetCell)
             is Cell.Safe -> openSafeCell(targetCell)
+            is Cell.Mine -> changeState(BoardState.MINE_EXPLODED)
         }
     }
 
-    private fun openMineCell(cell: Cell.Mine) {
-        openAllCells()
-        this._state = BoardState.MINE_EXPLODED
-    }
-
     private fun openSafeCell(cell: Cell.Safe) {
-        openSafeCell(mutableSetOf(cell))
+        openSafeCells(mutableSetOf(cell))
+        if (this.isAllSafeCellOpen) {
+            changeState(BoardState.COMPLETED)
+        }
     }
 
-    private tailrec fun openSafeCell(cellsToOpen: MutableSet<Cell>) {
+    private fun changeState(boardState: BoardState) {
+        this._state = boardState
+        if (this.isFinished) {
+            openAllCells()
+        }
+    }
+
+    private tailrec fun openSafeCells(cellsToOpen: MutableSet<Cell>) {
 
         val targetCell = cellsToOpen.firstOrNull() ?: return
         cellsToOpen.remove(targetCell)
@@ -49,7 +64,7 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
                 .filter { !it.isOpen }
             cellsToOpen.addAll(surroundCellsToOpen)
         }
-        openSafeCell(cellsToOpen)
+        openSafeCells(cellsToOpen)
     }
 
     private fun openAllCells() {

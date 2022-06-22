@@ -97,4 +97,40 @@ internal class BoardTest {
             { assertThat(board.cells.count { it.isOpen }).isEqualTo(4) }
         )
     }
+
+    @Test
+    fun `지뢰 열어서 끝남`() {
+
+        // given
+        val mineCells = listOf(
+            "*--",
+            "---",
+            "---"
+        )
+        val board = mineCells.toBoard()
+
+        // when
+        board.openCell(Position(0, 0))
+
+        // then
+        assertThat(board.state).isEqualTo(BoardState.MINE_EXPLODED)
+    }
+
+    @Test
+    fun `안전 셀 모두 열어서 끝남`() {
+
+        // given
+        val mineCells = listOf(
+            "*--",
+            "---",
+            "---"
+        )
+        val board = mineCells.toBoard()
+
+        // when
+        board.openCell(Position(2, 2))
+
+        // then
+        assertThat(board.state).isEqualTo(BoardState.COMPLETED)
+    }
 }
