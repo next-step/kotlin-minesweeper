@@ -5,4 +5,5 @@ import com.nextstep.jngcii.minesweeper.view.InputView
 fun main() {
     val rowCount = InputView.getRowCount()
     val columnCount = InputView.getColumnCount()
+    val mineCount = InputView.getMineCount()
 }

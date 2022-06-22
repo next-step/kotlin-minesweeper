@@ -13,5 +13,10 @@ object InputView {
         return inputLength()
     }
 
+    fun getMineCount(): Int {
+        println("지뢰는 몇 개인가요?")
+        return inputLength()
+    }
+
     private fun inputLength() = StringUtility.convertToPositiveInt(readln())
 }
