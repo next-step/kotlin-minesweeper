@@ -107,7 +107,7 @@ class MineFieldTest : StringSpec({
         }
     }
 
-    "좌표를 입력받아 지뢰 유무를 검증할수 있다." {
+    "좌표를 입력받아 지뢰 유무를 검증할수 있다. - 지뢰 필드 검증" {
         val height = Height(5)
         val width = Width(5)
         val numberOfMine = NumberOfMine(1)
@@ -119,10 +119,10 @@ class MineFieldTest : StringSpec({
 
         val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
 
-        mineField.open(mineCoordinate) shouldBe Mine()
+        mineField.open(mineCoordinate) shouldBe Mine(DotStatus.OPEN)
     }
 
-    "검증된 필드는 OPEN 상태로 변경된다." {
+    "좌표를 입력받아 지뢰 유무를 검증할수 있다. - 지뢰가 아닌 필드 검증" {
         val height = Height(5)
         val width = Width(5)
         val numberOfMine = NumberOfMine(1)
@@ -131,9 +131,13 @@ class MineFieldTest : StringSpec({
             CoordinateValue(0)
         )
         val mineCoordinates = listOf(mineCoordinate)
-        val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
-        mineField.open(mineCoordinate)
+        val nonMineCoordinate = Coordinate(
+            CoordinateValue(3),
+            CoordinateValue(3)
+        )
 
-        mineField.fields.values.first().status shouldBe DotStatus.OPEN
+        val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
+
+        mineField.open(nonMineCoordinate) shouldBe NonMine(0, DotStatus.OPEN)
     }
 })
