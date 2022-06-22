@@ -141,6 +141,28 @@ class MineFieldTest : StringSpec({
         mineField.open(nonMineCoordinate) shouldBe NonMine(0, DotStatus.OPEN)
     }
 
+    "입력받은 좌표가 지뢰판을 벗어난 경우 Exception을 던진다." {
+        val height = Height(5)
+        val width = Width(5)
+        val numberOfMine = NumberOfMine(1)
+        val mineCoordinate = Coordinate(
+            CoordinateValue(0),
+            CoordinateValue(0)
+        )
+        val mineCoordinates = listOf(mineCoordinate)
+
+        val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
+
+        shouldThrow<IllegalArgumentException> {
+            mineField.open(
+                Coordinate(
+                    CoordinateValue(9),
+                    CoordinateValue(9)
+                )
+            )
+        }
+    }
+
     "입력 받은 좌표가 지뢰가 아닌경우 인접한 NonMine 필드가 모두 공개된다. " {
         val height = Height(3)
         val width = Width(3)
