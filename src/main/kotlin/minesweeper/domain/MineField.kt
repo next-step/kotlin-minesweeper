@@ -43,7 +43,7 @@ class MineField(
             if (it in mineCoordinates) {
                 it to Mine
             } else {
-                it to NonMine.init()
+                it to NonMine.DEFAULT
             }
         }.mapValues { (coordinate, dot) ->
             when(dot) {
