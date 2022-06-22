@@ -3,22 +3,26 @@ package minesweeper.domain.board
 import minesweeper.domain.board.strategy.MineStrategy
 import minesweeper.domain.cell.Cells
 
-class MineBoard(
-    width: Int,
-    height: Int,
-    numberOfMines: Int,
-    mineStrategy: MineStrategy
+class MineBoard private constructor(
+    val cells: Cells
 ) {
-    var cells: Cells
 
-    init {
-        val size = width * height
+    companion object {
+        fun of(
+            width: Int,
+            height: Int,
+            numberOfMines: Int,
+            mineStrategy: MineStrategy
+        ): MineBoard {
+            val size = width * height
 
-        require(width >= 0 && height >= 0) { "property must be zero or positive." }
-        require(numberOfMines in (0..size)) { "number of mines must be within range of 0 ~ $size" }
+            require(width >= 0 && height >= 0) { "property must be zero or positive." }
+            require(numberOfMines in (0..size)) { "number of mines must be within range of 0 ~ $size" }
 
-        cells = Cells.of(width, height, numberOfMines, mineStrategy)
-        NearbyMineCounter.count(cells)
+            val cells = Cells.of(width, height, numberOfMines, mineStrategy)
+            NearbyMineCounter.count(cells)
+            return MineBoard(cells)
+        }
     }
 }
 
