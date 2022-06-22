@@ -17,8 +17,12 @@ class Cells private constructor(
         fun of(width: PositiveInt, height: PositiveInt, numberOfMines: PositiveInt, mineStrategy: MineStrategy): Cells {
             val numberOfCells = width * height
             val mineIndices = mineStrategy.getMineIndices(numberOfCells, numberOfMines)
-
             val size = (width * height).value
+
+            return createCells(size, width, mineIndices)
+        }
+
+        private fun createCells(size: Int, width: PositiveInt, mineIndices: NumberSet): Cells {
             val cells = List(size) {
                 val x = it % width
                 val y = it / width
