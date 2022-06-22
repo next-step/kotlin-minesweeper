@@ -2,7 +2,6 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.board.strategy.MineStrategy
 import minesweeper.domain.common.NumberSet
-import minesweeper.domain.common.Position
 import minesweeper.domain.common.PositiveInt
 import minesweeper.domain.common.div
 import minesweeper.domain.common.rem

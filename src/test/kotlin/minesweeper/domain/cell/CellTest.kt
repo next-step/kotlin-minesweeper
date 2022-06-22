@@ -1,6 +1,5 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.common.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

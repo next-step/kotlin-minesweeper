@@ -1,4 +1,6 @@
-package minesweeper.domain.common
+package minesweeper.domain.cell
+
+import minesweeper.domain.common.PositiveInt
 
 data class Position(
     val x: PositiveInt,
