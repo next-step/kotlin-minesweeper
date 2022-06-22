@@ -61,17 +61,6 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         }
     }
 
-    private fun changeState(boardState: BoardState) {
-        this._state = boardState
-        if (this.isFinished) {
-            openAllCells()
-        }
-    }
-
-    private fun openAllCells() {
-        this.cells.forEach { it.open() }
-    }
-
     private tailrec fun openSafeCells(cellsToOpen: MutableSet<Cell>) {
 
         val targetCell = cellsToOpen.firstOrNull() ?: return
@@ -85,6 +74,17 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
             cellsToOpen.addAll(surroundCellsToOpen)
         }
         openSafeCells(cellsToOpen)
+    }
+
+    private fun openAllCells() {
+        this.cells.forEach { it.open() }
+    }
+
+    private fun changeState(boardState: BoardState) {
+        this._state = boardState
+        if (this.isFinished) {
+            openAllCells()
+        }
     }
 
     companion object {
