@@ -106,4 +106,23 @@ internal class CellTest {
                 .surroundMineCount
         ).isEqualTo(surroundMineCount)
     }
+
+    @Test
+    fun `셀 오픈  테스트`() {
+
+        // given
+        val cellList = listOf(
+            Cell.Mine(Position(1, 1)),
+            Cell.Safe(Position(2, 1), SurroundMineCount(0))
+        )
+
+        // when
+        cellList.forEach { it.open() }
+
+        // then
+        assertAll(
+            { assertThat(cellList[0].isOpen).isTrue },
+            { assertThat(cellList[1].isOpen).isTrue }
+        )
+    }
 }

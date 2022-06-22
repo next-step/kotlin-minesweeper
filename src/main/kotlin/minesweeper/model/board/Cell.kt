@@ -5,6 +5,13 @@ import minesweeper.model.board.coordinate.Position
 
 sealed class Cell(open val position: Position) : Coordinate by position {
 
+    var isOpen: Boolean = false
+        private set
+
+    fun open() {
+        this.isOpen = true
+    }
+
     data class Mine(override val position: Position) : Cell(position)
 
     data class Safe(override val position: Position, val surroundMineCount: SurroundMineCount) : Cell(position)
