@@ -12,6 +12,8 @@ import minesweeper.domain.vo.Width
 class MineField(
     val fields: Map<Coordinate, Dot>
 ) {
+    val isAllOpen: Boolean
+        get() = fields.values.filterIsInstance<NonMine>().all { it.isOpen }
 
     init {
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
