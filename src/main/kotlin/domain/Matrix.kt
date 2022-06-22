@@ -5,7 +5,7 @@ import domain.geometric.Location
 import domain.geometric.LocationValue
 
 class Matrix(
-    private val dimension: Dimension,
+    val dimension: Dimension,
     numberOfMines: NumberOfMines,
     locationSelector: LocationSelector = RandomLocationSelector
 ) {
