@@ -1,7 +1,19 @@
 package minesweeper.model.board
 
-import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.cell.Cell
+import minesweeper.model.cell.CellBuilder
+import minesweeper.model.cell.Cells
+import minesweeper.model.coordinate.Area
+import minesweeper.model.coordinate.Position
+
+enum class BoardState {
+    RUNNING,
+    COMPLETED,
+    MINE_EXPLODED;
+
+    val isFinished: Boolean
+        get() = this == COMPLETED || this == MINE_EXPLODED
+}
 
 open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by area {
 

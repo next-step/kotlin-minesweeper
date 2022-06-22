@@ -1,11 +1,11 @@
 package minesweeper.view.input
 
-import minesweeper.model.BoardBuilder
-import minesweeper.model.RandomBoardBuilder
 import minesweeper.model.board.Board
+import minesweeper.model.board.BoardBuilder
 import minesweeper.model.board.RandomBoard.Companion.maxMineCountInRandomBoard
-import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.BoardArea
+import minesweeper.model.board.RandomBoardBuilder
+import minesweeper.model.coordinate.Area
+import minesweeper.model.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
 
 object ConsoleBoardBuilder : BoardBuilder {

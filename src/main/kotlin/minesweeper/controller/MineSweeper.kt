@@ -1,6 +1,6 @@
 package minesweeper.controller
 
-import minesweeper.model.BoardBuilder
+import minesweeper.model.board.BoardBuilder
 import minesweeper.view.input.InputView
 import minesweeper.view.output.OutputView
 

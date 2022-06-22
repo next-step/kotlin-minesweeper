@@ -1,6 +1,6 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

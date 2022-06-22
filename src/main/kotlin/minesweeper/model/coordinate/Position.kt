@@ -1,4 +1,4 @@
-package minesweeper.model.board.coordinate
+package minesweeper.model.coordinate
 
 data class Position(override val row: Int, override val column: Int) : Coordinate {
 

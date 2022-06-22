@@ -1,4 +1,4 @@
-package minesweeper.model.board.coordinate
+package minesweeper.model.coordinate
 
 @JvmInline
 value class PositiveInt(val value: Int) {

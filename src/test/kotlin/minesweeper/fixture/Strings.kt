@@ -1,9 +1,9 @@
 package minesweeper.fixture
 
 import minesweeper.model.board.Board
-import minesweeper.model.board.CellBuilder
-import minesweeper.model.board.coordinate.BoardArea
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.cell.CellBuilder
+import minesweeper.model.coordinate.BoardArea
+import minesweeper.model.coordinate.Position
 
 fun List<String>.toCellBuilder(): CellBuilder {
     val rowCount = this.count()

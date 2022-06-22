@@ -1,4 +1,4 @@
-package minesweeper.model.board.coordinate
+package minesweeper.model.coordinate
 
 data class BoardArea(override val rowCount: PositiveInt, override val columnCount: PositiveInt) : Area {
 

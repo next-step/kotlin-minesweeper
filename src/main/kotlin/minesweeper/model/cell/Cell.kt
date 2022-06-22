@@ -1,7 +1,7 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
-import minesweeper.model.board.coordinate.Coordinate
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
+import minesweeper.model.coordinate.Position
 
 sealed class Cell(open val position: Position) : Coordinate by position {
 

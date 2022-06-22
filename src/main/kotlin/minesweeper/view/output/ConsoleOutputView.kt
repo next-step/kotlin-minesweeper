@@ -2,9 +2,9 @@ package minesweeper.view.output
 
 import minesweeper.model.board.Board
 import minesweeper.model.board.BoardState
-import minesweeper.model.board.Cell
-import minesweeper.model.board.Cells
-import minesweeper.model.board.coordinate.rangeTo
+import minesweeper.model.cell.Cell
+import minesweeper.model.cell.Cells
+import minesweeper.model.coordinate.rangeTo
 
 object ConsoleOutputView : OutputView {
 

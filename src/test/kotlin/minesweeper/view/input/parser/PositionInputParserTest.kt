@@ -1,7 +1,7 @@
 package minesweeper.view.input.parser
 
-import minesweeper.model.board.coordinate.BoardArea
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.BoardArea
+import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest

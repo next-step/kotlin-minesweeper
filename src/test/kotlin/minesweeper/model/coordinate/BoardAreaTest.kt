@@ -1,4 +1,4 @@
-package minesweeper.model.board.coordinate
+package minesweeper.model.coordinate
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows

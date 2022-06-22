@@ -1,7 +1,7 @@
 package minesweeper.view.input.parser
 
-import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.Area
+import minesweeper.model.coordinate.Position
 
 class PositionInputParser(private val area: Area) : InputParser<Position> {
 

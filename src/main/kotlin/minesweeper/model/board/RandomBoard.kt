@@ -1,7 +1,11 @@
 package minesweeper.model.board
 
-import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.cell.Cell
+import minesweeper.model.cell.CellBuilder
+import minesweeper.model.cell.Cells
+import minesweeper.model.cell.SurroundMineCount
+import minesweeper.model.coordinate.Area
+import minesweeper.model.coordinate.Position
 
 class RandomBoard(area: Area, mineCount: Int) : Board(area) {
 

@@ -1,8 +1,8 @@
-package minesweeper.model
+package minesweeper.model.board
 
-import minesweeper.model.board.Cell
-import minesweeper.model.board.coordinate.BoardArea
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.cell.Cell
+import minesweeper.model.coordinate.BoardArea
+import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.assertAll

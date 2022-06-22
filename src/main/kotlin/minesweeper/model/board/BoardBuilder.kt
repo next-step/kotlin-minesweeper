@@ -1,6 +1,4 @@
-package minesweeper.model
-
-import minesweeper.model.board.Board
+package minesweeper.model.board
 
 fun interface BoardBuilder {
     fun createNewBoard(): Board

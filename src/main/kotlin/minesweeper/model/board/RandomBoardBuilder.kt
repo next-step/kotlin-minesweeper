@@ -1,8 +1,7 @@
-package minesweeper.model
+package minesweeper.model.board
 
-import minesweeper.model.board.RandomBoard
 import minesweeper.model.board.RandomBoard.Companion.maxMineCountInRandomBoard
-import minesweeper.model.board.coordinate.Area
+import minesweeper.model.coordinate.Area
 
 class RandomBoardBuilder(private val area: Area, mineCount: Int) : BoardBuilder {
 

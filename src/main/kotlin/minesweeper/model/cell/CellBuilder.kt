@@ -1,7 +1,7 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
-import minesweeper.model.board.coordinate.Area
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.Area
+import minesweeper.model.coordinate.Position
 
 class CellBuilder(private val area: Area, private val isMineCell: (Position) -> Boolean) {
 

@@ -1,8 +1,8 @@
 package minesweeper.model.board
 
 import minesweeper.fixture.toBoard
-import minesweeper.model.board.coordinate.BoardArea
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.BoardArea
+import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

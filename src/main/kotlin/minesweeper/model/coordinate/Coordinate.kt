@@ -1,4 +1,4 @@
-package minesweeper.model.board.coordinate
+package minesweeper.model.coordinate
 
 interface Coordinate {
     val row: Int

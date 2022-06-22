@@ -1,4 +1,4 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
 class SurroundMineCount(private val value: Int) : Comparable<Int> {
     init {
