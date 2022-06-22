@@ -3,7 +3,11 @@ package minesweeper.model.board
 import minesweeper.model.board.coordinate.Area
 import minesweeper.model.board.coordinate.Position
 
-class Board private constructor(private val area: Area, val cells: Cells) : Area by area {
+open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by area {
+
+    private val _cells = Cells(area.mapNotNull { cellBuilder?.createCell(it) })
+    open val cells: Cells
+        get() = _cells
 
     private var _state = BoardState.RUNNING
     val state: BoardState
@@ -26,7 +30,7 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
     fun cellAtOrNull(position: Position): Cell? =
         this.cells.find { it.row == position.row && it.column == position.column }
 
-    fun openCell(position: Position) {
+    open fun openCell(position: Position) {
         val targetCell = cellAtOrNull(position) ?: return
         if (targetCell.isOpen) {
             return
@@ -72,12 +76,10 @@ class Board private constructor(private val area: Area, val cells: Cells) : Area
     }
 
     companion object {
-
         fun build(area: Area, isMineCell: (Position) -> Boolean): Board {
-            val cellBuilder = CellBuilder(area, isMineCell)
             return Board(
                 area = area,
-                cells = Cells(area.map(cellBuilder::createCell))
+                cellBuilder = CellBuilder(area, isMineCell)
             )
         }
     }

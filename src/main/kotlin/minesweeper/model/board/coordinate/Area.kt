@@ -7,5 +7,7 @@ interface Area : Iterable<Position> {
     val cellCount: Int
     val rowRange: IntRange
     val columnRange: IntRange
+
+    operator fun get(index: Int): Position
     fun surroundPositionsOf(position: Position): List<Position>
 }

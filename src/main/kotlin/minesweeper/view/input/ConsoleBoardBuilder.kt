@@ -16,6 +16,8 @@ object ConsoleBoardBuilder : BoardBuilder {
     private const val MIN_COUNT_OF_COLUMN = 3
     private const val MIN_COUNT_OF_MINE = 1
 
+    private const val COUNT_OF_FORCE_SAFE_CELL = 1
+
     override fun createNewBoard(): Board {
         val boardArea = inputBoardArea()
         val mineCount = inputMineCount(boardArea)
@@ -30,7 +32,7 @@ object ConsoleBoardBuilder : BoardBuilder {
     }
 
     private fun inputMineCount(boardArea: BoardArea): Int {
-        val maxMineCount = boardArea.cellCount
+        val maxMineCount = boardArea.cellCount - COUNT_OF_FORCE_SAFE_CELL
         val mineCountRange = MIN_COUNT_OF_MINE..maxMineCount
         return ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
     }
