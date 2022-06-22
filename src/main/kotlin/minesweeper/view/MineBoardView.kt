@@ -13,19 +13,16 @@ object MineBoardView {
     }
 
     private fun printMineBoard(mineBoard: MineBoard) {
-        mineBoard.cells.forEachIndexed { index, cell ->
-            if (index % mineBoard.width == 0) {
-
-                print("\n${cell.shape()} ")
-            } else {
-                print("${cell.shape()} ")
+        mineBoard.cells.groupBy { it.position.y }
+            .forEach { (_, cells) ->
+                cells.forEach(this::printShape)
+                println()
             }
-        }
     }
 
-    private fun Cell.shape() =
-        when (this) {
-            is Mine -> "*"
-            is Empty -> this.numberOfNearbyMines
+    private fun printShape(cell: Cell) =
+        when (cell) {
+            is Mine -> print("* ")
+            is Empty -> print("${cell.numberOfNearbyMines} ")
         }
 }

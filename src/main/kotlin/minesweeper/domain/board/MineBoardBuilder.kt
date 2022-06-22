@@ -26,6 +26,6 @@ class MineBoardBuilder {
     }
 
     fun build(): MineBoard {
-        return MineBoard.of(width, height, numberOfMines, mineStrategy)
+        return MineBoard(width, height, numberOfMines, mineStrategy)
     }
 }

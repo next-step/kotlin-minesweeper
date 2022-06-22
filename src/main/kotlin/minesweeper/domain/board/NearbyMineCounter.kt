@@ -1,30 +1,33 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Empty
 
 class NearbyMineCounter {
 
     companion object {
-        fun count(mineBoard: MineBoard) {
-            mineBoard.cells.mineIndices.forEach { index ->
-                accNearbyMines(mineBoard, mineBoard.cells[index])
+        fun count(cells: Cells) {
+            cells.mineIndices.forEach { index ->
+                accNearbyMines(cells, cells[index])
             }
         }
 
-        private fun accNearbyMines(mineBoard: MineBoard, mineCell: Cell) {
+        private fun accNearbyMines(cells: Cells, mineCell: Cell) {
+            val width = cells.last().position.x + 1
+
             NearbyDirection.values().forEach { direction ->
                 val nearbyX = direction.x + mineCell.position.x
                 val nearbyY = direction.y + mineCell.position.y
-                val nearbyIndex = nearbyY * mineBoard.width + nearbyX
+                val nearbyIndex = nearbyY * width + nearbyX
 
-                accNearbyMine(mineBoard, nearbyX, nearbyY, nearbyIndex)
+                accNearbyMine(cells, width, nearbyX, nearbyY, nearbyIndex)
             }
         }
 
-        private fun accNearbyMine(mineBoard: MineBoard, nearbyX: Int, nearbyY: Int, nearbyIndex: Int) {
-            if (nearbyX.isBetweenRange(mineBoard.width) && nearbyY.isBetweenRange(mineBoard.width) && nearbyIndex < mineBoard.size) {
-                mineBoard.cells[nearbyIndex]
+        private fun accNearbyMine(cells: Cells, width: Int, nearbyX: Int, nearbyY: Int, nearbyIndex: Int) {
+            if (nearbyX.isBetweenRange(width) && nearbyY.isBetweenRange(width) && nearbyIndex < cells.size) {
+                cells[nearbyIndex]
                     .takeIf { it is Empty }
                     ?.let { (it as Empty).accNumberOfNearbyMines() }
             }
