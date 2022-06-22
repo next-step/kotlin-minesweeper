@@ -16,6 +16,9 @@ class MineField(
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
     }
 
+    fun open(coordinate: Coordinate): Dot = fields[coordinate]
+        ?: throw IllegalArgumentException("지뢰 판을 벗어난 좌표는 입력할수 없습니다.")
+
     companion object {
         private const val START_INDEX = 0
 
