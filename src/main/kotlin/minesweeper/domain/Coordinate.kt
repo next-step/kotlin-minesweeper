@@ -23,7 +23,7 @@ data class Coordinate(val x: Int, val y: Int) {
         return if (index == START_INDEX) {
             index..maxNearIndex
         } else {
-            index - NEAR_INDEX..maxNearIndex
+            (index - NEAR_INDEX)..maxNearIndex
         }
     }
 

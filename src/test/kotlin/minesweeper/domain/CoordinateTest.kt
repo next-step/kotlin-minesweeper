@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainAll
 
@@ -18,6 +20,15 @@ class CoordinateTest : DescribeSpec({
                 )
             }
         }
+
+        context("0 미만의 높이와 너비가 주어지면") {
+            it("IllegalArgumentException 이 발생한다") {
+                assertSoftly {
+                    shouldThrow<IllegalArgumentException> { Coordinate(-1, 0) }
+                    shouldThrow<IllegalArgumentException> { Coordinate(0, -1) }
+                }
+            }
+        }
     }
 
     describe("nearCoordinate") {
@@ -34,6 +45,18 @@ class CoordinateTest : DescribeSpec({
                 Coordinate(3, 2),
                 Coordinate(3, 3),
             )
+        }
+
+        context("주변 8개 좌표의 좌표 값이 0보다 작을 경우") {
+            it("좌표 값이 0보다 작은 좌표는 제외하고 구할 수 있다") {
+                val coordinate = Coordinate(0, 0)
+
+                coordinate.nearCoordinate() shouldContainAll listOf(
+                    Coordinate(0, 1),
+                    Coordinate(1, 0),
+                    Coordinate(1, 1),
+                )
+            }
         }
     }
 })
