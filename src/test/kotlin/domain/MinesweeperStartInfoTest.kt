@@ -17,7 +17,6 @@ class MinesweeperStartInfoTest {
             { assertThat(minesweeperStartInfo.rowCount).isEqualTo(10) },
             { assertThat(minesweeperStartInfo.columnCount).isEqualTo(20) },
             { assertThat(minesweeperStartInfo.mineCount).isEqualTo(30) }
-
         )
     }
 }
