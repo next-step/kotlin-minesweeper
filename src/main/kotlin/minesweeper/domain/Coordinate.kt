@@ -11,8 +11,8 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
             val movedX = x + it.x
             val movedY = y + it.y
 
-            if (movedX < 0 || movedY < 0) null
-            else Coordinate(movedX, movedY)
+            if (movedX < 0 || movedY < 0) return@mapNotNull null
+            Coordinate(movedX, movedY)
         }.toCoordinates()
     }
 
