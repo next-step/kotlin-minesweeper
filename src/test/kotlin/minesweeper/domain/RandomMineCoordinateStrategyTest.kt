@@ -8,8 +8,8 @@ class RandomMineCoordinateStrategyTest : DescribeSpec({
     describe("mineCoordinates") {
         it("좌표 목록과 지뢰 개수를 입력 받아 지뢰 개수만큼 랜덤한 좌표를 반환한다") {
             val coordinates = listOf(
-                Coordinate(CoordinateIndex(0), CoordinateIndex(0)),
-                Coordinate(CoordinateIndex(1), CoordinateIndex(1)),
+                Coordinate(0, 0),
+                Coordinate(1, 1),
             )
 
             val mineCoordinates = RandomMineCoordinateStrategy.mineCoordinates(coordinates, 1)
