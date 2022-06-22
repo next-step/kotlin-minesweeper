@@ -104,4 +104,19 @@ class MineFieldTest : StringSpec({
             (mineField.fields[it] as NonMine).mineCount shouldBe 1
         }
     }
+
+    "좌표를 입력받아 지뢰 유무를 검증할수 있다." {
+        val height = Height(5)
+        val width = Width(5)
+        val numberOfMine = NumberOfMine(1)
+        val mineCoordinate = Coordinate(
+            CoordinateValue(0),
+            CoordinateValue(0)
+        )
+        val mineCoordinates = listOf(mineCoordinate)
+
+        val mineField = MineField.create(height, width, numberOfMine) { _, _ -> mineCoordinates }
+
+        mineField.open(mineCoordinate) shouldBe Mine
+    }
 })
