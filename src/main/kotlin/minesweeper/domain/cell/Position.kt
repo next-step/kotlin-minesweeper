@@ -1,14 +1,10 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.common.PositiveInt
-
 data class Position(
-    val x: PositiveInt,
-    val y: PositiveInt
+    val x: Int,
+    val y: Int
 ) {
-    companion object {
-        fun of(x: Int, y: Int): Position {
-            return Position(PositiveInt(x), PositiveInt(y))
-        }
+    init {
+        require(x >= 0 && y >= 0) { "property must be zero or positive." }
     }
 }

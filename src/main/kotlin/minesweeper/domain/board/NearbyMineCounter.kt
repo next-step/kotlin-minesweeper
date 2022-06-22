@@ -2,10 +2,6 @@ package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Empty
-import minesweeper.domain.common.PositiveInt
-import minesweeper.domain.common.compareTo
-import minesweeper.domain.common.plus
-import minesweeper.domain.common.times
 
 class NearbyMineCounter {
 
@@ -34,7 +30,7 @@ class NearbyMineCounter {
             }
         }
 
-        private fun Int.isBetweenRange(width: PositiveInt) = this in 0 until width.value
+        private fun Int.isBetweenRange(width: Int) = this in 0 until width
     }
 
     enum class NearbyDirection(val x: Int, val y: Int) {
