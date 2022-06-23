@@ -2,7 +2,7 @@ package minesweeper.model
 
 data class CellPositions(
     private val positions: List<CellPosition>
-): List<CellPosition> by positions {
+) : List<CellPosition> by positions {
 
     fun generateShuffledPositions() = CellPositions(positions.shuffled())
 
