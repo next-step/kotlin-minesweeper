@@ -21,9 +21,8 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
     open val cells: Cells
         get() = _cells
 
-    private var _state = BoardState.RUNNING
-    val state: BoardState
-        get() = this._state
+    var state = BoardState.RUNNING
+        private set
 
     val isFinished: Boolean
         get() = this.state.isFinished
@@ -79,7 +78,7 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
     }
 
     private fun changeState(boardState: BoardState) {
-        this._state = boardState
+        this.state = boardState
         if (this.isFinished) {
             openAllCells()
         }
