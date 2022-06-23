@@ -12,17 +12,22 @@ class PositionInputParser(private val area: Area) : InputParser<Position> {
         }
     }
 
-    private fun String?.parseTwoInt(): ParseResult<IntArray> = runCatching {
-        val towIntValues = this?.split(",")
-            ?.map { it.trim() }
-            ?.filter { it.isNotEmpty() }
-            ?.map { it.toInt() }
-            ?.toIntArray() ?: IntArray(0)
+    private fun String?.parseTwoInt(): ParseResult<IntArray> {
 
-        require(towIntValues.size == 2) { ERROR_MESSAGE_NUMBER_FORMAT }
-        ParseResult.Value(towIntValues)
-    }.getOrElse {
-        ParseResult.Error(ERROR_MESSAGE_NUMBER_FORMAT)
+        this ?: return ParseResult.Error(ERROR_MESSAGE_NUMBER_FORMAT)
+
+        return runCatching {
+            val towIntValues = this.split(",")
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+                .map { it.toInt() }
+                .toIntArray()
+
+            require(towIntValues.size == 2) { ERROR_MESSAGE_NUMBER_FORMAT }
+            ParseResult.Value(towIntValues)
+        }.getOrElse {
+            ParseResult.Error(ERROR_MESSAGE_NUMBER_FORMAT)
+        }
     }
 
     private fun validateResult(parsedInput: ParseResult.Value<IntArray>): ParseResult<Position> = runCatching {
