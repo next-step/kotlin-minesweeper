@@ -8,12 +8,12 @@ class MinesweeperFactoryTest {
     @Test
     fun `MinesweeperFactory를 구현하여 MinesweeperStartInfo를 받아 Minesweeper를 만드는 팩토리를 만들 수 있다`() {
         val minesweeperFactory = object : MinesweeperFactory {
-            override fun create(minesweeperStartInfo: MinesweeperStartInfo): Minesweeper {
+            override fun create(minesweeperInfo: MinesweeperInfo): Minesweeper {
                 val rows = listOf(Row(listOf(Cell.MINE, Cell.LAND)))
                 return Minesweeper(rows)
             }
         }
-        val minesweeper = minesweeperFactory.create(MinesweeperStartInfo(0, 0, 0))
+        val minesweeper = minesweeperFactory.create(MinesweeperInfo(0, 0, 0))
 
         assertAll(
             { assertThat(minesweeper).hasSize(1) },

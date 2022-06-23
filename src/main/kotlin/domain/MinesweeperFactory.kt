@@ -1,5 +1,5 @@
 package domain
 
 interface MinesweeperFactory {
-    fun create(minesweeperStartInfo: MinesweeperStartInfo): Minesweeper
+    fun create(minesweeperInfo: MinesweeperInfo): Minesweeper
 }

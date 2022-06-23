@@ -1,6 +1,6 @@
 package domain
 
-data class MinesweeperStartInfo(
+data class MinesweeperInfo(
     val rowCount: Int,
     val columnCount: Int,
     val mineCount: Int
