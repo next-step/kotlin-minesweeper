@@ -37,6 +37,16 @@ data class BoardFields(val boardFields: List<BoardField>) {
         return BoardFields(openedFields)
     }
 
+    fun isAllOpenedNumberFields(): Boolean {
+        return boardFields.filterIsInstance<NumberField>()
+            .all { it.isOpen }
+    }
+
+    fun isOpenedMineField(): Boolean {
+        return boardFields.filterIsInstance<MineField>()
+            .any { it.isOpen }
+    }
+
     private fun boardField(coordinate: Coordinate): BoardField {
         return boardFields.find { it.coordinate == coordinate }
             ?: throw IllegalArgumentException("해당 좌표에 필드가 존재하지 않습니다. (${coordinate.x},${coordinate.y})")

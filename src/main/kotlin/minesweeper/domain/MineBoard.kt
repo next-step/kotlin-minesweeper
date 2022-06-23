@@ -2,20 +2,22 @@ package minesweeper.domain
 
 class MineBoard(
     val boardFields: BoardFields,
-    isEnd: Boolean = false
 ) {
-    private var _isEnd = isEnd
-    val isEnd get() = _isEnd
+    val isEnd get() = boardFields.isAllOpenedNumberFields() || boardFields.isOpenedMineField()
+    val isWin get() = boardFields.isAllOpenedNumberFields()
 
     fun open(coordinate: Coordinate) {
-        when (val openedField = boardFields.open(coordinate)) {
-            is NumberField -> openNearFields(openedField)
-            is MineField -> _isEnd = true
+        require(!isEnd) {
+            "게임이 종료된 후에는 필드를 오픈할 수 없습니다."
+        }
+
+        if (boardFields.open(coordinate) is NumberField) {
+            openNearFields(boardFields.open(coordinate))
         }
     }
 
     private fun openNearFields(field: BoardField) {
-        val notOpenedNumberFields = boardFields.nearNotOpenedNumberFields(field.coordinate)
+        val notOpenedNumberFields = boardFields.aroundNotOpenedNumberFields(field.coordinate)
         val openedFields = notOpenedNumberFields.open()
         openedFields.boardFields.forEach { openNearFields(it) }
     }

@@ -109,6 +109,33 @@ class BoardFieldsTest : DescribeSpec({
             )
         }
     }
+
+    describe("isAllOpenedNumberFields") {
+        it("모든 숫자필드가 오픈되었는 지 확인할 수 있다") {
+            val boardFields = BoardFields(
+                listOf(
+                    MineField(Coordinate(0, 0)),
+                    NumberField(Coordinate(2, 2), true),
+                    NumberField(Coordinate(2, 3), true),
+                )
+            )
+
+            boardFields.isAllOpenedNumberFields() shouldBe true
+        }
+    }
+
+    describe("isOpenedMineField") {
+        it("오픈된 지뢰필드가 있는지 확인할 수 있다") {
+            val boardFields = BoardFields(
+                listOf(
+                    MineField(Coordinate(0, 0), true),
+                    NumberField(Coordinate(2, 2)),
+                )
+            )
+
+            boardFields.isOpenedMineField() shouldBe true
+        }
+    }
 })
 
 private fun boardFields() = BoardFields(
