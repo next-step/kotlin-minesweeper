@@ -3,7 +3,6 @@ package minesweeper.model.board
 import minesweeper.model.cell.Cell
 import minesweeper.model.cell.CellBuilder
 import minesweeper.model.cell.Cells
-import minesweeper.model.cell.SurroundMineCount
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
@@ -12,7 +11,7 @@ class RandomBoard(area: Area, mineCount: Int) : Board(area) {
     private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard())
     private var realCells: Cells? = null
     private val initialCells = Cells(
-        List(area.cellCount) { index -> Cell.Safe(area[index], SurroundMineCount(0)) }
+        List(area.cellCount) { index -> Cell.Empty(area[index]) }
     )
     override val cells: Cells
         get() = realCells ?: initialCells

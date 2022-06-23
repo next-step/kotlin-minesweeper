@@ -19,6 +19,8 @@ sealed class Cell(open val coordinate: Coordinate) : Coordinate by coordinate {
     data class Safe(override val coordinate: Coordinate, val surroundMineCount: SurroundMineCount) : Cell(coordinate) {
         val isNoSurroundMine = surroundMineCount.equals(0)
     }
+
+    data class Empty(override val coordinate: Coordinate) : Cell(coordinate)
 }
 
 class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
