@@ -4,7 +4,8 @@ import minesweeper.domain.board.MineMaker
 
 sealed class Cell(
     val position: Position,
-    val nearbyPositions: Positions
+    val nearbyPositions: Positions,
+    val state: CellState = CellState.CLOSE
 )
 
 class Cells(
