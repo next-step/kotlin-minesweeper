@@ -1,7 +1,8 @@
 package com.nextstep.jngcii.minesweeper.domain
 
 class MineManager(
-    private val booleanStrategy: BooleanStrategy
+    private val booleanStrategy: BooleanStrategy,
+    private val pickStrategy: PickStrategy,
 ) {
     tailrec fun assignMinesOnRow(
         mineCountsByRow: MineCountsByRow,
@@ -18,5 +19,15 @@ class MineManager(
         } else {
             assignMinesOnRow(mineCountsByRow, nextRowIndex, assignableMineCount)
         }
+    }
+
+    fun selectMineLocation(
+        columnCount: Int,
+        mineCountOfRow: Int
+    ): MineLocationByRow {
+        val rowIndexes = List(columnCount) { it }
+        val pickedIndexes = pickStrategy.take(rowIndexes, mineCountOfRow)
+
+        return MineLocationByRow(pickedIndexes)
     }
 }

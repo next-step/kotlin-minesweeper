@@ -9,6 +9,10 @@ class MineMapFactory(
         mineCount: Int
     ) {
         val mineCountsByRow = getMineCountsByRow(rowCount, mineCount)
+
+        val mineLocationsByRow = mineCountsByRow.map {
+            mineManager.selectMineLocation(columnCount, it)
+        }
     }
 
     private fun getMineCountsByRow(rowCount: Int, mineCount: Int): MineCountsByRow {
