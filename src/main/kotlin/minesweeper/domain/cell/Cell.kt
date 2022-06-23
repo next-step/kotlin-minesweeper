@@ -1,17 +1,18 @@
 package minesweeper.domain.cell
 
+import minesweeper.domain.board.BoardStatus
 import minesweeper.domain.board.MineMaker
 
 sealed class Cell(
     val position: Position,
     val nearbyPositions: Positions,
 ) {
-    var state: CellState = CellState.CLOSE
+    var state: CellStatus = CellStatus.CLOSE
         private set
 
     fun open(): Cell {
-        check(state != CellState.OPEN) { "cell was already opened." }
-        state = CellState.OPEN
+        check(state != CellStatus.OPEN) { "cell (${position.x}, ${position.y}) was already opened." }
+        state = CellStatus.OPEN
         return this
     }
 }
@@ -20,17 +21,19 @@ class Cells(
     private val cells: List<Cell>
 ) : List<Cell> by cells {
 
-    fun sortedByIndex() = Cells(cells.sortedBy { it.position.index })
-
-    fun openByPosition(position: Position): Cell {
+    fun open(position: Position): BoardStatus {
         val cell = cells[position.index].open()
+        if (cell !is Empty) {
+            return BoardStatus.BOOM
+        }
+
         cell.nearbyPositions.forEach {
             val nearbyCell = cells[it.index]
-            if (nearbyCell is Empty && nearbyCell.state != CellState.OPEN) {
-                openByPosition(nearbyCell.position)
+            if (nearbyCell is Empty && nearbyCell.state != CellStatus.OPEN && cell.numberOfNearbyMines == 0) {
+                open(nearbyCell.position)
             }
         }
-        return cell
+        return BoardStatus.SAFE
     }
 
     companion object {
@@ -41,7 +44,7 @@ class Cells(
             val emptyIndices = (0 until numberOfCells).filterNot { it in mineIndices }
             val emptyCells = createEmptyCells(emptyIndices, width, height)
 
-            return Cells(mineCells + emptyCells)
+            return Cells(mineCells + emptyCells).sortedByIndex()
         }
 
         private fun createEmptyCells(emptyIndices: List<Int>, width: Int, height: Int): List<Empty> {
@@ -52,5 +55,7 @@ class Cells(
                 Empty(position, position.getNearbyPositions(width, height))
             }
         }
+
+        private fun Cells.sortedByIndex() = Cells(cells.sortedBy { it.position.index })
     }
 }

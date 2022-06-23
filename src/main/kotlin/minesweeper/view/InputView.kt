@@ -14,4 +14,12 @@ object InputView {
 
         return MineBoardRequest(width, height, numberOfMines)
     }
+
+    fun inputPositionToOpenCell(): List<Int> {
+        print("open: ")
+        val (x, y) = requireNotNull(readlnOrNull()?.split(","))
+        return listOf(x.int(), y.int())
+    }
+
+    private fun String.int() = this.trim().toInt()
 }

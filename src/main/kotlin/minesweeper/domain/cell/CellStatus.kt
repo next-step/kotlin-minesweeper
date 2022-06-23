@@ -1,5 +1,5 @@
 package minesweeper.domain.cell
 
-enum class CellState {
+enum class CellStatus {
     OPEN, CLOSE
 }

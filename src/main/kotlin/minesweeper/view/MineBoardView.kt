@@ -2,6 +2,7 @@ package minesweeper.view
 
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.CellStatus
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 
@@ -12,10 +13,8 @@ object MineBoardView {
         printMineBoard(mineBoard)
     }
 
-    private fun printMineBoard(mineBoard: MineBoard) {
-        val sortedCells = mineBoard.cells.sortedByIndex()
-
-        sortedCells.groupBy { it.position.y }
+    fun printMineBoard(mineBoard: MineBoard) {
+        mineBoard.cells.groupBy { it.position.y }
             .forEach { (_, cells) ->
                 cells.forEach(this::printShape)
                 println()
@@ -23,8 +22,14 @@ object MineBoardView {
     }
 
     private fun printShape(cell: Cell) =
-        when (cell) {
-            is Mine -> print("* ")
-            is Empty -> print("${cell.numberOfNearbyMines} ")
+        when (cell.state) {
+            CellStatus.CLOSE -> print("C ")
+            CellStatus.OPEN -> print("${cell.shape()} ")
+        }
+
+    private fun Cell.shape() =
+        when (this) {
+            is Mine -> "*"
+            is Empty -> "$numberOfNearbyMines"
         }
 }

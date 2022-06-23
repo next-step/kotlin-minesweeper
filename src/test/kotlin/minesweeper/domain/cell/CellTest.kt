@@ -37,7 +37,7 @@ internal class CellTest {
         val exceptionByCell = assertThrows<IllegalStateException> { cell.open() }
 
         // then
-        assertThat(exceptionByCell.message).isEqualTo("cell was already opened.")
+        assertThat(exceptionByCell.message).isEqualTo("cell (${cell.position.x}, ${cell.position.y}) was already opened.")
     }
 
     @ParameterizedTest
@@ -47,8 +47,8 @@ internal class CellTest {
         val cells = Cells(positions.map { Empty(it, it.getNearbyPositions(width, height)) })
 
         // when
-        cells.openByPosition(positions.first())
-        val result = cells.count { it.state == CellState.OPEN }
+        cells.open(positions.first())
+        val result = cells.count { it.state == CellStatus.OPEN }
 
         // then
         assertThat(result).isEqualTo(positions.size)

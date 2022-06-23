@@ -10,10 +10,9 @@ class NearbyMineCounter {
     companion object {
         fun count(cells: Cells) {
             val mineCells = cells.filterIsInstance<Mine>()
-            val sortedCells = cells.sortedByIndex()
 
             mineCells.forEach { mine ->
-                sortedCells.accNearbyMine(mine.nearbyPositions)
+                cells.accNearbyMine(mine.nearbyPositions)
             }
         }
 
