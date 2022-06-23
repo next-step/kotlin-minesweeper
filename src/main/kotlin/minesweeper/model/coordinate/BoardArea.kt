@@ -2,8 +2,7 @@ package minesweeper.model.coordinate
 
 data class BoardArea(override val rowCount: PositiveInt, override val columnCount: PositiveInt) : Area {
 
-    override val cellCount: Int
-        get() = this.rowCount * this.columnCount
+    override val cellCount: Int = this.rowCount * this.columnCount
 
     override val rowRange: IntRange
         get() = 0 until this.rowCount.value
