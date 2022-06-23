@@ -2,7 +2,7 @@ package domain
 
 import dto.CoordinateGeneratorRequest
 
-class CoordinateRandomGenerator(private val coordinateGeneratorRequest: CoordinateGeneratorRequest) : CoordinateGenerator {
+class CoordinateRandomGenerator(coordinateGeneratorRequest: CoordinateGeneratorRequest) : CoordinateGenerator {
     private val coordinates = coordinateGeneratorRequest.coordinates
     private val landMine = coordinateGeneratorRequest.landMine
 
