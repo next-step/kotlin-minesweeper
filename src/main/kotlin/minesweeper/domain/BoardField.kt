@@ -1,7 +1,15 @@
 package minesweeper.domain
 
-sealed interface BoardField {
-    val coordinate: Coordinate
+sealed class BoardField(
+    val coordinate: Coordinate,
+    isOpen: Boolean,
+) {
+    private var _isOpen = isOpen
+    val isOpen get() = _isOpen
+
+    fun open() {
+        _isOpen = true
+    }
 
     companion object {
         fun nonMine(coordinate: Coordinate): BoardField {
@@ -14,9 +22,36 @@ sealed interface BoardField {
     }
 }
 
-data class MineField(override val coordinate: Coordinate) : BoardField
+class MineField(
+    coordinate: Coordinate,
+    isOpen: Boolean = false
+) : BoardField(coordinate, isOpen) {
 
-data class NumberField(override val coordinate: Coordinate) : BoardField {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
+}
+
+class NumberField(
+    coordinate: Coordinate,
+    isOpen: Boolean = false
+) : BoardField(coordinate, isOpen) {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
 
     fun number(boardFields: BoardFields): Int {
         val nearFields = boardFields.nearFields(coordinate)
