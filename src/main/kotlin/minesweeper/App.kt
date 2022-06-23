@@ -17,5 +17,12 @@ fun main() {
     )
 
     val mineBoardResponse = MineBoardResponse.of(mineBoard, width)
-    ResultView.printBoard(mineBoardResponse)
+    ResultView.printGameStart()
+
+    while (!mineBoard.isEnd) {
+        val coordinate = InputView.open()
+        mineBoard.open(coordinate)
+        ResultView.printBoard(mineBoardResponse)
+    }
+    ResultView.printGameResult(mineBoard.isWin)
 }
