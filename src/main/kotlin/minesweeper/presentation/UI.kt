@@ -9,6 +9,10 @@ object UI {
         println("지뢰찾기 게임 시작")
     }
 
+    fun drawLoseMessage() {
+        println("Lose Game.")
+    }
+
     fun drawBoard(board: Board) {
         board.groupByColumn().forEach { (_, row) ->
             println(row.joinToString(" ") { convertCellMark(it) })
