@@ -9,8 +9,8 @@ data class BoardFields(val boardFields: List<BoardField>) {
         return BoardFields(nearFields)
     }
 
-    fun nearNotOpenedNumberFields(coordinate: Coordinate): BoardFields {
-        val nearCoordinate = coordinate.nearCoordinate()
+    fun aroundNotOpenedNumberFields(coordinate: Coordinate): BoardFields {
+        val nearCoordinate = coordinate.aroundCoordinate()
         val fields = boardFields.asSequence()
             .filter { nearCoordinate.contains(it.coordinate) }
             .filterIsInstance<NumberField>()

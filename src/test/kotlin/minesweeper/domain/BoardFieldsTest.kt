@@ -88,25 +88,24 @@ class BoardFieldsTest : DescribeSpec({
         }
     }
 
-    describe("nearNotOpenedNumberFields") {
-        it("좌표 주변에 오픈되지 않은 숫자 필드를 반환한다") {
+    describe("aroundNotOpenedNumberFields") {
+        it("좌표에 인접한 오픈되지 않은 숫자 필드를 반환한다") {
             /**
-             * * 2 *
-             * C C C
+             * * C *
+             * 2 C C
              * * C C
              */
             val boardFields = boardFields()
 
             boardFields.open(Coordinate(0, 1))
-            val coordinates = boardFields.nearNotOpenedNumberFields(Coordinate(1, 1))
+            val coordinates = boardFields.aroundNotOpenedNumberFields(Coordinate(1, 1))
                 .boardFields
                 .map { it.coordinate }
 
             coordinates shouldContainAll listOf(
                 Coordinate(1, 0),
-                Coordinate(1, 2),
                 Coordinate(2, 1),
-                Coordinate(2, 2),
+                Coordinate(1, 2),
             )
         }
     }
