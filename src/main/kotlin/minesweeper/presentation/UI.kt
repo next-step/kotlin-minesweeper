@@ -17,6 +17,14 @@ object UI {
         println("Lose Game.")
     }
 
+    fun drawNotFoundMessage() {
+        println("좌표를 다시 입력해주세요.")
+    }
+
+    fun drawAlreadyOpenedMessage() {
+        println("이미 열려있습니다.")
+    }
+
     fun drawBoard(board: Board) {
         board.groupByColumn().forEach { (_, row) ->
             println(row.joinToString(" ") { convertCellMark(it) })
