@@ -65,12 +65,12 @@ internal class RandomBoardBuilderTest {
         val expectedMineCount = boardArea.cellCount - expectedSafeCount
         val board = RandomBoardBuilder(boardArea, expectedMineCount)
             .createNewBoard()
-
         val randomClickPosition = board.shuffled()[0]
 
         // when
         board.openCell(randomClickPosition)
         val actualClickCell = board.cellAtOrNull(randomClickPosition)
+
         // then
         assertAll(
             { assertThat(actualClickCell).isInstanceOf(Cell.Safe::class.java) },
