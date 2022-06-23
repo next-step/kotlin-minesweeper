@@ -34,11 +34,8 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         Cells(this.cells.filter { it.row == row })
     }.getOrNull()
 
-    fun cellAtOrNull(coordinate: Coordinate): Cell? =
-        this.cells.find { it.row == coordinate.row && it.column == coordinate.column }
-
     open fun openCell(coordinate: Coordinate) {
-        val targetCell = cellAtOrNull(coordinate) ?: return
+        val targetCell = cells.cellAtOrNull(coordinate) ?: return
         if (targetCell.isOpen) {
             return
         }
@@ -86,7 +83,7 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
 
     private fun Cell.surroundCellsToOpen(): List<Cell> =
         area.surroundCoordinatesOf(this.coordinate)
-            .mapNotNull(::cellAtOrNull)
+            .mapNotNull(cells::cellAtOrNull)
             .filter { it.isClosed }
 
     companion object {

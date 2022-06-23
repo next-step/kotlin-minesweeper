@@ -24,4 +24,7 @@ sealed class Cell(open val coordinate: Coordinate) : Coordinate by coordinate {
 class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
     val mineCount: Int by lazy { this.count { it is Cell.Mine } }
     val safeCellCount: Int by lazy { this.count { it is Cell.Safe } }
+
+    fun cellAtOrNull(coordinate: Coordinate): Cell? =
+        this.find { it.row == coordinate.row && it.column == coordinate.column }
 }

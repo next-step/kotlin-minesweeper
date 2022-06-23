@@ -1,5 +1,6 @@
 package minesweeper.model.board
 
+import minesweeper.fixture.cellAtOrNull
 import minesweeper.fixture.toBoard
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.model.coordinate.Position
