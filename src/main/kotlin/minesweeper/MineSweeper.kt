@@ -14,6 +14,8 @@ object MineSweeper {
 
         UI.drawStartMessage()
         UI.drawBoard(board)
+
+        InputReceiver.receiveOpenCoordinate()
     }
 }
 
