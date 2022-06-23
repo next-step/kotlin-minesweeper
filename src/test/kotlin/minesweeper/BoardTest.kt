@@ -12,10 +12,10 @@ class BoardTest : DescribeSpec({
     describe("remainMineCount") {
         context("보드에 지뢰가 3개 존재하는 경우") {
             it("3을 리턴한다..") {
-                val firstLineCells = listOf(Cell.Mine(Coordinate(0, 0)), Cell.Mine(Coordinate(1, 0)))
-                val secondLineCells = listOf(Cell.Mine(Coordinate(0, 1)), Cell.Block(Coordinate(1, 1)))
-
-                val board = Board(firstLineCells + secondLineCells)
+                val board = Board(
+                    "**",
+                    "*3"
+                )
 
                 board.remainMineCount() shouldBe 3
             }
@@ -25,10 +25,13 @@ class BoardTest : DescribeSpec({
     describe("groupByColumn") {
         context("2줄 짜리 보드가 주어질 경우") {
             it("각 줄에 해당하는 cell 들을 리턴한다.") {
+                val board = Board(
+                    "00",
+                    "00"
+                )
+
                 val firstLineCells = listOf(Cell.Block(Coordinate(0, 0)), Cell.Block(Coordinate(1, 0)))
                 val secondLineCells = listOf(Cell.Block(Coordinate(0, 1)), Cell.Block(Coordinate(1, 1)))
-
-                val board = Board(firstLineCells + secondLineCells)
 
                 board.groupByColumn()[0] shouldBe firstLineCells
                 board.groupByColumn()[1] shouldBe secondLineCells
@@ -37,20 +40,21 @@ class BoardTest : DescribeSpec({
     }
 
     describe("openCell") {
-        context("2 * 2 보드에서 1,1 좌표에 폭탄이 있는 경우 0,0 좌표를 열면") {
-            it("(0,0), (0,1), (1,0) 좌표가 열린다.") {
-                val firstLineCells = listOf(Cell.Block(Coordinate(0, 0), 1), Cell.Block(Coordinate(1, 0), 1))
-                val secondLineCells = listOf(Cell.Block(Coordinate(0, 1), 1), Cell.Mine(Coordinate(1, 1)))
-
-                val board = Board(firstLineCells + secondLineCells)
+        context("보드에서 하나의 좌표를 열면") {
+            it("연결되어 있으면서 지뢰가 없는 좌표가 전부 열린다.") {
+                val board = Board(
+                    "01*10",
+                    "11110",
+                    "1*100"
+                )
 
                 board.open(Coordinate(0, 0))
 
-                val expectedFirstLineCells = listOf(OpenedCell(Coordinate(0, 0), 1), OpenedCell(Coordinate(1, 0), 1))
-                val expectedSecondLineCells = listOf(OpenedCell(Coordinate(0, 1), 1), Cell.Mine(Coordinate(1, 1)))
-
-                board.groupByColumn()[0] shouldBe expectedFirstLineCells
-                board.groupByColumn()[1] shouldBe expectedSecondLineCells
+                board.cells.count { it.isOpened() } shouldBe 4
+                board.groupByColumn()[0]!![0].isOpened() shouldBe true
+                board.groupByColumn()[0]!![1].isOpened() shouldBe true
+                board.groupByColumn()[1]!![0].isOpened() shouldBe true
+                board.groupByColumn()[1]!![1].isOpened() shouldBe true
             }
         }
 
@@ -90,3 +94,19 @@ class BoardTest : DescribeSpec({
 
 private fun OpenedCell(coordinate: Coordinate, aroundMineCount: Int = 0) =
     Cell.Block(coordinate, aroundMineCount).apply { open() }
+
+private fun Board(vararg board: String): Board {
+    return Board(
+        board.flatMapIndexed { y, row ->
+            row.mapIndexed { x, cell ->
+                val coordinate = Coordinate(x, y)
+                if (cell == '*') {
+                    Cell.Mine(coordinate)
+                } else {
+                    val aroundMineCount = cell.digitToInt()
+                    Cell.Block(coordinate, aroundMineCount)
+                }
+            }
+        }
+    )
+}

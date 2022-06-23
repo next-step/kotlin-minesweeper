@@ -20,6 +20,8 @@ object UI {
     }
 
     private fun convertCellMark(cell: Cell): String {
+        if (!cell.isOpened()) return "C"
+
         return when (cell) {
             is Cell.Mine -> "*"
             is Cell.Block -> cell.aroundMineCount.toString()

@@ -13,7 +13,13 @@ sealed class Cell(private var status: CellStatus = CellStatus.Hide) {
         status = CellStatus.Show
     }
 
-    data class Block(override val coordinate: Coordinate, val aroundMineCount: Int = 0) : Cell()
+    abstract fun isNearMine(): Boolean
 
-    data class Mine(override val coordinate: Coordinate) : Cell()
+    data class Block(override val coordinate: Coordinate, val aroundMineCount: Int = 0) : Cell() {
+        override fun isNearMine() = aroundMineCount > 0
+    }
+
+    data class Mine(override val coordinate: Coordinate) : Cell() {
+        override fun isNearMine(): Boolean = true
+    }
 }
