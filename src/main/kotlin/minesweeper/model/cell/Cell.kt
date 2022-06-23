@@ -27,4 +27,8 @@ class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
 
     fun cellAtOrNull(coordinate: Coordinate): Cell? =
         this.find { it.row == coordinate.row && it.column == coordinate.column }
+
+    fun openAll() {
+        this.forEach { it.open() }
+    }
 }

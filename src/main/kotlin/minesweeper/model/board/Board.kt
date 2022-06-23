@@ -70,14 +70,10 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         openSafeCells(cellsToOpen)
     }
 
-    private fun openAllCells() {
-        this.cells.forEach { it.open() }
-    }
-
     private fun changeState(boardState: BoardState) {
         this.state = boardState
         if (this.isFinished) {
-            openAllCells()
+            this.cells.openAll()
         }
     }
 
