@@ -7,17 +7,20 @@ class MineManager(
     tailrec fun assignMinesOnRow(
         mineCountsByRow: MineCountsByRow,
         rowIndex: Int,
-        assignableMineCount: Int
+        assignableMineCount: Int,
+        maxMineCountOnSingleRow: Int
     ) {
         if (assignableMineCount <= 0) return
 
         val nextRowIndex = (rowIndex + 1) % mineCountsByRow.size
 
-        if (booleanStrategy.next()) {
+        val isFullOnRow = maxMineCountOnSingleRow == mineCountsByRow[rowIndex]
+
+        if (booleanStrategy.next() && !isFullOnRow) {
             mineCountsByRow[rowIndex] += 1
-            assignMinesOnRow(mineCountsByRow, nextRowIndex, assignableMineCount - 1)
+            assignMinesOnRow(mineCountsByRow, nextRowIndex, assignableMineCount - 1, maxMineCountOnSingleRow)
         } else {
-            assignMinesOnRow(mineCountsByRow, nextRowIndex, assignableMineCount)
+            assignMinesOnRow(mineCountsByRow, nextRowIndex, assignableMineCount, maxMineCountOnSingleRow)
         }
     }
 

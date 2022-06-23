@@ -29,8 +29,9 @@ class MineManagerTest {
         expected: List<Int>
     ) {
         val rowCount = 3
+        val columnCount = 4
         val targetMineCountsByRow = MineCountsByRow(rowCount)
-        manager.assignMinesOnRow(targetMineCountsByRow, 0, mineCount)
+        manager.assignMinesOnRow(targetMineCountsByRow, 0, mineCount, columnCount)
 
         assertThat(targetMineCountsByRow.toList()).isEqualTo(expected)
     }
