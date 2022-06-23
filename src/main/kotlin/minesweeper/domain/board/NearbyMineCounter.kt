@@ -1,39 +1,28 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Empty
+import minesweeper.domain.cell.Mine
+import minesweeper.domain.cell.Positions
 
 class NearbyMineCounter {
 
     companion object {
         fun count(cells: Cells) {
-            cells.mineIndices.forEach { index ->
-                accNearbyMines(cells, cells[index])
+            val mineCells = cells.filterIsInstance<Mine>()
+
+            mineCells.forEach { mine ->
+                cells.accNearbyMine(mine.nearbyPositions)
             }
         }
 
-        private fun accNearbyMines(cells: Cells, mineCell: Cell) {
-            val width = cells.last().position.x + 1
-
-            NearbyDirection.values().forEach { direction ->
-                val nearbyX = direction.x + mineCell.position.x
-                val nearbyY = direction.y + mineCell.position.y
-                val nearbyIndex = nearbyY * width + nearbyX
-
-                accNearbyMine(cells, width, nearbyX, nearbyY, nearbyIndex)
-            }
-        }
-
-        private fun accNearbyMine(cells: Cells, width: Int, nearbyX: Int, nearbyY: Int, nearbyIndex: Int) {
-            if (nearbyX.isBetweenRange(width) && nearbyY.isBetweenRange(width) && nearbyIndex < cells.size) {
-                cells[nearbyIndex]
+        private fun Cells.accNearbyMine(nearbyPositions: Positions) {
+            nearbyPositions.forEach { position ->
+                this[position.index]
                     .takeIf { it is Empty }
                     ?.let { (it as Empty).accNumberOfNearbyMines() }
             }
         }
-
-        private fun Int.isBetweenRange(width: Int) = this in 0 until width
     }
 
     enum class NearbyDirection(val x: Int, val y: Int) {
