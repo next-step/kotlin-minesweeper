@@ -7,9 +7,9 @@ class MineBoard(
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
             val cellPositions = CellPositions.of(boardCreateDto.width, boardCreateDto.height)
-            cellPositions.shuffle()
+            val shuffledCellPositions = cellPositions.generateShuffledPositions()
 
-            val cells = Cells.of(cellPositions, boardCreateDto.mineCount)
+            val cells = Cells.of(shuffledCellPositions, boardCreateDto.mineCount)
             val sortedCells = cells.generateCellsSortedByPosition()
 
             return cellsToBoard(sortedCells, boardCreateDto.width, boardCreateDto.height)

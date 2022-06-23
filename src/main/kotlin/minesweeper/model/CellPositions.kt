@@ -1,16 +1,10 @@
 package minesweeper.model
 
 data class CellPositions(
-    private var positions: List<CellPosition>
-) {
-    val size
-        get() = positions.size
+    private val positions: List<CellPosition>
+): List<CellPosition> by positions {
 
-    fun shuffle() {
-        positions = positions.shuffled()
-    }
-
-    operator fun get(index: Int) = positions[index]
+    fun generateShuffledPositions() = CellPositions(positions.shuffled())
 
     companion object {
         fun of(width: Int, height: Int) =
