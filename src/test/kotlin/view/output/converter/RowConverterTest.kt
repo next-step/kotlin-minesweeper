@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test
 class RowConverterTest {
     @Test
     fun `RowConverter는 Row를 출력을 위한 문자열로 변환한다`() {
-        val cells = listOf(Cell.LAND, Cell.MINE, Cell.LAND, Cell.MINE, Cell.LAND, Cell.LAND)
-        val row = Row(cells)
+        val row = Row(Cell.LAND, Cell.MINE, Cell.LAND, Cell.MINE, Cell.LAND, Cell.LAND)
 
         assertThat(RowConverter.convert(row)).isEqualTo("C * C * C C")
     }
