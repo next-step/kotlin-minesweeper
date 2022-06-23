@@ -59,34 +59,69 @@ class BoardFieldsTest : DescribeSpec({
     }
 
     describe("open") {
-        val boardFields = BoardFields(
-            listOf(
-                BoardField.mine(Coordinate(0, 0)),
-                BoardField.nonMine(Coordinate(0, 1)),
-                BoardField.mine(Coordinate(0, 2)),
-                BoardField.nonMine(Coordinate(1, 0)),
-                BoardField.nonMine(Coordinate(1, 1)),
-                BoardField.nonMine(Coordinate(1, 2)),
-                BoardField.mine(Coordinate(2, 0)),
-                BoardField.nonMine(Coordinate(2, 1)),
-                BoardField.nonMine(Coordinate(2, 2)),
-            )
-        )
-
         context("필드들에 해당하는 좌표를 입력받아") {
             it("해당하는 필드를 열 수 있다.") {
-                val coordinate = Coordinate(0, 0)
-                boardFields.open(coordinate)
+                val boardFields = boardFields()
+                boardFields.open(Coordinate(0, 0))
 
-                val boardField = boardFields.boardFields.find { it.coordinate == coordinate }!!
+                val boardField = boardFields.boardFields.find { it.coordinate == Coordinate(0, 0) }!!
                 boardField.isOpen shouldBe true
             }
         }
 
         context("필드들에 해당하지 않는 좌표를 입력받으면") {
             it("IllegalArgumentException 이 발생한다.") {
+                val boardFields = boardFields()
+
                 shouldThrow<IllegalArgumentException> { boardFields.open(Coordinate(3, 3)) }
             }
         }
+
+        context("좌표를 입력받지 않는 경우") {
+            it("모든 필드를 연다") {
+                val boardFields = boardFields()
+
+                boardFields.open()
+
+                boardFields.boardFields.all { it.isOpen } shouldBe true
+            }
+        }
+    }
+
+    describe("nearNotOpenedNumberFields") {
+        it("좌표 주변에 오픈되지 않은 숫자 필드를 반환한다") {
+            /**
+             * * 2 *
+             * C C C
+             * * C C
+             */
+            val boardFields = boardFields()
+
+            boardFields.open(Coordinate(0, 1))
+            val coordinates = boardFields.nearNotOpenedNumberFields(Coordinate(1, 1))
+                .boardFields
+                .map { it.coordinate }
+
+            coordinates shouldContainAll listOf(
+                Coordinate(1, 0),
+                Coordinate(1, 2),
+                Coordinate(2, 1),
+                Coordinate(2, 2),
+            )
+        }
     }
 })
+
+private fun boardFields() = BoardFields(
+    listOf(
+        BoardField.mine(Coordinate(0, 0)),
+        BoardField.nonMine(Coordinate(0, 1)),
+        BoardField.mine(Coordinate(0, 2)),
+        BoardField.nonMine(Coordinate(1, 0)),
+        BoardField.nonMine(Coordinate(1, 1)),
+        BoardField.nonMine(Coordinate(1, 2)),
+        BoardField.mine(Coordinate(2, 0)),
+        BoardField.nonMine(Coordinate(2, 1)),
+        BoardField.nonMine(Coordinate(2, 2)),
+    )
+)
