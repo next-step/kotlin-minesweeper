@@ -1,4 +1,4 @@
 package com.nextstep.jngcii.minesweeper.domain
 
 @JvmInline
-value class MineLocationByRow(val indexes: List<Int>)
+value class Row(val row: List<Boolean>)

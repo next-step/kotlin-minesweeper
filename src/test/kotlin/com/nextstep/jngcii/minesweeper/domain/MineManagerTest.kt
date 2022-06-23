@@ -41,11 +41,11 @@ class MineManagerTest {
     fun `처음부터 순서대로 픽하는 전략으로 줄의 지뢰 위치를 반환받는 것 확인`(
         columnCount: Int,
         mineCount: Int,
-        expected: List<Int>
+        expected: List<Boolean>
     ) {
-        val actual = manager.selectMineLocation(columnCount, mineCount)
+        val actual = manager.setRow(columnCount, mineCount)
 
-        assertThat(actual.indexes).isEqualTo(expected)
+        assertThat(actual.row).isEqualTo(expected)
     }
 
     @Test
@@ -59,7 +59,7 @@ class MineManagerTest {
         val mineCount = 11
 
         assertThrows<IllegalStateException>("${columnCount}개 중 ${mineCount}개를 고를 수 없습니다.") {
-            randomPickStrategyManager.selectMineLocation(columnCount, mineCount)
+            randomPickStrategyManager.setRow(columnCount, mineCount)
         }
     }
 
@@ -74,9 +74,9 @@ class MineManagerTest {
 
         @JvmStatic
         fun columnCountAndMineCountAndExpected() = listOf(
-            Arguments.of(5, 0, emptyList<Int>()),
-            Arguments.of(5, 2, listOf(0, 1)),
-            Arguments.of(5, 5, listOf(0, 1, 2, 3, 4)),
+            Arguments.of(5, 0, List(5) { false }),
+            Arguments.of(5, 2, listOf(true, true, false, false, false)),
+            Arguments.of(5, 5, List(5) { true }),
         )
     }
 }

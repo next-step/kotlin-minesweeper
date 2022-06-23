@@ -24,13 +24,16 @@ class MineManager(
         }
     }
 
-    fun selectMineLocation(
+    fun setRow(
         columnCount: Int,
         mineCountOfRow: Int
-    ): MineLocationByRow {
+    ): Row {
         val rowIndexes = List(columnCount) { it }
         val pickedIndexes = pickStrategy.take(rowIndexes, mineCountOfRow)
 
-        return MineLocationByRow(pickedIndexes)
+        val row = MutableList(columnCount) { false }
+        pickedIndexes.forEach { row[it] = true }
+
+        return Row(row)
     }
 }

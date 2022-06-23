@@ -21,9 +21,9 @@ class MineMapFactoryTest {
 
         val expected = MineMap(
             listOf(
-                MineLocationByRow(listOf(0, 1, 2, 3)),
-                MineLocationByRow(listOf(0, 1, 2)),
-                MineLocationByRow(listOf(0, 1, 2)),
+                Row(listOf(true, true, true, true, false)),
+                Row(listOf(true, true, true, false, false)),
+                Row(listOf(true, true, true, false, false)),
             )
         )
 
