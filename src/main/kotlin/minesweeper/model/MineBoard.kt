@@ -1,6 +1,6 @@
 package minesweeper.model
 
-class MineBoard private constructor(
+class MineBoard(
     val board: List<Cells>
 ) {
 

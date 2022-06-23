@@ -5,9 +5,11 @@ data class Cell(
     val position: CellPosition,
 ) {
 
-    fun findSurroundingMineCountSum(cells: Cells): Int {
+    fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
-        return cells.cells.count { it.isMineIn(surroundingPositions) }
+        return board.board.sumOf {
+            it.count { cells -> cells.isMineIn(surroundingPositions) }
+        }
     }
 
     fun isMine() = type.isMine()

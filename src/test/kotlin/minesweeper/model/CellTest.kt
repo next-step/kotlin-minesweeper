@@ -24,24 +24,24 @@ class CellTest {
         val `p(1,2)` = Cell.mine(CellPosition.of(1, 2))
         val `p(2,2)` = Cell.nonMine(CellPosition.of(2, 2))
 
-        val cells = Cells(
+        val board = MineBoard(
             listOf(
-                `p(0,0)`, `p(1,0)`, `p(2,0)`,
-                `p(0,1)`, `p(1,1)`, `p(2,1)`,
-                `p(0,2)`, `p(1,2)`, `p(2,2)`
+                Cells(listOf(`p(0,0)`, `p(1,0)`, `p(2,0)`)),
+                Cells(listOf(`p(0,1)`, `p(1,1)`, `p(2,1)`)),
+                Cells(listOf(`p(0,2)`, `p(1,2)`, `p(2,2)`))
             )
         )
 
         // when, then
         assertAll(
             "find surrounding mine count sum test",
-            { assertThat(`p(1,0)`.findSurroundingMineCountSum(cells)).isEqualTo(1) },
-            { assertThat(`p(2,0)`.findSurroundingMineCountSum(cells)).isEqualTo(0) },
-            { assertThat(`p(0,1)`.findSurroundingMineCountSum(cells)).isEqualTo(2) },
-            { assertThat(`p(1,1)`.findSurroundingMineCountSum(cells)).isEqualTo(2) },
-            { assertThat(`p(2,1)`.findSurroundingMineCountSum(cells)).isEqualTo(1) },
-            { assertThat(`p(0,2)`.findSurroundingMineCountSum(cells)).isEqualTo(1) },
-            { assertThat(`p(2,2)`.findSurroundingMineCountSum(cells)).isEqualTo(1) }
+            { assertThat(`p(1,0)`.findSurroundingMineCountSum(board)).isEqualTo(1) },
+            { assertThat(`p(2,0)`.findSurroundingMineCountSum(board)).isEqualTo(0) },
+            { assertThat(`p(0,1)`.findSurroundingMineCountSum(board)).isEqualTo(2) },
+            { assertThat(`p(1,1)`.findSurroundingMineCountSum(board)).isEqualTo(2) },
+            { assertThat(`p(2,1)`.findSurroundingMineCountSum(board)).isEqualTo(1) },
+            { assertThat(`p(0,2)`.findSurroundingMineCountSum(board)).isEqualTo(1) },
+            { assertThat(`p(2,2)`.findSurroundingMineCountSum(board)).isEqualTo(1) }
         )
     }
 }
