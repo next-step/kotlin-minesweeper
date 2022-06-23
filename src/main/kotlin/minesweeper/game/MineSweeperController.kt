@@ -1,12 +1,12 @@
 package minesweeper.game
 
+import minesweeper.domain.board.MineMaker
 import minesweeper.domain.board.mineBoard
-import minesweeper.domain.board.strategy.MineStrategy
 import minesweeper.view.ViewResolver
 
 class MineSweeperController(
     private val viewResolver: ViewResolver,
-    private val mineStrategy: MineStrategy
+    private val mineMaker: MineMaker
 ) {
 
     fun start() {
@@ -15,7 +15,7 @@ class MineSweeperController(
             width(request.width)
             height(request.height)
             numberOfMines(request.numberOfMines)
-            mineStrategy(mineStrategy)
+            mineStrategy(mineMaker)
         }
         viewResolver.printStartOfGame(mineBoard)
     }

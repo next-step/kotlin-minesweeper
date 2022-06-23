@@ -13,7 +13,9 @@ object MineBoardView {
     }
 
     private fun printMineBoard(mineBoard: MineBoard) {
-        mineBoard.cells.groupBy { it.position.y }
+        val sortedCells = mineBoard.cells.sortedByIndex()
+
+        sortedCells.groupBy { it.position.y }
             .forEach { (_, cells) ->
                 cells.forEach(this::printShape)
                 println()

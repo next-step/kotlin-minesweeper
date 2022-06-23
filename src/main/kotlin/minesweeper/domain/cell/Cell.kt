@@ -1,56 +1,36 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.board.NearbyMineCounter.NearbyDirection
-import minesweeper.domain.board.strategy.MineStrategy
+import minesweeper.domain.board.MineMaker
 
 sealed class Cell(
     val position: Position,
     val nearbyPositions: Positions
 )
 
-class Cells private constructor(
-    private val cells: List<Cell>,
-    val mineIndices: List<Int>
+class Cells(
+    private val cells: List<Cell>
 ) : List<Cell> by cells {
 
+    fun sortedByIndex() = Cells(cells.sortedBy { it.position.index })
+
     companion object {
-        fun of(width: Int, height: Int, numberOfMines: Int, mineStrategy: MineStrategy): Cells {
+        fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {
+            val mineCells = mineMaker.createMines(width, height, numberOfMines)
+            val mineIndices = mineCells.map { it.position.index }
             val numberOfCells = width * height
-            val mineIndices = mineStrategy.getMineIndices(numberOfCells, numberOfMines)
+            val emptyIndices = (0 until numberOfCells).filterNot { it in mineIndices }
+            val emptyCells = createEmptyCells(emptyIndices, width, height)
 
-            return createCells(width, height, mineIndices)
+            return Cells(mineCells + emptyCells)
         }
 
-        private fun createCells(width: Int, height: Int, mineIndices: List<Int>): Cells {
-            val size = width * height
-            val cells = List(size) {
-                val x = it % width
-                val y = it / width
-                val position = Position(it, x, y)
-
-                if (it in mineIndices) {
-                    Mine(position, position.getNearbyPositions(width, height))
-                } else {
-                    Empty(position, position.getNearbyPositions(width, height))
-                }
+        private fun createEmptyCells(emptyIndices: List<Int>, width: Int, height: Int): List<Empty> {
+            return emptyIndices.map { index ->
+                val x = index % width
+                val y = index / width
+                val position = Position(index, x, y)
+                Empty(position, position.getNearbyPositions(width, height))
             }
-            return Cells(cells, mineIndices)
         }
-
-        private fun Position.getNearbyPositions(width: Int, height: Int): Positions {
-            val positions = NearbyDirection.values().mapNotNull { direction ->
-                val size = width * height
-                val nearbyX = direction.x + this.x
-                val nearbyY = direction.y + this.y
-                val nearbyIndex = nearbyY * width + nearbyX
-
-                if (nearbyX.isBetweenRange(width) && nearbyY.isBetweenRange(width) && nearbyIndex < size) {
-                    Position(nearbyIndex, nearbyX, nearbyY)
-                } else null
-            }
-            return Positions.from(positions)
-        }
-
-        private fun Int.isBetweenRange(limit: Int) = this in 0 until limit
     }
 }

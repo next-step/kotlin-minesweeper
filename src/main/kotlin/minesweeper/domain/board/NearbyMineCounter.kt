@@ -10,9 +10,10 @@ class NearbyMineCounter {
     companion object {
         fun count(cells: Cells) {
             val mineCells = cells.filterIsInstance<Mine>()
+            val sortedCells = cells.sortedByIndex()
 
             mineCells.forEach { mine ->
-                cells.accNearbyMine(mine.nearbyPositions)
+                sortedCells.accNearbyMine(mine.nearbyPositions)
             }
         }
 
@@ -23,18 +24,5 @@ class NearbyMineCounter {
                     ?.let { (it as Empty).accNumberOfNearbyMines() }
             }
         }
-    }
-
-    enum class NearbyDirection(val x: Int, val y: Int) {
-        UP_LEFT(-1, 1),
-        UP(0, 1),
-        UP_RIGHT(1, 1),
-
-        LEFT(-1, 0),
-        RIGHT(1, 0),
-
-        DOWN_LEFT(-1, -1),
-        DOWN(0, -1),
-        DOWN_RIGHT(1, -1)
     }
 }
