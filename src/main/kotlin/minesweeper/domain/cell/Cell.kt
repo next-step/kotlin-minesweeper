@@ -22,6 +22,17 @@ class Cells(
 
     fun sortedByIndex() = Cells(cells.sortedBy { it.position.index })
 
+    fun openByPosition(position: Position): Cell {
+        val cell = cells[position.index].open()
+        cell.nearbyPositions.forEach {
+            val nearbyCell = cells[it.index]
+            if (nearbyCell is Empty && nearbyCell.state != CellState.OPEN) {
+                openByPosition(nearbyCell.position)
+            }
+        }
+        return cell
+    }
+
     companion object {
         fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {
             val mineCells = mineMaker.createMines(width, height, numberOfMines)

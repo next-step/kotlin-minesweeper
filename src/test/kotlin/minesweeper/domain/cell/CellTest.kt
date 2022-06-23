@@ -3,7 +3,6 @@ package minesweeper.domain.cell
 import io.mockk.boxedClass
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -41,14 +40,23 @@ internal class CellTest {
         assertThat(exceptionByCell.message).isEqualTo("cell was already opened.")
     }
 
-    @Test
-    fun `지뢰가 없는 인접한 셀이 모두 열리게 된다`() {
-        TODO()
+    @ParameterizedTest
+    @MethodSource("인접한 위치 케이스")
+    fun `지뢰가 없는 인접한 셀이 모두 열리게 된다`(width: Int, height: Int, positions: Positions) {
+        // given
+        val cells = Cells(positions.map { Empty(it, it.getNearbyPositions(width, height)) })
+
+        // when
+        cells.openByPosition(positions.first())
+        val result = cells.count { it.state == CellState.OPEN }
+
+        // then
+        assertThat(result).isEqualTo(positions.size)
     }
 
     companion object {
-        val POSITION = Position(0, 0, 0)
-        val NEARBY_POSITIONS = Positions.from(emptyList())
+        private val POSITION = Position(0, 0, 0)
+        private val NEARBY_POSITIONS = Positions.from(emptyList())
 
         @JvmStatic
         fun `임의의 셀 케이스`() = Stream.of(
@@ -60,6 +68,35 @@ internal class CellTest {
         fun `열린 상태의 셀 케이스`() = Stream.of(
             Arguments.of(Empty(POSITION, NEARBY_POSITIONS).also { it.open() }),
             Arguments.of(Mine(POSITION, NEARBY_POSITIONS).also { it.open() })
+        )
+
+        @JvmStatic
+        fun `인접한 위치 케이스`() = Stream.of(
+            Arguments.of(
+                1, 5,
+                Positions.from(
+                    listOf(
+                        Position(0, 0, 0),
+                        Position(1, 0, 1),
+                        Position(2, 0, 2),
+                        Position(3, 0, 3),
+                        Position(4, 0, 4)
+                    )
+                )
+            ),
+            Arguments.of(
+                3, 2,
+                Positions.from(
+                    listOf(
+                        Position(0, 0, 0),
+                        Position(1, 1, 0),
+                        Position(2, 2, 0),
+                        Position(3, 0, 1),
+                        Position(4, 1, 1),
+                        Position(5, 2, 1)
+                    )
+                )
+            )
         )
     }
 }
