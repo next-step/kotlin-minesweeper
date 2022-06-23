@@ -26,11 +26,14 @@ object MineSweeper {
             val isGameOver = result == BoardOpenResult.Fail
             val isCompleted = board.isCompleted()
 
+            val canNextTurn = !isGameOver && !isCompleted
+
+            if (!canNextTurn) board.openAllMine()
             UI.drawBoard(board)
 
             if (isGameOver) UI.drawLoseMessage()
             else if (isCompleted) UI.drawWinMessage()
-        } while (!isGameOver || !isCompleted)
+        } while (canNextTurn)
     }
 }
 

@@ -100,6 +100,22 @@ class BoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("openAllMine") {
+        context("보드에 존재하는 모든 지뢰를") {
+            it("open 상태로 바꾼다.") {
+                val board = Board(
+                    "01*10",
+                    "11110",
+                    "1*100"
+                )
+
+                board.openAllMine()
+                board.cells.filterIsInstance<Cell.Mine>().all(Cell::isOpened)
+                board.cells.filterIsInstance<Cell.Block>().none(Cell::isOpened)
+            }
+        }
+    }
 })
 
 private fun OpenedCell(coordinate: Coordinate, aroundMineCount: Int = 0) =

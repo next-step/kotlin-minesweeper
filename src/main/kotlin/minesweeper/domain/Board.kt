@@ -21,6 +21,10 @@ value class Board(val cells: List<Cell>) {
         }
     }
 
+    fun openAllMine() {
+        cells.filterIsInstance<Cell.Mine>().forEach(Cell::open)
+    }
+
     private fun findCell(coordinate: Coordinate) = cells.find { it.coordinate == coordinate }
 
     private fun findAroundOpenableCells(cell: Cell): List<Cell> = cell.coordinate
