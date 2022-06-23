@@ -1,15 +1,15 @@
 package minesweeper.dto
 
 import minesweeper.domain.BoardFields
-import minesweeper.domain.MineBoard
+import minesweeper.domain.MineSweeper
 
 class MineBoardResponse(
     val boardFields: BoardFields,
     val width: Int
 ) {
     companion object {
-        fun of(mineBoard: MineBoard, width: Int): MineBoardResponse {
-            return MineBoardResponse(mineBoard.boardFields, width)
+        fun of(mineSweeper: MineSweeper, width: Int): MineBoardResponse {
+            return MineBoardResponse(mineSweeper.boardFields, width)
         }
     }
 }

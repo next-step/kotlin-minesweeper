@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.MineSweeper
+import minesweeper.domain.MineSweeperFactory
 import minesweeper.dto.MineBoardResponse
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
@@ -10,7 +10,7 @@ fun main() {
     val width = InputView.width()
     val mineCount = InputView.mineCount()
 
-    val mineBoard = MineSweeper().mineBoard(
+    val mineBoard = MineSweeperFactory().mineSweeper(
         height = height,
         width = width,
         mineCount = mineCount

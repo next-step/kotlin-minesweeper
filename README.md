@@ -27,14 +27,14 @@
 
 ## 도메인 모델
 
-- `지뢰 찾기 게임(MineSweeper)`
-  - [X] 높이, 너비, 지뢰 개수를 입력 받아 지뢰 판을 만든다.
+- `지뢰 찾기 게임 팩토리(MineSweeperFacotry)`
+  - [X] 높이, 너비, 지뢰 개수를 입력 받아 지뢰 게임을 만든다.
 
 - `지뢰 좌표 전략(MineCoordinateStrategy)`
   - `랜덤 좌표 전략(RandomMineCoordinateStrategyTest)` 
     - [X] 좌표 목록과 지뢰 개수를 입력 받아 지뢰 개수만큼 랜덤한 좌표를 반환한다.
 
-- `지뢰 판(MineBoard)`
+- `지뢰 찾기 게임(MineSweeper)`
   - 지뢰 판 필드들과 종료 여부를 가진다.
   - [X] 좌표를 입력받아 좌표에 해당하는 필드를 열 수 있다.
     - 지뢰가 없는 인접한 칸이 모두 열리게 된다.
