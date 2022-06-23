@@ -1,11 +1,11 @@
 package minesweeper.view.input
 
 import minesweeper.model.board.Board
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 import minesweeper.view.input.parser.PositionInputParser
 
 class ConsoleInputView : InputView {
-    override fun postionToOpen(board: Board): Position {
+    override fun coordinateToOpen(board: Board): Coordinate {
 
         val positionInputParser = PositionInputParser(board)
         return ConsoleReader.read(

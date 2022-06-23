@@ -21,6 +21,7 @@ object ConsoleOutputView : OutputView {
         when (board.state) {
             BoardState.MINE_EXPLODED -> println("Lose Game")
             BoardState.COMPLETED -> println("Win Game")
+            BoardState.RUNNING -> {}
         }
     }
 

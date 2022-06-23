@@ -2,7 +2,10 @@ package minesweeper.model.coordinate
 
 data class Position(override val row: Int, override val column: Int) : Coordinate {
 
-    val surroundPositions: List<Position> by lazy {
+    override val surroundCoordinates: List<Coordinate>
+        get() = this.surroundPositions
+
+    private val surroundPositions: List<Position> by lazy {
         listOf(
             this.aboveLeft(), this.above(), this.aboveRight(),
             this.left(), this.right(),

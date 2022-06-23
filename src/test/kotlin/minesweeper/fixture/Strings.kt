@@ -3,12 +3,12 @@ package minesweeper.fixture
 import minesweeper.model.board.Board
 import minesweeper.model.cell.CellBuilder
 import minesweeper.model.coordinate.BoardArea
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 
 fun List<String>.toCellBuilder(): CellBuilder {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
-    val isMine: (Position) -> Boolean = {
+    val isMine: (Coordinate) -> Boolean = {
         this[it.row][it.column] == '*'
     }
     return CellBuilder(BoardArea.of(rowCount, columnCount), isMine)
@@ -17,7 +17,7 @@ fun List<String>.toCellBuilder(): CellBuilder {
 fun List<String>.toBoard(): Board {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
-    val isMine: (Position) -> Boolean = {
+    val isMine: (Coordinate) -> Boolean = {
         this[it.row][it.column] == '*'
     }
     val area = BoardArea.of(rowCount, columnCount)

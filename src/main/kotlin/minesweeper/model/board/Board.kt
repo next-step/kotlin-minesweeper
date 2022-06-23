@@ -4,7 +4,7 @@ import minesweeper.model.cell.Cell
 import minesweeper.model.cell.CellBuilder
 import minesweeper.model.cell.Cells
 import minesweeper.model.coordinate.Area
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 
 enum class BoardState {
     RUNNING,
@@ -29,17 +29,17 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         get() = this.state.isFinished
 
     private val isAllSafeCellOpen: Boolean
-        get() = this.cells.none { it is Cell.Safe && !it.isOpen }
+        get() = this.cells.none { it is Cell.Safe && it.isClosed }
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         Cells(this.cells.filter { it.row == row })
     }.getOrNull()
 
-    fun cellAtOrNull(position: Position): Cell? =
-        this.cells.find { it.row == position.row && it.column == position.column }
+    fun cellAtOrNull(coordinate: Coordinate): Cell? =
+        this.cells.find { it.row == coordinate.row && it.column == coordinate.column }
 
-    open fun openCell(position: Position) {
-        val targetCell = cellAtOrNull(position) ?: return
+    open fun openCell(coordinate: Coordinate) {
+        val targetCell = cellAtOrNull(coordinate) ?: return
         if (targetCell.isOpen) {
             return
         }
@@ -68,9 +68,7 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         targetCell.open()
 
         if (targetCell is Cell.Safe && targetCell.isNoSurroundMine) {
-            val surroundCellsToOpen = area.surroundPositionsOf(targetCell.position)
-                .mapNotNull(::cellAtOrNull)
-                .filter { !it.isOpen }
+            val surroundCellsToOpen = targetCell.surroundCellsToOpen()
             cellsToOpen.addAll(surroundCellsToOpen)
         }
         openSafeCells(cellsToOpen)
@@ -87,8 +85,13 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         }
     }
 
+    private fun Cell.surroundCellsToOpen(): List<Cell> =
+        area.surroundCoordinatesOf(this.coordinate)
+            .mapNotNull(::cellAtOrNull)
+            .filter { it.isClosed }
+
     companion object {
-        fun build(area: Area, isMineCell: (Position) -> Boolean): Board {
+        fun build(area: Area, isMineCell: (Coordinate) -> Boolean): Board {
             return Board(
                 area = area,
                 cellBuilder = CellBuilder(area, isMineCell)

@@ -1,9 +1,9 @@
 package minesweeper.view.input
 
 import minesweeper.model.board.Board
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 
 fun interface InputView {
 
-    fun postionToOpen(board: Board): Position
+    fun coordinateToOpen(board: Board): Coordinate
 }

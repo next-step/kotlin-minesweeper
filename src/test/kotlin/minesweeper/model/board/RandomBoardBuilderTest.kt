@@ -60,7 +60,7 @@ internal class RandomBoardBuilderTest {
     fun `처음 클릭한 셀은 무조건 안전함`() {
 
         // given
-        val boardArea = BoardArea.of(10, 10)
+        val boardArea = BoardArea.of(100, 100)
         val expectedSafeCount = 1
         val expectedMineCount = boardArea.cellCount - expectedSafeCount
         val board = RandomBoardBuilder(boardArea, expectedMineCount)

@@ -5,7 +5,7 @@ import minesweeper.model.cell.CellBuilder
 import minesweeper.model.cell.Cells
 import minesweeper.model.cell.SurroundMineCount
 import minesweeper.model.coordinate.Area
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 
 class RandomBoard(area: Area, mineCount: Int) : Board(area) {
 
@@ -17,21 +17,21 @@ class RandomBoard(area: Area, mineCount: Int) : Board(area) {
     override val cells: Cells
         get() = realCells ?: initialCells
 
-    override fun openCell(position: Position) {
-        if (position !in this.area) {
+    override fun openCell(coordinate: Coordinate) {
+        if (coordinate !in this.area) {
             return
         }
-        this.realCells ?: createRealCells(forceSafePosition = position)
-        super.openCell(position)
+        this.realCells ?: createRealCells(forceSafeCellCoordinate = coordinate)
+        super.openCell(coordinate)
     }
 
-    private fun createRealCells(forceSafePosition: Position) {
+    private fun createRealCells(forceSafeCellCoordinate: Coordinate) {
 
-        val minePositions = area.shuffled()
-            .filter { it != forceSafePosition }
+        val mineCellCoordinates = area.shuffled()
+            .filter { it != forceSafeCellCoordinate }
             .take(mineCount)
 
-        val cellBuilder = CellBuilder(this.area) { position -> position in minePositions }
+        val cellBuilder = CellBuilder(this.area) { coordinate -> coordinate in mineCellCoordinates }
         this.realCells = Cells(this.area.map(cellBuilder::createCell))
     }
 

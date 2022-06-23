@@ -1,5 +1,6 @@
 package minesweeper.controller
 
+import minesweeper.model.board.Board
 import minesweeper.model.board.BoardBuilder
 import minesweeper.view.input.InputView
 import minesweeper.view.output.OutputView
@@ -11,16 +12,24 @@ class MineSweeper(
 ) {
 
     fun run() {
-        val board = boardBuilder.createNewBoard()
-        outputView?.printInitialMessage()
-        outputView?.printBoard(board)
-
+        val board = createMineBoard()
         do {
-            val positionToOpen = inputView.postionToOpen(board)
-            board.openCell(positionToOpen)
-            outputView?.printBoard(board)
+            guessAndOpen(board)
         } while (!board.isFinished)
 
         outputView?.printFinalMessage(board)
+    }
+
+    private fun createMineBoard(): Board {
+        val board = boardBuilder.createNewBoard()
+        outputView?.printInitialMessage()
+        outputView?.printBoard(board)
+        return board
+    }
+
+    private fun guessAndOpen(board: Board) {
+        val coordinateToOpen = inputView.coordinateToOpen(board)
+        board.openCell(coordinateToOpen)
+        outputView?.printBoard(board)
     }
 }

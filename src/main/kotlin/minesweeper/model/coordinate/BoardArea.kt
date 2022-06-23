@@ -11,20 +11,20 @@ data class BoardArea(override val rowCount: PositiveInt, override val columnCoun
     override val columnRange: IntRange
         get() = 0 until this.columnCount.value
 
-    override operator fun get(index: Int): Position =
+    override operator fun get(index: Int): Coordinate =
         Position(row = index / this.columnCount, column = index % this.columnCount)
 
-    fun indexOf(position: Position): Int = position.row * this.columnCount + position.column
+    fun indexOf(coordinate: Coordinate): Int = coordinate.row * this.columnCount + coordinate.column
 
-    override fun surroundPositionsOf(position: Position): List<Position> =
-        position.surroundPositions.filter { it in this }
+    override fun surroundCoordinatesOf(coordinate: Coordinate): List<Coordinate> =
+        coordinate.surroundCoordinates.filter { it in this }
 
-    override fun iterator() = object : Iterator<Position> {
+    override fun iterator() = object : Iterator<Coordinate> {
         private var offset = 0
 
         override fun hasNext(): Boolean = offset < this@BoardArea.cellCount
 
-        override fun next(): Position = this@BoardArea[offset++]
+        override fun next(): Coordinate = this@BoardArea[offset++]
     }
 
     companion object {

@@ -1,20 +1,20 @@
 package minesweeper.model.cell
 
 import minesweeper.model.coordinate.Area
-import minesweeper.model.coordinate.Position
+import minesweeper.model.coordinate.Coordinate
 
-class CellBuilder(private val area: Area, private val isMineCell: (Position) -> Boolean) {
+class CellBuilder(private val area: Area, private val isMineCell: (Coordinate) -> Boolean) {
 
-    fun createCell(position: Position): Cell {
-        if (isMineCell(position)) {
-            return Cell.Mine(position)
+    fun createCell(coordinate: Coordinate): Cell {
+        if (isMineCell(coordinate)) {
+            return Cell.Mine(coordinate)
         }
 
-        return Cell.Safe(position, surroundMineCountOf(position))
+        return Cell.Safe(coordinate, surroundMineCountOf(coordinate))
     }
 
-    private fun surroundMineCountOf(position: Position) = SurroundMineCount(
-        area.surroundPositionsOf(position)
+    private fun surroundMineCountOf(coordinate: Coordinate) = SurroundMineCount(
+        area.surroundCoordinatesOf(coordinate)
             .count(isMineCell)
     )
 }

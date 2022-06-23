@@ -1,6 +1,6 @@
 package minesweeper.model.coordinate
 
-interface Area : Iterable<Position> {
+interface Area : Iterable<Coordinate> {
 
     val columnCount: PositiveInt
     val rowCount: PositiveInt
@@ -8,6 +8,6 @@ interface Area : Iterable<Position> {
     val rowRange: IntRange
     val columnRange: IntRange
 
-    operator fun get(index: Int): Position
-    fun surroundPositionsOf(position: Position): List<Position>
+    operator fun get(index: Int): Coordinate
+    fun surroundCoordinatesOf(coordinate: Coordinate): List<Coordinate>
 }
