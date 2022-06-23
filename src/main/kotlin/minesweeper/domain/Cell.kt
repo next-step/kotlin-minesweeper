@@ -5,7 +5,7 @@ data class Cell(
 ) {
     lateinit var cellState: CellState
 
-    fun openNearCells(cells: List<Cell>) {
+    fun openNearCells(cells: Map<Position, Cell>) {
         this.click()
         if (isNearMineNotExist()) openNearCell(cells)
     }
@@ -18,12 +18,15 @@ data class Cell(
         return cellState.isOpen
     }
 
-    private fun openNearCell(cells: List<Cell>) {
-        cells
-            .filter { it.nearCellContain(this) && it.isNonMine() && it.isNotClicked() }
+    private fun openNearCell(cells: Map<Position, Cell>) {
+        getNearCells(cells)
             .onEach { it.click() }
             .filter { it.isNearMineNotExist() }
             .forEach { it.openNearCell(cells) }
+    }
+
+    private fun getNearCells(cells: Map<Position, Cell>): List<Cell> {
+        return this.position.nearCellPositions.map { cells[it]!! }.filter { it.isNonMine() && it.isNotClicked() }
     }
 
     private fun click() {

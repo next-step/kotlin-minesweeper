@@ -2,10 +2,12 @@ package minesweeper.domain
 
 class Cells(val cells: List<Cell>) : List<Cell> by cells {
 
+    private val cellsMap = cells.associateBy { it.position }
+
     fun click(position: Position) {
         require(position in cells.map { it.position }) { "유효하지 않은 좌표 입니다." }
         cells.first { it.position == position }.apply {
-            this.openNearCells(cells)
+            this.openNearCells(cellsMap)
         }
     }
 
