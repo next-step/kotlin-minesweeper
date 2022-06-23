@@ -1,6 +1,7 @@
 package minesweeper.game
 
 import minesweeper.domain.board.BoardStatus
+import minesweeper.domain.board.MineBoard
 import minesweeper.domain.board.MineMaker
 import minesweeper.domain.board.mineBoard
 import minesweeper.view.ViewResolver
@@ -12,6 +13,15 @@ class MineSweeperController(
     private var boardStatus: BoardStatus = BoardStatus.SAFE
 
     fun start() {
+        val mineBoard = initMineBoard()
+        viewResolver.printStartOfGame(mineBoard)
+        do {
+            playNextMove(mineBoard)
+        } while (boardStatus == BoardStatus.SAFE)
+        endGame()
+    }
+
+    private fun initMineBoard(): MineBoard {
         val request = viewResolver.inputMineBoardRequest()
         val mineBoard = mineBoard {
             width(request.width)
@@ -19,13 +29,16 @@ class MineSweeperController(
             numberOfMines(request.numberOfMines)
             mineStrategy(mineMaker)
         }
-        viewResolver.printStartOfGame(mineBoard)
-        do {
-            val (x, y) = viewResolver.inputPositionToOpenCell()
-            boardStatus = mineBoard.open(x, y)
-            viewResolver.printMineBoard(mineBoard)
-        } while (boardStatus == BoardStatus.SAFE)
+        return mineBoard
+    }
 
+    private fun playNextMove(mineBoard: MineBoard) {
+        val (x, y) = viewResolver.inputPositionToOpenCell()
+        boardStatus = mineBoard.open(x, y)
+        viewResolver.printMineBoard(mineBoard)
+    }
+
+    private fun endGame() {
         when (boardStatus) {
             BoardStatus.CLEAR -> println("Win Game!")
             BoardStatus.BOOM -> println("Lose Game.")

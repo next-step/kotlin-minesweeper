@@ -15,6 +15,10 @@ sealed class Cell(
         state = CellStatus.OPEN
         return this
     }
+
+    fun isEmpty() = this is Empty
+
+    fun isClosed() = this.state == CellStatus.CLOSE
 }
 
 class Cells(
@@ -26,14 +30,17 @@ class Cells(
         if (cell !is Empty) {
             return BoardStatus.BOOM
         }
-
-        cell.nearbyPositions.forEach {
-            val nearbyCell = cells[it.index]
-            if (nearbyCell is Empty && nearbyCell.state != CellStatus.OPEN && cell.numberOfNearbyMines == 0) {
-                open(nearbyCell.position)
-            }
-        }
+        cell.openNearbyCells()
         return BoardStatus.SAFE
+    }
+
+    private fun Empty.openNearbyCells() {
+        nearbyPositions.forEach { position ->
+            val nearbyCell = cells[position.index]
+            nearbyCell
+                .takeIf { nearbyCell.isEmpty() && nearbyCell.isClosed() && this.numberOfNearbyMines == 0 }
+                ?.let { open(nearbyCell.position) }
+        }
     }
 
     companion object {
