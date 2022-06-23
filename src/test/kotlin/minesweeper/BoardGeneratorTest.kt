@@ -45,8 +45,8 @@ class BoardGeneratorTest : DescribeSpec({
 
                 board.cells shouldContainAll listOf(
                     Cell.Mine(Coordinate(0, 0)),
-                    Cell.None(Coordinate(0, 1), 2),
-                    Cell.None(Coordinate(1, 0), 2),
+                    Cell.Block(Coordinate(0, 1), 2),
+                    Cell.Block(Coordinate(1, 0), 2),
                     Cell.Mine(Coordinate(1, 1))
                 )
             }
@@ -57,7 +57,7 @@ class BoardGeneratorTest : DescribeSpec({
                 val mineSpawner = TestMineSpawner(listOf(Coordinate(0, 0), Coordinate(1, 1)))
                 val board = BoardGenerator(mineSpawner).generate(Area(2, 2), MineCount(2))
 
-                board.cells shouldContain Cell.None(Coordinate(0, 1), 2)
+                board.cells shouldContain Cell.Block(Coordinate(0, 1), 2)
             }
         }
     }

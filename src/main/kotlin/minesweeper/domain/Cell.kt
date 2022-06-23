@@ -1,9 +1,19 @@
 package minesweeper.domain
 
-sealed interface Cell {
-    val coordinate: Coordinate
+private enum class CellStatus {
+    Show, Hide
+}
 
-    data class None(override val coordinate: Coordinate, val aroundMineCount: Int = 0) : Cell
+sealed class Cell(private var status: CellStatus = CellStatus.Hide) {
+    abstract val coordinate: Coordinate
 
-    data class Mine(override val coordinate: Coordinate) : Cell
+    fun isOpened() = status == CellStatus.Show
+
+    fun open() {
+        status = CellStatus.Show
+    }
+
+    data class Block(override val coordinate: Coordinate, val aroundMineCount: Int = 0) : Cell()
+
+    data class Mine(override val coordinate: Coordinate) : Cell()
 }

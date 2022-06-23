@@ -13,9 +13,11 @@ object MineSweeper {
         val board = BoardGenerator().generate(boardSize, mineCount)
 
         UI.drawStartMessage()
-        UI.drawBoard(board)
 
-        InputReceiver.receiveOpenCoordinate()
+        while(true) {
+            board.open(InputReceiver.receiveOpenCoordinate())
+            UI.drawBoard(board)
+        }
     }
 }
 

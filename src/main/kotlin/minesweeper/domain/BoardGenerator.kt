@@ -21,7 +21,7 @@ class BoardGenerator(private val mineSpawner: MineSpawner = RandomMineSpawner) {
                 Cell.Mine(coordinate)
             } else {
                 val aroundMineCount = coordinate.aroundCoordinates().containsCount(mineCoordinates)
-                Cell.None(coordinate, aroundMineCount)
+                Cell.Block(coordinate, aroundMineCount)
             }
         }
     }

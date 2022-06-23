@@ -18,7 +18,7 @@ object UI {
     private fun convertCellMark(cell: Cell): String {
         return when (cell) {
             is Cell.Mine -> "*"
-            is Cell.None -> cell.aroundMineCount.toString()
+            is Cell.Block -> cell.aroundMineCount.toString()
         }
     }
 }
