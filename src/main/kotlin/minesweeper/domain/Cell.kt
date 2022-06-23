@@ -1,6 +1,9 @@
 package minesweeper.domain
 
-sealed class Cell {
-    object None : Cell()
-    object Mine : Cell()
+sealed interface Cell {
+    val coordinate: Coordinate
+
+    data class None(override val coordinate: Coordinate, val aroundMineCount: Int = 0) : Cell
+
+    data class Mine(override val coordinate: Coordinate) : Cell
 }

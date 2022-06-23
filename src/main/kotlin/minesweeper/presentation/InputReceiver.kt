@@ -1,17 +1,17 @@
 package minesweeper.presentation
 
-import minesweeper.domain.BoardSize
+import minesweeper.domain.Area
 import minesweeper.domain.MineCount
 
 object InputReceiver {
 
-    fun receiveBoardSize(): BoardSize {
+    fun receiveBoardSize(): Area {
         val height = receiverHeight()
         println()
         val width = receiverWidth()
         println()
 
-        return BoardSize(height, width)
+        return Area(height, width)
     }
 
     private fun receiverHeight(): Int {

@@ -17,8 +17,8 @@ object UI {
 
     private fun convertCellMark(cell: Cell): String {
         return when (cell) {
-            Cell.Mine -> "*"
-            Cell.None -> "C"
+            is Cell.Mine -> "*"
+            is Cell.None -> cell.aroundMineCount.toString()
         }
     }
 }

@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.Board
+import minesweeper.domain.BoardGenerator
 import minesweeper.presentation.InputReceiver
 import minesweeper.presentation.UI
 
@@ -10,7 +10,7 @@ object MineSweeper {
         val boardSize = InputReceiver.receiveBoardSize()
         val mineCount = InputReceiver.receiveMineCount()
 
-        val board = Board.generate(boardSize, mineCount)
+        val board = BoardGenerator().generate(boardSize, mineCount)
 
         UI.drawStartMessage()
         UI.drawBoard(board)
