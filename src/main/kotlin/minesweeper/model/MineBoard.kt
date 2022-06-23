@@ -6,28 +6,20 @@ class MineBoard private constructor(
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
-            val mineCells = List(boardCreateDto.mineCount) {
-                Cell.mine()
-            }
+            val cellPositions = CellPositions.of(boardCreateDto.width, boardCreateDto.height)
+            cellPositions.shuffle()
 
-            val closeCells = List(boardCreateDto.closeCellCount) {
-                Cell.close()
-            }
+            val cells = Cells.of(cellPositions, boardCreateDto.mineCount)
+            cells.sortByPosition()
 
-            val mergedCells = mineCells.plus(closeCells)
-                .shuffled()
-
-            return mergedCellsToBoard(mergedCells, boardCreateDto.width, boardCreateDto.height)
+            return cellsToBoard(cells, boardCreateDto.width, boardCreateDto.height)
         }
 
-        private fun mergedCellsToBoard(mergedCells: List<Cell>, width: Int, height: Int): MineBoard {
-            val board = List(height) {
+        private fun cellsToBoard(cells: Cells, width: Int, height: Int) =
+            List(height) {
                 val startIndex = it * width
                 val endIndex = startIndex + width
-                Cells(mergedCells.subList(startIndex, endIndex))
-            }
-
-            return MineBoard(board)
-        }
+                cells.take(startIndex, endIndex)
+            }.let(::MineBoard)
     }
 }
