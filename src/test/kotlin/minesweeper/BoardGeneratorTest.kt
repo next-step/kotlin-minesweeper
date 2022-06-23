@@ -5,8 +5,8 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.BoardGenerator
 import minesweeper.domain.Area
+import minesweeper.domain.BoardGenerator
 import minesweeper.domain.Cell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.Coordinates

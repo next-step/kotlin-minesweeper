@@ -9,6 +9,10 @@ object UI {
         println("지뢰찾기 게임 시작")
     }
 
+    fun drawWinMessage() {
+        println("Win Game.")
+    }
+
     fun drawLoseMessage() {
         println("Lose Game.")
     }

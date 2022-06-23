@@ -7,6 +7,8 @@ value class Board(val cells: List<Cell>) {
 
     fun groupByColumn(): Map<Int, List<Cell>> = cells.groupBy(keySelector = { it.coordinate.y })
 
+    fun isCompleted(): Boolean = cells.filterIsInstance<Cell.Block>().all(Cell::isOpened)
+
     fun open(coordinate: Coordinate): BoardOpenResult {
         val cell = findCell(coordinate) ?: return BoardOpenResult.NotFound
         if (cell.isOpened()) return BoardOpenResult.AlreadyOpened

@@ -90,6 +90,16 @@ class BoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("isCompleted") {
+        context("보드에 존재하는 지뢰가 아닌 모든 Cell 이 열리면") {
+            it("true 를 리턴한다.") {
+                val board = Board(listOf(OpenedCell(Coordinate(0, 0))))
+
+                board.isCompleted() shouldBe true
+            }
+        }
+    }
 })
 
 private fun OpenedCell(coordinate: Coordinate, aroundMineCount: Int = 0) =

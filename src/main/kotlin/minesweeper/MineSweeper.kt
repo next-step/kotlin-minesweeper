@@ -15,6 +15,7 @@ object MineSweeper {
         val board = BoardGenerator().generate(boardSize, mineCount)
 
         UI.drawStartMessage()
+        UI.drawBoard(board)
 
         play(board)
     }
@@ -23,13 +24,13 @@ object MineSweeper {
         do {
             val result = board.open(InputReceiver.receiveOpenCoordinate())
             val isGameOver = result == BoardOpenResult.Fail
+            val isCompleted = board.isCompleted()
 
-            if (isGameOver) {
-                UI.drawLoseMessage()
-            } else {
-                UI.drawBoard(board)
-            }
-        } while (!isGameOver)
+            UI.drawBoard(board)
+
+            if (isGameOver) UI.drawLoseMessage()
+            else if (isCompleted) UI.drawWinMessage()
+        } while (!isGameOver || !isCompleted)
     }
 }
 
