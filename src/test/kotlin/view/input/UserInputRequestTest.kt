@@ -10,8 +10,8 @@ class UserInputRequestTest {
     fun `UserInputRequest는 사용자에게 입력을 요청하기 위한 정보를 보관한다`() {
         val message = "입력해 주세요."
         val inputConverter = object : InputConverter<String> {
-            override fun convert(input: String): String {
-                return input
+            override fun convert(input: String?): String {
+                return input ?: ""
             }
         }
         val userInputRequest = UserInputRequest(
