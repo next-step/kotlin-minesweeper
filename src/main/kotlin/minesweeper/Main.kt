@@ -9,7 +9,7 @@ fun main() {
 
     MineSweeper(
         boardBuilder = ConsoleBoardBuilder,
-        inputView = ConsoleInputView(),
+        inputView = ConsoleInputView,
         outputView = ConsoleOutputView
     ).run()
 }

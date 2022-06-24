@@ -4,7 +4,9 @@ import minesweeper.model.board.Board
 import minesweeper.model.coordinate.Coordinate
 import minesweeper.view.input.parser.PositionInputParser
 
-class ConsoleInputView : InputView {
+object ConsoleInputView : InputView {
+
+    private const val INPUT_GUIDE_MESSAGE = "Open cell(row,column): "
     override fun coordinateToOpen(board: Board): Coordinate {
 
         val positionInputParser = PositionInputParser(board)
@@ -13,9 +15,5 @@ class ConsoleInputView : InputView {
             inputAtNewLine = false,
             parser = positionInputParser
         )
-    }
-
-    companion object {
-        private const val INPUT_GUIDE_MESSAGE = "Open cell(row,column): "
     }
 }
