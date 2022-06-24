@@ -17,6 +17,8 @@ class SurroundMineCount(private val value: Int) : Comparable<Int> {
         return super.equals(other)
     }
 
+    override fun hashCode() = this.value.hashCode()
+
     companion object {
         private const val MIN_SURROUND_MINE_COUNT = 0
         private const val MAX_SURROUND_MINE_COUNT = 8
