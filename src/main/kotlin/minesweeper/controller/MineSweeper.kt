@@ -16,7 +16,6 @@ class MineSweeper(
         do {
             guessAndOpen(board)
         } while (!board.isFinished)
-
         outputView?.printFinalMessage(board)
     }
 

@@ -6,7 +6,6 @@ import minesweeper.view.input.ConsoleInputView
 import minesweeper.view.output.ConsoleOutputView
 
 fun main() {
-
     MineSweeper(
         boardGenerator = ConsoleBoardGenerator,
         inputView = ConsoleInputView,

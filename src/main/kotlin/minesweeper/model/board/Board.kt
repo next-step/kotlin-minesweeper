@@ -18,7 +18,6 @@ class Board(val area: Area, mineLocator: MineLocator) : Area by area {
 
     private val cellGenerator = CellGenerator(area, mineLocator)
     private val initialCells = Cells.safeCellsToFillOf(area)
-
     private lateinit var playingCells: Cells
 
     val cells: Cells
@@ -79,7 +78,6 @@ class Board(val area: Area, mineLocator: MineLocator) : Area by area {
         val targetCell = cellsToOpen.firstOrNull() ?: return
         cellsToOpen.remove(targetCell)
         targetCell.open()
-
         if (targetCell is Cell.Safe && targetCell.isNoSurroundMine) {
             val surroundCellsToOpen = targetCell.surroundCellsToOpen()
             cellsToOpen.addAll(surroundCellsToOpen)
