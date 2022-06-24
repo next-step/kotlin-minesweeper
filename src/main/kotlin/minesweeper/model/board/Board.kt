@@ -18,9 +18,7 @@ enum class BoardState {
 
 class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
 
-    private val initialCells = Cells(
-        List(area.cellCount) { index -> Cell.Empty(area[index]) }
-    )
+    private val initialCells = Cells.Safe(area)
 
     private lateinit var playingCells: Cells
 
@@ -53,10 +51,6 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
         when (targetCell) {
             is Cell.Mine -> onMineCellOpen()
             is Cell.Safe -> openSafeCell(targetCell)
-            is Cell.Empty -> {
-                // Do nothing
-                // N/A
-            }
         }
     }
 

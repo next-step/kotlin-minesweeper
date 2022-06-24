@@ -22,6 +22,7 @@ object ConsoleOutputView : OutputView {
             BoardState.MINE_EXPLODED -> println("Lose Game")
             BoardState.COMPLETED -> println("Win Game")
             BoardState.RUNNING -> {}
+            BoardState.READY -> {}
         }
     }
 
@@ -36,7 +37,6 @@ object ConsoleOutputView : OutputView {
 
     private fun Cell.toPrintableString(): String = when (this) {
         is Cell.Mine -> this.toPrintableString()
-        is Cell.Empty -> this.toPrintableString()
         is Cell.Safe -> this.toPrintableString()
     }
 
@@ -45,7 +45,4 @@ object ConsoleOutputView : OutputView {
 
     private fun Cell.Safe.toPrintableString(): String =
         if (this.isOpen) "${this.surroundMineCount}" else PRINTABLE_STRING_FOR_CLOSE_CELL
-
-    private fun Cell.Empty.toPrintableString(): String =
-        PRINTABLE_STRING_FOR_CLOSE_CELL
 }

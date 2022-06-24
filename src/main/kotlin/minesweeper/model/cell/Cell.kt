@@ -1,5 +1,6 @@
 package minesweeper.model.cell
 
+import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
 sealed class Cell(open val coordinate: Coordinate) : Coordinate by coordinate {
@@ -19,8 +20,6 @@ sealed class Cell(open val coordinate: Coordinate) : Coordinate by coordinate {
     data class Safe(override val coordinate: Coordinate, val surroundMineCount: SurroundMineCount) : Cell(coordinate) {
         val isNoSurroundMine = surroundMineCount.equals(0)
     }
-
-    data class Empty(override val coordinate: Coordinate) : Cell(coordinate)
 }
 
 class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
@@ -32,5 +31,11 @@ class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
 
     fun openAll() {
         this.forEach { it.open() }
+    }
+
+    companion object {
+        fun Safe(area: Area) = Cells(
+            List(area.cellCount) { index -> Cell.Safe(area[index], SurroundMineCount(0)) }
+        )
     }
 }
