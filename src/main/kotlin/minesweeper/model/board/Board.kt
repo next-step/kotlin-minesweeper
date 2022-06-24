@@ -15,7 +15,7 @@ sealed class BoardState {
 
 class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
 
-    private val initialCells = Cells.Safe(area)
+    private val initialCells = Cells.safeCellsToFillOf(area)
 
     private lateinit var playingCells: Cells
 
