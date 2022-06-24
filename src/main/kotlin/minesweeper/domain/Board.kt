@@ -1,9 +1,14 @@
 package minesweeper.domain
 
-@JvmInline
-value class Board(val cells: List<Cell>) {
+class Board(area: Area, mineCount: MineCount, cellsGenerator: CellsGenerator = DefaultCellsGenerator()) {
+    init {
+        val maxCellCount = area.height * area.width
+        require(mineCount <= maxCellCount) { "게임판 보다 많은 지뢰는 배치할 수 없습니다." }
+    }
 
-    fun remainMineCount() = cells.count { it is Cell.Mine }
+    val cells: List<Cell> = cellsGenerator.generate(area, mineCount)
+
+    fun remainMineCount(): Int = cells.count { it is Cell.Mine }
 
     fun groupByColumn(): Map<Int, List<Cell>> = cells.groupBy(keySelector = { it.coordinate.y })
 

@@ -7,7 +7,7 @@ private enum class CellStatus {
 sealed class Cell(private var status: CellStatus = CellStatus.Hide) {
     abstract val coordinate: Coordinate
 
-    fun isOpened() = status == CellStatus.Show
+    fun isOpened(): Boolean = status == CellStatus.Show
 
     fun open() {
         status = CellStatus.Show

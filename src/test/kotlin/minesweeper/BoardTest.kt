@@ -1,13 +1,26 @@
 package minesweeper
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Area
 import minesweeper.domain.Board
 import minesweeper.domain.BoardOpenResult
 import minesweeper.domain.Cell
 import minesweeper.domain.Coordinate
+import minesweeper.domain.MineCount
 
 class BoardTest : DescribeSpec({
+
+    describe("init") {
+        context("크기보다 지뢰의 개수가 많으면") {
+            it("Invalid 상태를 반환한다.") {
+                shouldThrow<IllegalArgumentException> {
+                    Board(Area(1, 1), MineCount(10))
+                }
+            }
+        }
+    }
 
     describe("remainMineCount") {
         context("보드에 지뢰가 3개 존재하는 경우") {
@@ -117,22 +130,3 @@ class BoardTest : DescribeSpec({
         }
     }
 })
-
-private fun OpenedCell(coordinate: Coordinate, aroundMineCount: Int = 0) =
-    Cell.Block(coordinate, aroundMineCount).apply { open() }
-
-private fun Board(vararg board: String): Board {
-    return Board(
-        board.flatMapIndexed { y, row ->
-            row.mapIndexed { x, cell ->
-                val coordinate = Coordinate(x, y)
-                if (cell == '*') {
-                    Cell.Mine(coordinate)
-                } else {
-                    val aroundMineCount = cell.digitToInt()
-                    Cell.Block(coordinate, aroundMineCount)
-                }
-            }
-        }
-    )
-}
