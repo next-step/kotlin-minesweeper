@@ -34,7 +34,9 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
         for (row: Int in 0 until minesweeperProperty.height) {
             for (col: Int in 0 until minesweeperProperty.width) {
                 val place = _board[row][col]
-                if (place.isNotMine()) place.nearMineCount = getNearMineCount(row, col)
+                if (place.isNotMine()) {
+                    _board[row][col] = Place(place.number, place.placeType, getNearMineCount(row, col))
+                }
             }
         }
     }
