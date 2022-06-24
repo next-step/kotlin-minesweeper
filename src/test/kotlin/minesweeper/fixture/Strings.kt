@@ -8,17 +8,20 @@ import minesweeper.model.coordinate.Coordinate
 fun List<String>.toCellBuilder(): CellBuilder {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
-    val isMine: (Coordinate) -> Boolean = {
-        this[it.row][it.column] == '*'
+    val isMine: (Coordinate, Coordinate) -> Boolean = { coordinate, _ ->
+        this[coordinate.row][coordinate.column] == '*'
     }
-    return CellBuilder(BoardArea.of(rowCount, columnCount), isMine)
+    return object : CellBuilder(BoardArea.of(rowCount, columnCount)) {
+        override fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
+            isMine(coordinate, firstClickCoordinate)
+    }
 }
 
 fun List<String>.toBoard(): Board {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
-    val isMine: (Coordinate) -> Boolean = {
-        this[it.row][it.column] == '*'
+    val isMine: (Coordinate, Coordinate) -> Boolean = { coordinate, _ ->
+        this[coordinate.row][coordinate.column] == '*'
     }
     val area = BoardArea.of(rowCount, columnCount)
     return Board.build(area, isMine)

@@ -15,10 +15,10 @@ internal class BoardTest {
 
     @ParameterizedTest
     @CsvSource(
-        "1,1,1", // rowCount, columnCount, mineCount
-        "1,2,2",
+        "10,10,1", // rowCount, columnCount, mineCount
+        "10,20,2",
         "10,10,10",
-        "5,5,5"
+        "50,50,5"
     )
     fun `높이 x 너비를 갖는 맵 생성 테스트`(rowCount: Int, columnCount: Int, expectedMineCount: Int) {
 
@@ -26,8 +26,12 @@ internal class BoardTest {
         val boardArea = BoardArea.of(rowCount, columnCount)
 
         // when
-        val actualCells = Board.build(boardArea) { position -> boardArea.indexOf(position) < expectedMineCount }
-            .cells
+        val actualCells = Board.build(boardArea) { position, _ ->
+            boardArea.indexOf(position) < expectedMineCount
+        }.apply {
+            this.openCell(Position(rowCount - 1, columnCount - 1))
+        }.cells
+
         val expectedCellCount = rowCount * columnCount
         val expectedSafeCellCount = expectedCellCount - expectedMineCount
 
@@ -46,7 +50,7 @@ internal class BoardTest {
         "0,0"
     )
     fun `맵 크기가 0 이면 에러`(rowCount: Int, columnCount: Int) {
-        assertThrows<IllegalArgumentException> { Board.build(BoardArea.of(rowCount, columnCount)) { true } }
+        assertThrows<IllegalArgumentException> { Board.build(BoardArea.of(rowCount, columnCount)) { _, _ -> true } }
     }
 
     @Test

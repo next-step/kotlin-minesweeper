@@ -17,7 +17,9 @@ internal class MineSweeperTest {
         val boardArea = BoardArea.of(10, 10)
         val expectedOutput = "*".repeat(boardArea.cellCount)
 
-        val board = Board.build(boardArea) { true } // 10* 10 , board filled with mines
+        // 10* 10 , board filled with mines
+        val board = Board.build(boardArea) { _, _ -> true }
+            .apply { this.openCell(Position(0, 0)) }
 
         var actualOutput = ""
         val outputView = object : OutputView {

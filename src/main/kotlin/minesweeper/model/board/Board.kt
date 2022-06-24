@@ -7,6 +7,7 @@ import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
 enum class BoardState {
+    READY,
     RUNNING,
     COMPLETED,
     MINE_EXPLODED;
@@ -15,13 +16,21 @@ enum class BoardState {
         get() = this == COMPLETED || this == MINE_EXPLODED
 }
 
-open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by area {
+class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
 
-    private val _cells = Cells(area.mapNotNull { cellBuilder?.createCell(it) })
-    open val cells: Cells
-        get() = _cells
+    private val initialCells = Cells(
+        List(area.cellCount) { index -> Cell.Empty(area[index]) }
+    )
 
-    var state = BoardState.RUNNING
+    private lateinit var playingCells: Cells
+
+    val cells: Cells
+        get() = when (state) {
+            BoardState.READY -> initialCells
+            else -> playingCells
+        }
+
+    var state = BoardState.READY
         private set
 
     val isFinished: Boolean
@@ -34,8 +43,9 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         Cells(this.cells.filter { it.row == row })
     }.getOrNull()
 
-    open fun openCell(coordinate: Coordinate) {
-        val targetCell = cells.cellAtOrNull(coordinate) ?: return
+    fun openCell(coordinate: Coordinate) {
+
+        val targetCell = targetCellToOpen(coordinate) ?: return
         if (targetCell.isOpen) {
             return
         }
@@ -43,7 +53,32 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
         when (targetCell) {
             is Cell.Mine -> onMineCellOpen()
             is Cell.Safe -> openSafeCell(targetCell)
+            is Cell.Empty -> {
+                // Do nothing
+                // N/A
+            }
         }
+    }
+
+    private fun targetCellToOpen(coordinate: Coordinate): Cell? {
+        if (coordinate !in this.area) {
+            return null
+        }
+        preparePayingCells(coordinate)
+        return cells.cellAtOrNull(coordinate)
+    }
+
+    private fun preparePayingCells(coordinate: Coordinate) {
+        if (this.state == BoardState.READY) {
+            createPlayingCells(coordinate)
+            changeState(BoardState.RUNNING)
+        }
+    }
+
+    private fun createPlayingCells(firstClickCell: Coordinate) {
+        this.playingCells = Cells(
+            area.mapNotNull { position -> cellBuilder.createCell(position, firstClickCell) }
+        )
     }
 
     private fun onMineCellOpen() {
@@ -83,11 +118,14 @@ open class Board(val area: Area, cellBuilder: CellBuilder? = null) : Area by are
             .filter { it.isClosed }
 
     companion object {
-        fun build(area: Area, isMineCell: (Coordinate) -> Boolean): Board {
-            return Board(
-                area = area,
-                cellBuilder = CellBuilder(area, isMineCell)
-            )
-        }
+
+        private const val COUNT_OF_FORCE_SAFE_CELL = 1
+
+        fun build(area: Area, isMineCellBlock: (Coordinate, Coordinate) -> Boolean) = Board(
+            area = area,
+            cellBuilder = CellBuilder(area, isMineCellBlock)
+        )
+
+        fun Area.maxMineCountInRandomBoard(): Int = this.cellCount - COUNT_OF_FORCE_SAFE_CELL
     }
 }

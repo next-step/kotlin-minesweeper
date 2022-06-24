@@ -1,8 +1,8 @@
 package minesweeper.view.input
 
 import minesweeper.model.board.Board
+import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
 import minesweeper.model.board.BoardBuilder
-import minesweeper.model.board.RandomBoard.Companion.maxMineCountInRandomBoard
 import minesweeper.model.board.RandomBoardBuilder
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.BoardArea

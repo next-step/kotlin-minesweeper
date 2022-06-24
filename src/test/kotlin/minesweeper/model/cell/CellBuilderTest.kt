@@ -1,6 +1,7 @@
 package minesweeper.model.cell
 
 import minesweeper.fixture.toCellBuilder
+import minesweeper.model.coordinate.Coordinate
 import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -76,6 +77,9 @@ internal class CellBuilderTest {
     }
 
     companion object {
+
+        private fun CellBuilder.createCell(coordinate: Coordinate) =
+            this.createCell(coordinate, Position(-1, -1))
 
         @JvmStatic
         fun provideCellBuilderAndPosition(): Stream<Arguments> {
