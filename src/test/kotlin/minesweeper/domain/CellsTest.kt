@@ -78,6 +78,21 @@ class CellsTest {
     }
 
     @Test
+    fun `게임판(5*5)에 5개의 마인 주변 셀을 열었을때 오픈되는 주변 셀의 갯수`() {
+        val mockPositions = MockPositions(FixtureMineSweeper.mockPositions5x5)
+        val positions = Positions(mockPositions)
+        val minePositions = FixtureMineSweeper.customMinePosition5x5
+        val cells = Cells.of(positions, minePositions)
+
+        cells.click(Position(0, 1))
+        assertThat(cells.count { it.isOpen() }).isEqualTo(1)
+        cells.click(Position(0, 4))
+        assertThat(cells.count { it.isOpen() }).isEqualTo(9)
+        cells.click(Position(4, 0))
+        assertThat(cells.count { it.isOpen() }).isEqualTo(17)
+    }
+
+    @Test
     fun `이미 클릭 된 포지션을 입력하는 경우 중복 에러 발생`() {
         val mockPositions = MockPositions(FixtureMineSweeper.mockPositions2x2)
         val positions = Positions(mockPositions)
