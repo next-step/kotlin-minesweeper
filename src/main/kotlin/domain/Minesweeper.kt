@@ -13,7 +13,7 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
         }
 
     val board: List<List<Place>>
-    get() = _board
+        get() = _board
 
     init {
         val totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height
