@@ -32,7 +32,7 @@ object ConsoleBoardBuilder : BoardBuilder {
     }
 
     private fun inputMineCount(area: Area): Int {
-        val maxMineCount = area.maxMineCountInRandomBoard()
+        val maxMineCount = area.maxMineCountInRandomBoard
         val mineCountRange = MIN_COUNT_OF_MINE..maxMineCount
         return ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
     }

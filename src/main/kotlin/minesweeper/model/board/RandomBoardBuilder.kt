@@ -6,7 +6,7 @@ import minesweeper.model.coordinate.Area
 
 class RandomBoardBuilder(private val area: Area, mineCount: Int) : BoardBuilder {
 
-    private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard())
+    private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard)
 
     override fun createNewBoard() = Board(area, RandomCellBuilder(area, mineCount))
 }

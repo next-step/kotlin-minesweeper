@@ -6,7 +6,7 @@ import minesweeper.model.coordinate.Coordinate
 class RandomCellBuilder(area: Area, private val mineCount: Int) : CellBuilder(area) {
 
     private var mineCoordinate: List<Coordinate>? = null
-    override fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
+    override fun isMineAt(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
         coordinate in mineCoordinate(firstClickCoordinate)
 
     private fun mineCoordinate(forceSafeCellCoordinate: Coordinate): List<Coordinate> {

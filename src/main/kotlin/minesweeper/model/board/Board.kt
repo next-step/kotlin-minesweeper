@@ -3,6 +3,7 @@ package minesweeper.model.board
 import minesweeper.model.cell.Cell
 import minesweeper.model.cell.CellBuilder
 import minesweeper.model.cell.Cells
+import minesweeper.model.cell.MineLocator
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
@@ -32,6 +33,8 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
 
     private val isAllSafeCellOpen: Boolean
         get() = this.cells.none { it is Cell.Safe && it.isClosed }
+
+    constructor(area: Area, mineLocator: MineLocator) : this(area, CellBuilder(area, mineLocator))
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         Cells(this.cells.filter { it.row == row })
@@ -111,11 +114,7 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
 
         private const val COUNT_OF_FORCE_SAFE_CELL = 1
 
-        fun build(area: Area, isMineCellBlock: (Coordinate, Coordinate) -> Boolean) = Board(
-            area = area,
-            cellBuilder = CellBuilder(area, isMineCellBlock)
-        )
-
-        fun Area.maxMineCountInRandomBoard(): Int = this.cellCount - COUNT_OF_FORCE_SAFE_CELL
+        val Area.maxMineCountInRandomBoard: Int
+            get() = this.cellCount - COUNT_OF_FORCE_SAFE_CELL
     }
 }

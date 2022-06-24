@@ -26,7 +26,7 @@ internal class BoardTest {
         val boardArea = BoardArea.of(rowCount, columnCount)
 
         // when
-        val actualCells = Board.build(boardArea) { position, _ ->
+        val actualCells = Board(boardArea) { position, _ ->
             boardArea.indexOf(position) < expectedMineCount
         }.apply {
             this.openCell(Position(rowCount - 1, columnCount - 1))
@@ -50,7 +50,7 @@ internal class BoardTest {
         "0,0"
     )
     fun `맵 크기가 0 이면 에러`(rowCount: Int, columnCount: Int) {
-        assertThrows<IllegalArgumentException> { Board.build(BoardArea.of(rowCount, columnCount)) { _, _ -> true } }
+        assertThrows<IllegalArgumentException> { Board(BoardArea.of(rowCount, columnCount)) { _, _ -> true } }
     }
 
     @Test
