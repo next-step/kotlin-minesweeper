@@ -5,9 +5,14 @@ data class Cell(
 ) {
     lateinit var cellState: CellState
 
+    var currentStatus: CellsOpener = CellsNotExist
+
     fun openNearCells(cells: Map<Position, Cell>) {
-        this.click()
-        if (isNearMineNotExist()) openNearCell(cells)
+        currentStatus.isNearCellExist(this)
+        val nearCells = currentStatus.getNearCells(cells, this)
+        currentStatus.openNearCell(nearCells, this).forEach {
+            it.openNearCells(cells)
+        }
     }
 
     fun isNonMine(): Boolean {
@@ -18,32 +23,17 @@ data class Cell(
         return cellState.isOpen
     }
 
-    private fun openNearCell(cells: Map<Position, Cell>) {
-        getNearCells(cells)
-            .onEach { it.click() }
-            .filter { it.isNearMineNotExist() }
-            .forEach { it.openNearCell(cells) }
-    }
-
-    private fun getNearCells(cells: Map<Position, Cell>): List<Cell> {
-        return this.position.nearCellPositions.map { cells[it]!! }.filter { it.isNonMine() && it.isNotClicked() }
-    }
-
-    private fun click() {
+    fun click() {
         require(isNotClicked()) { "이미 클릭된 좌표 입니다." }
         this.cellState.click()
     }
 
-    private fun isNotClicked(): Boolean {
+    fun isNotClicked(): Boolean {
         return !cellState.isOpen
     }
 
-    private fun isNearMineNotExist(): Boolean {
+    fun isNearMineNotExist(): Boolean {
         return this.cellState.getNearMineCount() == ZERO
-    }
-
-    private fun nearCellContain(cell: Cell): Boolean {
-        return this.position.nearCellPositions.contains(cell.position)
     }
 
     companion object {
