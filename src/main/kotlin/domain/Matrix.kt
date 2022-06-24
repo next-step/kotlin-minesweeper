@@ -13,7 +13,7 @@ class Matrix(
 
     init {
         require(numberOfMines.value <= dimension.area) {
-            "지뢰 개수는 전체 칸 수보다 많을 수 없습니다."
+            "지뢰 개수는 전체 칸 수보다 많을 수 없습니다. 전체 칸 수 = ${dimension.area}, 입력된 지뢰 개수 = ${numberOfMines.value}"
         }
         val locations = MatrixFiller.fill(dimension)
         val miningLocations = locationSelector.select(numberOfMines.value, locations)
