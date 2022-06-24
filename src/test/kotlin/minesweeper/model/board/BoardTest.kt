@@ -57,12 +57,11 @@ internal class BoardTest {
     fun `지뢰가 없는 인접한 칸이 모두 열림`() {
 
         // given
-        val mineCells = listOf(
+        val board = listOf(
             "--*",
             "--*",
             "**X"
-        )
-        val board = mineCells.toBoard()
+        ).toBoard()
 
         // when
         board.openCell(Position(0, 0))
@@ -81,12 +80,11 @@ internal class BoardTest {
     fun `지뢰가 없는 인접한 칸이 모두 열림2`() {
 
         // given
-        val mineCells = listOf(
+        val board = listOf(
             "01X",
             "11*",
             "*XX"
-        )
-        val board = mineCells.toBoard()
+        ).toBoard()
 
         // when
         board.openCell(Position(0, 0))
@@ -107,35 +105,39 @@ internal class BoardTest {
     fun `지뢰 열어서 끝남`() {
 
         // given
-        val mineCells = listOf(
+        val board = listOf(
             "*--",
             "---",
             "---"
-        )
-        val board = mineCells.toBoard()
+        ).toBoard()
 
         // when
-        board.openCell(Position(0, 0))
+        val actual = board
+            .apply { openCell(Position(0, 0)) }
+            .state as? BoardState.Finished
 
         // then
-        assertThat(board.state).isEqualTo(BoardState.MINE_EXPLODED)
+        val expected = BoardState.Finished(isWin = false)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `안전 셀 모두 열어서 끝남`() {
 
         // given
-        val mineCells = listOf(
+        val board = listOf(
             "*--",
             "---",
             "---"
-        )
-        val board = mineCells.toBoard()
+        ).toBoard()
 
         // when
-        board.openCell(Position(2, 2))
+        val actual = board
+            .apply { openCell(Position(2, 2)) }
+            .state as? BoardState.Finished
 
         // then
-        assertThat(board.state).isEqualTo(BoardState.COMPLETED)
+        val expected = BoardState.Finished(isWin = true)
+        assertThat(actual).isEqualTo(expected)
     }
 }
