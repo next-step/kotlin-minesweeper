@@ -3,7 +3,7 @@ package minesweeper.view.input
 import minesweeper.model.board.Board
 import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
 import minesweeper.model.board.BoardGenerator
-import minesweeper.model.cell.RandomMineLocator
+import minesweeper.model.board.RandomBoard
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
@@ -37,8 +37,3 @@ object ConsoleBoardGenerator : BoardGenerator {
         return ConsoleReader.read(MESSAGE_FOR_INPUT_MINE_COUNT, IntInputParser(mineCountRange))
     }
 }
-
-fun RandomBoard(area: Area, mineCount: Int) = Board(
-    area = area,
-    mineLocator = RandomMineLocator(area, mineCount)
-)

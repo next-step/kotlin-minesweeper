@@ -4,6 +4,7 @@ import minesweeper.model.cell.Cell
 import minesweeper.model.cell.CellGenerator
 import minesweeper.model.cell.Cells
 import minesweeper.model.cell.MineLocator
+import minesweeper.model.cell.RandomMineLocator
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
@@ -13,8 +14,9 @@ sealed class BoardState {
     data class Finished(val isWin: Boolean) : BoardState()
 }
 
-class Board(val area: Area, private val cellGenerator: CellGenerator) : Area by area {
+class Board(val area: Area, mineLocator: MineLocator) : Area by area {
 
+    private val cellGenerator = CellGenerator(area, mineLocator)
     private val initialCells = Cells.safeCellsToFillOf(area)
 
     private lateinit var playingCells: Cells
@@ -33,8 +35,6 @@ class Board(val area: Area, private val cellGenerator: CellGenerator) : Area by 
 
     private val isAllSafeCellOpen: Boolean
         get() = this.cells.none { it is Cell.Safe && it.isClosed }
-
-    constructor(area: Area, mineLocator: MineLocator) : this(area, CellGenerator(area, mineLocator))
 
     fun cellsAtRowOrNull(row: Int): Cells? = runCatching {
         Cells(this.cells.filter { it.row == row })
@@ -100,10 +100,13 @@ class Board(val area: Area, private val cellGenerator: CellGenerator) : Area by 
             .filter { it.isClosed }
 
     companion object {
-
         private const val COUNT_OF_FORCE_SAFE_CELL = 1
-
         val Area.maxMineCountInRandomBoard: Int
             get() = this.cellCount - COUNT_OF_FORCE_SAFE_CELL
     }
 }
+
+fun RandomBoard(area: Area, mineCount: Int) = Board(
+    area = area,
+    mineLocator = RandomMineLocator(area, mineCount)
+)

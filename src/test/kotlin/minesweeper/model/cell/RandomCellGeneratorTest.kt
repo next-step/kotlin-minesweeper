@@ -1,9 +1,9 @@
 package minesweeper.model.cell
 
 import minesweeper.fixture.cellAtOrNull
+import minesweeper.model.board.RandomBoard
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.model.coordinate.Position
-import minesweeper.view.input.RandomBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.assertAll

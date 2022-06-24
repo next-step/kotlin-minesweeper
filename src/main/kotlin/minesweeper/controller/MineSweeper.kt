@@ -12,7 +12,7 @@ class MineSweeper(
 ) {
 
     fun run() {
-        val board = createMineBoard()
+        val board = createBoard()
         do {
             guessAndOpen(board)
         } while (!board.isFinished)
@@ -20,7 +20,7 @@ class MineSweeper(
         outputView?.printFinalMessage(board)
     }
 
-    private fun createMineBoard(): Board {
+    private fun createBoard(): Board {
         val board = boardGenerator.createBoard()
         outputView?.printInitialMessage()
         outputView?.printBoard(board)
