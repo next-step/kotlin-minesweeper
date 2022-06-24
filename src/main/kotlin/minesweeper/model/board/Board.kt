@@ -38,32 +38,22 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
     }.getOrNull()
 
     fun openCell(coordinate: Coordinate) {
-
-        val targetCell = targetCellToOpen(coordinate) ?: return
-        if (targetCell.isOpen) {
-            return
-        }
-
+        val targetCell = cellToOpenAt(coordinate) ?: return
         when (targetCell) {
             is Cell.Mine -> onMineCellOpen()
             is Cell.Safe -> openSafeCell(targetCell)
         }
     }
 
-    private fun targetCellToOpen(coordinate: Coordinate): Cell? {
-        if (coordinate !in this.area) {
-            return null
-        }
-        preparePayingCells(coordinate)
-        return cells.cellAtOrNull(coordinate)
-    }
-
-    private fun preparePayingCells(coordinate: Coordinate) {
+    private fun cellToOpenAt(coordinate: Coordinate): Cell? = runCatching {
+        require(coordinate in this.area)
         if (this.state == BoardState.Ready) {
             createPlayingCells(coordinate)
             changeState(BoardState.Running)
         }
-    }
+        cells.cellAtOrNull(coordinate)
+            ?.run { if (this.isClosed) this else null }
+    }.getOrNull()
 
     private fun createPlayingCells(firstClickCell: Coordinate) {
         this.playingCells = Cells(
@@ -83,7 +73,6 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
     }
 
     private tailrec fun openSafeCells(cellsToOpen: MutableSet<Cell>) {
-
         val targetCell = cellsToOpen.firstOrNull() ?: return
         cellsToOpen.remove(targetCell)
         targetCell.open()
