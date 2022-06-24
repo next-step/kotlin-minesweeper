@@ -1,9 +1,9 @@
 package minesweeper.controller
 
-import minesweeper.model.BoardBuilder
 import minesweeper.model.board.Board
-import minesweeper.model.board.Cell
-import minesweeper.model.board.coordinate.BoardArea
+import minesweeper.model.cell.Cell
+import minesweeper.model.coordinate.BoardArea
+import minesweeper.model.coordinate.Position
 import minesweeper.view.output.OutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,7 +17,9 @@ internal class MineSweeperTest {
         val boardArea = BoardArea.of(10, 10)
         val expectedOutput = "*".repeat(boardArea.cellCount)
 
-        val board = Board.build(boardArea) { true } // 10* 10 , board filled with mines
+        // 10* 10 , board filled with mines
+        val board = Board(boardArea) { _, _ -> true }
+            .apply { this.openCell(Position(0, 0)) }
 
         var actualOutput = ""
         val outputView = object : OutputView {
@@ -29,7 +31,8 @@ internal class MineSweeperTest {
         }
 
         val controller = MineSweeper(
-            boardBuilder = BoardBuilder { board },
+            boardGenerator = { board },
+            inputView = { Position(0, 0) },
             outputView = outputView
         )
 

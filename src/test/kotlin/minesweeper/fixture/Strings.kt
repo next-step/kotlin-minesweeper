@@ -1,14 +1,24 @@
 package minesweeper.fixture
 
-import minesweeper.model.board.CellBuilder
-import minesweeper.model.board.coordinate.BoardArea
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.board.Board
+import minesweeper.model.cell.CellGenerator
+import minesweeper.model.coordinate.BoardArea
 
-fun List<String>.toCellBuilder(): CellBuilder {
+fun List<String>.toCellGenerator(): CellGenerator {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
-    val isMine: (Position) -> Boolean = {
-        this[it.row][it.column] == '*'
+
+    return CellGenerator(BoardArea.of(rowCount, columnCount)) { coordinate, _ ->
+        this[coordinate.row][coordinate.column] == '*'
     }
-    return CellBuilder(BoardArea.of(rowCount, columnCount), isMine)
+}
+
+fun List<String>.toBoard(): Board {
+    val rowCount = this.count()
+    val columnCount = this.maxOf { it.length }
+    val area = BoardArea.of(rowCount, columnCount)
+
+    return Board(area) { coordinate, _ ->
+        this[coordinate.row][coordinate.column] == '*'
+    }
 }

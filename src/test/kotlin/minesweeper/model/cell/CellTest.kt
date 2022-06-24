@@ -1,6 +1,6 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
-import minesweeper.model.board.coordinate.Position
+import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -105,5 +105,24 @@ internal class CellTest {
             Cell.Safe(Position(10, 10), SurroundMineCount(surroundMineCount))
                 .surroundMineCount
         ).isEqualTo(surroundMineCount)
+    }
+
+    @Test
+    fun `셀 오픈  테스트`() {
+
+        // given
+        val cellList = listOf(
+            Cell.Mine(Position(1, 1)),
+            Cell.Safe(Position(2, 1), SurroundMineCount(0))
+        )
+
+        // when
+        cellList.forEach { it.open() }
+
+        // then
+        assertAll(
+            { assertThat(cellList[0].isOpen).isTrue },
+            { assertThat(cellList[1].isOpen).isTrue }
+        )
     }
 }

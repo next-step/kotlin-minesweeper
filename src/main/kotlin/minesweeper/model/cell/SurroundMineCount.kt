@@ -1,4 +1,4 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
 class SurroundMineCount(private val value: Int) : Comparable<Int> {
     init {
@@ -10,12 +10,15 @@ class SurroundMineCount(private val value: Int) : Comparable<Int> {
     }
 
     override fun compareTo(other: Int): Int = this.value.compareTo(other)
+
     override fun equals(other: Any?): Boolean {
         if (other is Int) {
             return this.value == other
         }
         return super.equals(other)
     }
+
+    override fun hashCode() = this.value.hashCode()
 
     companion object {
         private const val MIN_SURROUND_MINE_COUNT = 0
