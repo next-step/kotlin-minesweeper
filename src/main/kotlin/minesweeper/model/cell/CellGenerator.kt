@@ -3,7 +3,7 @@ package minesweeper.model.cell
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-class CellGenerator(val area: Area, private val mineLocator: MineLocator) {
+class CellGenerator(private val area: Area, private val mineLocator: MineLocator) {
 
     fun createCell(coordinate: Coordinate, firstClickCoordinate: Coordinate): Cell {
         if (mineLocator.isMineAt(coordinate, firstClickCoordinate)) {
