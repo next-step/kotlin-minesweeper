@@ -10,6 +10,7 @@ class SurroundMineCount(private val value: Int) : Comparable<Int> {
     }
 
     override fun compareTo(other: Int): Int = this.value.compareTo(other)
+
     override fun equals(other: Any?): Boolean {
         if (other is Int) {
             return this.value == other
