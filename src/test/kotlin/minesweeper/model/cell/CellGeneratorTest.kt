@@ -1,6 +1,6 @@
 package minesweeper.model.cell
 
-import minesweeper.fixture.toCellBuilder
+import minesweeper.fixture.toCellGenerator
 import minesweeper.model.coordinate.Coordinate
 import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
@@ -19,14 +19,14 @@ internal class CellGeneratorTest {
             "*--",
             "---"
         )
-        val cellBuilder = mineCells.toCellBuilder()
-        val safeCell00 = cellBuilder.createCell(Position(0, 0))
-        val safeCell01 = cellBuilder.createCell(Position(0, 1))
-        val safeCell02 = cellBuilder.createCell(Position(0, 2))
+        val cellGenerator = mineCells.toCellGenerator()
+        val safeCell00 = cellGenerator.createCell(Position(0, 0))
+        val safeCell01 = cellGenerator.createCell(Position(0, 1))
+        val safeCell02 = cellGenerator.createCell(Position(0, 2))
 
-        val safeCell10 = cellBuilder.createCell(Position(1, 0))
-        val safeCell11 = cellBuilder.createCell(Position(1, 1))
-        val safeCell12 = cellBuilder.createCell(Position(1, 2))
+        val safeCell10 = cellGenerator.createCell(Position(1, 0))
+        val safeCell11 = cellGenerator.createCell(Position(1, 1))
+        val safeCell12 = cellGenerator.createCell(Position(1, 2))
 
         assertAll(
             { assertThat(safeCell00).isInstanceOf(Cell.Mine::class.java) },
@@ -46,8 +46,8 @@ internal class CellGeneratorTest {
             "*-*",
             "***"
         )
-        val cellBuilder = mineCells.toCellBuilder()
-        val actualCell = cellBuilder.createCell(Position(1, 1))
+        val cellGenerator = mineCells.toCellGenerator()
+        val actualCell = cellGenerator.createCell(Position(1, 1))
 
         assertAll(
             { assertThat(actualCell).isInstanceOf(Cell.Safe::class.java) },
@@ -59,7 +59,7 @@ internal class CellGeneratorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCellBuilderAndPosition")
+    @MethodSource("provideCellGeneratorAndPosition")
     fun `주변 지뢰 갯수 테스트 다중 케이스`(
         cellGenerator: CellGenerator,
         position: Position,
@@ -82,7 +82,7 @@ internal class CellGeneratorTest {
             this.createCell(coordinate, Position(-1, -1))
 
         @JvmStatic
-        fun provideCellBuilderAndPosition(): Stream<Arguments> {
+        fun provideCellGeneratorAndPosition(): Stream<Arguments> {
 
             return Stream.of(
                 Arguments.of(
@@ -90,7 +90,7 @@ internal class CellGeneratorTest {
                         "-**",
                         "***",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(0, 0),
                     3
                 ),
@@ -99,7 +99,7 @@ internal class CellGeneratorTest {
                         "***",
                         "-**",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(1, 0),
                     5
                 ),
@@ -109,7 +109,7 @@ internal class CellGeneratorTest {
                         "***",
                         "***",
                         "-**"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(2, 0),
                     3
                 ),
@@ -118,7 +118,7 @@ internal class CellGeneratorTest {
                         "---",
                         "---",
                         "---"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(1, 1),
                     0
                 ),
@@ -127,7 +127,7 @@ internal class CellGeneratorTest {
                         "**-",
                         "***",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(0, 2),
                     3
                 ),
@@ -136,7 +136,7 @@ internal class CellGeneratorTest {
                         "***",
                         "**-",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(1, 2),
                     5
                 ),
@@ -145,7 +145,7 @@ internal class CellGeneratorTest {
                         "***",
                         "***",
                         "**-"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(2, 2),
                     3
                 ),
@@ -154,7 +154,7 @@ internal class CellGeneratorTest {
                         "*-*",
                         "***",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(0, 1),
                     5
                 ),
@@ -163,7 +163,7 @@ internal class CellGeneratorTest {
                         "***",
                         "*-*",
                         "***"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(1, 1),
                     8
                 ),
@@ -172,7 +172,7 @@ internal class CellGeneratorTest {
                         "***",
                         "***",
                         "*-*"
-                    ).toCellBuilder(),
+                    ).toCellGenerator(),
                     Position(2, 1),
                     5
                 )

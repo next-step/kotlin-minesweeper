@@ -1,9 +1,9 @@
 package minesweeper.model.cell
 
 import minesweeper.fixture.cellAtOrNull
-import minesweeper.model.board.Board
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.model.coordinate.Position
+import minesweeper.view.input.RandomBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.assertAll
@@ -22,7 +22,7 @@ internal class RandomCellGeneratorTest {
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, mineCount: Int, expectedMineCount: Int) {
 
         val boardArea = BoardArea.of(rowCount, columnCount)
-        val actualMineCount = Board(boardArea, RandomCellGenerator(boardArea, mineCount))
+        val actualMineCount = RandomBoard(boardArea, mineCount)
             .apply { openCell(Position(0, 0)) }
             .cells.mineCount
         assertThat(actualMineCount).isEqualTo(expectedMineCount)
@@ -40,7 +40,7 @@ internal class RandomCellGeneratorTest {
         val boardArea = BoardArea.of(rowCount, height)
 
         // when
-        val actualBoard = Board(boardArea, RandomCellGenerator(boardArea, expectedMineCount))
+        val actualBoard = RandomBoard(boardArea, expectedMineCount)
             .apply { this.openCell(Position(0, 0)) }
 
         val actualCells = actualBoard.cells
@@ -62,7 +62,7 @@ internal class RandomCellGeneratorTest {
         val boardArea = BoardArea.of(100, 100)
         val expectedSafeCount = 1
         val expectedMineCount = boardArea.cellCount - expectedSafeCount
-        val board = Board(boardArea, RandomCellGenerator(boardArea, expectedMineCount))
+        val board = RandomBoard(boardArea, expectedMineCount)
         val randomClickPosition = board.shuffled()[0]
 
         // when

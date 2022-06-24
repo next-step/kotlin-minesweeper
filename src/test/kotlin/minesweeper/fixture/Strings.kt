@@ -4,11 +4,11 @@ import minesweeper.model.board.Board
 import minesweeper.model.cell.CellGenerator
 import minesweeper.model.coordinate.BoardArea
 
-fun List<String>.toCellBuilder(): CellGenerator {
+fun List<String>.toCellGenerator(): CellGenerator {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
 
-    return CellBuilder(BoardArea.of(rowCount, columnCount)) { coordinate, _ ->
+    return CellGenerator(BoardArea.of(rowCount, columnCount)) { coordinate, _ ->
         this[coordinate.row][coordinate.column] == '*'
     }
 }

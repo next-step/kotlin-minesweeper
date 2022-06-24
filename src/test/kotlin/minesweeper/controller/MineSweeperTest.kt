@@ -1,6 +1,5 @@
 package minesweeper.controller
 
-import minesweeper.fixture.Board
 import minesweeper.model.board.Board
 import minesweeper.model.cell.Cell
 import minesweeper.model.coordinate.BoardArea
