@@ -1,6 +1,6 @@
 package domain
 
-enum class PlaceType(val transform: String) {
-    MINE("*"),
-    NOT_MINE("B")
+enum class PlaceType {
+    MINE,
+    NOT_MINE
 }

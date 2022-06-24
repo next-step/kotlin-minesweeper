@@ -2,6 +2,7 @@ package view
 
 import domain.Minesweeper
 import domain.Place
+import domain.PlaceType
 
 class ResultView {
 
@@ -16,6 +17,9 @@ class ResultView {
     }
 
     private fun Place.toTransform(): String {
-        return placeType.transform
+        return when (this.placeType) {
+            PlaceType.MINE -> "*"
+            PlaceType.NOT_MINE -> "B"
+        }
     }
 }
