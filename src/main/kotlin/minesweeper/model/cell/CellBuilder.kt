@@ -3,7 +3,7 @@ package minesweeper.model.cell
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-abstract class CellBuilder(val area: Area) : MineLocator {
+abstract class CellBuilder(val area: Area) {
 
     fun createCell(coordinate: Coordinate, firstClickCoordinate: Coordinate): Cell {
         if (isMineAt(coordinate, firstClickCoordinate)) {
@@ -16,6 +16,8 @@ abstract class CellBuilder(val area: Area) : MineLocator {
         area.surroundCoordinatesOf(coordinate)
             .count { this.isMineAt(it, firstClickCoordinate) }
     )
+
+    abstract fun isMineAt(coordinate: Coordinate, firstClickCoordinate: Coordinate): Boolean
 
     companion object {
 
