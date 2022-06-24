@@ -5,7 +5,26 @@ data class Cell(
 ) {
     lateinit var cellState: CellState
 
+    var currentStatus: CellsOpener = CellsNotExist
+
+    fun openNearCells(cells: Map<Position, Cell>) {
+        currentStatus.isNearCellExist(this)
+        val nearCells = currentStatus.getNearCells(cells, this)
+        currentStatus.openNearCell(nearCells, this).forEach {
+            it.openNearCells(cells)
+        }
+    }
+
+    fun isNonMine(): Boolean {
+        return cellState.isNonMine()
+    }
+
+    fun isOpen(): Boolean {
+        return cellState.isOpen
+    }
+
     fun click() {
+        require(isNotClicked()) { "이미 클릭된 좌표 입니다." }
         this.cellState.click()
     }
 
@@ -13,12 +32,8 @@ data class Cell(
         return !cellState.isOpen
     }
 
-    fun getNearMineCount(): Int {
-        return this.cellState.mineCount
-    }
-
-    fun isNonMine(): Boolean {
-        return cellState.isNonMine()
+    fun isNearMineNotExist(): Boolean {
+        return this.cellState.getNearMineCount() == ZERO
     }
 
     companion object {
@@ -27,5 +42,7 @@ data class Cell(
                 this.cellState = CellState.of(position, minePositions)
             }
         }
+
+        private const val ZERO = 0
     }
 }

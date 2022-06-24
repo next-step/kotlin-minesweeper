@@ -12,7 +12,7 @@ class CellStateTest {
         val minePosition = Position(8, 8)
         val cellState = CellState.of(position, Positions(listOf(minePosition)))
 
-        assertThat(cellState.mineCount).isEqualTo(0)
+        assertThat(cellState.getNearMineCount()).isEqualTo(0)
         assertThat(cellState.isNonMine()).isEqualTo(true)
     }
 
@@ -23,7 +23,7 @@ class CellStateTest {
         val minePosition = Position(1, 1)
         val cellState = CellState.of(position, Positions(listOf(minePosition)))
 
-        assertThat(cellState.mineCount).isEqualTo(1)
+        assertThat(cellState.getNearMineCount()).isEqualTo(1)
         assertThat(cellState.isNonMine()).isEqualTo(true)
     }
 
