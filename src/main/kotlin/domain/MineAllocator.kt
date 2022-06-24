@@ -5,10 +5,9 @@ import domain.strategy.MineAllocationStrategy
 class MineAllocator : MineAllocationStrategy {
 
     override fun getAssignMineLocation(totalPlaceNumber: Int, numberToAllocate: Int): Set<Place> {
-        val sliceRange = IntRange(0, numberToAllocate - 1)
         return IntRange(0, totalPlaceNumber - 1)
             .shuffled()
-            .slice(sliceRange)
+            .take(numberToAllocate)
             .map { Place(it, PlaceType.MINE) }
             .toSet()
     }
