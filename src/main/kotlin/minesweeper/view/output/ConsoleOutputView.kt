@@ -14,12 +14,17 @@ object ConsoleOutputView : OutputView {
     override fun printInitialMessage() = println(initialMessage)
 
     override fun printBoard(board: Board) {
+
         println(board.toPrintableString())
+
+        val boardState = board.state
+        if (boardState is BoardState.Finished) {
+            printFinalMessage(boardState.isWin)
+        }
     }
 
-    override fun printFinalMessage(board: Board) {
-        val state = board.state as? BoardState.Finished ?: return
-        val message = if (state.isWin) "Win Game" else "Lose Game"
+    private fun printFinalMessage(isWin: Boolean) {
+        val message = if (isWin) "Win Game" else "Lose Game"
         println(message)
     }
 
