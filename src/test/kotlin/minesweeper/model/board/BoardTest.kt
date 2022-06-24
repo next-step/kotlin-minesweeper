@@ -117,7 +117,7 @@ internal class BoardTest {
             .state as? BoardState.Finished
 
         // then
-        val expected = BoardState.Finished(isWin = false)
+        val expected = BoardState.Finished(cells = board.cells, isWin = false)
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -137,7 +137,7 @@ internal class BoardTest {
             .state as? BoardState.Finished
 
         // then
-        val expected = BoardState.Finished(isWin = true)
+        val expected = BoardState.Finished(cells = board.cells, isWin = true)
         assertThat(actual).isEqualTo(expected)
     }
 }

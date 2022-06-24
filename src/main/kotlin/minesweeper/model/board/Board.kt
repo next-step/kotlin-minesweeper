@@ -8,25 +8,22 @@ import minesweeper.model.cell.RandomMineLocator
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-sealed class BoardState {
-    object Ready : BoardState()
-    object Running : BoardState()
-    data class Finished(val isWin: Boolean) : BoardState()
+sealed class BoardState(open val cells: Cells) {
+    data class Ready(override val cells: Cells) : BoardState(cells)
+    data class Running(override val cells: Cells) : BoardState(cells)
+    data class Finished(override val cells: Cells, val isWin: Boolean) : BoardState(cells)
+
+    fun toFinished(isWin: Boolean) = Finished(this.cells, isWin)
 }
 
 class Board(val area: Area, mineLocator: MineLocator) : Area by area {
 
     private val cellGenerator = CellGenerator(area, mineLocator)
-    private val initialCells = Cells.safeCellsToFillOf(area)
-    private lateinit var playingCells: Cells
 
     val cells: Cells
-        get() = when (state) {
-            BoardState.Ready -> initialCells
-            else -> playingCells
-        }
+        get() = this.state.cells
 
-    var state: BoardState = BoardState.Ready
+    var state: BoardState = BoardState.Ready(Cells.safeCellsToFillOf(area))
         private set
 
     val isFinished: Boolean
@@ -49,28 +46,26 @@ class Board(val area: Area, mineLocator: MineLocator) : Area by area {
 
     private fun cellToOpenAt(coordinate: Coordinate): Cell? = runCatching {
         require(coordinate in this.area)
-        if (this.state == BoardState.Ready) {
-            createPlayingCells(coordinate)
-            changeState(BoardState.Running)
+        if (this.state is BoardState.Ready) {
+            val playingCells = createPlayingCells(coordinate)
+            changeState(BoardState.Running(playingCells))
         }
         cells.cellAtOrNull(coordinate)
             ?.run { if (this.isClosed) this else null }
     }.getOrNull()
 
-    private fun createPlayingCells(firstClickCell: Coordinate) {
-        this.playingCells = Cells(
-            area.mapNotNull { position -> cellGenerator.createCell(position, firstClickCell) }
-        )
-    }
+    private fun createPlayingCells(firstClickCell: Coordinate) = Cells(
+        area.mapNotNull { position -> cellGenerator.createCell(position, firstClickCell) }
+    )
 
     private fun onMineCellOpen() {
-        changeState(BoardState.Finished(isWin = false))
+        changeState(this.state.toFinished(isWin = false))
     }
 
     private fun openSafeCell(cell: Cell.Safe) {
         openSafeCells(mutableSetOf(cell))
         if (this.isAllSafeCellOpen) {
-            changeState(BoardState.Finished(isWin = true))
+            changeState(this.state.toFinished(isWin = true))
         }
     }
 
