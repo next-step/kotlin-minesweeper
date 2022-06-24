@@ -10,9 +10,6 @@ sealed class BoardState {
     object Ready : BoardState()
     object Running : BoardState()
     data class Finished(val isWin: Boolean) : BoardState()
-
-    val isFinished: Boolean
-        get() = this is Finished
 }
 
 class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
@@ -31,7 +28,7 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
         private set
 
     val isFinished: Boolean
-        get() = this.state.isFinished
+        get() = this.state is BoardState.Finished
 
     private val isAllSafeCellOpen: Boolean
         get() = this.cells.none { it is Cell.Safe && it.isClosed }
