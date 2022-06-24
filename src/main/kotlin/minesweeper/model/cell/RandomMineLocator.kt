@@ -13,9 +13,8 @@ class RandomMineLocator(private val area: Area, mineCount: Int) : MineLocator {
         coordinate in mineCoordinate(firstClickCoordinate)
 
     private fun mineCoordinate(forceSafeCellCoordinate: Coordinate): List<Coordinate> {
-        val mineCoordinate = this.mineCoordinate ?: randomMineCoordinates(forceSafeCellCoordinate)
-        this.mineCoordinate = mineCoordinate
         return mineCoordinate
+            ?: randomMineCoordinates(forceSafeCellCoordinate).also { mineCoordinate = it }
     }
 
     private fun randomMineCoordinates(forceSafeCellCoordinate: Coordinate) = area.shuffled()
