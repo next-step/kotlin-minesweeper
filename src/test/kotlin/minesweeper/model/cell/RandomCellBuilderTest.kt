@@ -1,7 +1,7 @@
-package minesweeper.model.board
+package minesweeper.model.cell
 
 import minesweeper.fixture.cellAtOrNull
-import minesweeper.model.cell.Cell
+import minesweeper.model.board.Board
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.model.coordinate.Position
 import org.assertj.core.api.Assertions.assertThat
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-internal class RandomBoardBuilderTest {
+internal class RandomCellBuilderTest {
 
     @ParameterizedTest
     @CsvSource(
@@ -22,8 +22,7 @@ internal class RandomBoardBuilderTest {
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, mineCount: Int, expectedMineCount: Int) {
 
         val boardArea = BoardArea.of(rowCount, columnCount)
-        val actualMineCount = RandomBoardBuilder(boardArea, mineCount)
-            .createNewBoard()
+        val actualMineCount = Board(boardArea, RandomCellBuilder(boardArea, mineCount))
             .apply { openCell(Position(0, 0)) }
             .cells.mineCount
         assertThat(actualMineCount).isEqualTo(expectedMineCount)
@@ -41,8 +40,7 @@ internal class RandomBoardBuilderTest {
         val boardArea = BoardArea.of(rowCount, height)
 
         // when
-        val actualBoard = RandomBoardBuilder(boardArea, expectedMineCount)
-            .createNewBoard()
+        val actualBoard = Board(boardArea, RandomCellBuilder(boardArea, expectedMineCount))
             .apply { this.openCell(Position(0, 0)) }
 
         val actualCells = actualBoard.cells
@@ -64,8 +62,7 @@ internal class RandomBoardBuilderTest {
         val boardArea = BoardArea.of(100, 100)
         val expectedSafeCount = 1
         val expectedMineCount = boardArea.cellCount - expectedSafeCount
-        val board = RandomBoardBuilder(boardArea, expectedMineCount)
-            .createNewBoard()
+        val board = Board(boardArea, RandomCellBuilder(boardArea, expectedMineCount))
         val randomClickPosition = board.shuffled()[0]
 
         // when

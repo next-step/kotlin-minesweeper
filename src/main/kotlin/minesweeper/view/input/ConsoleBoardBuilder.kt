@@ -3,7 +3,7 @@ package minesweeper.view.input
 import minesweeper.model.board.Board
 import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
 import minesweeper.model.board.BoardBuilder
-import minesweeper.model.board.RandomBoardBuilder
+import minesweeper.model.cell.RandomCellBuilder
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
@@ -21,7 +21,7 @@ object ConsoleBoardBuilder : BoardBuilder {
     override fun createNewBoard(): Board {
         val boardArea = inputBoardArea()
         val mineCount = inputMineCount(boardArea)
-        return RandomBoardBuilder(boardArea, mineCount).createNewBoard()
+        return Board(boardArea, RandomCellBuilder(boardArea, mineCount))
     }
 
     private fun inputBoardArea(): Area {

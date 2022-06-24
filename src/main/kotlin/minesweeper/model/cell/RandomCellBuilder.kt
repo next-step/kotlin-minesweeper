@@ -1,9 +1,12 @@
 package minesweeper.model.cell
 
+import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-class RandomCellBuilder(area: Area, private val mineCount: Int) : CellBuilder(area) {
+class RandomCellBuilder(area: Area, mineCount: Int) : CellBuilder(area) {
+
+    private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard)
 
     private var mineCoordinate: List<Coordinate>? = null
     override fun isMineAt(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
