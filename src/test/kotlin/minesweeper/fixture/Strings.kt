@@ -1,10 +1,10 @@
 package minesweeper.fixture
 
 import minesweeper.model.board.Board
-import minesweeper.model.cell.CellBuilder
+import minesweeper.model.cell.CellGenerator
 import minesweeper.model.coordinate.BoardArea
 
-fun List<String>.toCellBuilder(): CellBuilder {
+fun List<String>.toCellBuilder(): CellGenerator {
     val rowCount = this.count()
     val columnCount = this.maxOf { it.length }
 

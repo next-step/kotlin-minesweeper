@@ -32,7 +32,7 @@ internal class MineSweeperTest {
         }
 
         val controller = MineSweeper(
-            boardBuilder = { board },
+            boardGenerator = { board },
             inputView = { Position(0, 0) },
             outputView = outputView
         )

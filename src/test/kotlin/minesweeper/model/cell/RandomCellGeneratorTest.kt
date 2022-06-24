@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-internal class RandomCellBuilderTest {
+internal class RandomCellGeneratorTest {
 
     @ParameterizedTest
     @CsvSource(
@@ -22,7 +22,7 @@ internal class RandomCellBuilderTest {
     fun `랜던 맵 생성 지뢰 갯수 범위 테스트`(rowCount: Int, columnCount: Int, mineCount: Int, expectedMineCount: Int) {
 
         val boardArea = BoardArea.of(rowCount, columnCount)
-        val actualMineCount = Board(boardArea, RandomCellBuilder(boardArea, mineCount))
+        val actualMineCount = Board(boardArea, RandomCellGenerator(boardArea, mineCount))
             .apply { openCell(Position(0, 0)) }
             .cells.mineCount
         assertThat(actualMineCount).isEqualTo(expectedMineCount)
@@ -40,7 +40,7 @@ internal class RandomCellBuilderTest {
         val boardArea = BoardArea.of(rowCount, height)
 
         // when
-        val actualBoard = Board(boardArea, RandomCellBuilder(boardArea, expectedMineCount))
+        val actualBoard = Board(boardArea, RandomCellGenerator(boardArea, expectedMineCount))
             .apply { this.openCell(Position(0, 0)) }
 
         val actualCells = actualBoard.cells
@@ -62,7 +62,7 @@ internal class RandomCellBuilderTest {
         val boardArea = BoardArea.of(100, 100)
         val expectedSafeCount = 1
         val expectedMineCount = boardArea.cellCount - expectedSafeCount
-        val board = Board(boardArea, RandomCellBuilder(boardArea, expectedMineCount))
+        val board = Board(boardArea, RandomCellGenerator(boardArea, expectedMineCount))
         val randomClickPosition = board.shuffled()[0]
 
         // when

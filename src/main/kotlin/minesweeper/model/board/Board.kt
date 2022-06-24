@@ -1,7 +1,7 @@
 package minesweeper.model.board
 
 import minesweeper.model.cell.Cell
-import minesweeper.model.cell.CellBuilder
+import minesweeper.model.cell.CellGenerator
 import minesweeper.model.cell.Cells
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
@@ -12,7 +12,7 @@ sealed class BoardState {
     data class Finished(val isWin: Boolean) : BoardState()
 }
 
-class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
+class Board(val area: Area, private val cellGenerator: CellGenerator) : Area by area {
 
     private val initialCells = Cells.safeCellsToFillOf(area)
 
@@ -57,7 +57,7 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
 
     private fun createPlayingCells(firstClickCell: Coordinate) {
         this.playingCells = Cells(
-            area.mapNotNull { position -> cellBuilder.createCell(position, firstClickCell) }
+            area.mapNotNull { position -> cellGenerator.createCell(position, firstClickCell) }
         )
     }
 

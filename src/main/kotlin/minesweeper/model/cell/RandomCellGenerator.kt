@@ -4,7 +4,7 @@ import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-class RandomCellBuilder(area: Area, mineCount: Int) : CellBuilder(area) {
+class RandomCellGenerator(area: Area, mineCount: Int) : CellGenerator(area) {
 
     private val mineCount: Int = mineCount.coerceIn(1, area.maxMineCountInRandomBoard)
 

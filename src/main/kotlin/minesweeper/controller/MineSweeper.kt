@@ -1,12 +1,12 @@
 package minesweeper.controller
 
 import minesweeper.model.board.Board
-import minesweeper.model.board.BoardBuilder
+import minesweeper.model.board.BoardGenerator
 import minesweeper.view.input.InputView
 import minesweeper.view.output.OutputView
 
 class MineSweeper(
-    private val boardBuilder: BoardBuilder,
+    private val boardGenerator: BoardGenerator,
     private val inputView: InputView,
     private val outputView: OutputView? = null
 ) {
@@ -21,7 +21,7 @@ class MineSweeper(
     }
 
     private fun createMineBoard(): Board {
-        val board = boardBuilder.createNewBoard()
+        val board = boardGenerator.createBoard()
         outputView?.printInitialMessage()
         outputView?.printBoard(board)
         return board

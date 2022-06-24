@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-internal class CellBuilderTest {
+internal class CellGeneratorTest {
 
     @Test
     fun `지뢰 생성 테스트`() {
@@ -61,12 +61,12 @@ internal class CellBuilderTest {
     @ParameterizedTest
     @MethodSource("provideCellBuilderAndPosition")
     fun `주변 지뢰 갯수 테스트 다중 케이스`(
-        cellBuilder: CellBuilder,
+        cellGenerator: CellGenerator,
         position: Position,
         expectedMineCount: Int
     ) {
 
-        val actualCell = cellBuilder.createCell(position)
+        val actualCell = cellGenerator.createCell(position)
 
         assertAll(
             { assertThat(actualCell).isInstanceOf(Cell.Safe::class.java) },
@@ -78,7 +78,7 @@ internal class CellBuilderTest {
 
     companion object {
 
-        private fun CellBuilder.createCell(coordinate: Coordinate) =
+        private fun CellGenerator.createCell(coordinate: Coordinate) =
             this.createCell(coordinate, Position(-1, -1))
 
         @JvmStatic

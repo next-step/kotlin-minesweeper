@@ -2,13 +2,13 @@ package minesweeper.view.input
 
 import minesweeper.model.board.Board
 import minesweeper.model.board.Board.Companion.maxMineCountInRandomBoard
-import minesweeper.model.board.BoardBuilder
-import minesweeper.model.cell.RandomCellBuilder
+import minesweeper.model.board.BoardGenerator
+import minesweeper.model.cell.RandomCellGenerator
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.BoardArea
 import minesweeper.view.input.parser.IntInputParser
 
-object ConsoleBoardBuilder : BoardBuilder {
+object ConsoleBoardGenerator : BoardGenerator {
 
     private const val MESSAGE_FOR_INPUT_ROW_COUNT = "높이를 입력하세요."
     private const val MESSAGE_FOR_INPUT_COLUMN_COUNT = "너비를 입력하세요."
@@ -18,10 +18,10 @@ object ConsoleBoardBuilder : BoardBuilder {
     private const val MIN_COUNT_OF_COLUMN = 3
     private const val MIN_COUNT_OF_MINE = 1
 
-    override fun createNewBoard(): Board {
+    override fun createBoard(): Board {
         val boardArea = inputBoardArea()
         val mineCount = inputMineCount(boardArea)
-        return Board(boardArea, RandomCellBuilder(boardArea, mineCount))
+        return Board(boardArea, RandomCellGenerator(boardArea, mineCount))
     }
 
     private fun inputBoardArea(): Area {
