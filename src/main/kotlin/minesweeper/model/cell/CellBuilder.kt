@@ -18,9 +18,13 @@ abstract class CellBuilder(val area: Area) {
     )
 
     abstract fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate): Boolean
-}
 
-fun CellBuilder(area: Area, isMineCellBlock: (Coordinate, Coordinate) -> Boolean) = object : CellBuilder(area) {
-    override fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
-        isMineCellBlock(coordinate, firstClickCoordinate)
+    companion object {
+
+        operator fun invoke(area: Area, isMineCellBlock: (Coordinate, Coordinate) -> Boolean) =
+            object : CellBuilder(area) {
+                override fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
+                    isMineCellBlock(coordinate, firstClickCoordinate)
+            }
+    }
 }

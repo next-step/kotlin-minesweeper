@@ -11,9 +11,8 @@ fun List<String>.toCellBuilder(): CellBuilder {
     val isMine: (Coordinate, Coordinate) -> Boolean = { coordinate, _ ->
         this[coordinate.row][coordinate.column] == '*'
     }
-    return object : CellBuilder(BoardArea.of(rowCount, columnCount)) {
-        override fun isMineCell(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
-            isMine(coordinate, firstClickCoordinate)
+    return CellBuilder(BoardArea.of(rowCount, columnCount)) { coordinate, firstClickCoordinate ->
+        isMine(coordinate, firstClickCoordinate)
     }
 }
 
