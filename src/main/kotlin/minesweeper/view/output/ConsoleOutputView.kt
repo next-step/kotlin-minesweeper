@@ -18,12 +18,9 @@ object ConsoleOutputView : OutputView {
     }
 
     override fun printFinalMessage(board: Board) {
-        when (board.state) {
-            BoardState.MINE_EXPLODED -> println("Lose Game")
-            BoardState.COMPLETED -> println("Win Game")
-            BoardState.RUNNING -> {}
-            BoardState.READY -> {}
-        }
+        val state = board.state as? BoardState.Finished ?: return
+        val message = if (state.isWin) "Win Game" else "Lose Game"
+        println(message)
     }
 
     private fun Board.toPrintableString(): String {

@@ -6,14 +6,13 @@ import minesweeper.model.cell.Cells
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-enum class BoardState {
-    READY,
-    RUNNING,
-    COMPLETED,
-    MINE_EXPLODED;
+sealed class BoardState {
+    object Ready : BoardState()
+    object Running : BoardState()
+    data class Finished(val isWin: Boolean) : BoardState()
 
     val isFinished: Boolean
-        get() = this == COMPLETED || this == MINE_EXPLODED
+        get() = this is Finished
 }
 
 class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area {
@@ -24,11 +23,11 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
 
     val cells: Cells
         get() = when (state) {
-            BoardState.READY -> initialCells
+            BoardState.Ready -> initialCells
             else -> playingCells
         }
 
-    var state = BoardState.READY
+    var state: BoardState = BoardState.Ready
         private set
 
     val isFinished: Boolean
@@ -63,9 +62,9 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
     }
 
     private fun preparePayingCells(coordinate: Coordinate) {
-        if (this.state == BoardState.READY) {
+        if (this.state == BoardState.Ready) {
             createPlayingCells(coordinate)
-            changeState(BoardState.RUNNING)
+            changeState(BoardState.Running)
         }
     }
 
@@ -76,13 +75,13 @@ class Board(val area: Area, private val cellBuilder: CellBuilder) : Area by area
     }
 
     private fun onMineCellOpen() {
-        changeState(BoardState.MINE_EXPLODED)
+        changeState(BoardState.Finished(isWin = false))
     }
 
     private fun openSafeCell(cell: Cell.Safe) {
         openSafeCells(mutableSetOf(cell))
         if (this.isAllSafeCellOpen) {
-            changeState(BoardState.COMPLETED)
+            changeState(BoardState.Finished(isWin = true))
         }
     }
 
