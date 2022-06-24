@@ -3,12 +3,8 @@ package minesweeper.model.coordinate
 data class BoardArea(override val rowCount: PositiveInt, override val columnCount: PositiveInt) : Area {
 
     override val cellCount: Int = this.rowCount * this.columnCount
-
-    override val rowRange: IntRange
-        get() = 0 until this.rowCount.value
-
-    override val columnRange: IntRange
-        get() = 0 until this.columnCount.value
+    override val rowRange: IntRange = 0 until this.rowCount.value
+    override val columnRange: IntRange = 0 until this.columnCount.value
 
     override operator fun get(index: Int): Coordinate =
         Position(row = index / this.columnCount, column = index % this.columnCount)
