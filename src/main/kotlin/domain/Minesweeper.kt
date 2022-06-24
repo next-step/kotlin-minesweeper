@@ -26,5 +26,43 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
                 val col = it % minesweeperProperty.width
                 _board[row][col] = Place(it, PlaceType.MINE)
             }
+
+        calculateNearMineCount(minesweeperProperty)
+    }
+
+    private fun calculateNearMineCount(minesweeperProperty: MinesweeperProperty) {
+        for (row: Int in 0 until minesweeperProperty.height) {
+            for (col: Int in 0 until minesweeperProperty.width) {
+                val place = _board[row][col]
+                if (place.isNotMine()) place.nearMineCount = getNearMineCount(row, col)
+            }
+        }
+    }
+
+    private fun getNearMineCount(row: Int, col: Int): Int {
+        var count = 0
+
+        if (isMineInPlace(row - 1, col - 1)) count++
+        if (isMineInPlace(row - 1, col)) count++
+        if (isMineInPlace(row - 1, col + 1)) count++
+        if (isMineInPlace(row, col - 1)) count++
+        if (isMineInPlace(row, col + 1)) count++
+        if (isMineInPlace(row + 1, col - 1)) count++
+        if (isMineInPlace(row + 1, col)) count++
+        if (isMineInPlace(row + 1, col + 1)) count++
+
+        return count
+    }
+
+    private fun isMineInPlace(row: Int, col: Int): Boolean {
+        return getPlaceOrNull(row, col)?.isMine() ?: false
+    }
+
+    private fun getPlaceOrNull(row: Int, col: Int): Place? {
+        return try {
+            _board[row][col]
+        } catch (e: IndexOutOfBoundsException) {
+            null
+        }
     }
 }

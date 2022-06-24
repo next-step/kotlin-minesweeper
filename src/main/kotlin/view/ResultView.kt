@@ -19,7 +19,7 @@ class ResultView {
     private fun Place.toTransform(): String {
         return when (this.placeType) {
             PlaceType.MINE -> "*"
-            PlaceType.NOT_MINE -> "B"
+            PlaceType.NOT_MINE -> this.nearMineCount.toString()
         }
     }
 }
