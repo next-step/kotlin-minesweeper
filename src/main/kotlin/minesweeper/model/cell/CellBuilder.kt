@@ -18,13 +18,4 @@ abstract class CellBuilder(val area: Area) {
     )
 
     abstract fun isMineAt(coordinate: Coordinate, firstClickCoordinate: Coordinate): Boolean
-
-    companion object {
-
-        operator fun invoke(area: Area, mineCellLocator: MineLocator) =
-            object : CellBuilder(area) {
-                override fun isMineAt(coordinate: Coordinate, firstClickCoordinate: Coordinate) =
-                    mineCellLocator.isMineAt(coordinate, firstClickCoordinate)
-            }
-    }
 }
