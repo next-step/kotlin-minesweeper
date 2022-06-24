@@ -35,7 +35,7 @@ class Cells(private val cellList: List<Cell>) : List<Cell> by cellList {
 
     companion object {
         fun safeCellsToFillOf(area: Area) = Cells(
-            List(area.cellCount) { index -> Cell.Safe(area[index], SurroundMineCount(0)) }
+            area.map { coordinate -> Cell.Safe(coordinate, SurroundMineCount(0)) }
         )
     }
 }
