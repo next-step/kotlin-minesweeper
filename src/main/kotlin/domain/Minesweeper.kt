@@ -21,6 +21,6 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
 
         board.flatten()
             .filter { assignedMineLocations.contains(it.number) }
-            .map { it.placeType = PlaceType.MINE }
+            .forEach { it.placeType = PlaceType.MINE }
     }
 }
