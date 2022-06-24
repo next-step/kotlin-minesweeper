@@ -1,3 +1,3 @@
 package domain
 
-class Place(val number: Int, var placeType: PlaceType)
+class Place(val number: Int, val placeType: PlaceType)

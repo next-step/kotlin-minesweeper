@@ -15,12 +15,13 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
     init {
         val totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height
         val numberToAllocate = minesweeperProperty.mineCount
-        val assignedMineLocations = mineAllocationStrategy
-            .getAssignMineLocation(totalPlaceNumber, numberToAllocate)
-            .map { it.number }
 
-        board.flatten()
-            .filter { assignedMineLocations.contains(it.number) }
-            .forEach { it.placeType = PlaceType.MINE }
+        mineAllocationStrategy.getAssignMineLocation(totalPlaceNumber, numberToAllocate)
+            .map { it.number }
+            .forEach {
+                val row = it / minesweeperProperty.height
+                val col = it % minesweeperProperty.width
+                board[row][col] = Place(it, PlaceType.MINE)
+            }
     }
 }
