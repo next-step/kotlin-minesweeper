@@ -11,6 +11,10 @@ data class Location(
     fun isLocatedInside(other: Location): Boolean {
         return row <= other.row && column <= other.column
     }
+
+    companion object {
+        val ORIGIN = Location(LocationValue(0), LocationValue(0))
+    }
 }
 
 @JvmInline
