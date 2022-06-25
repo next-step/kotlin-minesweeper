@@ -8,7 +8,7 @@ data class Cell(
     fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
         return board.board.sumOf {
-            it.count { cells -> cells.isMineIn(surroundingPositions) }
+            it.count { cell -> cell.isMineIn(surroundingPositions) }
         }
     }
 
