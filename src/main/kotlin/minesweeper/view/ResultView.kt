@@ -7,6 +7,9 @@ import minesweeper.domain.NumberField
 import minesweeper.dto.MineBoardResponse
 
 object ResultView {
+    private const val NOT_OPENED_FIELD_SYMBOL = "C"
+    private const val MINE_FIELD_SYMBOL = "*"
+    private const val FIELD_ROW_SEPARATOR = " "
 
     fun printGameStart() {
         println("지뢰찾기 게임 시작")
@@ -25,23 +28,23 @@ object ResultView {
             println("Lose Game.")
         }
     }
-}
 
-private fun convertBoardRow(boardFieldRow: List<BoardField>, boardFields: BoardFields): String {
-    return boardFieldRow.joinToString(" ") { convertBoardField(it, boardFields) }
-}
-
-private fun convertBoardField(boardField: BoardField, boardFields: BoardFields): String {
-    return if (!boardField.isOpen) {
-        "C"
-    } else {
-        convertOpenedField(boardField, boardFields)
+    private fun convertBoardRow(boardFieldRow: List<BoardField>, boardFields: BoardFields): String {
+        return boardFieldRow.joinToString(FIELD_ROW_SEPARATOR) { convertBoardField(it, boardFields) }
     }
-}
 
-private fun convertOpenedField(boardField: BoardField, boardFields: BoardFields): String {
-    return when (boardField) {
-        is MineField -> "*"
-        is NumberField -> boardField.number(boardFields).toString()
+    private fun convertBoardField(boardField: BoardField, boardFields: BoardFields): String {
+        return if (!boardField.isOpen) {
+            NOT_OPENED_FIELD_SYMBOL
+        } else {
+            convertOpenedField(boardField, boardFields)
+        }
+    }
+
+    private fun convertOpenedField(boardField: BoardField, boardFields: BoardFields): String {
+        return when (boardField) {
+            is MineField -> MINE_FIELD_SYMBOL
+            is NumberField -> boardField.number(boardFields).toString()
+        }
     }
 }

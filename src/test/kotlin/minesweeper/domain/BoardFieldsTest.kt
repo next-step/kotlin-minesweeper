@@ -64,7 +64,7 @@ class BoardFieldsTest : DescribeSpec({
                 val boardFields = boardFields()
                 boardFields.open(Coordinate(0, 0))
 
-                val boardField = boardFields.boardFields.find { it.coordinate == Coordinate(0, 0) }!!
+                val boardField = boardFields.boardFields.first() { it.coordinate == Coordinate(0, 0) }
                 boardField.isOpen shouldBe true
             }
         }

@@ -11,12 +11,12 @@ data class MineSweeperFactory(val mineCoordinateStrategy: MineCoordinateStrategy
 
     private fun boardField(
         mineCoordinates: List<Coordinate>,
-        it: Coordinate
+        coordinate: Coordinate
     ): BoardField {
-        return if (mineCoordinates.contains(it)) {
-            BoardField.mine(it)
+        return if (mineCoordinates.contains(coordinate)) {
+            BoardField.mine(coordinate)
         } else {
-            BoardField.nonMine(it)
+            BoardField.nonMine(coordinate)
         }
     }
 }
