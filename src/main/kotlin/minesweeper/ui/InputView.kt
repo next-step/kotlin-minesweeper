@@ -25,10 +25,9 @@ object InputView {
 
     fun inputCoordinate(): Coordinate {
         print("open: ")
-        return readln().split(", ").map { CoordinateValue(it.toInt()) }
-            .let {
-                require(it.size == 2) { "x, y 좌표값을 입력해주세요." }
-                Coordinate(it[0], it[1])
-            }
+        val coordinateValues = readln().split(", ").map { CoordinateValue(it.toInt()) }
+        require(coordinateValues.size == 2) { "x, y 좌표값을 입력해주세요." }
+
+        return Coordinate(coordinateValues[0], coordinateValues[1])
     }
 }
