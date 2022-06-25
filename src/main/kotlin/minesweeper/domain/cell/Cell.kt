@@ -7,8 +7,7 @@ sealed class Cell(
     val position: Position,
     val nearbyPositions: Positions,
 ) {
-    var state: CellStatus = CellStatus.CLOSE
-        private set
+    private var state: CellStatus = CellStatus.CLOSE
 
     fun open(): Cell {
         check(state != CellStatus.OPEN) { "cell (${position.x}, ${position.y}) was already opened." }

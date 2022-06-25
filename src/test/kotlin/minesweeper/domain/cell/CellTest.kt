@@ -48,7 +48,7 @@ internal class CellTest {
 
         // when
         cells.open(positions.first())
-        val result = cells.count { it.state == CellStatus.OPEN }
+        val result = cells.count { it.isOpen() }
 
         // then
         assertThat(result).isEqualTo(positions.size)
