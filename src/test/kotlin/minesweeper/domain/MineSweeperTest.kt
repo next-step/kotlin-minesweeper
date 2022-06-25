@@ -53,7 +53,7 @@ class MineSweeperTest : DescribeSpec({
         }
 
         context("게임이 종료된 경우") {
-            it("IllegalStatementException 이 발생한다") {
+            it("IllegalStateException 이 발생한다") {
                 /**
                  * * C *
                  * C C C
@@ -62,7 +62,7 @@ class MineSweeperTest : DescribeSpec({
                 val mineBoard = mineBoard()
                 mineBoard.open(Coordinate(0, 0))
 
-                shouldThrow<IllegalArgumentException> { mineBoard.open(Coordinate(1, 1)) }
+                shouldThrow<IllegalStateException> { mineBoard.open(Coordinate(1, 1)) }
             }
         }
     }

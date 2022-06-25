@@ -1,7 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.MineSweeperFactory
-import minesweeper.dto.MineBoardResponse
+import minesweeper.dto.MineSweeperResponse
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -10,19 +10,18 @@ fun main() {
     val width = InputView.width()
     val mineCount = InputView.mineCount()
 
-    val mineBoard = MineSweeperFactory().mineSweeper(
+    val mineSweeper = MineSweeperFactory().mineSweeper(
         height = height,
         width = width,
         mineCount = mineCount
     )
 
-    val mineBoardResponse = MineBoardResponse.of(mineBoard, width)
     ResultView.printGameStart()
 
-    while (!mineBoard.isEnd) {
+    while (!mineSweeper.isEnd) {
         val coordinate = InputView.open()
-        mineBoard.open(coordinate)
-        ResultView.printBoard(mineBoardResponse)
+        mineSweeper.open(coordinate)
+        ResultView.printMineSweeper(MineSweeperResponse.of(mineSweeper.boardFields, width))
     }
-    ResultView.printGameResult(mineBoard.isWin)
+    ResultView.printGameResult(mineSweeper.isWin)
 }
