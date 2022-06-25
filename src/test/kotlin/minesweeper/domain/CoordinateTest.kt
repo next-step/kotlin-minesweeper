@@ -31,11 +31,11 @@ class CoordinateTest : DescribeSpec({
         }
     }
 
-    describe("nearCoordinate") {
+    describe("nearCoordinates") {
         it("주변 8개의 좌표들을 구할 수 있다.") {
             val coordinate = Coordinate(2, 2)
 
-            coordinate.nearCoordinate() shouldContainAll listOf(
+            coordinate.nearCoordinates() shouldContainAll listOf(
                 Coordinate(1, 1),
                 Coordinate(1, 2),
                 Coordinate(1, 3),
@@ -51,12 +51,36 @@ class CoordinateTest : DescribeSpec({
             it("좌표 값이 0보다 작은 좌표는 제외하고 구할 수 있다") {
                 val coordinate = Coordinate(0, 0)
 
-                coordinate.nearCoordinate() shouldContainAll listOf(
+                coordinate.nearCoordinates() shouldContainAll listOf(
                     Coordinate(0, 1),
                     Coordinate(1, 0),
                     Coordinate(1, 1),
                 )
             }
+        }
+    }
+
+    describe("aroundCoordinates") {
+        it("인접한 좌표들을 구할 수 있다") {
+            val coordinate = Coordinate(2, 2)
+
+            coordinate.aroundCoordinates() shouldContainAll listOf(
+                Coordinate(1, 2),
+                Coordinate(2, 1),
+                Coordinate(2, 3),
+                Coordinate(3, 2),
+            )
+        }
+    }
+
+    context("인접한 좌표의 좌표 값이 0보다 작을 경우") {
+        it("좌표 값이 0보다 작은 좌표는 제외하고 구할 수 있다") {
+            val coordinate = Coordinate(0, 0)
+
+            coordinate.aroundCoordinates() shouldContainAll listOf(
+                Coordinate(0, 1),
+                Coordinate(1, 0),
+            )
         }
     }
 })
