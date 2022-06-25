@@ -34,7 +34,8 @@ class MineSweeperController(
 
     private fun playNextMove(mineBoard: MineBoard) {
         val (x, y) = viewResolver.inputPositionToOpenCell()
-        boardStatus = mineBoard.open(x, y)
+        val cell = mineBoard.cells.first { it.position.x == x && it.position.y == y }
+        boardStatus = mineBoard.open(cell.position)
         viewResolver.printMineBoard(mineBoard)
     }
 
