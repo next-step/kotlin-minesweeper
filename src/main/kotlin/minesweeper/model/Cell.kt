@@ -12,13 +12,13 @@ data class Cell(
         }
     }
 
-    fun isMine() = type.isMine()
+    fun isMine(): Boolean = type.isMine()
 
-    private fun isMineIn(positions: Set<CellPosition>) = isMine() && positions.contains(position)
+    private fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
 
     companion object {
-        fun mine(position: CellPosition) = Cell(CellType.MINE, position)
+        fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)
 
-        fun nonMine(position: CellPosition) = Cell(CellType.NON_MINE, position)
+        fun nonMine(position: CellPosition): Cell = Cell(CellType.NON_MINE, position)
     }
 }

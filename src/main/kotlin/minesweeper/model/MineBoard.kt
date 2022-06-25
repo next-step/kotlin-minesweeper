@@ -15,7 +15,7 @@ class MineBoard(
             return cellsToBoard(sortedCells, boardCreateDto.width, boardCreateDto.height)
         }
 
-        private fun cellsToBoard(cells: Cells, width: Int, height: Int) =
+        private fun cellsToBoard(cells: Cells, width: Int, height: Int): MineBoard =
             List(height) {
                 val startIndex = it * width
                 val endIndex = startIndex + width

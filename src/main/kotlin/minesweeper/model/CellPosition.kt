@@ -5,11 +5,11 @@ data class CellPosition(
     private val y: Position,
 ) : Comparable<CellPosition> {
 
-    fun findSurroundingCellPositions() = SurroundingPosition.values()
+    fun findSurroundingCellPositions(): Set<CellPosition> = SurroundingPosition.values()
         .map { this + it }
         .toSet()
 
-    operator fun plus(position: SurroundingPosition) = CellPosition(x + position.x, y + position.y)
+    operator fun plus(position: SurroundingPosition): CellPosition = CellPosition(x + position.x, y + position.y)
 
     override fun compareTo(other: CellPosition): Int {
         if (y.isGreaterThan(other.y)) {
@@ -32,6 +32,6 @@ data class CellPosition(
     }
 
     companion object {
-        fun of(x: Int, y: Int) = CellPosition(Position.from(x), Position.from(y))
+        fun of(x: Int, y: Int): CellPosition = CellPosition(Position.from(x), Position.from(y))
     }
 }
