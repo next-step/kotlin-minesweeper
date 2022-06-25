@@ -4,11 +4,11 @@ sealed class BoardField(
     val coordinate: Coordinate,
     isOpen: Boolean,
 ) {
-    private var _isOpen = isOpen
-    val isOpen get() = _isOpen
+    var isOpen = isOpen
+        private set
 
     fun open() {
-        _isOpen = true
+        isOpen = true
     }
 
     companion object {
