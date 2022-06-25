@@ -53,7 +53,7 @@ class MineSweeperTest : DescribeSpec({
         }
 
         context("게임이 종료된 경우") {
-            it("IllegalArgumentException 이 발생한다") {
+            it("IllegalStatementException 이 발생한다") {
                 /**
                  * * C *
                  * C C C
