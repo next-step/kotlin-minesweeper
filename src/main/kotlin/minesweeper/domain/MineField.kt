@@ -29,7 +29,7 @@ class MineField(
         }
     } ?: throw IllegalArgumentException("지뢰 판을 벗어난 좌표는 입력할수 없습니다.")
 
-    private tailrec fun openAroundCoordinate(coordinate: Coordinate): Unit =
+    private fun openAroundCoordinate(coordinate: Coordinate): Unit =
         fields[coordinate].let { dot ->
             when (dot) {
                 is Mine -> return
