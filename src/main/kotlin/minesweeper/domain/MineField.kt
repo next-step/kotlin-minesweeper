@@ -10,7 +10,7 @@ import minesweeper.domain.vo.NumberOfMine
 import minesweeper.domain.vo.Width
 
 class MineField(
-    val fields: Map<Coordinate, Dot>
+    private val fields: Map<Coordinate, Dot>
 ) {
     val isAllOpen: Boolean
         get() = fields.values.filterIsInstance<NonMine>().all { it.isOpen }
@@ -19,9 +19,14 @@ class MineField(
         require(fields.isNotEmpty()) { "지뢰판은 비어있을수 없습니다." }
     }
 
+    fun toMap(): Map<Coordinate, Dot> = fields.toMap()
+
     fun open(input: Coordinate): Dot = fields[input]?.let { dot ->
         when (dot) {
-            is Mine -> dot
+            is Mine -> {
+                dot.open()
+                dot
+            }
             is NonMine -> dot.apply {
                 open()
                 input.findAround().forEach(::openAroundCoordinate)

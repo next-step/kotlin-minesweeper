@@ -18,7 +18,7 @@ class MineSweeper {
     fun open(mineField: MineField, inputCoordinate: Coordinate): Dot = mineField.open(inputCoordinate)
 
     fun createMineFieldView(mineField: MineField, width: Width): MineFieldView =
-        mineField.fields.values
+        mineField.toMap().values
             .chunked(width.value)
             .map(::Row)
             .let(::MineFieldView)
