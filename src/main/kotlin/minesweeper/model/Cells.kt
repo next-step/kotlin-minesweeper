@@ -10,6 +10,9 @@ data class Cells(
 
     fun take(startIndex: Int, endIndex: Int): Cells = cells.subList(startIndex, endIndex).let(::Cells)
 
+    fun mineCountIn(surroundingPositions: Set<CellPosition>): Int =
+        cells.count { cell -> cell.isMineIn(surroundingPositions) }
+
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {
             val mineCells = List(mineCellCount) {

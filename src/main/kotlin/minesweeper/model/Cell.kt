@@ -7,14 +7,12 @@ data class Cell(
 
     fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
-        return board.board.sumOf {
-            it.count { cell -> cell.isMineIn(surroundingPositions) }
-        }
+        return board.sumOfMineCountIn(surroundingPositions)
     }
 
-    fun isMine(): Boolean = type.isMine()
+    fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
 
-    private fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
+    fun isMine(): Boolean = type.isMine()
 
     companion object {
         fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)
