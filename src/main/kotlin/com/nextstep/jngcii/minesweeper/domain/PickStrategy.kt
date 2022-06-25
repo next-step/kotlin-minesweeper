@@ -1,15 +1,20 @@
 package com.nextstep.jngcii.minesweeper.domain
 
 fun interface PickStrategy {
-    fun take(target: List<Int>, count: Int): List<Int>
+    fun pick(target: Locations, count: Int)
 }
 
 object RandomPickStrategy : PickStrategy {
-    override fun take(target: List<Int>, count: Int): List<Int> {
-        if (target.size < count) {
-            throw IllegalStateException("${target.size}개 중 ${count}개를 고를 수 없습니다.")
+    override fun pick(target: Locations, count: Int) {
+        val pairs = target.pairs
+
+        if (pairs.size < count) {
+            throw IllegalStateException("${pairs.size}개 중 ${count}개를 고를 수 없습니다.")
         }
 
-        return target.shuffled().take(count)
+        List(pairs.size) { it }
+            .shuffled()
+            .take(count)
+            .forEach { target.pairs[it].pick() }
     }
 }
