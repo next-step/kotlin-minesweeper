@@ -1,4 +1,4 @@
-package ui
+package ui.input
 
 import domain.NumberOfMines
 
