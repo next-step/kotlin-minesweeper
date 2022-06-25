@@ -3,8 +3,11 @@ package domain
 import domain.geometric.Dimension
 
 class Board(
-    private val matrix: Matrix,
+    val dimension: Dimension,
+    val cells: List<Cell>
 ) {
-    val dimension: Dimension = matrix.dimension
-    val cells: List<Cell> = matrix.cells
+    constructor(matrix: Matrix) : this(
+        matrix.dimension,
+        matrix.cells
+    )
 }

@@ -1,9 +1,16 @@
 package domain.geometric
 
+import domain.location
+import domain.locations
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.data.forAll
+import io.kotest.data.headers
+import io.kotest.data.row
 import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldContainInOrder
+import io.kotest.matchers.shouldBe
 
 class DimensionTest : DescribeSpec({
 
@@ -22,6 +29,28 @@ class DimensionTest : DescribeSpec({
             it("예외를 발생시킨다") {
                 listOf(0, -1).forAll { height ->
                     shouldThrowExactly<IllegalArgumentException> { Dimension(width = 10, height = height) }
+                }
+            }
+        }
+
+        it("차원의 넓이만큼 위치를 채울 수 있다") {
+            Dimension(2, 2).fill() shouldContainInOrder listOf(
+                location(0, 0), location(0, 1),
+                location(1, 0), location(1, 1),
+            )
+        }
+
+        context("여러 위치가 주어지면") {
+            val table = io.kotest.data.table(
+                headers("locations", "result"),
+                row(locations(0 to 0, 0 to 1, 1 to 1, 1 to 0), true),
+                row(locations(0 to 0, 0 to 1, 1 to 1, 1 to 2), false),
+                row(locations(0 to 0, 0 to 1, 1 to 1, 1 to 1), false),
+            )
+            val dimension = Dimension(2, 2)
+            it("차원을 채울 수 있는지 판단할 수 있다") {
+                table.forAll { locations, result ->
+                    dimension.isFilled(locations) shouldBe result
                 }
             }
         }

@@ -4,6 +4,7 @@ data class Location(
     val row: LocationValue,
     val column: LocationValue,
 ) {
+
     fun isLocatedOutside(other: Location): Boolean {
         return row >= other.row && column >= other.column
     }
