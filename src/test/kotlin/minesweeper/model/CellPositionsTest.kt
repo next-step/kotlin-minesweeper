@@ -13,12 +13,12 @@ class CellPositionsTest {
         val cellPositions = CellPositions.of(2, 2)
 
         // then
-        val expected = listOf(
+        val expected = setOf(
             CellPosition.of(0, 0),
             CellPosition.of(1, 0),
             CellPosition.of(0, 1),
             CellPosition.of(1, 1),
         )
-        assertThat(cellPositions).isEqualTo(CellPositions(expected))
+        assertThat(cellPositions.containsAll(expected)).isTrue
     }
 }

@@ -15,13 +15,15 @@ data class Cells(
 
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {
+            val cellPositions = positions.toList()
+
             val mineCells = List(mineCellCount) {
-                Cell.mine(positions[it])
+                Cell.mine(cellPositions[it])
             }
 
             val closeCellCount = positions.size - mineCellCount
             val closeCells = List(closeCellCount) {
-                Cell.nonMine(positions[mineCellCount + it])
+                Cell.nonMine(cellPositions[mineCellCount + it])
             }
 
             return Cells(mineCells.plus(closeCells))
