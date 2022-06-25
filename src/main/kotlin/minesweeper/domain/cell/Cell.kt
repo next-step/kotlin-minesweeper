@@ -15,8 +15,6 @@ sealed class Cell(
         return this
     }
 
-    fun isEmpty() = this is Empty
-
     fun isClosed() = this.state == CellStatus.CLOSE
 
     fun isOpen() = this.state == CellStatus.OPEN
@@ -38,10 +36,14 @@ class Cells(
     fun hasClosedEmptyCell() = cells.any { it is Empty && it.isClosed() }
 
     private fun Empty.openNearbyCells() {
+        if (this.numberOfNearbyMines != 0) {
+            return
+        }
+
         nearbyPositions.forEach { position ->
             val nearbyCell = cells[position.index]
             nearbyCell
-                .takeIf { nearbyCell.isEmpty() && nearbyCell.isClosed() && this.numberOfNearbyMines == 0 }
+                .takeIf { nearbyCell is Empty && nearbyCell.isClosed() }
                 ?.let { open(nearbyCell.position) }
         }
     }
