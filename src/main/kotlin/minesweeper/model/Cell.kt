@@ -1,14 +1,22 @@
 package minesweeper.model
 
-@JvmInline
-value class Cell private constructor(
+data class Cell(
     private val type: CellType,
+    val position: CellPosition,
 ) {
-    fun isMine() = type.isMine()
+
+    fun findSurroundingMineCountSum(board: MineBoard): Int {
+        val surroundingPositions = position.findSurroundingCellPositions()
+        return board.sumOfMineCountIn(surroundingPositions)
+    }
+
+    fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
+
+    fun isMine(): Boolean = type.isMine()
 
     companion object {
-        fun mine() = Cell(CellType.MINE)
+        fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)
 
-        fun close() = Cell(CellType.NON_MINE)
+        fun nonMine(position: CellPosition): Cell = Cell(CellType.NON_MINE, position)
     }
 }

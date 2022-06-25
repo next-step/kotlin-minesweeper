@@ -1,33 +1,27 @@
 package minesweeper.model
 
-class MineBoard private constructor(
+class MineBoard(
     val board: List<Cells>
 ) {
+    fun sumOfMineCountIn(surroundingPositions: Set<CellPosition>): Int =
+        board.sumOf { it.mineCountIn(surroundingPositions) }
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
-            val mineCells = List(boardCreateDto.mineCount) {
-                Cell.mine()
-            }
+            val cellPositions = CellPositions.of(boardCreateDto.width, boardCreateDto.height)
+            val shuffledCellPositions = cellPositions.generateShuffledPositions()
 
-            val closeCells = List(boardCreateDto.closeCellCount) {
-                Cell.close()
-            }
+            val cells = Cells.of(shuffledCellPositions, boardCreateDto.mineCount)
+            val sortedCells = cells.generateCellsSortedByPosition()
 
-            val mergedCells = mineCells.plus(closeCells)
-                .shuffled()
-
-            return mergedCellsToBoard(mergedCells, boardCreateDto.width, boardCreateDto.height)
+            return cellsToBoard(sortedCells, boardCreateDto.width, boardCreateDto.height)
         }
 
-        private fun mergedCellsToBoard(mergedCells: List<Cell>, width: Int, height: Int): MineBoard {
-            val board = List(height) {
+        private fun cellsToBoard(cells: Cells, width: Int, height: Int): MineBoard =
+            List(height) {
                 val startIndex = it * width
                 val endIndex = startIndex + width
-                Cells(mergedCells.subList(startIndex, endIndex))
-            }
-
-            return MineBoard(board)
-        }
+                cells.take(startIndex, endIndex)
+            }.let(::MineBoard)
     }
 }

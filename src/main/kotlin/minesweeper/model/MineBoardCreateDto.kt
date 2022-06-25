@@ -6,8 +6,6 @@ class MineBoardCreateDto(
     val mineCount: Int,
 ) {
 
-    val closeCellCount = width * height - mineCount
-
     init {
         validateMinWidth(width)
         validateMinHeight(height)

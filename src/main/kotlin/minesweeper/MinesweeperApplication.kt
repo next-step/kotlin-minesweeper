@@ -2,6 +2,7 @@ package minesweeper
 
 import minesweeper.model.MineBoard
 import minesweeper.model.MineBoardCreateDto
+import minesweeper.model.MineBoardResult
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -17,6 +18,6 @@ object MinesweeperApplication {
         val mineCount = inputView.inputMineCount()
 
         val mineBoard = MineBoard.of(MineBoardCreateDto(width = width, height = height, mineCount = mineCount))
-        resultView.printMineBoard(mineBoard)
+        resultView.printMineBoard(MineBoardResult.from(mineBoard))
     }
 }
