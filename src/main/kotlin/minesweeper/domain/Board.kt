@@ -6,7 +6,7 @@ class Board(
     val minesCount: Int
 ) {
 
-    val cells: List<Cell> = (1.. height * width).map {
+    val cells: List<Cell> = (1..height * width).map {
         if (it <= minesCount) Mine()
         else Opened()
     }.shuffled()

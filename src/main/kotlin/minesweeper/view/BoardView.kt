@@ -13,7 +13,7 @@ class BoardView(private val board: Board) {
     }
 
     private fun getCharacter(cell: Cell): String {
-        return when(cell) {
+        return when (cell) {
             is Mine -> MINE
             is Opened -> OPENED
         }
