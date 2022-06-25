@@ -26,18 +26,17 @@ class LocationsTest {
     @ParameterizedTest
     @MethodSource("rowCountAndColumnCountAndExpected")
     fun `Locations 객체 생성시 pairs 프로퍼티 확인`(
-        rowCount: Int,
-        columnCount: Int,
+        meta: MineMapMeta,
         expected: List<Location>
     ) {
-        val locations = Locations(rowCount, columnCount)
+        val locations = Locations(meta)
 
         assertThat(locations.pairs).isEqualTo(expected)
     }
 
     @Test
     fun `가장 앞부터 순서대로 조작하는 전략으로 지뢰 선택시 결과 확인`() {
-        val locations = Locations(2, 3)
+        val locations = Locations(MineMapMeta(2, 3))
 
         val strategyPickOrderly = PickStrategy { target, count ->
             target.pairs
@@ -60,7 +59,7 @@ class LocationsTest {
 
     @Test
     fun `지뢰 위치 확인`() {
-        val locations = Locations(2, 3)
+        val locations = Locations(MineMapMeta(2, 3))
 
         locations.pairs
             .filter { it.x == 1 }
@@ -82,7 +81,7 @@ class LocationsTest {
         delimiter = ':'
     )
     fun `잘못된 지뢰 위치 확인시 예외 발생`(x: Int, y: Int) {
-        val locations = Locations(2, 3)
+        val locations = Locations(MineMapMeta(2, 3))
 
         assertThrows<IllegalArgumentException>(
             "해당 좌표에 대한 Location이 존재하지 않습니다. (x:$x, y:$y)"
@@ -93,8 +92,7 @@ class LocationsTest {
         @JvmStatic
         fun rowCountAndColumnCountAndExpected() = listOf(
             Arguments.of(
-                2,
-                3,
+                MineMapMeta(2, 3),
                 listOf(
                     Location(0, 0),
                     Location(0, 1),
@@ -105,8 +103,7 @@ class LocationsTest {
                 )
             ),
             Arguments.of(
-                1,
-                2,
+                MineMapMeta(1, 2),
                 listOf(
                     Location(0, 0),
                     Location(1, 0),

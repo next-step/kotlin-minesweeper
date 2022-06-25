@@ -5,8 +5,8 @@ value class MineMap private constructor(val rows: List<Row>) {
     companion object {
         fun build(locations: Locations): MineMap {
             val rows = getInitialTwoDimensionalList(
-                locations.rowCount,
-                locations.columnCount
+                locations.meta.rowCount,
+                locations.meta.columnCount
             )
 
             locations.pairs.forEach {

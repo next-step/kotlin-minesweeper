@@ -32,9 +32,11 @@ class MineMapTest {
     }
 
     private fun List<Location>.toLocations(): Locations {
-        val rowCount = this.filter { it.x == 0 }.size
-        val columnCount = this.filter { it.y == 0 }.size
-        val locations = Locations(rowCount, columnCount)
+        val meta = MineMapMeta(
+            rowCount = this.filter { it.x == 0 }.size,
+            columnCount = this.filter { it.y == 0 }.size
+        )
+        val locations = Locations(meta)
 
         this.forEach { location ->
             if (location.isMine) {

@@ -13,12 +13,11 @@ class MineMapFactoryTest {
 
     @Test
     fun `기본지뢰매니저를 사용해 지뢰맵을 만드는 결과 확인해보기`() {
-        val rowCount = 3
-        val columnCount = 5
+        val meta = MineMapMeta(3, 5)
 
         val mineCount = 10
 
-        val mineMap = mineMapFactory.create(rowCount, columnCount, mineCount)
+        val mineMap = mineMapFactory.create(meta, mineCount)
 
         assertThat(mineMap.rows).isEqualTo(
             listOf(

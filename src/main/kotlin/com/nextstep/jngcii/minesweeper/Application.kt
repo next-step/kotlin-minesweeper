@@ -6,12 +6,11 @@ import com.nextstep.jngcii.minesweeper.view.InputView
 import com.nextstep.jngcii.minesweeper.view.ResultView
 
 fun main() {
-    val rowCount = InputView.getRowCount()
-    val columnCount = InputView.getColumnCount()
+    val meta = InputView.getMineMapMeta()
     val mineCount = InputView.getMineCount()
 
     val mineMapFactory = MineMapFactory(RandomPickStrategy)
-    val mineMap = mineMapFactory.create(rowCount, columnCount, mineCount)
+    val mineMap = mineMapFactory.create(meta, mineCount)
 
     ResultView.printMap(mineMap)
 }
