@@ -2,7 +2,6 @@ package minesweeper.view
 
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.CellStatus
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 
@@ -22,9 +21,9 @@ object MineBoardView {
     }
 
     private fun printShape(cell: Cell) =
-        when (cell.state) {
-            CellStatus.CLOSE -> print("C ")
-            CellStatus.OPEN -> print("${cell.shape()} ")
+        when (cell.isClosed()) {
+            true -> print("C ")
+            false -> print("${cell.shape()} ")
         }
 
     private fun Cell.shape() =

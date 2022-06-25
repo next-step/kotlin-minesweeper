@@ -19,6 +19,8 @@ sealed class Cell(
     fun isEmpty() = this is Empty
 
     fun isClosed() = this.state == CellStatus.CLOSE
+
+    fun isOpen() = this.state == CellStatus.OPEN
 }
 
 class Cells(
@@ -33,6 +35,8 @@ class Cells(
         cell.openNearbyCells()
         return BoardStatus.SAFE
     }
+
+    fun hasClosedEmptyCell() = cells.any { it is Empty && it.isOpen() }
 
     private fun Empty.openNearbyCells() {
         nearbyPositions.forEach { position ->
