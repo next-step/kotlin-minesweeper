@@ -31,7 +31,7 @@ class Board(val area: Area, initialBoardState: BoardState) : Area by area {
     }
 }
 
-fun RandomBoard(area: Area, mineCount: Int): Board = Board(
+fun RandomBoard(area: Area, mineCount: Int) = Board(
     area = area,
     initialBoardState = boardStateReadyForRandomMine(area, mineCount)
 )
