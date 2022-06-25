@@ -30,9 +30,13 @@ object ConsoleOutputView : OutputView {
 
     private fun Board.toPrintableString(): String {
         val rowCount = this.rowCount
-        return (0..rowCount).mapNotNull(::cellsAtRowOrNull)
+        return (0..rowCount).mapNotNull { this.cellsAtRowOrNull(it) }
             .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
     }
+
+    private fun Board.cellsAtRowOrNull(row: Int): Cells? = runCatching {
+        Cells(this.cells.filter { it.row == row })
+    }.getOrNull()
 
     private fun Cells.toPrintableString(): String =
         this.joinToString(separator = "") { cell -> cell.toPrintableString() }
