@@ -35,7 +35,7 @@ class Cells(
         return BoardStatus.SAFE
     }
 
-    fun hasClosedEmptyCell() = cells.any { it is Empty && it.isOpen() }
+    fun hasClosedEmptyCell() = cells.any { it is Empty && it.isClosed() }
 
     private fun Empty.openNearbyCells() {
         nearbyPositions.forEach { position ->
