@@ -2,17 +2,13 @@ package minesweeper.model.board
 
 import minesweeper.model.cell.CellGenerator
 import minesweeper.model.cell.Cells
-import minesweeper.model.cell.MineLocator
 import minesweeper.model.cell.RandomMineLocator
 import minesweeper.model.coordinate.Area
 import minesweeper.model.coordinate.Coordinate
 
-class Board(val area: Area, mineLocator: MineLocator) : Area by area {
+class Board(val area: Area, initialBoardState: BoardState) : Area by area {
 
-    private val stateReady = BoardState.Ready(
-        area = area,
-        cellGenerator = CellGenerator(area, mineLocator)
-    )
+    private val stateReady = initialBoardState
 
     val cells: Cells
         get() = this.state.cells
@@ -37,5 +33,8 @@ class Board(val area: Area, mineLocator: MineLocator) : Area by area {
 
 fun RandomBoard(area: Area, mineCount: Int) = Board(
     area = area,
-    mineLocator = RandomMineLocator(area, mineCount)
+    initialBoardState = BoardState.Ready(
+        area = area,
+        cellGenerator = CellGenerator(area, RandomMineLocator(area, mineCount))
+    )
 )
