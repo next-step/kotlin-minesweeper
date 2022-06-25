@@ -1,7 +1,7 @@
 package minesweeper.view
 
-import minesweeper.model.MineBoard
+import minesweeper.model.MineBoardResult
 
 interface ResultView {
-    fun printMineBoard(board: MineBoard)
+    fun printMineBoard(boardResult: MineBoardResult)
 }
