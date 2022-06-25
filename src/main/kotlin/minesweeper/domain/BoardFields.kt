@@ -3,21 +3,21 @@ package minesweeper.domain
 data class BoardFields(val boardFields: List<BoardField>) {
 
     fun nearFields(coordinate: Coordinate): BoardFields {
-        val nearCoordinate = coordinate.nearCoordinate()
+        val nearCoordinate = coordinate.nearCoordinates()
         val nearFields = boardFields.filter { nearCoordinate.contains(it.coordinate) }
 
         return BoardFields(nearFields)
     }
 
     fun aroundNotOpenedNumberFields(coordinate: Coordinate): BoardFields {
-        val nearCoordinate = coordinate.aroundCoordinate()
-        val fields = boardFields.asSequence()
-            .filter { nearCoordinate.contains(it.coordinate) }
+        val aroundCoordinates = coordinate.aroundCoordinates()
+        val aroundNotOpenedNumberFields = boardFields.asSequence()
+            .filter { aroundCoordinates.contains(it.coordinate) }
             .filterIsInstance<NumberField>()
             .filterNot { it.isOpen }
             .toList()
 
-        return BoardFields(fields)
+        return BoardFields(aroundNotOpenedNumberFields)
     }
 
     fun mineCount(): Int {

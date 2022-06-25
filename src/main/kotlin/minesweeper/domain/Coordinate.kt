@@ -8,19 +8,19 @@ data class Coordinate(val x: Int, val y: Int) {
         }
     }
 
-    fun aroundCoordinate(): List<Coordinate> {
+    fun aroundCoordinates(): List<Coordinate> {
         val xAroundCoordinates = nearRange(x).map { Coordinate(it, y) }
         val yAroundCoordinates = nearRange(y).map { Coordinate(x, it) }
 
         return (xAroundCoordinates + yAroundCoordinates).filterNot { it == this }
     }
 
-    fun nearCoordinate(): List<Coordinate> {
-        return nearRange(x).flatMap { nearCoordinate(it) }
+    fun nearCoordinates(): List<Coordinate> {
+        return nearRange(x).flatMap { nearCoordinates(it) }
             .filterNot { it == this }
     }
 
-    private fun nearCoordinate(x: Int): List<Coordinate> {
+    private fun nearCoordinates(x: Int): List<Coordinate> {
         return nearRange(y).map { Coordinate(x, it) }
     }
 
