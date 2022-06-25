@@ -2,6 +2,6 @@ package minesweeper.domain
 
 sealed class Cell
 
-class Mine : Cell()
+object Mine : Cell()
 
-class Opened : Cell()
+object Opened : Cell()

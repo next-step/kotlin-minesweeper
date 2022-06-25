@@ -1,6 +1,7 @@
 package minesweeper.controller
 
 import minesweeper.domain.Board
+import minesweeper.domain.BoardSize
 import minesweeper.parser.InputParser
 import minesweeper.view.BoardView
 import minesweeper.view.MinesweeperView
@@ -12,7 +13,7 @@ class MinesweeperController {
         val width = getWidth()
         val minesCount = getMinesCount()
 
-        val board = Board(height, width, minesCount)
+        val board = Board(BoardSize(height, width), minesCount)
 
         BoardView(board).print()
     }

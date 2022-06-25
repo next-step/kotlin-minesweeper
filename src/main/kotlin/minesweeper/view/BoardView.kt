@@ -7,9 +7,9 @@ import minesweeper.domain.Opened
 
 class BoardView(private val board: Board) {
     fun print() {
-        board.cells.map { getCharacter(it) }
-            .chunked(board.width)
-            .forEach { println(it.joinToString(" ")) }
+        board.rows().forEach {
+            println(it.joinToString(" ") { cell -> getCharacter(cell) })
+        }
     }
 
     private fun getCharacter(cell: Cell): String {
