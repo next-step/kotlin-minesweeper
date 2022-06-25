@@ -31,10 +31,15 @@ class Board(val area: Area, initialBoardState: BoardState) : Area by area {
     }
 }
 
-fun RandomBoard(area: Area, mineCount: Int) = Board(
+fun RandomBoard(area: Area, mineCount: Int): Board = Board(
     area = area,
-    initialBoardState = BoardState.Ready(
-        area = area,
-        cellGenerator = CellGenerator(area, RandomMineLocator(area, mineCount))
-    )
+    initialBoardState = boardStateReadyForRandomMine(area, mineCount)
 )
+
+private fun boardStateReadyForRandomMine(area: Area, mineCount: Int) = BoardState.Ready(
+    area = area,
+    cellGenerator = cellGeneratorForRandomMine(area, mineCount)
+)
+
+private fun cellGeneratorForRandomMine(area: Area, mineCount: Int) =
+    CellGenerator(area, RandomMineLocator(area, mineCount))
