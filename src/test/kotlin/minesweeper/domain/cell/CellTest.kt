@@ -44,7 +44,7 @@ internal class CellTest {
     @MethodSource("인접한 위치 케이스")
     fun `지뢰가 없는 인접한 셀이 모두 열리게 된다`(width: Int, height: Int, positions: Positions) {
         // given
-        val cells = Cells(positions.map { Empty(it, it.getNearbyPositions(width, height)) })
+        val cells = Cells(positions.map { Empty(it) })
 
         // when
         cells.open(positions.first())
@@ -55,19 +55,18 @@ internal class CellTest {
     }
 
     companion object {
-        private val POSITION = Position(0, 0, 0)
-        private val NEARBY_POSITIONS = Positions.from(emptyList())
+        private val POSITION = Position(0, 0)
 
         @JvmStatic
         fun `임의의 셀 케이스`() = Stream.of(
-            Arguments.of(Empty::class, Empty(POSITION, NEARBY_POSITIONS)),
-            Arguments.of(Mine::class, Mine(POSITION, NEARBY_POSITIONS))
+            Arguments.of(Empty::class, Empty(POSITION)),
+            Arguments.of(Mine::class, Mine(POSITION))
         )
 
         @JvmStatic
         fun `열린 상태의 셀 케이스`() = Stream.of(
-            Arguments.of(Empty(POSITION, NEARBY_POSITIONS).also { it.open() }),
-            Arguments.of(Mine(POSITION, NEARBY_POSITIONS).also { it.open() })
+            Arguments.of(Empty(POSITION).also { it.open() }),
+            Arguments.of(Mine(POSITION).also { it.open() })
         )
 
         @JvmStatic
@@ -76,11 +75,11 @@ internal class CellTest {
                 1, 5,
                 Positions.from(
                     listOf(
-                        Position(0, 0, 0),
-                        Position(1, 0, 1),
-                        Position(2, 0, 2),
-                        Position(3, 0, 3),
-                        Position(4, 0, 4)
+                        Position(0, 0),
+                        Position(0, 1),
+                        Position(0, 2),
+                        Position(0, 3),
+                        Position(0, 4)
                     )
                 )
             ),
@@ -88,12 +87,12 @@ internal class CellTest {
                 3, 2,
                 Positions.from(
                     listOf(
-                        Position(0, 0, 0),
-                        Position(1, 1, 0),
-                        Position(2, 2, 0),
-                        Position(3, 0, 1),
-                        Position(4, 1, 1),
-                        Position(5, 2, 1)
+                        Position(0, 0),
+                        Position(1, 0),
+                        Position(2, 0),
+                        Position(0, 1),
+                        Position(1, 1),
+                        Position(2, 1)
                     )
                 )
             )

@@ -1,6 +1,3 @@
 package minesweeper.domain.cell
 
-class Mine(
-    position: Position,
-    nearbyPositions: Positions
-) : Cell(position, nearbyPositions)
+class Mine(position: Position) : Cell(position)

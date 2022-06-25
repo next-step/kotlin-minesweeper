@@ -35,11 +35,11 @@ internal class NearbyMineCounterTest {
         cellsRequest.mapIndexed { index, cell ->
             val x = index % width
             val y = index / width
-            val position = Position(index, x, y)
+            val position = Position(x, y)
             if (cell == 1) {
-                Mine(position, position.getNearbyPositions(width, height))
+                Mine(position)
             } else {
-                Empty(position, position.getNearbyPositions(width, height))
+                Empty(position)
             }
         }
     )

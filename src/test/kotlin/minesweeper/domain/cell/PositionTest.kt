@@ -12,13 +12,11 @@ internal class PositionTest {
     @ParameterizedTest
     @MethodSource("위치 좌표에 음수가 존재하는 케이스")
     fun `모든 공간의 위치 x, y 는 음수일 수 없다`(x: Int, y: Int) {
-        val exceptionByEmpty = assertThrows<IllegalArgumentException> { Position(INDEX, x, y) }
+        val exceptionByEmpty = assertThrows<IllegalArgumentException> { Position(x, y) }
         assertThat(exceptionByEmpty.message).isEqualTo("property must be zero or positive.")
     }
 
     companion object {
-        private const val INDEX = 0
-
         @JvmStatic
         fun `위치 좌표에 음수가 존재하는 케이스`() = Stream.of(
             Arguments.of(1, -1),

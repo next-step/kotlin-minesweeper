@@ -12,8 +12,8 @@ class RandomMineMaker : MineMaker {
         return mineIndices.map {
             val x = it % width
             val y = it / width
-            val position = Position(it, x, y)
-            Mine(position, position.getNearbyPositions(width, height))
+            val position = Position(x, y)
+            Mine(position)
         }
     }
 

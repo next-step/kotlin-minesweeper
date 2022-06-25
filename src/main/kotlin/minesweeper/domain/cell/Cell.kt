@@ -3,10 +3,7 @@ package minesweeper.domain.cell
 import minesweeper.domain.board.BoardStatus
 import minesweeper.domain.board.MineMaker
 
-sealed class Cell(
-    val position: Position,
-    val nearbyPositions: Positions,
-) {
+sealed class Cell(val position: Position) {
     private var state: CellStatus = CellStatus.CLOSE
 
     fun open(): Cell {
@@ -20,12 +17,10 @@ sealed class Cell(
     fun isOpen() = this.state == CellStatus.OPEN
 }
 
-class Cells(
-    private val cells: List<Cell>
-) : List<Cell> by cells {
+class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     fun open(position: Position): BoardStatus {
-        val cell = cells[position.index].open()
+        val cell = findCell(position).open()
         if (cell !is Empty) {
             return BoardStatus.BOOM
         }
@@ -39,35 +34,60 @@ class Cells(
         if (this.numberOfNearbyMines != 0) {
             return
         }
-
-        nearbyPositions.forEach { position ->
-            val nearbyCell = cells[position.index]
+        getNearbyCells(this).forEach { nearbyCell ->
             nearbyCell
                 .takeIf { nearbyCell is Empty && nearbyCell.isClosed() }
                 ?.let { open(nearbyCell.position) }
         }
     }
 
+    fun getNearbyCells(cell: Cell): Cells {
+        val width = last().position.x + 1
+        val height = last().position.y + 1
+        val nearbyPositions = getNearbyPositions(cell, width, height)
+
+        return Cells(nearbyPositions.map { findCell(it) })
+    }
+
+    private fun getNearbyPositions(
+        cell: Cell,
+        width: Int,
+        height: Int,
+    ) = NearbyDirection.values().mapNotNull {
+        val nearbyX = cell.position.x + it.x
+        val nearbyY = cell.position.y + it.y
+        val nearbyIndex = nearbyY * width + nearbyX
+
+        if (nearbyX.isBetweenRange(width) && nearbyY.isBetweenRange(height) && nearbyIndex < size) {
+            Position(nearbyX, nearbyY)
+        } else null
+    }
+
+    private fun findCell(position: Position) =
+        cells.find { it.position == position } ?: throw IllegalArgumentException("no cells found in that position.")
+
+    private fun Int.isBetweenRange(limit: Int) = this in 0 until limit
+
     companion object {
         fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {
+            val cells = initCells(width, height)
             val mineCells = mineMaker.createMines(width, height, numberOfMines)
-            val mineIndices = mineCells.map { it.position.index }
-            val numberOfCells = width * height
-            val emptyIndices = (0 until numberOfCells).filterNot { it in mineIndices }
-            val emptyCells = createEmptyCells(emptyIndices, width, height)
 
-            return Cells(mineCells + emptyCells).sortedByIndex()
+            mineCells.forEach { mine ->
+                val index = mine.position.y * width + mine.position.x
+                cells[index] = mine
+            }
+            return Cells(cells)
         }
 
-        private fun createEmptyCells(emptyIndices: List<Int>, width: Int, height: Int): List<Empty> {
-            return emptyIndices.map { index ->
-                val x = index % width
-                val y = index / width
-                val position = Position(index, x, y)
-                Empty(position, position.getNearbyPositions(width, height))
+        private fun initCells(width: Int, height: Int): MutableList<Cell> {
+            val size = width * height
+            return MutableList(size) {
+                val x = it % width
+                val y = it / width
+                val position = Position(x, y)
+                Empty(position)
             }
         }
-
-        private fun Cells.sortedByIndex() = Cells(cells.sortedBy { it.position.index })
     }
 }

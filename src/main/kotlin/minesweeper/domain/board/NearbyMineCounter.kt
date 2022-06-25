@@ -3,22 +3,19 @@ package minesweeper.domain.board
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
-import minesweeper.domain.cell.Positions
 
 object NearbyMineCounter {
 
     fun count(cells: Cells) {
         val mineCells = cells.filterIsInstance<Mine>()
-
         mineCells.forEach { mine ->
-            cells.accNearbyMine(mine.nearbyPositions)
+            cells.accNearbyMine(mine)
         }
     }
 
-    private fun Cells.accNearbyMine(nearbyPositions: Positions) {
-        nearbyPositions.forEach { position ->
-            this[position.index]
-                .takeIf { it is Empty }
+    private fun Cells.accNearbyMine(mine: Mine) {
+        getNearbyCells(mine).forEach { cell ->
+            cell.takeIf { it is Empty }
                 ?.let { (it as Empty).accNumberOfNearbyMines() }
         }
     }
