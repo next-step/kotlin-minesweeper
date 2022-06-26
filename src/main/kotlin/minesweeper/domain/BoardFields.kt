@@ -2,15 +2,9 @@ package minesweeper.domain
 
 data class BoardFields(val boardFields: List<BoardField>) {
 
-    fun aroundFields(coordinate: Coordinate): BoardFields {
-        val aroundCoordinates = coordinate.aroundCoordinates()
-        val aroundFields = boardFields.filter { aroundCoordinates.contains(it.coordinate) }
-
-        return BoardFields(aroundFields)
-    }
-
-    fun mineCount(): Int {
-        return boardFields.count { it is MineField }
+    fun mineCount(coordinate: List<Coordinate>): Int {
+        return boardFields.filter { coordinate.contains(it.coordinate) }
+            .count { it is MineField }
     }
 
     fun open(coordinate: Coordinate): BoardField {

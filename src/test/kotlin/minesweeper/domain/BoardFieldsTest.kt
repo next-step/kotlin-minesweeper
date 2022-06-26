@@ -2,46 +2,12 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class BoardFieldsTest : DescribeSpec({
-
-    describe("aroundFields") {
-        context("좌표가 주어지면 주변 필드를 반환한다") {
-            val coordinates = Coordinate.listOf(10, 10)
-            val boardFields = BoardFields(coordinates.map { BoardField.nonMine(it) })
-
-            it("주어진 좌표가 0인 경우") {
-                val aroundFields = boardFields.aroundFields(Coordinate(0, 0))
-
-                aroundFields.boardFields shouldContainAll listOf(
-                    BoardField.nonMine(Coordinate(0, 1)),
-                    BoardField.nonMine(Coordinate(1, 1)),
-                    BoardField.nonMine(Coordinate(1, 0)),
-                )
-            }
-
-            it("주어진 좌표의 주변 좌표가 모두 있는 경우") {
-                val aroundFields = boardFields.aroundFields(Coordinate(1, 1))
-
-                aroundFields.boardFields shouldContainAll listOf(
-                    BoardField.nonMine(Coordinate(0, 0)),
-                    BoardField.nonMine(Coordinate(0, 1)),
-                    BoardField.nonMine(Coordinate(0, 2)),
-                    BoardField.nonMine(Coordinate(1, 0)),
-                    BoardField.nonMine(Coordinate(1, 2)),
-                    BoardField.nonMine(Coordinate(2, 0)),
-                    BoardField.nonMine(Coordinate(2, 1)),
-                    BoardField.nonMine(Coordinate(2, 2)),
-                )
-            }
-        }
-    }
-
     describe("mineCount") {
-        it("지뢰 개수를 확인할 수 있다") {
+        it("좌표 들을 입력받아 지뢰 개수를 확인할 수 있다") {
             val boardFields = BoardFields(
                 listOf(
                     BoardField.mine(Coordinate(0, 0)),
@@ -55,7 +21,13 @@ class BoardFieldsTest : DescribeSpec({
                 )
             )
 
-            boardFields.mineCount() shouldBe 3
+            val coordinates = listOf(
+                Coordinate(0, 0),
+                Coordinate(0, 1),
+                Coordinate(0, 2),
+                Coordinate(3, 3),
+            )
+            boardFields.mineCount(coordinates) shouldBe 2
         }
     }
 
