@@ -1,6 +1,6 @@
 package domain
 
-data class Board(private val rows: List<Row>) {
+data class Board(val rows: List<Row>) {
 
     init {
         require(rows.isNotEmpty()) { "적어도 하나의 row 가 필요합니다" }
