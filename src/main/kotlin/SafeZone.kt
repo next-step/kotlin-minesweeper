@@ -1,6 +1,3 @@
 class SafeZone : Field {
-
-    companion object {
-        const val SYMBOL: String = "C"
-    }
+    override fun symbol(): String = "C"
 }

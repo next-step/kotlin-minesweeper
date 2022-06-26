@@ -1,5 +1,3 @@
 class Mine : Field {
-    companion object {
-        const val SYMBOL: String = "*"
-    }
+    override fun symbol(): String = "*"
 }
