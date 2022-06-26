@@ -11,14 +11,16 @@ class MineSweeper(
             "게임이 종료된 후에는 필드를 오픈할 수 없습니다."
         }
 
-        if (boardFields.open(coordinate) is NumberField) {
-            openAdjacentFields(boardFields.open(coordinate))
+        val openedField = boardFields.open(coordinate)
+
+        if (openedField is NumberField) {
+            openAdjacentNumberFields(coordinate)
         }
     }
 
-    private fun openAdjacentFields(field: BoardField) {
-        val adjacentNotOpenedNumberFields = boardFields.adjacentNotOpenedNumberFields(field.coordinate)
-        val openedFields = adjacentNotOpenedNumberFields.open()
-        openedFields.boardFields.forEach { openAdjacentFields(it) }
+    private fun openAdjacentNumberFields(coordinate: Coordinate) {
+        val adjacentCoordinates = coordinate.adjacentCoordinates()
+        val openNumberFields = boardFields.openNumberFields(adjacentCoordinates)
+        openNumberFields.forEach { openAdjacentNumberFields(it.coordinate) }
     }
 }
