@@ -61,10 +61,6 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
     }
 
     private fun getPlaceOrNull(row: Int, col: Int): Place? {
-        return try {
-            _board[row][col]
-        } catch (e: IndexOutOfBoundsException) {
-            null
-        }
+        return _board.getOrNull(row)?.getOrNull(col)
     }
 }
