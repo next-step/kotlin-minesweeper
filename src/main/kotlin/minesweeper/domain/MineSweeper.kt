@@ -3,7 +3,7 @@ package minesweeper.domain
 class MineSweeper(
     val boardFields: BoardFields,
 ) {
-    val isEnd get() = isWin || boardFields.isOpenedMineField()
+    val isEnd get() = isWin || boardFields.hasOpenedMineField()
     val isWin get() = boardFields.isAllOpenedNumberFields()
 
     fun open(coordinate: Coordinate) {

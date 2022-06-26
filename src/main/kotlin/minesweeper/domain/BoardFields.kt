@@ -32,7 +32,7 @@ data class BoardFields(val boardFields: List<BoardField>) {
             .all { it.isOpen }
     }
 
-    fun isOpenedMineField(): Boolean {
+    fun hasOpenedMineField(): Boolean {
         return boardFields.filterIsInstance<MineField>()
             .any { it.isOpen }
     }

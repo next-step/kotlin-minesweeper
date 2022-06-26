@@ -126,7 +126,7 @@ class BoardFieldsTest : DescribeSpec({
         }
     }
 
-    describe("isOpenedMineField") {
+    describe("hasOpenedMineField") {
         it("오픈된 지뢰필드가 있는지 확인할 수 있다") {
             val boardFields = BoardFields(
                 listOf(
@@ -135,7 +135,7 @@ class BoardFieldsTest : DescribeSpec({
                 )
             )
 
-            boardFields.isOpenedMineField() shouldBe true
+            boardFields.hasOpenedMineField() shouldBe true
         }
     }
 })
