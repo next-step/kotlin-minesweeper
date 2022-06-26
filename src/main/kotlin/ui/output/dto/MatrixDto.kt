@@ -24,8 +24,8 @@ data class Line(
     companion object {
         fun of(matrix: Matrix, cells: List<Cell>): Line {
             val displayedCells = cells.map {
-                if (it is Cell.Mine) return@map DisplayedCell("*")
-                DisplayedCell("${matrix.countMinesAround(it.location)}")
+                if (it is Cell.Mine) return@map DisplayedCell.MINE_DISPLAY_VIEW
+                DisplayedCell.from(matrix.countMinesAround(it.location))
             }
             return Line(displayedCells)
         }
@@ -34,4 +34,9 @@ data class Line(
 
 data class DisplayedCell(
     val displayView: String
-)
+) {
+    companion object {
+        val MINE_DISPLAY_VIEW = DisplayedCell("*")
+        fun from(count: Int): DisplayedCell = DisplayedCell("$count")
+    }
+}
