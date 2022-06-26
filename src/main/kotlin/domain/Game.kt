@@ -1,0 +1,31 @@
+package domain
+
+import vo.Height
+import vo.MineCount
+import vo.Point
+import vo.Width
+
+data class Game(val board: Board) {
+
+    companion object {
+
+        fun of(width: Width, height: Height, mineCount: MineCount): Game {
+            val cellCount = width * height
+            require(mineCount.value <= cellCount) { "지뢰를 생성할 공간이 부족합니다" }
+
+            return toCoordinates(width, height)
+                .zip(mineCount.toShuffledList(cellCount))
+                .map { (coordinate, isMine) -> if (isMine) Mine(coordinate) else Empty(coordinate) }
+                .chunked(width.value)
+                .map { Row.of(it) }
+                .let(::Board)
+                .let(::Game)
+        }
+
+        private fun MineCount.toShuffledList(cellCount: Int): List<Boolean> =
+            (List(value) { true } + List(cellCount - value) { false }).shuffled()
+
+        private fun toCoordinates(width: Width, height: Height): List<Coordinate> =
+            (1..height.value).flatMap { y -> (1..width.value).map { x -> Coordinate(Point(x), Point(y)) } }
+    }
+}
