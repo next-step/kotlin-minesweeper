@@ -14,11 +14,19 @@ object OutputView {
     private fun printRow(row: Row) {
         val rowString = row.value.map {
             when (it) {
-                is Mine -> "*"
-                is NonMine -> it.mineCount
+                is Mine -> if (it.isOpen) "*" else "C"
+                is NonMine -> if (it.isOpen) it.mineCount else "C"
             }
         }
 
         println(rowString.joinToString())
+    }
+
+    fun printGameOver() {
+        println("Lose Game...")
+    }
+
+    fun printGameEnd() {
+        println("Win !!")
     }
 }
