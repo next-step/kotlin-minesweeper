@@ -7,6 +7,7 @@ import domain.Row
 class GameView(val io: IO) {
 
     fun viewBoard(board: Board) {
+        io.write("")
         io.write("지뢰찾기 게임 시작")
         board.rows.forEach {
             io.write(it.toBoardString())
