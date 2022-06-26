@@ -14,20 +14,29 @@ object ConsoleOutputView : OutputView {
     override fun printInitialMessage() = println(initialMessage)
 
     override fun printBoard(board: Board) {
+
         println(board.toPrintableString())
+
+        val boardState = board.state
+        if (boardState is BoardState.Finished) {
+            printFinalMessage(boardState.isWin)
+        }
     }
 
-    override fun printFinalMessage(board: Board) {
-        val state = board.state as? BoardState.Finished ?: return
-        val message = if (state.isWin) "Win Game" else "Lose Game"
+    private fun printFinalMessage(isWin: Boolean) {
+        val message = if (isWin) "Win Game" else "Lose Game"
         println(message)
     }
 
     private fun Board.toPrintableString(): String {
         val rowCount = this.rowCount
-        return (0..rowCount).mapNotNull(::cellsAtRowOrNull)
+        return (0..rowCount).mapNotNull { this.cellsAtRowOrNull(it) }
             .joinToString(separator = "\n") { cells -> cells.toPrintableString() }
     }
+
+    private fun Board.cellsAtRowOrNull(row: Int): Cells? = runCatching {
+        Cells(this.cells.filter { it.row == row })
+    }.getOrNull()
 
     private fun Cells.toPrintableString(): String =
         this.joinToString(separator = "") { cell -> cell.toPrintableString() }

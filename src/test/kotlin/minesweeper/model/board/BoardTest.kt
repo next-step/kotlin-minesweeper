@@ -1,5 +1,6 @@
 package minesweeper.model.board
 
+import minesweeper.fixture.Board
 import minesweeper.fixture.cellAtOrNull
 import minesweeper.fixture.toBoard
 import minesweeper.model.coordinate.BoardArea
@@ -117,7 +118,11 @@ internal class BoardTest {
             .state as? BoardState.Finished
 
         // then
-        val expected = BoardState.Finished(isWin = false)
+        val expected = BoardState.Finished(
+            area = board.area,
+            cells = board.cells,
+            isWin = false
+        )
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -137,7 +142,11 @@ internal class BoardTest {
             .state as? BoardState.Finished
 
         // then
-        val expected = BoardState.Finished(isWin = true)
+        val expected = BoardState.Finished(
+            area = board.area,
+            cells = board.cells,
+            isWin = true
+        )
         assertThat(actual).isEqualTo(expected)
     }
 }
