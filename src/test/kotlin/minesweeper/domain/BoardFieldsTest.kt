@@ -7,15 +7,15 @@ import io.kotest.matchers.shouldBe
 
 class BoardFieldsTest : DescribeSpec({
 
-    describe("nearFields") {
+    describe("aroundFields") {
         context("좌표가 주어지면 주변 필드를 반환한다") {
             val coordinates = Coordinate.listOf(10, 10)
             val boardFields = BoardFields(coordinates.map { BoardField.nonMine(it) })
 
             it("주어진 좌표가 0인 경우") {
-                val nearFields = boardFields.nearFields(Coordinate(0, 0))
+                val aroundFields = boardFields.aroundFields(Coordinate(0, 0))
 
-                nearFields.boardFields shouldContainAll listOf(
+                aroundFields.boardFields shouldContainAll listOf(
                     BoardField.nonMine(Coordinate(0, 1)),
                     BoardField.nonMine(Coordinate(1, 1)),
                     BoardField.nonMine(Coordinate(1, 0)),
@@ -23,9 +23,9 @@ class BoardFieldsTest : DescribeSpec({
             }
 
             it("주어진 좌표의 주변 좌표가 모두 있는 경우") {
-                val nearFields = boardFields.nearFields(Coordinate(1, 1))
+                val aroundFields = boardFields.aroundFields(Coordinate(1, 1))
 
-                nearFields.boardFields shouldContainAll listOf(
+                aroundFields.boardFields shouldContainAll listOf(
                     BoardField.nonMine(Coordinate(0, 0)),
                     BoardField.nonMine(Coordinate(0, 1)),
                     BoardField.nonMine(Coordinate(0, 2)),
@@ -88,7 +88,7 @@ class BoardFieldsTest : DescribeSpec({
         }
     }
 
-    describe("aroundNotOpenedNumberFields") {
+    describe("adjacentNotOpenedNumberFields") {
         it("좌표에 인접한 오픈되지 않은 숫자 필드를 반환한다") {
             /**
              * * C *
@@ -98,7 +98,7 @@ class BoardFieldsTest : DescribeSpec({
             val boardFields = boardFields()
 
             boardFields.open(Coordinate(0, 1))
-            val coordinates = boardFields.aroundNotOpenedNumberFields(Coordinate(1, 1))
+            val coordinates = boardFields.adjacentNotOpenedNumberFields(Coordinate(1, 1))
                 .boardFields
                 .map { it.coordinate }
 

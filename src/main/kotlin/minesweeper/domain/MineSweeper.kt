@@ -12,13 +12,13 @@ class MineSweeper(
         }
 
         if (boardFields.open(coordinate) is NumberField) {
-            openAroundFields(boardFields.open(coordinate))
+            openAdjacentFields(boardFields.open(coordinate))
         }
     }
 
-    private fun openAroundFields(field: BoardField) {
-        val notOpenedNumberFields = boardFields.aroundNotOpenedNumberFields(field.coordinate)
-        val openedFields = notOpenedNumberFields.open()
-        openedFields.boardFields.forEach { openAroundFields(it) }
+    private fun openAdjacentFields(field: BoardField) {
+        val adjacentNotOpenedNumberFields = boardFields.adjacentNotOpenedNumberFields(field.coordinate)
+        val openedFields = adjacentNotOpenedNumberFields.open()
+        openedFields.boardFields.forEach { openAdjacentFields(it) }
     }
 }

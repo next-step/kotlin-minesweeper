@@ -54,7 +54,7 @@ class NumberField(
     }
 
     fun number(boardFields: BoardFields): Int {
-        val nearFields = boardFields.nearFields(coordinate)
-        return nearFields.mineCount()
+        val aroundFields = boardFields.aroundFields(coordinate)
+        return aroundFields.mineCount()
     }
 }
