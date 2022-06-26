@@ -17,7 +17,7 @@ data class Game(val board: Board) {
                 .zip(mineCount.toShuffledList(cellCount))
                 .map { (coordinate, isMine) -> if (isMine) Mine(coordinate) else Empty(coordinate) }
                 .chunked(width.value)
-                .map { Row.of(it) }
+                .map(Row::of)
                 .let(::Board)
                 .let(::Game)
         }
