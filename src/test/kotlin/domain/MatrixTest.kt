@@ -23,7 +23,7 @@ class MatrixTest : DescribeSpec({
             )
             val matrix = Matrix.of(dimension, numberOfMines, locationSelector)
             it("그 수만큼 지뢰 칸을 배치한다") {
-                matrix.cells.count { it is Mine } shouldBe numberOfMines.value
+                matrix.cells.count { it is Cell.Mine } shouldBe numberOfMines.value
             }
         }
 

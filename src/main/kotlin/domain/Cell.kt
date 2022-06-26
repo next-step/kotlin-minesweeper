@@ -2,8 +2,11 @@ package domain
 
 import domain.geometric.Location
 
-sealed interface Cell {
-    val location: Location
+sealed class Cell {
+    abstract val location: Location
+
+    internal data class Mine(override val location: Location) : Cell()
+    internal data class Safe(override val location: Location) : Cell()
 
     companion object {
 
@@ -23,7 +26,3 @@ sealed interface Cell {
         }
     }
 }
-
-internal data class Mine(override val location: Location) : Cell
-
-internal data class Safe(override val location: Location) : Cell

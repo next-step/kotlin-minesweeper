@@ -2,7 +2,6 @@ package ui.output.dto
 
 import domain.Cell
 import domain.Matrix
-import domain.Mine
 
 data class MatrixDto(
     val lines: List<Line>,
@@ -25,7 +24,7 @@ data class Line(
     companion object {
         fun of(matrix: Matrix, cells: List<Cell>): Line {
             val displayedCells = cells.map {
-                if (it is Mine) return@map DisplayedCell("*")
+                if (it is Cell.Mine) return@map DisplayedCell("*")
                 DisplayedCell("${matrix.countMinesAround(it.location)}")
             }
             return Line(displayedCells)

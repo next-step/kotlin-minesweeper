@@ -26,7 +26,7 @@ class Matrix(
             if (aroundLocation == null || aroundLocation !in this) {
                 return@count false
             }
-            cellsByLocation[aroundLocation] is Mine
+            cellsByLocation[aroundLocation] is Cell.Mine
         }
     }
 
