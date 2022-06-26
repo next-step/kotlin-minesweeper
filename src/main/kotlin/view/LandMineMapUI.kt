@@ -1,11 +1,9 @@
 package view
 
-import domain.LandMineRandomMap
 import domain.Line
+import dto.LandMineMapUIRequest
 
-class LandMineMapUI(landMineRandomMap: LandMineRandomMap) {
-    private val mapCoordinates = landMineRandomMap.mapLine.reversed()
-    private val landMineCoordinates = landMineRandomMap.landMineCoordinates
+class LandMineMapUI(private val landMineMapUIRequest: LandMineMapUIRequest) {
 
     fun title() {
         println()
@@ -13,7 +11,7 @@ class LandMineMapUI(landMineRandomMap: LandMineRandomMap) {
     }
 
     fun map() {
-        mapCoordinates.map {
+        landMineMapUIRequest.mapCoordinates.map {
             println()
             display(it)
         }
@@ -21,7 +19,7 @@ class LandMineMapUI(landMineRandomMap: LandMineRandomMap) {
 
     private fun display(mapLine: Line) {
         mapLine.coordinates.forEach {
-            if (landMineCoordinates.contains(it)) print("* ")
+            if (landMineMapUIRequest.landMineCoordinates.contains(it)) print("* ")
             else print("C ")
         }
     }
