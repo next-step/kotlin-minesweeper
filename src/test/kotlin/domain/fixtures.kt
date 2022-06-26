@@ -14,6 +14,12 @@ fun cells(dimension: Dimension): MutableList<Cell> {
     }.toMutableList()
 }
 
+fun MutableList<Cell>.replaceToMine(location: Location) {
+    val cell = this.find { it.location == location } ?: return
+    val index = this.indexOf(cell)
+    this[index] = Cell.mine(location)
+}
+
 private fun fill(dimension: Dimension): List<Location> {
     val rows = (0 until dimension.height).toList()
     val columns = (0 until dimension.width).toList()

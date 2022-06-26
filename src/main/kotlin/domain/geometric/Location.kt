@@ -14,7 +14,10 @@ data class Location(
     }
 
     companion object {
-        val ORIGIN = Location(LocationValue(0), LocationValue(0))
+        fun ofOrNull(row: Int, column: Int): Location? {
+            if (row < 0 || column < 0) return null
+            return Location(LocationValue(row), LocationValue(column))
+        }
     }
 }
 

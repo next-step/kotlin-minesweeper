@@ -1,6 +1,8 @@
 package ui.output
 
 import domain.Cell
+import domain.Mine
+import domain.Safe
 import ui.output.dto.BoardDto
 import ui.output.dto.Line
 
@@ -22,8 +24,8 @@ object OutputUI {
 
     private fun Cell.display(): String {
         return when (this) {
-            is Cell.Mine -> "*"
-            is Cell.Safe -> "C"
+            is Mine -> "*"
+            is Safe -> "C"
         }
     }
 }

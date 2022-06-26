@@ -19,6 +19,21 @@ class Matrix(
         }
     }
 
+    fun countMinesAround(location: Location): Int {
+        if (location !in this) return -1
+        return Direction.values().count {
+            val aroundLocation = it.getAroundLocationOrNull(location)
+            if (aroundLocation == null || aroundLocation !in this) {
+                return@count false
+            }
+            cellsByLocation[aroundLocation] is Mine
+        }
+    }
+
+    private operator fun contains(location: Location): Boolean {
+        return cellsByLocation[location] != null
+    }
+
     companion object {
         fun of(
             dimension: Dimension,
@@ -39,5 +54,22 @@ class Matrix(
 
             return Matrix(dimension, cells)
         }
+    }
+}
+
+private enum class Direction(val rowPower: Int, val columnPower: Int) {
+    TOP(-1, 0),
+    TOP_RIGHT(-1, 1),
+    RIGHT(0, 1),
+    BOTTOM_RIGHT(1, 1),
+    BOTTOM(1, 0),
+    BOTTOM_LEFT(1, -1),
+    LEFT(0, -1),
+    TOP_LEFT(-1, -1);
+
+    fun getAroundLocationOrNull(location: Location): Location? {
+        val row = location.row.value + rowPower
+        val column = location.column.value + columnPower
+        return Location.ofOrNull(row, column)
     }
 }

@@ -2,20 +2,10 @@ package domain
 
 import domain.geometric.Location
 
-sealed class Cell {
-    abstract val location: Location
-
-    data class Mine(override val location: Location) : Cell()
-    data class Safe(override val location: Location) : Cell()
+sealed interface Cell {
+    val location: Location
 
     companion object {
-        fun safe(location: Location): Cell {
-            return Safe(location)
-        }
-
-        fun mine(location: Location): Cell {
-            return Mine(location)
-        }
 
         fun of(location: Location, miningLocations: List<Location>): Cell {
             return when (location in miningLocations) {
@@ -23,5 +13,17 @@ sealed class Cell {
                 false -> safe(location)
             }
         }
+
+        fun safe(location: Location): Cell {
+            return Safe(location)
+        }
+
+        fun mine(location: Location): Cell {
+            return Mine(location)
+        }
     }
 }
+
+internal data class Mine(override val location: Location) : Cell
+
+internal data class Safe(override val location: Location) : Cell
