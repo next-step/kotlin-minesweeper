@@ -10,14 +10,16 @@ class Matrix(
     init {
         val locations = MatrixFiller.fill(dimension)
         val miningLocations = locationSelector.select(numberOfMines.mineCount, locations)
-        cells = locations.map {
-            when (it) {
-                in miningLocations -> Cell.mine(it)
-                else -> Cell.ground(it)
-            }
-        }.associateBy {
+        cells = locations.map { getCell(it, miningLocations) }.associateBy {
             it.location
         }.toMap()
+    }
+
+    private fun getCell(location: Location, miningLocations: List<Location>): Cell {
+        return when (location) {
+            in miningLocations -> Cell.mine(location)
+            else -> Cell.ground(location)
+        }
     }
 
     private object MatrixFiller {
