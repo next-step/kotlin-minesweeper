@@ -40,4 +40,10 @@ class MineMapTest : StringSpec({
             MineMap.build(5, 5, 26)
         }
     }
+
+    "입력받은 지뢰 수는 마이너스가 될 수 없다." {
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Count") {
+            MineMap.build(5, 5, -3)
+        }
+    }
 })
