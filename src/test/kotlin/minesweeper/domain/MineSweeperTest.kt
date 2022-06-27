@@ -12,4 +12,18 @@ class MineSweeperTest : StringSpec({
         sweptMineMap.flatten().count { it is MineCell } shouldBe 0
         sweptMineMap.flatten().all { it.mineCountAround == 0 } shouldBe true
     }
+
+    "기준 셀 오른쪽에 지뢰가 있으면 1로 표시된다." {
+        val sweptMineMap = MineSweeper.sweepe(listOf(listOf(Cell(), MineCell())))
+
+        sweptMineMap.flatten().count { it is MineCell } shouldBe 1
+        sweptMineMap[0][0].mineCountAround shouldBe 1
+    }
+
+    "기준 셀 왼쪽에 지뢰가 있으면 1로 표시된다." {
+        val sweptMineMap = MineSweeper.sweepe(listOf(listOf(MineCell(), Cell())))
+
+        sweptMineMap.flatten().count { it is MineCell } shouldBe 1
+        sweptMineMap[0][1].mineCountAround shouldBe 1
+    }
 })
