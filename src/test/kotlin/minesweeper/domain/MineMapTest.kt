@@ -35,4 +35,10 @@ class MineMapTest : StringSpec({
         mineMap.map().flatten().count { it } shouldBe 6
     }
 
+    "입력받은 지뢰 수는 지뢰 맵 총 사이즈보다 클 수 없다." {
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Count") {
+            MineMap.build(5, 5, 26)
+        }
+    }
+
 })
