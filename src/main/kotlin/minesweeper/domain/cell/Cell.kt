@@ -1,6 +1,7 @@
 package minesweeper.domain.cell
 
 import minesweeper.domain.board.MineMaker
+import minesweeper.domain.board.NearbyMineCounter
 
 sealed class Cell(val position: Position) {
     private var state: CellStatus = CellStatus.CLOSE
@@ -58,7 +59,7 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
                 val index = mine.position.y * width + mine.position.x
                 cells[index] = mine
             }
-            return Cells(cells)
+            return Cells(cells).apply { NearbyMineCounter.count(this) }
         }
 
         private fun initCells(width: Int, height: Int): MutableList<Cell> {

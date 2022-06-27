@@ -31,7 +31,6 @@ class MineBoard private constructor(val cells: Cells) {
         ): MineBoard {
             validate(width, height, numberOfMines)
             val cells = Cells.of(width, height, numberOfMines, mineMaker)
-            NearbyMineCounter.count(cells)
             return MineBoard(cells)
         }
 
