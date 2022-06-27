@@ -10,7 +10,8 @@ class ResultView {
         println("\n지뢰찾기 게임 시작")
         var result = ""
         for (row in minesweeper.board) {
-            result += row.joinToString(" ") { place -> place.toTransform() }
+
+            result += row.places.joinToString(" ") { place -> place.toTransform() }
             result += "\n"
         }
 

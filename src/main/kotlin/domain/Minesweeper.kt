@@ -4,40 +4,39 @@ import domain.strategy.MineAllocationStrategy
 
 class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrategy: MineAllocationStrategy) {
 
-    private val _board: MutableList<MutableList<Place>> =
-        MutableList(minesweeperProperty.height) { row ->
-            MutableList(minesweeperProperty.width) { col ->
-                val number = (row * minesweeperProperty.width) + col
-                Place(number, PlaceType.NOT_MINE)
-            }
-        }
+    private val _board: MutableList<Row>
 
-    val board: List<List<Place>>
+    val board: List<Row>
         get() = _board
 
     init {
         val totalPlaceNumber = minesweeperProperty.width * minesweeperProperty.height
         val numberToAllocate = minesweeperProperty.mineCount
 
-        mineAllocationStrategy.getAssignMineLocation(totalPlaceNumber, numberToAllocate)
+        val minePlaceNumbers = mineAllocationStrategy
+            .getAssignMineLocation(totalPlaceNumber, numberToAllocate)
             .map { it.number }
-            .forEach {
-                val row = it / minesweeperProperty.height
-                val col = it % minesweeperProperty.width
-                _board[row][col] = Place(it, PlaceType.MINE)
+
+        _board = MutableList(minesweeperProperty.height) { rowIndex ->
+            val places = mutableListOf<Place>()
+
+            for (col in 1..minesweeperProperty.width) {
+                val placeNumber = (rowIndex * minesweeperProperty.height) + col
+                val placeType = getPlaceType(minePlaceNumbers, placeNumber)
+
+                val place = Place(placeNumber, placeType)
+                places.add(place)
             }
 
-        calculateNearMineCount(minesweeperProperty)
+            Row(places)
+        }
+
+        calculateNearMineCount()
     }
 
-    private fun calculateNearMineCount(minesweeperProperty: MinesweeperProperty) {
-        for (row: Int in 0 until minesweeperProperty.height) {
-            for (col: Int in 0 until minesweeperProperty.width) {
-                val place = _board[row][col]
-                if (place.isNotMine()) {
-                    _board[row][col] = Place(place.number, place.placeType, getNearMineCount(row, col))
-                }
-            }
+    private fun calculateNearMineCount() {
+        _board.forEachIndexed { rowIndex, row ->
+            row.transformPlaceIndexed(createMineCountedPlace(rowIndex))
         }
     }
 
@@ -61,6 +60,26 @@ class Minesweeper(minesweeperProperty: MinesweeperProperty, mineAllocationStrate
     }
 
     private fun getPlaceOrNull(row: Int, col: Int): Place? {
-        return _board.getOrNull(row)?.getOrNull(col)
+        return _board.getOrNull(row)?.places?.getOrNull(col)
+    }
+
+    private fun createMineCountedPlace(rowIndex: Int): (Int, Place) -> Place {
+        return { colIndex, place -> getCreatedPlace(place, rowIndex, colIndex) }
+    }
+
+    private fun getCreatedPlace(place: Place, rowIndex: Int, colIndex: Int): Place {
+        if (place.isNotMine()) {
+            return Place(place.number, place.placeType, getNearMineCount(rowIndex, colIndex))
+        }
+
+        return place
+    }
+
+    private fun getPlaceType(minePlaceNumbers: List<Int>, placeNumber: Int): PlaceType {
+        if (minePlaceNumbers.contains(placeNumber)) {
+            return PlaceType.MINE
+        }
+
+        return PlaceType.NOT_MINE
     }
 }

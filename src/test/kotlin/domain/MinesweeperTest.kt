@@ -11,13 +11,13 @@ class MinesweeperTest {
         val minesweeperWidth = 5
         val minesweeperHeight = 5
         val mineCount = 1
-        val place = setOf(Place(0, PlaceType.MINE))
+        val place = setOf(Place(1, PlaceType.MINE))
 
         val mineAllocatorFixture = MineAllocatorFixture(place)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[0][0].placeType).isEqualTo(PlaceType.MINE)
+        assertThat(minesweeper.board[0].places[0].placeType).isEqualTo(PlaceType.MINE)
     }
 
     @Test
@@ -31,7 +31,7 @@ class MinesweeperTest {
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[2][2].placeType).isEqualTo(PlaceType.NOT_MINE)
+        assertThat(minesweeper.board[2].places[2].placeType).isEqualTo(PlaceType.NOT_MINE)
     }
 
     @Test
@@ -45,7 +45,7 @@ class MinesweeperTest {
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[0][0].nearMineCount).isEqualTo(0)
+        assertThat(minesweeper.board[0].places[0].nearMineCount).isEqualTo(0)
     }
 
     @Test
@@ -59,7 +59,7 @@ class MinesweeperTest {
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][1].nearMineCount).isEqualTo(1)
+        assertThat(minesweeper.board[1].places[1].nearMineCount).isEqualTo(1)
     }
 
     @Test
@@ -68,15 +68,15 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 2
         val minePlace = setOf(
-            Place(11, PlaceType.MINE),
             Place(12, PlaceType.MINE),
+            Place(13, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(2)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(2)
     }
 
     @Test
@@ -85,16 +85,16 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 3
         val minePlace = setOf(
-            Place(11, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[3][2].nearMineCount).isEqualTo(3)
+        assertThat(minesweeper.board[3].places[2].nearMineCount).isEqualTo(3)
     }
 
     @Test
@@ -103,17 +103,17 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 4
         val minePlace = setOf(
-            Place(6, PlaceType.MINE),
-            Place(11, PlaceType.MINE),
+            Place(7, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(4)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(4)
     }
 
     @Test
@@ -122,18 +122,18 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 5
         val minePlace = setOf(
-            Place(6, PlaceType.MINE),
-            Place(8, PlaceType.MINE),
-            Place(11, PlaceType.MINE),
+            Place(7, PlaceType.MINE),
+            Place(9, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(5)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(5)
     }
 
     @Test
@@ -142,19 +142,19 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 6
         val minePlace = setOf(
-            Place(1, PlaceType.MINE),
-            Place(6, PlaceType.MINE),
-            Place(8, PlaceType.MINE),
-            Place(11, PlaceType.MINE),
+            Place(2, PlaceType.MINE),
+            Place(7, PlaceType.MINE),
+            Place(9, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(6)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(6)
     }
 
     @Test
@@ -163,20 +163,20 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 7
         val minePlace = setOf(
-            Place(1, PlaceType.MINE),
             Place(2, PlaceType.MINE),
-            Place(6, PlaceType.MINE),
-            Place(8, PlaceType.MINE),
-            Place(11, PlaceType.MINE),
+            Place(3, PlaceType.MINE),
+            Place(7, PlaceType.MINE),
+            Place(9, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(7)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(7)
     }
 
     @Test
@@ -185,20 +185,20 @@ class MinesweeperTest {
         val minesweeperHeight = 5
         val mineCount = 8
         val minePlace = setOf(
-            Place(1, PlaceType.MINE),
             Place(2, PlaceType.MINE),
             Place(3, PlaceType.MINE),
-            Place(6, PlaceType.MINE),
-            Place(8, PlaceType.MINE),
-            Place(11, PlaceType.MINE),
+            Place(4, PlaceType.MINE),
+            Place(7, PlaceType.MINE),
+            Place(9, PlaceType.MINE),
             Place(12, PlaceType.MINE),
             Place(13, PlaceType.MINE),
+            Place(14, PlaceType.MINE),
         )
 
         val mineAllocatorFixture = MineAllocatorFixture(minePlace)
         val minesweeper =
             Minesweeper(MinesweeperProperty(minesweeperWidth, minesweeperHeight, mineCount), mineAllocatorFixture)
 
-        assertThat(minesweeper.board[1][2].nearMineCount).isEqualTo(8)
+        assertThat(minesweeper.board[1].places[2].nearMineCount).isEqualTo(8)
     }
 }
