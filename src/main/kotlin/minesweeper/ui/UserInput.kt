@@ -1,6 +1,6 @@
 package minesweeper.ui
 
-import minesweeper.domain.MineMap
+import minesweeper.domain.Cell
 
 object UserInput {
     fun inputHeight(): Int {
@@ -18,15 +18,15 @@ object UserInput {
         return readln().toIntOrNull() ?: throw IllegalArgumentException()
     }
 
-    fun printResult(mineMap: MineMap) {
+    fun printResult(map: List<List<Cell>>) {
         println("지뢰찾기 게임 시작")
-        for (i in mineMap.map().indices) {
-            for (j in mineMap.map()[i].indices) {
-                if (mineMap.map()[i][j].isMineCell) {
+        for (i in map.indices) {
+            for (j in map[i].indices) {
+                if (map[i][j].isMineCell) {
                     print("*")
                 } else {
-                    mineMap.map()[i][j].mineCountAround
-                }
+                    print(map[i][j].mineCountAround)
+                }.also { print(" ") }
             }
             println()
         }

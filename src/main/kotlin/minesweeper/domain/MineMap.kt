@@ -10,21 +10,11 @@ class MineMap(width: Int, height: Int, mineCount: Int = 0) {
         map = Array(width * height) { Cell() }
             .apply { fill(MineCell(), 0, mineCount) }
             .apply { shuffle() }
-            .apply { sweeper() }
             .toList()
             .chunked(height)
     }
 
     fun map(): List<List<Cell>> {
         return map
-    }
-
-    private fun <T> Array<T>.sweeper() {
-        for (i in lastIndex downTo 1) {
-            // val j = random.nextInt(i + 1)
-            // val copy = this[i]
-            // this[i] = this[j]
-            // this[j] = copy
-        }
     }
 }

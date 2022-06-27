@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.MineMap
+import minesweeper.domain.MineSweeper
 import minesweeper.ui.UserInput
 
 fun main() {
@@ -9,5 +10,6 @@ fun main() {
     val mineCount = UserInput.inputMineCount().also { println() }
 
     val mineMap = MineMap(height, width, mineCount)
-    UserInput.printResult(mineMap)
+    val sweptMineMap = MineSweeper.sweepe(mineMap.map())
+    UserInput.printResult(sweptMineMap)
 }
