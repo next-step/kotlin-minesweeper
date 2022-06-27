@@ -32,7 +32,7 @@ class MineMapTest : StringSpec({
 
     "입력받은 지뢰 수(mineCount) 만큼 지뢰를 랜덤하게 배치한다." {
         val mineMap = MineMap(10, 5, 6)
-        mineMap.map().flatten().count { it } shouldBe 6
+        mineMap.map().flatten().count { it is MineCell } shouldBe 6
     }
 
     "입력받은 지뢰 수는 지뢰 맵 총 사이즈보다 클 수 없다." {
