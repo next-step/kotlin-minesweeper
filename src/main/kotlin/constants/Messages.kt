@@ -6,6 +6,7 @@ package constants
 object Messages {
     const val WRITE_HEIGHT = "높이를 입력하세요."
     const val WRITE_WIDTH = "너비를 입력하세요."
+    const val WRITE_MINE_COUNT = "지뢰는 몇 개인가요?"
 }
 
 object ErrorMessages {

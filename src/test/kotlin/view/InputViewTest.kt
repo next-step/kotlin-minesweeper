@@ -52,4 +52,26 @@ class InputViewTest {
             InputView.getWidth { source }
         }
     }
+
+    @Test
+    fun `지뢰갯수가 양수가 아닌경우 IllegalArgumentException을 던진다`() {
+        assertThrows<IllegalArgumentException> {
+            InputView.getMineCount { "0" }
+        }
+    }
+
+    @Test
+    fun `지뢰갯수가 숫자가 아닌경우 IllegalArgumentException을 던진다`() {
+        assertThrows<IllegalArgumentException> {
+            InputView.getMineCount { "hihi" }
+        }
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun `지뢰갯수에 빈칸이 오는 경우 IllegalArgumentException을 던진다`(source: String?) {
+        assertThrows<IllegalArgumentException> {
+            InputView.getMineCount { source }
+        }
+    }
 }

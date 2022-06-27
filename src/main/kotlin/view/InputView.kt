@@ -19,7 +19,12 @@ object InputView {
         return getInt(readStringValue)
     }
 
-    private fun getInt(readStringValue: () -> String? = { readlnOrNull() }): Int {
+    fun getMineCount(readStringValue: () -> String? = { readlnOrNull() }): Int {
+        println(Messages.WRITE_MINE_COUNT)
+        return getInt(readStringValue)
+    }
+
+    private fun getInt(readStringValue: () -> String?): Int {
         val input = readStringValue()
         require(!input.isNullOrBlank()) { ErrorMessages.IS_NULL_OR_EMPTY }
         require(input.toIntOrNull() != null) { ErrorMessages.IS_NOT_NUMBER }
