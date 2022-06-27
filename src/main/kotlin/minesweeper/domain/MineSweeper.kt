@@ -9,6 +9,10 @@ object MineSweeper {
                     map.getOrNull(x)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
                     map.getOrNull(x - 1)?.getOrNull(y)?.let { it.mineCountAround++ }
                     map.getOrNull(x + 1)?.getOrNull(y)?.let { it.mineCountAround++ }
+                    map.getOrNull(x - 1)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
+                    map.getOrNull(x + 1)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
+                    map.getOrNull(x - 1)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
+                    map.getOrNull(x + 1)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
                 }
             }
         }
