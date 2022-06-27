@@ -8,6 +8,7 @@ class MineMap private constructor(private val map: List<List<Boolean>>) {
 
     companion object Factory {
         fun build(width: Int, height: Int): MineMap {
+            require(width > 0 && height > 0) { "Invalid Mine Map Size" }
             val array = Array(width * height) { false }
             return MineMap(array.toList().chunked(height))
         }

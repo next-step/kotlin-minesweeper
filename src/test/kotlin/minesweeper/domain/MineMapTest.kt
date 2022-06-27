@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -10,5 +11,24 @@ class MineMapTest : StringSpec({
         mineMap.map().size shouldBe  10
         mineMap.map().all { it.size == 5 } shouldBe true
     }
+
+    "지뢰 맵의 높이, 너비는 0보다 커야 한다." {
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Map Size") {
+            MineMap.build(-1, 0)
+        }
+
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Map Size") {
+            MineMap.build(0, 0)
+        }
+
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Map Size") {
+            MineMap.build(10, 0)
+        }
+
+        shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Map Size") {
+            MineMap.build(0, 10)
+        }
+    }
+
 
 })
