@@ -20,7 +20,7 @@ object UserInput {
 
     fun printResult(mineMap: MineMap) {
         println("지뢰찾기 게임 시작")
-        for(i in mineMap.map().indices) {
+        for (i in mineMap.map().indices) {
             for (j in mineMap.map()[i].indices) {
                 if (mineMap.map()[i][j]) {
                     print("*")
