@@ -52,24 +52,23 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     companion object {
         fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {
-            val cells = initCells(width, height)
             val mineCells = mineMaker.createMines(width, height, numberOfMines)
-
-            mineCells.forEach { mine ->
-                val index = mine.position.y * width + mine.position.x
-                cells[index] = mine
-            }
-            return Cells(cells).apply { NearbyMineCounter.count(this) }
+            val minePositions = mineCells.map { it.position }
+            val emptyCells = createEmptyCells(width, height, minePositions)
+            return Cells(mineCells + emptyCells).apply { NearbyMineCounter.count(this) }
         }
 
-        private fun initCells(width: Int, height: Int): MutableList<Cell> {
-            val size = width * height
-            return MutableList(size) {
-                val x = it % width
-                val y = it / width
-                val position = Position(x, y)
-                Empty(position)
+        private fun createEmptyCells(width: Int, height: Int, minePositions: Iterable<Position>): List<Cell> {
+            val emptyCells = mutableListOf<Cell>()
+            repeat(width) { x ->
+                repeat(height) { y ->
+                    val position = Position(x, y)
+                    if (position !in minePositions) {
+                        emptyCells.add(Empty(position))
+                    }
+                }
             }
+            return emptyCells
         }
     }
 }
