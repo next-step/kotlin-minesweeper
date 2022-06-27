@@ -3,7 +3,14 @@ package domain
 data class Location(
     val row: LocationValue,
     val column: LocationValue,
-)
+) {
+    companion object {
+        fun of(row: Int, column: Int): Location? {
+            if (row < 0 || column < 0) return null
+            return Location(LocationValue(row), LocationValue(column))
+        }
+    }
+}
 
 @JvmInline
 value class LocationValue(val value: Int) {
