@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 object MineSweeper {
-    fun sweepe(map: List<List<Cell>>): List<List<Cell>> {
+    fun sweep(map: List<List<Cell>>): List<List<Cell>> {
         mineCellPositions(map)
             .forEach { (x, y) ->
                 map.getOrNull(x)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
