@@ -1,18 +1,26 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.Empty
+import minesweeper.domain.cell.Mine
 import minesweeper.domain.cell.Position
 
 class MineBoard private constructor(val cells: Cells) {
 
     fun open(position: Position): BoardStatus {
-        val boardStatus = cells.open(position)
-        return if (cells.hasClosedEmptyCell()) {
-            boardStatus
-        } else {
-            BoardStatus.CLEAR
+        val cell = cells.open(position)
+        if (cells.hasClosedEmptyCell()) {
+            return getBoardStatusByCell(cell)
         }
+        return BoardStatus.CLEAR
     }
+
+    private fun getBoardStatusByCell(cell: Cell) =
+        when (cell) {
+            is Mine -> BoardStatus.BOOM
+            is Empty -> BoardStatus.SAFE
+        }
 
     companion object {
         fun of(

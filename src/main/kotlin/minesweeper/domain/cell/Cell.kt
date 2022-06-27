@@ -1,6 +1,5 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.board.BoardStatus
 import minesweeper.domain.board.MineMaker
 
 sealed class Cell(val position: Position) {
@@ -19,13 +18,12 @@ sealed class Cell(val position: Position) {
 
 class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
-    fun open(position: Position): BoardStatus {
+    fun open(position: Position): Cell {
         val cell = findCell(position).open()
-        if (cell !is Empty) {
-            return BoardStatus.BOOM
+        if (cell is Empty) {
+            cell.openNearbyCells()
         }
-        cell.openNearbyCells()
-        return BoardStatus.SAFE
+        return cell
     }
 
     fun hasClosedEmptyCell() = cells.any { it is Empty && it.isClosed() }
