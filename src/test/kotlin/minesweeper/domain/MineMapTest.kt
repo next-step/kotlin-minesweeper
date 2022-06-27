@@ -46,4 +46,9 @@ class MineMapTest : StringSpec({
             MineMap(5, 5, -3)
         }
     }
+
+    "지뢰가 개수 확인" {
+        MineMap(5, 5, 0).map().flatten().count { it is MineCell } shouldBe 0
+        MineMap(5, 5, 1).map().flatten().count { it is MineCell } shouldBe 1
+    }
 })
