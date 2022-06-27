@@ -14,7 +14,7 @@ object NearbyMineCounter {
     }
 
     private fun Cells.accNearbyMine(mine: Mine) {
-        getNearbyCells(mine).forEach { cell ->
+        mine.getNearbyCells().forEach { cell ->
             cell.takeIf { it is Empty }
                 ?.let { (it as Empty).accNumberOfNearbyMines() }
         }

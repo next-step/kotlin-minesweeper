@@ -32,39 +32,22 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
         if (this.numberOfNearbyMines != 0) {
             return
         }
-        getNearbyCells(this).forEach { nearbyCell ->
+        this.getNearbyCells().forEach { nearbyCell ->
             nearbyCell
                 .takeIf { nearbyCell is Empty && nearbyCell.isClosed() }
                 ?.let { open(nearbyCell.position) }
         }
     }
 
-    fun getNearbyCells(cell: Cell): Cells {
-        val width = last().position.x + 1
-        val height = last().position.y + 1
-        val nearbyPositions = getNearbyPositions(cell, width, height)
-
+    fun Cell.getNearbyCells(): Cells {
+        val nearbyPositions = cells
+            .map { it.position }
+            .intersect(this.position.getNearbyPosition())
         return Cells(nearbyPositions.map { findCell(it) })
     }
 
-    private fun getNearbyPositions(
-        cell: Cell,
-        width: Int,
-        height: Int,
-    ) = NearbyDirection.values().mapNotNull {
-        val nearbyX = cell.position.x + it.x
-        val nearbyY = cell.position.y + it.y
-        val nearbyIndex = nearbyY * width + nearbyX
-
-        if (nearbyX.isBetweenRange(width) && nearbyY.isBetweenRange(height) && nearbyIndex < size) {
-            Position(nearbyX, nearbyY)
-        } else null
-    }
-
-    private fun findCell(position: Position) =
+    private fun findCell(position: Position): Cell =
         cells.find { it.position == position } ?: throw IllegalArgumentException("no cells found in that position.")
-
-    private fun Int.isBetweenRange(limit: Int) = this in 0 until limit
 
     companion object {
         fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {

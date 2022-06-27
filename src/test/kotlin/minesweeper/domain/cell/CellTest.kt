@@ -42,7 +42,7 @@ internal class CellTest {
 
     @ParameterizedTest
     @MethodSource("인접한 위치 케이스")
-    fun `지뢰가 없는 인접한 셀이 모두 열리게 된다`(width: Int, height: Int, positions: Positions) {
+    fun `지뢰가 없는 인접한 셀이 모두 열리게 된다`(width: Int, height: Int, positions: Set<Position>) {
         // given
         val cells = Cells(positions.map { Empty(it) })
 
@@ -73,27 +73,23 @@ internal class CellTest {
         fun `인접한 위치 케이스`() = Stream.of(
             Arguments.of(
                 1, 5,
-                Positions.from(
-                    listOf(
-                        Position(0, 0),
-                        Position(0, 1),
-                        Position(0, 2),
-                        Position(0, 3),
-                        Position(0, 4)
-                    )
+                setOf(
+                    Position(0, 0),
+                    Position(0, 1),
+                    Position(0, 2),
+                    Position(0, 3),
+                    Position(0, 4)
                 )
             ),
             Arguments.of(
                 3, 2,
-                Positions.from(
-                    listOf(
-                        Position(0, 0),
-                        Position(1, 0),
-                        Position(2, 0),
-                        Position(0, 1),
-                        Position(1, 1),
-                        Position(2, 1)
-                    )
+                setOf(
+                    Position(0, 0),
+                    Position(1, 0),
+                    Position(2, 0),
+                    Position(0, 1),
+                    Position(1, 1),
+                    Position(2, 1)
                 )
             )
         )
