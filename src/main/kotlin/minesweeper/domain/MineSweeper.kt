@@ -7,6 +7,8 @@ object MineSweeper {
                 if (map[x][y].isMineCell) {
                     map.getOrNull(x)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
                     map.getOrNull(x)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
+                    map.getOrNull(x - 1)?.getOrNull(y)?.let { it.mineCountAround++ }
+                    map.getOrNull(x + 1)?.getOrNull(y)?.let { it.mineCountAround++ }
                 }
             }
         }
