@@ -8,6 +8,6 @@ fun main() {
     val width = UserInput.inputWidth().also { println() }
     val mineCount = UserInput.inputMineCount().also { println() }
 
-    val mineMap = MineMap.build(height, width, mineCount)
+    val mineMap = MineMap(height, width, mineCount)
     UserInput.printResult(mineMap)
 }
