@@ -8,35 +8,35 @@ data class Coordinate(val x: Int, val y: Int) {
         }
     }
 
-    fun aroundCoordinates(): List<Coordinate> {
-        val xAroundCoordinates = nearRange(x).map { Coordinate(it, y) }
-        val yAroundCoordinates = nearRange(y).map { Coordinate(x, it) }
+    fun adjacentCoordinates(): List<Coordinate> {
+        val xAdjacentCoordinates = aroundRange(x).map { Coordinate(it, y) }
+        val yAdjacentCoordinates = aroundRange(y).map { Coordinate(x, it) }
 
-        return (xAroundCoordinates + yAroundCoordinates).filterNot { it == this }
+        return (xAdjacentCoordinates + yAdjacentCoordinates).filterNot { it == this }
     }
 
-    fun nearCoordinates(): List<Coordinate> {
-        return nearRange(x).flatMap { nearCoordinates(it) }
+    fun aroundCoordinates(): List<Coordinate> {
+        return aroundRange(x).flatMap { aroundCoordinates(it) }
             .filterNot { it == this }
     }
 
-    private fun nearCoordinates(x: Int): List<Coordinate> {
-        return nearRange(y).map { Coordinate(x, it) }
+    private fun aroundCoordinates(x: Int): List<Coordinate> {
+        return aroundRange(y).map { Coordinate(x, it) }
     }
 
-    private fun nearRange(index: Int): IntRange {
-        val maxNearIndex = index + NEAR_INDEX
+    private fun aroundRange(index: Int): IntRange {
+        val maxAroundIndex = index + AROUND_INDEX
 
         return if (index == START_INDEX) {
-            index..maxNearIndex
+            index..maxAroundIndex
         } else {
-            (index - NEAR_INDEX)..maxNearIndex
+            (index - AROUND_INDEX)..maxAroundIndex
         }
     }
 
     companion object {
         private const val START_INDEX = 0
-        private const val NEAR_INDEX = 1
+        private const val AROUND_INDEX = 1
 
         fun listOf(height: Int, width: Int): List<Coordinate> {
             return (START_INDEX until height).flatMap { y ->
