@@ -42,7 +42,7 @@ class CellsTest : DescribeSpec({
             it("요청한 위치의 Cell 을 리턴한다.") {
                 val cells = Cells(listOf(Cell.Block(Coordinate(0, 0)), Cell.Block(Coordinate(0, 1))))
 
-                cells.findCell(Coordinate(0, 0)) shouldNotBe null
+                cells.findCellOrNull(Coordinate(0, 0)) shouldNotBe null
             }
         }
     }

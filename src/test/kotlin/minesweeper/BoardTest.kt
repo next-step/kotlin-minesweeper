@@ -2,6 +2,7 @@ package minesweeper
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Area
 import minesweeper.domain.Board
@@ -34,11 +35,13 @@ class BoardTest : DescribeSpec({
 
                 board.open(Coordinate(0, 0))
 
-                board.cells.count { it.isOpened() } shouldBe 4
-                board.cells.findCell(Coordinate(0, 0))!!.isOpened() shouldBe true
-                board.cells.findCell(Coordinate(0, 1))!!.isOpened() shouldBe true
-                board.cells.findCell(Coordinate(1, 0))!!.isOpened() shouldBe true
-                board.cells.findCell(Coordinate(1, 1))!!.isOpened() shouldBe true
+                board.getAllCell().count { it.isOpened() } shouldBe 4
+                board.getAllCell() shouldContainAll listOf(
+                    OpenedCell(Coordinate(0, 0), 0),
+                    OpenedCell(Coordinate(1, 0), 1),
+                    OpenedCell(Coordinate(0, 1), 1),
+                    OpenedCell(Coordinate(1, 1), 2)
+                )
             }
         }
 
@@ -96,8 +99,8 @@ class BoardTest : DescribeSpec({
                 val board = SampleBoard(Area(3, 3), MineCount(2), mines = listOf(Coordinate(0, 2), Coordinate(2, 1)))
 
                 board.openAllMine()
-                board.cells.filterIsInstance<Cell.Mine>().all(Cell::isOpened)
-                board.cells.filterIsInstance<Cell.Block>().none(Cell::isOpened)
+                board.getAllCell().filterIsInstance<Cell.Mine>().all(Cell::isOpened)
+                board.getAllCell().filterIsInstance<Cell.Block>().none(Cell::isOpened)
             }
         }
     }

@@ -2,11 +2,11 @@ package minesweeper.domain
 
 class Cells(private val list: List<Cell>) : List<Cell> by list {
 
-    fun isAllBlockOpened(): Boolean = list.filterIsInstance<Cell.Block>().all(Cell::isOpened)
+    fun isAllBlockOpened(): Boolean = filterIsInstance<Cell.Block>().all(Cell::isOpened)
 
     fun openAllMine() {
-        list.filterIsInstance<Cell.Mine>().forEach(Cell::open)
+        filterIsInstance<Cell.Mine>().forEach(Cell::open)
     }
 
-    fun findCell(coordinate: Coordinate) = list.find { it.coordinate == coordinate }
+    fun findCellOrNull(coordinate: Coordinate): Cell? = find { it.coordinate == coordinate }
 }

@@ -37,7 +37,7 @@ object UI {
     }
 
     fun drawBoard(board: Board) {
-        board.cells.groupByColumn().forEach { (_, row) ->
+        board.getAllCell().groupByColumn().forEach { (_, row) ->
             println(row.joinToString(" ") { convertCellMark(it) })
         }
     }
