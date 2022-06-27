@@ -7,7 +7,7 @@ class MineMap(width: Int, height: Int, mineCount: Int = 0) {
     init {
         require(width > 0 && height > 0) { "Invalid Mine Map Size" }
         require(mineCount >= 0 && width * height >= mineCount) { "Invalid Mine Count" }
-        map = Array(width * height) { Cell() }
+        map = Array<Cell>(width * height) { NumberCell() }
             .apply { fill(MineCell(), 0, mineCount) }
             .apply { shuffle() }
             .toList()
