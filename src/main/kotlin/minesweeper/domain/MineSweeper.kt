@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 object MineSweeper {
+    // TODO 리팩토링 (STEP4) - 연산 로직 개선
     fun sweep(map: List<List<Cell>>): List<List<Cell>> {
         mineCellPositions(map)
             .forEach { (x, y) ->
