@@ -19,8 +19,7 @@ object MineSweeper {
 
     private fun mineCellPositions(map: List<List<Cell>>): List<Pair<Int, Int>> {
         return map.flatMapIndexed { x: Int, cells: List<Cell> ->
-            cells.mapIndexedNotNull { y: Int, cell: Cell -> if (cell is MineCell) y else null }
-                .map { y -> Pair(x, y) }
+            cells.mapIndexedNotNull { y: Int, cell: Cell -> if (cell is MineCell) Pair(x, y) else null }
         }
     }
 }
