@@ -11,6 +11,15 @@ object InputView {
 
     fun getHeight(readStringValue: () -> String? = { readlnOrNull() }): Int {
         println(Messages.WRITE_HEIGHT)
+        return getInt(readStringValue)
+    }
+
+    fun getWidth(readStringValue: () -> String? = { readlnOrNull() }): Int {
+        println(Messages.WRITE_WIDTH)
+        return getInt(readStringValue)
+    }
+
+    private fun getInt(readStringValue: () -> String? = { readlnOrNull() }): Int {
         val input = readStringValue()
         require(!input.isNullOrBlank()) { ErrorMessages.IS_NULL_OR_EMPTY }
         require(input.toIntOrNull() != null) { ErrorMessages.IS_NOT_NUMBER }
