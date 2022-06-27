@@ -14,7 +14,7 @@ class LocationTest : DescribeSpec({
             val row = 10
             val column = 10
             it("정상 위치를 반환한다") {
-                Location.ofOrNull(row, column) shouldBe location(10, 10)
+                Location.nullable(row, column) shouldBe location(10, 10)
             }
         }
         context("0보다 작은 가로, 세로 값이 주어지면") {
@@ -26,7 +26,7 @@ class LocationTest : DescribeSpec({
             )
             it("null을 반환한다") {
                 table.forAll { row, column ->
-                    Location.ofOrNull(row, column) shouldBe null
+                    Location.nullable(row, column) shouldBe null
                 }
             }
         }

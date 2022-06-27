@@ -73,7 +73,9 @@ class MatrixTest : DescribeSpec({
             val cells = cells(dimension)
             val matrix = Matrix(dimension, cells)
             it("해당 칸 주변 지뢰의 개수를 구할 수 없다") {
-                matrix.countMinesAround(location(10, 10)) shouldBe -1
+                shouldThrowExactly<IllegalArgumentException> {
+                    matrix.countMinesAround(location(10, 10))
+                }
             }
         }
     }

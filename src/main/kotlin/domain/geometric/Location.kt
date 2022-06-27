@@ -6,7 +6,7 @@ data class Location(
 ) {
 
     companion object {
-        fun ofOrNull(row: Int, column: Int): Location? {
+        fun nullable(row: Int, column: Int): Location? {
             if (row < 0 || column < 0) return null
             return Location(LocationValue(row), LocationValue(column))
         }

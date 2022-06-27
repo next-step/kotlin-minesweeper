@@ -20,18 +20,25 @@ class Matrix(
     }
 
     fun countMinesAround(location: Location): Int {
-        if (location !in this) return -1
-        return Direction.values().count {
-            val aroundLocation = it.getAroundLocationOrNull(location)
-            if (aroundLocation == null || aroundLocation !in this) {
-                return@count false
+        require(location in this) { "주어진 위치가 행렬을 벗어났습니다. 행렬 = ${dimension.width}x${dimension.height}, 주어진 위치 = $location" }
+        return Direction.values()
+            .count {
+                it.getAroundLocation(location)
+                    .isValidCountingTarget()
             }
-            cellsByLocation[aroundLocation] is Cell.Mine
-        }
     }
 
     private operator fun contains(location: Location): Boolean {
         return cellsByLocation[location] != null
+    }
+
+    private fun Location?.isValidCountingTarget(): Boolean {
+        if (this == null || this notIn this@Matrix) return false
+        return cellsByLocation[this] is Cell.Mine
+    }
+
+    private infix fun Location.notIn(matrix: Matrix): Boolean {
+        return !matrix.cellsByLocation.contains(this)
     }
 
     companion object {
@@ -67,9 +74,9 @@ private enum class Direction(val rowPower: Int, val columnPower: Int) {
     LEFT(0, -1),
     TOP_LEFT(-1, -1);
 
-    fun getAroundLocationOrNull(location: Location): Location? {
+    fun getAroundLocation(location: Location): Location? {
         val row = location.row.value + rowPower
         val column = location.column.value + columnPower
-        return Location.ofOrNull(row, column)
+        return Location.nullable(row, column)
     }
 }
