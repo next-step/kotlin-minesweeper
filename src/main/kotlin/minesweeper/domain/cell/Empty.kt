@@ -2,12 +2,13 @@ package minesweeper.domain.cell
 
 class Empty(
     position: Position,
-    private var _numberOfNearbyMines: Int = 0
+    numberOfNearbyMines: Int = 0
 ) : Cell(position) {
 
-    val numberOfNearbyMines get() = _numberOfNearbyMines
+    var numberOfNearbyMines: Int = numberOfNearbyMines
+        private set
 
     fun accNumberOfNearbyMines() {
-        _numberOfNearbyMines += 1
+        numberOfNearbyMines += 1
     }
 }
