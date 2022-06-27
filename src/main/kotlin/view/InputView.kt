@@ -1,5 +1,6 @@
 package view
 
+import constants.ErrorMessages
 import constants.Messages
 
 /**
@@ -11,6 +12,9 @@ object InputView {
     fun getHeight(readStringValue: () -> String? = { readlnOrNull() }): Int {
         println(Messages.WRITE_HEIGHT)
         val input = readStringValue()
-        return input!!.toInt()
+        require(!input.isNullOrBlank()) { ErrorMessages.IS_NULL_OR_EMPTY }
+        require(input.toIntOrNull() != null) { ErrorMessages.IS_NOT_NUMBER }
+        require(input.toInt() > 0) { ErrorMessages.IS_UNDER_ZERO }
+        return input.toInt()
     }
 }

@@ -8,7 +8,7 @@
 
 ## TODO LIST 
 - [x] 높이를 입력받는다.
-- [ ] 높이가 숫자가 아니거나 양수가 아닌경우 IllegalArgumentException을 던진다.
+- [x] 높이가 숫자가 아니거나 양수가 아닌경우 IllegalArgumentException을 던진다.
 - [ ] 너비를 입력받는다.
 - [ ] 너비가 숫자가 아니거나 양수가 아닌경우 IllegalArgumentException을 던진다.
 - [ ] 지뢰 갯수를 입력받는다.
