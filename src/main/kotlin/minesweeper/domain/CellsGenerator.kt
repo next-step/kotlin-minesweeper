@@ -1,14 +1,14 @@
 package minesweeper.domain
 
 interface CellsGenerator {
-    fun generate(area: Area, mineCount: MineCount): List<Cell>
+    fun generate(area: Area, mineCount: MineCount): Cells
 }
 
 class DefaultCellsGenerator(private val mineSpawner: MineSpawner = RandomMineSpawner) : CellsGenerator {
 
-    override fun generate(area: Area, mineCount: MineCount): List<Cell> {
+    override fun generate(area: Area, mineCount: MineCount): Cells {
         val mineCoordinates = mineSpawner.spawn(area, mineCount)
-        return generateCells(area, mineCoordinates)
+        return Cells(generateCells(area, mineCoordinates))
     }
 
     private fun generateCells(area: Area, mineCoordinates: Coordinates): List<Cell> {
