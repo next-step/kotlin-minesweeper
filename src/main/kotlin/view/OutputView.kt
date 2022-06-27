@@ -10,16 +10,16 @@ object OutputView {
         val cells = board.cells
         val width = board.dimension.width
 
-        cells.forEachIndexed { i, cell ->
-            if (i % width == 0) println()
+        cells.forEach { location, cell ->
+            if (location.column.value % width == 0) println()
             print(cell.display())
         }
     }
 
     private fun Cell.display(): String {
         return when (this) {
-            is Cell.Mine -> "*"
-            is Cell.Ground -> "C"
+            is Cell.Mine -> MINE_SYMBOL
+            is Cell.Ground -> GROUND_SYMBOL
         }
     }
 
