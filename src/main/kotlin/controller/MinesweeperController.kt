@@ -11,7 +11,7 @@ import view.output.converter.MinesweeperConverter
 object MinesweeperController {
     private const val GUIDANCE_MESSAGE_START_MINESWEEPER = "지뢰찾기 게임 시작"
 
-    fun execute(factory: MinesweeperFactory) {
+    fun startGame(factory: MinesweeperFactory) {
         val minesweeperInfo = MinesweeperInfo(
             rowCount = getUserInput(InputType.ROW),
             columnCount = getUserInput(InputType.COLUMN),
