@@ -1,4 +1,4 @@
-interface Square {
+sealed interface Square {
     fun isMine(): Boolean
     fun display(): String
 }
