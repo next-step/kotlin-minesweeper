@@ -1,4 +1,4 @@
-package view
+package controller
 
 import domain.MinesweeperFactory
 import domain.MinesweeperInfo
@@ -8,7 +8,7 @@ import view.input.converter.StringToIntConverter
 import view.output.OutputView
 import view.output.converter.MinesweeperConverter
 
-object MinesweeperLayout {
+object MinesweeperController {
     private const val GUIDANCE_MESSAGE_START_MINESWEEPER = "지뢰찾기 게임 시작"
 
     fun execute(factory: MinesweeperFactory) {

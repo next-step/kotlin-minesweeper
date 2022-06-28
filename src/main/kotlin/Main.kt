@@ -1,6 +1,6 @@
+import controller.MinesweeperController
 import domain.RandomMinesweeperFactory
-import view.MinesweeperLayout
 
 fun main() {
-    MinesweeperLayout.execute(RandomMinesweeperFactory)
+    MinesweeperController.execute(RandomMinesweeperFactory)
 }
