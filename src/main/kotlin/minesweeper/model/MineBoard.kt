@@ -3,6 +3,9 @@ package minesweeper.model
 class MineBoard(
     val board: List<Cells>
 ) {
+    val mineCount
+        get() = board.sumOf { it.mineCount }
+
     fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
         board.sumOf { it.mineCountIn(positions) }
 

@@ -27,6 +27,8 @@ data class Cell(
 
     fun isMine(): Boolean = type.isMine()
 
+    fun isMineAndOpened(): Boolean = isMine() && isOpened
+
     fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
 
     companion object {
