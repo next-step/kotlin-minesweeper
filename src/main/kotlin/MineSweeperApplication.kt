@@ -10,5 +10,5 @@ fun main() {
 
     val mineSweeperGameBoard = MineSweeperGameBoard(MineSweeperBoardGenerator(info))
 
-    Response.startView(mineSweeperGameBoard.board)
+//    Response.startView(mineSweeperGameBoard.board)
 }

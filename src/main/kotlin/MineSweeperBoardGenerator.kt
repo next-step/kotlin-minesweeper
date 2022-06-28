@@ -1,20 +1,28 @@
+import domain.Point
+
 class MineSweeperBoardGenerator(private val gameSettingInfo: GameSettingInfo) : BoardGenerator {
 
-    override fun create(): List<Squares> {
-        val shuffledSquares = createSquares()
+    override fun create(): Map<Point, Square> {
+        val height = gameSettingInfo.height
+        val width = gameSettingInfo.width
 
-        val board: MutableList<Squares> = mutableListOf()
+        val shuffledSquares = createSquares().toMutableList()
 
-        repeat(gameSettingInfo.height) {
-            val squaresLine = shuffledSquares.subList(FIRST_INDEX, gameSettingInfo.width)
-            board.add(Squares(squaresLine.toList()))
-            shuffledSquares.removeAll(squaresLine)
+        val board: MutableMap<Point, Square> = mutableMapOf()
+
+        for (i in FIRST_INDEX until height) {
+            for (j in FIRST_INDEX until width) {
+                val point = Point(i, j)
+                board[point] = shuffledSquares.removeFirst()
+                println(board[point].toString())
+                println(board.size)
+            }
         }
 
-        return board.toList()
+        return board.toMap()
     }
 
-    private fun createSquares(): MutableList<Square> {
+    private fun createSquares(): List<Square> {
         val squares: MutableList<Square> = mutableListOf()
         repeat(gameSettingInfo.mineCount) {
             squares.add(Mine())
@@ -25,7 +33,7 @@ class MineSweeperBoardGenerator(private val gameSettingInfo: GameSettingInfo) : 
             squares.add(NonMine())
         }
 
-        return squares.shuffled().toMutableList()
+        return squares.shuffled()
     }
 
     companion object {

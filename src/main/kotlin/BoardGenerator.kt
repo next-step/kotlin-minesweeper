@@ -1,4 +1,6 @@
+import domain.Point
+
 interface BoardGenerator {
 
-    fun create(): List<Squares>
+    fun create(): Map<Point, Square>
 }

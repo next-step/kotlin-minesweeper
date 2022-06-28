@@ -1,5 +1,7 @@
+import domain.Point
+
 class MineSweeperGameBoard(boardGenerator: BoardGenerator) {
 
-    val board: List<Squares> = boardGenerator.create()
+    val board: Map<Point, Square> = boardGenerator.create()
 
 }
