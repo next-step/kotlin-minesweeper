@@ -31,7 +31,7 @@ class LocationsTest {
     ) {
         val locations = Locations(meta)
 
-        assertThat(locations.pairs).isEqualTo(expected)
+        assertThat(locations.locations).isEqualTo(expected)
     }
 
     @Test
@@ -39,14 +39,14 @@ class LocationsTest {
         val locations = Locations(MineMapMeta(2, 3))
 
         val strategyPickOrderly = PickStrategy { target, count ->
-            target.pairs
+            target.locations
                 .take(count)
                 .forEach { it.pick() }
         }
 
         locations.pickMines(3, strategyPickOrderly)
 
-        val pairs = locations.pairs
+        val pairs = locations.locations
 
         assertThat(pairs.filter { it.isMine }).isEqualTo(
             listOf(Location(0, 0), Location(0, 1), Location(1, 0))
@@ -61,7 +61,7 @@ class LocationsTest {
     fun `지뢰 위치 확인`() {
         val locations = Locations(MineMapMeta(2, 3))
 
-        locations.pairs
+        locations.locations
             .filter { it.x == 1 }
             .forEach { it.pick() }
 

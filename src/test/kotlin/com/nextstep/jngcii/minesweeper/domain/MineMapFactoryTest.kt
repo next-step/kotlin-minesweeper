@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class MineMapFactoryTest {
     private val strategyPickOrderly = PickStrategy { target, count ->
-        target.pairs
+        target.locations
             .take(count)
             .forEach { it.pick() }
     }

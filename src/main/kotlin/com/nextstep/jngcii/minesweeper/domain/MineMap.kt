@@ -9,7 +9,7 @@ value class MineMap private constructor(val rows: List<Row>) {
                 locations.meta.columnCount
             )
 
-            locations.pairs.forEach {
+            locations.locations.forEach {
                 rows[it.y][it.x] = locations.check(it.x, it.y)
             }
 

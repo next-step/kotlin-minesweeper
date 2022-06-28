@@ -40,7 +40,7 @@ class MineMapTest {
 
         this.forEach { location ->
             if (location.isMine) {
-                locations.pairs.find { it.x == location.x && it.y == location.y }?.pick()
+                locations.locations.find { it.x == location.x && it.y == location.y }?.pick()
             }
         }
 
