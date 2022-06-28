@@ -3,6 +3,7 @@ package minesweeper.model
 data class Cells(
     val cells: List<Cell>
 ) : List<Cell> by cells {
+
     val mineCount
         get(): Int = cells.count { it.isMine() }
 

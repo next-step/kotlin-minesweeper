@@ -2,7 +2,8 @@ package minesweeper.model
 
 class MineBoard(
     val board: List<Cells>
-) {
+) : List<Cells> by board {
+
     val mineCount
         get() = board.sumOf { it.mineCount }
 

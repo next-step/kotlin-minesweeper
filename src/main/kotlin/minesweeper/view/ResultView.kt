@@ -1,7 +1,11 @@
 package minesweeper.view
 
-import minesweeper.model.MineBoardResult
+import minesweeper.model.GameResult
 
 interface ResultView {
-    fun printMineBoard(boardResult: MineBoardResult)
+    fun printMinesweeperGameStartMessage()
+
+    fun printMineBoard(gameResult: GameResult)
+
+    fun printMinesweeperGameResult(gameResult: GameResult)
 }

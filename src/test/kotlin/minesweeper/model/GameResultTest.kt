@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-@DisplayName("지뢰판 결과 테스트")
-class MineBoardResultTest {
+@DisplayName("지뢰찾기 게임 결과 테스트")
+class GameResultTest {
 
     private lateinit var `p(0,0)`: Cell
     private lateinit var `p(1,0)`: Cell
@@ -47,10 +47,10 @@ class MineBoardResultTest {
     }
 
     @Test
-    fun `지뢰판 결과 생성시 지뢰가 아닌데 오픈 됐으면 주변 8개 지뢰의 개수, 닫혀 있으면 C로 표시`() {
+    fun `지뢰찾기 게임 결과 생성시 지뢰가 아닌데 오픈 됐으면 주변 8개 지뢰의 개수, 닫혀 있으면 C로 표시`() {
         // when
         `p(0,0)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = MineBoardResult.from(board)
+        val boardResult = GameResult.from(board)
 
         // then
         assertAll(
@@ -69,22 +69,22 @@ class MineBoardResultTest {
     }
 
     @Test
-    fun `지뢰판 결과 생성시 지뢰인데 오픈 됐으면 게임에서 진 상태`() {
+    fun `지뢰찾기 게임 결과 생성시 지뢰인데 오픈 됐으면 게임에서 진 상태`() {
         // when
         `p(1,2)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = MineBoardResult.from(board)
+        val boardResult = GameResult.from(board)
 
         // then
         assertThat(boardResult.gameStatus).isEqualTo(GameStatus.LOST)
     }
 
     @Test
-    fun `지뢰판 결과 생성시 지뢰를 제외한 모든 셀을 오픈했으면 게임에서 이긴 상태`() {
+    fun `지뢰찾기 게임 결과 생성시 지뢰를 제외한 모든 셀을 오픈했으면 게임에서 이긴 상태`() {
         // when
         `p(0,0)`.openMeAndSurroundingNonMineCells(board)
         `p(0,2)`.openMeAndSurroundingNonMineCells(board)
         `p(2,2)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = MineBoardResult.from(board)
+        val boardResult = GameResult.from(board)
 
         // then
         assertThat(boardResult.gameStatus).isEqualTo(GameStatus.WIN)
