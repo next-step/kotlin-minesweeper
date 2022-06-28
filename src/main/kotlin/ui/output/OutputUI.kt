@@ -1,29 +1,21 @@
 package ui.output
 
-import domain.Cell
-import ui.output.dto.BoardDto
 import ui.output.dto.Line
+import ui.output.dto.MatrixDto
 
 object OutputUI {
 
-    fun showBoard(boardDto: BoardDto) {
-        println("지뢰찾기 게임 시작")
-        boardDto.lines.forEach {
-            printLine(it)
-            println()
+    fun showBoard(matrixDto: MatrixDto): Unit = with(StringBuilder()) {
+        appendLine("지뢰찾기 게임 시작")
+        matrixDto.lines.forEach {
+            appendLine(buildLine(it))
         }
+        print(this)
     }
 
-    private fun printLine(line: Line) {
-        line.cells.forEach {
-            print(it.display())
-        }
-    }
-
-    private fun Cell.display(): String {
-        return when (this) {
-            is Cell.Mine -> "*"
-            is Cell.Safe -> "C"
+    private fun buildLine(line: Line) = buildString {
+        line.displayedCells.forEach {
+            append("${it.displayView} ")
         }
     }
 }

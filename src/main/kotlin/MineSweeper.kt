@@ -1,9 +1,8 @@
-import domain.Board
 import domain.Matrix
 import domain.geometric.Dimension
 import ui.input.InputUI
 import ui.output.OutputUI
-import ui.output.dto.BoardDto
+import ui.output.dto.MatrixDto
 
 object MineSweeper {
 
@@ -14,8 +13,8 @@ object MineSweeper {
 
         val dimension = Dimension(width = width, height = height)
 
-        val board = Board(Matrix.of(dimension, numberOfMines))
+        val matrix = Matrix.of(dimension, numberOfMines)
 
-        OutputUI.showBoard(BoardDto.from(board))
+        OutputUI.showBoard(MatrixDto.from(matrix))
     }
 }

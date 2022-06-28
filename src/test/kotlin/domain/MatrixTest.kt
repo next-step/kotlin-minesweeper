@@ -51,5 +51,32 @@ class MatrixTest : DescribeSpec({
                 }
             }
         }
+
+        context("행렬에 포함된 위치가 주어지면") {
+            val cells = cells(dimension).apply {
+                replaceToMine(location(0, 0))
+                replaceToMine(location(0, 1))
+                replaceToMine(location(0, 2))
+                replaceToMine(location(1, 0))
+                replaceToMine(location(1, 2))
+                replaceToMine(location(2, 0))
+                replaceToMine(location(2, 1))
+                replaceToMine(location(2, 2))
+            }
+            val matrix = Matrix(dimension, cells)
+            it("해당 칸 주변 지뢰의 개수를 구할 수 있다") {
+                matrix.countMinesAround(location(1, 1)) shouldBe 8
+            }
+        }
+
+        context("행렬을 벗어난 위치가 주어지면") {
+            val cells = cells(dimension)
+            val matrix = Matrix(dimension, cells)
+            it("해당 칸 주변 지뢰의 개수를 구할 수 없다") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    matrix.countMinesAround(location(10, 10))
+                }
+            }
+        }
     }
 })

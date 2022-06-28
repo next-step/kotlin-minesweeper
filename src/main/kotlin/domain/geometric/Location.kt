@@ -5,16 +5,11 @@ data class Location(
     val column: LocationValue,
 ) {
 
-    fun isLocatedOutside(other: Location): Boolean {
-        return row >= other.row && column >= other.column
-    }
-
-    fun isLocatedInside(other: Location): Boolean {
-        return row <= other.row && column <= other.column
-    }
-
     companion object {
-        val ORIGIN = Location(LocationValue(0), LocationValue(0))
+        fun nullable(row: Int, column: Int): Location? {
+            if (row < 0 || column < 0) return null
+            return Location(LocationValue(row), LocationValue(column))
+        }
     }
 }
 

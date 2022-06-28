@@ -16,15 +16,12 @@ data class Dimension(
         val rows = (0 until height).toList()
         val columns = (0 until width).toList()
         return rows.flatMap { row ->
-            mapToLocation(columns, row)
+            columns.mapToLocation(row)
         }
     }
 
-    private fun mapToLocation(
-        columns: List<Int>,
-        row: Int
-    ): List<Location> = columns.map { col ->
-        Location(LocationValue(row), LocationValue(col))
+    private fun List<Int>.mapToLocation(row: Int): List<Location> {
+        return this.map { col -> Location(LocationValue(row), LocationValue(col)) }
     }
 
     fun isFilled(locations: List<Location>): Boolean {
