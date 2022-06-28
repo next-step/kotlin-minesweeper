@@ -6,8 +6,6 @@ data class Cells(
     val mineCount
         get(): Int = cells.count { it.isMine() }
 
-    fun generateCellsSortedByPosition(): Cells = Cells(cells.sortedBy { it.position })
-
     fun take(startIndex: Int, endIndex: Int): Cells = cells.subList(startIndex, endIndex).let(::Cells)
 
     fun mineCountIn(surroundingPositions: Set<CellPosition>): Int =
@@ -26,7 +24,10 @@ data class Cells(
                 Cell.nonMine(cellPositions[mineCellCount + it])
             }
 
-            return Cells(mineCells.plus(closeCells))
+            val sortedCells = mineCells.plus(closeCells)
+                .sortedBy { it.position }
+
+            return Cells(sortedCells)
         }
     }
 }

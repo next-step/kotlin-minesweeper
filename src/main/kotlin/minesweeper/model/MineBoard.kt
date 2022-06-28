@@ -12,9 +12,8 @@ class MineBoard(
             val shuffledCellPositions = cellPositions.generateShuffledPositions()
 
             val cells = Cells.of(shuffledCellPositions, boardCreateDto.mineCount)
-            val sortedCells = cells.generateCellsSortedByPosition()
 
-            return cellsToBoard(sortedCells, boardCreateDto.width, boardCreateDto.height)
+            return cellsToBoard(cells, boardCreateDto.width, boardCreateDto.height)
         }
 
         private fun cellsToBoard(cells: Cells, width: Int, height: Int): MineBoard =
