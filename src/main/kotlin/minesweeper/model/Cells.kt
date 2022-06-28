@@ -11,8 +11,8 @@ data class Cells(
     fun mineCountIn(positions: Set<CellPosition>): Int =
         cells.count { it.isMineIn(positions) }
 
-    fun findUnopenedCellsIn(positions: Set<CellPosition>): List<Cell> =
-        cells.filter { it.isUnopenedAndIn(positions) }
+    fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
+        cells.filter { it.isClosedAndIn(positions) }
 
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {

@@ -19,15 +19,15 @@ data class Cell(
             return
         }
 
-        val surroundingUnopenedNonMineCells = board.findUnopenedCellsIn(surroundingPositions)
-        surroundingUnopenedNonMineCells.forEach { it.openMeAndSurroundingNonMineCells(board) }
+        val surroundingClosedNonMineCells = board.findClosedCellsIn(surroundingPositions)
+        surroundingClosedNonMineCells.forEach { it.openMeAndSurroundingNonMineCells(board) }
     }
 
     fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
 
     fun isMine(): Boolean = type.isMine()
 
-    fun isUnopenedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
+    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
 
     companion object {
         fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)

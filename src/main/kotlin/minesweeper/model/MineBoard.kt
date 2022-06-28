@@ -6,8 +6,8 @@ class MineBoard(
     fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
         board.sumOf { it.mineCountIn(positions) }
 
-    fun findUnopenedCellsIn(positions: Set<CellPosition>): List<Cell> =
-        board.flatMap { it.findUnopenedCellsIn(positions) }
+    fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
+        board.flatMap { it.findClosedCellsIn(positions) }
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
