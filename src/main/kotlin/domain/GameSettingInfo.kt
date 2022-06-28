@@ -8,8 +8,12 @@ import constants.ErrorMessages
  */
 data class GameSettingInfo(val height: Int, val width: Int, val mineCount: Int) {
     init {
-        require(height > 0) { ErrorMessages.IS_UNDER_ZERO }
-        require(width > 0) { ErrorMessages.IS_UNDER_ZERO }
-        require(mineCount >= 0) { ErrorMessages.IS_UNDER_ZERO }
+        require(height > ZERO_INDEX) { ErrorMessages.IS_UNDER_ZERO }
+        require(width > ZERO_INDEX) { ErrorMessages.IS_UNDER_ZERO }
+        require(mineCount >= ZERO_INDEX) { ErrorMessages.IS_UNDER_ZERO }
+    }
+
+    companion object {
+        private const val ZERO_INDEX = 0
     }
 }
