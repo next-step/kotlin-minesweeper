@@ -9,3 +9,4 @@
 
 # 피드백
 - 좌표를 키 값으로 Map Collection 활용
+- 응답 값 List -> Map 으로 수정

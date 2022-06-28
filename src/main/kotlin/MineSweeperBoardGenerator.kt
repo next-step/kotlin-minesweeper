@@ -14,8 +14,6 @@ class MineSweeperBoardGenerator(private val gameSettingInfo: GameSettingInfo) : 
             for (j in FIRST_INDEX until width) {
                 val point = Point(i, j)
                 board[point] = shuffledSquares.removeFirst()
-                println(board[point].toString())
-                println(board.size)
             }
         }
 

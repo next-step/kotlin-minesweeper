@@ -1,14 +1,22 @@
 package view
 
-import Squares
+import GameSettingInfo
+import Square
+import domain.Point
+
+private const val FIRST_INDEX = 0
 
 object Response {
 
-    fun startView(board: List<Squares>) {
+    fun startView(board: Map<Point, Square>, info: GameSettingInfo) {
         println("지뢰찾기 게임 시작")
 
-        board.forEach { squares ->
-            println(squares.squares.joinToString(" ") { it.display() })
+        for (i in FIRST_INDEX until info.height) {
+            for (j in FIRST_INDEX until info.width) {
+                val point = Point(i, j)
+                print("%s ".format(board.getValue(point).display()))
+            }
+            println()
         }
     }
 }
