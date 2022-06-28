@@ -12,9 +12,8 @@ object RandomPickStrategy : PickStrategy {
             "${pairs.size}개 중 ${count}개를 고를 수 없습니다."
         }
 
-        List(pairs.size) { it }
-            .shuffled()
+        pairs.shuffled()
             .take(count)
-            .forEach { target.locations[it].pick() }
+            .forEach(Location::pick)
     }
 }
