@@ -9,27 +9,27 @@ import org.junit.jupiter.api.assertAll
 @DisplayName("지뢰판 테스트")
 class MineBoardTest {
 
-    lateinit var `p(0,0)`: Cell
-    lateinit var `p(1,0)`: Cell
-    lateinit var `p(2,0)`: Cell
-    lateinit var `p(3,0)`: Cell
+    private lateinit var `p(0,0)`: Cell
+    private lateinit var `p(1,0)`: Cell
+    private lateinit var `p(2,0)`: Cell
+    private lateinit var `p(3,0)`: Cell
 
-    lateinit var `p(0,1)`: Cell
-    lateinit var `p(1,1)`: Cell
-    lateinit var `p(2,1)`: Cell
-    lateinit var `p(3,1)`: Cell
+    private lateinit var `p(0,1)`: Cell
+    private lateinit var `p(1,1)`: Cell
+    private lateinit var `p(2,1)`: Cell
+    private lateinit var `p(3,1)`: Cell
 
-    lateinit var `p(0,2)`: Cell
-    lateinit var `p(1,2)`: Cell
-    lateinit var `p(2,2)`: Cell
-    lateinit var `p(3,2)`: Cell
+    private lateinit var `p(0,2)`: Cell
+    private lateinit var `p(1,2)`: Cell
+    private lateinit var `p(2,2)`: Cell
+    private lateinit var `p(3,2)`: Cell
 
-    lateinit var `p(0,3)`: Cell
-    lateinit var `p(1,3)`: Cell
-    lateinit var `p(2,3)`: Cell
-    lateinit var `p(3,3)`: Cell
+    private lateinit var `p(0,3)`: Cell
+    private lateinit var `p(1,3)`: Cell
+    private lateinit var `p(2,3)`: Cell
+    private lateinit var `p(3,3)`: Cell
 
-    lateinit var board: MineBoard
+    private lateinit var board: MineBoard
 
     @BeforeEach
     fun setUp() {
