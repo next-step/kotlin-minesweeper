@@ -5,14 +5,14 @@ object MineSweeper {
     fun sweep(map: List<List<Cell>>): List<List<Cell>> {
         mineCellPositions(map)
             .forEach { (x, y) ->
-                map.getOrNull(x)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
-                map.getOrNull(x)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y)?.let { it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y)?.let { it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y - 1)?.let { it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y + 1)?.let { it.mineCountAround++ }
+                map.getOrNull(x)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y - 1)?.let {if (it is NumberCell)  it.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
             }
         return map
     }

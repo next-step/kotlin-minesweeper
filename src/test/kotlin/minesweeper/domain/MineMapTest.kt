@@ -30,7 +30,7 @@ class MineMapTest : StringSpec({
         }
     }
 
-    "입력받은 지뢰 수(mineCount) 만큼 지뢰를 랜덤하게 배치한다." {
+    "입력받은 지뢰 수(mineCount) 만큼 지뢰를 배치한다." {
         val mineMap = MineMap(10, 5, 6)
         mineMap.map().flatten().count { it is MineCell } shouldBe 6
     }
@@ -45,10 +45,5 @@ class MineMapTest : StringSpec({
         shouldThrowWithMessage<IllegalArgumentException>("Invalid Mine Count") {
             MineMap(5, 5, -3)
         }
-    }
-
-    "지뢰가 개수 확인" {
-        MineMap(5, 5, 0).map().flatten().count { it is MineCell } shouldBe 0
-        MineMap(5, 5, 1).map().flatten().count { it is MineCell } shouldBe 1
     }
 })

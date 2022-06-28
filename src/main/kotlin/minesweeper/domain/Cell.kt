@@ -1,6 +1,17 @@
 package minesweeper.domain
 
-open class Cell(var mineCountAround: Int = 0, val isMineCell: Boolean = false)
+sealed class Cell {
+    abstract fun text(): String
+}
 
-class NumberCell(mineCountAround: Int = 0) : Cell(mineCountAround)
-class MineCell : Cell(isMineCell = true)
+class NumberCell(var mineCountAround: Int = 0) : Cell() {
+    override fun text(): String {
+        return mineCountAround.toString()
+    }
+}
+
+object MineCell : Cell() {
+    override fun text(): String {
+        return "*"
+    }
+}

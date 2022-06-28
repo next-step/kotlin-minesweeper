@@ -22,11 +22,8 @@ object UserInput {
         println("지뢰찾기 게임 시작")
         for (i in map.indices) {
             for (j in map[i].indices) {
-                if (map[i][j].isMineCell) {
-                    print("*")
-                } else {
-                    print(map[i][j].mineCountAround)
-                }.also { print(" ") }
+                print(map[i][j].text())
+                    .also { print(" ") }
             }
             println()
         }
