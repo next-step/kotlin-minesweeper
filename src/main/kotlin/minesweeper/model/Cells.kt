@@ -8,8 +8,11 @@ data class Cells(
 
     fun take(startIndex: Int, endIndex: Int): Cells = cells.subList(startIndex, endIndex).let(::Cells)
 
-    fun mineCountIn(surroundingPositions: Set<CellPosition>): Int =
-        cells.count { cell -> cell.isMineIn(surroundingPositions) }
+    fun mineCountIn(positions: Set<CellPosition>): Int =
+        cells.count { it.isMineIn(positions) }
+
+    fun findUnopenedCellsIn(positions: Set<CellPosition>): List<Cell> =
+        cells.filter { it.isUnopenedAndIn(positions) }
 
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {

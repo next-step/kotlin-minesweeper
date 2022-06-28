@@ -3,8 +3,11 @@ package minesweeper.model
 class MineBoard(
     val board: List<Cells>
 ) {
-    fun sumOfMineCountIn(surroundingPositions: Set<CellPosition>): Int =
-        board.sumOf { it.mineCountIn(surroundingPositions) }
+    fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
+        board.sumOf { it.mineCountIn(positions) }
+
+    fun findUnopenedCellsIn(positions: Set<CellPosition>): List<Cell> =
+        board.flatMap { it.findUnopenedCellsIn(positions) }
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
