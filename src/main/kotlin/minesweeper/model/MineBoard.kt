@@ -2,7 +2,7 @@ package minesweeper.model
 
 class MineBoard(
     val board: List<Cells>
-) : List<Cells> by board {
+) {
 
     val mineCount
         get() = board.sumOf { it.mineCount }
@@ -12,6 +12,9 @@ class MineBoard(
 
     fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
         board.flatMap { it.findClosedCellsIn(positions) }
+
+    fun openAndSurroundingNonMineCells(position: CellPosition) =
+        board[position.x.position].openAndSurroundingNonMineCells(position.y, this)
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {

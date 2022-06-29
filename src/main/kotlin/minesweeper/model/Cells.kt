@@ -15,6 +15,9 @@ data class Cells(
     fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
         cells.filter { it.isClosedAndIn(positions) }
 
+    fun openAndSurroundingNonMineCells(position: Position, mineBoard: MineBoard) =
+        cells[position.position].openMeAndSurroundingNonMineCells(mineBoard)
+
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {
             val cellPositions = positions.toList()

@@ -23,8 +23,7 @@ object MinesweeperApplication {
         var gameResult = GameResult.from(mineBoard)
         while (gameResult.isOngoing) {
             val openTargetCellPosition = inputView.inputOpenCellPosition()
-            val openTargetCell = mineBoard[openTargetCellPosition.x.position][openTargetCellPosition.y.position]
-            openTargetCell.openMeAndSurroundingNonMineCells(mineBoard)
+            mineBoard.openAndSurroundingNonMineCells(openTargetCellPosition)
 
             gameResult = GameResult.from(mineBoard)
             resultView.printMineBoard(gameResult)
