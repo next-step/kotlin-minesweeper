@@ -60,8 +60,8 @@ class MineMapTest {
                     Location(2, 1),
                 ),
                 listOf(
-                    Row(listOf(true, false, false)),
-                    Row(listOf(false, true, false))
+                    Row(RowElement.from(listOf(true, false, false))),
+                    Row(RowElement.from(listOf(false, true, false)))
                 )
             ),
             Arguments.of(
@@ -74,9 +74,9 @@ class MineMapTest {
                     Location(1, 2).apply { pick() },
                 ),
                 listOf(
-                    Row(listOf(true, false)),
-                    Row(listOf(false, true)),
-                    Row(listOf(false, true))
+                    Row(RowElement.from(listOf(true, false))),
+                    Row(RowElement.from(listOf(false, true))),
+                    Row(RowElement.from(listOf(false, true)))
                 )
             ),
         )

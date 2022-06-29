@@ -19,6 +19,6 @@ object ResultView {
         get() = this
             .row
             .joinToString(EMPTY_STRING) {
-                if (it) MINE else SPACE
+                if (it.isMine) MINE else SPACE
             }
 }

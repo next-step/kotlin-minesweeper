@@ -19,9 +19,9 @@ class MineMapFactoryTest {
 
         assertThat(mineMap.rows).isEqualTo(
             listOf(
-                Row(listOf(true, true, true, true, false)),
-                Row(listOf(true, true, true, false, false)),
-                Row(listOf(true, true, true, false, false)),
+                Row(RowElement.from(listOf(true, true, true, true, false))),
+                Row(RowElement.from(listOf(true, true, true, false, false))),
+                Row(RowElement.from(listOf(true, true, true, false, false))),
             )
         )
     }
