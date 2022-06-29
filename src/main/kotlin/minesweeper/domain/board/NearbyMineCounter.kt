@@ -1,52 +1,22 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Empty
-import minesweeper.domain.common.PositiveInt
-import minesweeper.domain.common.compareTo
-import minesweeper.domain.common.plus
-import minesweeper.domain.common.times
+import minesweeper.domain.cell.Mine
 
-class NearbyMineCounter {
+object NearbyMineCounter {
 
-    companion object {
-        fun count(mineBoard: MineBoard) {
-            mineBoard.cells.mineIndices.forEach { index ->
-                accNearbyMines(mineBoard, mineBoard.cells[index])
-            }
+    fun count(cells: Cells) {
+        val mineCells = cells.filterIsInstance<Mine>()
+        mineCells.forEach { mine ->
+            cells.accNearbyMine(mine)
         }
-
-        private fun accNearbyMines(mineBoard: MineBoard, mineCell: Cell) {
-            NearbyDirection.values().forEach { direction ->
-                val nearbyX = direction.x + mineCell.position.x
-                val nearbyY = direction.y + mineCell.position.y
-                val nearbyIndex = nearbyY * mineBoard.width + nearbyX
-
-                accNearbyMine(mineBoard, nearbyX, nearbyY, nearbyIndex)
-            }
-        }
-
-        private fun accNearbyMine(mineBoard: MineBoard, nearbyX: Int, nearbyY: Int, nearbyIndex: Int) {
-            if (nearbyX.isBetweenRange(mineBoard.width) && nearbyY.isBetweenRange(mineBoard.width) && nearbyIndex < mineBoard.size) {
-                mineBoard.cells[nearbyIndex]
-                    .takeIf { it is Empty }
-                    ?.let { (it as Empty).accNumberOfNearbyMines() }
-            }
-        }
-
-        private fun Int.isBetweenRange(width: PositiveInt) = this in 0 until width.value
     }
 
-    enum class NearbyDirection(val x: Int, val y: Int) {
-        UP_LEFT(-1, 1),
-        UP(0, 1),
-        UP_RIGHT(1, 1),
-
-        LEFT(-1, 0),
-        RIGHT(1, 0),
-
-        DOWN_LEFT(-1, -1),
-        DOWN(0, -1),
-        DOWN_RIGHT(1, -1)
+    private fun Cells.accNearbyMine(mine: Mine) {
+        mine.getNearbyCells().forEach { cell ->
+            cell.takeIf { it is Empty }
+                ?.let { (it as Empty).accNumberOfNearbyMines() }
+        }
     }
 }

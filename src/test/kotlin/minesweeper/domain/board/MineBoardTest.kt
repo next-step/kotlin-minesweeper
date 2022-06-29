@@ -1,6 +1,5 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.board.strategy.DefaultRandomMineStrategy
 import minesweeper.domain.cell.Empty
 import minesweeper.domain.cell.Mine
 import org.assertj.core.api.Assertions.assertThat
@@ -43,20 +42,6 @@ internal class MineBoardTest {
         assertThat(countOfMine).isEqualTo(NUMBER_OF_MINES)
     }
 
-    @Test
-    fun `지뢰 보드를 생성할 때 지뢰의 위치를 결정한다`() {
-        // given
-        val width = WIDTH
-        val height = HEIGHT
-        val numberOfMines = NUMBER_OF_MINES
-
-        // when
-        val mineBoard = newMineBoard(width, height, numberOfMines)
-
-        // then
-        assertThat(mineBoard.cells.mineIndices).hasSize(numberOfMines)
-    }
-
     companion object {
         private const val WIDTH = 10
         private const val HEIGHT = 10
@@ -66,7 +51,7 @@ internal class MineBoardTest {
             width(width)
             height(height)
             numberOfMines(numberOfMines)
-            mineStrategy(DefaultRandomMineStrategy())
+            mineStrategy(RandomMineMaker())
         }
 
         @JvmStatic

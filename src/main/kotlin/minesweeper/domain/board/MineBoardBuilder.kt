@@ -1,32 +1,30 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.board.strategy.MineStrategy
-import minesweeper.domain.common.PositiveInt
 import kotlin.properties.Delegates
 
 class MineBoardBuilder {
-    private var width: PositiveInt by Delegates.notNull()
-    private var height: PositiveInt by Delegates.notNull()
-    private var numberOfMines: PositiveInt by Delegates.notNull()
-    private lateinit var mineStrategy: MineStrategy
+    private var width: Int by Delegates.notNull()
+    private var height: Int by Delegates.notNull()
+    private var numberOfMines: Int by Delegates.notNull()
+    private lateinit var mineMaker: MineMaker
 
     fun width(value: Int) {
-        width = PositiveInt(value)
+        width = value
     }
 
     fun height(value: Int) {
-        height = PositiveInt(value)
+        height = value
     }
 
     fun numberOfMines(value: Int) {
-        numberOfMines = PositiveInt(value)
+        numberOfMines = value
     }
 
-    fun mineStrategy(mineStrategy: MineStrategy) {
-        this.mineStrategy = mineStrategy
+    fun mineStrategy(mineMaker: MineMaker) {
+        this.mineMaker = mineMaker
     }
 
     fun build(): MineBoard {
-        return MineBoard.of(width, height, numberOfMines, mineStrategy)
+        return MineBoard.of(width, height, numberOfMines, mineMaker)
     }
 }
