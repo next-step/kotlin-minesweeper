@@ -1,0 +1,4 @@
+package minesweeper
+
+class MineSweeper {
+}
