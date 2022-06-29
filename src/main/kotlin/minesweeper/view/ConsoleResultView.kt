@@ -12,7 +12,7 @@ object ConsoleResultView : ResultView {
 
     override fun printMineBoard(gameResult: GameResultDto) {
         val boardView = gameResult.boardRows
-            .joinToString(ROW_SEPARATOR) { it.joinToString(CELL_SEPARATOR) }
+            .joinToString(ROW_SEPARATOR) { it.boardRow.joinToString(CELL_SEPARATOR) }
 
         println(boardView)
         println()
