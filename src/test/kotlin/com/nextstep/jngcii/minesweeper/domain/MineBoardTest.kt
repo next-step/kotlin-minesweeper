@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
-class LocationsTest {
+class MineBoardTest {
     @DisplayName(
         """
         ## 예시 ##
@@ -26,25 +26,25 @@ class LocationsTest {
     @ParameterizedTest
     @MethodSource("rowCountAndColumnCountAndExpected")
     fun `Locations 객체 생성시 pairs 프로퍼티 확인`(
-        meta: MineMapMeta,
+        meta: MineBoardMeta,
         expected: List<Location>
     ) {
-        val locations = Locations(meta)
+        val mineBoard = MineBoard(meta)
 
-        assertThat(locations.locations).isEqualTo(expected)
+        assertThat(mineBoard.locations).isEqualTo(expected)
     }
 
     @Test
     fun `가장 앞부터 순서대로 조작하는 전략으로 지뢰 선택시 결과 확인`() {
-        val locations = Locations(MineMapMeta(2, 3))
+        val mineBoard = MineBoard(MineBoardMeta(2, 3))
 
         val notingOrderStrategy = OrderStrategy { total, count ->
             List(total) { it }.take(count)
         }
 
-        locations.pickMines(3, notingOrderStrategy)
+        mineBoard.pickMines(3, notingOrderStrategy)
 
-        val pairs = locations.locations
+        val pairs = mineBoard.locations
 
         assertThat(pairs.filter { it.isMine }).isEqualTo(
             listOf(Location(0, 0), Location(0, 1), Location(1, 0))
@@ -57,19 +57,19 @@ class LocationsTest {
 
     @Test
     fun `지뢰 위치 확인`() {
-        val locations = Locations(MineMapMeta(2, 3))
+        val mineBoard = MineBoard(MineBoardMeta(2, 3))
 
-        locations.locations
+        mineBoard.locations
             .filter { it.x == 1 }
             .forEach { it.pick() }
 
         assertAll(
-            { assertThat(locations.check(0, 0)).isFalse },
-            { assertThat(locations.check(0, 1)).isFalse },
-            { assertThat(locations.check(1, 0)).isTrue },
-            { assertThat(locations.check(1, 1)).isTrue },
-            { assertThat(locations.check(2, 0)).isFalse },
-            { assertThat(locations.check(2, 1)).isFalse },
+            { assertThat(mineBoard.check(0, 0)).isFalse },
+            { assertThat(mineBoard.check(0, 1)).isFalse },
+            { assertThat(mineBoard.check(1, 0)).isTrue },
+            { assertThat(mineBoard.check(1, 1)).isTrue },
+            { assertThat(mineBoard.check(2, 0)).isFalse },
+            { assertThat(mineBoard.check(2, 1)).isFalse },
         )
     }
 
@@ -79,18 +79,18 @@ class LocationsTest {
         delimiter = ':'
     )
     fun `잘못된 지뢰 위치 확인시 예외 발생`(x: Int, y: Int) {
-        val locations = Locations(MineMapMeta(2, 3))
+        val mineBoard = MineBoard(MineBoardMeta(2, 3))
 
         assertThrows<IllegalArgumentException>(
             "해당 좌표에 대한 Location이 존재하지 않습니다. (x:$x, y:$y)"
-        ) { locations.check(x, y) }
+        ) { mineBoard.check(x, y) }
     }
 
     companion object {
         @JvmStatic
         fun rowCountAndColumnCountAndExpected() = listOf(
             Arguments.of(
-                MineMapMeta(2, 3),
+                MineBoardMeta(2, 3),
                 listOf(
                     Location(0, 0),
                     Location(0, 1),
@@ -101,7 +101,7 @@ class LocationsTest {
                 )
             ),
             Arguments.of(
-                MineMapMeta(1, 2),
+                MineBoardMeta(1, 2),
                 listOf(
                     Location(0, 0),
                     Location(1, 0),

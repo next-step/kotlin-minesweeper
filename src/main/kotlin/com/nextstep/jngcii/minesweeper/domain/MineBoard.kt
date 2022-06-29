@@ -1,9 +1,10 @@
 package com.nextstep.jngcii.minesweeper.domain
 
-data class Locations(
-    val meta: MineMapMeta
+data class MineBoard(
+    val meta: MineBoardMeta
 ) {
     val locations: List<Location> = meta.toLocationList()
+    val rowGroups = locations.chunked(meta.columnCount)
 
     fun pickMines(count: Int, strategy: OrderStrategy) {
         check(locations.size >= count) {
@@ -25,7 +26,7 @@ data class Locations(
             ?: throw IllegalArgumentException("해당 좌표에 대한 Location이 존재하지 않습니다. (x:$x, y:$y)")
     }
 
-    private fun MineMapMeta.toLocationList(): List<Location> {
+    private fun MineBoardMeta.toLocationList(): List<Location> {
         val xIndexes = List(columnCount) { it }
         val yIndexes = List(rowCount) { it }
 

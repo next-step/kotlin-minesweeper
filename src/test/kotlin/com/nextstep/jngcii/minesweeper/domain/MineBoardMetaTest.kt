@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class MineMapMetaTest {
+class MineBoardMetaTest {
     @ParameterizedTest
     @CsvSource(
         value = ["0:2", "3:0", "-1:1", "10:-2"],
@@ -15,7 +15,7 @@ class MineMapMetaTest {
     fun `0 이하의 높이 너비 입력시 예외 발생`(rowCount: Int, columnCount: Int) {
         assertThrows<IllegalArgumentException>(
             "높이와 너비 모두 0보다 커야합니다. (높이:$rowCount, 너비:$columnCount)"
-        ) { MineMapMeta(rowCount, columnCount) }
+        ) { MineBoardMeta(rowCount, columnCount) }
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ class MineMapMetaTest {
         assertAll(
             {
                 assertThat(
-                    MineMapMeta(rowCount, columnCount).totalArea
+                    MineBoardMeta(rowCount, columnCount).totalArea
                 ).isEqualTo(total)
             }
         )

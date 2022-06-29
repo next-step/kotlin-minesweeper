@@ -1,6 +1,6 @@
 package com.nextstep.jngcii.minesweeper.domain
 
-data class MineMapMeta(
+data class MineBoardMeta(
     val rowCount: Int,
     val columnCount: Int
 ) {

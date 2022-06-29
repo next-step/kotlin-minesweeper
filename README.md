@@ -52,7 +52,9 @@
 ## step2
 
 ### TODO-LIST
-- [x] Row가 지뢰여부 뿐 아니라 위험도를 나타내야함
-  - Row가 boolean이 아닌 RowElement를 원소롤 갖도록 수정
-- [ ] 각 RowElement들을 순회하며 위험도를 파악해 기록하는 기능 추가
+- [x] ~~Row가 지뢰여부 뿐 아니라 위험도를 나타내야함~~
+  - ~~Row가 boolean이 아닌 RowElement를 원소롤 갖도록 수정~~
+- [ ] ~~각 RowElement들을 순회하며 위험도를 파악해 기록하는 기능 추가~~
+- [x] 중복되는 개념 제거 (MineMap과 Locations가 같은 개념임)
+- [ ] 각 Location들의 위험도 파악해 기록하는 기능 추가
 - [ ] 위험도 출력 기능 추가
