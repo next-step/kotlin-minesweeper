@@ -34,23 +34,19 @@ class GameResult private constructor(
             return GameResult(boardResult, GameStatus.ONGOING)
         }
 
-        private fun generateBoardRow(cells: Cells, board: MineBoard): List<String> {
-            val boardRow = mutableListOf<String>()
-            for (cell in cells.cells) {
-                if (cell.isMineAndOpened()) {
-                    boardRow.add(MINE_MARK)
-                    continue
-                }
+        private fun generateBoardRow(cells: Cells, board: MineBoard): List<String> =
+            cells.cells.map { findMarkOf(it, board) }
 
-                if (cell.isOpened) {
-                    boardRow.add(cell.findSurroundingMineCountSum(board).toString())
-                    continue
-                }
-
-                boardRow.add(CLOSE_MARK)
+        private fun findMarkOf(cell: Cell, board: MineBoard): String {
+            if (cell.isMineAndOpened()) {
+                return MINE_MARK
             }
 
-            return boardRow
+            if (cell.isOpened) {
+                return cell.findSurroundingMineCountSum(board).toString()
+            }
+
+            return CLOSE_MARK
         }
     }
 }
