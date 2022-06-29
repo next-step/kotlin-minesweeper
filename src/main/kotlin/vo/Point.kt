@@ -8,5 +8,5 @@ value class Point(private val value: Int) : Comparable<Point> {
     }
 
     override fun compareTo(other: Point): Int =
-        value.compareTo(other.value)
+        value compareTo other.value
 }
