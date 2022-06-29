@@ -33,15 +33,16 @@ data class MineMap(private val map: List<List<Cell>>) {
             ?.takeIf { (it is NumberCell) && it.mineCountAround == 0 }
             ?.let {
                 listOf(
-                    Pair(position.first-1, position.second-1),
-                    Pair(position.first-1, position.second),
-                    Pair(position.first-1, position.second+1),
-                    Pair(position.first, position.second-1),
-                    Pair(position.first, position.second+1),
-                    Pair(position.first+1, position.second-1),
-                    Pair(position.first+1, position.second),
-                    Pair(position.first+1, position.second+1)
-                )}
+                    Pair(position.first - 1, position.second - 1),
+                    Pair(position.first - 1, position.second),
+                    Pair(position.first - 1, position.second + 1),
+                    Pair(position.first, position.second - 1),
+                    Pair(position.first, position.second + 1),
+                    Pair(position.first + 1, position.second - 1),
+                    Pair(position.first + 1, position.second),
+                    Pair(position.first + 1, position.second + 1)
+                )
+            }
             ?.filter { (numberCell(it)?.let { cell -> cell.status == CellStatus.CLOSE }) ?: false }
             ?: emptyList()
     }
