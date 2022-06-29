@@ -1,7 +1,7 @@
 package com.nextstep.jngcii.minesweeper.domain
 
 class MineMapFactory(
-    private val pickStrategy: PickStrategy
+    private val orderStrategy: OrderStrategy
 ) {
     fun create(
         meta: MineMapMeta,
@@ -12,7 +12,7 @@ class MineMapFactory(
         }
 
         val locations = Locations(meta).apply {
-            pickMines(mineCount, pickStrategy)
+            pickMines(mineCount, orderStrategy)
         }
 
         return MineMap.build(locations)

@@ -5,8 +5,15 @@ data class Locations(
 ) {
     val locations: List<Location> = meta.toLocationList()
 
-    fun pickMines(count: Int, strategy: PickStrategy) {
-        strategy.pick(this, count)
+    fun pickMines(count: Int, strategy: OrderStrategy) {
+        check(locations.size >= count) {
+            "${locations.size}개 중 ${count}개를 고를 수 없습니다."
+        }
+
+        locations
+            .apply(strategy.pick())
+            .take(count)
+            .forEach(Location::pick)
     }
 
     fun check(x: Int, y: Int): Boolean {
