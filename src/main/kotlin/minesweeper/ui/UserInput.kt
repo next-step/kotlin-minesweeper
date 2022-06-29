@@ -1,6 +1,8 @@
 package minesweeper.ui
 
 import minesweeper.domain.Cell
+import minesweeper.domain.NumberCell
+import minesweeper.domain.enums.CellStatus
 
 object UserInput {
     fun inputHeight(): Int {
@@ -33,5 +35,12 @@ object UserInput {
             }
             println()
         }
+    }
+
+    private fun Cell.text(): String {
+        if (this is NumberCell && this.status == CellStatus.OPEN) {
+            return this.mineCountAround.toString()
+        }
+        return "C"
     }
 }
