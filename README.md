@@ -22,7 +22,7 @@
 - 지뢰가 없는 인접한 칸이 모두 열리게 된다.
 
 ### 구현
-- [ ] NumberCell은 Open 여부 상태를 갖고 있다. (초기값: false)
+- [x] NumberCell은 Open 여부 상태를 갖고 있으며 변경 가능하다 (초기값: false)
 - [ ] NumberCell Open 상태에 따라 출력을 다르게 한다. (Close: "C", Open: 숫자)
 - [ ] 사용자로부터 받은 위치의 Cell은 Open 상태로 변경 된다.
 - [ ] MineCell Open 시 게임은 즉시 종료 된다.
