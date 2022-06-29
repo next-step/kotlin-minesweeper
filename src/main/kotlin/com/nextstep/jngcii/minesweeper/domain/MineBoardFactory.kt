@@ -13,6 +13,7 @@ class MineBoardFactory(
 
         return MineBoard(meta).apply {
             pickMines(mineCount, orderStrategy)
+            recordRisk()
         }
     }
 }

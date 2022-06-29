@@ -4,7 +4,10 @@ data class MineBoard(
     val meta: MineBoardMeta
 ) {
     val locations: List<Location> = meta.toLocationList()
-    val rowGroups = locations.chunked(meta.columnCount)
+    val locationsByRow = locations
+        .groupBy { it.y }
+        .values
+        .toList()
 
     fun pickMines(count: Int, strategy: OrderStrategy) {
         check(locations.size >= count) {
@@ -19,11 +22,17 @@ data class MineBoard(
         picked.forEach { locations[it].pick() }
     }
 
-    fun check(x: Int, y: Int): Boolean {
-        return locations
-            .find { it.x == x && it.y == y }
-            ?.isMine
-            ?: throw IllegalArgumentException("해당 좌표에 대한 Location이 존재하지 않습니다. (x:$x, y:$y)")
+    fun recordRisk() {
+        locations.filter { it.isMine }
+            .also { println(it) }
+            .map { mines -> mines.aroundPairs }
+            .forEach { pairs -> pairs.increaseRisks() }
+    }
+
+    private fun List<Pair<Int, Int>>.increaseRisks() {
+        this.forEach { (x, y) ->
+            locations.find { x == it.x && y == it.y && !it.isMine }?.increaseRisk()
+        }
     }
 
     private fun MineBoardMeta.toLocationList(): List<Location> {

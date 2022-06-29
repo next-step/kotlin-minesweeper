@@ -4,10 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class MineBoardTest {
@@ -24,14 +22,18 @@ class MineBoardTest {
     """
     )
     @ParameterizedTest
-    @MethodSource("rowCountAndColumnCountAndExpected")
+    @MethodSource("rowCountAndColumnCountAndLocationsAndByRows")
     fun `Locations 객체 생성시 pairs 프로퍼티 확인`(
         meta: MineBoardMeta,
-        expected: List<Location>
+        locations: List<Location>,
+        locationsByRow: List<List<Location>>
     ) {
         val mineBoard = MineBoard(meta)
 
-        assertThat(mineBoard.locations).isEqualTo(expected)
+        assertAll(
+            { assertThat(mineBoard.locations).isEqualTo(locations) },
+            { assertThat(mineBoard.locationsByRow).isEqualTo(locationsByRow) }
+        )
     }
 
     @Test
@@ -43,52 +45,45 @@ class MineBoardTest {
         }
 
         mineBoard.pickMines(3, notingOrderStrategy)
+        mineBoard.recordRisk()
 
-        val pairs = mineBoard.locations
+        val locations = mineBoard.locations
 
-        assertThat(pairs.filter { it.isMine }).isEqualTo(
-            listOf(Location(0, 0), Location(0, 1), Location(1, 0))
-        )
-
-        assertThat(pairs.filter { !it.isMine }).isEqualTo(
-            listOf(Location(1, 1), Location(2, 0), Location(2, 1))
+        assertAll(
+            {
+                assertThat(locations.filter { it.isMine }).isEqualTo(
+                    listOf(Location(0, 0), Location(0, 1), Location(1, 0))
+                )
+            },
+            {
+                assertThat(locations.filter { !it.isMine }).isEqualTo(
+                    listOf(Location(1, 1), Location(2, 0), Location(2, 1))
+                )
+            }
         )
     }
 
     @Test
-    fun `지뢰 위치 확인`() {
+    fun `가장 앞부터 순서대로 조작하는 전략으로 지뢰 선택시 ri나 기록 결과 확인`() {
         val mineBoard = MineBoard(MineBoardMeta(2, 3))
 
-        mineBoard.locations
-            .filter { it.x == 1 }
-            .forEach { it.pick() }
+        val notingOrderStrategy = OrderStrategy { total, count ->
+            List(total) { it }.take(count)
+        }
 
-        assertAll(
-            { assertThat(mineBoard.check(0, 0)).isFalse },
-            { assertThat(mineBoard.check(0, 1)).isFalse },
-            { assertThat(mineBoard.check(1, 0)).isTrue },
-            { assertThat(mineBoard.check(1, 1)).isTrue },
-            { assertThat(mineBoard.check(2, 0)).isFalse },
-            { assertThat(mineBoard.check(2, 1)).isFalse },
+        mineBoard.pickMines(3, notingOrderStrategy)
+        mineBoard.recordRisk()
+
+        val locations = mineBoard.locations
+
+        assertThat(locations.map { it.risk }).isEqualTo(
+            listOf(0, 0, 0, 3, 1, 1)
         )
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        value = ["3:0", "0:2"],
-        delimiter = ':'
-    )
-    fun `잘못된 지뢰 위치 확인시 예외 발생`(x: Int, y: Int) {
-        val mineBoard = MineBoard(MineBoardMeta(2, 3))
-
-        assertThrows<IllegalArgumentException>(
-            "해당 좌표에 대한 Location이 존재하지 않습니다. (x:$x, y:$y)"
-        ) { mineBoard.check(x, y) }
     }
 
     companion object {
         @JvmStatic
-        fun rowCountAndColumnCountAndExpected() = listOf(
+        fun rowCountAndColumnCountAndLocationsAndByRows() = listOf(
             Arguments.of(
                 MineBoardMeta(2, 3),
                 listOf(
@@ -98,6 +93,10 @@ class MineBoardTest {
                     Location(1, 1),
                     Location(2, 0),
                     Location(2, 1),
+                ),
+                listOf(
+                    listOf(Location(0, 0), Location(1, 0), Location(2, 0)),
+                    listOf(Location(0, 1), Location(1, 1), Location(2, 1))
                 )
             ),
             Arguments.of(
@@ -105,6 +104,9 @@ class MineBoardTest {
                 listOf(
                     Location(0, 0),
                     Location(1, 0),
+                ),
+                listOf(
+                    listOf(Location(0, 0), Location(1, 0))
                 )
             )
         )

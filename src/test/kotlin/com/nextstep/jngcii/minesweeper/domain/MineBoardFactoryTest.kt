@@ -2,6 +2,7 @@ package com.nextstep.jngcii.minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class MineBoardFactoryTest {
     private val notingOrderStrategy = OrderStrategy { total, count ->
@@ -17,24 +18,30 @@ class MineBoardFactoryTest {
 
         val mineBoard = mineBoardFactory.create(meta, mineCount)
 
-        assertThat(mineBoard.locations).isEqualTo(
-            listOf(
-                Location(x = 0, y = 0),
-                Location(x = 0, y = 1),
-                Location(x = 0, y = 2),
-                Location(x = 1, y = 0),
-                Location(x = 1, y = 1),
-                Location(x = 1, y = 2),
-                Location(x = 2, y = 0),
-                Location(x = 2, y = 1),
-                Location(x = 2, y = 2),
-                Location(x = 3, y = 0),
-                Location(x = 3, y = 1),
-                Location(x = 3, y = 2),
-                Location(x = 4, y = 0),
-                Location(x = 4, y = 1),
-                Location(x = 4, y = 2)
-            )
+        val expectedLocations = listOf(
+            Location(x = 0, y = 0),
+            Location(x = 0, y = 1),
+            Location(x = 0, y = 2),
+            Location(x = 1, y = 0),
+            Location(x = 1, y = 1),
+            Location(x = 1, y = 2),
+            Location(x = 2, y = 0),
+            Location(x = 2, y = 1),
+            Location(x = 2, y = 2),
+            Location(x = 3, y = 0),
+            Location(x = 3, y = 1),
+            Location(x = 3, y = 2),
+            Location(x = 4, y = 0),
+            Location(x = 4, y = 1),
+            Location(x = 4, y = 2)
+        )
+        val expectedRisks = listOf(
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 2, 1, 1, 0
+        )
+
+        assertAll(
+            { assertThat(mineBoard.locations).isEqualTo(expectedLocations) },
+            { assertThat(mineBoard.locations.map { it.risk }).isEqualTo(expectedRisks) }
         )
     }
 }
