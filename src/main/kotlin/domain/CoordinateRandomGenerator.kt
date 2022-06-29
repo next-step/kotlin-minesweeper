@@ -7,6 +7,6 @@ class CoordinateRandomGenerator(coordinateGeneratorRequest: CoordinateGeneratorR
     private val landMine = coordinateGeneratorRequest.landMine
 
     override fun coordinates(): List<Coordinate> {
-        return coordinates.shuffled().subList(0, landMine)
+        return coordinates.shuffled().take(landMine)
     }
 }
