@@ -1,26 +1,35 @@
 package view
 
+import domain.Coordinate
 import domain.Line
 import dto.LandMineMapUIRequest
 
 class LandMineMapUI(private val landMineMapUIRequest: LandMineMapUIRequest) {
 
-    fun title() {
-        println()
-        println("지뢰찾기 게임 시작")
+    fun title() = with(StringBuilder()) {
+        appendLine()
+        appendLine("지뢰찾기 게임 시작")
+        println(this)
     }
 
-    fun map() {
+    fun map() = with(StringBuilder()) {
         landMineMapUIRequest.mapCoordinates.map {
-            println()
-            display(it)
+            appendLine(buildDisplay(it))
+        }
+        println(this)
+    }
+
+    private fun buildDisplay(mapLine: Line) = buildString {
+        mapLine.coordinates.map {
+            append(displayLandMine(it))
         }
     }
 
-    private fun display(mapLine: Line) {
-        mapLine.coordinates.forEach {
-            if (landMineMapUIRequest.landMineCoordinates.contains(it)) print("* ")
-            else print("C ")
+    private fun displayLandMine(coordinate: Coordinate) = buildString {
+        if (landMineMapUIRequest.landMineCoordinates.contains(coordinate)) {
+            append("* ")
+        } else {
+            append("C ")
         }
     }
 }
