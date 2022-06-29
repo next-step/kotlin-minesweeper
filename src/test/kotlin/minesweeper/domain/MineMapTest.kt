@@ -46,4 +46,37 @@ class MineMapTest : StringSpec({
             MineMap(5, 5, -3)
         }
     }
+
+    "입력 받은 위치의 cell 주변에 지뢰가 있다면, 반환되는 주변 cell position이 없다" {
+        mineMap {
+            rows(NumberCell(1), NumberCell(1))
+            rows(NumberCell(1), MineCell)
+        }.safeAroundPositions(Pair(0, 0)) shouldBe emptyList()
+    }
+
+    "입력 받은 위치의 cell 이 안전할 때, 주변 cell position 을 반환한다" {
+        mineMap {
+            rows(NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0))
+        }.safeAroundPositions(Pair(0, 0)) shouldBe listOf(
+            Pair(0, 1),
+            Pair(1, 0),
+            Pair(1, 1)
+        )
+
+        mineMap {
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+        }.safeAroundPositions(Pair(1, 1)) shouldBe listOf(
+            Pair(0, 0),
+            Pair(0, 1),
+            Pair(0, 2),
+            Pair(1, 0),
+            Pair(1, 2),
+            Pair(2, 0),
+            Pair(2, 1),
+            Pair(2, 2)
+        )
+    }
 })

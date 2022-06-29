@@ -6,14 +6,14 @@ object MineSweeper {
         val map = this.map()
         mineCellPositions(map)
             .forEach { (x, y) ->
-                map.getOrNull(x)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                map.getOrNull(x)?.getOrNull(y - 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x)?.getOrNull(y + 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y - 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y - 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x - 1)?.getOrNull(y + 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
+                map.getOrNull(x + 1)?.getOrNull(y + 1)?.apply { if (this is NumberCell) this.mineCountAround++ }
             }
         return MineMap(map)
     }

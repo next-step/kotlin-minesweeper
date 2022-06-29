@@ -17,12 +17,34 @@ data class MineMap(private val map: List<List<Cell>>) {
     }
 
     fun open(position: Pair<Int, Int>): Boolean {
-        val cell = requireNotNull(map.getOrNull(position.first)?.getOrNull(position.second)) { "Invalid Position" }
+        val cell = requireNotNull(cell(position)) { "Invalid Position" }
         return cell.open()
     }
 
     fun map(): List<List<Cell>> {
         return map
+    }
+
+    fun safeAroundPositions(position: Pair<Int, Int>): List<Pair<Int, Int>> {
+        return cell(position)
+            ?.takeIf { (it is NumberCell) && it.mineCountAround == 0 }
+            ?.let {
+                listOf(
+                    Pair(position.first-1, position.second-1),
+                    Pair(position.first-1, position.second),
+                    Pair(position.first-1, position.second+1),
+                    Pair(position.first, position.second-1),
+                    Pair(position.first, position.second+1),
+                    Pair(position.first+1, position.second-1),
+                    Pair(position.first+1, position.second),
+                    Pair(position.first+1, position.second+1)
+                )}
+            ?.filter { cell(it) != null }
+            ?: emptyList()
+    }
+
+    private fun cell(position: Pair<Int, Int>): Cell? {
+        return map.getOrNull(position.first)?.getOrNull(position.second)
     }
 }
 
