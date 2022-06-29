@@ -25,6 +25,7 @@
 - [x] NumberCell은 Open 여부 상태를 갖고 있으며 변경 가능하다 (초기값: false)
 - [x] NumberCell Open 상태에 따라 출력을 다르게 한다. (Close: "C", Open: 숫자)
 - [x] 사용자로부터 Open 위치를 입력 받을 수 있다.
-  - [x] MineCell Open 시 게임은 즉시 종료 된다.
+  - [x] MineCell Open 시 게임은 실패로 종료 된다.
   - [x] NumberCell Open 시 게임이 종료 되지 않고, 지뢰 맵(mineMap)을 현황을 출력하며, 다음 Open 위치를 입력 받는다.
+  - [x] Open 되지 않은 Cell 이 지뢰만 남았다면 게임은 성공으로 종료 된다.
 - [x] NumberCell Open 시 주변 지뢰 숫자가 0이라면, 주변의 NumberCell을 전부 Open 한다.

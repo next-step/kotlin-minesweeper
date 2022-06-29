@@ -20,6 +20,10 @@ fun main() {
             println("Lose Game.")
             break
         }
+        if (sweptMineMap.isOverallSafe()) {
+            println("Win Game.")
+            break
+        }
         UserInput.printResult(sweptMineMap.map())
     } while (true)
 }

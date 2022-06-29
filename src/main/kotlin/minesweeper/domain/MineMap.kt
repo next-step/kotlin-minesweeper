@@ -28,6 +28,12 @@ data class MineMap(private val map: List<List<Cell>>) {
         return map
     }
 
+    fun isOverallSafe(): Boolean {
+        return map.flatten()
+            .filterIsInstance<NumberCell>()
+            .none { it.status == CellStatus.CLOSE }
+    }
+
     fun safeAroundPositions(position: Pair<Int, Int>): List<Pair<Int, Int>> {
         return cell(position)
             ?.takeIf { (it is NumberCell) && it.mineCountAround == 0 }
