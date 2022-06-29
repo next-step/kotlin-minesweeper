@@ -7,7 +7,6 @@ value class MineMap private constructor(val rows: List<Row>) {
             val meta = locations.meta
             val boolean2dList = List(meta.totalArea) { false }
                 .chunked(meta.columnCount) { it.toMutableList() }
-                .toMutableList()
 
             locations.locations.forEach {
                 boolean2dList[it.y][it.x] = locations.check(it.x, it.y)
