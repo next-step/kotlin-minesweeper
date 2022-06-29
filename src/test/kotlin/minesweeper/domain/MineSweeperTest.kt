@@ -8,7 +8,7 @@ class MineSweeperTest : StringSpec({
 
     "주변 셀에 지뢰가 없으면 0 으로 표시한다." {
         val mineMap = MineMap(2, 2, 0)
-        val sweptMineMap = mineMap.map().sweep()
+        val sweptMineMap = mineMap.sweep()
 
         sweptMineMap shouldBe mineMap {
             rows(NumberCell(0), NumberCell(0))

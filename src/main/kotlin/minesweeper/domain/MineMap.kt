@@ -1,17 +1,19 @@
 package minesweeper.domain
 
-class MineMap(width: Int, height: Int, mineCount: Int = 0) {
+data class MineMap(private val map: List<List<Cell>>) {
 
-    private val map: List<List<Cell>>
-
-    init {
+    constructor(width: Int, height: Int, mineCount: Int = 0) : this(mutableListOf()) {
         require(width > 0 && height > 0) { "Invalid Mine Map Size" }
         require(mineCount >= 0 && width * height >= mineCount) { "Invalid Mine Count" }
-        map = Array<Cell>(width * height) { NumberCell() }
-            .apply { fill(MineCell, 0, mineCount) }
-            .apply { shuffle() }
-            .toList()
-            .chunked(height)
+
+        if (map is MutableList) {
+            Array<Cell>(width * height) { NumberCell() }
+                .apply { fill(MineCell, 0, mineCount) }
+                .apply { shuffle() }
+                .toList()
+                .chunked(height)
+                .forEach { item -> map.add(item) }
+        }
     }
 
     fun map(): List<List<Cell>> {
@@ -19,14 +21,7 @@ class MineMap(width: Int, height: Int, mineCount: Int = 0) {
     }
 }
 
-fun mineMap(block: MineMapBuilder.() -> Unit): List<List<Cell>> = MineMapBuilder().apply(block).build()
-
-@JvmInline
-value class Cells(private val cells: List<Cell> = emptyList()) {
-    operator fun get(index: Int?): Cell {
-        return index?.let { MineCell } ?: NumberCell()
-    }
-}
+fun mineMap(block: MineMapBuilder.() -> Unit): MineMap = MineMapBuilder().apply(block).build()
 
 class MineMapBuilder {
     private val rows = mutableListOf<List<Cell>>()
@@ -35,7 +30,7 @@ class MineMapBuilder {
         rows.add(cells.toList())
     }
 
-    fun build(): List<List<Cell>> {
-        return rows.toList()
+    fun build(): MineMap {
+        return MineMap(rows.toList())
     }
 }

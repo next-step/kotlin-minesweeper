@@ -10,6 +10,6 @@ fun main() {
     val mineCount = UserInput.inputMineCount().also { println() }
 
     val mineMap = MineMap(height, width, mineCount)
-    val sweptMineMap = mineMap.map().sweep()
-    UserInput.printResult(sweptMineMap)
+    val sweptMineMap = mineMap.sweep()
+    UserInput.printResult(sweptMineMap.map())
 }
