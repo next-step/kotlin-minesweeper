@@ -10,7 +10,10 @@ data class NumberCell(var mineCountAround: Int = 0) : Cell() {
     var status = CellStatus.CLOSE
 
     override fun text(): String {
-        return mineCountAround.toString()
+        return when(status) {
+            CellStatus.CLOSE -> "C"
+            CellStatus.OPEN -> mineCountAround.toString()
+        }
     }
 
     fun open() {

@@ -15,4 +15,11 @@ class NumberCellTest : StringSpec({
         numberCell.open()
         numberCell.status shouldBe CellStatus.OPEN
     }
+
+    "NumberCell Open 상태에 따라 출력을 다르게 한다." {
+        val numberCell = NumberCell()
+        numberCell.text() shouldBe "C"
+        numberCell.open()
+        numberCell.text() shouldBe "0"
+    }
 })
