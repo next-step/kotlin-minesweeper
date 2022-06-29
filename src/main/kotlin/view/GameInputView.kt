@@ -1,9 +1,9 @@
 package view
 
 import domain.Game
-import vo.Height
-import vo.MineCount
-import vo.Width
+import domain.vo.Height
+import domain.vo.MineCount
+import domain.vo.Width
 
 class GameInputView(private val io: IO) {
 

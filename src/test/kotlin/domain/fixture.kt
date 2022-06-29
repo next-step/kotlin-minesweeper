@@ -1,6 +1,6 @@
 package domain
 
-import vo.Point
+import domain.vo.Point
 
 fun createCell(x: Int, y: Int) = Mine(Coordinate(Point(x), Point(y)))
 

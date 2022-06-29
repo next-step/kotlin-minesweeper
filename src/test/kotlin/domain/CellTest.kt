@@ -1,8 +1,8 @@
 package domain
 
+import domain.vo.Point
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.types.shouldBeInstanceOf
-import vo.Point
 
 internal class CellTest : StringSpec({
 

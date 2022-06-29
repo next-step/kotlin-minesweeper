@@ -1,9 +1,9 @@
 package domain
 
-import vo.Height
-import vo.MineCount
-import vo.Point
-import vo.Width
+import domain.vo.Height
+import domain.vo.MineCount
+import domain.vo.Point
+import domain.vo.Width
 
 data class Game(val board: Board) {
 

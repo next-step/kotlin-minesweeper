@@ -1,11 +1,11 @@
 package domain
 
+import domain.vo.Height
+import domain.vo.MineCount
+import domain.vo.Width
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import vo.Height
-import vo.MineCount
-import vo.Width
 
 internal class GameTest : FreeSpec({
 

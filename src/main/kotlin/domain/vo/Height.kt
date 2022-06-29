@@ -1,4 +1,4 @@
-package vo
+package domain.vo
 
 @JvmInline
 value class Height(val value: Int) {

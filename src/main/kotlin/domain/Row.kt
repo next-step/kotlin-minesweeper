@@ -1,6 +1,6 @@
 package domain
 
-import vo.Point
+import domain.vo.Point
 
 data class Row(val cells: List<Cell>) {
 

@@ -1,8 +1,8 @@
 package domain
 
+import domain.vo.Point
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import vo.Point
 
 internal class CoordinateTest : StringSpec({
 

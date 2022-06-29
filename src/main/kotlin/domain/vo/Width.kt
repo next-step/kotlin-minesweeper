@@ -1,4 +1,4 @@
-package vo
+package domain.vo
 
 @JvmInline
 value class Width(val value: Int) {

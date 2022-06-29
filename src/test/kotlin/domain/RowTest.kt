@@ -1,9 +1,9 @@
 package domain
 
+import domain.vo.Point
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import vo.Point
 
 internal class RowTest : FreeSpec({
 

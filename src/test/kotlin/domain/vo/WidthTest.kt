@@ -1,20 +1,20 @@
-package vo
+package domain.vo
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 
-internal class HeightTest : FreeSpec({
+internal class WidthTest : FreeSpec({
 
     "에러" - {
-        "높이는 음수가 될 수 없다" {
+        "너비는 음수가 될 수 없다" {
             shouldThrow<IllegalArgumentException> {
-                Height(-1)
+                Width(-1)
             }
         }
 
-        "높이는 0 이 될 수 없다" {
+        "너비는 0 이 될 수 없다" {
             shouldThrow<IllegalArgumentException> {
-                Height(-0)
+                Width(-0)
             }
         }
     }
@@ -22,7 +22,7 @@ internal class HeightTest : FreeSpec({
     "성공" - {
         "1 이상의 숫자를 입력하면 성공한다" {
             val value = (1..100).random()
-            Height(value)
+            Width(value)
         }
     }
 })
