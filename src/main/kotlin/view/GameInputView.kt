@@ -26,17 +26,21 @@ class GameInputView(private val io: IO) {
             return initGame()
         }
 
-    private tailrec fun readHeight(): Height =
-        runCatching {
-            Height(io.read().toInt())
+    private fun readInt() = io.read().toInt()
+
+    private tailrec fun readHeight(): Height {
+
+        return runCatching {
+            Height(readInt())
         }.getOrElse {
             io.write("다시 입력해주세요.")
             return readHeight()
         }
+    }
 
     private tailrec fun readWidth(): Width =
         runCatching {
-            Width(io.read().toInt())
+            Width(readInt())
         }.getOrElse {
             io.write("다시 입력해주세요.")
             return readWidth()
@@ -44,7 +48,7 @@ class GameInputView(private val io: IO) {
 
     private tailrec fun readMineCount(): MineCount =
         runCatching {
-            MineCount(io.read().toInt())
+            MineCount(readInt())
         }.getOrElse {
             io.write("다시 입력해주세요.")
             return readMineCount()
