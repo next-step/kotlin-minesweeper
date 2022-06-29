@@ -4,10 +4,10 @@ package com.nextstep.jngcii.minesweeper.domain
 value class MineMap private constructor(val rows: List<Row>) {
     companion object {
         fun build(locations: Locations): MineMap {
-            val rows = getInitialTwoDimensionalList(
-                locations.meta.rowCount,
-                locations.meta.columnCount
-            )
+            val meta = locations.meta
+            val rows = List(meta.totalArea) { false }
+                .chunked(meta.columnCount) { it.toMutableList() }
+                .toMutableList()
 
             locations.locations.forEach {
                 rows[it.y][it.x] = locations.check(it.x, it.y)
