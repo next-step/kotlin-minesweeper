@@ -15,6 +15,6 @@ class MineMapFactory(
             pickMines(mineCount, orderStrategy)
         }
 
-        return MineMap.build(locations)
+        return MineMap.from(locations)
     }
 }

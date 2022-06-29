@@ -24,7 +24,7 @@ class MineMapTest {
         locationList: List<Location>,
         rows: List<Row>
     ) {
-        val mineMap = MineMap.build(
+        val mineMap = MineMap.from(
             locations = locationList.toLocations()
         )
 
