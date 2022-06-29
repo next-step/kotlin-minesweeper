@@ -2,19 +2,19 @@ package minesweeper.domain
 
 object MineSweeper {
     // TODO 리팩토링 (STEP4) - 연산 로직 개선
-    fun sweep(map: List<List<Cell>>): List<List<Cell>> {
-        mineCellPositions(map)
+    fun List<List<Cell>>.sweep(): List<List<Cell>> {
+        mineCellPositions(this)
             .forEach { (x, y) ->
-                map.getOrNull(x)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y - 1)?.let {if (it is NumberCell)  it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x - 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
-                map.getOrNull(x + 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x - 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x + 1)?.getOrNull(y)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x - 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x + 1)?.getOrNull(y - 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x - 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
+                this.getOrNull(x + 1)?.getOrNull(y + 1)?.let { if (it is NumberCell) it.mineCountAround++ }
             }
-        return map
+        return this
     }
 
     private fun mineCellPositions(map: List<List<Cell>>): List<Pair<Int, Int>> {

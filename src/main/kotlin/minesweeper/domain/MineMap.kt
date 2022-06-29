@@ -18,3 +18,24 @@ class MineMap(width: Int, height: Int, mineCount: Int = 0) {
         return map
     }
 }
+
+fun mineMap(block: MineMapBuilder.() -> Unit): List<List<Cell>> = MineMapBuilder().apply(block).build()
+
+@JvmInline
+value class Cells(private val cells: List<Cell> = emptyList()) {
+    operator fun get(index: Int?): Cell {
+        return index?.let { MineCell } ?: NumberCell()
+    }
+}
+
+class MineMapBuilder {
+    private val rows = mutableListOf<List<Cell>>()
+
+    fun rows(vararg cells: Cell) {
+        rows.add(cells.toList())
+    }
+
+    fun build(): List<List<Cell>> {
+        return rows.toList()
+    }
+}

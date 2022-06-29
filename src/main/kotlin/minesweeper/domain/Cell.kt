@@ -4,7 +4,7 @@ sealed class Cell {
     abstract fun text(): String
 }
 
-class NumberCell(var mineCountAround: Int = 0) : Cell() {
+data class NumberCell(var mineCountAround: Int = 0) : Cell() {
     override fun text(): String {
         return mineCountAround.toString()
     }
