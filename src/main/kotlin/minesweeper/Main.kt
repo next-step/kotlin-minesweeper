@@ -11,5 +11,16 @@ fun main() {
 
     val mineMap = MineMap(height, width, mineCount)
     val sweptMineMap = mineMap.sweep()
-    UserInput.printResult(sweptMineMap.map())
+
+    println("지뢰찾기 게임 시작")
+    do {
+        val positions = UserInput.inputOpenPosition()
+        val result = sweptMineMap.open(positions)
+        if (!result) {
+            println("Lose Game.")
+            break
+        }
+        UserInput.printResult(sweptMineMap.map())
+    } while (result)
+
 }

@@ -18,8 +18,14 @@ object UserInput {
         return readln().toIntOrNull() ?: throw IllegalArgumentException()
     }
 
+    fun inputOpenPosition(): Pair<Int, Int> {
+        print("open: ")
+        val (x, y) = readln().split(",", limit = 2)
+            .map { it.trim().toIntOrNull() ?: throw IllegalArgumentException() }
+        return Pair(x, y)
+    }
+
     fun printResult(map: List<List<Cell>>) {
-        println("지뢰찾기 게임 시작")
         for (i in map.indices) {
             for (j in map[i].indices) {
                 print(map[i][j].text())

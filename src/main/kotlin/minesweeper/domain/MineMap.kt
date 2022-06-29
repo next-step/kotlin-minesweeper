@@ -16,6 +16,11 @@ data class MineMap(private val map: List<List<Cell>>) {
         }
     }
 
+    fun open(position: Pair<Int, Int>): Boolean {
+        val cell = requireNotNull(map.getOrNull(position.first)?.getOrNull(position.second)) { "Invalid Position" }
+        return cell.open()
+    }
+
     fun map(): List<List<Cell>> {
         return map
     }
