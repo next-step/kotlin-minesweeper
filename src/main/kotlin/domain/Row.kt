@@ -2,7 +2,7 @@ package domain
 
 import domain.vo.Point
 
-data class Row(val cells: List<Cell>) {
+class Row private constructor(val cells: List<Cell>) {
 
     val size: Int = cells.size
 
