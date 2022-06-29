@@ -26,9 +26,9 @@ object UserInput {
     }
 
     fun printResult(map: List<List<Cell>>) {
-        for (i in map.indices) {
-            for (j in map[i].indices) {
-                print(map[i][j].text())
+        for (y in map.indices) {
+            for (x in map[y].indices) {
+                print(map[x][y].text())
                     .also { print(" ") }
             }
             println()
