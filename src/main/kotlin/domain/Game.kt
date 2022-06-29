@@ -5,7 +5,7 @@ import domain.vo.MineCount
 import domain.vo.Point
 import domain.vo.Width
 
-data class Game(val board: Board) {
+class Game private constructor(val board: Board) {
 
     companion object {
 
