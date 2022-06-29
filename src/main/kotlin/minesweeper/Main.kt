@@ -21,5 +21,5 @@ fun main() {
             break
         }
         UserInput.printResult(sweptMineMap.map())
-    } while (result)
+    } while (true)
 }
