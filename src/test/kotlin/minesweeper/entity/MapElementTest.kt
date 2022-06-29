@@ -6,43 +6,23 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 internal class MapElementTest {
-
   @Test
-  fun `높이 5 가로 3 지뢰 7개인 지도에서 높이는 5이다`() {
+  fun `일반 땅(GROUND)은 C로 표현된다`() {
     // given
-    val height = 5
-    val width = 3
-    val numberOfMines = 7
-    val mapInfo = MapInformation(height, width, numberOfMines)
-    val expected = 5
+    val groundRepresent = MapElement.GROUND.represent
+    val expected = "C"
 
     // then
-    Assertions.assertThat(mapInfo.height).isEqualTo(expected)
+    Assertions.assertThat(groundRepresent).isEqualTo(expected)
   }
 
   @Test
-  fun `높이 5 가로 3 지뢰 7개인 지도에서 가로는 3이다`() {
+  fun `지뢰(MINE)은 *로 표현된다`() {
     // given
-    val height = 5
-    val width = 3
-    val numberOfMines = 7
-    val mapInfo = MapInformation(height, width, numberOfMines)
-    val expected = 3
+    val groundRepresent = MapElement.MINE.represent
+    val expected = "*"
 
     // then
-    Assertions.assertThat(mapInfo.width).isEqualTo(expected)
-  }
-
-  @Test
-  fun `높이 5 가로 3 지뢰 7개인 지도에서 지뢰는 7개이다`() {
-    // given
-    val height = 5
-    val width = 3
-    val numberOfMines = 7
-    val mapInfo = MapInformation(height, width, numberOfMines)
-    val expected = 7
-
-    // then
-    Assertions.assertThat(mapInfo.numberOfMines).isEqualTo(expected)
+    Assertions.assertThat(groundRepresent).isEqualTo(expected)
   }
 }

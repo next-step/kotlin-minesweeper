@@ -1,5 +1,5 @@
 package minesweeper.entity
 
-enum class MapElement(val type: String) {
+enum class MapElement(val represent: String) {
   GROUND("C"), MINE("*");
 }
