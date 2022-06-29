@@ -1,9 +1,12 @@
 package com.nextstep.jngcii.minesweeper.domain
 
 fun interface OrderStrategy {
-    fun pick(): (List<Location>) -> Unit
+    fun pick(total: Int, count: Int): List<Int>
 }
 
 object ShuffleOrderStrategy : OrderStrategy {
-    override fun pick(): (List<Location>) -> Unit = { it.shuffled() }
+    override fun pick(total: Int, count: Int) =
+        List(total) { it }
+            .shuffled()
+            .take(count)
 }

@@ -38,7 +38,9 @@ class LocationsTest {
     fun `가장 앞부터 순서대로 조작하는 전략으로 지뢰 선택시 결과 확인`() {
         val locations = Locations(MineMapMeta(2, 3))
 
-        val notingOrderStrategy = OrderStrategy { { } }
+        val notingOrderStrategy = OrderStrategy { total, count ->
+            List(total) { it }.take(count)
+        }
 
         locations.pickMines(3, notingOrderStrategy)
 

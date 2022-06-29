@@ -4,7 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MineMapFactoryTest {
-    private val notingOrderStrategy = OrderStrategy { { } }
+    private val notingOrderStrategy = OrderStrategy { total, count ->
+        List(total) { it }.take(count)
+    }
     private val mineMapFactory = MineMapFactory(notingOrderStrategy)
 
     @Test

@@ -10,10 +10,12 @@ data class Locations(
             "${locations.size}개 중 ${count}개를 고를 수 없습니다."
         }
 
-        locations
-            .apply(strategy.pick())
-            .take(count)
-            .forEach(Location::pick)
+        val picked = strategy.pick(
+            total = locations.size,
+            count = count
+        )
+
+        picked.forEach { locations[it].pick() }
     }
 
     fun check(x: Int, y: Int): Boolean {
