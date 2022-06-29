@@ -7,7 +7,7 @@ internal class BoardTest : StringSpec({
 
     "빈 리스트로는 인스턴스 생성할 수 없다" {
         shouldThrow<IllegalArgumentException> {
-            Board(listOf())
+            Board.of(listOf())
         }
     }
 
@@ -18,7 +18,7 @@ internal class BoardTest : StringSpec({
                 createRow(3, 2),
                 createRow(2, 3),
             )
-            Board(rows)
+            Board.of(rows)
         }
     }
 })

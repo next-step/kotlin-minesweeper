@@ -18,7 +18,7 @@ data class Game(val board: Board) {
                 .map { (coordinate, isMine) -> if (isMine) Mine(coordinate) else Empty(coordinate) }
                 .chunked(width.value)
                 .map(Row::of)
-                .let(::Board)
+                .let(Board::of)
                 .let(::Game)
         }
 
