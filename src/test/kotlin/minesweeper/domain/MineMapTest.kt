@@ -79,4 +79,14 @@ class MineMapTest : StringSpec({
             Pair(2, 2)
         )
     }
+
+    "입력 받은 위치의 cell 이 안전할 때, 주변 Close 상태인 cell position 만을 반환한다" {
+        mineMap {
+            rows(NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0).apply { open() })
+        }.safeAroundPositions(Pair(0, 0)) shouldBe listOf(
+            Pair(0, 1),
+            Pair(1, 0)
+        )
+    }
 })

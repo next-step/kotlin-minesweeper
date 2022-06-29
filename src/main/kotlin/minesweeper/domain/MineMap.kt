@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.enums.CellStatus
+
 data class MineMap(private val map: List<List<Cell>>) {
 
     constructor(width: Int, height: Int, mineCount: Int = 0) : this(mutableListOf()) {
@@ -39,8 +41,12 @@ data class MineMap(private val map: List<List<Cell>>) {
                     Pair(position.first+1, position.second),
                     Pair(position.first+1, position.second+1)
                 )}
-            ?.filter { cell(it) != null }
+            ?.filter { (numberCell(it)?.let { cell -> cell.status == CellStatus.CLOSE }) ?: false }
             ?: emptyList()
+    }
+
+    private fun numberCell(position: Pair<Int, Int>): NumberCell? {
+        return cell(position) as? NumberCell
     }
 
     private fun cell(position: Pair<Int, Int>): Cell? {
