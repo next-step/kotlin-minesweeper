@@ -2,8 +2,7 @@ package minesweeper.domain
 
 private const val MIN_WIDTH_VALUE = 0
 
-@JvmInline
-value class Width(
+data class Width(
     val value: Int,
 ) {
     init {

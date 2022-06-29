@@ -2,8 +2,7 @@ package minesweeper.domain
 
 private const val MIN_HEIGHT_VALUE = 0
 
-@JvmInline
-value class Height(
+data class Height(
     val value: Int,
 ) {
     init {
