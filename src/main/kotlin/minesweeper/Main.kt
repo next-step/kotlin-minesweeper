@@ -1,5 +1,5 @@
-package blackjack
+package minesweeper
 
 fun main() {
-    BlackJack().play()
+  MineSweeper().play()
 }
