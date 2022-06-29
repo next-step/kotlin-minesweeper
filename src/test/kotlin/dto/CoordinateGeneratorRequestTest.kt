@@ -1,11 +1,11 @@
 package dto
 
 import domain.Coordinate
+import domain.CoordinatePoint
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import util.ConvertType
-import util.PositiveInt
 import java.lang.IllegalArgumentException
 
 class CoordinateGeneratorRequestTest : FreeSpec({
@@ -32,7 +32,7 @@ class CoordinateGeneratorRequestTest : FreeSpec({
             val landMineMapRequestDto = LandMineMapRequest.of("1", "1")
             val coordinateGeneratorRequest = CoordinateGeneratorRequest.of(landMineMapRequestDto, "1")
 
-            coordinateGeneratorRequest.coordinates shouldBe listOf(Coordinate(PositiveInt(1), PositiveInt(1)))
+            coordinateGeneratorRequest.coordinates shouldBe listOf(Coordinate(CoordinatePoint(1), CoordinatePoint(1)))
             coordinateGeneratorRequest.landMine shouldBe 1
         }
     }
