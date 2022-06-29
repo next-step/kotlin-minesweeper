@@ -1,5 +1,6 @@
 package minesweeper.domain
 
-interface Zone {
-    fun isMine(): Boolean
-}
+@JvmInline
+value class Zone(
+    val hasMine: Boolean,
+)
