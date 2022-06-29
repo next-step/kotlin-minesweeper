@@ -1,4 +1,4 @@
-package minesweeper.model
+package minesweeper.dto
 
 class MineBoardCreateDto(
     val width: Int,

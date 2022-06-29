@@ -1,11 +1,11 @@
 package minesweeper.view
 
-import minesweeper.model.GameResult
+import minesweeper.dto.GameResultDto
 
 interface ResultView {
     fun printMinesweeperGameStartMessage()
 
-    fun printMineBoard(gameResult: GameResult)
+    fun printMineBoard(gameResult: GameResultDto)
 
-    fun printMinesweeperGameResult(gameResult: GameResult)
+    fun printMinesweeperGameResult(gameResult: GameResultDto)
 }

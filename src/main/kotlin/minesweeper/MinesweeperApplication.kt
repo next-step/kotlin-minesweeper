@@ -1,8 +1,8 @@
 package minesweeper
 
-import minesweeper.model.GameResult
+import minesweeper.dto.GameResultDto
+import minesweeper.dto.MineBoardCreateDto
 import minesweeper.model.MineBoard
-import minesweeper.model.MineBoardCreateDto
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -20,12 +20,12 @@ object MinesweeperApplication {
         val mineBoard = MineBoard.of(MineBoardCreateDto(width = width, height = height, mineCount = mineCount))
         resultView.printMinesweeperGameStartMessage()
 
-        var gameResult = GameResult.from(mineBoard)
+        var gameResult = GameResultDto.from(mineBoard)
         while (gameResult.isOngoing) {
             val openTargetCellPosition = inputView.inputOpenCellPosition()
             mineBoard.openAndSurroundingNonMineCells(openTargetCellPosition)
 
-            gameResult = GameResult.from(mineBoard)
+            gameResult = GameResultDto.from(mineBoard)
             resultView.printMineBoard(gameResult)
         }
 

@@ -1,5 +1,10 @@
-package minesweeper.model
+package minesweeper.dto
 
+import minesweeper.model.Cell
+import minesweeper.model.CellPosition
+import minesweeper.model.Cells
+import minesweeper.model.GameStatus
+import minesweeper.model.MineBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -7,7 +12,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 @DisplayName("지뢰찾기 게임 결과 테스트")
-class GameResultTest {
+class GameResultDtoTest {
 
     private lateinit var `p(0,0)`: Cell
     private lateinit var `p(1,0)`: Cell
@@ -50,7 +55,7 @@ class GameResultTest {
     fun `지뢰찾기 게임 결과 생성시 지뢰가 아닌데 오픈 됐으면 주변 8개 지뢰의 개수, 닫혀 있으면 C로 표시`() {
         // when
         `p(0,0)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = GameResult.from(board)
+        val boardResult = GameResultDto.from(board)
 
         // then
         assertAll(
@@ -72,7 +77,7 @@ class GameResultTest {
     fun `지뢰찾기 게임 결과 생성시 지뢰인데 오픈 됐으면 게임에서 진 상태`() {
         // when
         `p(1,2)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = GameResult.from(board)
+        val boardResult = GameResultDto.from(board)
 
         // then
         assertThat(boardResult.gameStatus).isEqualTo(GameStatus.LOST)
@@ -84,7 +89,7 @@ class GameResultTest {
         `p(0,0)`.openMeAndSurroundingNonMineCells(board)
         `p(0,2)`.openMeAndSurroundingNonMineCells(board)
         `p(2,2)`.openMeAndSurroundingNonMineCells(board)
-        val boardResult = GameResult.from(board)
+        val boardResult = GameResultDto.from(board)
 
         // then
         assertThat(boardResult.gameStatus).isEqualTo(GameStatus.WIN)

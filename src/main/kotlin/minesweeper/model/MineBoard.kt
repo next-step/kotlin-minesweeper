@@ -1,5 +1,7 @@
 package minesweeper.model
 
+import minesweeper.dto.MineBoardCreateDto
+
 class MineBoard(
     val board: List<Cells>
 ) {
