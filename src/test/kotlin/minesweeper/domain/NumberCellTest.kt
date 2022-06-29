@@ -9,4 +9,10 @@ class NumberCellTest : StringSpec({
         val numberCell = NumberCell()
         numberCell.status shouldBe CellStatus.CLOSE
     }
+
+    "NumberCell 을 open 하면 상태가 OPEN으로 변경된다" {
+        val numberCell = NumberCell()
+        numberCell.open()
+        numberCell.status shouldBe CellStatus.OPEN
+    }
 })
