@@ -10,5 +10,5 @@ object Console : IO {
         println(message)
     }
 
-    override fun read(): String = readLine() ?: ""
+    override fun read(): String = readln()
 }
