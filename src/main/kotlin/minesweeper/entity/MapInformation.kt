@@ -1,3 +1,3 @@
 package minesweeper.entity
 
-data class MapInformation()
+data class MapInformation(val height:Int, val width: Int, val numberOfMines: Int)
