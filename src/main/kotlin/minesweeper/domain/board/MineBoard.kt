@@ -1,9 +1,9 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Cell.Empty
+import minesweeper.domain.cell.Cell.Mine
 import minesweeper.domain.cell.Cells
-import minesweeper.domain.cell.Empty
-import minesweeper.domain.cell.Mine
 import minesweeper.domain.cell.Position
 
 class MineBoard private constructor(val cells: Cells) {

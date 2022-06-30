@@ -1,5 +1,8 @@
 package minesweeper.domain.cell
 
+import minesweeper.domain.cell.Cell.Empty
+import minesweeper.domain.cell.Cell.Mine
+
 object CellMaker {
     fun make(width: Int, height: Int, numberOfMines: Int): List<Cell> {
         val positions = makePositions(width, height)

@@ -2,8 +2,8 @@ package minesweeper.view
 
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.Empty
-import minesweeper.domain.cell.Mine
+import minesweeper.domain.cell.Cell.Empty
+import minesweeper.domain.cell.Cell.Mine
 
 object MineBoardView {
 

@@ -1,8 +1,21 @@
 package minesweeper.domain.cell
 
 import minesweeper.domain.board.NearbyMineCounter
+import minesweeper.domain.cell.Cell.Empty
 
 sealed class Cell(val position: Position) {
+
+    class Mine(position: Position) : Cell(position)
+
+    class Empty(position: Position, numberOfNearbyMines: Int = 0) : Cell(position) {
+        var numberOfNearbyMines: Int = numberOfNearbyMines
+            private set
+
+        fun accNumberOfNearbyMines() {
+            numberOfNearbyMines += 1
+        }
+    }
+
     private var state: CellStatus = CellStatus.CLOSE
 
     fun open(): Cell {
