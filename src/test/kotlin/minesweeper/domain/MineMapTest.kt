@@ -30,7 +30,7 @@ class MineMapTest : StringSpec({
         }
     }
 
-    "입력받은 지뢰 수(mineCount) 만큼 지뢰를 랜덤하게 배치한다." {
+    "입력받은 지뢰 수(mineCount) 만큼 지뢰를 배치한다." {
         val mineMap = MineMap(10, 5, 6)
         mineMap.map().flatten().count { it is MineCell } shouldBe 6
     }
@@ -47,8 +47,46 @@ class MineMapTest : StringSpec({
         }
     }
 
-    "지뢰가 개수 확인" {
-        MineMap(5, 5, 0).map().flatten().count { it is MineCell } shouldBe 0
-        MineMap(5, 5, 1).map().flatten().count { it is MineCell } shouldBe 1
+    "입력 받은 위치의 cell 주변에 지뢰가 있다면, 반환되는 주변 cell position이 없다" {
+        mineMap {
+            rows(NumberCell(1), NumberCell(1))
+            rows(NumberCell(1), MineCell)
+        }.safeAroundPositions(Pair(0, 0)) shouldBe emptyList()
+    }
+
+    "입력 받은 위치의 cell 이 안전할 때, 주변 cell position 을 반환한다" {
+        mineMap {
+            rows(NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0))
+        }.safeAroundPositions(Pair(0, 0)) shouldBe listOf(
+            Pair(0, 1),
+            Pair(1, 0),
+            Pair(1, 1)
+        )
+
+        mineMap {
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0), NumberCell(0))
+        }.safeAroundPositions(Pair(1, 1)) shouldBe listOf(
+            Pair(0, 0),
+            Pair(0, 1),
+            Pair(0, 2),
+            Pair(1, 0),
+            Pair(1, 2),
+            Pair(2, 0),
+            Pair(2, 1),
+            Pair(2, 2)
+        )
+    }
+
+    "입력 받은 위치의 cell 이 안전할 때, 주변 Close 상태인 cell position 만을 반환한다" {
+        mineMap {
+            rows(NumberCell(0), NumberCell(0))
+            rows(NumberCell(0), NumberCell(0).apply { open() })
+        }.safeAroundPositions(Pair(0, 0)) shouldBe listOf(
+            Pair(0, 1),
+            Pair(1, 0)
+        )
     }
 })

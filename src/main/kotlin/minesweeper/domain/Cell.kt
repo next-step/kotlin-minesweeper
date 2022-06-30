@@ -1,6 +1,22 @@
 package minesweeper.domain
 
-open class Cell(var mineCountAround: Int = 0, val isMineCell: Boolean = false)
+import minesweeper.domain.enums.CellStatus
 
-class NumberCell(mineCountAround: Int = 0) : Cell(mineCountAround)
-class MineCell : Cell(isMineCell = true)
+sealed class Cell {
+    abstract fun open(): Boolean
+}
+
+data class NumberCell(var mineCountAround: Int = 0) : Cell() {
+    var status = CellStatus.CLOSE
+
+    override fun open(): Boolean {
+        status = CellStatus.OPEN
+        return true
+    }
+}
+
+object MineCell : Cell() {
+    override fun open(): Boolean {
+        return false
+    }
+}

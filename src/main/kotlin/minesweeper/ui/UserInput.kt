@@ -1,6 +1,8 @@
 package minesweeper.ui
 
 import minesweeper.domain.Cell
+import minesweeper.domain.NumberCell
+import minesweeper.domain.enums.CellStatus
 
 object UserInput {
     fun inputHeight(): Int {
@@ -18,17 +20,27 @@ object UserInput {
         return readln().toIntOrNull() ?: throw IllegalArgumentException()
     }
 
+    fun inputOpenPosition(): Pair<Int, Int> {
+        print("open: ")
+        val (x, y) = readln().split(",", limit = 2)
+            .map { it.trim().toIntOrNull() ?: throw IllegalArgumentException() }
+        return Pair(x, y)
+    }
+
     fun printResult(map: List<List<Cell>>) {
-        println("지뢰찾기 게임 시작")
-        for (i in map.indices) {
-            for (j in map[i].indices) {
-                if (map[i][j].isMineCell) {
-                    print("*")
-                } else {
-                    print(map[i][j].mineCountAround)
-                }.also { print(" ") }
+        for (y in map.indices) {
+            for (x in map[y].indices) {
+                print(map[x][y].text())
+                    .also { print(" ") }
             }
             println()
         }
+    }
+
+    fun Cell.text(): String {
+        if (this is NumberCell && this.status == CellStatus.OPEN) {
+            return this.mineCountAround.toString()
+        }
+        return "C"
     }
 }
