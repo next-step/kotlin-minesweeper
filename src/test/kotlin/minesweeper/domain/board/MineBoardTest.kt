@@ -51,7 +51,6 @@ internal class MineBoardTest {
             width(width)
             height(height)
             numberOfMines(numberOfMines)
-            mineStrategy(RandomMineMaker())
         }
 
         @JvmStatic

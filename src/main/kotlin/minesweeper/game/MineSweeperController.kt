@@ -2,13 +2,11 @@ package minesweeper.game
 
 import minesweeper.domain.board.BoardStatus
 import minesweeper.domain.board.MineBoard
-import minesweeper.domain.board.MineMaker
 import minesweeper.domain.board.mineBoard
 import minesweeper.view.ViewResolver
 
 class MineSweeperController(
     private val viewResolver: ViewResolver,
-    private val mineMaker: MineMaker
 ) {
     private var boardStatus: BoardStatus = BoardStatus.SAFE
 
@@ -27,7 +25,6 @@ class MineSweeperController(
             width(request.width)
             height(request.height)
             numberOfMines(request.numberOfMines)
-            mineStrategy(mineMaker)
         }
         return mineBoard
     }

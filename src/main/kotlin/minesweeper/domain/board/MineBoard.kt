@@ -26,11 +26,10 @@ class MineBoard private constructor(val cells: Cells) {
         fun of(
             width: Int,
             height: Int,
-            numberOfMines: Int,
-            mineMaker: MineMaker
+            numberOfMines: Int
         ): MineBoard {
             validate(width, height, numberOfMines)
-            val cells = Cells.of(width, height, numberOfMines, mineMaker)
+            val cells = Cells.of(width, height, numberOfMines)
             return MineBoard(cells)
         }
 

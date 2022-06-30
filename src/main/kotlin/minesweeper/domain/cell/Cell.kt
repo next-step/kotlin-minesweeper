@@ -1,6 +1,5 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.board.MineMaker
 import minesweeper.domain.board.NearbyMineCounter
 
 sealed class Cell(val position: Position) {
@@ -51,24 +50,9 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
         cells.find { it.position == position } ?: throw IllegalArgumentException("no cells found in that position.")
 
     companion object {
-        fun of(width: Int, height: Int, numberOfMines: Int, mineMaker: MineMaker): Cells {
-            val mineCells = mineMaker.createMines(width, height, numberOfMines)
-            val minePositions = mineCells.map { it.position }
-            val emptyCells = createEmptyCells(width, height, minePositions)
-            return Cells(mineCells + emptyCells).apply { NearbyMineCounter.count(this) }
-        }
-
-        private fun createEmptyCells(width: Int, height: Int, minePositions: Iterable<Position>): List<Cell> {
-            val emptyCells = mutableListOf<Cell>()
-            repeat(width) { x ->
-                repeat(height) { y ->
-                    val position = Position(x, y)
-                    if (position !in minePositions) {
-                        emptyCells.add(Empty(position))
-                    }
-                }
-            }
-            return emptyCells
+        fun of(width: Int, height: Int, numberOfMines: Int): Cells {
+            val cells = CellMaker.make(width, height, numberOfMines)
+            return Cells(cells).apply { NearbyMineCounter.count(this) }
         }
     }
 }
