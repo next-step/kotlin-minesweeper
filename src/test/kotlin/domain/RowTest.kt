@@ -8,7 +8,7 @@ class RowTest {
     @Test
     fun `Row는 한 줄에 나열될 Cell들을 보관한다`() {
         val cells = List(10) {
-            Cell.values().random()
+            Cell.Land.ZERO
         }
         val row = Row(cells)
 

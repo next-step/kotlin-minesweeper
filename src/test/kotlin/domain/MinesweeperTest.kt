@@ -8,7 +8,7 @@ class MinesweeperTest {
     @Test
     fun `Minesweeper는 지뢰찾기 게임의 현황을 구성한다`() {
         val row = List(10) {
-            Cell.values().random()
+            Cell.Land.ZERO
         }
         val rows = List(10) {
             Row(row)

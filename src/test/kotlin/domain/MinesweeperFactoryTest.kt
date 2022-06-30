@@ -9,7 +9,7 @@ class MinesweeperFactoryTest {
     fun `MinesweeperFactory를 구현하여 MinesweeperStartInfo를 받아 Minesweeper를 만드는 팩토리를 만들 수 있다`() {
         val minesweeperFactory = object : MinesweeperFactory {
             override fun create(minesweeperInfo: MinesweeperInfo): Minesweeper {
-                val rows = listOf(Row(listOf(Cell.MINE, Cell.LAND)))
+                val rows = listOf(Row(listOf(Cell.Mine, Cell.Land.ZERO)))
                 return Minesweeper(rows)
             }
         }
@@ -18,7 +18,7 @@ class MinesweeperFactoryTest {
         assertAll(
             { assertThat(minesweeper).hasSize(1) },
             { assertThat(minesweeper.first()).hasSize(2) },
-            { assertThat(minesweeper.first()).contains(Cell.MINE, Cell.LAND) }
+            { assertThat(minesweeper.first()).contains(Cell.Mine, Cell.Land.ZERO) }
         )
     }
 }

@@ -4,8 +4,8 @@ object RandomMinesweeperFactory : MinesweeperFactory {
     override fun create(minesweeperInfo: MinesweeperInfo): Minesweeper {
         val landCount = getLandCount(minesweeperInfo)
 
-        val lands = List(landCount) { Cell.LAND }
-        val mines = List(minesweeperInfo.mineCount) { Cell.MINE }
+        val lands = List(landCount) { Cell.Land.ZERO }
+        val mines = List(minesweeperInfo.mineCount) { Cell.Mine }
 
         val rows = (lands + mines)
             .shuffled()

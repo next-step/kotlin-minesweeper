@@ -23,7 +23,7 @@ class RandomMinesweeperFactoryTest {
             },
             {
                 assertThat(minesweeper.flatten()).filteredOn { cell ->
-                    cell == Cell.MINE
+                    cell == Cell.Mine
                 }.hasSize(minesweeperInfo.mineCount)
             }
         )
