@@ -3,6 +3,7 @@ package minesweeper.domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.enums.CellStatus
+import minesweeper.ui.UserInput.text
 
 class NumberCellTest : StringSpec({
     "NumberCell 의 초기 상태값은 CLOSE" {

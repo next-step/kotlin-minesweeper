@@ -37,7 +37,7 @@ object UserInput {
         }
     }
 
-    private fun Cell.text(): String {
+    fun Cell.text(): String {
         if (this is NumberCell && this.status == CellStatus.OPEN) {
             return this.mineCountAround.toString()
         }
