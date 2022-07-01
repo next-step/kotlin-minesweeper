@@ -5,28 +5,25 @@ enum class GameMessage {
 }
 
 class MineSweeper(
-    val requestBoardSize: () -> Area,
-    val requestMineCount: () -> MineCount,
-    val requestOpenCoordinate: () -> Coordinate,
-    val drawMessage: (GameMessage) -> Unit,
-    val drawBoard: (Board) -> Unit
+    private val inputView: InputView,
+    private val outputView: OutputView
 ) {
 
     fun run() {
-        val boardSize = requestBoardSize()
-        val mineCount = requestMineCount()
+        val boardSize = inputView.receiveBoardSize()
+        val mineCount = inputView.receiveMineCount()
 
         val board = Board(boardSize, mineCount)
 
-        drawMessage(GameMessage.Start)
-        drawBoard(board)
+        outputView.drawMessage(GameMessage.Start)
+        outputView.drawBoard(board)
 
         play(board)
     }
 
     private fun play(board: Board) {
         do {
-            val result = board.open(requestOpenCoordinate())
+            val result = board.open(inputView.receiveOpenCoordinate())
 
             val isGameOver = result == CellsOpenResult.Fail
             val isCompleted = board.isCompleted()
@@ -41,22 +38,22 @@ class MineSweeper(
             CellsOpenResult.Success -> {
                 if (board.isCompleted()) {
                     drawFinalBoard(board)
-                    drawMessage(GameMessage.Win)
+                    outputView.drawMessage(GameMessage.Win)
                 } else {
-                    drawBoard(board)
+                    outputView.drawBoard(board)
                 }
             }
             CellsOpenResult.Fail -> {
                 drawFinalBoard(board)
-                drawMessage(GameMessage.Lose)
+                outputView.drawMessage(GameMessage.Lose)
             }
-            CellsOpenResult.AlreadyOpened -> drawMessage(GameMessage.CellAlreadyOpened)
-            CellsOpenResult.NotFound -> drawMessage(GameMessage.CellNotFound)
+            CellsOpenResult.AlreadyOpened -> outputView.drawMessage(GameMessage.CellAlreadyOpened)
+            CellsOpenResult.NotFound -> outputView.drawMessage(GameMessage.CellNotFound)
         }
     }
 
     private fun drawFinalBoard(board: Board) {
         board.openAllMine()
-        drawBoard(board)
+        outputView.drawBoard(board)
     }
 }

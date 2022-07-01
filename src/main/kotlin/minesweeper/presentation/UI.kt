@@ -3,10 +3,11 @@ package minesweeper.presentation
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
 import minesweeper.domain.GameMessage
+import minesweeper.domain.OutputView
 
-object UI {
+object UI : OutputView {
 
-    fun drawMessage(messageType: GameMessage) {
+    override fun drawMessage(messageType: GameMessage) {
         when (messageType) {
             GameMessage.Start -> drawStartMessage()
             GameMessage.Win -> drawWinMessage()
@@ -36,7 +37,7 @@ object UI {
         println("이미 열려있습니다.")
     }
 
-    fun drawBoard(board: Board) {
+    override fun drawBoard(board: Board) {
         board.getAllCell().groupByColumn().forEach { (_, row) ->
             println(row.joinToString(" ") { convertCellMark(it) })
         }
