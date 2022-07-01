@@ -1,24 +1,21 @@
 package com.nextstep.jngcii.minesweeper.view
 
-import com.nextstep.jngcii.minesweeper.domain.MineMap
-import com.nextstep.jngcii.minesweeper.domain.Row
+import com.nextstep.jngcii.minesweeper.domain.Location
+import com.nextstep.jngcii.minesweeper.domain.MineBoard
 
 object ResultView {
-    private const val EMPTY_STRING = ""
+    private const val BLANK_STRING = " "
     private const val MINE = "@"
-    private const val SPACE = "-"
 
-    fun printMap(mineMap: MineMap) {
+    fun printMap(mineBoard: MineBoard) {
         println("지뢰찾기 게임 시작")
-        mineMap.rows.forEach {
+        mineBoard.locationsByRow.forEach {
             println(it.joinedStringBySymbol)
         }
     }
 
-    private val Row.joinedStringBySymbol
-        get() = this
-            .row
-            .joinToString(EMPTY_STRING) {
-                if (it) MINE else SPACE
-            }
+    private val List<Location>.joinedStringBySymbol
+        get() = this.joinToString(BLANK_STRING) {
+            if (it.isMine) MINE else it.risk.toString()
+        }
 }

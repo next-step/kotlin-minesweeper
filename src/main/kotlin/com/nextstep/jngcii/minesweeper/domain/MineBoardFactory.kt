@@ -1,20 +1,19 @@
 package com.nextstep.jngcii.minesweeper.domain
 
-class MineMapFactory(
-    private val pickStrategy: PickStrategy
+class MineBoardFactory(
+    private val orderStrategy: OrderStrategy
 ) {
     fun create(
-        meta: MineMapMeta,
+        meta: MineBoardMeta,
         mineCount: Int
-    ): MineMap {
+    ): MineBoard {
         require(meta.totalArea >= mineCount) {
             "지뢰 갯수는 ${meta.totalArea}(${meta.rowCount} X ${meta.columnCount}) 보다 클 수 없습니다. (입력값 : $mineCount)"
         }
 
-        val locations = Locations(meta).apply {
-            pickMines(mineCount, pickStrategy)
+        return MineBoard(meta).apply {
+            pickMines(mineCount, orderStrategy)
+            recordRisk()
         }
-
-        return MineMap.build(locations)
     }
 }

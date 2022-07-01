@@ -1,10 +1,10 @@
 package com.nextstep.jngcii.minesweeper.view
 
-import com.nextstep.jngcii.minesweeper.domain.MineMapMeta
+import com.nextstep.jngcii.minesweeper.domain.MineBoardMeta
 
 object InputView {
-    fun getMineMapMeta(): MineMapMeta {
-        return MineMapMeta(
+    fun getMineMapMeta(): MineBoardMeta {
+        return MineBoardMeta(
             rowCount = getRowCount(),
             columnCount = getColumnCount()
         )
