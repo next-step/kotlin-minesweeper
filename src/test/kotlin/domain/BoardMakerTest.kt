@@ -22,6 +22,6 @@ class BoardMakerTest {
     fun `지뢰를 10개 설정시 10개의 지뢰가 보드판에 설치된다`() {
         val gameSettingInfo = GameSettingInfo(10, 10, 10)
         val board = BoardMaker(gameSettingInfo).makeBoard()
-        assertThat(board.grounds.filter { it.value.isMine }.count()).isEqualTo(10)
+        assertThat(board.grounds.count { it.value.isMine }).isEqualTo(10)
     }
 }
