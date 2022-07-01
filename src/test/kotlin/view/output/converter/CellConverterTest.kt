@@ -13,7 +13,7 @@ class CellConverterTest {
 
         assertAll(
             { assertThat(CellConverter.convert(mine)).isEqualTo("*") },
-            { assertThat(CellConverter.convert(land)).isEqualTo("C") }
+            { assertThat(CellConverter.convert(land)).isEqualTo("0") }
         )
     }
 }

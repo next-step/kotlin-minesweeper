@@ -18,11 +18,11 @@ class MinesweeperConverterTest {
         )
 
         val expected = """
-            * * C * C
-            * C * * C
-            C * C * C
-            * * C C C
-            C C C * *
+            * * 4 * 2
+            * 5 * * 3
+            4 * 5 * 2
+            * * 4 3 3
+            2 2 2 * *
         """.trimIndent()
 
         assertThat(MinesweeperConverter.convert(minesweeper)).isEqualTo(expected)
