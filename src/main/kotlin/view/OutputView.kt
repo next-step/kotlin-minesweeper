@@ -16,6 +16,8 @@ object OutputView {
             if (location.column.value % width == 0) println()
             print(cell.display(cells))
         }
+        println()
+        println()
     }
 
     private fun Cell.display(cells: Map<Location, Cell>): String {

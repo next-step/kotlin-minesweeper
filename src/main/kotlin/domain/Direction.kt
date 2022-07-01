@@ -9,7 +9,7 @@ enum class Direction(val rowDirection: Int, val columnDirection: Int) {
     LEFT(0, -1),
     TOP_LEFT(-1, -1);
 
-    fun getSurroundLocation(location: Location): Location? {
+    fun getSurroundLocation(location: Location): Location {
         val row = location.row.value + rowDirection
         val column = location.column.value + columnDirection
 
