@@ -28,7 +28,7 @@ class MineSweeper(
         do {
             val result = board.open(requestOpenCoordinate())
 
-            val isGameOver = result == BoardOpenResult.Fail
+            val isGameOver = result == CellsOpenResult.Fail
             val isCompleted = board.isCompleted()
             val canNextTurn = !isCompleted && !isGameOver
 
@@ -36,9 +36,9 @@ class MineSweeper(
         } while (canNextTurn)
     }
 
-    private fun drawTurn(board: Board, result: BoardOpenResult) {
+    private fun drawTurn(board: Board, result: CellsOpenResult) {
         when (result) {
-            BoardOpenResult.Success -> {
+            CellsOpenResult.Success -> {
                 if (board.isCompleted()) {
                     drawFinalBoard(board)
                     drawMessage(GameMessage.Win)
@@ -46,12 +46,12 @@ class MineSweeper(
                     drawBoard(board)
                 }
             }
-            BoardOpenResult.Fail -> {
+            CellsOpenResult.Fail -> {
                 drawFinalBoard(board)
                 drawMessage(GameMessage.Lose)
             }
-            BoardOpenResult.AlreadyOpened -> drawMessage(GameMessage.CellAlreadyOpened)
-            BoardOpenResult.NotFound -> drawMessage(GameMessage.CellNotFound)
+            CellsOpenResult.AlreadyOpened -> drawMessage(GameMessage.CellAlreadyOpened)
+            CellsOpenResult.NotFound -> drawMessage(GameMessage.CellNotFound)
         }
     }
 

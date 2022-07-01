@@ -1,5 +1,5 @@
 package minesweeper.domain
 
-enum class BoardOpenResult {
+enum class CellsOpenResult {
     Success, Fail, AlreadyOpened, NotFound
 }

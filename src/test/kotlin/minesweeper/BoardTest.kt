@@ -2,11 +2,9 @@ package minesweeper
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Area
 import minesweeper.domain.Board
-import minesweeper.domain.BoardOpenResult
 import minesweeper.domain.Cell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.MineCount
@@ -19,61 +17,6 @@ class BoardTest : DescribeSpec({
                 shouldThrow<IllegalArgumentException> {
                     Board(Area(1, 1), MineCount(10))
                 }
-            }
-        }
-    }
-
-    describe("openCell") {
-        context("보드에서 하나의 좌표를 열면") {
-            it("연결되어 있으면서 지뢰가 없는 좌표가 전부 열린다.") {
-                /* 보드 Cell 배치
-                0 1 *
-                1 2 1
-                1 * 1
-                */
-                val board = SampleBoard(Area(3, 3), MineCount(2), mines = listOf(Coordinate(0, 2), Coordinate(2, 1)))
-
-                board.open(Coordinate(0, 0))
-
-                board.getAllCell().count { it.isOpened() } shouldBe 4
-                board.getAllCell() shouldContainAll listOf(
-                    OpenedCell(Coordinate(0, 0), 0),
-                    OpenedCell(Coordinate(1, 0), 1),
-                    OpenedCell(Coordinate(0, 1), 1),
-                    OpenedCell(Coordinate(1, 1), 2)
-                )
-            }
-        }
-
-        context("좌표를 열었을 때 지뢰가 아니라면") {
-            it("성공한 것을 알린다. ( BoardOpenResult.Success 을 리턴한다. )") {
-                val board = SampleBoard(listOf(Cell.Block(Coordinate(0, 0))))
-
-                board.open(Coordinate(0, 0)) shouldBe BoardOpenResult.Success
-            }
-        }
-
-        context("좌표를 열었을 때 지뢰가 아니고 이미 열려있다면") {
-            it("BoardOpenResult.AlreadyOpened 을 리턴한다.") {
-                val board = SampleBoard(listOf(OpenedCell(Coordinate(0, 0))))
-
-                board.open(Coordinate(0, 0)) shouldBe BoardOpenResult.AlreadyOpened
-            }
-        }
-
-        context("좌표를 열었을 때 지뢰라면") {
-            it("실패한 것을 알린다. ( BoardOpenResult.Fail 을 리턴한다. )") {
-                val board = SampleBoard(listOf(Cell.Mine(Coordinate(0, 0))))
-
-                board.open(Coordinate(0, 0)) shouldBe BoardOpenResult.Fail
-            }
-        }
-
-        context("좌표가 보드판을 벗어났다면") {
-            it("BoardOpenResult.NotFound 를 리턴한다.") {
-                val board = SampleBoard(listOf(Cell.Block(Coordinate(0, 0))))
-
-                board.open(Coordinate(0, 1)) shouldBe BoardOpenResult.NotFound
             }
         }
     }
