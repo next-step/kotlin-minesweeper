@@ -3,6 +3,7 @@ package minesweeper.domain.board
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cell.Empty
 import minesweeper.domain.cell.Cell.Mine
+import minesweeper.domain.cell.CellMaker
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Position
 
@@ -26,10 +27,11 @@ class MineBoard private constructor(val cells: Cells) {
         fun of(
             width: Int,
             height: Int,
-            numberOfMines: Int
+            numberOfMines: Int,
+            cellMaker: CellMaker
         ): MineBoard {
             validate(width, height, numberOfMines)
-            val cells = Cells.of(width, height, numberOfMines)
+            val cells = Cells.of(width, height, numberOfMines, cellMaker)
             return MineBoard(cells)
         }
 

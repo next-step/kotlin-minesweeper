@@ -34,8 +34,8 @@ class Cells(private val cells: List<Cell>) : List<Cell> by cells {
         cells.find { it.position == position } ?: throw IllegalArgumentException("no cells found in that position.")
 
     companion object {
-        fun of(width: Int, height: Int, numberOfMines: Int): Cells {
-            val cells = CellMaker.make(width, height, numberOfMines)
+        fun of(width: Int, height: Int, numberOfMines: Int, cellMaker: CellMaker): Cells {
+            val cells = cellMaker.make(width, height, numberOfMines)
             return Cells(cells).apply { NearbyMineCounter.count(this) }
         }
     }

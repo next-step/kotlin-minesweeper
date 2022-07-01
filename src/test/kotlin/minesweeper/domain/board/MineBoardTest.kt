@@ -2,6 +2,7 @@ package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell.Empty
 import minesweeper.domain.cell.Cell.Mine
+import minesweeper.domain.cell.RandomCellMaker
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -51,6 +52,7 @@ internal class MineBoardTest {
             width(width)
             height(height)
             numberOfMines(numberOfMines)
+            cellMaker(RandomCellMaker)
         }
 
         @JvmStatic
