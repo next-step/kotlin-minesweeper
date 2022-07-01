@@ -1,6 +1,8 @@
 package minesweeper.domain.cell
 
 import io.mockk.boxedClass
+import minesweeper.domain.cell.Cell.Empty
+import minesweeper.domain.cell.Cell.Mine
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.assertThrows

@@ -1,12 +1,12 @@
 package minesweeper.game
 
-import minesweeper.domain.board.RandomMineMaker
+import minesweeper.domain.cell.RandomCellMaker
 import minesweeper.view.ViewResolver
 
 fun main() {
     val mineSweeperController = MineSweeperController(
         viewResolver = ViewResolver(),
-        mineMaker = RandomMineMaker()
+        cellMaker = RandomCellMaker
     )
     mineSweeperController.start()
 }
