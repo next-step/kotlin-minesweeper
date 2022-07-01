@@ -3,6 +3,7 @@ package minesweeper.domain.board
 import minesweeper.domain.cell.Cell.Empty
 import minesweeper.domain.cell.Cell.Mine
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.NearbyMineCounter
 import minesweeper.domain.cell.Position
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest

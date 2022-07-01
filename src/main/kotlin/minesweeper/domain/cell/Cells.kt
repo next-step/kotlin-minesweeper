@@ -1,7 +1,5 @@
 package minesweeper.domain.cell
 
-import minesweeper.domain.board.NearbyMineCounter
-
 class Cells(private val cells: List<Cell>) : List<Cell> by cells {
 
     fun open(position: Position): Cell {

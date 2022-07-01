@@ -1,8 +1,7 @@
-package minesweeper.domain.board
+package minesweeper.domain.cell
 
 import minesweeper.domain.cell.Cell.Empty
 import minesweeper.domain.cell.Cell.Mine
-import minesweeper.domain.cell.Cells
 
 object NearbyMineCounter {
 
