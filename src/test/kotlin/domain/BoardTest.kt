@@ -1,10 +1,10 @@
 package domain
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-internal class BoardTest : StringSpec({
+internal class BoardTest : FreeSpec({
 
     "빈 리스트로는 인스턴스 생성할 수 없다" {
         shouldThrow<IllegalArgumentException> {
@@ -42,5 +42,44 @@ internal class BoardTest : StringSpec({
         val board = Board.of(rows)
 
         board.rows.flatMap { it.cells }.map { board.mineCount(it) } shouldBe listOf(2, 1, 1, 2)
+    }
+
+    "open" - {
+        "지뢰가 있는 cell 을 열면 패배한다" {
+            val rows = listOf(
+                createRow(createEmpty(1, 1), createMine(2, 1)),
+                createRow(createMine(1, 2), createEmpty(2, 2)),
+            )
+            val board = Board.of(rows)
+
+            val status = board.open(board.rows[0].cells[1])
+
+            status shouldBe GameStatus.LOST
+        }
+
+        "지뢰가 없는 곳을 모두 열면 승리한다" {
+            val rows = listOf(
+                createRow(createEmpty(1, 1), createMine(2, 1)),
+                createRow(createMine(1, 2), createEmpty(2, 2)),
+            )
+            val board = Board.of(rows)
+
+            board.open(board.rows[0].cells[0])
+            val status = board.open(board.rows[1].cells[1])
+
+            status shouldBe GameStatus.WIN
+        }
+
+        "아직 열지않은 지뢰가 없는 곳이 남았다면 게임을 계속 진행한다" {
+            val rows = listOf(
+                createRow(createEmpty(1, 1), createMine(2, 1)),
+                createRow(createMine(1, 2), createEmpty(2, 2)),
+            )
+            val board = Board.of(rows)
+
+            val status = board.open(board.rows[0].cells[0])
+
+            status shouldBe GameStatus.CONTINUE
+        }
     }
 })

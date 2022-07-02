@@ -9,6 +9,19 @@ class Board private constructor(val rows: List<Row>) {
     fun mineCount(cell: Cell): Int =
         rows.flatMap { it.cells }.count { it is Mine && it.isAdjacentTo(cell) }
 
+    fun open(cell: Cell): GameStatus {
+        when (cell) {
+            is Mine -> return GameStatus.LOST
+            is Empty -> cell.open()
+        }
+
+        return if (isClear()) GameStatus.WIN
+        else GameStatus.CONTINUE
+    }
+
+    private fun isClear(): Boolean =
+        rows.flatMap { it.cells }.filterIsInstance<Empty>().all { it.opened }
+
     companion object {
 
         fun of(rows: List<Row>): Board {
