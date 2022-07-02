@@ -33,4 +33,14 @@ internal class BoardTest : StringSpec({
 
         board.cellCount shouldBe 9
     }
+
+    "주어진 cell 주변의 지뢰개수를 반환한다" {
+        val rows = listOf(
+            createRow(createEmpty(1, 1), createMine(2, 1)),
+            createRow(createMine(1, 2), createEmpty(2, 2)),
+        )
+        val board = Board.of(rows)
+
+        board.rows.flatMap { it.cells }.map { board.mineCount(it) } shouldBe listOf(2, 1, 1, 2)
+    }
 })
