@@ -2,12 +2,14 @@ package domain
 
 class Board private constructor(val rows: List<Row>) {
 
-    val mineCount = rows.flatMap { it.cells }.count { it is Mine }
+    private val allCells = rows.flatMap { it.cells }
 
-    val cellCount = rows.first().size * rows.size
+    val mineCount = allCells.count { it is Mine }
+
+    val cellCount = allCells.size
 
     fun mineCount(cell: Cell): Int =
-        rows.flatMap { it.cells }.count { it is Mine && it.isAdjacentTo(cell) }
+        allCells.count { it is Mine && it.isAdjacentTo(cell) }
 
     fun open(cell: Cell): GameStatus {
         when (cell) {
@@ -20,7 +22,7 @@ class Board private constructor(val rows: List<Row>) {
     }
 
     private fun isClear(): Boolean =
-        rows.flatMap { it.cells }.filterIsInstance<Empty>().all { it.opened }
+        allCells.filterIsInstance<Empty>().all { it.opened }
 
     companion object {
 
