@@ -18,7 +18,7 @@ object InputView {
 
     private fun readInput(message: String): PositiveNumber = inputErrorCatch {
         println(message)
-        val input = requireNotNull(readln().toIntOrNull())
+        val input = requireNotNull(readlnOrNull()?.toIntOrNull())
         PositiveNumber(input)
     }
 

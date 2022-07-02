@@ -10,6 +10,8 @@ value class PositiveNumber(
         require(number > 0) { VALUE_IS_NOT_POSITIVE_NUMBER_ERROR_MSG }
     }
 
+    fun toInt() = number
+
     operator fun compareTo(anotherNumber: Any): Int =
         when (anotherNumber) {
             is PositiveNumber -> number.compareTo(anotherNumber.number)

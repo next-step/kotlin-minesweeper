@@ -59,9 +59,9 @@ C C C C C C C C C C
     [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
     [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
     [x] 높이 * 너비 보다 큰 숫자이면 IllegalArgumentException을 반환한다
-[] 지뢰 찾기
-    [] 보드를 생성한다
-    [] 지뢰를 생성한다
-    [] 일반 땅을 생성한다
+[x] 지뢰 찾기 게임 생성
+    [x] 보드를 생성한다
+    [x] 지뢰를 생성한다
+    [x] 일반 땅을 생성한다
 [] 지뢰 결과를 출력한다.
     [] 지뢰와 아닌것을 구분하여 출력한다.
