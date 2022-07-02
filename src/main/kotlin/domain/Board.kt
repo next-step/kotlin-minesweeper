@@ -16,21 +16,21 @@ class Board private constructor(val rows: List<Row>) {
 
         when (cell) {
             is Mine -> return GameStatus.LOST
-            is Empty -> getClearCells(cell).forEach { it.openAll() }
+            is Empty -> getZeroMineCells(cell).forEach { it.openAll() }
         }
 
         return if (isClear()) GameStatus.WIN
         else GameStatus.CONTINUE
     }
 
-    private fun getClearCells(cell: Cell, clearCells: MutableList<Cell> = mutableListOf()): List<Cell> {
+    private fun getZeroMineCells(cell: Cell, clearCells: MutableList<Cell> = mutableListOf()): List<Cell> {
         cell
             .emptyNeighbors()
             .filter { mineCount(it) == 0 }
             .filter { !clearCells.contains(it) }
             .forEach {
                 clearCells.add(it)
-                getClearCells(it, clearCells)
+                getZeroMineCells(it, clearCells)
             }
 
         return clearCells
