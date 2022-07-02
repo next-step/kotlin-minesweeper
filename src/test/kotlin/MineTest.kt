@@ -11,6 +11,7 @@ internal class MineTest {
         assertAll("정보 확인", {
             assertThat(mine.isMine()).isTrue
             assertThat(mine.display()).isEqualTo("*")
+            assertThat(mine.countAroundMine()).isEqualTo(-1)
         })
     }
 }

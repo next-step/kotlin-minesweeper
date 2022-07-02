@@ -1,3 +1,3 @@
 package domain
 
-data class Point(val pointX: Int, val pointY: Int)
+data class Point(val x: Int, val y: Int)

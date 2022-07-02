@@ -10,8 +10,8 @@ internal class PointTest {
     fun `Point 객체 생성 및 좌표 값 확인`() {
         val point = Point(1, 2)
 
-        val actualX = point.pointX
-        val actualY = point.pointY
+        val actualX = point.x
+        val actualY = point.y
 
         val expectedX = 1
         val expectedY = 2

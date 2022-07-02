@@ -9,6 +9,6 @@ fun main() {
     )
 
     val mineSweeperGameBoard = MineSweeperGameBoard(MineSweeperBoardGenerator(info))
-
-    Response.startView(mineSweeperGameBoard.board, info)
+    val mineSetting = AroundMineSetting(mineSweeperGameBoard.board)
+    Response.startView(mineSetting.board, info)
 }
