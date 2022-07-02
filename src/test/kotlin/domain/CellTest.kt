@@ -23,10 +23,10 @@ internal class CellTest : StringSpec({
     "지뢰없는 cell 을 open 처리 한다" {
         val cell = Empty(Coordinate(Point(1), Point(2)))
 
-        cell.opended.shouldBeFalse()
+        cell.opened.shouldBeFalse()
 
         cell.open()
 
-        cell.opended.shouldBeTrue()
+        cell.opened.shouldBeTrue()
     }
 })
