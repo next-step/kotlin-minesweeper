@@ -6,6 +6,9 @@ class Board private constructor(val rows: List<Row>) {
 
     val cellCount = rows.first().size * rows.size
 
+    fun mineCount(cell: Cell): Int =
+        rows.flatMap { it.cells }.count { it is Mine && it.isAdjacentTo(cell) }
+
     companion object {
 
         fun of(rows: List<Row>): Board {
