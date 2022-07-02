@@ -2,13 +2,10 @@ package domain
 
 import domain.vo.Point
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FreeSpec
-import io.kotest.inspectors.forAll
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-internal class CoordinateTest : FreeSpec({
+internal class CoordinateTest : StringSpec({
 
     "x 위치가 1보다 작으면 인스턴스 생성에 실패한다" {
         shouldThrow<IllegalArgumentException> {
@@ -29,35 +26,30 @@ internal class CoordinateTest : FreeSpec({
         coordinate.y shouldBe Point(2)
     }
 
-    "isAdjacentTo" - {
-        "근접한 좌표를 제공하면 true 를 반환한다" {
-            val coordinate = Coordinate(Point(3), Point(3))
-            val surrounds = listOf(
-                Coordinate(Point(2), Point(2)),
-                Coordinate(Point(3), Point(2)),
-                Coordinate(Point(4), Point(2)),
-                Coordinate(Point(2), Point(3)),
-                Coordinate(Point(4), Point(3)),
-                Coordinate(Point(2), Point(4)),
-                Coordinate(Point(3), Point(4)),
-                Coordinate(Point(4), Point(4)),
-            )
+    "범위를 벗어나는 좌표를 제외한 주변 좌표목록을 생성한다" {
+        val coordinate = Coordinate(Point(1), Point(2))
 
-            surrounds.forAll {
-                it.isAdjacentTo(coordinate).shouldBeTrue()
-            }
-        }
+        coordinate.surroundings shouldBe listOf(
+            Coordinate(Point(1), Point(1)),
+            Coordinate(Point(2), Point(1)),
+            Coordinate(Point(2), Point(2)),
+            Coordinate(Point(1), Point(3)),
+            Coordinate(Point(2), Point(3)),
+        )
+    }
 
-        "근접하지 않은 좌표를 제공하면 false 를 반환한다" {
-            val coordinate = Coordinate(Point(3), Point(4))
+    "8개의 주변좌표를 생성한다 " {
+        val coordinate = Coordinate(Point(3), Point(3))
 
-            coordinate.isAdjacentTo(Coordinate(Point(3), Point(6))).shouldBeFalse()
-        }
-
-        "동일한 좌표를 제공하면 false 를 반환한다" {
-            val coordinate = Coordinate(Point(3), Point(4))
-
-            coordinate.isAdjacentTo(Coordinate(Point(3), Point(4))).shouldBeFalse()
-        }
+        coordinate.surroundings shouldBe listOf(
+            Coordinate(Point(2), Point(2)),
+            Coordinate(Point(3), Point(2)),
+            Coordinate(Point(4), Point(2)),
+            Coordinate(Point(2), Point(3)),
+            Coordinate(Point(4), Point(3)),
+            Coordinate(Point(2), Point(4)),
+            Coordinate(Point(3), Point(4)),
+            Coordinate(Point(4), Point(4)),
+        )
     }
 })
