@@ -50,15 +50,15 @@ C C C C C C C C C C
 
 ### 상세 구현 사항
 [] 높이를 입력받는다.
-    [] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다 
-    [] 0을 넘지 않으면 IllegalArgumentException을 반환한다
+    [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다 
+    [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
 [] 너비를 입력받는다.
-    [] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
-    [] 0을 넘지 않으면 IllegalArgumentException을 반환한다
+    [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
+    [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
 [] 지뢰 개수를 입력받는다.
-    [] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
-    [] 0을 넘지 않으면 IllegalArgumentException을 반환한다
-    [] 높이 * 너비 보다 큰 숫자이면 IllegalArgumentException을 반환한다
+    [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
+    [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
+    [x] 높이 * 너비 보다 큰 숫자이면 IllegalArgumentException을 반환한다
 [] 지뢰 찾기
     [] 보드를 생성한다
     [] 지뢰를 생성한다
