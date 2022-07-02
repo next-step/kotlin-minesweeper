@@ -16,6 +16,8 @@ sealed class Cell(private val coordinate: Coordinate) {
     }
 
     fun isAdjacentTo(cell: Cell): Boolean = coordinate.isAdjacentTo(cell.coordinate)
+
+    fun equalsBy(coordinate: Coordinate): Boolean = this.coordinate == coordinate
 }
 
 class Mine(coordinate: Coordinate) : Cell(coordinate)
