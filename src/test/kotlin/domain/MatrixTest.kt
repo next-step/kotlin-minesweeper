@@ -19,10 +19,11 @@ class MatrixTest {
         val dimension = Dimension(10, 10)
         val locationSelector = CustomLocationSelector(
             listOf(
-                Location(LocationValue(0),LocationValue(0)),
-                Location(LocationValue(1),LocationValue(1)),
-                Location(LocationValue(2),LocationValue(2))
-        ))
+                Location(LocationValue(0), LocationValue(0)),
+                Location(LocationValue(1), LocationValue(1)),
+                Location(LocationValue(2), LocationValue(2))
+            )
+        )
         val matrix = Matrix(dimension, numberOfMines, locationSelector)
 
         assertThat(matrix.cells.values.filter { it is Cell.Ground }.count()).isEqualTo(97)

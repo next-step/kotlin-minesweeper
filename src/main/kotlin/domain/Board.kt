@@ -1,8 +1,8 @@
 package domain
 
 class Board(
-    private val matrix: Matrix,
+    matrix: Matrix,
 ) {
     val dimension: Dimension = matrix.dimension
-    val cells: List<Cell> = matrix.cells.values.toList()
+    val cells: Map<Location, Cell> = matrix.cells
 }

@@ -3,11 +3,18 @@ package domain
 data class Location(
     val row: LocationValue,
     val column: LocationValue,
-)
+) {
+    companion object {
+        fun of(row: Int, column: Int): Location {
+            return Location(LocationValue(row), LocationValue(column))
+        }
 
-@JvmInline
-value class LocationValue(val value: Int) {
-    init {
-        require(value >= 0) { "위치를 표현하는 값은 0 이상이어야 합니다." }
+        fun Location.isMine(cells: Map<Location, Cell>): Boolean {
+            if (this == null) return false
+            return cells[this] is Cell.Mine
+        }
     }
 }
+
+@JvmInline
+value class LocationValue(val value: Int)

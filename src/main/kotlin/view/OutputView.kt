@@ -2,6 +2,8 @@ package view
 
 import domain.Board
 import domain.Cell
+import domain.Location
+import domain.Matrix.Companion.countMineFound
 
 object OutputView {
 
@@ -10,20 +12,21 @@ object OutputView {
         val cells = board.cells
         val width = board.dimension.width
 
-        cells.forEachIndexed { i, cell ->
-            if (i % width == 0) println()
-            print(cell.display())
+        cells.forEach { location, cell ->
+            if (location.column.value % width == 0) println()
+            print(cell.display(cells))
         }
+        println()
+        println()
     }
 
-    private fun Cell.display(): String {
+    private fun Cell.display(cells: Map<Location, Cell>): String {
         return when (this) {
-            is Cell.Mine -> "*"
-            is Cell.Ground -> "C"
+            is Cell.Mine -> MINE_SYMBOL
+            is Cell.Ground -> countMineFound(this, cells).toString()
         }
     }
 
     private const val MINESWEEPER_TITLE = "지뢰찾기 게임 시작"
     private const val MINE_SYMBOL = "*"
-    private const val GROUND_SYMBOL = "C"
 }
