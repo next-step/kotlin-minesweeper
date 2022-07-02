@@ -4,18 +4,18 @@ package view
  * 입력을 받는 클래스
  * Created by Jaesungchi on 2022.06.28..
  */
-class InputView() {
-    fun getHeight(readStringValue: () -> String? = { readlnOrNull() }): Int {
+class InputView(private val readStringValue: () -> String?) {
+    fun getHeight(): Int {
         println(WRITE_HEIGHT)
         return getInt(readStringValue)
     }
 
-    fun getWidth(readStringValue: () -> String? = { readlnOrNull() }): Int {
+    fun getWidth(): Int {
         println(WRITE_WIDTH)
         return getInt(readStringValue)
     }
 
-    fun getMineCount(readStringValue: () -> String? = { readlnOrNull() }): Int {
+    fun getMineCount(): Int {
         println(WRITE_MINE_COUNT)
         return getInt(readStringValue)
     }

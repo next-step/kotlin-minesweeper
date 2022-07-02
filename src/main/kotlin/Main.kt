@@ -1,9 +1,11 @@
 import controller.MineController
+import view.InputView
 
 /**
  * Created by Jaesungchi on 2022.06.28..
  */
 
 fun main() {
-    MineController.startMineSweeper()
+    val inputView = InputView(::readlnOrNull)
+    MineController(inputView).startMineSweeper()
 }

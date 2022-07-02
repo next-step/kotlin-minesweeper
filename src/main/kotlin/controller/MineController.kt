@@ -9,12 +9,12 @@ import view.OutputView
  * 지뢰찾기를 진행하는 컨트롤러
  * Created by Jaesungchi on 2022.06.28..
  */
-object MineController {
+class MineController(private val inputView: InputView) {
     fun startMineSweeper() {
         val settingInfo = GameSettingInfo(
-            InputView.getHeight(),
-            InputView.getWidth(),
-            InputView.getMineCount()
+            inputView.getHeight(),
+            inputView.getWidth(),
+            inputView.getMineCount()
         )
         val board = BoardMaker(settingInfo).makeBoard()
         OutputView.printBoard(board, settingInfo)
