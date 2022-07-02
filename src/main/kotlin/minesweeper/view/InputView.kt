@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.model.CellPosition
+
 interface InputView {
     fun printHeightInputMessage()
 
@@ -12,4 +14,6 @@ interface InputView {
     fun printMineCountInputMessage()
 
     fun inputMineCount(): Int
+
+    fun inputOpenCellPosition(): CellPosition
 }

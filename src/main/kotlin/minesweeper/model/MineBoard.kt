@@ -1,10 +1,22 @@
 package minesweeper.model
 
+import minesweeper.dto.MineBoardCreateDto
+
 class MineBoard(
     val board: List<Cells>
 ) {
-    fun sumOfMineCountIn(surroundingPositions: Set<CellPosition>): Int =
-        board.sumOf { it.mineCountIn(surroundingPositions) }
+
+    val mineCount
+        get() = board.sumOf { it.mineCount }
+
+    fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
+        board.sumOf { it.mineCountIn(positions) }
+
+    fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
+        board.flatMap { it.findClosedCellsIn(positions) }
+
+    fun openAndSurroundingNonMineCells(position: CellPosition) =
+        board[position.x.position].openAndSurroundingNonMineCells(position.y, this)
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {
@@ -12,9 +24,8 @@ class MineBoard(
             val shuffledCellPositions = cellPositions.generateShuffledPositions()
 
             val cells = Cells.of(shuffledCellPositions, boardCreateDto.mineCount)
-            val sortedCells = cells.generateCellsSortedByPosition()
 
-            return cellsToBoard(sortedCells, boardCreateDto.width, boardCreateDto.height)
+            return cellsToBoard(cells, boardCreateDto.width, boardCreateDto.height)
         }
 
         private fun cellsToBoard(cells: Cells, width: Int, height: Int): MineBoard =

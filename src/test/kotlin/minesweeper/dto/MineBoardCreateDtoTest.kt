@@ -1,4 +1,4 @@
-package minesweeper.model
+package minesweeper.dto
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName

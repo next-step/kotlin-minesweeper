@@ -3,6 +3,7 @@ package minesweeper.model
 data class Cell(
     private val type: CellType,
     val position: CellPosition,
+    var isOpened: Boolean = false,
 ) {
 
     fun findSurroundingMineCountSum(board: MineBoard): Int {
@@ -10,9 +11,25 @@ data class Cell(
         return board.sumOfMineCountIn(surroundingPositions)
     }
 
+    fun openMeAndSurroundingNonMineCells(board: MineBoard) {
+        isOpened = true
+
+        val surroundingPositions = position.findSurroundingCellPositions()
+        if (board.sumOfMineCountIn(surroundingPositions) > 0) {
+            return
+        }
+
+        val surroundingClosedNonMineCells = board.findClosedCellsIn(surroundingPositions)
+        surroundingClosedNonMineCells.forEach { it.openMeAndSurroundingNonMineCells(board) }
+    }
+
     fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
 
     fun isMine(): Boolean = type.isMine()
+
+    fun isMineAndOpened(): Boolean = isMine() && isOpened
+
+    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
 
     companion object {
         fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)

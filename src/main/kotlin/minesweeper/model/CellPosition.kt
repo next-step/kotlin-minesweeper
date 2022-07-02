@@ -1,8 +1,8 @@
 package minesweeper.model
 
 data class CellPosition(
-    private val x: Position,
-    private val y: Position,
+    val x: Position,
+    val y: Position,
 ) : Comparable<CellPosition> {
 
     fun findSurroundingCellPositions(): Set<CellPosition> = SurroundingPosition.values()
