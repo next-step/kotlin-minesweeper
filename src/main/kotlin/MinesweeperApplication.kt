@@ -1,5 +1,8 @@
+import domain.Board
+import domain.BoardGenerator
 import domain.GameInfo
 import view.InputView
+import view.OutputView
 
 fun main() {
     val vertical = InputView.getVertical()
@@ -7,5 +10,7 @@ fun main() {
     val mineCount = InputView.getMineCount()
 
     val gameInfo = GameInfo(vertical, horizontal, mineCount)
-    println(gameInfo)
+    val board = Board(BoardGenerator(gameInfo))
+
+    OutputView.printMinesweeperBoard(board, gameInfo)
 }
