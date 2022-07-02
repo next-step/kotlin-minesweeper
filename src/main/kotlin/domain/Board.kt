@@ -9,20 +9,43 @@ class Board private constructor(val rows: List<Row>) {
     val cellCount = allCells.size
 
     fun mineCount(cell: Cell): Int =
-        allCells.count { it is Mine && it.isAdjacentTo(cell) }
+        allCells.count { it.isAdjacentTo(cell) && it is Mine }
 
     fun open(cell: Cell): GameStatus {
+        cell.open()
+
         when (cell) {
             is Mine -> return GameStatus.LOST
-            is Empty -> cell.open()
+            is Empty -> getClearCells(cell).forEach { it.openAll() }
         }
 
         return if (isClear()) GameStatus.WIN
         else GameStatus.CONTINUE
     }
 
+    private fun getClearCells(cell: Cell, clearCells: MutableList<Cell> = mutableListOf()): List<Cell> {
+        cell
+            .emptyNeighbors()
+            .filter { mineCount(it) == 0 }
+            .filter { !clearCells.contains(it) }
+            .forEach {
+                clearCells.add(it)
+                getClearCells(it, clearCells)
+            }
+
+        return clearCells
+    }
+
+    private fun Cell.emptyNeighbors(): List<Cell> =
+        allCells.filter { it.isAdjacentTo(this) }.filterIsInstance<Empty>()
+
     private fun isClear(): Boolean =
         allCells.filterIsInstance<Empty>().all { it.opened }
+
+    private fun Cell.openAll() {
+        open()
+        emptyNeighbors().forEach { it.open() }
+    }
 
     companion object {
 

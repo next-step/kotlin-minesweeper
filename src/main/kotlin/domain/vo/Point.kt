@@ -14,4 +14,6 @@ value class Point(private val value: Int) : Comparable<Point> {
 
     operator fun minus(other: Int): Point =
         Point(value - other)
+
+    override fun toString(): String = value.toString()
 }

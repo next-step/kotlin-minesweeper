@@ -81,5 +81,30 @@ internal class BoardTest : FreeSpec({
 
             status shouldBe GameStatus.CONTINUE
         }
+
+        "지뢰가 없는 인접한 곳을 모두 연다" {
+            val rows = listOf(
+                createRow(createEmpty(1, 1), createEmpty(2, 1), createEmpty(3, 1)),
+                createRow(createEmpty(1, 2), createEmpty(2, 2), createMine(3, 2)),
+                createRow(createEmpty(1, 3), createEmpty(2, 3), createEmpty(3, 3)),
+                createRow(createMine(1, 4), createEmpty(2, 4), createEmpty(3, 4)),
+            )
+            val board = Board.of(rows)
+
+            board.open(board.rows[0].cells[0])
+
+            rows
+                .flatMap { it.cells }
+                .filterIsInstance<Empty>()
+                .filter { it.opened }
+                .map { "(${it.x}, ${it.y})" } shouldBe listOf(
+                "(1, 1)",
+                "(2, 1)",
+                "(1, 2)",
+                "(2, 2)",
+                "(1, 3)",
+                "(2, 3)",
+            )
+        }
     }
 })
