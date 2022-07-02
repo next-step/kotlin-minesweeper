@@ -1,36 +1,49 @@
 package minesweeper
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Area
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
 import minesweeper.domain.Coordinate
+import minesweeper.domain.MineCount
 
 class BoardTest : DescribeSpec({
 
-    describe("remainMineCount") {
-        context("보드에 지뢰가 3개 존재하는 경우") {
-            it("3을 리턴한다..") {
-                val firstLineCells = listOf(Cell.Mine(Coordinate(0, 0)), Cell.Mine(Coordinate(1, 0)))
-                val secondLineCells = listOf(Cell.Mine(Coordinate(0, 1)), Cell.None(Coordinate(1, 1)))
-
-                val board = Board(firstLineCells + secondLineCells)
-
-                board.remainMineCount() shouldBe 3
+    describe("init") {
+        context("크기보다 지뢰의 개수가 많으면") {
+            it("Invalid 상태를 반환한다.") {
+                shouldThrow<IllegalArgumentException> {
+                    Board(Area(1, 1), MineCount(10))
+                }
             }
         }
     }
 
-    describe("groupByColumn") {
-        context("2줄 짜리 보드가 주어질 경우") {
-            it("각 줄에 해당하는 cell 들을 리턴한다.") {
-                val firstLineCells = listOf(Cell.None(Coordinate(0, 0)), Cell.None(Coordinate(1, 0)))
-                val secondLineCells = listOf(Cell.None(Coordinate(0, 1)), Cell.None(Coordinate(1, 1)))
+    describe("isCompleted") {
+        context("보드에 존재하는 지뢰가 아닌 모든 Cell 이 열리면") {
+            it("true 를 리턴한다.") {
+                val board = SampleBoard(listOf(OpenedCell(Coordinate(0, 0))))
 
-                val board = Board(firstLineCells + secondLineCells)
+                board.isCompleted() shouldBe true
+            }
+        }
+    }
 
-                board.groupByColumn()[0] shouldBe firstLineCells
-                board.groupByColumn()[1] shouldBe secondLineCells
+    describe("openAllMine") {
+        context("보드에 존재하는 모든 지뢰를") {
+            it("open 상태로 바꾼다.") {
+                /* 보드 Cell 배치
+                 0 1 *
+                 1 2 1
+                 1 * 1
+                 */
+                val board = SampleBoard(Area(3, 3), MineCount(2), mines = listOf(Coordinate(0, 2), Coordinate(2, 1)))
+
+                board.openAllMine()
+                board.getAllCell().filterIsInstance<Cell.Mine>().all(Cell::isOpened)
+                board.getAllCell().filterIsInstance<Cell.Block>().none(Cell::isOpened)
             }
         }
     }
