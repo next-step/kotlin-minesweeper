@@ -49,13 +49,13 @@ C C C C C C C C C C
 - getter/setter/프로퍼티를 쓰지 않는다.
 
 ### 상세 구현 사항
-[] 높이를 입력받는다.
+[x] 높이를 입력받는다.
     [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다 
     [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
-[] 너비를 입력받는다.
+[x] 너비를 입력받는다.
     [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
     [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
-[] 지뢰 개수를 입력받는다.
+[x] 지뢰 개수를 입력받는다.
     [x] empty이거나 숫자가 아니면 IllegalArgumentException을 반환한다
     [x] 0을 넘지 않으면 IllegalArgumentException을 반환한다
     [x] 높이 * 너비 보다 큰 숫자이면 IllegalArgumentException을 반환한다
