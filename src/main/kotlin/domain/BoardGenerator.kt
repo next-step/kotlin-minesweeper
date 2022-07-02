@@ -4,7 +4,7 @@ class BoardGenerator(private val gameInfo: GameInfo) {
     private val vertical = gameInfo.vertical.toInt()
     private val horizontal = gameInfo.horizontal.toInt()
 
-    fun create(): List<Cell> {
+    fun create(): Cells {
         val squares = createSquares().toMutableList()
 
         return (1..vertical).flatMap { yIdx ->
@@ -12,6 +12,7 @@ class BoardGenerator(private val gameInfo: GameInfo) {
                 Cell(Position.of(xIdx, yIdx), squares.removeFirst())
             }
         }.toList()
+            .toCells()
     }
 
     private fun createSquares(): List<Square> {
