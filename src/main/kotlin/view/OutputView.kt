@@ -2,13 +2,13 @@ package view
 
 import domain.Board
 import domain.Cell
+import domain.Cell.Companion.surroundMineCount
 import domain.Location
-import domain.Matrix.Companion.countMineFound
+import domain.Location.Companion.isMine
 
 object OutputView {
 
     fun showBoard(board: Board) {
-        println(MINESWEEPER_TITLE)
         val cells = board.cells
         val width = board.dimension.width
 
@@ -21,12 +21,21 @@ object OutputView {
     }
 
     private fun Cell.display(cells: Map<Location, Cell>): String {
-        return when (this) {
-            is Cell.Mine -> MINE_SYMBOL
-            is Cell.Ground -> countMineFound(this, cells).toString()
-        }
+        return if (this.location.closed) HIDE_SYMBOL
+        else if (isMine(this.location, cells)) MINE_SYMBOL
+        else surroundMineCount(this, cells).toString()
+    }
+
+    fun displayGameStart() {
+        println(MINESWEEPER_TITLE)
+    }
+
+    fun displayGameEnd() {
+        println(LOSE_GAME)
     }
 
     private const val MINESWEEPER_TITLE = "지뢰찾기 게임 시작"
     private const val MINE_SYMBOL = "*"
+    private const val HIDE_SYMBOL = "C"
+    private const val LOSE_GAME = "Lose Game."
 }

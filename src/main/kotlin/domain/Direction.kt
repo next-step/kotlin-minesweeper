@@ -1,6 +1,6 @@
 package domain
 
-enum class Direction(val rowDirection: Int, val columnDirection: Int) {
+enum class Direction(private val rowDirection: Int, private val columnDirection: Int) {
     TOP(-1, 0),
     TOP_RIGHT(-1, 1),
     RIGHT(0, 1),
