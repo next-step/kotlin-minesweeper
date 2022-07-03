@@ -22,12 +22,12 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
 
         // then
         assertSoftly(mineSweeperBoard.zones) {
-            size shouldBe height
-            get(0).size shouldBe width
-            get(1).size shouldBe width
-            get(2).size shouldBe width
-            get(3).size shouldBe width
-            get(4).size shouldBe width
+            size shouldBe height * width
+            // get(0).size shouldBe width
+            // get(1).size shouldBe width
+            // get(2).size shouldBe width
+            // get(3).size shouldBe width
+            // get(4).size shouldBe width
         }
     }
 

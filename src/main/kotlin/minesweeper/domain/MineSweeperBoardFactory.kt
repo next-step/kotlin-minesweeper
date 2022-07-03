@@ -26,8 +26,8 @@ class MineSweeperBoardBuilder {
     fun build(): MineSweeperBoard {
         val zoneArea = height.value * width.value
         require(zoneArea >= countOfMine.value) { "지뢰 갯수는 총 면적보다 클 수 없습니다. 총 면적 = $zoneArea, 지뢰 갯수 = $countOfMine" }
-        val safeZones = List(zoneArea - countOfMine.value) { Zone(false) }
-        val mineZones = List(countOfMine.value) { Zone(true) }
+        val safeZones = List(zoneArea - countOfMine.value) { SafeZone }
+        val mineZones = List(countOfMine.value) { MineZone }
 
         return (mineZones + safeZones).shuffled()
             .chunked(width.value)

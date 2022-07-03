@@ -1,7 +1,9 @@
 package minesweeper.view
 
 import minesweeper.domain.MineSweeperBoard
+import minesweeper.domain.MineZone
 import minesweeper.domain.Position
+import minesweeper.domain.SafeZone
 import minesweeper.domain.Zone
 
 object OutputView {
@@ -25,8 +27,8 @@ object OutputView {
         }
     }
 
-    private fun mapToMineZoneOrSafeZoneSymbol(zone: Zone) = when (zone.hasMine) {
-        true -> MINE_ZONE_SYMBOL
-        false -> SAFE_ZONE_SYMBOL
+    private fun mapToMineZoneOrSafeZoneSymbol(zone: Zone) = when (zone) {
+        is MineZone -> MINE_ZONE_SYMBOL
+        is SafeZone -> SAFE_ZONE_SYMBOL
     }
 }
