@@ -44,4 +44,16 @@ class CellTest {
             { assertThat(`p(2,2)`.findSurroundingMineCountSum(board)).isEqualTo(1) }
         )
     }
+
+    @Test
+    fun `셀 오픈 기능이 정상 동작`() {
+        // given when, then
+        assertAll(
+            "open cell test",
+            { assertThat(ClosedNonMine(CellPosition.of(0, 0)).open()).isExactlyInstanceOf(OpenedNonMine::class.java) },
+            { assertThat(ClosedMine(CellPosition.of(0, 0)).open()).isExactlyInstanceOf(OpenedMine::class.java) },
+            { assertThat(OpenedNonMine(CellPosition.of(0, 0)).open()).isExactlyInstanceOf(OpenedNonMine::class.java) },
+            { assertThat(OpenedMine(CellPosition.of(0, 0)).open()).isExactlyInstanceOf(OpenedMine::class.java) },
+        )
+    }
 }
