@@ -5,12 +5,13 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class MineSweeperBoardFactoryKtTest : StringSpec({
     "지뢰찾기 보드를 생성하는 기능" {
         // given
-        val height = 5
-        val width = 5
+        val height = 2
+        val width = 2
         val countOfMine = 1
 
         // when
@@ -18,16 +19,23 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
             height(height)
             width(width)
             countOfMine(countOfMine)
+            strategy { _: Int, _: Int, _: Int ->
+                mapOf(
+                    Position(1, 1) to MineZone,
+                    Position(1, 2) to SafeZone,
+                    Position(2, 1) to SafeZone,
+                    Position(2, 2) to SafeZone,
+                )
+            }
         }
 
         // then
         assertSoftly(mineSweeperBoard.zones) {
             size shouldBe height * width
-            // get(0).size shouldBe width
-            // get(1).size shouldBe width
-            // get(2).size shouldBe width
-            // get(3).size shouldBe width
-            // get(4).size shouldBe width
+            get(Position(1, 1)).shouldBeInstanceOf<MineZone>()
+            get(Position(1, 2)).shouldBeInstanceOf<SafeZone>()
+            get(Position(2, 1)).shouldBeInstanceOf<SafeZone>()
+            get(Position(2, 2)).shouldBeInstanceOf<SafeZone>()
         }
     }
 
