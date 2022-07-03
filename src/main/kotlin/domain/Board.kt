@@ -6,4 +6,16 @@ package domain
  */
 data class Board(
     val grounds: Map<Position, Ground>
-)
+) {
+    fun setAutoMine(mineCount: Int) {
+        grounds.toList().shuffled().take(mineCount).map {
+            grounds[it.first]?.installMine()
+        }
+    }
+
+    fun setManualMine(positions: List<Position>?) {
+        positions?.forEach {
+            grounds[it]?.installMine()
+        }
+    }
+}
