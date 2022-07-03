@@ -3,6 +3,8 @@ package minesweeper.dto
 import minesweeper.model.Cell
 import minesweeper.model.CellPosition
 import minesweeper.model.Cells
+import minesweeper.model.ClosedMine
+import minesweeper.model.ClosedNonMine
 import minesweeper.model.GameStatus
 import minesweeper.model.MineBoard
 import org.assertj.core.api.Assertions.assertThat
@@ -32,21 +34,21 @@ class GameResultDtoTest {
         // 0 0 0
         // 1 1 1
         // 1 * 1
-        `p(0,0)` = Cell.nonMine(CellPosition.of(0, 0))
-        `p(1,0)` = Cell.nonMine(CellPosition.of(1, 0))
-        `p(2,0)` = Cell.nonMine(CellPosition.of(2, 0))
-        `p(0,1)` = Cell.nonMine(CellPosition.of(0, 1))
-        `p(1,1)` = Cell.nonMine(CellPosition.of(1, 1))
-        `p(2,1)` = Cell.nonMine(CellPosition.of(2, 1))
-        `p(0,2)` = Cell.nonMine(CellPosition.of(0, 2))
-        `p(1,2)` = Cell.mine(CellPosition.of(1, 2))
-        `p(2,2)` = Cell.nonMine(CellPosition.of(2, 2))
+        `p(0,0)` = ClosedNonMine(CellPosition.of(0, 0))
+        `p(1,0)` = ClosedNonMine(CellPosition.of(1, 0))
+        `p(2,0)` = ClosedNonMine(CellPosition.of(2, 0))
+        `p(0,1)` = ClosedNonMine(CellPosition.of(0, 1))
+        `p(1,1)` = ClosedNonMine(CellPosition.of(1, 1))
+        `p(2,1)` = ClosedNonMine(CellPosition.of(2, 1))
+        `p(0,2)` = ClosedNonMine(CellPosition.of(0, 2))
+        `p(1,2)` = ClosedMine(CellPosition.of(1, 2))
+        `p(2,2)` = ClosedNonMine(CellPosition.of(2, 2))
 
         board = MineBoard(
             listOf(
-                Cells(listOf(`p(0,0)`, `p(1,0)`, `p(2,0)`)),
-                Cells(listOf(`p(0,1)`, `p(1,1)`, `p(2,1)`)),
-                Cells(listOf(`p(0,2)`, `p(1,2)`, `p(2,2)`))
+                Cells(mutableListOf(`p(0,0)`, `p(1,0)`, `p(2,0)`)),
+                Cells(mutableListOf(`p(0,1)`, `p(1,1)`, `p(2,1)`)),
+                Cells(mutableListOf(`p(0,2)`, `p(1,2)`, `p(2,2)`))
             )
         )
     }
@@ -54,7 +56,7 @@ class GameResultDtoTest {
     @Test
     fun `지뢰찾기 게임 결과 생성시 지뢰가 아닌데 오픈 됐으면 주변 8개 지뢰의 개수, 닫혀 있으면 C로 표시`() {
         // when
-        `p(0,0)`.openMeAndSurroundingNonMineCells(board)
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 0))
         val boardResult = GameResultDto.from(board)
 
         // then
@@ -76,7 +78,7 @@ class GameResultDtoTest {
     @Test
     fun `지뢰찾기 게임 결과 생성시 지뢰인데 오픈 됐으면 게임에서 진 상태`() {
         // when
-        `p(1,2)`.openMeAndSurroundingNonMineCells(board)
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(1, 2))
         val boardResult = GameResultDto.from(board)
 
         // then
@@ -86,9 +88,9 @@ class GameResultDtoTest {
     @Test
     fun `지뢰찾기 게임 결과 생성시 지뢰를 제외한 모든 셀을 오픈했으면 게임에서 이긴 상태`() {
         // when
-        `p(0,0)`.openMeAndSurroundingNonMineCells(board)
-        `p(0,2)`.openMeAndSurroundingNonMineCells(board)
-        `p(2,2)`.openMeAndSurroundingNonMineCells(board)
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 0))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 2))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(2, 2))
         val boardResult = GameResultDto.from(board)
 
         // then

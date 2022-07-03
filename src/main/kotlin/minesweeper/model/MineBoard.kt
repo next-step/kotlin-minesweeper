@@ -3,20 +3,38 @@ package minesweeper.model
 import minesweeper.dto.MineBoardCreateDto
 
 class MineBoard(
+    board: List<Cells>
+) : List<Cells> by board {
+
+    private val _board: MutableList<Cells> = board.toMutableList()
     val board: List<Cells>
-) {
+        get() = _board.toList()
 
     val mineCount
         get() = board.sumOf { it.mineCount }
 
+    fun openAtPositionAndSurroundingNonMineCells(position: CellPosition) {
+        val targetCells = board[position.y.position]
+        if (targetCells.isOpenedAt(position.x)) {
+            return
+        }
+
+        _board[position.y.position][position.x.position] = targetCells.openAt(position.x)
+
+        val surroundingPositions = position.findSurroundingCellPositions()
+        if (sumOfMineCountIn(surroundingPositions) > 0) {
+            return
+        }
+
+        val surroundingClosedNonMineCells = findClosedCellsIn(surroundingPositions)
+        surroundingClosedNonMineCells.forEach { openAtPositionAndSurroundingNonMineCells(it.position) }
+    }
+
     fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
         board.sumOf { it.mineCountIn(positions) }
 
-    fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
+    private fun findClosedCellsIn(positions: Set<CellPosition>) =
         board.flatMap { it.findClosedCellsIn(positions) }
-
-    fun openAndSurroundingNonMineCells(position: CellPosition) =
-        board[position.x.position].openAndSurroundingNonMineCells(position.y, this)
 
     companion object {
         fun of(boardCreateDto: MineBoardCreateDto): MineBoard {

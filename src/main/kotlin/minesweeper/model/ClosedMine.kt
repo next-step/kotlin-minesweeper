@@ -1,6 +1,4 @@
-package minesweeper.model2
-
-import minesweeper.model.CellPosition
+package minesweeper.model
 
 class ClosedMine(
     position: CellPosition,

@@ -1,8 +1,9 @@
 package minesweeper.dto
 
-import minesweeper.model.Cell
 import minesweeper.model.CellPosition
 import minesweeper.model.Cells
+import minesweeper.model.ClosedMine
+import minesweeper.model.ClosedNonMine
 import minesweeper.model.MineBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -34,22 +35,22 @@ class BoardRowDtoTest {
         // 0 0 0
         // 1 1 1
         // 1 * 1
-        val `p(0,0)` = Cell.nonMine(CellPosition.of(0, 0))
-        val `p(1,0)` = Cell.nonMine(CellPosition.of(1, 0))
-        val `p(2,0)` = Cell.nonMine(CellPosition.of(2, 0))
-        val `p(0,1)` = Cell.nonMine(CellPosition.of(0, 1))
-        val `p(1,1)` = Cell.nonMine(CellPosition.of(1, 1))
-        val `p(2,1)` = Cell.nonMine(CellPosition.of(2, 1))
-        val `p(0,2)` = Cell.nonMine(CellPosition.of(0, 2))
-        val `p(1,2)` = Cell.mine(CellPosition.of(1, 2))
-        val `p(2,2)` = Cell.nonMine(CellPosition.of(2, 2))
+        val `p(0,0)` = ClosedNonMine(CellPosition.of(0, 0))
+        val `p(1,0)` = ClosedNonMine(CellPosition.of(1, 0))
+        val `p(2,0)` = ClosedNonMine(CellPosition.of(2, 0))
+        val `p(0,1)` = ClosedNonMine(CellPosition.of(0, 1))
+        val `p(1,1)` = ClosedNonMine(CellPosition.of(1, 1))
+        val `p(2,1)` = ClosedNonMine(CellPosition.of(2, 1))
+        val `p(0,2)` = ClosedNonMine(CellPosition.of(0, 2))
+        val `p(1,2)` = ClosedMine(CellPosition.of(1, 2))
+        val `p(2,2)` = ClosedNonMine(CellPosition.of(2, 2))
 
-        val cellsOfRow1 = Cells(listOf(`p(0,0)`, `p(1,0)`, `p(2,0)`))
-        val cellsOfRow2 = Cells(listOf(`p(0,1)`, `p(1,1)`, `p(2,1)`))
-        val cellsOfRow3 = Cells(listOf(`p(0,2)`, `p(1,2)`, `p(2,2)`))
+        val cellsOfRow1 = Cells(mutableListOf(`p(0,0)`, `p(1,0)`, `p(2,0)`))
+        val cellsOfRow2 = Cells(mutableListOf(`p(0,1)`, `p(1,1)`, `p(2,1)`))
+        val cellsOfRow3 = Cells(mutableListOf(`p(0,2)`, `p(1,2)`, `p(2,2)`))
 
         val board = MineBoard(listOf(cellsOfRow1, cellsOfRow2, cellsOfRow3))
-        `p(0,0)`.openMeAndSurroundingNonMineCells(board)
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 0))
 
         // when, then
         assertAll(

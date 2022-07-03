@@ -20,7 +20,7 @@ class BoardRowDto(
         fun of(cells: Cells, board: MineBoard): BoardRowDto = BoardRowDto(cells.cells.map { findMarkOf(it, board) })
 
         private fun findMarkOf(cell: Cell, board: MineBoard): String {
-            if (cell.isMineAndOpened()) {
+            if (cell.isMineAndOpened) {
                 return MINE_MARK
             }
 

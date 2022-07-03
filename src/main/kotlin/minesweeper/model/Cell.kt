@@ -1,39 +1,25 @@
 package minesweeper.model
 
-data class Cell(
-    private val type: CellType,
+abstract class Cell(
     val position: CellPosition,
-    var isOpened: Boolean = false,
 ) {
+    abstract val isOpened: Boolean
+
+    abstract val isMine: Boolean
+
+    val isMineAndOpened: Boolean
+        get() = isMine && isOpened
+
+    fun isMineAndIn(positions: Set<CellPosition>) = isMine && isIn(positions)
+
+    fun isClosedAndIn(positions: Set<CellPosition>) = !isOpened && isIn(positions)
 
     fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
         return board.sumOfMineCountIn(surroundingPositions)
     }
 
-    fun openMeAndSurroundingNonMineCells(board: MineBoard) {
-        isOpened = true
+    private fun isIn(positions: Collection<CellPosition>) = positions.contains(position)
 
-        val surroundingPositions = position.findSurroundingCellPositions()
-        if (board.sumOfMineCountIn(surroundingPositions) > 0) {
-            return
-        }
-
-        val surroundingClosedNonMineCells = board.findClosedCellsIn(surroundingPositions)
-        surroundingClosedNonMineCells.forEach { it.openMeAndSurroundingNonMineCells(board) }
-    }
-
-    fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
-
-    fun isMine(): Boolean = type.isMine()
-
-    fun isMineAndOpened(): Boolean = isMine() && isOpened
-
-    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
-
-    companion object {
-        fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)
-
-        fun nonMine(position: CellPosition): Cell = Cell(CellType.NON_MINE, position)
-    }
+    abstract fun open(): Cell
 }
