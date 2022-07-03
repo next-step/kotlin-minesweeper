@@ -1,8 +1,8 @@
 package domain
 
-import domain.BoardMaker.Companion.ARROW_COUNT
-import domain.BoardMaker.Companion.X_MARGINS
-import domain.BoardMaker.Companion.Y_MARGINS
+import domain.Board.Companion.ARROW_COUNT
+import domain.Board.Companion.X_MARGINS
+import domain.Board.Companion.Y_MARGINS
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
