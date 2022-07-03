@@ -47,4 +47,44 @@ class BoardMakerTest {
             assertThat(mineCount == ground.mineCount).isTrue
         }
     }
+
+    @Test
+    fun `5x5보드에 테스트를 위한 2,2 자리에 지뢰 설치시 2,2에 지뢰가 잘 설치된다`() {
+        val gameSettingInfo = GameSettingInfo(5, 5, 0)
+        val board = BoardMaker(gameSettingInfo).makeBoard(listOf(Position(2, 2)))
+
+        assertThat(board.grounds[Position(2, 2)]?.isMine).isTrue
+    }
+
+    @Test
+    fun `5x5보드에 2,2 자리에 지뢰가 있다면 1,1에 지뢰 카운트는 1이다`() {
+        val gameSettingInfo = GameSettingInfo(5, 5, 0)
+        val board = BoardMaker(gameSettingInfo).makeBoard(listOf(Position(2, 2)))
+
+        assertThat(board.grounds[Position(1, 1)]?.mineCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `5x5보드에 2,2 자리, 1,2에 지뢰가 있다면 1,1에 지뢰 카운트는 2이다`() {
+        val gameSettingInfo = GameSettingInfo(5, 5, 0)
+        val board = BoardMaker(gameSettingInfo).makeBoard(listOf(Position(2, 2), Position(1, 2)))
+
+        assertThat(board.grounds[Position(1, 1)]?.mineCount).isEqualTo(2)
+    }
+
+    @Test
+    fun `5x5보드에 2,2 자리, 1,2에 지뢰가 있다면 0,0에 지뢰 카운트는 0이다`() {
+        val gameSettingInfo = GameSettingInfo(5, 5, 0)
+        val board = BoardMaker(gameSettingInfo).makeBoard(listOf(Position(2, 2), Position(1, 2)))
+
+        assertThat(board.grounds[Position(0, 0)]?.mineCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `5x5보드에 2,2 자리, 1,2에 지뢰가 있다면 3,2에 지뢰 카운트는 1이다`() {
+        val gameSettingInfo = GameSettingInfo(5, 5, 0)
+        val board = BoardMaker(gameSettingInfo).makeBoard(listOf(Position(2, 2), Position(1, 2)))
+
+        assertThat(board.grounds[Position(3, 2)]?.mineCount).isEqualTo(1)
+    }
 }
