@@ -5,7 +5,6 @@ import domain.Cell
 import domain.Cell.Companion.surroundMineCount
 import domain.Location
 import domain.Location.Companion.isMine
-import java.lang.IllegalArgumentException
 
 object OutputView {
 
@@ -22,7 +21,7 @@ object OutputView {
     }
 
     private fun Cell.display(cells: Map<Location, Cell>): String {
-        return if(this.location.closed) HIDE_SYMBOL
+        return if (this.location.closed) HIDE_SYMBOL
         else if (isMine(this.location, cells)) MINE_SYMBOL
         else surroundMineCount(this, cells).toString()
     }

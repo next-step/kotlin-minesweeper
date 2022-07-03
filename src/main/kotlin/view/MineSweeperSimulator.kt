@@ -28,7 +28,7 @@ fun main() {
         continueGame = !isMine(cell.location, board.cells)
     }
 
-    if(!continueGame) {
+    if (!continueGame) {
         OutputView.displayGameEnd()
     }
 }
