@@ -13,7 +13,7 @@ object MineSweeperBoardController {
             countOfMine(InputView.inputCountOfMine())
             strategy { width: Int, height: Int, countOfMine: Int -> randomGenerateStrategy(width, height, countOfMine) }
         }.also {
-            OutputView.printMineSweeperBoard(it)
+            OutputView.printAllOpenMineSweeperBoard(it)
         }
     }
 }

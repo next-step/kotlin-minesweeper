@@ -55,4 +55,30 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
             }
         }
     }
+
+    "지뢰 찾기 보드판의 보드의 주변 지뢰 갯수를 오픈한다. " {
+        // given
+        val mineSweeperBoard = factory {
+            height(2)
+            width(2)
+            countOfMine(1)
+            strategy { _: Int, _: Int, _: Int ->
+                mapOf(
+                    Position(1, 1) to MineZone,
+                    Position(1, 2) to SafeZone,
+                    Position(2, 1) to SafeZone,
+                    Position(2, 2) to SafeZone,
+                )
+            }
+        }
+
+        // when
+        val actual = mineSweeperBoard.openAllZone()
+
+        // then
+        actual[Position(1, 1)] shouldBe 0
+        actual[Position(1, 2)] shouldBe 1
+        actual[Position(2, 1)] shouldBe 1
+        actual[Position(2, 2)] shouldBe 1
+    }
 })
