@@ -1,8 +1,12 @@
 package domain
 
-sealed class Cell(coordinate: Coordinate) {
+sealed class Cell(private val coordinate: Coordinate) {
+
     val x = coordinate.x
+
     val y = coordinate.y
+
+    fun isAdjacentTo(cell: Cell): Boolean = coordinate.isAdjacentTo(cell.coordinate)
 }
 
 class Mine(coordinate: Coordinate) : Cell(coordinate)

@@ -10,21 +10,20 @@ class GameView(val io: IO) {
         io.write("")
         io.write("지뢰찾기 게임 시작")
         board.rows.forEach {
-            io.write(it.toBoardString())
+            io.write(it.toBoardString(board))
         }
     }
 
-    private fun Row.toBoardString(): String =
+    private fun Row.toBoardString(board: Board): String =
         cells.joinToString(CELL_SEPARATOR) {
             when (it) {
                 is Mine -> MINE
-                else -> COVERED
+                else -> "${board.mineCount(it)}"
             }
         }
 
     companion object {
         private const val MINE = "*"
-        private const val COVERED = "C"
         private const val CELL_SEPARATOR = " "
     }
 }
