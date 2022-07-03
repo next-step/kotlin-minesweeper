@@ -2,13 +2,16 @@ package domain
 
 class Board private constructor(val rows: List<Row>) {
 
-    private val allCells = rows.flatMap { it.cells }
+    private val allCells: List<Cell> = rows.flatMap { it.cells }
 
     val mineCount: Int
         get() = allCells.count { it is Mine }
 
     val cellCount: Int
         get() = allCells.size
+
+    fun getCell(coordinate: Coordinate): Cell =
+        allCells.find { it.equalsBy(coordinate) } ?: throw IllegalArgumentException("존재하지 않는 cell 입니다")
 
     fun mineCount(cell: Cell): Int =
         allCells.count { it.isAdjacentTo(cell) && it is Mine }
@@ -37,9 +40,6 @@ class Board private constructor(val rows: List<Row>) {
 
         return clearCells
     }
-
-    fun getCell(coordinate: Coordinate): Cell =
-        allCells.find { it.equalsBy(coordinate) } ?: throw IllegalArgumentException("존재하지 않는 cell 입니다")
 
     private fun Cell.emptyNeighbors(): List<Cell> =
         allCells.filter { it.isAdjacentTo(this) }.filterIsInstance<Empty>()
