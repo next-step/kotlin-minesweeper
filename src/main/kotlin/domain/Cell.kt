@@ -18,7 +18,7 @@ sealed class Cell(val location: Location) {
 
         fun surroundMineCount(cell: Cell, cells: Map<Location, Cell>): Int {
             return Direction.values().count {
-                it.getSurroundLocation(cell.location).isMine(cells)
+               isMine(it.getSurroundLocation(cell.location), cells)
             }
         }
     }
