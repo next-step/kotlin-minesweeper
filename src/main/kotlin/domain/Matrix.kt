@@ -1,5 +1,7 @@
 package domain
 
+import domain.Location.Companion.isMine
+
 class Matrix(
     val dimension: Dimension,
     numberOfMines: MinesCounter,
@@ -31,6 +33,14 @@ class Matrix(
                 columns.map { col ->
                     Location(LocationValue(row), LocationValue(col))
                 }
+            }
+        }
+    }
+
+    companion object {
+        fun countMineFound(cell: Cell, cells: Map<Location, Cell>): Int {
+            return Direction.values().count {
+                it.getSurroundLocation(cell.location).isMine(cells)
             }
         }
     }
