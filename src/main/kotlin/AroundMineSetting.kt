@@ -4,6 +4,9 @@ class AroundMineSetting(board: Map<Point, Square>) {
 
     private val _board: MutableMap<Point, Square> = board.toMutableMap()
 
+    val board: Map<Point, Square>
+        get() = _board.toMap()
+
     init {
         update()
     }
@@ -21,7 +24,4 @@ class AroundMineSetting(board: Map<Point, Square>) {
             _board.replace(currentPoint, NonMine(countMine))
         }
     }
-
-    val board: Map<Point, Square>
-        get() = _board.toMap()
 }
