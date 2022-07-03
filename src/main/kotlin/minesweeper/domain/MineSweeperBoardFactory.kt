@@ -29,9 +29,12 @@ class MineSweeperBoardBuilder {
         val safeZones = List(zoneArea - countOfMine.value) { Zone(false) }
         val mineZones = List(countOfMine.value) { Zone(true) }
 
-        return MineSweeperBoard(
-            (mineZones + safeZones).shuffled()
-                .chunked(width.value)
-        )
+        return (mineZones + safeZones).shuffled()
+            .chunked(width.value)
+            .flatMapIndexed { x, zones ->
+                zones.mapIndexed { y, zone -> Position(x + 1, y + 1) to zone }
+            }
+            .toMap()
+            .let { MineSweeperBoard(it) }
     }
 }

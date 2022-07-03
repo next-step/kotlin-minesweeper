@@ -1,5 +1,6 @@
 package minesweeper.domain
 
-class MineSweeperBoard(
-    val zones: List<List<Zone>>
+@JvmInline
+value class MineSweeperBoard(
+    val zones: Map<Position, Zone>,
 )

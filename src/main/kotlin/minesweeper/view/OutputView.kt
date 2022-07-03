@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.MineSweeperBoard
+import minesweeper.domain.Position
 import minesweeper.domain.Zone
 
 object OutputView {
@@ -9,11 +10,19 @@ object OutputView {
 
     fun printMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         println("지뢰찾기 게임 시작")
-        mineSweeperBoard.zones.forEach { println(mapToMineZoneOrSafeZoneSymbols(it)) }
-    }
+        val zones = mineSweeperBoard.zones
 
-    private fun mapToMineZoneOrSafeZoneSymbols(zones: List<Zone>): String {
-        return zones.joinToString(" ") { mapToMineZoneOrSafeZoneSymbol(it) }
+        var x = 1
+        var y = 1
+        while (zones.containsKey(Position(x, y))) {
+            while (zones.containsKey(Position(x, y))) {
+                print("${mapToMineZoneOrSafeZoneSymbol(zones[Position(x, y)]!!)} ")
+                y++
+            }
+            println()
+            y = 1
+            x++
+        }
     }
 
     private fun mapToMineZoneOrSafeZoneSymbol(zone: Zone) = when (zone.hasMine) {
