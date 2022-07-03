@@ -1,14 +1,14 @@
 package game.minesweeper.domain.map
 
 enum class Direction(private val moveX: Int, private val moveY: Int) {
-    East(0, 1),
-    Southeast(1, 1),
-    South(1, 0),
-    Southwest(1, -1),
-    West(0, -1),
-    Northwest(-1, -1),
-    North(-1, 0),
-    Northeast(-1, 1),
+    RIGHT(0, 1),
+    BOTTOM_RIGHT(1, 1),
+    BOTTOM(1, 0),
+    BOTTOM_LEFT(1, -1),
+    LEFT(0, -1),
+    TOP_LEFT(-1, -1),
+    TOP(-1, 0),
+    TOP_RIGHT(-1, 1),
     ;
 
     fun from(here: Coordinate) = runCatching {
