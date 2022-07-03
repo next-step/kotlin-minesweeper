@@ -7,7 +7,6 @@ class Row private constructor(val cells: List<Cell>) {
     val size: Int = cells.size
 
     companion object {
-
         fun of(cells: List<Cell>): Row {
             require(cells.isNotEmpty()) { "하나 이상의 cell 이 필요합니다" }
 

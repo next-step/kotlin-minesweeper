@@ -1,12 +1,16 @@
 package domain
 
+import domain.vo.Point
+
 sealed class Cell(private val coordinate: Coordinate) {
 
     private var isOpen = false
 
-    val x = coordinate.x
+    val x: Point
+        get() = coordinate.x
 
-    val y = coordinate.y
+    val y: Point
+        get() = coordinate.y
 
     val opened: Boolean
         get() = isOpen
