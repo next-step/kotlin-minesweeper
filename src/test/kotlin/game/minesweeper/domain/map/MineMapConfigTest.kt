@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("지뢰 지도의 설정값")
-internal class MapConfigTest {
+internal class MineMapConfigTest {
 
     @Test
     fun `생성자 인자로 설정 객체 생성`() {

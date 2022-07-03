@@ -1,20 +1,16 @@
 package game.minesweeper.domain
 
 import game.minesweeper.domain.map.MapConfig
-import game.minesweeper.domain.map.Row
+import game.minesweeper.domain.map.MineMap
 
 class GameController(private val config: MapConfig, private val mineCount: Int) {
 
-    val rows: List<Row>
+    private val _mineMap: MineMap
 
     init {
         require(config.configurableMine(mineCount)) { "지뢰의 개수가 너무 많습니다.(${mineCount}개)" }
-        rows = createMap()
+        _mineMap = MineMap.create(config)
     }
 
-    private fun createMap(): List<Row> = (START_ROW_NUM..config.height).map { Row.from(it, config.width) }
-
-    companion object {
-        private const val START_ROW_NUM = 1
-    }
+    fun map() = _mineMap
 }

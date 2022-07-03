@@ -8,5 +8,5 @@ import game.minesweeper.view.ResultView
 fun main() {
     val config = MapConfig(InputView.readHeight(), InputView.readWeight())
     val controller = GameController(config, InputView.readMineCount())
-    ResultView.drawMap(controller.rows)
+    ResultView.drawMap(controller.map())
 }

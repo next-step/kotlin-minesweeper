@@ -1,11 +1,11 @@
 package game.minesweeper.view
 
 import game.minesweeper.domain.map.Fragment
-import game.minesweeper.domain.map.Row
+import game.minesweeper.domain.map.MineMap
 
 object ResultView {
-    fun drawMap(rows: List<Row>) {
-        rows.forEach { row ->
+    fun drawMap(mineMap: MineMap) {
+        mineMap.rows().forEach { row ->
             println(row.fragments().joinToString(separator = " ") { formatFragment(it) })
         }
     }
