@@ -14,7 +14,6 @@ data class Fragment(
 
     fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
 
-
     companion object {
         fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))
     }
