@@ -12,4 +12,12 @@ internal class RowTest {
         val row = Row.from(1, 6)
         assertThat(row.fragments()).hasSize(6)
     }
+
+    @Test
+    fun `지뢰 매설`() {
+        val row = Row.from(1, 6)
+        row.setMines(listOf(Coordinate(1, 2), Coordinate(1, 3)))
+        assertThat(row.fragments()).hasSize(6)
+        assertThat(row.fragments().filter { it.hasMine() }).hasSize(2)
+    }
 }

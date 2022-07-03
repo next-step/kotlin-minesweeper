@@ -4,6 +4,9 @@ class MineMap(private val _rows: List<Row>) {
 
     fun rows() = _rows
 
+    fun setMines(coordinates: List<Coordinate>) = coordinates.groupBy { it.x }
+        .forEach { _rows[it.key - 1].setMines(it.value) }
+
     companion object {
         private const val START_ROW_NUM = 1
         fun create(config: MapConfig) = MineMap(
