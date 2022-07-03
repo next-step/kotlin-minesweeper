@@ -2,8 +2,9 @@ package view
 
 import domain.Board
 import domain.Cell
+import domain.Cell.Companion.surroundMineCount
 import domain.Location
-import domain.Matrix.Companion.countMineFound
+import domain.Location.Companion.isMine
 
 object OutputView {
 
@@ -21,10 +22,8 @@ object OutputView {
     }
 
     private fun Cell.display(cells: Map<Location, Cell>): String {
-        return when (this) {
-            is Cell.Mine -> MINE_SYMBOL
-            is Cell.Ground -> countMineFound(this, cells).toString()
-        }
+        return if (this.location.isMine(cells)) MINE_SYMBOL
+        else surroundMineCount(this, cells).toString()
     }
 
     private const val MINESWEEPER_TITLE = "지뢰찾기 게임 시작"

@@ -1,5 +1,7 @@
 package domain
 
+import domain.Location.Companion.isMine
+
 sealed class Cell(val location: Location) {
 
     internal class Mine(location: Location) : Cell(location)
@@ -12,6 +14,12 @@ sealed class Cell(val location: Location) {
 
         fun mine(location: Location): Cell {
             return Mine(location)
+        }
+
+        fun surroundMineCount(cell: Cell, cells: Map<Location, Cell>): Int {
+            return Direction.values().count {
+                it.getSurroundLocation(cell.location).isMine(cells)
+            }
         }
     }
 }

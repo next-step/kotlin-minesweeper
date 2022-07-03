@@ -10,7 +10,6 @@ data class Location(
         }
 
         fun Location.isMine(cells: Map<Location, Cell>): Boolean {
-            if (this == null) return false
             return cells[this] is Cell.Mine
         }
     }
