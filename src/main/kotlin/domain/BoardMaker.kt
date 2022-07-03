@@ -6,7 +6,9 @@ package domain
  */
 class BoardMaker(private val gameSettingInfo: GameSettingInfo) {
     fun makeBoard(): Board {
-        return Board(createGround())
+        val board = Board(createGround())
+        setMineCount(board)
+        return board
     }
 
     private fun createGround(): Map<Position, Ground> {
@@ -32,7 +34,27 @@ class BoardMaker(private val gameSettingInfo: GameSettingInfo) {
         return map
     }
 
+    private fun setMineCount(board: Board) {
+        val minePositions = board.grounds.filter { it.value.isMine }.map { it.key }
+        minePositions.forEach {
+            setMineCount(it, board)
+        }
+    }
+
+    private fun setMineCount(position: Position, board: Board) {
+        repeat(ARROW_COUNT) {
+            val tempX = position.x + X_MARGINS[it]
+            val tempY = position.y + Y_MARGINS[it]
+            val position = Position.makePositionOrNull(tempX, tempY, gameSettingInfo.width, gameSettingInfo.height)
+                ?: return@repeat
+            board.grounds[position]?.addMineCount()
+        }
+    }
+
     companion object {
         private const val START_INDEX = 0
+        const val ARROW_COUNT = 8
+        val Y_MARGINS = listOf(-1, -1, -1, 0, 0, 1, 1, 1)
+        val X_MARGINS = listOf(-1, 0, 1, -1, 1, -1, 0, 1)
     }
 }

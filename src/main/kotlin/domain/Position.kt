@@ -15,5 +15,13 @@ data class Position(val x: Int, val y: Int) {
     companion object {
         private const val ZERO_POSITION = 0
         private const val POSITION_CAN_NOT_UNDER_ZERO = "위치는 0보다 작을 수 없습니다."
+
+        fun makePositionOrNull(x: Int, y: Int, maxX: Int, maxY: Int): Position? {
+            if (x < ZERO_POSITION || x >= maxX)
+                return null
+            if (y < ZERO_POSITION || y >= maxY)
+                return null
+            return Position(x, y)
+        }
     }
 }
