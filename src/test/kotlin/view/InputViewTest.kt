@@ -10,13 +10,6 @@ import org.junit.jupiter.params.provider.NullAndEmptySource
  */
 class InputViewTest {
     @Test
-    fun `높이가 양수가 아닌경우 IllegalArgumentException을 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            InputView { "0" }.getHeight()
-        }
-    }
-
-    @Test
     fun `높이가 숫자가 아닌경우 IllegalArgumentException을 던진다`() {
         assertThrows<IllegalArgumentException> {
             InputView { "hihi" }.getHeight()
@@ -32,13 +25,6 @@ class InputViewTest {
     }
 
     @Test
-    fun `너비가 양수가 아닌경우 IllegalArgumentException을 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            InputView { "0" }.getWidth()
-        }
-    }
-
-    @Test
     fun `너비가 숫자가 아닌경우 IllegalArgumentException을 던진다`() {
         assertThrows<IllegalArgumentException> {
             InputView { "hihi" }.getWidth()
@@ -50,13 +36,6 @@ class InputViewTest {
     fun `너비에 빈칸이 오는 경우 IllegalArgumentException을 던진다`(source: String?) {
         assertThrows<IllegalArgumentException> {
             InputView { source }.getWidth()
-        }
-    }
-
-    @Test
-    fun `지뢰갯수가 양수가 아닌경우 IllegalArgumentException을 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            InputView { "0" }.getMineCount()
         }
     }
 
