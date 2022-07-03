@@ -1,4 +1,3 @@
-import domain.CoordinateRandomGenerator
 import domain.LandMineRandomMap
 import dto.CoordinateGeneratorRequest
 import dto.LandMineMapRequest
@@ -11,9 +10,9 @@ fun main() {
     val width = InputView.width()
     val landmine = InputView.landmine()
 
-    val landMineMapRequest = LandMineMapRequest.of(height, width)
-    val coordinateGeneratorRequest = CoordinateGeneratorRequest.of(landMineMapRequest, landmine)
-    val landMineRandomMap = LandMineRandomMap(landMineMapRequest, CoordinateRandomGenerator(coordinateGeneratorRequest))
+    val landMineMapRequest = LandMineMapRequest.of(height, width, landmine)
+    val coordinateGenerator = CoordinateGeneratorRequest.of(landMineMapRequest)
+    val landMineRandomMap = LandMineRandomMap(landMineMapRequest, coordinateGenerator)
 
     val mapUI = LandMineMapUI(LandMineMapUIRequest(landMineRandomMap))
     mapUI.title()

@@ -2,15 +2,19 @@ package dto
 
 import domain.Coordinate
 import domain.CoordinatePoint
-import util.ConvertType
+import domain.CoordinateRandomGenerator
 
-class CoordinateGeneratorRequest(val coordinates: List<Coordinate>, val landMine: Int) {
+class CoordinateGeneratorRequest {
 
     companion object {
-        fun of(landMineMapRequest: LandMineMapRequest, landMine: String): CoordinateGeneratorRequest {
+        fun of(landMineMapRequest: LandMineMapRequest): CoordinateRandomGenerator {
             val coordinates: List<Coordinate> = landMineMapRequest.height
                 .flatMap { y -> coordinatesByHeight(y, landMineMapRequest) }
-            return CoordinateGeneratorRequest(coordinates, ConvertType.int(landMine))
+            return toGenerator(coordinates, landMineMapRequest.landMine)
+        }
+
+        private fun toGenerator(coordinates: List<Coordinate>, landMine: Int): CoordinateRandomGenerator {
+            return CoordinateRandomGenerator(coordinates, landMine)
         }
 
         private fun coordinatesByHeight(y: CoordinatePoint, landMineMapRequest: LandMineMapRequest): List<Coordinate> {
