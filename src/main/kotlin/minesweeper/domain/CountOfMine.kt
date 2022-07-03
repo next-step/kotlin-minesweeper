@@ -2,7 +2,8 @@ package minesweeper.domain
 
 private const val MIN_MINE_NUMBER = 1
 
-data class CountOfMine(
+@JvmInline
+value class CountOfMine(
     val value: Int,
 ) {
     init {

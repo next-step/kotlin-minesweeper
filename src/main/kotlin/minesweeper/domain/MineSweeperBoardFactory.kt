@@ -1,13 +1,15 @@
 package minesweeper.domain
 
+import kotlin.properties.Delegates
+
 fun factory(block: MineSweeperBoardBuilder.() -> Unit): MineSweeperBoard {
     return MineSweeperBoardBuilder().apply(block).build()
 }
 
 class MineSweeperBoardBuilder {
-    private lateinit var height: Height
-    private lateinit var width: Width
-    private lateinit var countOfMine: CountOfMine
+    private var height: Height by Delegates.notNull()
+    private var width: Width by Delegates.notNull()
+    private var countOfMine: CountOfMine by Delegates.notNull()
 
     fun height(value: Int) {
         height = Height(value)
