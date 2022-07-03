@@ -1,7 +1,7 @@
 package minesweeper.domain.cell
 
 @JvmInline
-value class CellValue(
+value class CoordinateValue(
     val value: Int
 ) {
     init {
