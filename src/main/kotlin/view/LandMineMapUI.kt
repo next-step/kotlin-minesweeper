@@ -1,6 +1,6 @@
 package view
 
-import domain.Coordinate
+import domain.LandMineRandomMap.Companion.LAND_MINE_FEATURE
 import domain.Line
 import dto.LandMineMapUIRequest
 
@@ -20,16 +20,16 @@ class LandMineMapUI(private val landMineMapUIRequest: LandMineMapUIRequest) {
     }
 
     private fun buildDisplay(mapLine: Line) = buildString {
-        mapLine.coordinates.map {
+        mapLine.landMineCount.map {
             append(displayLandMine(it))
         }
     }
 
-    private fun displayLandMine(coordinate: Coordinate) = buildString {
-        if (landMineMapUIRequest.landMineCoordinates.contains(coordinate)) {
+    private fun displayLandMine(landMineCount: Int) = buildString {
+        if (landMineCount == LAND_MINE_FEATURE) {
             append("* ")
         } else {
-            append("C ")
+            append("$landMineCount ")
         }
     }
 }

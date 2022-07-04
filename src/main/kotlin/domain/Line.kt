@@ -1,3 +1,3 @@
 package domain
 
-data class Line(val coordinates: List<Coordinate>)
+data class Line(val landMineCount: List<Int>)
