@@ -1,11 +1,10 @@
 package minesweeper.domain
 
 import minesweeper.domain.cell.*
-import minesweeper.domain.strategy.MineDeployStrategy
 import minesweeper.domain.strategy.RandomMineDeployStrategy
 
 class MineBoard(
-    val cells: List<Cell>
+    val cells: List<Cell>,
 ) {
     init {
         require(cells.isNotEmpty()) { "지뢰판은 빌 수 없습니다." }
@@ -17,12 +16,13 @@ class MineBoard(
         fun createWithRandomStrategy(
             height: Int,
             width: Int,
-            mineCount: Int
+            mineCount: Int,
         ): MineBoard {
             validateArguments(height, width, mineCount)
 
             val coordinates = generateCoordinates(height = height, width = width)
-            val mineCoordinates = RandomMineDeployStrategy.execute(coordinates = coordinates, mineCount = mineCount)
+            val mineCoordinates =
+                RandomMineDeployStrategy.execute(coordinates = coordinates, mineCount = mineCount)
             val cells = coordinates.map {
                 if (it in mineCoordinates) {
                     Cell(it, Mine)

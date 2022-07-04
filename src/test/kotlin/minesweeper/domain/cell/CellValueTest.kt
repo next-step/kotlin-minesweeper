@@ -3,7 +3,6 @@ package minesweeper.domain.cell
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.cell.CoordinateValue
 
 internal class CellValueTest : FreeSpec({
 

@@ -1,7 +1,6 @@
 package minesweeper.controller
 
-import minesweeper.domain.MineBoardFactory
-import minesweeper.domain.strategy.RandomMineDeployStrategy
+import minesweeper.domain.MineBoard
 import minesweeper.dto.MineBoardMatrix
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -15,11 +14,10 @@ class MineSweeper(
         val width = inputView.inputWidth()
         val mineCount = inputView.inputMineCount()
 
-        val mineBoard = MineBoardFactory.create(
+        val mineBoard = MineBoard.createWithRandomStrategy(
             height = height,
             width = width,
             mineCount = mineCount,
-            strategy = RandomMineDeployStrategy
         )
 
         outputView.printMineBoard(MineBoardMatrix.from(mineBoard = mineBoard, width = width))
