@@ -51,7 +51,7 @@ internal class BoardTest {
 
     @Test
     fun `2 x 2 Board with 1 Mine`() {
-        val board = createBoard(BoardSize(2, 2), 1)
+        val board = createDummyBoard(BoardSize(2, 2), 1)
 
         board.open()
 
@@ -60,7 +60,7 @@ internal class BoardTest {
 
     @Test
     fun `2 x 2 Board with 2 Mines`() {
-        val board = createBoard(BoardSize(2, 2), 2)
+        val board = createDummyBoard(BoardSize(2, 2), 2)
 
         board.open()
 
@@ -69,7 +69,7 @@ internal class BoardTest {
 
     @Test
     fun `2 x 2 Board with 3 Mines`() {
-        val board = createBoard(BoardSize(2, 2), 3)
+        val board = createDummyBoard(BoardSize(2, 2), 3)
 
         board.open()
 
@@ -77,7 +77,8 @@ internal class BoardTest {
     }
 
     companion object {
-        private fun createBoard(boardSize: BoardSize, minesCount: Int): Board {
+        // 지뢰가 앞에 몰려있는 보드를 생성합니다.
+        private fun createDummyBoard(boardSize: BoardSize, minesCount: Int): Board {
             return Board(
                 boardSize = boardSize,
                 cells = (1..boardSize.area).map {
