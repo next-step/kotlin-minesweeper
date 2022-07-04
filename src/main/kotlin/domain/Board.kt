@@ -1,5 +1,5 @@
 package domain
 
-class Board(boardGenerator: BoardGenerator) {
-    val cells: Cells = boardGenerator.create()
+class Board(val cells: Cells) {
+    constructor(boardGenerator: BoardGenerator) : this(boardGenerator.create())
 }
