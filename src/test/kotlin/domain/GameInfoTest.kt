@@ -8,20 +8,14 @@ internal class GameInfoTest {
     @Test
     internal fun `지뢰 개수가 보드 넓이보다 크면 GameInfo를 생성할 때 IllegalArgumentException을 반환한다`() {
         assertThrows<IllegalArgumentException> {
-            GameInfo(5, 5, 26)
+            GameInfo.of(5, 5, 26)
         }
     }
 
     @Test
     internal fun `정상적으로 GameInfo를 생성한다`() {
         assertDoesNotThrow {
-            GameInfo(3, 3, 5)
+            GameInfo.of(3, 3, 5)
         }
     }
-
-    private fun GameInfo(vertical: Int, horizontal: Int, mineCount: Int) = GameInfo(
-        PositiveNumber(vertical),
-        PositiveNumber(horizontal),
-        PositiveNumber(mineCount)
-    )
 }
