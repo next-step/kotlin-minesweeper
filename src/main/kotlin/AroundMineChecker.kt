@@ -4,6 +4,8 @@ class AroundMineChecker(board: Map<Point, Square>, private val currentPoint: Poi
 
     private val _board: MutableMap<Point, Square> = board.toMutableMap()
 
+    fun isFinish(): Boolean = _board.getValue(currentPoint).isMine()
+
     fun getBoard(): Map<Point, Square> {
         checkLeft(currentPoint)
         checkRight(currentPoint)
