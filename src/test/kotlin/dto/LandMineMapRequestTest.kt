@@ -26,8 +26,8 @@ class LandMineMapRequestTest : FreeSpec({
 
         "입력값이 LandMineMapRequest 로 변환되어야한다." {
             val landMineMapRequestDto = LandMineMapRequest.of("2", "3", "1")
-            landMineMapRequestDto.height.size shouldBe 2
-            landMineMapRequestDto.width.size shouldBe 3
+            landMineMapRequestDto.yCoordinatePoints.size shouldBe 2
+            landMineMapRequestDto.xCoordinatePoints.size shouldBe 3
         }
     }
 })

@@ -4,8 +4,8 @@ import domain.CoordinatePoint
 import util.ConvertType
 
 class LandMineMapRequest(
-    val width: List<CoordinatePoint>,
-    val height: List<CoordinatePoint>,
+    val xCoordinatePoints: List<CoordinatePoint>,
+    val yCoordinatePoints: List<CoordinatePoint>,
     val landMine: Int
 ) {
 

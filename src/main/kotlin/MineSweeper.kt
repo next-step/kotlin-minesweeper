@@ -14,7 +14,11 @@ object MineSweeper {
 
         val landMineMapRequest = LandMineMapRequest.of(height, width, landmine)
         val coordinateGenerator = CoordinateGeneratorRequest.of(landMineMapRequest)
-        val landMineRandomMap = LandMineRandomMap(landMineMapRequest, coordinateGenerator)
+        val landMineRandomMap = LandMineRandomMap(
+            landMineMapRequest.xCoordinatePoints,
+            landMineMapRequest.yCoordinatePoints,
+            coordinateGenerator
+        )
 
         val mapUI = LandMineMapUI(LandMineMapUIRequest(landMineRandomMap))
         mapUI.title()
