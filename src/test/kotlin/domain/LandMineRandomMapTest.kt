@@ -11,8 +11,12 @@ class LandMineRandomMapTest : FreeSpec({
         val x = CoordinatePoint(1)
         val y = CoordinatePoint(1)
         val coordinateGenerator = CoordinateGeneratorFake(listOf(Coordinate(x, y)))
-        val landMineMapRequestDto = LandMineMapRequest.of("1", "3")
-        val landMineRandomMap = LandMineRandomMap(landMineMapRequestDto, coordinateGenerator)
+        val landMineMapRequestDto = LandMineMapRequest.of("1", "3", "1")
+        val landMineRandomMap = LandMineRandomMap(
+            landMineMapRequestDto.xCoordinatePoints,
+            landMineMapRequestDto.yCoordinatePoints,
+            coordinateGenerator
+        )
 
         landMineRandomMap.landMineCoordinates shouldBe listOf(Coordinate(x, y))
     }

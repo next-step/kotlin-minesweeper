@@ -1,10 +1,9 @@
 package domain
 
-import dto.CoordinateGeneratorRequest
-
-class CoordinateRandomGenerator(coordinateGeneratorRequest: CoordinateGeneratorRequest) : CoordinateGenerator {
-    private val coordinates = coordinateGeneratorRequest.coordinates
-    private val landMine = coordinateGeneratorRequest.landMine
+class CoordinateRandomGenerator(
+    private val coordinates: List<Coordinate>,
+    private val landMine: Int
+) : CoordinateGenerator {
 
     override fun coordinates(): List<Coordinate> {
         return coordinates.shuffled().take(landMine)
