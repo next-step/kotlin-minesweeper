@@ -1,8 +1,8 @@
 package domain
 
 class BoardGenerator(private val gameInfo: GameInfo) {
-    private val vertical = gameInfo.vertical.toInt()
-    private val horizontal = gameInfo.horizontal.toInt()
+    private val vertical = gameInfo.vertical.number
+    private val horizontal = gameInfo.horizontal.number
 
     fun create(): Cells {
         val squares = createSquares()
@@ -17,7 +17,7 @@ class BoardGenerator(private val gameInfo: GameInfo) {
 
     private fun createSquares(): MutableList<Square> {
         val area = vertical * horizontal
-        val mineCount = gameInfo.mineCount.toInt()
+        val mineCount = gameInfo.mineCount.number
 
         val mineList = List(mineCount) { Square.Mine }
         val noneMineList = List(area - mineCount) { Square.NonMine }

@@ -6,7 +6,7 @@ data class Cells(
     fun get() = cells.toList()
 
     fun getCell(x: Int, y: Int): Cell =
-        cells.first { it.position.x.toInt() == x && it.position.y.toInt() == y }
+        cells.first { it.position.x.number == x && it.position.y.number == y }
 }
 
 fun List<Cell>.toCells() = Cells(this)

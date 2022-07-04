@@ -2,15 +2,13 @@ package domain
 
 @JvmInline
 value class PositiveNumber(
-    private val number: Int
+    val number: Int
 ) {
     constructor(value: String) : this(requireNotNull(value.toIntOrNull()) { VALUE_IS_NOT_INT_ERROR_MSG })
 
     init {
         require(number > 0) { VALUE_IS_NOT_POSITIVE_NUMBER_ERROR_MSG }
     }
-
-    fun toInt() = number
 
     operator fun compareTo(anotherNumber: Any): Int =
         when (anotherNumber) {

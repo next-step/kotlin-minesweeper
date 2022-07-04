@@ -10,8 +10,8 @@ object OutputView {
     private const val noneMineSymbol = "C"
 
     fun printMinesweeperBoard(board: Board, gameInfo: GameInfo) {
-        (1..gameInfo.vertical.toInt()).forEach() { yIdx ->
-            (1..gameInfo.horizontal.toInt()).forEach() { xIdx ->
+        (1..gameInfo.vertical.number).forEach() { yIdx ->
+            (1..gameInfo.horizontal.number).forEach() { xIdx ->
                 val cell = board.cells.getCell(xIdx, yIdx)
                 print(getSquareSymbol(cell) + " ")
             }

@@ -14,6 +14,6 @@ internal class CellsTest {
                 Cell(Position(PositiveNumber(2), PositiveNumber(1)), Square.NonMine)
             )
         )
-        assertThat(cells.getCell(position.x.toInt(), position.y.toInt())).isEqualTo(cell)
+        assertThat(cells.getCell(position.x.number, position.y.number)).isEqualTo(cell)
     }
 }
