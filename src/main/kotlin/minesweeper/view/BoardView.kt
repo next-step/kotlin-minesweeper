@@ -15,12 +15,15 @@ class BoardView(private val board: Board) {
     private fun getCharacter(cell: Cell): String {
         return when (cell) {
             is Mine -> MINE
-            is Opened -> OPENED
+            is Opened -> numbers.get(cell.counter)
         }
     }
 
     companion object {
         private const val MINE = "\uD83D\uDCA5" // 💥
+        private val numbers = listOf(
+            "⬜", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣"
+        )
         private const val OPENED = "⬜"
     }
 }
