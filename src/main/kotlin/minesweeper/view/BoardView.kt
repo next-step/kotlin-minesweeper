@@ -15,7 +15,7 @@ class BoardView(private val board: Board) {
     private fun getCharacter(cell: Cell): String {
         return when (cell) {
             is Mine -> MINE
-            is Opened -> numbers.get(cell.counter)
+            is Opened -> numbers[cell.counter]
         }
     }
 
