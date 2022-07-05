@@ -10,8 +10,8 @@ data class MineBoardMatrix(
     companion object {
         fun from(mineBoard: MineBoard, width: MineBoardLength): MineBoardMatrix = MineBoardMatrix(
             mineBoard.cells
+                .values
                 .asSequence()
-                .map { it.dot }
                 .chunked(width.value)
                 .map { Row(it) }
                 .toList()

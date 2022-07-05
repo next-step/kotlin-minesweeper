@@ -6,7 +6,7 @@ import minesweeper.domain.MineCount
 class Coordinates(
     val values: List<Coordinate>,
 ) {
-    fun randomMine(count: MineCount): List<Cell> {
+    fun randomMine(count: MineCount): Map<Coordinate, Dot> {
         val mineCoordinates = shuffleAndTake(count.value)
         return mineAt(mineCoordinates)
     }
@@ -18,11 +18,11 @@ class Coordinates(
     }
 
     private fun mineAt(mineCoordinates: List<Coordinate>) =
-        values.map {
+        values.associate {
             if (it in mineCoordinates) {
-                Cell(it, Mine)
+                it to Mine
             } else {
-                Cell(it, Land)
+                it to Land
             }
         }
 

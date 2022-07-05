@@ -2,17 +2,17 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import minesweeper.MineBoard
 import minesweeper.domain.cell.Land
 import minesweeper.domain.cell.Mine
-import minesweeper.MineBoard
 
 internal class MineBoardTest : FreeSpec({
 
     "지뢰판의 셀이 비어있을 경우 예외가 발생한다." {
         val exception =
-            shouldThrowExactly<IllegalArgumentException> { MineBoard(emptyList()) }
+            shouldThrowExactly<IllegalArgumentException> { MineBoard(emptyMap()) }
         exception.message shouldBe "지뢰판은 빌 수 없습니다."
     }
 
@@ -24,7 +24,7 @@ internal class MineBoardTest : FreeSpec({
         )
 
         mineBoard.cells.shouldHaveSize(25)
-        mineBoard.cells.count { it.dot == Mine } shouldBe 5
-        mineBoard.cells.count { it.dot == Land } shouldBe 20
+        mineBoard.cells.count { it.value == Mine } shouldBe 5
+        mineBoard.cells.count { it.value == Land } shouldBe 20
     }
 })

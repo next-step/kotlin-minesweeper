@@ -1,10 +1,11 @@
 package minesweeper.domain
 
-import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Coordinate
 import minesweeper.domain.cell.Coordinates
+import minesweeper.domain.cell.Dot
 
 class MineBoard(
-    val cells: List<Cell>,
+    val cells: Map<Coordinate, Dot>,
 ) {
     init {
         require(cells.isNotEmpty()) { "지뢰판은 빌 수 없습니다." }

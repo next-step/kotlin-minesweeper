@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.Coordinates
-import minesweeper.MineBoard
 import minesweeper.domain.MineCount
 
 internal class CoordinatesTest : FreeSpec({
@@ -26,8 +25,8 @@ internal class CoordinatesTest : FreeSpec({
         val cells = coordinates.randomMine(MineCount(2))
 
         // then
-        cells.count { it.dot == Mine } shouldBe 2
-        cells.count { it.dot == Land } shouldBe 7
+        cells.count { it.value == Mine } shouldBe 2
+        cells.count { it.value == Land } shouldBe 7
     }
 
     "지뢰 개수가 좌표 개수보다 많은 경우 예외가 발생한다." {
