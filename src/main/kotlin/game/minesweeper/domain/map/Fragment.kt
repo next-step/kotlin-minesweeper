@@ -2,15 +2,13 @@ package game.minesweeper.domain.map
 
 data class Fragment(
     private val coordinate: Coordinate,
-    private var _hasMine: Boolean = false,
     private var borderMine: Int = 0,
+    var hasMine: Boolean = false,
 ) {
 
     fun setMine() {
-        _hasMine = true
+        hasMine = true
     }
-
-    fun hasMine() = _hasMine
 
     fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
 

@@ -1,18 +1,16 @@
 package game.minesweeper.domain.map
 
-class MineMap(private val config: MapConfig, private val _rows: List<Row>) {
-
-    fun rows() = _rows
+class MineMap(private val config: MapConfig, val rows: List<Row>) {
 
     fun setMines(coordinates: List<Coordinate>) {
         coordinates.groupBy { it.x }
-            .forEach { _rows[it.key - 1].setMines(it.value) }
+            .forEach { rows[it.key - 1].setMines(it.value) }
 
         val borders = coordinates.flatMap {
             it.findBorder(config.height, config.width)
         }
 
-        _rows.flatMap { it.fragments() }
+        rows.flatMap { it.fragments }
             .forEach { it.increaseBorderMine(it.count(borders)) }
     }
 

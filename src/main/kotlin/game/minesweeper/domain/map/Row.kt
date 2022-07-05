@@ -1,11 +1,9 @@
 package game.minesweeper.domain.map
 
-data class Row(private val _fragments: List<Fragment>) {
-
-    fun fragments() = _fragments
+data class Row(val fragments: List<Fragment>) {
 
     fun setMines(coordinates: List<Coordinate>) {
-        _fragments
+        fragments
             .filter { it.included(coordinates) }
             .forEach { it.setMine() }
     }

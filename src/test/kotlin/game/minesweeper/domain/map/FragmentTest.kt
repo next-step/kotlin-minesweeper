@@ -10,13 +10,13 @@ internal class FragmentTest {
     @Test
     fun `처음 생성하면 지뢰 없는 상태`() {
         val fragment = Fragment.of(1, 1)
-        assertThat(fragment.hasMine()).isFalse
+        assertThat(fragment.hasMine).isFalse
     }
 
     @Test
     fun `지뢰 심기`() {
         val fragment = Fragment.of(1, 1)
         fragment.setMine()
-        assertThat(fragment.hasMine()).isTrue
+        assertThat(fragment.hasMine).isTrue
     }
 }
