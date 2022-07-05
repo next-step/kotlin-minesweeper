@@ -57,5 +57,15 @@ internal class MineBoardTest : FreeSpec({
                 )
             }
         }
+
+        "지뢰 개수가 높이 * 너비 값보다 큰 경우 예외가 발생한다." {
+            shouldThrowExactly<IllegalArgumentException> {
+                MineBoard.createWithRandomStrategy(
+                    height = 5,
+                    width = 5,
+                    mineCount = 26
+                )
+            }
+        }
     }
 })
