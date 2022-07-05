@@ -2,7 +2,6 @@ package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Coordinates
-import minesweeper.domain.strategy.RandomMineDeployStrategy
 
 class MineBoard(
     val cells: List<Cell>,
@@ -12,25 +11,14 @@ class MineBoard(
     }
 
     companion object {
-        fun createWithRandomStrategy(
-            height: Int,
-            width: Int,
-            mineCount: Int,
+        fun create(
+            height: MineBoardLength,
+            width: MineBoardLength,
+            mineCount: MineCount,
         ): MineBoard {
-            validateArguments(height, width, mineCount)
-
             val coordinates = Coordinates.from(height = height, width = width)
-            val mineCoordinates =
-                RandomMineDeployStrategy.execute(coordinates = coordinates, mineCount = mineCount)
-
-            return MineBoard(cells = coordinates.mineAt(mineCoordinates))
-        }
-
-        private fun validateArguments(height: Int, width: Int, numberOfMine: Int) {
-            require(height > 0) { "지뢰판 높이는 1보다 작을 수 없습니다." }
-            require(width > 0) { "지뢰판 너비는 1보다 작을 수 없습니다." }
-            require(numberOfMine >= 0) { "지뢰 개수는 음수일 수 없습니다." }
-            require(height * width >= numberOfMine) { "지뢰판 넓이보다 지뢰 개수 많을 수 없습니다." }
+            val cells = coordinates.randomMine(count = mineCount)
+            return MineBoard(cells = cells)
         }
     }
 }
