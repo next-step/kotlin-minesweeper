@@ -1,8 +1,8 @@
 package minesweeper.domain.strategy
 
-import minesweeper.domain.cell.Coordinate
+import minesweeper.domain.cell.Coordinates
 
 object RandomMineDeployStrategy : MineDeployStrategy {
-    override fun execute(coordinates: List<Coordinate>, mineCount: Int): List<Coordinate> =
-        coordinates.shuffled().take(mineCount)
+    override fun execute(coordinates: Coordinates, mineCount: Int): Coordinates =
+        coordinates.shuffledAndTake(count = mineCount)
 }

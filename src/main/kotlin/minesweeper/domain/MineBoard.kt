@@ -1,6 +1,7 @@
 package minesweeper.domain
 
-import minesweeper.domain.cell.*
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Coordinates
 import minesweeper.domain.strategy.RandomMineDeployStrategy
 
 class MineBoard(
@@ -11,8 +12,6 @@ class MineBoard(
     }
 
     companion object {
-        private const val START_INDEX = 0
-
         fun createWithRandomStrategy(
             height: Int,
             width: Int,
@@ -20,18 +19,11 @@ class MineBoard(
         ): MineBoard {
             validateArguments(height, width, mineCount)
 
-            val coordinates = generateCoordinates(height = height, width = width)
+            val coordinates = Coordinates.from(height = height, width = width)
             val mineCoordinates =
                 RandomMineDeployStrategy.execute(coordinates = coordinates, mineCount = mineCount)
-            val cells = coordinates.map {
-                if (it in mineCoordinates) {
-                    Cell(it, Mine)
-                } else {
-                    Cell(it, Land)
-                }
-            }
 
-            return MineBoard(cells = cells)
+            return MineBoard(cells = coordinates.mineAt(mineCoordinates))
         }
 
         private fun validateArguments(height: Int, width: Int, numberOfMine: Int) {
@@ -39,18 +31,6 @@ class MineBoard(
             require(width > 0) { "지뢰판 너비는 1보다 작을 수 없습니다." }
             require(numberOfMine >= 0) { "지뢰 개수는 음수일 수 없습니다." }
             require(height * width >= numberOfMine) { "지뢰판 넓이보다 지뢰 개수 많을 수 없습니다." }
-        }
-
-        private fun generateCoordinates(
-            height: Int,
-            width: Int,
-        ) = (START_INDEX until height).flatMap { xValue ->
-            (START_INDEX until width).map { yValue ->
-                Coordinate(
-                    y = CoordinateValue(value = yValue),
-                    x = CoordinateValue(value = xValue)
-                )
-            }
         }
     }
 }
