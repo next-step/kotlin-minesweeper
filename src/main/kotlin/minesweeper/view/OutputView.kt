@@ -18,7 +18,7 @@ class OutputView {
     }
 
     private fun convertToSign(dot: Dot): String = when (dot) {
-        Mine -> "*"
-        Land -> "C"
+        is Mine -> "*"
+        is Land -> dot.mineCount.value.toString()
     }
 }

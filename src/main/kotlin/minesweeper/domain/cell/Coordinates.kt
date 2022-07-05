@@ -18,11 +18,12 @@ class Coordinates(
     }
 
     private fun mineAt(mineCoordinates: List<Coordinate>) =
-        values.associate {
-            if (it in mineCoordinates) {
-                it to Mine
+        values.associate { coordinate ->
+            if (coordinate in mineCoordinates) {
+                coordinate to Mine
             } else {
-                it to Land
+                val mineCount = MineCount(coordinate.around().count { it in mineCoordinates })
+                coordinate to Land(mineCount)
             }
         }
 
