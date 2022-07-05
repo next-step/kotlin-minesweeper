@@ -10,4 +10,12 @@ internal class CellValueTest : FreeSpec({
         val exception = shouldThrowExactly<IllegalArgumentException> { CoordinateValue(-1) }
         exception.message shouldBe "셀 좌표 값은 음수일 수 없습니다."
     }
+
+    "좌표 값을 더할 수 있다." {
+        CoordinateValue(1) + CoordinateValue(2) shouldBe CoordinateValue(3)
+    }
+
+    "좌표 값을 뺄 수 있다." {
+        CoordinateValue(1) - CoordinateValue(1) shouldBe CoordinateValue(0)
+    }
 })
