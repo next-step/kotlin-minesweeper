@@ -1,7 +1,11 @@
 package domain
 
 sealed interface Cell {
-    object Mine : Cell
+    fun increaseMineCount(): Cell
+
+    object Mine : Cell {
+        override fun increaseMineCount(): Cell = this
+    }
 
     enum class Land(val nearMineCount: Int) : Cell {
         ZERO(0),
@@ -13,6 +17,8 @@ sealed interface Cell {
         SIX(6),
         SEVEN(7),
         EIGHT(8);
+
+        override fun increaseMineCount(): Cell = from((this.nearMineCount + 1).coerceAtMost(MAXIMUM_NEAR_MINE_COUNT))
 
         companion object {
             const val MAXIMUM_NEAR_MINE_COUNT = 8
@@ -27,12 +33,5 @@ sealed interface Cell {
                 }
             }
         }
-    }
-}
-
-fun Cell.increaseMineCount(): Cell {
-    return when (this) {
-        is Cell.Mine -> Cell.Mine
-        is Cell.Land -> Cell.Land.from((this.nearMineCount + 1).coerceAtMost(Cell.Land.MAXIMUM_NEAR_MINE_COUNT))
     }
 }
