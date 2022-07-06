@@ -39,7 +39,7 @@ abstract class MinesweeperFactory {
         Direction.values().forEach { direction ->
             val nearPosition = minePosition.apply(direction)
 
-            if (nearPosition.isValid(minesweeperInfo)) return@forEach
+            if (nearPosition.isInBoundaryOf(minesweeperInfo)) return@forEach
             this[nearPosition.row][nearPosition.column] =
                 this[nearPosition.row][nearPosition.column].increaseMineCount()
         }

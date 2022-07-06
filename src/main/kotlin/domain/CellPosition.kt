@@ -11,7 +11,7 @@ data class CellPosition(
         )
     }
 
-    fun isValid(minesweeperInfo: MinesweeperInfo): Boolean {
+    fun isInBoundaryOf(minesweeperInfo: MinesweeperInfo): Boolean {
         return row < 0 || row >= minesweeperInfo.rowCount || column < 0 || column >= minesweeperInfo.columnCount
     }
 
