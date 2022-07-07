@@ -1,7 +1,13 @@
 package minesweeper.domain
 
-sealed interface Zone
+sealed class Zone(
+    val isHidden: Boolean = true
+)
 
-object MineZone : Zone
+class MineZone(
+    isHidden: Boolean = true
+) : Zone(isHidden)
 
-object SafeZone : Zone
+class SafeZone(
+    isHidden: Boolean = true
+) : Zone(isHidden)

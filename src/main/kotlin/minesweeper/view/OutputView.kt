@@ -8,52 +8,46 @@ import minesweeper.domain.Zone
 
 object OutputView {
     private const val MINE_ZONE_SYMBOL = "*"
-    private const val SAFE_ZONE_SYMBOL = "C"
-
-    // TODO 2022-07-03 경록: 사용하지 않는 함수이지만 다음 단계에서 사용할 것으로 추정되어 삭제X
-    fun printMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
-        println("지뢰찾기 게임 시작")
-        val zones = mineSweeperBoard.zones
-
-        var x = 1
-        var y = 1
-        while (zones.containsKey(Position(x, y))) {
-            while (zones.containsKey(Position(x, y))) {
-                print("${mapToMineZoneOrSafeZoneSymbol(zones[Position(x, y)]!!)} ")
-                y++
-            }
-            println()
-            y = 1
-            x++
-        }
-    }
-
-    private fun mapToMineZoneOrSafeZoneSymbol(zone: Zone) = when (zone) {
-        is MineZone -> MINE_ZONE_SYMBOL
-        is SafeZone -> SAFE_ZONE_SYMBOL
-    }
+    private const val HIDDEN_SYMBOL = "C"
 
     fun printAllOpenMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         println("지뢰찾기 게임 시작")
         val originalZones = mineSweeperBoard.zones
         val zones = mineSweeperBoard.openAllZone()
+        val heightIndexes = zones.keys.asSequence()
+            .map { it.x }
+            .distinctBy { it }
+            .sortedBy { it }
+        val widthIndexes = zones.keys.asSequence()
+            .map { it.y }
+            .distinctBy { it }
+            .sortedBy { it }
 
-        var x = 1
-        var y = 1
-        while (zones.containsKey(Position(x, y))) {
-            while (zones.containsKey(Position(x, y))) {
-                val currentPosition = Position(x, y)
-                print("${mapToMineZoneOrSafeZone(originalZones[currentPosition]!!, zones[currentPosition]!!)} ")
-                y++
-            }
-            println()
-            y = 1
-            x++
+        for (x in heightIndexes) {
+            printMineSweeeperBoardRow2(widthIndexes, zones, originalZones, x)
         }
     }
 
-    private fun mapToMineZoneOrSafeZone(zone: Zone, countOfNearMine: Int) = when (zone) {
-        is MineZone -> MINE_ZONE_SYMBOL
-        is SafeZone -> countOfNearMine.toString()
+    private fun printMineSweeeperBoardRow2(
+        ys: Sequence<Int>,
+        originalZones: Map<Position, Int>,
+        zones: Map<Position, Zone>,
+        x: Int
+    ) {
+        for (y in ys) {
+            print("${mapToMineZoneOrSafeZone(zones[Position(x, y)]!!, originalZones[Position(x,y)]!!)} ")
+        }
+        println()
+    }
+
+    private fun mapToMineZoneOrSafeZone(zone: Zone, countOfNearMine: Int): String {
+        if (zone.isHidden) {
+            return HIDDEN_SYMBOL
+        }
+
+        return when (zone) {
+            is MineZone -> MINE_ZONE_SYMBOL
+            is SafeZone -> countOfNearMine.toString()
+        }
     }
 }

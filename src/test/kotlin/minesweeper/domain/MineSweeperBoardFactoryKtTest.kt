@@ -17,10 +17,10 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
         val mockGeneratorStrategy: MineGeneratorStrategy = object : MineGeneratorStrategy {
             override fun execute(width: Int, height: Int, countOfMine: Int): Map<Position, Zone> {
                 return mapOf(
-                    Position(1, 1) to MineZone,
-                    Position(1, 2) to SafeZone,
-                    Position(2, 1) to SafeZone,
-                    Position(2, 2) to SafeZone,
+                    Position(1, 1) to MineZone(),
+                    Position(1, 2) to SafeZone(),
+                    Position(2, 1) to SafeZone(),
+                    Position(2, 2) to SafeZone(),
                 )
             }
         }
@@ -65,10 +65,10 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
         val mockMineGeneratorStrategy = object : MineGeneratorStrategy {
             override fun execute(width: Int, height: Int, countOfMine: Int): Map<Position, Zone> {
                 return mapOf(
-                    Position(1, 1) to MineZone,
-                    Position(1, 2) to SafeZone,
-                    Position(2, 1) to SafeZone,
-                    Position(2, 2) to SafeZone,
+                    Position(1, 1) to MineZone(),
+                    Position(1, 2) to SafeZone(),
+                    Position(2, 1) to SafeZone(),
+                    Position(2, 2) to SafeZone(),
                 )
             }
         }
