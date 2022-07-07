@@ -6,9 +6,6 @@ import minesweeper.domain.cell.DotStatus.*
 sealed interface Dot {
     var status: DotStatus
 
-    val isOpen: Boolean
-        get() = status == OPEN
-
     val isHidden: Boolean
         get() = status == HIDDEN
 
