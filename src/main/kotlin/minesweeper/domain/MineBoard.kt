@@ -9,14 +9,19 @@ class MineBoard(
         require(cells.isNotEmpty()) { "지뢰판은 빌 수 없습니다." }
     }
 
-    fun open(coordinate: Coordinate): Dot  {
+    fun open(coordinate: Coordinate): Dot {
         return cells[coordinate]?.let { dot ->
-            if (dot is Land) {
-                dot.open()
-                CoordinateDirection.around(coordinate).forEach(::openAround)
-            }
+            return when (dot) {
+                is Land -> dot.apply {
+                    dot.open()
+                    CoordinateDirection.around(coordinate).forEach(::openAround)
+                }
 
-            return dot
+                is Mine -> {
+                    dot.open()
+                    dot
+                }
+            }
         } ?: throw IllegalArgumentException("해당 좌표는 존재하지 않습니다.")
     }
 
@@ -28,6 +33,8 @@ class MineBoard(
     }
 
     fun remainHiddenLands(): Boolean = cells.values.filterIsInstance<Land>().any { it.isHidden }
+
+    fun nonExistOpenedMine(): Boolean = cells.values.filterIsInstance<Mine>().all { it.isHidden }
 
     companion object {
         fun create(

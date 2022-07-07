@@ -46,7 +46,7 @@ internal class MineBoardTest : FreeSpec({
         val mineBoard = MineBoard(cells = cells)
 
         "정상적인 좌표를 입력하면 지뢰, 빈땅을 확인할 수 있다." {
-            mineBoard.open(Coordinate(0, 0)) shouldBe Mine()
+            mineBoard.open(Coordinate(0, 0)) shouldBe Mine(status = DotStatus.OPEN)
             mineBoard.open(Coordinate(1, 1)) shouldBe Land(1, status = DotStatus.OPEN)
         }
 
@@ -119,13 +119,33 @@ internal class MineBoardTest : FreeSpec({
 
         val mineBoard = MineBoard(cells = cells)
 
-        "Hidden인 Land가 하나라도 있으면 False를 반환한다." {
+        "Hidden인 Land가 하나라도 있으면 true를 반환한다." {
             mineBoard.remainHiddenLands() shouldBe true
         }
 
-        "Hidden인 Land가 하나도 없으면 False를 반환한다." {
+        "Hidden인 Land가 하나도 없으면 false를 반환한다." {
             mineBoard.open(Coordinate(1, 1))
             mineBoard.remainHiddenLands() shouldBe false
+        }
+    }
+
+    "모든 Mine이 Hidden 상태인지 물을 때" - {
+        val cells = mapOf(
+            Pair(Coordinate(0, 0), Mine()),
+            Pair(Coordinate(0, 1), Mine()),
+            Pair(Coordinate(1, 0), Mine()),
+            Pair(Coordinate(1, 1), Mine()),
+        )
+
+        val mineBoard = MineBoard(cells = cells)
+
+        "Open인 Mine이 하나도 없으면 true를 반환한다." {
+            mineBoard.nonExistOpenedMine() shouldBe true
+        }
+
+        "Open인 Mine이 하나라도 있으면 false를 반환한다." {
+            mineBoard.open(Coordinate(0, 0))
+            mineBoard.nonExistOpenedMine() shouldBe false
         }
 
     }
