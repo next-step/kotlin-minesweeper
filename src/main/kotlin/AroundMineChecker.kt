@@ -15,15 +15,13 @@ class AroundMineChecker(board: Map<Point, Square>, private val currentPoint: Poi
     private fun checkLeft(currentPoint: Point) {
         if (!_board.containsKey(currentPoint)) return
         if (_board.getValue(currentPoint).isMine()) return
-        else {
-            val countMine = AroundMine(_board, currentPoint).countMine()
-            _board.replace(currentPoint, NonMine(countMine))
+        val countMine = AroundMine(_board, currentPoint).countMine()
+        _board.replace(currentPoint, NonMine(countMine))
 
-            checkLeft(diagonalUpLeft(currentPoint))
-            checkLeft(left(currentPoint))
-            checkLeft(diagonalBottomLeft(currentPoint))
-            checkLeft(bottom(currentPoint))
-        }
+        checkLeft(diagonalUpLeft(currentPoint))
+        checkLeft(left(currentPoint))
+        checkLeft(diagonalBottomLeft(currentPoint))
+        checkLeft(bottom(currentPoint))
     }
 
     private fun checkRight(currentPoint: Point) {
