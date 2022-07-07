@@ -3,7 +3,6 @@ package minesweeper.controller
 import minesweeper.domain.MineBoard
 import minesweeper.domain.MineBoardLength
 import minesweeper.domain.MineCount
-import minesweeper.domain.cell.Mine
 import minesweeper.dto.MineBoardMatrix
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -30,9 +29,6 @@ class MineSweeper(
             outputView.printMineBoard(MineBoardMatrix.from(mineBoard = mineBoard, width = width))
         }
 
-        when (mineBoard.nonExistOpenedMine()) {
-            true -> outputView.printWinGame()
-            false -> outputView.printLoseGame()
-        }
+        outputView.printGameResult(mineBoard)
     }
 }

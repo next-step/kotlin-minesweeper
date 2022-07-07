@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.domain.MineBoard
+import minesweeper.domain.MineSweeperResult
 import minesweeper.domain.cell.Dot
 import minesweeper.domain.cell.Land
 import minesweeper.domain.cell.Mine
@@ -26,11 +28,10 @@ class OutputView {
         is Land -> if (dot.isHidden) "C" else dot.mineCount.value.toString()
     }
 
-    fun printLoseGame() {
-        println("Lose Game.")
-    }
-
-    fun printWinGame() {
-        println("Win Game!")
+    fun printGameResult(mineBoard: MineBoard) {
+        when (MineSweeperResult.isWin(mineBoard)) {
+            true -> println("Win Game!")
+            false -> println("Lose Game.")
+        }
     }
 }
