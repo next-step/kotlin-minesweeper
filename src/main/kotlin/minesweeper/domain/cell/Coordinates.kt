@@ -18,7 +18,7 @@ class Coordinates(
 
     private fun mineAt(mineCoordinates: List<Coordinate>) = values.associate { coordinate ->
         if (coordinate in mineCoordinates) {
-            coordinate to Mine
+            coordinate to Mine()
         } else {
             coordinate to Land(mineCount(coordinate, mineCoordinates))
         }
