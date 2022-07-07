@@ -1,53 +1,41 @@
 import domain.Point
 
-class AroundMineChecker(board: Map<Point, Square>, private val currentPoint: Point) {
+class AroundMineChecker(private val mineBoard: Map<Point, Square>, private val currentPoint: Point) {
 
-    private val _board: MutableMap<Point, Square> = board.toMutableMap()
-
-    fun isFinish(): Boolean = _board.getValue(currentPoint).isMine()
+    fun isFinish(): Boolean = mineBoard.getValue(currentPoint).isMine()
 
     fun getBoard(): Map<Point, Square> {
-        checkLeft(currentPoint)
-        checkRight(currentPoint)
-        return _board.toMap()
+        val checkLeft = checkLeft(currentPoint, mineBoard)
+        return checkRight(currentPoint, checkLeft)
     }
 
-    private fun checkLeft(currentPoint: Point) {
-        if (!_board.containsKey(currentPoint)) return
-        if (_board.getValue(currentPoint).isMine()) return
-        val countMine = AroundMine(_board, currentPoint).countMine()
-        _board.replace(currentPoint, NonMine(countMine))
+    private fun checkLeft(currentPoint: Point, acc: Map<Point, Square> = emptyMap()): Map<Point, Square> {
+        val board = acc.toMutableMap()
 
-        checkLeft(diagonalUpLeft(currentPoint))
-        checkLeft(left(currentPoint))
-        checkLeft(diagonalBottomLeft(currentPoint))
-        checkLeft(bottom(currentPoint))
+        if (!board.containsKey(currentPoint)) return acc
+        if (board.getValue(currentPoint).isMine()) return acc
+
+        val countMine = AroundMine(board, currentPoint).countMine()
+        board.replace(currentPoint, NonMine(countMine))
+
+        val diagonalUpLeft = checkLeft(currentPoint.diagonalUpLeft(), board)
+        val left = checkLeft(currentPoint.left(), diagonalUpLeft)
+        val diagonalBottomLeft = checkLeft(currentPoint.diagonalBottomLeft(), left)
+        return checkLeft(currentPoint.bottom(), diagonalBottomLeft)
     }
 
-    private fun checkRight(currentPoint: Point) {
-        if (!_board.containsKey(currentPoint)) return
-        if (_board.getValue(currentPoint).isMine()) return
-        val countMine = AroundMine(_board, currentPoint).countMine()
-        _board.replace(currentPoint, NonMine(countMine))
-        checkRight(up(currentPoint))
-        checkRight(diagonalUpRight(currentPoint))
-        checkRight(diagonalBottomRight(currentPoint))
-        checkRight(right(currentPoint))
+    private fun checkRight(currentPoint: Point, acc: Map<Point, Square> = emptyMap()): Map<Point, Square> {
+        val board = acc.toMutableMap()
+
+        if (!board.containsKey(currentPoint)) return acc
+        if (board.getValue(currentPoint).isMine()) return acc
+
+        val countMine = AroundMine(board, currentPoint).countMine()
+        board.replace(currentPoint, NonMine(countMine))
+        val up = checkRight(currentPoint.up(), board)
+        val diagonalUpRight = checkRight(currentPoint.diagonalUpRight(), up)
+        val diagonalBottomRight = checkRight(currentPoint.diagonalBottomRight(), diagonalUpRight)
+        return checkRight(currentPoint.right(), diagonalBottomRight)
     }
 
-    private fun diagonalUpLeft(currentPoint: Point): Point = Point(currentPoint.x - 1, currentPoint.y - 1)
-
-    private fun up(currentPoint: Point): Point = Point(currentPoint.x, currentPoint.y - 1)
-
-    private fun diagonalUpRight(currentPoint: Point): Point = Point(currentPoint.x + 1, currentPoint.y - 1)
-
-    private fun left(currentPoint: Point): Point = Point(currentPoint.x - 1, currentPoint.y)
-
-    private fun right(currentPoint: Point): Point = Point(currentPoint.x + 1, currentPoint.y)
-
-    private fun diagonalBottomLeft(currentPoint: Point): Point = Point(currentPoint.x - 1, currentPoint.y + 1)
-
-    private fun bottom(currentPoint: Point): Point = Point(currentPoint.x, currentPoint.y + 1)
-
-    private fun diagonalBottomRight(currentPoint: Point): Point = Point(currentPoint.x + 1, currentPoint.y + 1)
 }
