@@ -26,7 +26,6 @@ internal class CoordinatesTest : FreeSpec({
 
         // then
         cells.count { it.value == Mine } shouldBe 2
-        cells.count { it.value == Land } shouldBe 7
     }
 
     "지뢰 개수가 좌표 개수보다 많은 경우 예외가 발생한다." {

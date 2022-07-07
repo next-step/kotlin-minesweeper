@@ -22,10 +22,15 @@ class Coordinates(
             if (coordinate in mineCoordinates) {
                 coordinate to Mine
             } else {
-                val mineCount = MineCount(coordinate.around().count { it in mineCoordinates })
-                coordinate to Land(mineCount)
+                coordinate to Land(mineCount(coordinate, mineCoordinates))
             }
         }
+
+    private fun mineCount(
+        coordinate: Coordinate,
+        mineCoordinates: List<Coordinate>
+    ) = MineCount(CoordinateDirection.aroundCoordinates(coordinate)
+        .count { it in mineCoordinates })
 
     companion object {
         private const val START_INDEX = 0

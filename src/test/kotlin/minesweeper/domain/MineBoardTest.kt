@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.MineBoard
-import minesweeper.domain.cell.Land
 import minesweeper.domain.cell.Mine
 
 internal class MineBoardTest : FreeSpec({
@@ -25,6 +24,5 @@ internal class MineBoardTest : FreeSpec({
 
         mineBoard.cells.shouldHaveSize(25)
         mineBoard.cells.count { it.value == Mine } shouldBe 5
-        mineBoard.cells.count { it.value == Land } shouldBe 20
     }
 })
