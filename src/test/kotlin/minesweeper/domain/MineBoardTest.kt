@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.Coordinate
@@ -45,9 +46,12 @@ internal class MineBoardTest : FreeSpec({
         val mineBoard = MineBoard(cells = cells)
 
         "정상적인 좌표를 입력하면 지뢰, 빈땅을 확인할 수 있다." {
-            mineBoard.open(Coordinate(0, 0)) shouldBe Mine(status = DotStatus.OPEN)
-            mineBoard.open(Coordinate(1, 0)) shouldBe Land(1, status = DotStatus.OPEN)
-            mineBoard.open(Coordinate(2, 2)) shouldBe Land(0, status = DotStatus.OPEN)
+            mineBoard.open(Coordinate(0, 0)) shouldBe Mine()
+            mineBoard.open(Coordinate(1, 1)) shouldBe Land(1, status = DotStatus.OPEN)
+        }
+
+        "이미 확인한(OPEN된) 좌표를 입력하면 예외가 발생한다." {
+            shouldThrowExactly<IllegalArgumentException> { mineBoard.open(Coordinate(1, 1)) }
         }
 
         "지뢰판 바깥의 좌표를 입력하면 예외가 발생한다." {
@@ -73,5 +77,30 @@ internal class MineBoardTest : FreeSpec({
         mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.HIDDEN
         mineBoard.open(Coordinate(2, 2)) shouldBe Land(0, status = DotStatus.OPEN)
         mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.OPEN
+    }
+
+    "입력 받은 좌표가 지뢰가 아닌경우 인접한 NonMine 필드가 모두 공개된다. " {
+        val cells = mapOf(
+            Pair(Coordinate(0, 0), Mine()),
+            Pair(Coordinate(0, 1), Land(1)),
+            Pair(Coordinate(0, 2), Land(0)),
+            Pair(Coordinate(1, 0), Land(1)),
+            Pair(Coordinate(1, 1), Land(1)),
+            Pair(Coordinate(1, 2), Land(0)),
+            Pair(Coordinate(2, 0), Land(0)),
+            Pair(Coordinate(2, 1), Land(0)),
+            Pair(Coordinate(2, 2), Land(0)),
+        )
+
+        val mineBoard = MineBoard(cells = cells)
+        val nonMineCoordinates = mineBoard.cells.keys
+            .filter { it != Coordinate(0, 2) }
+            .filter { mineBoard.cells[it] != Mine() }
+
+        mineBoard.open(Coordinate(0, 2))
+
+        nonMineCoordinates.forAll {
+            mineBoard.cells[it]?.status shouldBe DotStatus.OPEN
+        }
     }
 })

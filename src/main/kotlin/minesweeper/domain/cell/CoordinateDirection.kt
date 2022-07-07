@@ -16,7 +16,7 @@ enum class CoordinateDirection(
     ;
 
     companion object {
-        fun aroundCoordinates(coordinate: Coordinate): List<Coordinate> = values().map {
+        fun around(coordinate: Coordinate): List<Coordinate> = values().map {
             Coordinate(
                 x = coordinate.x + it.x,
                 y = coordinate.y + it.y

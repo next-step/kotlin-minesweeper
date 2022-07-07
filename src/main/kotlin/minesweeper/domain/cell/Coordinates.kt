@@ -26,7 +26,7 @@ class Coordinates(
 
     private fun mineCount(
         coordinate: Coordinate, mineCoordinates: List<Coordinate>
-    ) = MineCount(CoordinateDirection.aroundCoordinates(coordinate).count { it in mineCoordinates })
+    ) = MineCount(CoordinateDirection.around(coordinate).count { it in mineCoordinates })
 
     companion object {
         private const val START_INDEX = 0
