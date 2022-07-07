@@ -1,6 +1,6 @@
 package minesweeper.controller
 
-import minesweeper.domain.MineGeneratorStrategy
+import minesweeper.domain.RandomGeneratorStrategy
 import minesweeper.domain.factory
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -11,7 +11,7 @@ object MineSweeperBoardController {
             height(InputView.inputHeight())
             width(InputView.inputWidth())
             countOfMine(InputView.inputCountOfMine())
-            strategy(MineGeneratorStrategy())
+            strategy(RandomGeneratorStrategy)
         }.also {
             OutputView.printAllOpenMineSweeperBoard(it)
         }
