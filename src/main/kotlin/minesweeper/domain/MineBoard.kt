@@ -27,6 +27,8 @@ class MineBoard(
         }
     }
 
+    fun remainHiddenLands(): Boolean = cells.values.filterIsInstance<Land>().any { it.isHidden }
+
     companion object {
         fun create(
             height: MineBoardLength,

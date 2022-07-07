@@ -103,4 +103,30 @@ internal class MineBoardTest : FreeSpec({
             mineBoard.cells[it]?.status shouldBe DotStatus.OPEN
         }
     }
+
+    "모든 Land가 OPEN 상태인지 물을 때" - {
+        val cells = mapOf(
+            Pair(Coordinate(0, 0), Land(0)),
+            Pair(Coordinate(0, 1), Land(0)),
+            Pair(Coordinate(0, 2), Land(0)),
+            Pair(Coordinate(1, 0), Land(0)),
+            Pair(Coordinate(1, 1), Land(0)),
+            Pair(Coordinate(1, 2), Land(0)),
+            Pair(Coordinate(2, 0), Land(0)),
+            Pair(Coordinate(2, 1), Land(0)),
+            Pair(Coordinate(2, 2), Land(0)),
+        )
+
+        val mineBoard = MineBoard(cells = cells)
+
+        "Hidden인 Land가 하나라도 있으면 False를 반환한다." {
+            mineBoard.remainHiddenLands() shouldBe true
+        }
+
+        "Hidden인 Land가 하나도 없으면 False를 반환한다." {
+            mineBoard.open(Coordinate(1, 1))
+            mineBoard.remainHiddenLands() shouldBe false
+        }
+
+    }
 })
