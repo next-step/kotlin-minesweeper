@@ -11,6 +11,9 @@ class MineBoard(
         require(cells.isNotEmpty()) { "지뢰판은 빌 수 없습니다." }
     }
 
+    fun open(coordinate: Coordinate): Dot =
+        cells[coordinate] ?: throw IllegalArgumentException("해당 좌표는 존재하지 않습니다.")
+
     companion object {
         fun create(
             height: MineBoardLength,

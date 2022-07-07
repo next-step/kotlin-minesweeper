@@ -39,8 +39,9 @@ class Coordinates(
 
         private fun generateRows(width: MineBoardLength, xValue: Int) =
             (START_INDEX until width.value).map { yValue ->
-                Coordinate(y = CoordinateValue(value = yValue), x = CoordinateValue(value = xValue)
-            )
-        }
+                Coordinate(
+                    y = CoordinateValue(value = yValue), x = CoordinateValue(value = xValue)
+                )
+            }
     }
 }
