@@ -27,14 +27,12 @@ class AroundMineChecker(board: Map<Point, Square>, private val currentPoint: Poi
     private fun checkRight(currentPoint: Point) {
         if (!_board.containsKey(currentPoint)) return
         if (_board.getValue(currentPoint).isMine()) return
-        else {
-            val countMine = AroundMine(_board, currentPoint).countMine()
-            _board.replace(currentPoint, NonMine(countMine))
-            checkRight(up(currentPoint))
-            checkRight(diagonalUpRight(currentPoint))
-            checkRight(diagonalBottomRight(currentPoint))
-            checkRight(right(currentPoint))
-        }
+        val countMine = AroundMine(_board, currentPoint).countMine()
+        _board.replace(currentPoint, NonMine(countMine))
+        checkRight(up(currentPoint))
+        checkRight(diagonalUpRight(currentPoint))
+        checkRight(diagonalBottomRight(currentPoint))
+        checkRight(right(currentPoint))
     }
 
     private fun diagonalUpLeft(currentPoint: Point): Point = Point(currentPoint.x - 1, currentPoint.y - 1)
