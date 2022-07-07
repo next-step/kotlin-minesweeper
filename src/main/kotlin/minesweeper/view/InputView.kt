@@ -24,7 +24,11 @@ class InputView {
     fun inputCoordinate(): Coordinate {
         print("open: ")
         val coordinateValues = readln().split(", ").map { CoordinateValue(it.toInt()) }
-        require(coordinateValues.size == 2) { "x, y 좌표값을 순서대로 ', '로 나누어  입력해주세요." }
+        require(coordinateValues.size == COORDINATE_VALUE_COUNT) { "x, y 좌표값을 순서대로 ', '로 나누어  입력해주세요." }
         return Coordinate(coordinateValues[0], coordinateValues[1])
+    }
+
+    companion object {
+        private const val COORDINATE_VALUE_COUNT = 2
     }
 }
