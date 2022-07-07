@@ -15,6 +15,8 @@ class MinesweeperController {
 
         val board = Board(BoardSize(height, width), minesCount)
 
+        board.open()
+
         BoardView(board).print()
     }
 
