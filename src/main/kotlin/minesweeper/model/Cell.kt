@@ -3,12 +3,13 @@ package minesweeper.model
 abstract class Cell(
     val position: CellPosition,
 ) {
-    abstract val isOpened: Boolean
-
-    abstract val isMine: Boolean
 
     val isMineAndOpened: Boolean
         get() = isMine && isOpened
+
+    abstract val isOpened: Boolean
+
+    abstract val isMine: Boolean
 
     fun isMineAndIn(positions: Set<CellPosition>) = isMine && isIn(positions)
 
@@ -26,36 +27,44 @@ abstract class Cell(
 
 class ClosedMine(
     position: CellPosition,
-    override val isOpened: Boolean = false,
-    override val isMine: Boolean = true,
 ) : Cell(position) {
+
+    override val isOpened: Boolean = false
+
+    override val isMine: Boolean = true
 
     override fun open(): Cell = OpenedMine(position)
 }
 
 class ClosedNonMine(
     position: CellPosition,
-    override val isOpened: Boolean = false,
-    override val isMine: Boolean = false,
 ) : Cell(position) {
+
+    override val isOpened: Boolean = false
+
+    override val isMine: Boolean = false
 
     override fun open(): Cell = OpenedNonMine(position)
 }
 
 class OpenedMine(
     position: CellPosition,
-    override val isOpened: Boolean = true,
-    override val isMine: Boolean = true,
 ) : Cell(position) {
+
+    override val isOpened: Boolean = true
+
+    override val isMine: Boolean = true
 
     override fun open(): Cell = this
 }
 
 class OpenedNonMine(
     position: CellPosition,
-    override val isOpened: Boolean = true,
-    override val isMine: Boolean = false,
 ) : Cell(position) {
+
+    override val isOpened: Boolean = true
+
+    override val isMine: Boolean = false
 
     override fun open(): Cell = this
 }
