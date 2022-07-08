@@ -32,7 +32,7 @@ class Cells(
                 ClosedNonMine(cellPositions[mineCellCount + it])
             }
 
-            val sortedCells = closedMines.plus(closedNonMineCells)
+            val sortedCells = (closedMines + closedNonMineCells)
                 .sortedBy { it.position }
 
             return Cells(sortedCells.toMutableList())
