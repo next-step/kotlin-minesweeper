@@ -11,16 +11,16 @@ abstract class Cell(
 
     abstract val isMine: Boolean
 
-    fun isMineAndIn(positions: Set<CellPosition>) = isMine && isIn(positions)
+    fun isMineAndIn(positions: Set<CellPosition>): Boolean = isMine && isIn(positions)
 
-    fun isClosedAndIn(positions: Set<CellPosition>) = !isOpened && isIn(positions)
+    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && isIn(positions)
 
     fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
         return board.sumOfMineCountIn(surroundingPositions)
     }
 
-    private fun isIn(positions: Collection<CellPosition>) = positions.contains(position)
+    private fun isIn(positions: Collection<CellPosition>): Boolean = positions.contains(position)
 
     abstract fun open(): Cell
 }

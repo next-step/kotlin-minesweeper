@@ -33,7 +33,7 @@ class MineBoard(
     fun sumOfMineCountIn(positions: Set<CellPosition>): Int =
         board.sumOf { it.mineCountIn(positions) }
 
-    private fun findClosedCellsIn(positions: Set<CellPosition>) =
+    private fun findClosedCellsIn(positions: Set<CellPosition>): List<Cell> =
         board.flatMap { it.findClosedCellsIn(positions) }
 
     companion object {
