@@ -11,23 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 @DisplayName("보드 한줄 테스트")
-class BoardRowDtoTest {
-
-    @Test
-    fun `보드 한줄의 닫힌 셀 개수 구하는 기능이 정상 동작`() {
-        // given, when, then
-        assertThat(BoardRowDto(listOf("*", "C", "C")).countOfCloseMark).isEqualTo(2)
-    }
-
-    @Test
-    fun `보드 한줄에 지뢰 포함 여부 구하는 기능이 정상 동작`() {
-        // given, when, then
-        assertAll(
-            "contains mine test",
-            { assertThat(BoardRowDto(listOf("C", "C", "C")).containsMine()).isFalse },
-            { assertThat(BoardRowDto(listOf("C", "*", "C")).containsMine()).isTrue }
-        )
-    }
+class MineBoardRowDtoTest {
 
     @Test
     fun `보드 한줄 생성하는 기능이 정상 동작`() {
@@ -55,9 +39,9 @@ class BoardRowDtoTest {
         // when, then
         assertAll(
             "create board row test",
-            { assertThat(BoardRowDto.of(cellsOfRow1, board).boardRow).isEqualTo(listOf("0", "0", "0")) },
-            { assertThat(BoardRowDto.of(cellsOfRow2, board).boardRow).isEqualTo(listOf("1", "1", "1")) },
-            { assertThat(BoardRowDto.of(cellsOfRow3, board).boardRow).isEqualTo(listOf("C", "C", "C")) },
+            { assertThat(MineBoardRowDto.of(cellsOfRow1, board).boardRow).isEqualTo(listOf("0", "0", "0")) },
+            { assertThat(MineBoardRowDto.of(cellsOfRow2, board).boardRow).isEqualTo(listOf("1", "1", "1")) },
+            { assertThat(MineBoardRowDto.of(cellsOfRow3, board).boardRow).isEqualTo(listOf("C", "C", "C")) },
         )
     }
 }

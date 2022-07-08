@@ -7,6 +7,9 @@ class Cells(
     val mineCount
         get(): Int = cells.count { it.isMine }
 
+    val closedCellCount
+        get(): Int = cells.count { !it.isOpened }
+
     fun take(startIndex: Int, endIndex: Int): Cells = cells.subList(startIndex, endIndex).let(::Cells)
 
     fun mineCountIn(positions: Set<CellPosition>): Int =
@@ -18,6 +21,8 @@ class Cells(
     fun isOpenedAt(position: Position): Boolean = cells[position.position].isOpened
 
     fun openAt(position: Position): Cell = cells[position.position].open()
+
+    fun containsOpenedMine(): Boolean = cells.any { it.isOpenedMine }
 
     companion object {
         fun of(positions: CellPositions, mineCellCount: Int): Cells {

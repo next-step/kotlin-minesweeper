@@ -5,9 +5,12 @@ enum class GameStatus {
     WIN,
     LOST;
 
-    fun isOngoing(): Boolean = this == ONGOING
+    val isOngoing
+        get(): Boolean = this == ONGOING
 
-    fun win(): Boolean = this == WIN
+    val win
+        get(): Boolean = this == WIN
 
-    fun lost(): Boolean = this == LOST
+    val lost
+        get(): Boolean = this == LOST
 }

@@ -10,8 +10,30 @@ class MineBoard(
     val board: List<Cells>
         get() = _board.toList()
 
-    val mineCount
-        get() = board.sumOf { it.mineCount }
+    val isOngoing: Boolean
+        get() = gameStatus.isOngoing
+
+    val gameStatus
+        get(): GameStatus {
+            if (containsOpenedMine) {
+                return GameStatus.LOST
+            }
+
+            if (mineCount == closedCellCount) {
+                return GameStatus.WIN
+            }
+
+            return GameStatus.ONGOING
+        }
+
+    private val mineCount
+        get(): Int = board.sumOf { it.mineCount }
+
+    private val containsOpenedMine
+        get(): Boolean = board.any { it.containsOpenedMine() }
+
+    private val closedCellCount
+        get(): Int = board.sumOf { it.closedCellCount }
 
     fun openAtPositionAndSurroundingNonMineCells(position: CellPosition) {
         val targetCells = board[position.y.position]

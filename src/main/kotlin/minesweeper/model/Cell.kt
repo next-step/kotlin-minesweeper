@@ -4,7 +4,7 @@ abstract class Cell(
     val position: CellPosition,
 ) {
 
-    val isMineAndOpened: Boolean
+    val isOpenedMine: Boolean
         get() = isMine && isOpened
 
     abstract val isOpened: Boolean

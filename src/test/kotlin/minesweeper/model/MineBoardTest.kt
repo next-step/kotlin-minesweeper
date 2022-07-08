@@ -502,4 +502,44 @@ class MineBoardTest {
             { assertThat(board[3][3].isOpened).isEqualTo(true) },
         )
     }
+
+    @Test
+    fun `오픈된 지뢰가 있으면 게임에서 진 상태`() {
+        // when
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(1, 0))
+
+        // then
+        assertThat(board.gameStatus).isEqualTo(GameStatus.LOST)
+    }
+
+    @Test
+    fun `지뢰를 제외한 모든 셀을 오픈했으면 게임에서 이긴 상태`() {
+        // when
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 0))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(2, 0))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(3, 0))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 1))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(1, 1))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(2, 1))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(3, 1))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 2))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(1, 2))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(3, 2))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 3))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(1, 3))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(2, 3))
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(3, 3))
+
+        // then
+        assertThat(board.gameStatus).isEqualTo(GameStatus.WIN)
+    }
+
+    @Test
+    fun `오픈된 지뢰가 없으면서, 지뢰를 제외한 셀을 모두 오픈한 상태가 아니면 게임 진행중 상태`() {
+        // when
+        board.openAtPositionAndSurroundingNonMineCells(CellPosition.of(0, 0))
+
+        // then
+        assertThat(board.gameStatus).isEqualTo(GameStatus.ONGOING)
+    }
 }
