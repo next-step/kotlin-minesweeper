@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertAll
 class MinesweeperTest {
     @Test
     fun `Minesweeper는 지뢰찾기 게임의 현황을 구성한다`() {
-        val row = List(10) {
+        val row = MutableList<Cell>(10) {
             Cell.Land.ZERO
         }
         val rows = List(10) {

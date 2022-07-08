@@ -1,5 +1,5 @@
 package domain
 
-class Row(cells: List<Cell>) : List<Cell> by cells {
-    constructor(vararg cell: Cell) : this(cell.toList())
+class Row(cells: MutableList<Cell>) : MutableList<Cell> by cells {
+    constructor(vararg cell: Cell) : this(cell.toMutableList())
 }
