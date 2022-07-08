@@ -56,4 +56,51 @@ class CellTest {
             { assertThat(OpenedMine(CellPosition.of(0, 0)).open()).isExactlyInstanceOf(OpenedMine::class.java) },
         )
     }
+
+    @Test
+    fun `닫힌 지뢰 셀은 열림 상태가 false`() {
+        // given, when, then
+        assertThat(ClosedMine(CellPosition.of(0, 0)).isOpened).isFalse
+    }
+
+    @Test
+    fun `닫힌 지뢰 셀은 지뢰 상태가 true`() {
+        // given, when, then
+        assertThat(ClosedMine(CellPosition.of(0, 0)).isMine).isTrue
+    }
+
+    @Test
+    fun `닫혀있고 지뢰가 아닌 셀은 열림 상태가 false`() {
+        // given, when, then
+        assertThat(ClosedNonMine(CellPosition.of(0, 0)).isOpened).isFalse
+    }
+
+    @Test
+    fun `닫혀있고 지뢰가 아닌 셀은 지뢰 상태가 false`() {
+        // given, when, then
+        assertThat(ClosedNonMine(CellPosition.of(0, 0)).isMine).isFalse
+    }
+
+    @Test
+    fun `열려있고 지뢰인 셀은 열림 상태가 true`() {
+        // given, when, then
+        assertThat(OpenedMine(CellPosition.of(0, 0)).isOpened).isTrue
+    }
+
+    @Test
+    fun `열려있고 지뢰인 셀은 지뢰 상태가 true`() {
+        // given, when, then
+        assertThat(OpenedMine(CellPosition.of(0, 0)).isMine).isTrue
+    }
+
+    @Test
+    fun `열려있고 지뢰가 아닌 셀은 열림 상태가 true`() {
+        // given, when, then
+        assertThat(OpenedNonMine(CellPosition.of(0, 0)).isOpened).isTrue
+    }
+
+    @Test
+    fun `열려있고 지뢰가 아닌 셀은 지뢰 상태가 false`() {
+        assertThat(OpenedNonMine(CellPosition.of(0, 0)).isMine).isFalse
+    }
 }
