@@ -9,13 +9,14 @@ import domain.GameSettingInfo
  */
 object OutputView {
     private const val START_MINE_SWEEPER = "지뢰찾기 게임 시작"
-    private const val MINE = "M "
-    private const val NOT_MINE = "O "
+    private const val MINE = "M"
+    private const val SPACE = " "
 
     fun printBoard(board: Board, settingInfo: GameSettingInfo) {
         println(START_MINE_SWEEPER)
         board.grounds.forEach { (position, ground) ->
-            print(if (ground.isMine) MINE else NOT_MINE)
+            print(if (ground.isMine) MINE else ground.mineCount)
+            print(SPACE)
             if (position.x == settingInfo.width - 1) println()
         }
     }

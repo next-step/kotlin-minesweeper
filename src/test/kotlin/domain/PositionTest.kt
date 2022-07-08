@@ -1,5 +1,6 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -12,5 +13,10 @@ class PositionTest {
         assertThrows<IllegalArgumentException> {
             Position(0, -1)
         }
+    }
+
+    @Test
+    fun `만들수 없는 포지션을 만들면 null을 반환한다`() {
+        assertThat(Position.makePositionOrNull(-1, -1, 1, 1)).isNull()
     }
 }
