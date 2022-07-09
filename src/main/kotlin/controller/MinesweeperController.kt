@@ -1,5 +1,6 @@
 package controller
 
+import domain.MinePositionsFactory
 import domain.Minesweeper
 import domain.MinesweeperInfo
 import view.input.InputView
@@ -11,14 +12,14 @@ import view.output.converter.MinesweeperConverter
 object MinesweeperController {
     private const val GUIDANCE_MESSAGE_START_MINESWEEPER = "지뢰찾기 게임 시작"
 
-    fun startGame() {
+    fun startGame(minePositionsFactory: MinePositionsFactory) {
         val minesweeperInfo = MinesweeperInfo(
             rowCount = getUserInput(InputType.ROW),
             columnCount = getUserInput(InputType.COLUMN),
             mineCount = getUserInput(InputType.MINE)
         )
 
-        val minesweeper = Minesweeper.from(minesweeperInfo)
+        val minesweeper = Minesweeper.of(minesweeperInfo, minePositionsFactory)
         OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_START_MINESWEEPER)
         OutputView.print(minesweeper, MinesweeperConverter)
     }
