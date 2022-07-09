@@ -7,19 +7,14 @@ import org.junit.jupiter.api.assertAll
 class MinesweeperTest {
     @Test
     fun `Minesweeper는 지뢰찾기 게임의 현황을 구성한다`() {
-        val row = MutableList<Cell>(10) {
-            Cell.Land.ZERO
-        }
-        val rows = List(10) {
-            Row(row)
-        }
-        val minesweeper = Minesweeper(rows)
+        val minesweeperInfo = MinesweeperInfo(10, 10, 10)
+        val minesweeper = Minesweeper.from(minesweeperInfo)
 
         assertAll(
-            { assertThat(minesweeper).hasSize(rows.size) },
+            { assertThat(minesweeper).hasSize(minesweeperInfo.rowCount) },
             {
                 assertThat(minesweeper).allMatch {
-                    it.size == row.size && it.containsAll(row)
+                    it.value.size == minesweeperInfo.columnCount
                 }
             }
         )

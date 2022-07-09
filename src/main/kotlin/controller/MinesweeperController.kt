@@ -1,5 +1,6 @@
 package controller
 
+import domain.Minesweeper
 import domain.MinesweeperFactory
 import domain.MinesweeperInfo
 import view.input.InputView
@@ -18,7 +19,7 @@ object MinesweeperController {
             mineCount = getUserInput(InputType.MINE)
         )
 
-        val minesweeper = factory.create(minesweeperInfo)
+        val minesweeper = Minesweeper.from(minesweeperInfo)
         OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_START_MINESWEEPER)
         OutputView.print(minesweeper, MinesweeperConverter)
     }

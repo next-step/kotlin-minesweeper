@@ -13,8 +13,8 @@ class RowTest {
         val row = Row(cells)
 
         assertAll(
-            { assertThat(row).hasSize(cells.size) },
-            { assertThat(row).containsAll(cells) }
+            { assertThat(row.value).hasSize(cells.size) },
+            { assertThat(row.value).containsAll(cells) }
         )
     }
 }
