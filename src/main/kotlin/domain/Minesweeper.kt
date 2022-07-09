@@ -1,12 +1,13 @@
 package domain
 
-class Minesweeper private constructor(board: List<Row>) : List<Row> by board {
+@JvmInline
+value class Minesweeper private constructor(private val board: List<Row>) : List<Row> by board {
     operator fun get(position: CellPosition): Cell {
-        return this[position.row][position.column]
+        return board[position.row][position.column]
     }
 
     private operator fun set(position: CellPosition, value: Cell) {
-        this[position.row][position.column] = value
+        board[position.row][position.column] = value
     }
 
     companion object {
