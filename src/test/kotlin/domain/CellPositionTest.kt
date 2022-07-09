@@ -16,16 +16,6 @@ class CellPositionTest {
     }
 
     @Test
-    fun `전체 cell 중의 순번과 열의 개수를 받아 위치를 구할 수 있다`() {
-        val cellPosition = CellPosition.from(138, 15)
-
-        assertAll(
-            { assertThat(cellPosition.row).isEqualTo(9) },
-            { assertThat(cellPosition.column).isEqualTo(3) }
-        )
-    }
-
-    @Test
     fun `isInBoundaryOf를 통해 해당 좌표가 지뢰찾기 범위 안에 있는지 확인할 수 있다`() {
         val minesweeperInfo = MinesweeperInfo(10, 15, 1)
 

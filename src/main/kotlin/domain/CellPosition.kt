@@ -21,12 +21,5 @@ data class CellPosition(
     companion object {
         private const val FIRST_ROW_INDEX = 0
         private const val FIRST_COLUMN_INDEX = 0
-
-        fun from(index: Int, columnCount: Int): CellPosition {
-            val row = index / columnCount
-            val column = index % columnCount
-
-            return CellPosition(row, column)
-        }
     }
 }

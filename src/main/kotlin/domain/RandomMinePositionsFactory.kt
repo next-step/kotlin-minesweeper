@@ -6,11 +6,18 @@ object RandomMinePositionsFactory : MinePositionsFactory() {
         val mineIndexes = cellCount.toShuffledIndexes().take(minesweeperInfo.mineCount)
 
         return mineIndexes.map { mineIndex ->
-            CellPosition.from(mineIndex, minesweeperInfo.columnCount)
+            getMinePosition(mineIndex, minesweeperInfo.columnCount)
         }
     }
 
     private fun Int.toShuffledIndexes(): List<Int> {
         return (0 until this.coerceAtLeast(1)).shuffled()
+    }
+
+    private fun getMinePosition(index: Int, columnCount: Int): CellPosition {
+        val row = index / columnCount
+        val column = index % columnCount
+
+        return CellPosition(row, column)
     }
 }
