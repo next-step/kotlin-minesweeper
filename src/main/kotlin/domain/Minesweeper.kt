@@ -2,11 +2,11 @@ package domain
 
 class Minesweeper private constructor(board: List<Row>) : List<Row> by board {
     operator fun get(position: CellPosition): Cell {
-        return this[position.row].value[position.column]
+        return this[position.row][position.column]
     }
 
     private operator fun set(position: CellPosition, value: Cell) {
-        this[position.row].value[position.column] = value
+        this[position.row][position.column] = value
     }
 
     companion object {
