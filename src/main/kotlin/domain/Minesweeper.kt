@@ -27,21 +27,12 @@ class Minesweeper private constructor(
         Direction.values().forEach { direction ->
             val nearPosition = minePosition.apply(direction)
 
-            if (isOutOfBoundary(nearPosition)) return@forEach
+            if (nearPosition.isInBoundaryOf(minesweeperInfo)) return@forEach
             this[nearPosition] = this[nearPosition].increaseMineCount()
         }
     }
 
-    private fun isOutOfBoundary(cellPosition: CellPosition): Boolean {
-        return cellPosition.row < 0 ||
-            cellPosition.row >= minesweeperInfo.rowCount ||
-            cellPosition.column < 0 ||
-            cellPosition.column >= minesweeperInfo.columnCount
-    }
-
     companion object {
-        const val MESSAGE_INVALID_MINE_COUNT = "사용자의 입력과 동일한 개수의 지뢰가 생성되어야 합니다."
-
         fun from(minesweeperInfo: MinesweeperInfo): Minesweeper {
             val board = List(minesweeperInfo.rowCount) {
                 Row.from(minesweeperInfo.columnCount)
