@@ -1,12 +1,27 @@
 package domain
 
+import domain.vo.Point
+
 sealed class Cell(private val coordinate: Coordinate) {
 
-    val x = coordinate.x
+    private var isOpen = false
 
-    val y = coordinate.y
+    val x: Point
+        get() = coordinate.x
+
+    val y: Point
+        get() = coordinate.y
+
+    val opened: Boolean
+        get() = isOpen
+
+    fun open() {
+        isOpen = true
+    }
 
     fun isAdjacentTo(cell: Cell): Boolean = coordinate.isAdjacentTo(cell.coordinate)
+
+    fun equalsBy(coordinate: Coordinate): Boolean = this.coordinate == coordinate
 }
 
 class Mine(coordinate: Coordinate) : Cell(coordinate)

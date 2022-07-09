@@ -7,8 +7,13 @@ import domain.vo.Width
 
 class Game private constructor(val board: Board) {
 
-    companion object {
+    fun open(coordinate: Coordinate): GameStatus {
+        val cell = board.getCell(coordinate)
 
+        return board.open(cell)
+    }
+
+    companion object {
         fun of(width: Width, height: Height, mineCount: MineCount): Game {
             val cellCount = width * height
             require(mineCount.value <= cellCount) { "지뢰를 생성할 공간이 부족합니다" }

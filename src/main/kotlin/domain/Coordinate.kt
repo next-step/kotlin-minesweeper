@@ -6,6 +6,13 @@ data class Coordinate(
     val x: Point,
     val y: Point,
 ) {
+    init {
+        require(x.isPositive) { "x 는 1보다 커야합니다" }
+        require(y.isPositive) { "y 는 1보다 커야합니다" }
+    }
+
+    fun isAdjacentTo(coordinate: Coordinate): Boolean =
+        surroundings.contains(coordinate)
 
     private val surroundings: List<Coordinate> by lazy {
         listOfNotNull(
@@ -22,14 +29,6 @@ data class Coordinate(
             makeCoordinateOrNull(x = x + 1, y = y + 1),
         )
     }
-
-    init {
-        require(x.isPositive) { "x 는 1보다 커야합니다" }
-        require(y.isPositive) { "y 는 1보다 커야합니다" }
-    }
-
-    fun isAdjacentTo(coordinate: Coordinate): Boolean =
-        surroundings.contains(coordinate)
 
     private fun makeCoordinateOrNull(x: Point, y: Point): Coordinate? =
         runCatching { Coordinate(x, y) }.getOrNull()

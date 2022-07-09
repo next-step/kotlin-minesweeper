@@ -5,5 +5,5 @@ import view.GameView
 fun main() {
     val game = GameInputView(Console).initGame()
 
-    GameView(Console).viewBoard(game.board)
+    GameView(Console).play(game)
 }
