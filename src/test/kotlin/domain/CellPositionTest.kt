@@ -24,4 +24,17 @@ class CellPositionTest {
             { assertThat(cellPosition.column).isEqualTo(3) }
         )
     }
+
+    @Test
+    fun `isInBoundaryOf를 통해 해당 좌표가 지뢰찾기 범위 안에 있는지 확인할 수 있다`() {
+        val minesweeperInfo = MinesweeperInfo(10, 15, 1)
+
+        assertAll(
+            { assertThat(CellPosition(0, 2).isInBoundaryOf(minesweeperInfo)).isTrue },
+            { assertThat(CellPosition(11, 2).isInBoundaryOf(minesweeperInfo)).isFalse },
+            { assertThat(CellPosition(0, 18).isInBoundaryOf(minesweeperInfo)).isFalse },
+            { assertThat(CellPosition(-5, 3).isInBoundaryOf(minesweeperInfo)).isFalse },
+            { assertThat(CellPosition(2, -10).isInBoundaryOf(minesweeperInfo)).isFalse }
+        )
+    }
 }
