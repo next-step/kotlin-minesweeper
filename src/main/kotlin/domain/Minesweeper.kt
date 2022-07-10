@@ -29,8 +29,8 @@ class Minesweeper(private val board: List<Row>) : List<Row> by board {
             }
         }
 
-        private fun Minesweeper.setMines(minesweeperInfo: MinesweeperInfo, minePositions: List<CellPosition>) {
-            minePositions.forEach { minePosition ->
+        private fun Minesweeper.setMines(minesweeperInfo: MinesweeperInfo, minePositions: MinePositions) {
+            minePositions.value.forEach { minePosition ->
                 setMine(minePosition)
                 increaseMineCountOfNearCells(minesweeperInfo, minePosition)
             }

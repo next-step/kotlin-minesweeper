@@ -10,7 +10,7 @@ class MinePositionsFactoryTest {
     @Test
     fun `MinePositionsFactory를 구현하여 지뢰가 있는 좌표의 리스트를 구할 수 있다`() {
         val minePositions = listOf(CellPosition(0, 0), CellPosition(0, 1), CellPosition(0, 2))
-        assertThat(getMinePositionsFactory(minePositions).create(minesweeperInfo)).isEqualTo(minePositions)
+        assertThat(getMinePositionsFactory(minePositions).create(minesweeperInfo).value).isEqualTo(minePositions)
     }
 
     @Test
@@ -32,9 +32,9 @@ class MinePositionsFactoryTest {
     }
 
     private fun getMinePositionsFactory(minePositions: List<CellPosition>): MinePositionsFactory {
-        return object : MinePositionsFactory() {
-            override fun getMinePositionsFrom(minesweeperInfo: MinesweeperInfo): List<CellPosition> {
-                return minePositions
+        return object : MinePositionsFactory {
+            override fun create(minesweeperInfo: MinesweeperInfo): MinePositions {
+                return MinePositions.of(minePositions, minesweeperInfo)
             }
         }
     }

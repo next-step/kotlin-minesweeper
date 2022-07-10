@@ -13,6 +13,6 @@ class RandomMinePositionsFactoryTest {
         )
         val minePositions = RandomMinePositionsFactory.create(minesweeperInfo)
 
-        assertThat(minePositions).hasSize(minesweeperInfo.mineCount)
+        assertThat(minePositions.value).hasSize(minesweeperInfo.mineCount)
     }
 }

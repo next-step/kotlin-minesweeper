@@ -1,12 +1,16 @@
 package domain
 
-object RandomMinePositionsFactory : MinePositionsFactory() {
-    override fun getMinePositionsFrom(minesweeperInfo: MinesweeperInfo): List<CellPosition> {
+object RandomMinePositionsFactory : MinePositionsFactory {
+    override fun create(minesweeperInfo: MinesweeperInfo): MinePositions {
         val cellCount = minesweeperInfo.rowCount * minesweeperInfo.columnCount
         val mineIndexes = cellCount.toShuffledIndexes().take(minesweeperInfo.mineCount)
 
-        return mineIndexes.map { mineIndex ->
-            getMinePosition(mineIndex, minesweeperInfo.columnCount)
+        return MinePositions.of(mineIndexes.toMinePositions(minesweeperInfo.columnCount), minesweeperInfo)
+    }
+
+    private fun List<Int>.toMinePositions(columnCount: Int): List<CellPosition> {
+        return map { mineIndex ->
+            getMinePosition(mineIndex, columnCount)
         }
     }
 

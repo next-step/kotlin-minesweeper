@@ -23,9 +23,12 @@ class MinesweeperTest {
     @Test
     fun `MinePositionsFactory를 전달하여 특정 위치에 지뢰를 생성할 수 있다`() {
         val minesweeperInfo = MinesweeperInfo(10, 10, 3)
-        val minePositionsFactory = object : MinePositionsFactory() {
-            override fun getMinePositionsFrom(minesweeperInfo: MinesweeperInfo): List<CellPosition> {
-                return listOf(CellPosition(0, 0), CellPosition(0, 1), CellPosition(0, 2))
+        val minePositionsFactory = object : MinePositionsFactory {
+            override fun create(minesweeperInfo: MinesweeperInfo): MinePositions {
+                return MinePositions.of(
+                    positions = listOf(CellPosition(0, 0), CellPosition(0, 1), CellPosition(0, 2)),
+                    minesweeperInfo = minesweeperInfo
+                )
             }
         }
         val minesweeper = Minesweeper.of(minesweeperInfo, minePositionsFactory)
