@@ -21,7 +21,7 @@ class Board private constructor(val rows: List<Row>) {
 
         when (cell) {
             is Mine -> return GameStatus.LOST
-            is Empty -> getZeroMineCells(cell).forEach { it.openAll() }
+            is Empty -> getZeroMineCells(cell).forEach { it.openWithNeighbors() }
         }
 
         return if (isClear()) GameStatus.WIN
@@ -47,7 +47,7 @@ class Board private constructor(val rows: List<Row>) {
     private fun isClear(): Boolean =
         allCells.filterIsInstance<Empty>().all { it.opened }
 
-    private fun Cell.openAll() {
+    private fun Cell.openWithNeighbors() {
         open()
         emptyNeighbors().forEach { it.open() }
     }
