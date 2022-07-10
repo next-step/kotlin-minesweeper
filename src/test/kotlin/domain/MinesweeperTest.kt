@@ -14,7 +14,7 @@ class MinesweeperTest {
             { assertThat(minesweeper).hasSize(minesweeperInfo.rowCount) },
             {
                 assertThat(minesweeper).allMatch {
-                    it.value.size == minesweeperInfo.columnCount
+                    it.size == minesweeperInfo.columnCount
                 }
             }
         )

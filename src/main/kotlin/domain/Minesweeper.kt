@@ -12,9 +12,15 @@ class Minesweeper(private val board: List<Row>) : List<Row> by board {
     companion object {
         fun from(minesweeperInfo: MinesweeperInfo): Minesweeper {
             val board = List(minesweeperInfo.rowCount) {
-                Row.from(minesweeperInfo.columnCount)
+                getRow(minesweeperInfo.columnCount)
             }
             return Minesweeper(board)
+        }
+
+        private fun getRow(columnCount: Int): Row {
+            return Row(columnCount) {
+                Cell.Land.ZERO
+            }
         }
 
         fun of(minesweeperInfo: MinesweeperInfo, minePositionsFactory: MinePositionsFactory): Minesweeper {
