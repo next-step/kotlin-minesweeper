@@ -14,9 +14,10 @@ internal class FragmentTest {
     }
 
     @Test
-    fun `지뢰 심기`() {
-        val fragment = Fragment.of(1, 1)
-        fragment.setMine()
+    fun `해당 좌표를 지뢰로 변환`() {
+        var fragment: Fragment = Fragment.of(1, 1)
+        assertThat(fragment.hasMine()).isFalse
+        fragment = fragment.convertToMine()
         assertThat(fragment.hasMine()).isTrue
     }
 }

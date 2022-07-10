@@ -1,16 +1,27 @@
 package game.minesweeper.domain.map
 
-data class Fragment(private val coordinate: Coordinate, private var _hasMine: Boolean = false) {
+open class Fragment(
+    private val coordinate: Coordinate,
+    private var borderMine: Int = 0,
+) {
 
-    fun setMine() {
-        _hasMine = true
+    fun included(coordinates: List<Coordinate>): Boolean = coordinates.contains(coordinate)
+
+    fun countBorderMine(coordinates: List<Coordinate>): Int = coordinates.count { it == coordinate }
+
+    fun increaseBorderMine(count: Int) {
+        borderMine += count
     }
 
-    fun hasMine() = _hasMine
+    fun borderMine(): Int = borderMine
 
-    fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
+    fun convertToMine(): MineFragment {
+        return MineFragment(coordinate, borderMine)
+    }
+
+    open fun hasMine(): Boolean = false
 
     companion object {
-        fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))
+        fun of(x: Int, y: Int): Fragment = Fragment(Coordinate(x, y))
     }
 }

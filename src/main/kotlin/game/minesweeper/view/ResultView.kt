@@ -5,10 +5,11 @@ import game.minesweeper.domain.map.MineMap
 
 object ResultView {
     fun drawMap(mineMap: MineMap) {
-        mineMap.rows().forEach { row ->
-            println(row.fragments().joinToString(separator = " ") { formatFragment(it) })
+        println("지뢰찾기 게임 시작")
+        mineMap.fragments.chunked(mineMap.width()).forEach {
+            println(it.joinToString(separator = " ") { fragment -> formatFragment(fragment) })
         }
     }
 
-    private fun formatFragment(fragment: Fragment) = if (fragment.hasMine()) "X" else "□"
+    private fun formatFragment(fragment: Fragment) = if (fragment.hasMine()) "*" else fragment.borderMine().toString()
 }
