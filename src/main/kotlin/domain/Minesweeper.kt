@@ -18,7 +18,7 @@ value class Minesweeper(private val board: List<Row>) : List<Row> by board {
 
             fun Minesweeper.increaseMineCountOfNearCells(minePosition: CellPosition) {
                 Direction.values().forEach { direction ->
-                    val nearPosition = minePosition.apply(direction)
+                    val nearPosition = minePosition.moveTo(direction)
 
                     if (!nearPosition.isInBoundaryOf(minesweeperInfo)) return@forEach
                     this[nearPosition] = this[nearPosition].increaseMineCount()

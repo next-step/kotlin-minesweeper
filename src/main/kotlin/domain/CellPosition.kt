@@ -4,7 +4,7 @@ data class CellPosition(
     val row: Int,
     val column: Int
 ) {
-    fun apply(direction: Direction): CellPosition {
+    fun moveTo(direction: Direction): CellPosition {
         return CellPosition(
             row = row + direction.diffRow,
             column = column + direction.diffColumn
