@@ -1,5 +1,6 @@
 package domain
 
+import domain.vo.Point
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -42,6 +43,20 @@ internal class BoardTest : FreeSpec({
         val board = Board.of(rows)
 
         board.rows.flatMap { it.cells }.map { board.mineCount(it) } shouldBe listOf(2, 1, 1, 2)
+    }
+
+    "Board 의 범위를 벗어나는 cell 을 요청하면 에러가 발생한다" {
+        val rows = listOf(
+            createRow(createEmpty(1, 1), createMine(2, 1)),
+            createRow(createMine(1, 2), createEmpty(2, 2)),
+        )
+        val board = Board.of(rows)
+
+        val exception = shouldThrow<IllegalArgumentException> {
+            board.getCell(Coordinate(Point(1), Point(3)))
+        }
+
+        exception.message shouldBe "존재하지 않는 cell 입니다"
     }
 
     "open" - {
