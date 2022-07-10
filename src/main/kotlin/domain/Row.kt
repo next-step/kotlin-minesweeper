@@ -1,5 +1,11 @@
 package domain
 
-class Row(cells: List<Cell>) : List<Cell> by cells {
-    constructor(vararg cell: Cell) : this(cell.toList())
+typealias Row = MutableList<Cell>
+
+fun Row(vararg cell: Cell): Row {
+    return cell.toMutableList()
+}
+
+inline fun Row(columnCount: Int, createValue: (Int) -> Cell): Row {
+    return MutableList(columnCount, createValue)
 }

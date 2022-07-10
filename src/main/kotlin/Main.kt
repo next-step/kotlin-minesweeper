@@ -1,6 +1,6 @@
 import controller.MinesweeperController
-import domain.RandomMinesweeperFactory
+import domain.RandomMinePositionsFactory
 
 fun main() {
-    MinesweeperController.startGame(RandomMinesweeperFactory)
+    MinesweeperController.startGame(RandomMinePositionsFactory)
 }
