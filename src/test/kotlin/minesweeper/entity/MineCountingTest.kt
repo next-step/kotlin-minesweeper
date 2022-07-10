@@ -103,7 +103,6 @@ internal class MineCountingTest {
         Assertions.assertThat(result).isEqualTo(expected)
     }
 
-
     fun `네 방향에 지뢰가 네 개 있으면 MapElement FOUR를 리턴한다`() {
         // given
         val mapInformation = MapInformation(3, 3, 4)
