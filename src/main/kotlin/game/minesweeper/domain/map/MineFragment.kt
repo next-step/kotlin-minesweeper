@@ -4,6 +4,5 @@ class MineFragment(
     coordinate: Coordinate,
     borderMine: Int = 0,
 ) : Fragment(coordinate, borderMine) {
-
-    override fun hasMine() = true
+    override fun hasMine(): Boolean = true
 }

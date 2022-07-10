@@ -16,7 +16,7 @@ class MineMap(private val config: MapConfig, val rows: List<Row>) {
 
     companion object {
         private const val START_ROW_NUM = 1
-        fun create(config: MapConfig) = MineMap(
+        fun create(config: MapConfig): MineMap = MineMap(
             config,
             (START_ROW_NUM..config.height)
                 .map { Row.from(it, config.width) }

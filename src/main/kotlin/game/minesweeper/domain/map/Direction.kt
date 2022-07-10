@@ -11,7 +11,7 @@ enum class Direction(private val moveX: Int, private val moveY: Int) {
     TOP_RIGHT(-1, 1),
     ;
 
-    fun from(here: Coordinate) = runCatching {
+    fun from(here: Coordinate): Coordinate? = runCatching {
         Coordinate(here.x + moveX, here.y + moveY)
     }.getOrNull()
 }

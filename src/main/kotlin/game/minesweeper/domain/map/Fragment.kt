@@ -5,23 +5,23 @@ open class Fragment(
     private var borderMine: Int = 0,
 ) {
 
-    fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
+    fun included(coordinates: List<Coordinate>): Boolean = coordinates.contains(coordinate)
 
-    fun count(coordinates: List<Coordinate>) = coordinates.count { it == coordinate }
+    fun count(coordinates: List<Coordinate>): Int = coordinates.count { it == coordinate }
 
     fun increaseBorderMine(count: Int) {
         borderMine += count
     }
 
-    fun borderMine() = borderMine
+    fun borderMine(): Int = borderMine
 
     fun convertToMine(): MineFragment {
         return MineFragment(coordinate, borderMine)
     }
 
-    open fun hasMine() = false
+    open fun hasMine(): Boolean = false
 
     companion object {
-        fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))
+        fun of(x: Int, y: Int): Fragment = Fragment(Coordinate(x, y))
     }
 }
