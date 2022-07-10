@@ -24,15 +24,17 @@ class Board private constructor(val rows: List<Row>) {
             is Empty -> getZeroMineCells(cell).forEach { it.openWithNeighbors() }
         }
 
-        return if (isClear()) GameStatus.WIN
-        else GameStatus.CONTINUE
+        return when (isClear()) {
+            true -> GameStatus.WIN
+            false -> GameStatus.CONTINUE
+        }
     }
 
     private fun getZeroMineCells(cell: Cell, clearCells: MutableList<Cell> = mutableListOf()): List<Cell> {
         cell
             .emptyNeighbors()
             .filter { mineCount(it) == 0 }
-            .filter { !clearCells.contains(it) }
+            .filterNot { clearCells.contains(it) }
             .forEach {
                 clearCells.add(it)
                 getZeroMineCells(it, clearCells)
