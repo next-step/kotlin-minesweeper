@@ -1,14 +1,9 @@
 package game.minesweeper.domain.map
 
-data class Fragment(
+open class Fragment(
     private val coordinate: Coordinate,
     private var borderMine: Int = 0,
-    var hasMine: Boolean = false,
 ) {
-
-    fun setMine() {
-        hasMine = true
-    }
 
     fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
 
@@ -19,6 +14,12 @@ data class Fragment(
     }
 
     fun borderMine() = borderMine
+
+    fun convertToMine(): MineFragment {
+        return MineFragment(coordinate, borderMine)
+    }
+
+    open fun hasMine() = false
 
     companion object {
         fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))

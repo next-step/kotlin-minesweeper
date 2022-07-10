@@ -16,10 +16,10 @@ internal class MineMapTest {
     }
 
     @Test
-    fun `지뢰 매설`() {
+    fun `입력한 좌표의 수 만큼 지뢰를 매설한다`() {
         val config = MapConfig(5, 10)
         val map = MineMap.create(config)
         map.setMines(listOf(Coordinate(1, 2), Coordinate(1, 3), Coordinate(5, 10)))
-        assertThat(map.rows.flatMap { it.fragments }.filter { it.hasMine }).hasSize(3)
+        assertThat(map.rows.flatMap { it.fragments }.filter { it.hasMine() }).hasSize(3)
     }
 }

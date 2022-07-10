@@ -6,7 +6,7 @@ class MineMap(private val config: MapConfig, val rows: List<Row>) {
         coordinates.groupBy { it.x }
             .forEach { rows[it.key - 1].setMines(it.value) }
 
-        val borders = coordinates.flatMap {
+        val borders: List<Coordinate> = coordinates.flatMap {
             it.findBorder(config.height, config.width)
         }
 

@@ -11,5 +11,5 @@ object ResultView {
         }
     }
 
-    private fun formatFragment(fragment: Fragment) = if (fragment.hasMine) "*" else fragment.borderMine().toString()
+    private fun formatFragment(fragment: Fragment) = if (fragment.hasMine()) "*" else fragment.borderMine().toString()
 }

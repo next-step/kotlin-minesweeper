@@ -14,10 +14,10 @@ internal class RowTest {
     }
 
     @Test
-    fun `지뢰 매설`() {
+    fun `입력한 좌표의 수 만큼 지뢰를 매설한다`() {
         val row = Row.from(1, 6)
         row.setMines(listOf(Coordinate(1, 2), Coordinate(1, 3)))
         assertThat(row.fragments).hasSize(6)
-        assertThat(row.fragments.filter { it.hasMine }).hasSize(2)
+        assertThat(row.fragments.filter { it.hasMine() }).hasSize(2)
     }
 }
