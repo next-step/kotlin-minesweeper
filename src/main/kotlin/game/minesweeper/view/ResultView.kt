@@ -6,8 +6,8 @@ import game.minesweeper.domain.map.MineMap
 object ResultView {
     fun drawMap(mineMap: MineMap) {
         println("지뢰찾기 게임 시작")
-        mineMap.rows.forEach { row ->
-            println(row.fragments.joinToString(separator = " ") { formatFragment(it) })
+        mineMap.fragments.chunked(mineMap.width()).forEach {
+            println(it.joinToString(separator = " ") { fragment -> formatFragment(fragment) })
         }
     }
 

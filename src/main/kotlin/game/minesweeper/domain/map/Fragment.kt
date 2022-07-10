@@ -7,7 +7,7 @@ open class Fragment(
 
     fun included(coordinates: List<Coordinate>): Boolean = coordinates.contains(coordinate)
 
-    fun count(coordinates: List<Coordinate>): Int = coordinates.count { it == coordinate }
+    fun countBorderMine(coordinates: List<Coordinate>): Int = coordinates.count { it == coordinate }
 
     fun increaseBorderMine(count: Int) {
         borderMine += count
