@@ -10,37 +10,40 @@ class Minesweeper(private val board: List<Row>) : List<Row> by board {
     }
 
     companion object {
-        fun of(minesweeperInfo: MinesweeperInfo, minePositionsFactory: MinePositionsFactory): Minesweeper {
-            fun Minesweeper.setMine(minePosition: CellPosition) {
-                this[minePosition] = Cell.Mine
-            }
-
-            fun Minesweeper.increaseMineCountOfNearCells(minePosition: CellPosition) {
-                Direction.values().forEach { direction ->
-                    val nearPosition = minePosition.moveTo(direction)
-
-                    if (!nearPosition.isInBoundaryOf(minesweeperInfo)) return@forEach
-                    this[nearPosition] = this[nearPosition].increaseMineCount()
-                }
-            }
-
-            fun Minesweeper.setMines(minePositions: List<CellPosition>) {
-                minePositions.forEach { minePosition ->
-                    setMine(minePosition)
-                    increaseMineCountOfNearCells(minePosition)
-                }
-            }
-
-            return from(minesweeperInfo).apply {
-                setMines(minePositionsFactory.create(minesweeperInfo))
-            }
-        }
-
         fun from(minesweeperInfo: MinesweeperInfo): Minesweeper {
             val board = List(minesweeperInfo.rowCount) {
                 Row.from(minesweeperInfo.columnCount)
             }
             return Minesweeper(board)
+        }
+
+        fun of(minesweeperInfo: MinesweeperInfo, minePositionsFactory: MinePositionsFactory): Minesweeper {
+            return from(minesweeperInfo).apply {
+                setMines(minesweeperInfo, minePositionsFactory.create(minesweeperInfo))
+            }
+        }
+
+        private fun Minesweeper.setMines(minesweeperInfo: MinesweeperInfo, minePositions: List<CellPosition>) {
+            minePositions.forEach { minePosition ->
+                setMine(minePosition)
+                increaseMineCountOfNearCells(minesweeperInfo, minePosition)
+            }
+        }
+
+        private fun Minesweeper.setMine(minePosition: CellPosition) {
+            this[minePosition] = Cell.Mine
+        }
+
+        private fun Minesweeper.increaseMineCountOfNearCells(
+            minesweeperInfo: MinesweeperInfo,
+            minePosition: CellPosition
+        ) {
+            Direction.values().forEach { direction ->
+                val nearPosition = minePosition.moveTo(direction)
+
+                if (!nearPosition.isInBoundaryOf(minesweeperInfo)) return@forEach
+                this[nearPosition] = this[nearPosition].increaseMineCount()
+            }
         }
     }
 }
