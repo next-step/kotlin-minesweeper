@@ -1,16 +1,11 @@
 package domain
 
-@JvmInline
-value class Row(val value: MutableList<Cell>) : MutableList<Cell> by value {
-    constructor(vararg cell: Cell) : this(cell.toMutableList())
+typealias Row = MutableList<Cell>
 
-    companion object {
-        fun from(columnCount: Int): Row {
-            return Row(
-                MutableList(columnCount) {
-                    Cell.Land.ZERO
-                }
-            )
-        }
-    }
+fun Row(vararg cell: Cell): Row {
+    return cell.toMutableList()
+}
+
+inline fun Row(columnCount: Int, createValue: (Int) -> Cell): Row {
+    return MutableList(columnCount, createValue)
 }
