@@ -4,7 +4,7 @@ import domain.vo.Point
 
 sealed class Cell(private val coordinate: Coordinate) {
 
-    private var isOpen = false
+    private var _opened = false
 
     val x: Point
         get() = coordinate.x
@@ -13,10 +13,10 @@ sealed class Cell(private val coordinate: Coordinate) {
         get() = coordinate.y
 
     val opened: Boolean
-        get() = isOpen
+        get() = _opened
 
     fun open() {
-        isOpen = true
+        _opened = true
     }
 
     fun isAdjacentTo(cell: Cell): Boolean = coordinate.isAdjacentTo(cell.coordinate)
