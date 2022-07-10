@@ -53,7 +53,7 @@ internal class BoardTest : FreeSpec({
         val board = Board.of(rows)
 
         val exception = shouldThrow<IllegalArgumentException> {
-            board.getCell(Coordinate(Point(1), Point(3)))
+            board.getCell(createCoordinate(1, 3))
         }
 
         exception.message shouldBe "존재하지 않는 cell 입니다"
@@ -67,7 +67,7 @@ internal class BoardTest : FreeSpec({
             )
             val board = Board.of(rows)
 
-            val status = board.open(board.rows[0].cells[1])
+            val status = board.open(createCoordinate(1, 2))
 
             status shouldBe GameStatus.LOST
         }
@@ -79,8 +79,8 @@ internal class BoardTest : FreeSpec({
             )
             val board = Board.of(rows)
 
-            board.open(board.rows[0].cells[0])
-            val status = board.open(board.rows[1].cells[1])
+            board.open(createCoordinate(1, 1))
+            val status = board.open(createCoordinate(2, 2))
 
             status shouldBe GameStatus.WIN
         }
@@ -92,7 +92,7 @@ internal class BoardTest : FreeSpec({
             )
             val board = Board.of(rows)
 
-            val status = board.open(board.rows[0].cells[0])
+            val status = board.open(createCoordinate(1, 1))
 
             status shouldBe GameStatus.CONTINUE
         }
@@ -106,7 +106,7 @@ internal class BoardTest : FreeSpec({
             )
             val board = Board.of(rows)
 
-            board.open(board.rows[0].cells[0])
+            board.open(createCoordinate(1, 1))
 
             rows
                 .flatMap { it.cells }
@@ -123,3 +123,5 @@ internal class BoardTest : FreeSpec({
         }
     }
 })
+
+fun createCoordinate(x: Int, y: Int): Coordinate = Coordinate(Point(x), Point(y))

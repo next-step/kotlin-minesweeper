@@ -16,7 +16,8 @@ class Board private constructor(val rows: List<Row>) {
     fun mineCount(cell: Cell): Int =
         allCells.count { it.isAdjacentTo(cell) && it is Mine }
 
-    fun open(cell: Cell): GameStatus {
+    fun open(coordinate: Coordinate): GameStatus {
+        val cell = getCell(coordinate)
         cell.open()
 
         when (cell) {

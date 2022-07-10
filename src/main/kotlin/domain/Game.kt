@@ -7,11 +7,7 @@ import domain.vo.Width
 
 class Game private constructor(val board: Board) {
 
-    fun open(coordinate: Coordinate): GameStatus {
-        val cell = board.getCell(coordinate)
-
-        return board.open(cell)
-    }
+    fun open(coordinate: Coordinate): GameStatus = board.open(coordinate)
 
     companion object {
         fun of(width: Width, height: Height, mineCount: MineCount): Game {
