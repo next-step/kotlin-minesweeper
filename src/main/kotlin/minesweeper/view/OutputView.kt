@@ -24,11 +24,11 @@ object OutputView {
             .sortedBy { it }
 
         for (x in heightIndexes) {
-            printMineSweeeperBoardRow2(widthIndexes, zones, originalZones, x)
+            printMineSweeperBoardRow(widthIndexes, zones, originalZones, x)
         }
     }
 
-    private fun printMineSweeeperBoardRow2(
+    private fun printMineSweeperBoardRow(
         ys: Sequence<Int>,
         originalZones: Map<Position, Int>,
         zones: Map<Position, Zone>,
