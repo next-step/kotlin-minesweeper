@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class MineSweeperBoardFactoryKtTest : StringSpec({
     "지뢰찾기 보드를 생성하는 기능" {
@@ -137,6 +138,38 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
 
             // then
             actual shouldBe expected
+        }
+    }
+
+    "게임 결과를 확인한다." {
+        listOf(
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(true),
+                    Position(1, 2) to SafeZone(false),
+                    Position(2, 1) to SafeZone(false),
+                    Position(2, 2) to SafeZone(false),
+                ).let { Zones(it) },
+                MineSweeperResult.WIN,
+            ),
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(false),
+                    Position(1, 2) to SafeZone(false),
+                    Position(2, 1) to SafeZone(true),
+                    Position(2, 2) to SafeZone(true),
+                ).let { Zones(it) },
+                MineSweeperResult.LOSE,
+            ),
+        ).forEach { (zones, expected) ->
+            // given
+            val mineSweeperBoard = MineSweeperBoard(zones)
+
+            // when
+            val actual = mineSweeperBoard.getResult()
+
+            // then
+            actual shouldBeSameInstanceAs expected
         }
     }
 })

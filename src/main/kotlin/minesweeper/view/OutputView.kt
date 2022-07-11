@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.MineSweeperBoard
+import minesweeper.domain.MineSweeperResult
 import minesweeper.domain.MineZone
 import minesweeper.domain.Position
 import minesweeper.domain.SafeZone
@@ -53,5 +54,9 @@ object OutputView {
             is MineZone -> MINE_ZONE_SYMBOL
             is SafeZone -> countOfNearMine.toString()
         }
+    }
+
+    fun printResult(result: MineSweeperResult) {
+        println(result.message)
     }
 }

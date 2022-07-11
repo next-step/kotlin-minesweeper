@@ -18,5 +18,16 @@ value class MineSweeperBoard(
         zones.openAt(position)
     }
 
+    fun getResult(): MineSweeperResult {
+        if (isPlaying) {
+            throw IllegalStateException("지뢰찾기 게임이 진행중입니다.")
+        }
+
+        return when (zones.isAllHiddenMineZone()) {
+            true -> MineSweeperResult.WIN
+            false -> MineSweeperResult.LOSE
+        }
+    }
+
     operator fun get(position: Position): Zone? = zones[position]
 }

@@ -26,6 +26,8 @@ object MineSweeperBoardController {
                 println(e.message)
             }
         }
+
+        OutputView.printResult(mineSweeperBoard.getResult())
     }
 }
 
