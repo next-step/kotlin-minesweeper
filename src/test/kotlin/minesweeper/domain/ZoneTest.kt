@@ -1,8 +1,9 @@
 package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.row
+import io.kotest.matchers.shouldBe
 
 class ZoneTest : StringSpec({
     "해당 칸을 오픈한다." {
@@ -16,14 +17,19 @@ class ZoneTest : StringSpec({
         }
     }
 
-    "이미 open된 칸을 오픈하면 예외를 발생시킨다." {
+    "open할 수 있는 칸인지 확인한다." {
         // given
         listOf(
-            MineZone(false),
-            SafeZone(false),
-        ).forEach {
-            // when // then
-            shouldThrowExactly<IllegalArgumentException> { it.open() }
+            row(MineZone(true), false),
+            row(MineZone(true), false),
+            row(SafeZone(true), true),
+            row(SafeZone(false), false),
+        ).forEach { (zone, expected) ->
+            // when
+            val actual = zone.isOpenable()
+
+            // then
+            actual shouldBe expected
         }
     }
 })

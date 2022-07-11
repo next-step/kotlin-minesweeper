@@ -5,17 +5,31 @@ sealed class Zone(
 ) {
     fun open() {
         if (!isHidden) {
-            throw IllegalArgumentException("이미 open된 칸입니다.")
+            return
         }
 
         isHidden = false
     }
+
+    abstract fun isSafeZone(): Boolean
+
+    abstract fun isMineZone(): Boolean
+
+    fun isOpenable(): Boolean = isSafeZone() && isHidden
 }
 
 class MineZone(
     isHidden: Boolean = true
-) : Zone(isHidden)
+) : Zone(isHidden) {
+    override fun isSafeZone(): Boolean = false
+
+    override fun isMineZone(): Boolean = true
+}
 
 class SafeZone(
     isHidden: Boolean = true
-) : Zone(isHidden)
+) : Zone(isHidden) {
+    override fun isSafeZone(): Boolean = true
+
+    override fun isMineZone(): Boolean = false
+}
