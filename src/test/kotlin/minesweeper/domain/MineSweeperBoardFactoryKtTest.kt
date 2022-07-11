@@ -89,4 +89,54 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
         actual[Position(2, 1)] shouldBe 1
         actual[Position(2, 2)] shouldBe 1
     }
+
+    "지뢰 찾기 보드의 게임 상태를 확인한다." {
+        listOf(
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(true),
+                    Position(1, 2) to SafeZone(true),
+                    Position(2, 1) to SafeZone(true),
+                    Position(2, 2) to SafeZone(true),
+                ),
+                true,
+            ),
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(true),
+                    Position(1, 2) to SafeZone(false),
+                    Position(2, 1) to SafeZone(true),
+                    Position(2, 2) to SafeZone(true),
+                ),
+                true,
+            ),
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(false),
+                    Position(1, 2) to SafeZone(true),
+                    Position(2, 1) to SafeZone(true),
+                    Position(2, 2) to SafeZone(true),
+                ),
+                false,
+            ),
+            row(
+                mapOf(
+                    Position(1, 1) to MineZone(true),
+                    Position(1, 2) to SafeZone(false),
+                    Position(2, 1) to SafeZone(false),
+                    Position(2, 2) to SafeZone(false),
+                ),
+                false,
+            ),
+        ).forEach { (zones, expected) ->
+            // given
+            val mineSweeperBoard = MineSweeperBoard(zones)
+
+            // when
+            val actual = mineSweeperBoard.isPlaying
+
+            // then
+            actual shouldBe expected
+        }
+    }
 })
