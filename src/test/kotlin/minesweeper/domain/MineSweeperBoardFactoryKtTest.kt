@@ -15,13 +15,13 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
         val countOfMine = 1
 
         val mockGeneratorStrategy: MineGeneratorStrategy = object : MineGeneratorStrategy {
-            override fun execute(width: Int, height: Int, countOfMine: Int): Map<Position, Zone> {
+            override fun execute(width: Int, height: Int, countOfMine: Int): Zones {
                 return mapOf(
                     Position(1, 1) to MineZone(),
                     Position(1, 2) to SafeZone(),
                     Position(2, 1) to SafeZone(),
                     Position(2, 2) to SafeZone(),
-                )
+                ).let { Zones(it) }
             }
         }
 
@@ -63,13 +63,13 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
     "지뢰 찾기 보드판의 보드의 주변 지뢰 갯수를 오픈한다. " {
         // given
         val mockMineGeneratorStrategy = object : MineGeneratorStrategy {
-            override fun execute(width: Int, height: Int, countOfMine: Int): Map<Position, Zone> {
+            override fun execute(width: Int, height: Int, countOfMine: Int): Zones {
                 return mapOf(
                     Position(1, 1) to MineZone(),
                     Position(1, 2) to SafeZone(),
                     Position(2, 1) to SafeZone(),
                     Position(2, 2) to SafeZone(),
-                )
+                ).let { Zones(it) }
             }
         }
 
@@ -98,7 +98,7 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
                     Position(1, 2) to SafeZone(true),
                     Position(2, 1) to SafeZone(true),
                     Position(2, 2) to SafeZone(true),
-                ),
+                ).let { Zones(it) },
                 true,
             ),
             row(
@@ -107,7 +107,7 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
                     Position(1, 2) to SafeZone(false),
                     Position(2, 1) to SafeZone(true),
                     Position(2, 2) to SafeZone(true),
-                ),
+                ).let { Zones(it) },
                 true,
             ),
             row(
@@ -116,7 +116,7 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
                     Position(1, 2) to SafeZone(true),
                     Position(2, 1) to SafeZone(true),
                     Position(2, 2) to SafeZone(true),
-                ),
+                ).let { Zones(it) },
                 false,
             ),
             row(
@@ -125,7 +125,7 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
                     Position(1, 2) to SafeZone(false),
                     Position(2, 1) to SafeZone(false),
                     Position(2, 2) to SafeZone(false),
-                ),
+                ).let { Zones(it) },
                 false,
             ),
         ).forEach { (zones, expected) ->
@@ -138,20 +138,5 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
             // then
             actual shouldBe expected
         }
-    }
-
-    "지뢰찾기 판에 존재하지 않는 칸을 open하면 예외를 발생시킨다." {
-        // given
-        val mineSweeperBoard = MineSweeperBoard(
-            mapOf(
-                Position(1, 1) to MineZone(true),
-                Position(1, 2) to SafeZone(true),
-                Position(2, 1) to SafeZone(true),
-                Position(2, 2) to SafeZone(true),
-            ),
-        )
-
-        // when // then
-        shouldThrowExactly<IllegalArgumentException> { mineSweeperBoard.openAt(Position(3, 1)) }
     }
 })

@@ -16,7 +16,7 @@ object OutputView {
     }
 
     fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
-        val originalZones = mineSweeperBoard.zones
+        val originalZones = mineSweeperBoard.zones.values
         val zones = mineSweeperBoard.openAllZone()
         val heightIndexes = zones.keys.asSequence()
             .map { it.x }
