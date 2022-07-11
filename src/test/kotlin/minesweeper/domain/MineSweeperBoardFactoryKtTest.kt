@@ -139,4 +139,19 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
             actual shouldBe expected
         }
     }
+
+    "지뢰찾기 판에 존재하지 않는 칸을 open하면 예외를 발생시킨다." {
+        // given
+        val mineSweeperBoard = MineSweeperBoard(
+            mapOf(
+                Position(1, 1) to MineZone(true),
+                Position(1, 2) to SafeZone(true),
+                Position(2, 1) to SafeZone(true),
+                Position(2, 2) to SafeZone(true),
+            ),
+        )
+
+        // when // then
+        shouldThrowExactly<IllegalArgumentException> { mineSweeperBoard.openAt(Position(3, 1)) }
+    }
 })

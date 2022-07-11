@@ -10,8 +10,12 @@ object OutputView {
     private const val MINE_ZONE_SYMBOL = "*"
     private const val HIDDEN_SYMBOL = "C"
 
-    fun printAllOpenMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
+    fun printInitMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         println("지뢰찾기 게임 시작")
+        printCurrentMineSweeperBoard(mineSweeperBoard)
+    }
+
+    fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         val originalZones = mineSweeperBoard.zones
         val zones = mineSweeperBoard.openAllZone()
         val heightIndexes = zones.keys.asSequence()
@@ -35,7 +39,7 @@ object OutputView {
         x: Int
     ) {
         for (y in ys) {
-            print("${mapToMineZoneOrSafeZone(zones[Position(x, y)]!!, originalZones[Position(x,y)]!!)} ")
+            print("${mapToMineZoneOrSafeZone(zones[Position(x, y)]!!, originalZones[Position(x, y)]!!)} ")
         }
         println()
     }

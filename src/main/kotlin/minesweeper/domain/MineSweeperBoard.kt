@@ -27,4 +27,9 @@ value class MineSweeperBoard(
             .filterIsInstance<SafeZone>()
             .any { it.isHidden }
     }
+
+    fun openAt(position: Position) {
+        val selectedZone = zones[position] ?: throw IllegalArgumentException("존재하지 않는 칸입니다. 선택한 위치 = $position")
+        selectedZone.open()
+    }
 }
