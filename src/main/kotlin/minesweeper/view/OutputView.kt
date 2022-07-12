@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.domain.MineBoard
+import minesweeper.domain.MineSweeperResult
 import minesweeper.domain.cell.Dot
 import minesweeper.domain.cell.Land
 import minesweeper.domain.cell.Mine
@@ -7,10 +9,14 @@ import minesweeper.dto.MineBoardMatrix
 import minesweeper.dto.Row
 
 class OutputView {
+    fun printStartGame() {
+        println("지뢰찾기 게임 시작")
+    }
+
     fun printMineBoard(matrix: MineBoardMatrix) {
         println()
-        println("지뢰찾기 게임 시작")
         matrix.rows.forEach { printMineBoardRow(it) }
+        println()
     }
 
     private fun printMineBoardRow(row: Row) {
@@ -18,7 +24,14 @@ class OutputView {
     }
 
     private fun convertToSign(dot: Dot): String = when (dot) {
-        is Mine -> "*"
-        is Land -> dot.mineCount.value.toString()
+        is Mine -> if (dot.isHidden) "C" else "*"
+        is Land -> if (dot.isHidden) "C" else dot.mineCount.value.toString()
+    }
+
+    fun printGameResult(mineBoard: MineBoard) {
+        when (MineSweeperResult.isWin(mineBoard)) {
+            true -> println("Win Game!")
+            false -> println("Lose Game.")
+        }
     }
 }

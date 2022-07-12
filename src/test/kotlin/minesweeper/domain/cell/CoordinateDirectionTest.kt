@@ -16,6 +16,6 @@ internal class CoordinateDirectionTest : FreeSpec({
         )
 
         // when, then
-        CoordinateDirection.aroundCoordinates(coordinate = coordinate) shouldContainExactlyInAnyOrder aroundCoordinates
+        CoordinateDirection.around(coordinate = coordinate) shouldContainExactlyInAnyOrder aroundCoordinates
     }
 })

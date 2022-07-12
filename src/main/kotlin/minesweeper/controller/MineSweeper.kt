@@ -22,6 +22,13 @@ class MineSweeper(
             mineCount = mineCount,
         )
 
-        outputView.printMineBoard(MineBoardMatrix.from(mineBoard = mineBoard, width = width))
+        outputView.printStartGame()
+
+        while (mineBoard.remainHiddenLands() && mineBoard.nonExistOpenedMine()) {
+            mineBoard.open(inputView.inputCoordinate())
+            outputView.printMineBoard(MineBoardMatrix.from(mineBoard = mineBoard, width = width))
+        }
+
+        outputView.printGameResult(mineBoard)
     }
 }

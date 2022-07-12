@@ -4,6 +4,8 @@ import minesweeper.domain.MineBoardLength
 import minesweeper.domain.MineCount
 import minesweeper.domain.cell.Coordinate
 import minesweeper.domain.cell.CoordinateValue
+import minesweeper.domain.cell.DotStatus
+import minesweeper.domain.cell.Land
 
 fun Coordinate(
     x: Int,
@@ -11,6 +13,14 @@ fun Coordinate(
 ): Coordinate = Coordinate(
     x = CoordinateValue(value = x),
     y = CoordinateValue(value = y)
+)
+
+fun Land(
+    mineCount: Int,
+    status: DotStatus = DotStatus.HIDDEN,
+): Land = Land(
+    mineCount = MineCount(value = mineCount),
+    status = status
 )
 
 object Coordinates {
