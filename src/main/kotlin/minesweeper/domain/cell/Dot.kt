@@ -4,25 +4,37 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.cell.DotStatus.*
 
 sealed interface Dot {
-    var status: DotStatus
+    val status: DotStatus
 
     val isHidden: Boolean
         get() = status == HIDDEN
 
-    fun open() {
-        require(status == HIDDEN) { "이미 오픈된 영역 입니다." }
-        status = OPEN
-    }
+    fun open(): Dot
 }
 
 data class Land(
     val mineCount: MineCount,
-    override var status: DotStatus = HIDDEN
-) : Dot
+    override val status: DotStatus = HIDDEN
+) : Dot {
+    override fun open(): Dot {
+        require(status == HIDDEN) { "이미 오픈된 영역 입니다." }
+        return Land(
+            mineCount = mineCount,
+            status = OPEN
+        )
+    }
+}
 
 data class Mine(
-    override var status: DotStatus = HIDDEN
-) : Dot
+    override val status: DotStatus = HIDDEN
+) : Dot {
+    override fun open(): Dot {
+        require(status == HIDDEN) { "이미 오픈된 영역 입니다." }
+        return Mine(
+            status = OPEN
+        )
+    }
+}
 
 enum class DotStatus {
     OPEN,

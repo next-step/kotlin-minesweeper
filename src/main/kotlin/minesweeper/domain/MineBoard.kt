@@ -3,32 +3,37 @@ package minesweeper.domain
 import minesweeper.domain.cell.*
 
 class MineBoard(
-    val cells: Map<Coordinate, Dot>,
+    cells: Map<Coordinate, Dot>
 ) {
+    private val _cells: MutableMap<Coordinate, Dot> = cells.toMutableMap()
+    val cells: Map<Coordinate, Dot>
+        get() = _cells
+
     init {
         require(cells.isNotEmpty()) { "지뢰판은 빌 수 없습니다." }
     }
 
     fun open(coordinate: Coordinate): Dot {
-        val dot = cells[coordinate] ?: throw IllegalArgumentException("해당 좌표는 존재하지 않습니다.")
+        val dot = _cells[coordinate] ?: throw IllegalArgumentException("해당 좌표는 존재하지 않습니다.")
 
         return when (dot) {
-            is Land -> dot.apply {
-                dot.open()
+            is Land -> {
+                _cells[coordinate] = dot.open()
                 CoordinateDirection.around(coordinate).forEach(::openAround)
+                _cells[coordinate]!!
             }
             is Mine -> {
-                dot.open()
-                dot
+                _cells[coordinate] = dot.open()
+                _cells[coordinate]!!
             }
         }
     }
 
     private fun openAround(coordinate: Coordinate) {
-        val dot = cells[coordinate] ?: return
+        val dot = _cells[coordinate] ?: return
 
         if (dot is Land && dot.isHidden) {
-            dot.open()
+            _cells[coordinate] = dot.open()
             CoordinateDirection.around(coordinate).forEach(::openAround)
         }
     }
