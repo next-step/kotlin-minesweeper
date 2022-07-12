@@ -16,10 +16,11 @@ class MineBoard(
     fun open(coordinate: Coordinate): Dot {
         val dot = _cells[coordinate] ?: throw IllegalArgumentException("해당 좌표는 존재하지 않습니다.")
 
+        require(dot.isHidden) { "이미 오픈된 영역 입니다." }
+
         return when (dot) {
             is Land -> {
-                _cells[coordinate] = dot.open()
-                CoordinateDirection.around(coordinate).forEach(::openAround)
+                openAround(coordinate)
                 _cells[coordinate]!!
             }
             is Mine -> {
@@ -32,9 +33,12 @@ class MineBoard(
     private fun openAround(coordinate: Coordinate) {
         val dot = _cells[coordinate] ?: return
 
-        if (dot is Land && dot.isHidden) {
-            _cells[coordinate] = dot.open()
-            CoordinateDirection.around(coordinate).forEach(::openAround)
+        _cells[coordinate] = dot.open()
+
+        if (dot.isZeroMineLand()) {
+            CoordinateDirection.around(coordinate)
+                .filter { _cells[it]?.isHidden ?: false }
+                .forEach(::openAround)
         }
     }
 
