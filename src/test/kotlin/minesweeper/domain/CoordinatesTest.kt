@@ -22,7 +22,7 @@ internal class CoordinatesTest : FreeSpec({
         val coordinates = Coordinates.from(3, 3)
 
         // when
-        val cells = coordinates.randomBuryMine(MineCount(2))
+        val cells = coordinates.buryMinesRandomly(MineCount(2))
 
         // then
         cells.count { it.value == Mine() } shouldBe 2
@@ -31,7 +31,13 @@ internal class CoordinatesTest : FreeSpec({
     "지뢰 개수가 좌표수보다 많은 경우 예외가 발생한다." {
         val coordinates = Coordinates.from(3, 3)
         val exception =
-            shouldThrowExactly<IllegalArgumentException> { coordinates.randomBuryMine(MineCount(10)) }
+            shouldThrowExactly<IllegalArgumentException> {
+                coordinates.buryMinesRandomly(
+                    MineCount(
+                        10
+                    )
+                )
+            }
         exception.message shouldBe "좌표 개수보다 지뢰 개수가 많을 수 없습니다."
     }
 })

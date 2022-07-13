@@ -54,7 +54,7 @@ class MineBoard(
             mineCount: MineCount,
         ): MineBoard {
             val coordinates = Coordinates.from(height = height, width = width)
-            val cells = coordinates.randomBuryMine(count = mineCount)
+            val cells = coordinates.buryMinesRandomly(count = mineCount)
             return MineBoard(cells = cells)
         }
     }

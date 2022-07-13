@@ -6,7 +6,7 @@ import minesweeper.dto.MineCount
 class Coordinates(
     val values: List<Coordinate>,
 ) {
-    fun randomBuryMine(count: MineCount): Map<Coordinate, Dot> {
+    fun buryMinesRandomly(count: MineCount): Map<Coordinate, Dot> {
         val mineCoordinates = shuffleAndTake(count.value)
         return mineAt(mineCoordinates)
     }
