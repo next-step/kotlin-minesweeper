@@ -1,5 +1,7 @@
 package minesweeper
 
-fun main() {
+import minesweeper.controller.MineSweeper
 
+fun main() {
+    MineSweeper().execute()
 }
