@@ -1,7 +1,7 @@
 package minesweeper.view
 
-import minesweeper.domain.cell.Coordinate
-import minesweeper.domain.cell.CoordinateValue
+import minesweeper.domain.Coordinate
+import minesweeper.domain.CoordinateValue
 
 class InputView {
     fun inputHeight(): Int {

@@ -1,6 +1,7 @@
 package minesweeper.domain
 
-import minesweeper.domain.cell.*
+import minesweeper.dto.MineBoardLength
+import minesweeper.dto.MineCount
 
 class MineBoard(
     cells: Map<Coordinate, Dot>
@@ -21,11 +22,11 @@ class MineBoard(
         return when (dot) {
             is Land -> {
                 openAround(coordinate)
-                _cells[coordinate]!!
+                _cells.getValue(coordinate)
             }
             is Mine -> {
                 _cells[coordinate] = dot.open()
-                _cells[coordinate]!!
+                _cells.getValue(coordinate)
             }
         }
     }
@@ -53,7 +54,7 @@ class MineBoard(
             mineCount: MineCount,
         ): MineBoard {
             val coordinates = Coordinates.from(height = height, width = width)
-            val cells = coordinates.randomMine(count = mineCount)
+            val cells = coordinates.buryMinesRandomly(count = mineCount)
             return MineBoard(cells = cells)
         }
     }

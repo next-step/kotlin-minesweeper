@@ -1,9 +1,9 @@
 package minesweeper.controller
 
 import minesweeper.domain.MineBoard
-import minesweeper.domain.MineBoardLength
-import minesweeper.domain.MineCount
+import minesweeper.dto.MineBoardLength
 import minesweeper.dto.MineBoardMatrix
+import minesweeper.dto.MineCount
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 

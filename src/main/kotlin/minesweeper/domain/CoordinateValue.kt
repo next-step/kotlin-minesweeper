@@ -1,4 +1,4 @@
-package minesweeper.domain.cell
+package minesweeper.domain
 
 @JvmInline
 value class CoordinateValue(

@@ -8,26 +8,24 @@ import io.kotest.matchers.shouldBe
 import minesweeper.Coordinate
 import minesweeper.Land
 import minesweeper.MineBoard
-import minesweeper.domain.cell.DotStatus
-import minesweeper.domain.cell.Mine
 
 internal class MineBoardTest : FreeSpec({
 
-    "지뢰판의 셀이 비어있을 경우 예외가 발생한다." {
+    "높이, 너비, 지뢰 개수를 입력 받아 지뢰판을 만들 수 있다." {
+        val mineBoard = MineBoard.create(
+            height = 10,
+            width = 10,
+            mineCount = 10
+        )
+
+        mineBoard.cells.shouldHaveSize(100)
+        mineBoard.cells.count { it.value == Mine() } shouldBe 10
+    }
+
+    "지뢰판의 좌표 목록이 비어있을 경우 예외가 발생한다." {
         val exception =
             shouldThrowExactly<IllegalArgumentException> { MineBoard(emptyMap()) }
         exception.message shouldBe "지뢰판은 빌 수 없습니다."
-    }
-
-    "높이, 너비, 지뢰 개수를 입력 받아 지뢰판을 만들 수 있다." {
-        val mineBoard = MineBoard.create(
-            height = 5,
-            width = 5,
-            mineCount = 5
-        )
-
-        mineBoard.cells.shouldHaveSize(25)
-        mineBoard.cells.count { it.value == Mine() } shouldBe 5
     }
 
     "좌표를 입력받아 지뢰 유무를 확인 할수 있다." - {
@@ -50,12 +48,10 @@ internal class MineBoardTest : FreeSpec({
             mineBoard.open(Coordinate(1, 1)) shouldBe Land(1, status = DotStatus.OPEN)
         }
 
-        "이미 확인한(OPEN된) 좌표를 입력하면 예외가 발생한다." {
-            shouldThrowExactly<IllegalArgumentException> { mineBoard.open(Coordinate(1, 1)) }
-        }
-
         "지뢰판 바깥의 좌표를 입력하면 예외가 발생한다." {
-            shouldThrowExactly<IllegalArgumentException> { mineBoard.open(Coordinate(9, 9)) }
+            val exception =
+                shouldThrowExactly<IllegalArgumentException> { mineBoard.open(Coordinate(9, 9)) }
+            exception.message shouldBe "해당 좌표는 존재하지 않습니다."
         }
     }
 
@@ -74,9 +70,30 @@ internal class MineBoardTest : FreeSpec({
 
         val mineBoard = MineBoard(cells = cells)
 
-        mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.HIDDEN
+        mineBoard.cells.getValue(Coordinate(2, 2)).status shouldBe DotStatus.HIDDEN
         mineBoard.open(Coordinate(2, 2)) shouldBe Land(0, status = DotStatus.OPEN)
-        mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.OPEN
+        mineBoard.cells.getValue(Coordinate(2, 2)).status shouldBe DotStatus.OPEN
+    }
+
+    "이미 확인한(OPEN된) 좌표를 입력하면 예외가 발생한다." {
+        val cells = mapOf(
+            Pair(Coordinate(0, 0), Mine()),
+            Pair(Coordinate(0, 1), Land(1)),
+            Pair(Coordinate(0, 2), Land(0)),
+            Pair(Coordinate(1, 0), Land(1)),
+            Pair(Coordinate(1, 1), Land(1)),
+            Pair(Coordinate(1, 2), Land(0)),
+            Pair(Coordinate(2, 0), Land(0)),
+            Pair(Coordinate(2, 1), Land(0)),
+            Pair(Coordinate(2, 2), Land(0)),
+        )
+
+        val mineBoard = MineBoard(cells = cells)
+        mineBoard.open(Coordinate(1, 1))
+
+        val exception =
+            shouldThrowExactly<IllegalArgumentException> { mineBoard.open(Coordinate(1, 1)) }
+        exception.message shouldBe "이미 오픈된 영역 입니다."
     }
 
     "입력 받은 좌표가 지뢰가 아닌경우 인접한 NonMine 필드가 모두 공개된다. " {

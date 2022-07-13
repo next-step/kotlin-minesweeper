@@ -1,4 +1,4 @@
-package minesweeper.domain.cell
+package minesweeper.domain
 
 enum class CoordinateDirection(
     val x: CoordinateValue,

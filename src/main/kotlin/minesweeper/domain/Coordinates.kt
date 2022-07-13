@@ -1,12 +1,12 @@
-package minesweeper.domain.cell
+package minesweeper.domain
 
-import minesweeper.domain.MineBoardLength
-import minesweeper.domain.MineCount
+import minesweeper.dto.MineBoardLength
+import minesweeper.dto.MineCount
 
 class Coordinates(
     val values: List<Coordinate>,
 ) {
-    fun randomMine(count: MineCount): Map<Coordinate, Dot> {
+    fun buryMinesRandomly(count: MineCount): Map<Coordinate, Dot> {
         val mineCoordinates = shuffleAndTake(count.value)
         return mineAt(mineCoordinates)
     }

@@ -1,8 +1,6 @@
 package minesweeper.dto
 
 import minesweeper.domain.MineBoard
-import minesweeper.domain.MineBoardLength
-import minesweeper.domain.cell.Dot
 
 data class MineBoardMatrix(
     val rows: List<Row>,
@@ -18,7 +16,3 @@ data class MineBoardMatrix(
         )
     }
 }
-
-data class Row(
-    val dots: List<Dot>,
-)

@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.dto
 
 @JvmInline
 value class MineBoardLength(
