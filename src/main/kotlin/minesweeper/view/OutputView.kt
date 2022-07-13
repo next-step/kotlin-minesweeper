@@ -1,6 +1,10 @@
 package minesweeper.view
 
-import minesweeper.domain.*
+import minesweeper.domain.Dot
+import minesweeper.domain.Land
+import minesweeper.domain.Mine
+import minesweeper.domain.MineBoard
+import minesweeper.domain.MineSweeperResult
 import minesweeper.dto.MineBoardMatrix
 import minesweeper.dto.Row
 
