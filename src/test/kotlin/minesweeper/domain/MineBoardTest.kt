@@ -70,9 +70,9 @@ internal class MineBoardTest : FreeSpec({
 
         val mineBoard = MineBoard(cells = cells)
 
-        mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.HIDDEN
+        mineBoard.cells.getValue(Coordinate(2, 2)).status shouldBe DotStatus.HIDDEN
         mineBoard.open(Coordinate(2, 2)) shouldBe Land(0, status = DotStatus.OPEN)
-        mineBoard.cells[Coordinate(2, 2)]!!.status shouldBe DotStatus.OPEN
+        mineBoard.cells.getValue(Coordinate(2, 2)).status shouldBe DotStatus.OPEN
     }
 
     "이미 확인한(OPEN된) 좌표를 입력하면 예외가 발생한다." {

@@ -22,11 +22,11 @@ class MineBoard(
         return when (dot) {
             is Land -> {
                 openAround(coordinate)
-                _cells[coordinate]!!
+                _cells.getValue(coordinate)
             }
             is Mine -> {
                 _cells[coordinate] = dot.open()
-                _cells[coordinate]!!
+                _cells.getValue(coordinate)
             }
         }
     }
