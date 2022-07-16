@@ -14,16 +14,15 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
         val height = 2
         val width = 2
         val countOfMine = 1
-
-        val mockGeneratorStrategy: MineGeneratorStrategy = object : MineGeneratorStrategy {
-            override fun execute(width: Int, height: Int, countOfMine: Int): Zones {
-                return mapOf(
+        val mockGeneratorStrategy = MineGeneratorStrategy { _, _, _ ->
+            Zones(
+                mapOf(
                     Position(1, 1) to MineZone(),
                     Position(1, 2) to SafeZone(),
                     Position(2, 1) to SafeZone(),
                     Position(2, 2) to SafeZone(),
-                ).let { Zones(it) }
-            }
+                )
+            )
         }
 
         // when
@@ -63,15 +62,13 @@ class MineSweeperBoardFactoryKtTest : StringSpec({
 
     "지뢰 찾기 보드판의 보드의 주변 지뢰 갯수를 오픈한다. " {
         // given
-        val mockMineGeneratorStrategy = object : MineGeneratorStrategy {
-            override fun execute(width: Int, height: Int, countOfMine: Int): Zones {
-                return mapOf(
-                    Position(1, 1) to MineZone(),
-                    Position(1, 2) to SafeZone(),
-                    Position(2, 1) to SafeZone(),
-                    Position(2, 2) to SafeZone(),
-                ).let { Zones(it) }
-            }
+        val mockMineGeneratorStrategy = MineGeneratorStrategy { _, _, _ ->
+            mapOf(
+                Position(1, 1) to MineZone(),
+                Position(1, 2) to SafeZone(),
+                Position(2, 1) to SafeZone(),
+                Position(2, 2) to SafeZone(),
+            ).let { Zones(it) }
         }
 
         val mineSweeperBoard = factory {

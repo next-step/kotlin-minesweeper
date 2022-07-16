@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-interface MineGeneratorStrategy {
+fun interface MineGeneratorStrategy {
     fun execute(width: Int, height: Int, countOfMine: Int): Zones
 }
 
