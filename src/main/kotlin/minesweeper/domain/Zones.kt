@@ -4,17 +4,17 @@ private const val NOT_NEARBY_HAVE_MINE = 0
 
 @JvmInline
 value class Zones(
-    val values: Map<Position, Zone>,
+    val zones: Map<Position, Zone>,
 ) {
     val size: Int
-        get() = values.size
+        get() = zones.size
 
     fun openAllZone(): Map<Position, Int> {
-        return values.keys.associateWith { countNearMines(it) }
+        return zones.keys.associateWith { countNearMines(it) }
     }
 
     fun openAt(position: Position) {
-        val selectedZone = values[position] ?: throw IllegalArgumentException("존재하지 않는 칸입니다. 선택한 위치 = $position")
+        val selectedZone = zones[position] ?: throw IllegalArgumentException("존재하지 않는 칸입니다. 선택한 위치 = $position")
         selectedZone.open()
         if (selectedZone.isMineZone()) {
             return
@@ -28,29 +28,29 @@ value class Zones(
     private fun openNearbyPositions(position: Position) {
         position.getNearPositions()
             .asSequence()
-            .filter { values.containsKey(it) }
-            .filter { values[it]!!.isOpenable() }
+            .filter { zones.containsKey(it) }
+            .filter { zones[it]!!.isOpenable() }
             .forEach { openAt(it) }
     }
 
     private fun countNearMines(position: Position): Int {
         return position.getNearPositions()
-            .count { values[it] is MineZone }
+            .count { zones[it] is MineZone }
     }
 
     fun isAllHiddenMineZone(): Boolean {
-        return values.values.asSequence()
+        return zones.values.asSequence()
             .filterIsInstance<MineZone>()
             .all { it.isHidden }
     }
 
     fun isAnyHiddenSafeZone(): Boolean {
-        return values.values.asSequence()
+        return zones.values.asSequence()
             .filterIsInstance<SafeZone>()
             .any { it.isHidden }
     }
 
     operator fun get(position: Position): Zone? {
-        return values[position]
+        return zones[position]
     }
 }
