@@ -28,8 +28,7 @@ value class Zones(
     private fun openNearbyPositions(position: Position) {
         position.getNearPositions()
             .asSequence()
-            .filter { zones.containsKey(it) }
-            .filter { zones[it]!!.isOpenable() }
+            .filter { zones.containsKey(it) && zones[it]!!.isOpenable() }
             .forEach { openAt(it) }
     }
 
