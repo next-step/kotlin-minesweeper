@@ -19,28 +19,28 @@ object OutputView {
     fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         val originalZones = mineSweeperBoard.zones.zones
         val zones = mineSweeperBoard.openAllZone()
-        val heightIndexes = zones.keys.asSequence()
+        val rowLength = zones.keys.asSequence()
             .map { it.x }
             .distinctBy { it }
             .sortedBy { it }
-        val widthIndexes = zones.keys.asSequence()
+        val columnLength = zones.keys.asSequence()
             .map { it.y }
             .distinctBy { it }
             .sortedBy { it }
 
-        for (x in heightIndexes) {
-            printMineSweeperBoardRow(widthIndexes, zones, originalZones, x)
+        for (row in rowLength) {
+            printMineSweeperBoardRow(columnLength, zones, originalZones, row)
         }
     }
 
     private fun printMineSweeperBoardRow(
-        ys: Sequence<Int>,
+        columnLength: Sequence<Int>,
         originalZones: Map<Position, Int>,
         zones: Map<Position, Zone>,
-        x: Int
+        row: Int
     ) {
-        for (y in ys) {
-            print("${mapToMineZoneOrSafeZone(zones[Position(x, y)]!!, originalZones[Position(x, y)]!!)} ")
+        for (column in columnLength) {
+            print("${mapToMineZoneOrSafeZone(zones[Position(row, column)]!!, originalZones[Position(row, column)]!!)} ")
         }
         println()
     }
