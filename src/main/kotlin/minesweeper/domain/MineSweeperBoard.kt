@@ -28,6 +28,4 @@ value class MineSweeperBoard(
             false -> MineSweeperResult.LOSE
         }
     }
-
-    operator fun get(position: Position): Zone? = zones[position]
 }
