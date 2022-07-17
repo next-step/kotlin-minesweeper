@@ -20,7 +20,7 @@ object ConsoleInputView : InputView {
     override fun inputOpenCellPosition(): CellPosition {
         print("open: ")
 
-        val (y, x) = readln().split(CELL_POSITION_DELIMITER)
+        val (x, y) = readln().split(CELL_POSITION_DELIMITER)
         return CellPosition.of(x.trim().toInt(), y.trim().toInt())
     }
 }

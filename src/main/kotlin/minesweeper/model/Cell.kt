@@ -1,39 +1,70 @@
 package minesweeper.model
 
-data class Cell(
-    private val type: CellType,
+abstract class Cell(
     val position: CellPosition,
-    var isOpened: Boolean = false,
 ) {
+
+    val isOpenedMine: Boolean
+        get() = isMine && isOpened
+
+    abstract val isOpened: Boolean
+
+    abstract val isMine: Boolean
+
+    fun isMineAndIn(positions: Set<CellPosition>): Boolean = isMine && isIn(positions)
+
+    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && isIn(positions)
 
     fun findSurroundingMineCountSum(board: MineBoard): Int {
         val surroundingPositions = position.findSurroundingCellPositions()
         return board.sumOfMineCountIn(surroundingPositions)
     }
 
-    fun openMeAndSurroundingNonMineCells(board: MineBoard) {
-        isOpened = true
+    private fun isIn(positions: Collection<CellPosition>): Boolean = positions.contains(position)
 
-        val surroundingPositions = position.findSurroundingCellPositions()
-        if (board.sumOfMineCountIn(surroundingPositions) > 0) {
-            return
-        }
+    abstract fun open(): Cell
+}
 
-        val surroundingClosedNonMineCells = board.findClosedCellsIn(surroundingPositions)
-        surroundingClosedNonMineCells.forEach { it.openMeAndSurroundingNonMineCells(board) }
-    }
+class ClosedMine(
+    position: CellPosition,
+) : Cell(position) {
 
-    fun isMineIn(positions: Set<CellPosition>): Boolean = isMine() && positions.contains(position)
+    override val isOpened: Boolean = false
 
-    fun isMine(): Boolean = type.isMine()
+    override val isMine: Boolean = true
 
-    fun isMineAndOpened(): Boolean = isMine() && isOpened
+    override fun open(): Cell = OpenedMine(position)
+}
 
-    fun isClosedAndIn(positions: Set<CellPosition>): Boolean = !isOpened && positions.contains(position)
+class ClosedNonMine(
+    position: CellPosition,
+) : Cell(position) {
 
-    companion object {
-        fun mine(position: CellPosition): Cell = Cell(CellType.MINE, position)
+    override val isOpened: Boolean = false
 
-        fun nonMine(position: CellPosition): Cell = Cell(CellType.NON_MINE, position)
-    }
+    override val isMine: Boolean = false
+
+    override fun open(): Cell = OpenedNonMine(position)
+}
+
+class OpenedMine(
+    position: CellPosition,
+) : Cell(position) {
+
+    override val isOpened: Boolean = true
+
+    override val isMine: Boolean = true
+
+    override fun open(): Cell = this
+}
+
+class OpenedNonMine(
+    position: CellPosition,
+) : Cell(position) {
+
+    override val isOpened: Boolean = true
+
+    override val isMine: Boolean = false
+
+    override fun open(): Cell = this
 }

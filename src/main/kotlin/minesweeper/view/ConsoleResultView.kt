@@ -1,6 +1,7 @@
 package minesweeper.view
 
-import minesweeper.dto.GameResultDto
+import minesweeper.dto.MineBoardDto
+import minesweeper.model.GameStatus
 
 object ConsoleResultView : ResultView {
     private const val ROW_SEPARATOR = "\n"
@@ -10,7 +11,7 @@ object ConsoleResultView : ResultView {
         println("\n지뢰찾기 게임 시작")
     }
 
-    override fun printMineBoard(gameResult: GameResultDto) {
+    override fun printMineBoard(gameResult: MineBoardDto) {
         val boardView = gameResult.boardRows
             .joinToString(ROW_SEPARATOR) { it.boardRow.joinToString(CELL_SEPARATOR) }
 
@@ -18,13 +19,13 @@ object ConsoleResultView : ResultView {
         println()
     }
 
-    override fun printMinesweeperGameResult(gameResult: GameResultDto) {
-        if (gameResult.lost) {
+    override fun printMinesweeperGameStatus(gameStatus: GameStatus) {
+        if (gameStatus.lost) {
             println("Lost Game.")
             return
         }
 
-        if (gameResult.win) {
+        if (gameStatus.win) {
             println("Win Game.")
         }
     }

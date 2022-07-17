@@ -13,9 +13,9 @@ class GameStatusTest {
         // given, when, then
         assertAll(
             "determining whether object is ONGOING",
-            { assertThat(GameStatus.ONGOING.isOngoing()).isTrue },
-            { assertThat(GameStatus.WIN.isOngoing()).isFalse },
-            { assertThat(GameStatus.LOST.isOngoing()).isFalse },
+            { assertThat(GameStatus.ONGOING.isOngoing).isTrue },
+            { assertThat(GameStatus.WIN.isOngoing).isFalse },
+            { assertThat(GameStatus.LOST.isOngoing).isFalse },
         )
     }
 
@@ -24,9 +24,9 @@ class GameStatusTest {
         // given, when, then
         assertAll(
             "determining whether object is WIN",
-            { assertThat(GameStatus.ONGOING.win()).isFalse },
-            { assertThat(GameStatus.WIN.win()).isTrue },
-            { assertThat(GameStatus.LOST.win()).isFalse },
+            { assertThat(GameStatus.ONGOING.win).isFalse },
+            { assertThat(GameStatus.WIN.win).isTrue },
+            { assertThat(GameStatus.LOST.win).isFalse },
         )
     }
 
@@ -35,9 +35,9 @@ class GameStatusTest {
         // given, when, then
         assertAll(
             "determining whether object is LOST",
-            { assertThat(GameStatus.ONGOING.lost()).isFalse },
-            { assertThat(GameStatus.WIN.lost()).isFalse },
-            { assertThat(GameStatus.LOST.lost()).isTrue },
+            { assertThat(GameStatus.ONGOING.lost).isFalse },
+            { assertThat(GameStatus.WIN.lost).isFalse },
+            { assertThat(GameStatus.LOST.lost).isTrue },
         )
     }
 }
