@@ -12,4 +12,5 @@ enum class MineSearchDirection(
     DOWN(1, 0),
     LEFT_DOWN(1, -1),
     RIGHT_DOWN(1, 1),
+    ;
 }

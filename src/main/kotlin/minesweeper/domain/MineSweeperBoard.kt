@@ -1,26 +1,31 @@
 package minesweeper.domain
 
-private const val MINIMUM_POSITION_NUMBER = 1
-
 @JvmInline
 value class MineSweeperBoard(
-    val zones: Map<Position, Zone>,
+    val zones: Zones,
 ) {
+    val size: Int
+        get() = zones.size
+
+    val isPlaying: Boolean
+        get() = zones.isAllHiddenMineZone() && zones.isAnyHiddenSafeZone()
+
     fun openAllZone(): Map<Position, Int> {
-        return zones.keys.associateWith { countOfNearMine(it) }
+        return zones.openAllZone()
     }
 
-    private fun countOfNearMine(position: Position): Int {
-        return MineSearchDirection.values()
-            .filter { isSatisfiedNextPositionCondition(position, it) }
-            .count { zones[getNextPosition(position, it)] is MineZone }
+    fun openAt(position: Position) {
+        zones.openAt(position)
     }
 
-    private fun isSatisfiedNextPositionCondition(position: Position, mineSearchDirection: MineSearchDirection): Boolean {
-        return (position.x + mineSearchDirection.x >= MINIMUM_POSITION_NUMBER) && (position.y + mineSearchDirection.y >= MINIMUM_POSITION_NUMBER)
-    }
+    fun getResult(): MineSweeperResult {
+        if (isPlaying) {
+            throw IllegalStateException("지뢰찾기 게임이 진행중입니다.")
+        }
 
-    private fun getNextPosition(position: Position, mineSearchDirection: MineSearchDirection): Position {
-        return Position(position.x + mineSearchDirection.x, position.y + mineSearchDirection.y)
+        return when (zones.isAllHiddenMineZone()) {
+            true -> MineSweeperResult.WIN
+            false -> MineSweeperResult.LOSE
+        }
     }
 }
