@@ -5,6 +5,6 @@ value class MineSweeperBoard(
     val zones: Zones
 ) {
     fun isPlaying(): Boolean {
-        return false
+        return zones.isNotOpenMineZone() && zones.existHiddenSafeZone()
     }
 }
