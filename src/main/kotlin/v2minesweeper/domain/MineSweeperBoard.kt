@@ -4,4 +4,7 @@ package v2minesweeper.domain
 value class MineSweeperBoard(
     val zones: Zones
 ) {
+    fun isPlaying(): Boolean {
+        return false
+    }
 }
