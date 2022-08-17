@@ -104,4 +104,38 @@ class MineSweeperBoardTest : FunSpec({
         mineSweeperBoard[Position(3 to 2)].isHidden shouldBe false
         mineSweeperBoard[Position(3 to 3)].isHidden shouldBe true
     }
+
+    test("게임 결과를 출력하는 기능") {
+        // given
+        listOf(
+            row(
+                MineSweeperBoard(
+                    mapOf(
+                        (1 to 1) to SafeZone(false),
+                        (1 to 2) to SafeZone(false),
+                        (2 to 1) to SafeZone(false),
+                        (2 to 2) to SafeZone(false)
+                    ).toZones()
+                ),
+                GameResult.WIN
+            ),
+            row(
+                MineSweeperBoard(
+                    mapOf(
+                        (1 to 1) to MineZone(false),
+                        (1 to 2) to SafeZone(),
+                        (2 to 1) to SafeZone(),
+                        (2 to 2) to SafeZone()
+                    ).toZones()
+                ),
+                GameResult.LOSE
+            )
+        ).forEach { (mineSweeperBoard, expected) ->
+            // when
+            val result = mineSweeperBoard.getResult()
+
+            // then
+            result shouldBe expected
+        }
+    }
 })
