@@ -2,6 +2,7 @@ package v2minesweeper.view
 
 import v2minesweeper.domain.MineSweeperBoard
 import v2minesweeper.domain.MineZone
+import v2minesweeper.domain.Position
 import v2minesweeper.domain.SafeZone
 import v2minesweeper.domain.Zone
 
@@ -14,15 +15,15 @@ object OutputView {
         printCurrentMineSweeperBoard(mineSweeperBoard)
     }
 
-    fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
+    private fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         val zones = mineSweeperBoard.zones.values
         val rowLength = zones.keys.asSequence()
-            .map { it.first }
+            .map { it.value.first }
             .distinctBy { it }
             .sortedBy { it }
 
         val columnLength = zones.keys.asSequence()
-            .map { it.second }
+            .map { it.value.second }
             .distinctBy { it }
             .sortedBy { it }
 
@@ -33,11 +34,11 @@ object OutputView {
 
     private fun printMineSweeperBoardRow(
         columnLength: Sequence<Int>,
-        zones: Map<Pair<Int, Int>, Zone>,
+        zones: Map<Position, Zone>,
         row: Int
     ) {
         for (column in columnLength) {
-            print("${mapToMineZoneOrSafeZone(zones[row to column]!!)} ")
+            print("${mapToMineZoneOrSafeZone(zones[Position(row to column)]!!)} ")
         }
         println()
     }

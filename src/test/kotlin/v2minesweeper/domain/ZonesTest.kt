@@ -6,19 +6,17 @@ import io.kotest.matchers.shouldBe
 class ZonesTest : FunSpec({
     test("지뢰찾기판의 모든 위치의 인근 지뢰갯수를 찾는다.") {
         // given
-        val zones = Zones(
-            mapOf(
-                (1 to 1) to SafeZone(),
-                (1 to 2) to MineZone(),
-                (1 to 3) to MineZone(),
-                (2 to 1) to MineZone(),
-                (2 to 2) to SafeZone(),
-                (2 to 3) to SafeZone(),
-                (3 to 1) to SafeZone(),
-                (3 to 2) to SafeZone(),
-                (3 to 3) to SafeZone()
-            )
-        )
+        val zones = mapOf(
+            (1 to 1) to SafeZone(),
+            (1 to 2) to MineZone(),
+            (1 to 3) to MineZone(),
+            (2 to 1) to MineZone(),
+            (2 to 2) to SafeZone(),
+            (2 to 3) to SafeZone(),
+            (3 to 1) to SafeZone(),
+            (3 to 2) to SafeZone(),
+            (3 to 3) to SafeZone()
+        ).toZones()
 
         // when
         val result = zones.findAllNearMineNumber()
