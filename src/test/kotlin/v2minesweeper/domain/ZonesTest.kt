@@ -32,7 +32,7 @@ class ZonesTest : FunSpec({
         result[2 to 2] shouldBe 3
         result[2 to 3] shouldBe 2
         result[3 to 1] shouldBe 1
-        result[3 to 2] shouldBe 0
+        result[3 to 2] shouldBe 1
         result[3 to 3] shouldBe 0
     }
 })
