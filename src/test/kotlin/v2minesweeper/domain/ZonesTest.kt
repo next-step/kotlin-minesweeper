@@ -1,5 +1,6 @@
 package v2minesweeper.domain
 
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
@@ -97,5 +98,15 @@ class ZonesTest : FunSpec({
             // then
             actual shouldBe expected
         }
+    }
+
+    test("존재하지 않는 위치를 조회하면 예외를 발생시킨다.") {
+        // given
+        val zones = Zones(
+            mapOf(Position(1 to 1) to SafeZone())
+        )
+
+        // when // then
+        shouldThrowExactly<IllegalArgumentException> { zones[Position(1 to 2)] }
     }
 })

@@ -1,8 +1,12 @@
 package v2minesweeper.domain
 
 sealed class Zone(
-    val isHidden: Boolean
-)
+    var isHidden: Boolean
+) {
+    fun open() {
+        isHidden = false
+    }
+}
 
 private const val INIT_HIDDEN = true
 

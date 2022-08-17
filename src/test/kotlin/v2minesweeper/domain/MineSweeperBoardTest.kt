@@ -55,4 +55,22 @@ class MineSweeperBoardTest : FunSpec({
             result shouldBe expected
         }
     }
+
+    test("특정 위치를 open한다.") {
+        // given
+        val mineSweeperBoard = MineSweeperBoard(
+            mapOf(
+                (1 to 1) to SafeZone(false),
+                (1 to 2) to SafeZone(false),
+                (2 to 1) to SafeZone(false),
+                (2 to 2) to SafeZone(false)
+            ).toZones()
+        )
+
+        // when
+        mineSweeperBoard.open(Position(1 to 1))
+
+        // then
+        mineSweeperBoard[Position(1 to 1)].isHidden shouldBe false
+    }
 })

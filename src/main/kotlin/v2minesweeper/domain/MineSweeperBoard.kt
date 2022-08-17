@@ -7,4 +7,12 @@ value class MineSweeperBoard(
     fun isPlaying(): Boolean {
         return zones.isNotOpenMineZone() && zones.existHiddenSafeZone()
     }
+
+    fun open(position: Position) {
+        zones[position].open()
+    }
+
+    operator fun get(position: Position): Zone {
+        return zones[position]
+    }
 }

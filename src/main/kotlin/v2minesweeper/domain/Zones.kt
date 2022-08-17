@@ -22,6 +22,10 @@ value class Zones(
             .values
             .any { it.isHidden }
     }
+
+    operator fun get(position: Position): Zone {
+        return values[position] ?: throw IllegalArgumentException("존재하지 않는 위치입니다. position = $position")
+    }
 }
 
 fun Map<Pair<Int, Int>, Zone>.toZones(): Zones = Zones(this.mapKeys { Position(it.key) })
