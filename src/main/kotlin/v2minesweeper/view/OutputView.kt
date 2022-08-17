@@ -15,7 +15,7 @@ object OutputView {
     }
 
     fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
-        val zones = mineSweeperBoard.zones
+        val zones = mineSweeperBoard.zones.values
         val rowLength = zones.keys.asSequence()
             .map { it.first }
             .distinctBy { it }

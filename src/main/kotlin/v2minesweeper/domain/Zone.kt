@@ -1,7 +1,19 @@
 package v2minesweeper.domain
 
-sealed interface Zone
+sealed class Zone(
+    val isHidden: Boolean
+)
 
-object MineZone : Zone
+private const val INIT_HIDDEN = false
 
-object SafeZone : Zone
+class MineZone(
+    isHidden: Boolean = INIT_HIDDEN
+) : Zone(
+    isHidden = isHidden
+)
+
+class SafeZone(
+    isHidden: Boolean = INIT_HIDDEN
+) : Zone(
+    isHidden = isHidden
+)
