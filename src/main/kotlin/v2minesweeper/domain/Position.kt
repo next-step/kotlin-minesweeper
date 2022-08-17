@@ -34,3 +34,5 @@ private operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>) =
 operator fun <V> Map<Position, V>.get(position: Pair<Int, Int>): V {
     return this[Position(position)] ?: throw IllegalArgumentException("존재하지 않는 위치입니다.")
 }
+
+fun Pair<Int, Int>.toPosition(): Position = Position(this)

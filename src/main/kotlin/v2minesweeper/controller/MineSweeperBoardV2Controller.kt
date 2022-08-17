@@ -5,6 +5,7 @@ import v2minesweeper.domain.MineNumber
 import v2minesweeper.domain.MineSweeperBoardFactory
 import v2minesweeper.domain.Width
 import v2minesweeper.domain.createRandomMineSweeperBoard
+import v2minesweeper.domain.toPosition
 import v2minesweeper.view.InputView
 import v2minesweeper.view.OutputView
 
@@ -22,6 +23,15 @@ object MineSweeperBoardV2Controller {
             )
         }.operate()
 
-        OutputView.printInitMineSweeperBoard(mineSweeperBoard = mineSweeperBoard)
+        OutputView.printInitMineSweeperBoard(mineSweeperBoard)
+
+        while (mineSweeperBoard.isPlaying()) {
+            try {
+                mineSweeperBoard.open(InputView.inputOpenPosition().toPosition())
+            } catch (e: Exception) {
+                println(e.message)
+            }
+            OutputView.printCurrentMineSweeperBoard(mineSweeperBoard)
+        }
     }
 }

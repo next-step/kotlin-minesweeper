@@ -1,15 +1,23 @@
 package v2minesweeper.domain
 
-@JvmInline
-value class MineSweeperBoard(
-    val zones: Zones
+private const val NO_MINE = 0
+
+class MineSweeperBoard(
+    val zones: Zones,
+    val mineNumberInfos: Map<Position, Int>
 ) {
+    constructor(zones: Zones) : this(zones, zones.findAllNearMineNumber())
+
     fun isPlaying(): Boolean {
         return zones.isNotOpenMineZone() && zones.existHiddenSafeZone()
     }
 
     fun open(position: Position) {
-        zones[position].open()
+        zones.open(position)
+        if (mineNumberInfos[position] == NO_MINE) {
+            zones.getNearSafeZonesByPosition(position)
+                .forEach { open(it) }
+        }
     }
 
     operator fun get(position: Position): Zone {

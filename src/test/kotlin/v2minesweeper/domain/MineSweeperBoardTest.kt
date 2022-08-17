@@ -60,10 +60,10 @@ class MineSweeperBoardTest : FunSpec({
         // given
         val mineSweeperBoard = MineSweeperBoard(
             mapOf(
-                (1 to 1) to SafeZone(false),
-                (1 to 2) to SafeZone(false),
-                (2 to 1) to SafeZone(false),
-                (2 to 2) to SafeZone(false)
+                (1 to 1) to SafeZone(),
+                (1 to 2) to SafeZone(),
+                (2 to 1) to SafeZone(),
+                (2 to 2) to SafeZone()
             ).toZones()
         )
 
@@ -72,5 +72,36 @@ class MineSweeperBoardTest : FunSpec({
 
         // then
         mineSweeperBoard[Position(1 to 1)].isHidden shouldBe false
+    }
+
+    test("특정 위치의 지뢰 갯수가 0개이면 인접한 칸이 모두 열린다.") {
+        // given
+        val mineSweeperBoard = MineSweeperBoard(
+            mapOf(
+                (1 to 1) to SafeZone(),
+                (1 to 2) to SafeZone(),
+                (1 to 3) to SafeZone(),
+                (2 to 1) to SafeZone(),
+                (2 to 2) to SafeZone(),
+                (2 to 3) to SafeZone(),
+                (3 to 1) to SafeZone(),
+                (3 to 2) to SafeZone(),
+                (3 to 3) to MineZone()
+            ).toZones()
+        )
+
+        // when
+        mineSweeperBoard.open(Position(1 to 1))
+
+        // then
+        mineSweeperBoard[Position(1 to 1)].isHidden shouldBe false
+        mineSweeperBoard[Position(1 to 2)].isHidden shouldBe false
+        mineSweeperBoard[Position(1 to 3)].isHidden shouldBe false
+        mineSweeperBoard[Position(2 to 1)].isHidden shouldBe false
+        mineSweeperBoard[Position(2 to 2)].isHidden shouldBe false
+        mineSweeperBoard[Position(2 to 3)].isHidden shouldBe false
+        mineSweeperBoard[Position(3 to 1)].isHidden shouldBe false
+        mineSweeperBoard[Position(3 to 2)].isHidden shouldBe false
+        mineSweeperBoard[Position(3 to 3)].isHidden shouldBe true
     }
 })

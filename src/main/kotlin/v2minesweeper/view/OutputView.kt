@@ -15,8 +15,9 @@ object OutputView {
         printCurrentMineSweeperBoard(mineSweeperBoard)
     }
 
-    private fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
+    fun printCurrentMineSweeperBoard(mineSweeperBoard: MineSweeperBoard) {
         val zones = mineSweeperBoard.zones.values
+        val mineNumbers = mineSweeperBoard.mineNumberInfos
         val rowLength = zones.keys.asSequence()
             .map { it.value.first }
             .distinctBy { it }
@@ -28,29 +29,30 @@ object OutputView {
             .sortedBy { it }
 
         for (row in rowLength) {
-            printMineSweeperBoardRow(columnLength, zones, row)
+            printMineSweeperBoardRow(columnLength, zones, row, mineNumbers)
         }
     }
 
     private fun printMineSweeperBoardRow(
         columnLength: Sequence<Int>,
         zones: Map<Position, Zone>,
-        row: Int
+        row: Int,
+        mineNumbers: Map<Position, Int>
     ) {
         for (column in columnLength) {
-            print("${mapToMineZoneOrSafeZone(zones[Position(row to column)]!!)} ")
+            print("${mapToMineZoneOrSafeZone(zones[Position(row to column)]!!, mineNumbers[Position(row to column)]!!)} ")
         }
         println()
     }
 
-    private fun mapToMineZoneOrSafeZone(zone: Zone): String {
+    private fun mapToMineZoneOrSafeZone(zone: Zone, mineNumber: Int): String {
         if (zone.isHidden) {
             return HIDDEN_SYMBOL
         }
 
         return when (zone) {
             is MineZone -> MINE_ZONE_SYMBOL
-            is SafeZone -> HIDDEN_SYMBOL
+            is SafeZone -> mineNumber.toString()
         }
     }
 

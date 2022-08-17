@@ -23,6 +23,15 @@ value class Zones(
             .any { it.isHidden }
     }
 
+    fun open(position: Position) {
+        values[position]!!.open()
+    }
+
+    fun getNearSafeZonesByPosition(position: Position): List<Position> {
+        return position.toNextPositions()
+            .filter { values[it] is SafeZone && values[it]!!.isHidden }
+    }
+
     operator fun get(position: Position): Zone {
         return values[position] ?: throw IllegalArgumentException("존재하지 않는 위치입니다. position = $position")
     }
