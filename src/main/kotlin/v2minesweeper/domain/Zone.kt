@@ -4,7 +4,7 @@ sealed class Zone(
     val isHidden: Boolean
 )
 
-private const val INIT_HIDDEN = false
+private const val INIT_HIDDEN = true
 
 class MineZone(
     isHidden: Boolean = INIT_HIDDEN

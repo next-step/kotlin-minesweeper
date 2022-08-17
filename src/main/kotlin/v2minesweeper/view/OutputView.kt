@@ -44,6 +44,10 @@ object OutputView {
     }
 
     private fun mapToMineZoneOrSafeZone(zone: Zone): String {
+        if (zone.isHidden) {
+            return HIDDEN_SYMBOL
+        }
+
         return when (zone) {
             is MineZone -> MINE_ZONE_SYMBOL
             is SafeZone -> HIDDEN_SYMBOL
