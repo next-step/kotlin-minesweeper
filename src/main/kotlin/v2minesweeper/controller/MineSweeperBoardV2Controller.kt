@@ -33,5 +33,7 @@ object MineSweeperBoardV2Controller {
             }
             OutputView.printCurrentMineSweeperBoard(mineSweeperBoard)
         }
+
+        OutputView.printGameResult(mineSweeperBoard.getResult())
     }
 }

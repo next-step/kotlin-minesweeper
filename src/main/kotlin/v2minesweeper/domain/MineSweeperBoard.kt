@@ -23,4 +23,12 @@ class MineSweeperBoard(
     operator fun get(position: Position): Zone {
         return zones[position]
     }
+
+    fun getResult(): GameResult {
+        if (!zones.isNotOpenMineZone()) {
+            return GameResult.LOSE
+        }
+
+        return GameResult.WIN
+    }
 }

@@ -1,5 +1,6 @@
 package v2minesweeper.view
 
+import v2minesweeper.domain.GameResult
 import v2minesweeper.domain.MineSweeperBoard
 import v2minesweeper.domain.MineZone
 import v2minesweeper.domain.Position
@@ -40,7 +41,14 @@ object OutputView {
         mineNumbers: Map<Position, Int>
     ) {
         for (column in columnLength) {
-            print("${mapToMineZoneOrSafeZone(zones[Position(row to column)]!!, mineNumbers[Position(row to column)]!!)} ")
+            print(
+                "${
+                mapToMineZoneOrSafeZone(
+                    zones[Position(row to column)]!!,
+                    mineNumbers[Position(row to column)]!!
+                )
+                } "
+            )
         }
         println()
     }
@@ -56,7 +64,10 @@ object OutputView {
         }
     }
 
-    // fun printResult(result: MineSweeperResult) {
-    //     println(result.message)
-    // }
+    fun printGameResult(result: GameResult) {
+        when (result) {
+            GameResult.WIN -> print("Win Game.")
+            GameResult.LOSE -> print("Lose Game.")
+        }
+    }
 }
