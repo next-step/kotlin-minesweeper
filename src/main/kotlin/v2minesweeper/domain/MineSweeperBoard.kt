@@ -1,7 +1,5 @@
 package v2minesweeper.domain
 
-private const val NO_MINE = 0
-
 class MineSweeperBoard(
     val zones: Zones,
     val mineNumberInfos: Map<Position, Int>
@@ -30,5 +28,9 @@ class MineSweeperBoard(
         }
 
         return GameResult.WIN
+    }
+
+    companion object {
+        private const val NO_MINE = 0
     }
 }
