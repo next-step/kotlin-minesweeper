@@ -24,7 +24,8 @@ value class Zones(
     }
 
     fun open(position: Position) {
-        values[position]!!.open()
+        val zone = values[position] ?: throw IllegalArgumentException("존재하지 않는 위치입니다. position = $position")
+        zone.open()
     }
 
     fun getNearSafeZonesByPosition(position: Position): List<Position> {
