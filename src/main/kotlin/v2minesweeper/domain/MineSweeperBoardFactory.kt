@@ -17,6 +17,8 @@ class MineSweeperBoardFactory(
     )
 }
 
+private const val INIT_POSITION_NUMBER = 1
+
 fun createRandomMineSweeperBoard(height: Height, width: Width, mineNumber: MineNumber): MineSweeperBoard {
     val totalSize = (height.value * width.value)
     val mineZones = List(mineNumber.value) { MineZone() }
@@ -25,9 +27,8 @@ fun createRandomMineSweeperBoard(height: Height, width: Width, mineNumber: MineN
     return (mineZones + safeZones).shuffled()
         .chunked(width.value)
         .flatMapIndexed { x, zones ->
-            zones.mapIndexed { y, zone -> (x + 1 to y + 1) to zone }
+            zones.mapIndexed { y, zone -> (x + INIT_POSITION_NUMBER to y + INIT_POSITION_NUMBER) to zone }
         }
         .toMap()
         .let { MineSweeperBoard(it.toZones()) }
 }
-
