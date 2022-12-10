@@ -1,6 +1,6 @@
 package domain
 
-abstract class MineGenerator(var mineNumber: Int, var dotNumber: Int) {
+abstract class MineGenerator(private var mineNumber: Int, private var dotNumber: Int) {
 
     fun generate(): DotState {
         require(dotNumber >= 0) { "점 개수는 음수일수 없습니다" }
