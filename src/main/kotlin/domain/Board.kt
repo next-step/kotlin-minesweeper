@@ -1,3 +1,5 @@
+package domain
+
 class Board(width: Int, height: Int, private val generator: MineGenerator) {
 
     val board: Map<Dot, DotState>
@@ -13,6 +15,4 @@ class Board(width: Int, height: Int, private val generator: MineGenerator) {
             Dot(width, it) to generator.generate()
         }
     }
-
-
 }
