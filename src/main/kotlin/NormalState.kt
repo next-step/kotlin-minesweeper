@@ -1,0 +1,2 @@
+class NormalState : DotState {
+}
