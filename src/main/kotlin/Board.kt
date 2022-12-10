@@ -1,4 +1,4 @@
-class Board(width: Int, height: Int, val generator: MineGenerator) {
+class Board(width: Int, height: Int, private val generator: MineGenerator) {
 
     val board: Map<Dot, DotState>
 
