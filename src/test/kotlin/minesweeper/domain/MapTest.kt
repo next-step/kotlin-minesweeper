@@ -1,6 +1,9 @@
-package minesweeper
+package minesweeper.domain
 
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Map
+import minesweeper.domain.Mine
+import minesweeper.domain.Position
 import org.junit.jupiter.api.Test
 
 

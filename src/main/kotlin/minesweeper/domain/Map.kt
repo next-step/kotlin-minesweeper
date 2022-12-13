@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class Map(val maxSize: Position, val mines: List<Mine>) {
     fun print(): String {

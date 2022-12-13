@@ -1,6 +1,7 @@
-package minesweeper
+package minesweeper.domain
 
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Position
 
 
 internal class PositionTest{
