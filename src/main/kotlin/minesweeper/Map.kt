@@ -2,23 +2,22 @@ package minesweeper
 
 class Map(val maxSize: Position, val mines: List<Mine>) {
     fun print(): String {
-        var string = ""
-
-        for (height in 1 .. maxSize.height) {
-            for (width in 1 .. maxSize.width) {
-                string += if (isMine(Position(width, height))) MINE_STRING else SAFE_STRING
-                string += " "
-            }
-            string += "\n"
-        }
-        return string
+        return drawHeight()
     }
 
-    private fun isMine(position: Position): Boolean {
-        return mines.any {
-            it.position == position
+    private fun drawHeight(): String {
+        return (1..maxSize.height).joinToString("\n") { height ->
+            drawWidth(height)
         }
     }
+
+    private fun drawWidth(height: Int): String {
+        return (1..maxSize.width).joinToString(" ") { width ->
+            if (isMine(Position(width, height))) MINE_STRING else SAFE_STRING
+        }
+    }
+
+    private fun isMine(position: Position) = mines.any { it.position == position }
 
     companion object {
         private const val MINE_STRING = "*"

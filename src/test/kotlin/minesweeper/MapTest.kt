@@ -17,16 +17,16 @@ internal class MapTest {
     fun `지도 출력`() {
         val map = Map(Position(10, 10), listOf(Mine(Position(10, 10))))
         val expectedString =
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C C \n" +
-            "C C C C C C C C C * \n"
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C C\n" +
+            "C C C C C C C C C *"
 
         map.print() shouldBe expectedString
     }
