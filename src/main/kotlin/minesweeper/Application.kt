@@ -20,12 +20,18 @@ fun main() {
 }
 
 fun createRandomMine(maxSize: Position, count: Int): List<Mine> {
-    return (1..maxSize.height).map { height: Int ->
-        (1..maxSize.width).map { width: Int ->
-            Position(width, height)
-        }
-    }.reduce { acc: List<Position>, list: List<Position> -> acc.plus(list) }
+    return createRandomPosition(maxSize).reduce { acc: List<Position>, list: List<Position> ->
+        acc.plus(list)
+    }
         .map { Mine(it) }
         .shuffled()
         .slice(0 until count)
+}
+
+private fun createRandomPosition(maxSize: Position) = (1..maxSize.height).map { height: Int ->
+    createPositionByWidth(maxSize.width, height)
+}
+
+private fun createPositionByWidth(maxWidth: Int, height: Int) = (1..maxWidth).map { width: Int ->
+    Position(height, width)
 }
