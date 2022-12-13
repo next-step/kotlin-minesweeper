@@ -18,7 +18,8 @@ internal class MapTest {
 
     @Test
     fun `지도 출력`() {
-        val map = Map(Position(10, 10), listOf(Mine(Position(10, 10))))
+        val mines = listOf(Mine(Position(10, 10)))
+        val map = Map(Position(10, 10), mines)
         val expectedString =
             "C C C C C C C C C C\n" +
             "C C C C C C C C C C\n" +
@@ -32,5 +33,6 @@ internal class MapTest {
             "C C C C C C C C C *"
 
         map.print() shouldBe expectedString
+        map.print().contains("*") shouldBe mines.count()
     }
 }

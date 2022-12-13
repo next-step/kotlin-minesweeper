@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Map(val maxSize: Position, val mines: List<Mine>) {
+class Map(val maxSize: Position, private val mines: List<Mine>) {
     fun print(): String {
         return drawHeight()
     }
