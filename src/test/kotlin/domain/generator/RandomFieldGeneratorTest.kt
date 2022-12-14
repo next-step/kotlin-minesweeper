@@ -1,4 +1,4 @@
-package domain
+package domain.generator
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

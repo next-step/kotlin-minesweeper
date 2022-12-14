@@ -1,4 +1,8 @@
-package domain
+package domain.generator
+
+import domain.Coordinate
+import domain.Field
+import domain.Row
 
 private const val MIN_VALUE = 0
 
