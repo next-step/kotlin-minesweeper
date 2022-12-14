@@ -1,6 +1,5 @@
 package domain
 
 class Mine(
-    x: Coordinate,
-    y: Coordinate
-) : Block(x, y, "*")
+    coordinate: Coordinate,
+) : Block(coordinate, "*")

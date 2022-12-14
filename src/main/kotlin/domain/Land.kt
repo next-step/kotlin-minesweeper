@@ -1,6 +1,5 @@
 package domain
 
 class Land(
-    x: Coordinate,
-    y: Coordinate
-) : Block(x, y, "C")
+    coordinate: Coordinate
+) : Block(coordinate, "C")
