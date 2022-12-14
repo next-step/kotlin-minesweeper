@@ -1,7 +1,6 @@
 package domain
 
 sealed class Block(
-    val coordinate: Coordinate,
     val desc: String
 ) {
 
