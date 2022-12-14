@@ -7,7 +7,7 @@ import domain.Row
 private const val MIN_VALUE = 0
 
 class RandomFieldGenerator : FieldGenerator {
-    override fun generate(width: Int, height: Int, mineCount: Int): Field {
+    override fun generate(height: Int, width: Int, mineCount: Int): Field {
         val rows = (MIN_VALUE until height).map {
             Row.create(MIN_VALUE until width)
         }
