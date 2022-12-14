@@ -5,8 +5,8 @@ import io.kotest.matchers.shouldBe
 
 class BlockTest : StringSpec({
 
-    "블록은 'c' 로 표시한다." {
-        Block.Normal().blockText shouldBe "c"
+    "블록은 'C' 로 표시한다." {
+        Block.Normal().blockText shouldBe "C"
     }
 
     "지뢰는 '*' 로 표시한다." {
