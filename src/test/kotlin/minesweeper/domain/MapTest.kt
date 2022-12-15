@@ -1,11 +1,7 @@
 package minesweeper.domain
 
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Map
-import minesweeper.domain.Mine
-import minesweeper.domain.Position
 import org.junit.jupiter.api.Test
-
 
 internal class MapTest {
     @Test
@@ -21,18 +17,12 @@ internal class MapTest {
         val mines = listOf(Mine(Position(10, 10)))
         val map = Map(Position(10, 10), mines)
         val expectedString =
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C C\n" +
-            "C C C C C C C C C *"
+            "C C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C *"
 
-        map.print() shouldBe expectedString
-        map.print().contains("*") shouldBe mines.count()
+        val actual = map.print()
+        val actualMineCount = actual.count { it == '*' }
+
+        actual shouldBe expectedString
+        actualMineCount shouldBe mines.count()
     }
 }
