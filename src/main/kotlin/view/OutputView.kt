@@ -1,0 +1,3 @@
+package view
+
+class OutputView
