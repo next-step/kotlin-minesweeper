@@ -11,27 +11,4 @@ internal class MapTest {
         map.maxSize.height shouldBe 10
         map.maxSize.width shouldBe 10
     }
-
-    @Test
-    fun `지도 출력`() {
-        val mines = listOf(Mine(Position(10, 10)))
-        val map = Map(Position(10, 10), mines)
-
-        var expectedString = "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C C\n"
-        expectedString += "C C C C C C C C C *"
-
-        val actual = map.print()
-        val actualMineCount = actual.count { it == '*' }
-
-        actual shouldBe expectedString
-        actualMineCount shouldBe mines.count()
-    }
 }
