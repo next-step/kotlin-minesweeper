@@ -8,11 +8,11 @@ class BlockRepository(height: Int, width: Int, mineCount: Int, val blocks: List<
             val blockList = ArrayList<Block>()
 
             repeat(blockCount) {
-                blockList.add(Block.Normal())
+                blockList.add(Block.Normal(it))
             }
 
             repeat(mineCount) {
-                blockList.add(Block.LandMine())
+                blockList.add(Block.LandMine(blockCount + it))
             }
 
             return blockList.shuffled().chunked(width)
