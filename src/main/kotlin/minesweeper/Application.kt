@@ -5,6 +5,7 @@ import minesweeper.domain.Mine
 import minesweeper.domain.Position
 import minesweeper.io.Input
 import minesweeper.io.Output
+import kotlin.random.Random
 
 fun main() {
     val input = Input()
@@ -13,25 +14,25 @@ fun main() {
     val maxSize = Position(input.getHeight(), input.getWidth())
     val mineCount = input.getMineCount()
 
-    val mines = createRandomMine(maxSize, mineCount)
+    val mines = getRandomMineList(maxSize, mineCount)
     val map = Map(maxSize, mines)
 
     output.printMap(map)
 }
 
-fun createRandomMine(maxSize: Position, count: Int): List<Mine> {
-    return createRandomPosition(maxSize).reduce { acc: List<Position>, list: List<Position> ->
-        acc.plus(list)
+fun getRandomMineList(maxSize: Position, count: Int): List<Mine> {
+    val mineList = mutableListOf<Mine>()
+
+    while (mineList.count() != count) {
+        val mine = createRandomMine(maxSize)
+        if (!mineList.contains(mine)) mineList.add(mine)
     }
-        .map { Mine(it) }
-        .shuffled()
-        .slice(0 until count)
+
+    return mineList
 }
 
-private fun createRandomPosition(maxSize: Position) = (1..maxSize.height).map { height: Int ->
-    createPositionByWidth(maxSize.width, height)
-}
-
-private fun createPositionByWidth(maxWidth: Int, height: Int) = (1..maxWidth).map { width: Int ->
-    Position(height, width)
+fun createRandomMine(maxSize: Position): Mine {
+    val width = Random.nextInt(1, maxSize.width + 1)
+    val height = Random.nextInt(1, maxSize.height + 1)
+    return Mine(Position(width, height))
 }

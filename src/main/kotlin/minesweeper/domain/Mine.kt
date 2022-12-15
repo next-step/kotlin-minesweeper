@@ -1,3 +1,3 @@
 package minesweeper.domain
 
-class Mine(val position: Position)
+data class Mine(val position: Position)
