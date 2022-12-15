@@ -16,8 +16,17 @@ internal class MapTest {
     fun `지도 출력`() {
         val mines = listOf(Mine(Position(10, 10)))
         val map = Map(Position(10, 10), mines)
-        val expectedString =
-            "C C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C C\nC C C C C C C C C *"
+
+        var expectedString = "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C C\n"
+        expectedString += "C C C C C C C C C *"
 
         val actual = map.print()
         val actualMineCount = actual.count { it == '*' }
