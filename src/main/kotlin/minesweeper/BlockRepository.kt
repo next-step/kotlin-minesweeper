@@ -14,7 +14,7 @@ class BlockRepository(
             val blockList = ArrayList<Block.Normal>()
 
             repeat(blockCount) {
-                blockList.add(Block.Normal(it))
+                blockList.add(Block.Normal())
             }
 
             return blockList
@@ -23,7 +23,7 @@ class BlockRepository(
         private fun createMineBlocks(mineCount: Int): List<Block.LandMine> {
             val blockList = ArrayList<Block.LandMine>()
             repeat(mineCount) {
-                blockList.add(Block.LandMine(it))
+                blockList.add(Block.LandMine())
             }
 
             return blockList
