@@ -4,8 +4,8 @@ import view.InputView
 import view.OutputView
 
 class MinesweeperController {
-    private val inputView = InputView()
-    private val outputView = OutputView()
+    private val inputView = InputView
+    private val outputView = OutputView
 
     fun run() {
         val height = inputView.inputHeight()

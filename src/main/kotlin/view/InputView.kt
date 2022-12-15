@@ -1,27 +1,29 @@
 package view
 
-import domain.Number
-
-class InputView {
-    fun inputHeight(): Number {
+object InputView {
+    fun inputHeight(): Int {
         return inputRequireNumber("높이를 입력하세요.")
     }
 
-    fun inputWidth(): Number {
+    fun inputWidth(): Int {
         return inputRequireNumber("너비를 입력하세요.")
     }
 
-    fun inputMineCount(): Number {
+    fun inputMineCount(): Int {
         return inputRequireNumber("지뢰는 몇 개인가요?")
     }
 
-    private fun inputRequireNumber(message: String): Number {
+    private fun inputRequireNumber(message: String): Int {
         println(message)
-        return runCatching { Number(readln()) }
+        val value = readln()
+        return runCatching {
+            require(value.isInt()) { "0보다 큰 숫자여야합니다." }
+            value.toInt()
+        }
             .fold(
                 onSuccess = {
                     println()
-                    return it
+                    it
                 },
                 onFailure = { e ->
                     println(e.message)
@@ -29,4 +31,6 @@ class InputView {
                 }
             )
     }
+
+    private fun String.isInt(): Boolean = this.toIntOrNull() != null
 }

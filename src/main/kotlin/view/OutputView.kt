@@ -1,3 +1,3 @@
 package view
 
-class OutputView
+object OutputView
