@@ -1,3 +1,5 @@
 package domain
 
-class Mine : Block("*")
+data class Mine(override val position: Position) : Block {
+    override fun isMine(): Boolean = true
+}
