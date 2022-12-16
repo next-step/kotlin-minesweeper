@@ -1,16 +1,19 @@
 package domain
 
-import domain.block.Mine
-
 class Field(
-    val rows: List<Row>,
-    mines: List<Coordinate>
+    val rows: List<Row>
 ) {
-    init {
-        mines.forEach { cell(it).updateBlock(Mine()) }
-    }
+    companion object {
+        fun create(height: Int, width: Int, mines: List<Coordinate>): Field {
+            val rows = (0 until height).map { y ->
+                Row(
+                    (0 until width).map { x ->
+                        Cell.init(x, Coordinate(y, x).toBlock(mines))
+                    }
+                )
+            }
 
-    fun cell(coordinate: Coordinate): Cell {
-        return rows[coordinate.y.value].cells[coordinate.x.value]
+            return Field(rows)
+        }
     }
 }
