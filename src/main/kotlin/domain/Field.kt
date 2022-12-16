@@ -1,5 +1,7 @@
 package domain
 
+import domain.block.Mine
+
 class Field(
     val rows: List<Row>,
     mines: List<Coordinate>

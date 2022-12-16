@@ -1,5 +1,8 @@
 package domain
 
+import domain.block.Block
+import domain.block.Land
+
 class Cell(
     val pos: Pos,
     private var _block: Block
