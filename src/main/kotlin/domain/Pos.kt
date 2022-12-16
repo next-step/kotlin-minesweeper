@@ -12,7 +12,7 @@ data class Pos private constructor(
         private const val MIN_VALUE = 0
         private const val MAX_CACHE_VALUE = 10
 
-        private val cache = (MIN_VALUE..MAX_CACHE_VALUE).associateWith { Pos(it) }
+        private val cache: Map<Int, Pos> = (MIN_VALUE..MAX_CACHE_VALUE).associateWith { Pos(it) }
 
         fun of(value: Int): Pos {
             return cache[value] ?: Pos(value)
