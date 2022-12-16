@@ -4,8 +4,6 @@ import domain.Coordinate
 import domain.Field
 import domain.Row
 
-private const val MIN_VALUE = 0
-
 class RandomFieldGenerator : FieldGenerator {
     override fun generate(height: Int, width: Int, mineCount: Int): Field {
         val rows = (MIN_VALUE until height).map {
@@ -23,4 +21,8 @@ class RandomFieldGenerator : FieldGenerator {
                 Coordinate(y, x)
             }
         }.shuffled().subList(0, mineCount)
+
+    companion object {
+        private const val MIN_VALUE = 0
+    }
 }
