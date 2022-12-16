@@ -8,8 +8,8 @@ data class Coordinate(
     val y: Pos,
     val x: Pos
 ) {
-    fun toBlock(mines: List<Coordinate>): Block {
-        return if (mines.contains(this)) {
+    fun toBlock(mines: LocationOfMines): Block {
+        return if (mines.exist(this)) {
             Mine()
         } else {
             Land()
