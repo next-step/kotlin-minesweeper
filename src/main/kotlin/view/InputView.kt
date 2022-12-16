@@ -2,20 +2,20 @@ package view
 
 object InputView {
 
-    fun inputHeight(): Int {
+    fun readHeight(): Int {
         println("높이를 입력하세요.")
 
         return readln().toInt()
     }
 
-    fun inputWidth(): Int {
+    fun readWidth(): Int {
         println()
         println("너비를 입력하세요.")
 
         return readln().toInt()
     }
 
-    fun inputMineCount(): Int {
+    fun readMineCount(): Int {
         println()
         println("지뢰는 몇 개인가요?")
 
