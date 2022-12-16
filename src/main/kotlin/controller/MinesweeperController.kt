@@ -1,5 +1,7 @@
 package controller
 
+import domain.MineFieldFactory
+import domain.Rectangle
 import view.InputView
 import view.OutputView
 
@@ -11,6 +13,10 @@ class MinesweeperController {
         val height = inputView.inputHeight()
         val width = inputView.inputWidth()
         val mineCount = inputView.inputMineCount()
+
+        val rectangle = Rectangle(height, width)
+        val mineField = MineFieldFactory().generate(rectangle, mineCount)
+        outputView.printGameStart(mineField)
     }
 }
 
