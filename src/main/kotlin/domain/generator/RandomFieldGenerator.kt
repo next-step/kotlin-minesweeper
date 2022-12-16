@@ -15,7 +15,7 @@ class RandomFieldGenerator : FieldGenerator {
         return Field(rows, mineCoordinates)
     }
 
-    private fun createMineCoordinates(height: Int, width: Int, mineCount: Int) =
+    private fun createMineCoordinates(height: Int, width: Int, mineCount: Int): List<Coordinate> =
         (MIN_VALUE until height).flatMap { y ->
             (MIN_VALUE until width).map { x ->
                 Coordinate(y, x)
