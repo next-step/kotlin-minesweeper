@@ -11,7 +11,7 @@ import domain.MineCnt
 class RandomMineBoardGenerateStrategy : BoardGenerateStrategy {
     override fun generate(maxCoordinateSize: Int, mineCnt: MineCnt): Fields {
         val mineCoordinates = getMineCoordinates(maxCoordinateSize, mineCnt)
-        return generateBoard(maxCoordinateSize, mineCoordinates)
+        return generateFields(maxCoordinateSize, mineCoordinates)
     }
 
     private fun getMineCoordinates(maxCoordinateSize: Int, mineCnt: MineCnt): List<Coordinate> {
@@ -20,11 +20,11 @@ class RandomMineBoardGenerateStrategy : BoardGenerateStrategy {
             .map { number -> Coordinate(number) }
     }
 
-    private fun generateBoard(maxCoordinateSize: Int, mineCoordinate: List<Coordinate>): Fields {
-        return Fields(generateFieldsMap(maxCoordinateSize, mineCoordinate))
+    private fun generateFields(maxCoordinateSize: Int, mineCoordinate: List<Coordinate>): Fields {
+        return Fields(generateFieldMap(maxCoordinateSize, mineCoordinate))
     }
 
-    private fun generateFieldsMap(maxCoordinateSize: Int, mineCoordinate: List<Coordinate>): Map<Coordinate, Field> {
+    private fun generateFieldMap(maxCoordinateSize: Int, mineCoordinate: List<Coordinate>): Map<Coordinate, Field> {
         return List(maxCoordinateSize) { number ->
             val coordinate = Coordinate(number)
             when (coordinate in mineCoordinate) {
