@@ -26,6 +26,7 @@ object Controller {
     }
 
     private fun getCoordinateText(coordinate: Coordinate): String {
-        return if (coordinate.isMine()) "* " else "C "
+        if (coordinate.isMine()) return "* "
+        return "C "
     }
 }
