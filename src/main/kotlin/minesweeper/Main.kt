@@ -1,8 +1,9 @@
 package minesweeper
 
-import minesweeper.domain.Column
+import minesweeper.domain.ColumnCount
+import minesweeper.domain.MineCount
 import minesweeper.domain.MineBoard
-import minesweeper.domain.Row
+import minesweeper.domain.RowCount
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 
@@ -13,7 +14,7 @@ fun main() {
     val columnCount: Int = inputView.inputColumnCount()
     val mineCount: Int = inputView.inputMineCount()
 
-    val board = MineBoard(Row(rowCount), Column(columnCount), mineCount)
+    val board = MineBoard(RowCount(rowCount), ColumnCount(columnCount), MineCount(mineCount))
 
     val resultView = ResultView()
     resultView.showBoard(board)
