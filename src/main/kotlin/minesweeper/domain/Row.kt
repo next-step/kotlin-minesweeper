@@ -1,6 +1,8 @@
 package minesweeper.domain
 
-class Row(rowCount: Int?) {
+class Row(val count: Int) {
 
-    val count = rowCount ?: 0
+    init {
+        require(count > 0) { "높이는 1 이상이어야 합니다" }
+    }
 }

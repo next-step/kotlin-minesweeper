@@ -2,17 +2,17 @@ package minesweeper.ui
 
 class InputView {
 
-    fun inputColumnCount(): Int {
-        println("높이를 입력하세요.")
-        val columnCount: Int = readlnOrNull()?.toIntOrNull() ?: 0
-        return if (columnCount <= 0) inputColumnCount() else columnCount
-    }
-
     fun inputRowCount(): Int {
-        println()
-        println("너비를 입력하세요.")
+        println("높이를 입력하세요.")
         val rowCount: Int = readlnOrNull()?.toIntOrNull() ?: 0
         return if (rowCount <= 0) inputRowCount() else rowCount
+    }
+
+    fun inputColumnCount(): Int {
+        println()
+        println("너비를 입력하세요.")
+        val columnCount: Int = readlnOrNull()?.toIntOrNull() ?: 0
+        return if (columnCount <= 0) inputColumnCount() else columnCount
     }
 
     fun inputMineCount(): Int {

@@ -1,6 +1,8 @@
 package minesweeper.domain
 
-class Column(columnCount: Int?) {
+class Column(val count: Int) {
 
-    val count = columnCount ?: 0
+    init {
+        require(count > 0) { "너비는 1 이상이어야 합니다" }
+    }
 }
