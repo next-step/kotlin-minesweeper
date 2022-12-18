@@ -6,16 +6,16 @@ class MineBoard(rowCount: RowCount, columnCount: ColumnCount, mineCount: MineCou
     val columnSize = columnCount.count
     val size: Int = rowCount.count * columnCount.count
 
-    val coordinates: List<Coordinates> = make(mineCount)
+    val coordinates: List<Coordinate> = make(mineCount)
 
-    private fun make(mineCount: MineCount): List<Coordinates> {
+    private fun make(mineCount: MineCount): List<Coordinate> {
         val mineCoordinates: List<Int> = (0..size).shuffled().take(mineCount.count)
 
         return List(size) { index ->
             if (mineCoordinates.contains(index)) {
-                Coordinates(CoordinateType.MINE)
+                Coordinate(CoordinateType.MINE)
             } else {
-                Coordinates(CoordinateType.NONE)
+                Coordinate(CoordinateType.NONE)
             }
         }
     }
