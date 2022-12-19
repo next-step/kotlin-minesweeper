@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.should
 import io.kotest.matchers.string.startWith
 
-internal class ColumnTest: StringSpec({
+internal class ColumnTest : StringSpec({
     "너비가 0 이라면 IllegalArgumentException 이 발생한다." {
         val exception = shouldThrow<IllegalArgumentException> {
             Column(0)
