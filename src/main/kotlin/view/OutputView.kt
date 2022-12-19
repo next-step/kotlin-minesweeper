@@ -1,7 +1,7 @@
 package view
 
 import domain.Block
-import domain.MineField
+import domain.Board
 
 object OutputView {
     private const val MARK_MINE_BLOCK = "*"
@@ -9,15 +9,15 @@ object OutputView {
     private const val SEPARATOR_ROW = "\n"
     private const val SEPARATOR_BLOCK = " "
 
-    fun printGameStart(mineField: MineField) {
+    fun printGameStart(board: Board) {
         println("지뢰찾기 게임 시작")
-        printMineField(mineField)
+        printBoard(board)
     }
 
-    private fun printMineField(mineField: MineField) {
+    private fun printBoard(board: Board) {
         println(
-            parseListAsBlockMark(mineField.blocks)
-                .chunked(mineField.rectangle.width)
+            parseListAsBlockMark(board.getBlocks())
+                .chunked(board.getWidth())
                 .joinMineField()
         )
     }
@@ -33,6 +33,4 @@ object OutputView {
     private fun getBlockMark(isMine: Boolean): String {
         return if (isMine) MARK_MINE_BLOCK else MARK_NORMAL_BLOCK
     }
-
-
 }
