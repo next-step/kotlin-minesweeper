@@ -1,7 +1,13 @@
 package domain
 
-data class Rectangle(val height: Int, val width: Int) {
-    init {
-        require(height > 0 && width > 0) { "높이와 너비는 양수여야합니다." }
+data class Rectangle(
+    private val width: Width,
+    private val height: Height
+) {
+    fun getWidth(): Int = width.value
+    fun getHeight(): Int = height.value
+
+    fun toPositions(): List<Position> {
+        return Position.createAll(this)
     }
 }

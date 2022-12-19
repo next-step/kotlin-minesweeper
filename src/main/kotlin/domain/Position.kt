@@ -11,11 +11,11 @@ data class Position(val x: Int, val y: Int) : Comparable<Position> {
     }
 
     companion object {
-        private const val POSITION_START = 0
+        private val START_POSITION: Position = Position(0, 0)
 
-        fun createAll(rectangle: Rectangle): List<Position> {
-            return (POSITION_START until rectangle.height).flatMap { y ->
-                (POSITION_START until rectangle.width).map { Position(it, y) }
+        fun createAll(rectangle: Rectangle, startPosition: Position = START_POSITION): List<Position> {
+            return (startPosition.x until rectangle.getWidth()).flatMap { y ->
+                (startPosition.y until rectangle.getHeight()).map { Position(it, y) }
             }
         }
     }
