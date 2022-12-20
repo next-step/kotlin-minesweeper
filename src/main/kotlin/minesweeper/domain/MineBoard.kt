@@ -24,7 +24,7 @@ class MineBoard(
         val mineCoordinates: List<Int> = (0..size).shuffled().take(mineCount.count)
         return Coordinates.Of(
             List(size) { index ->
-                if (mineCoordinates.contains(index)) return@List Coordinate(CoordinateType.MINE)
+                if (index in mineCoordinates) return@List Coordinate(CoordinateType.MINE)
                 Coordinate(CoordinateType.NONE)
             }
         )
