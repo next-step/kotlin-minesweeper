@@ -2,7 +2,6 @@ package minesweeper.domain.tile.state.set
 
 import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.pos.Coordinate
-import minesweeper.domain.tile.pos.Position
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,7 +9,7 @@ class MineTest {
     @Test
     fun `Mine - 심볼 확인 테스트`() {
         // given
-        val given = Mine(Coordinate(Position(0), Position(0)))
+        val given = Mine(Coordinate.of(0, 0))
 
         // when
         val actual = given.marking

@@ -11,8 +11,8 @@ class CoordinateTest {
         // given
         val (x1, y1) = given1.split(",").map { it.toInt() }
         val (x2, y2) = given2.split(",").map { it.toInt() }
-        val coordinate1 = Coordinate(Position(x1), Position(y1))
-        val coordinate2 = Coordinate(Position(x2), Position(y2))
+        val coordinate1 = Coordinate.of(x1, y1)
+        val coordinate2 = Coordinate.of(x2, y2)
 
         // when
         val actual = coordinate1 == coordinate2
