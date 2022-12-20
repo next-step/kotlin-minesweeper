@@ -9,5 +9,5 @@ interface Tile {
 
     val isChecked: Boolean
 
-    val symbol: Symbol
+    val marking: Marking
 }

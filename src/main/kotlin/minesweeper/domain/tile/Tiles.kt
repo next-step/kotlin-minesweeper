@@ -8,6 +8,6 @@ value class Tiles(private val value: List<Tile>) {
     }
 
     fun getListAsString(): List<String> {
-        return value.map { tile -> tile.symbol.symbol }
+        return value.map { tile -> tile.marking.symbol }
     }
 }

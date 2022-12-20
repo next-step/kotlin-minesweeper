@@ -1,6 +1,6 @@
 package minesweeper.domain.tile
 
-enum class Symbol(val symbol: String) {
+enum class Marking(val symbol: String) {
     MINE("*"),
     EMPTY("0"),
     ONE("1"),

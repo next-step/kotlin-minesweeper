@@ -1,6 +1,6 @@
 package minesweeper.domain.tile.state.set
 
-import minesweeper.domain.tile.Symbol
+import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.pos.Position
 import org.assertj.core.api.Assertions
@@ -13,9 +13,9 @@ class NotCheckedTest {
         val given = NotChecked(Coordinate(Position(0), Position(0)), false)
 
         // when
-        val actual = given.symbol
+        val actual = given.marking
 
         // then
-        Assertions.assertThat(actual).isEqualTo(Symbol.CLOSED)
+        Assertions.assertThat(actual).isEqualTo(Marking.CLOSED)
     }
 }
