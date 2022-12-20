@@ -13,12 +13,14 @@ internal class RandomMineBoardGenerateStrategyTest : BehaviorSpec({
         val height = Height(5)
         val width = Width(9)
         val mineCnt = MineCnt(10)
+
         When("생성하면 ") {
             val fields = RandomMineBoardGenerateStrategy().generate(height, width, mineCnt)
             val mineCnt = List(45) { number ->
                 val coordinate = Coordinate(number / width.value, number % width.value)
                 fields.getField(coordinate)::class == Mine::class
             }.count { it }
+
             Then("지뢰 최대 수만큼 지뢰가 존재한다.") {
                 mineCnt shouldBe 10
             }

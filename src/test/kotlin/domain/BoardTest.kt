@@ -7,6 +7,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 internal class BoardTest : BehaviorSpec({
     Given("보드가 주어졌을 때 ") {
         val board = Board(Height(10), Width(10), MineCnt(10))
+
         When("정상적인 좌표의 필드를 조회하면 ") {
             Then("정상적으로 조회한다.") {
                 shouldNotThrowAny {
