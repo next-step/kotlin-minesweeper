@@ -1,7 +1,7 @@
 package minesweeper.domain.tile.pos
 
 @JvmInline
-value class Position(private val value: Int) {
+value class Position(val value: Int) {
     init {
         require(value in MINIMUM_POSITION..MAXIMUM_POSITION) { "높이와 너비는 $MINIMUM_POSITION 이상 $MAXIMUM_POSITION 이하의 정수여야 합니다." }
     }
