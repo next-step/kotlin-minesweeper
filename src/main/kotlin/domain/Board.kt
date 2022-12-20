@@ -9,10 +9,10 @@ class Board(
     val mineCnt: MineCnt,
     strategy: BoardGenerateStrategy = RandomMineBoardGenerateStrategy(),
 ) {
-    val fields: Fields = strategy.generate(height.value * width.value, mineCnt)
+    val fields: Fields = strategy.generate(height, width, mineCnt)
 
     fun getField(height: Int, width: Int): Field {
-        val coordinate = Coordinate(this.height.value * height + width)
+        val coordinate = Coordinate(height, width)
         return fields.getField(coordinate)
     }
 }

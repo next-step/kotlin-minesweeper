@@ -1,5 +1,6 @@
 package domain
 
 data class Coordinate(
-    val value: Int
+    val row: Int,
+    val col: Int,
 )
