@@ -2,7 +2,6 @@ package domain.strategy
 
 import domain.Coordinate
 import domain.Field
-import domain.FieldType
 import domain.Fields
 import domain.Land
 import domain.Mine
@@ -25,13 +24,15 @@ class RandomMineBoardGenerateStrategy : BoardGenerateStrategy {
     }
 
     private fun generateFieldMap(maxCoordinateSize: Int, mineCoordinate: List<Coordinate>): Map<Coordinate, Field> {
-        return List(maxCoordinateSize) { number ->
+        val map = mutableMapOf<Coordinate, Field>()
+        repeat(maxCoordinateSize) { number ->
             val coordinate = Coordinate(number)
             when (coordinate in mineCoordinate) {
-                true -> coordinate to Mine(coordinate, FieldType.MINE)
-                false -> coordinate to Land(coordinate, FieldType.LAND)
+                true -> map[coordinate] = Mine()
+                false -> map[coordinate] = Land()
             }
-        }.toMap()
+        }
+        return map
     }
 
     companion object {
