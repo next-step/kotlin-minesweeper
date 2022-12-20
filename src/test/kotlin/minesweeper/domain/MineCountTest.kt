@@ -11,7 +11,16 @@ class MineCountTest {
     fun minimumSize() {
         AssertionsForClassTypes.assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {
-                MineCount(0)
+                MineCount(0, 10)
+            }
+    }
+
+    @DisplayName("지뢰 개수는 보드 크기보다 많으면 안됩니다")
+    @Test
+    fun exceedMineNumber() {
+        AssertionsForClassTypes.assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy {
+                MineCount(11, 10)
             }
     }
 }

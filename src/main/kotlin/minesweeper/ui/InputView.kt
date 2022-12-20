@@ -21,11 +21,11 @@ class InputView {
         return ColumnCount(columnCount)
     }
 
-    fun inputMineCount(): MineCount {
+    fun inputMineCount(boardSize: Int): MineCount {
         println()
         println("지뢰는 몇 개인가요?")
         val mineCount: Int = readlnOrNull()?.toIntOrNull() ?: 0
-        if (mineCount <= 0) return inputMineCount()
-        return MineCount(mineCount)
+        if (mineCount <= 0) return inputMineCount(boardSize)
+        return MineCount(mineCount, boardSize)
     }
 }

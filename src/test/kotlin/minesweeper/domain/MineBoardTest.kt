@@ -1,17 +1,27 @@
 package minesweeper.domain
 
-import org.assertj.core.api.AssertionsForClassTypes
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class MineBoardTest {
 
-    @DisplayName("지뢰 개수는 보드 크기보다 작거나 같아야 합니다.")
+    @DisplayName("보드판에 지뢰를 확인합니다")
     @Test
-    fun minimumMineCount() {
-        AssertionsForClassTypes.assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy {
-                MineBoard(RowCount(10), ColumnCount(10), MineCount(101))
-            }
+    fun checkMine() {
+        val rowCount = RowCount(10)
+        val columnCount = ColumnCount(10)
+        val mineCount = MineCount(
+            count = 3,
+            boardSize = rowCount * columnCount,
+            minePositionList = listOf(1, 2, 3)
+        )
+
+        val board = MineBoard(rowCount, columnCount, mineCount)
+
+        board.coordinates[0].isMine() shouldBe false
+        board.coordinates[1].isMine() shouldBe true
+        board.coordinates[2].isMine() shouldBe true
+        board.coordinates[3].isMine() shouldBe true
     }
 }
