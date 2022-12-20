@@ -13,6 +13,6 @@ class MineCount(
 
     fun makeMinePositionList(): List<Int> {
         if (minePositionList.isNotEmpty()) return minePositionList
-        return (1..boardSize).shuffled().take(count)
+        return (0 until boardSize).shuffled().take(count)
     }
 }
