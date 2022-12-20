@@ -13,7 +13,7 @@ class ResultView {
 
     private fun makeBoardText(board: MineBoard): String {
         var result = ""
-        repeat(board.rowSize) { rowIndex ->
+        repeat(board.rowSize()) { rowIndex ->
             result += getColumnText(board, rowIndex) + "\n"
         }
         return result
@@ -21,9 +21,9 @@ class ResultView {
 
     private fun getColumnText(board: MineBoard, rowIndex: Int): String {
         var result = ""
-        val level = rowIndex * board.columnSize
+        val level = rowIndex * board.columnSize()
 
-        repeat(board.columnSize) { columnIndex ->
+        repeat(board.columnSize()) { columnIndex ->
             val coordinate = board.coordinates[level + columnIndex]
             result += getCoordinateText(coordinate)
         }

@@ -1,18 +1,26 @@
 package minesweeper.domain
 
-class MineBoard(rowCount: RowCount, columnCount: ColumnCount, mineCount: MineCount) {
+class MineBoard(
+    private val rowCount: RowCount,
+    private val columnCount: ColumnCount,
+    private val mineCount: MineCount
+) {
 
-    val rowSize = rowCount.count
-    val columnSize = columnCount.count
-    private val size: Int = rowSize * columnSize
+    private val size: Int = calculateBoardSize()
 
-    val coordinates: List<Coordinate> = make(mineCount)
+    val coordinates: List<Coordinate> = make()
 
     init {
         require(mineCount.count <= size) { "지뢰 개수는 보드 크기보다 작거나 같아야 합니다." }
     }
 
-    private fun make(mineCount: MineCount): List<Coordinate> {
+    fun rowSize(): Int = rowCount.count
+
+    fun columnSize(): Int = columnCount.count
+
+    private fun calculateBoardSize(): Int = rowCount * columnCount
+
+    private fun make(): List<Coordinate> {
         val mineCoordinates: List<Int> = (0..size).shuffled().take(mineCount.count)
 
         return List(size) { index ->
@@ -20,4 +28,6 @@ class MineBoard(rowCount: RowCount, columnCount: ColumnCount, mineCount: MineCou
             Coordinate(CoordinateType.NONE)
         }
     }
+
+    private operator fun RowCount.times(columnCount: ColumnCount): Int = count * columnCount.count
 }
