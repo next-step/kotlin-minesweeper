@@ -4,7 +4,7 @@ import minesweeper.domain.tile.Symbol
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.state.Opened
 
-class Mine(coordinate: Coordinate) : Opened(coordinate) {
+data class Mine(override val coordinate: Coordinate) : Opened() {
     override val isMine: Boolean = true
 
     override val symbol: Symbol = Symbol.MINE
