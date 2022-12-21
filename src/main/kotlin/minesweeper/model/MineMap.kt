@@ -4,8 +4,8 @@ class MineMap private constructor(
     private val value: List<List<Cell>>
 ) : List<List<Cell>> by value {
     init {
-        require(value.isNotEmpty())
-        require(value.first().isNotEmpty())
+        require(value.isNotEmpty()) { "행의 크기는 0이 될 수 없습니다." }
+        require(value.first().isNotEmpty()) { "열의 크기는 0이 될 수 없습니다." }
     }
 
     val rowSize = value.size
