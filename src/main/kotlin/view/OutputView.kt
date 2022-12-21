@@ -2,6 +2,7 @@ package view
 
 import domain.Block
 import domain.Board
+import domain.Position
 
 object OutputView {
     private const val MARK_MINE_BLOCK = "*"
@@ -22,8 +23,8 @@ object OutputView {
         )
     }
 
-    private fun parseListAsBlockMark(blocks: List<Block>): List<String> {
-        return blocks.map { getBlockMark(it.isMine()) }
+    private fun parseListAsBlockMark(blocks: Map<Position, Block>): List<String> {
+        return blocks.map { getBlockMark(it.value.isMine()) }
     }
 
     private fun List<List<String>>.joinMineField(): String {

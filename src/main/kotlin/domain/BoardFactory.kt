@@ -9,7 +9,7 @@ class BoardFactory(
     fun generate(rectangle: Rectangle, mineCount: MineCount): Board {
         val positions = rectangle.toPositions()
         val minePositions = positionsSelectStrategy.getMinePositions(positions, mineCount)
-        val blocks = positions.map { if (minePositions.contains(it)) Mine(it) else NormalBlock(it) }
+        val blocks = positions.associateWith { if (minePositions.contains(it)) Mine(it) else NormalBlock(it) }
         return Board(rectangle, blocks)
     }
 }

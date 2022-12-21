@@ -2,9 +2,11 @@ package domain
 
 data class Board(
     private val rectangle: Rectangle,
-    private val blocks: List<Block>
+    private val blocks: Map<Position, Block>
 ) {
-    fun getBlocks(): List<Block> = blocks
+    fun getBlocks(): Map<Position, Block> = blocks
+
     fun getWidth(): Int = rectangle.getWidth()
+
     fun getHeight(): Int = rectangle.getHeight()
 }

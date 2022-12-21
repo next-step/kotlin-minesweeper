@@ -8,6 +8,12 @@ data class Rectangle(
     fun getHeight(): Int = height.value
 
     fun toPositions(): List<Position> {
-        return Position.createAll(this)
+        return (POSITION_START until height.value).flatMap { y ->
+            (POSITION_START until width.value).map { Position(it, y) }
+        }
+    }
+
+    companion object {
+        private const val POSITION_START = 0
     }
 }

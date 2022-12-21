@@ -10,6 +10,6 @@ class BoardFactoryTest {
         val mineCount = MineCount(5)
         val board = BoardFactory().generate(rectangle, mineCount)
         board.getBlocks().size shouldBe 25
-        board.getBlocks().count { it.isMine() } shouldBe mineCount.value
+        board.getBlocks().count { it.value.isMine() } shouldBe mineCount.value
     }
 }
