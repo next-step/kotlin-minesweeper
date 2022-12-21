@@ -1,3 +1,3 @@
 package minesweeper.model
 
-data class Cell(private val x: Int, private val y: Int)
+data class Cell(val x: Int, val y: Int)
