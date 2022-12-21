@@ -15,4 +15,9 @@ class Board(
         val coordinate = Coordinate(height, width)
         return fields.getField(coordinate)
     }
+
+    fun getNearByMine(height: Int, width: Int): List<Field> {
+        val coordinate = Coordinate(height, width)
+        return fields.getNearByFields(coordinate).filterIsInstance<Mine>()
+    }
 }

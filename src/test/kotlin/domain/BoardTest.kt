@@ -3,6 +3,7 @@ package domain
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 
 internal class BoardTest : BehaviorSpec({
     Given("보드가 주어졌을 때 ") {
@@ -21,6 +22,15 @@ internal class BoardTest : BehaviorSpec({
                 shouldThrow<IllegalArgumentException> {
                     board.getField(13, 13)
                 }
+            }
+        }
+
+        val coordinate = Coordinate(5, 5)
+        val mineCnt = board.fields.getNearByFields(coordinate).count { it is Mine }
+
+        When("주변에 지뢰가 있다면 ") {
+            Then("정상적으로 가져온다.") {
+                board.getNearByMine(5, 5).size shouldBe mineCnt
             }
         }
     }
