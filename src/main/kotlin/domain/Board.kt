@@ -9,4 +9,6 @@ data class Board(
     fun getWidth(): Int = rectangle.getWidth()
 
     fun getHeight(): Int = rectangle.getHeight()
+
+    fun getBlockByPosition(position: Position): Block? = blocks[position]
 }
