@@ -13,4 +13,14 @@ internal class BoardTest : StringSpec({
 
         board.cells.filterIsInstance<Mine>().size shouldBe mineCount.value
     }
+
+    "지뢰 개수를 제외한 나머지 칸은 빈칸이다." {
+        val row = Row(3)
+        val column = Column(3)
+        val mineCount = MineCount(4)
+
+        val board = Board.from(row, column, mineCount)
+
+        board.cells.filterIsInstance<Blank>().size shouldBe (row * column) - mineCount.value
+    }
 })
