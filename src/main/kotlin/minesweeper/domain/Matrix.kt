@@ -2,35 +2,27 @@ package minesweeper.domain
 
 class Matrix(val rows: List<Row>) {
     operator fun set(x: Int, y: Int, dot: Field) {
-        require(y in (1..rows.size))
+        require(y in rows.indices)
 
-        this.rows[y - 1][x] = dot
+        this.rows[y][x] = dot
     }
 
     operator fun set(coordinate: Coordinate, dot: Field) {
-        require(coordinate.y in (1..rows.size))
+        require(coordinate.y in rows.indices)
 
-        this.rows[coordinate.y - 1][coordinate.x] = dot
+        this.rows[coordinate.y][coordinate.x] = dot
     }
 
     operator fun get(x: Int, y: Int): Field {
-        require(y in (1..rows.size))
+        require(y in rows.indices)
 
-        return rows[y - 1][x]
+        return rows[y][x]
     }
 
     operator fun get(coordinate: Coordinate): Field {
-        require(coordinate.y in (1..rows.size))
+        require(coordinate.y in rows.indices)
 
-        return rows[coordinate.y - 1][coordinate.x]
-    }
-
-    fun coordinates(): List<Coordinate> {
-        return (1..rows.size).flatMap { y: Int ->
-            (1..rows[0].fields.size).map { x: Int ->
-                Coordinate(x, y)
-            }
-        }
+        return rows[coordinate.y][coordinate.x]
     }
 
     fun width(): Int {

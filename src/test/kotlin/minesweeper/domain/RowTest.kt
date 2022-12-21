@@ -15,7 +15,7 @@ internal class RowTest {
     fun `x 값을 통해 값을 구할 수 있다`() {
         val row = Row.init(2)
 
-        row[1] shouldBe row.fields[0]
+        row[0] shouldBe row.fields[0]
     }
 
     @Test
@@ -23,9 +23,9 @@ internal class RowTest {
         val row = Row.init(2)
         val mine = Mine()
 
-        row[1] = mine
+        row[0] = mine
 
-        row[1] shouldBe mine
+        row[0] shouldBe mine
         row.fields[0] shouldBe mine
     }
 }
