@@ -1,9 +1,12 @@
 package domain
 
 class Board(cells: List<Cell>) {
+    init {
+        cells.sortedWith(compareBy({ it.coordinate.x.value }, { it.coordinate.y.value })).toList()
+    }
     private val _cells: MutableList<Cell> = cells.toMutableList()
     val cells: List<Cell>
-        get() = _cells.sortedWith(compareBy({ it.coordinate.x.value }, { it.coordinate.y.value })).toList()
+        get() = _cells.toList()
 
     companion object {
         fun from(row: Row, column: Column, mineCount: MineCount): Board {
