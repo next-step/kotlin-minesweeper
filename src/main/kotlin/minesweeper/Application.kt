@@ -12,9 +12,7 @@ fun main() {
     val height = input.getHeight()
     val width = input.getWidth()
 
-    val board = Board(Matrix.of(width, height))
-    board.createRandomMine(input.getMineCount())
-    board.createSafe()
+    val board = Board(Matrix.of(width, height), input.getMineCount())
 
     output.printBoard(board)
 }

@@ -1,8 +1,13 @@
 package minesweeper.domain
 
-class Board(val matrix: Matrix) {
-    fun createRandomMine(count: Int) {
-        require(count < matrix.width() * matrix.height()) {
+class Board(val matrix: Matrix, mineCount: Int) {
+    init {
+        createRandomMine(mineCount)
+        createSafe()
+    }
+
+    private fun createRandomMine(count: Int) {
+        require(count <= matrix.width() * matrix.height()) {
             "지뢰 개수는 지도에 존재하는 모든 필드의 수보다 클 수 없습니다."
         }
 
@@ -11,7 +16,7 @@ class Board(val matrix: Matrix) {
             .forEach { matrix[it] = Mine() }
     }
 
-    fun createSafe() {
+    private fun createSafe() {
         matrix.coordinates()
             .forEach { if (matrix[it] !is Mine) matrix[it] = Safe(aroundMineCount(it)) }
     }
