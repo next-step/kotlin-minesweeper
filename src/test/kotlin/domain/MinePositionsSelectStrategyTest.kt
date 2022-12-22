@@ -20,7 +20,7 @@ class MinePositionsSelectStrategyTest {
     @Test
     fun `위치 수와 지뢰 수가 같으면 전체가 반환된다`() {
         val minePositions = listOf(
-            Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)
+            Position.of(0, 0), Position.of(0, 1), Position.of(1, 0), Position.of(1, 1)
         )
         val positionsSelector = RandomMinePositionsSelectStrategy()
         positionsSelector.getMinePositions(fakePositions, MineCount(minePositions.size)) shouldContainAll minePositions

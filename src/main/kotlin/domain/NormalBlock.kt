@@ -5,5 +5,4 @@ data class NormalBlock(
     override val mineCount: MineCount
 ) : Block {
     override fun isMine(): Boolean = false
-
 }
