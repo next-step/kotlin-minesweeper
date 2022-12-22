@@ -12,4 +12,13 @@ class BoardFactoryTest {
         board.getBlocks().size shouldBe 25
         board.getBlocks().count { it.value.isMine() } shouldBe mineCount.value
     }
+
+    @Test
+    fun `보드 생성시 각 블록은 주변 지뢰 수를 계산하여 가지고 생성된다`() {
+        val rectangle = Rectangle(Width(2), Height(2))
+        val mineCount = MineCount(1)
+        val board = BoardFactory().generate(rectangle, mineCount)
+        val block = board.getBlockByPosition(Position.of(0, 0))
+        block?.getMineCount() shouldBe 1
+    }
 }
