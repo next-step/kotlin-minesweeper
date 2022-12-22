@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 class MineCount(
-    private val count: Int,
+    val count: Int,
     private val boardSize: Int,
     private val minePositionList: List<Int> = emptyList()
 ) {

@@ -27,3 +27,7 @@ class MineBoard(
 }
 
 operator fun RowCount.times(columnCount: ColumnCount): Int = count * columnCount.count
+
+fun MineBoard(block: MineBoardBuilder.() -> Unit): MineBoard {
+    return MineBoardBuilder().apply(block).build()
+}

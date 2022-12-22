@@ -15,7 +15,11 @@ fun main() {
     val columnCount: ColumnCount = inputView.inputColumnCount()
     val mineCount: MineCount = inputView.inputMineCount(boardSize = rowCount * columnCount)
 
-    val board = MineBoard(rowCount, columnCount, mineCount)
+    val board = MineBoard {
+        rows(rowCount)
+        columns(columnCount)
+        mines(mineCount)
+    }
 
     val resultView = ResultView()
     resultView.showBoard(board)

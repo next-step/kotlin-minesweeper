@@ -17,7 +17,11 @@ class MineBoardTest {
             minePositionList = listOf(1, 2, 3)
         )
 
-        val board = MineBoard(rowCount, columnCount, mineCount)
+        val board = MineBoard {
+            rows(rowCount)
+            columns(columnCount)
+            mines(mineCount)
+        }
 
         board.coordinates[0].isMine() shouldBe false
         board.coordinates[1].isMine() shouldBe true
