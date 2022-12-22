@@ -2,6 +2,8 @@ package domain
 
 import domain.block.Land
 import domain.block.Mine
+import domain.coord.Coordinate
+import domain.coord.RelativeCoordinate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -38,7 +40,7 @@ internal class CoordinateTest {
     internal fun `y 또는 x 좌표의 합중 하나라도 음수이면 두 좌표는 더할 수 없다`(y1: Int, x1: Int, y2: Int, x2: Int) {
         // given
         val coordinate1 = Coordinate(y1, x1)
-        val coordinate2 = Coordinate(y2, x2)
+        val coordinate2 = RelativeCoordinate(y2, x2)
 
         // when
         val isPossiblePlus = coordinate1.isPossiblePlus(coordinate2)

@@ -1,14 +1,17 @@
-package domain
+package domain.coord
 
+import domain.LocationOfMines
 import domain.block.Block
 import domain.block.Land
 import domain.block.Mine
+import domain.pos.AbstractPos
+import domain.pos.Pos
 
 data class Coordinate(
-    val y: Pos,
-    val x: Pos
-) {
-    constructor(y: Int, x: Int) : this(Pos.of(y), Pos.of(x))
+    override val y: Pos,
+    override val x: Pos
+) : Coord {
+    constructor(y: Int, x: Int) : this(AbstractPos.of(y), AbstractPos.of(x))
 
     fun toBlock(mines: LocationOfMines): Block {
         return if (mines.exist(this)) {
@@ -18,7 +21,7 @@ data class Coordinate(
         }
     }
 
-    fun isPossiblePlus(target: Coordinate): Boolean {
+    fun isPossiblePlus(target: Coord): Boolean {
         if (y.isNotPossiblePlus(target.y)) {
             return false
         }
@@ -29,6 +32,4 @@ data class Coordinate(
 
         return true
     }
-
-    operator fun plus(target: Coordinate): Coordinate = Coordinate(y + target.y, x + target.x)
 }

@@ -1,5 +1,7 @@
 package domain
 
+import domain.coord.Coordinate
+
 class Field(
     val rows: List<Row>
 ) {

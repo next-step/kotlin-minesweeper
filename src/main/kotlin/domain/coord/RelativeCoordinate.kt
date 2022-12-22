@@ -1,0 +1,12 @@
+package domain.coord
+
+import domain.pos.Pos
+import domain.pos.RelativePos
+
+data class RelativeCoordinate(
+    override val y: Pos,
+    override val x: Pos
+) : Coord {
+
+    constructor(y: Int, x: Int) : this(RelativePos.of(y), RelativePos.of(x))
+}

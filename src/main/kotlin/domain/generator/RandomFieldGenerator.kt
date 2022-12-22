@@ -1,8 +1,8 @@
 package domain.generator
 
-import domain.Coordinate
 import domain.Field
 import domain.LocationOfMines
+import domain.coord.Coordinate
 
 class RandomFieldGenerator : FieldGenerator {
     override fun generate(height: Int, width: Int, mineCount: Int): Field {
