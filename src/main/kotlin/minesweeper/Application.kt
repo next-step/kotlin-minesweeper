@@ -1,38 +1,18 @@
 package minesweeper
 
-import minesweeper.domain.Map
-import minesweeper.domain.Mine
-import minesweeper.domain.Position
+import minesweeper.domain.Board
+import minesweeper.domain.Matrix
 import minesweeper.io.Input
 import minesweeper.io.Output
-import kotlin.random.Random
 
 fun main() {
     val input = Input()
     val output = Output()
 
-    val maxSize = Position(input.getHeight(), input.getWidth())
-    val mineCount = input.getMineCount()
+    val height = input.getHeight()
+    val width = input.getWidth()
 
-    val mines = getRandomMineList(maxSize, mineCount)
-    val map = Map(maxSize, mines)
+    val board = Board(Matrix.of(width, height), input.getMineCount())
 
-    output.printMap(map)
-}
-
-fun getRandomMineList(maxSize: Position, count: Int): List<Mine> {
-    val mineList = mutableListOf<Mine>()
-
-    while (mineList.count() != count) {
-        val mine = createRandomMine(maxSize)
-        if (!mineList.contains(mine)) mineList.add(mine)
-    }
-
-    return mineList
-}
-
-fun createRandomMine(maxSize: Position): Mine {
-    val width = Random.nextInt(1, maxSize.width + 1)
-    val height = Random.nextInt(1, maxSize.height + 1)
-    return Mine(Position(width, height))
+    output.printBoard(board)
 }
