@@ -12,5 +12,3 @@ fun main() {
 
     ResultView.printGameStart(field)
 }
-
-class MainController

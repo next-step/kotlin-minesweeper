@@ -3,7 +3,6 @@ package domain
 data class Pos private constructor(
     val value: Int
 ) {
-
     init {
         require(value >= MIN_VALUE) { "입력값은 0 이상이어야 합니다." }
     }
