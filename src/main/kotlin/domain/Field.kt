@@ -5,15 +5,15 @@ class Field(
 ) {
     companion object {
         fun create(height: Int, width: Int, mines: LocationOfMines): Field {
-            val rows = (0 until height).map { y ->
-                Row(
-                    (0 until width).map { x ->
-                        Cell.init(x, Coordinate(y, x).toBlock(mines))
-                    }
-                )
-            }
+            val rows = (0 until height).map { y -> y.rows(width, mines) }
 
             return Field(rows)
         }
+
+        private fun Int.rows(maxWidth: Int, mines: LocationOfMines) = Row(
+            (0 until maxWidth).map { x ->
+                Cell.init(x, Coordinate(this, x).toBlock(mines))
+            }
+        )
     }
 }
