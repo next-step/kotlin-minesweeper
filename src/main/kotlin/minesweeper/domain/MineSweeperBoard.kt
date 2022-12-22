@@ -1,15 +1,12 @@
-package minesweeper
+package minesweeper.domain
 
 import java.util.Random
 
-const val BLOCK_CHARACTER = "C"
-const val MINE_CHARACTER = "*"
-
 class MineSweeperBoard(width: Int, height: Int, mineCount: Int = 0) {
 
-    private val _state: MutableList<MutableList<String>>
+    private val _state: MutableList<MutableList<Block>>
 
-    val state: List<List<String>>
+    val state: List<List<Block>>
         get() = _state.toList()
 
     val mineCount
@@ -24,7 +21,7 @@ class MineSweeperBoard(width: Int, height: Int, mineCount: Int = 0) {
         plantMines(mineCount)
     }
 
-    private fun buildBoard(width: Int, height: Int): MutableList<MutableList<String>> {
+    private fun buildBoard(width: Int, height: Int): MutableList<MutableList<Block>> {
         return buildList {
             repeat(height) {
                 add(
@@ -34,10 +31,10 @@ class MineSweeperBoard(width: Int, height: Int, mineCount: Int = 0) {
         }.toMutableList()
     }
 
-    private fun buildRows(width: Int): MutableList<String> {
+    private fun buildRows(width: Int): MutableList<Block> {
         return buildList {
             repeat(width) {
-                add(BLOCK_CHARACTER)
+                add(SafeBlock())
             }
         }.toMutableList()
     }
@@ -47,13 +44,13 @@ class MineSweeperBoard(width: Int, height: Int, mineCount: Int = 0) {
             val height = Random().nextInt(_state.size)
             val width = Random().nextInt(_state[0].size)
 
-            _state[height][width] = MINE_CHARACTER
+            _state[height][width] = MineBlock()
         }
     }
 
     private fun countMine(): Int {
         return _state.fold(0) { total, row ->
-            total + row.count { block -> block == MINE_CHARACTER }
+            total + row.count { block -> block is MineBlock }
         }
     }
 }
