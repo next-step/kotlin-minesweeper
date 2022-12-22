@@ -14,7 +14,21 @@ data class Coordinate(
         return if (mines.exist(this)) {
             Mine()
         } else {
-            Land()
+            Land(mines.countByNearMines(this))
         }
     }
+
+    fun isPossiblePlus(target: Coordinate): Boolean {
+        if (y.isNotPossiblePlus(target.y)) {
+            return false
+        }
+
+        if (x.isNotPossiblePlus(target.x)) {
+            return false
+        }
+
+        return true
+    }
+
+    operator fun plus(target: Coordinate): Coordinate = Coordinate(y + target.y, x + target.x)
 }
