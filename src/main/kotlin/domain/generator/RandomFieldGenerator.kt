@@ -14,11 +14,11 @@ class RandomFieldGenerator : FieldGenerator {
     private fun createMineCoordinates(height: Int, width: Int, mineCount: Int): LocationOfMines =
         LocationOfMines(
             (MIN_VALUE until height).flatMap { y ->
-                (MIN_VALUE until width).map { x ->
-                    Coordinate(y, x)
-                }
+                y.coordinates(width)
             }.shuffled().subList(0, mineCount)
         )
+
+    private fun Int.coordinates(maxWidth: Int): List<Coordinate> = (MIN_VALUE until maxWidth).map { x -> Coordinate(this, x) }
 
     companion object {
         private const val MIN_VALUE = 0
