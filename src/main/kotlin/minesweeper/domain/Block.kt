@@ -1,7 +1,17 @@
 package minesweeper.domain
 
-abstract class Block {
-
-    abstract val mark: String
+sealed class Block {
     abstract fun open()
+}
+
+class MineBlock : Block() {
+    override fun open() {
+        TODO("Not yet implemented")
+    }
+}
+
+class SafeBlock : Block() {
+    override fun open() {
+        TODO("Not yet implemented")
+    }
 }

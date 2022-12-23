@@ -28,6 +28,6 @@
 - [ ] `Custom Exception` 사용
 - [ ] 지뢰의 수를 측정하는 메소드와 변수 정리
 - [ ] `View` 를 `Interface`로 두고 `Controller`에 테스트 추가
-- [ ] `View` 에서 처리해야할 로직들 이동
-   - [ ] `Blcok` 클래스의 `mark` 삭제 -> `View`로 이동
-   - [ ] 모델들의 `toString()` -> `View`로 이동
+- [x] `View` 에서 처리해야할 로직들 이동
+   - [x] `Blcok` 클래스의 `mark` 삭제 -> `View`로 이동
+   - [x] 모델들의 `toString()` -> `View`로 이동
