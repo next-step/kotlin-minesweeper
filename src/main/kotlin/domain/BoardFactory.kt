@@ -16,12 +16,12 @@ class BoardFactory(
     private fun createBlocks(positions: List<Position>, minePositions: List<Position>): Map<Position, Block> {
         return positions.associateWith {
             val mineCount = getMineCountFromSurroundings(it, minePositions)
-            if (minePositions.contains(it)) Mine(it, MineCount(mineCount + 1))
-            else NormalBlock(it, MineCount(mineCount))
+            if (minePositions.contains(it)) Mine(it, mineCount)
+            else NormalBlock(it, mineCount)
         }
     }
 
-    private fun getMineCountFromSurroundings(position: Position, minePositions: List<Position>): Int {
-        return position.surroundings().count { minePositions.contains(it) }
+    private fun getMineCountFromSurroundings(position: Position, minePositions: List<Position>): MineCount {
+        return MineCount(position.surroundings().count { minePositions.contains(it) })
     }
 }
