@@ -1,27 +1,17 @@
 package view
 
-import domain.Blank
-import domain.Board
-import domain.Cell
 import domain.Column
 import domain.Game
-import domain.Mine
+import dto.BoardDto
 
 object ResultView {
-    fun printBoard(game: Game, board: Board) {
+    fun printBoard(game: Game, boardDto: BoardDto) {
         println("지뢰찾기 게임 시작")
 
-        board.cells.forEachIndexed { index, it ->
-            print("${toStringCell(it)} ")
+        boardDto.cells.forEachIndexed { index, it ->
+            print("$it ")
 
             if (isSpace(index, game.column)) println()
-        }
-    }
-
-    private fun toStringCell(cell: Cell): String {
-        return when (cell) {
-            is Mine -> "*"
-            is Blank -> "C"
         }
     }
 

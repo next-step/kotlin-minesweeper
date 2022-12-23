@@ -1,6 +1,7 @@
 package controller
 
 import domain.Game
+import dto.BoardDto
 import view.InputView
 import view.ResultView
 
@@ -12,7 +13,7 @@ class MinesweeperController {
 
         val game = Game(row, column, mineCount)
         val board = game.createBoard()
-        ResultView.printBoard(game, board)
+        ResultView.printBoard(game, BoardDto.from(board))
     }
 }
 
