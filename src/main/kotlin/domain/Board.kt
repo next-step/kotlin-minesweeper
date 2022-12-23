@@ -9,28 +9,14 @@ class Board(cells: List<Cell>) {
 
     companion object {
         fun from(row: Row, column: Column, mineCount: MineCount): Board {
-            val cellSize = row.value * column.value
+            val cellSize = row * column
 
             val locations = List(cellSize) { it }
             val randomMineLocations = (0 until cellSize).shuffled().take(mineCount.value)
             val blankLocations = locations - randomMineLocations.toSet()
+            val cellGenerator = CellGenerator(blankLocations, randomMineLocations, row)
 
-            val mineCells = makeMineCells(randomMineLocations, row)
-            val blankCells = makeBlankCells(blankLocations, row)
-
-            return Board(mineCells + blankCells)
-        }
-
-        private fun makeMineCells(cells: List<Int>, row: Row): List<Cell> {
-            return cells.map {
-                Mine.from(it / row.value + 1, it % row.value + 1)
-            }
-        }
-
-        private fun makeBlankCells(cells: List<Int>, row: Row): List<Cell> {
-            return cells.map {
-                Blank.from(it / row.value + 1, it % row.value + 1)
-            }
+            return Board(cellGenerator.minesGenerate() + cellGenerator.blanksGenerate())
         }
     }
 }
