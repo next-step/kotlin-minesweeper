@@ -6,7 +6,6 @@ import domain.Position
 
 object OutputView {
     private const val MARK_MINE_BLOCK = "*"
-    private const val MARK_NORMAL_BLOCK = "C"
     private const val SEPARATOR_ROW = "\n"
     private const val SEPARATOR_BLOCK = " "
 
@@ -17,21 +16,21 @@ object OutputView {
 
     private fun printBoard(board: Board) {
         println(
-            parseListAsBlockMark(board.getBlocks())
+            getBlocksAsView(board.getBlocks())
                 .chunked(board.getWidth())
                 .joinMineField()
         )
     }
 
-    private fun parseListAsBlockMark(blocks: Map<Position, Block>): List<String> {
-        return blocks.map { getBlockMark(it.value.isMine()) }
+    private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {
+        return blocks.map { getBlockView(it.value) }
     }
 
     private fun List<List<String>>.joinMineField(): String {
         return this.joinToString(SEPARATOR_ROW) { it.joinToString(SEPARATOR_BLOCK) }
     }
 
-    private fun getBlockMark(isMine: Boolean): String {
-        return if (isMine) MARK_MINE_BLOCK else MARK_NORMAL_BLOCK
+    private fun getBlockView(block: Block): String {
+        return if (block.isMine()) MARK_MINE_BLOCK else block.getMineCount().toString()
     }
 }
