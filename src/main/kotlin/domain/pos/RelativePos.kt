@@ -10,6 +10,8 @@ class RelativePos private constructor(
         require(allowableRange.contains(value)) { "상대 좌표는 -1, 0, 1만 올 수 있어요." }
     }
 
+    override fun plus(target: Pos): Pos = of(value + target.value)
+
     companion object {
         private const val MIN_VALUE = -1
         private const val MAX_VALUE = 1

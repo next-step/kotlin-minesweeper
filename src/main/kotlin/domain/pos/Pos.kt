@@ -5,5 +5,5 @@ sealed interface Pos {
 
     fun isPossiblePlus(target: Pos): Boolean = value + target.value >= 0
 
-    operator fun plus(target: Pos): Pos = AbstractPos.of(value + target.value)
+    operator fun plus(target: Pos): Pos
 }
