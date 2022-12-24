@@ -10,13 +10,14 @@ object OutputView {
 
     fun printMineBoard(mineBoard: MineBoard) {
         println("\n지뢰찾기 게임 시작")
-        mineBoard.map.forEach { row -> printRow(row, mineBoard) }
+        val mineMap = mineBoard.mineMap
+        mineMap.forEach { row -> printRow(row, mineBoard::checkMine) }
     }
 
-    private fun printRow(row: List<Cell>, board: MineBoard) {
+    private fun printRow(row: List<Cell>, checkMine: (Cell) -> Boolean) {
         println(
             row.joinToString(CELL_SPACE) { cell ->
-                if (board.checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
+                if (checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
             }
         )
     }

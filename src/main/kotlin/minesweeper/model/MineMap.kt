@@ -2,7 +2,7 @@ package minesweeper.model
 
 class MineMap private constructor(
     private val value: List<List<Cell>>
-) : List<List<Cell>> by value {
+) {
     init {
         require(value.isNotEmpty()) { "행의 크기는 0이 될 수 없습니다." }
         require(value.first().isNotEmpty()) { "열의 크기는 0이 될 수 없습니다." }
@@ -20,6 +20,10 @@ class MineMap private constructor(
             .take(mineCount)
             .toSet()
         return Mines(shuffledMines)
+    }
+
+    fun forEach(action: (List<Cell>) -> Unit) {
+        value.forEach(action)
     }
 
     companion object {
