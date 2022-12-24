@@ -14,7 +14,7 @@ class Field(
 
         private fun Int.rows(maxWidth: Int, mines: LocationOfMines) = Row(
             (0 until maxWidth).map { x ->
-                Cell.init(x, Coordinate(this, x).toBlock(mines))
+                Cell(Coordinate(this, x).toBlock(mines))
             }
         )
     }
