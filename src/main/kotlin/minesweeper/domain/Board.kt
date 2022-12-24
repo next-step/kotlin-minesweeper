@@ -13,18 +13,18 @@ class Board(val matrix: Matrix, mineCount: Int) {
 
         coordinates().shuffled()
             .take(count)
-            .forEach { matrix[it] = Mine() }
+            .forEach { matrix.set(it, Mine()) }
     }
 
     private fun createSafe() {
         coordinates()
-            .forEach { if (matrix[it] !is Mine) matrix[it] = Safe(aroundMineCount(it)) }
+            .forEach { if (matrix.get(it) !is Mine) matrix.set(it, Safe(aroundMineCount(it))) }
     }
 
     private fun aroundMineCount(coordinate: Coordinate): Int {
         return CoordinateDirection.around(coordinate)
             .filter { it.x in 0 until matrix.width() && it.y in 0 until matrix.height() }
-            .count { matrix[it] is Mine }
+            .count { matrix.get(it) is Mine }
     }
 
     private fun coordinates() = matrix.rows.indices.flatMap { y: Int -> rowsCoordinates(y) }
