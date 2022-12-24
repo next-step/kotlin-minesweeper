@@ -9,8 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource
 class MineBoardTest {
     @Test
     internal fun `지뢰 갯수는 높이x너비 값을 넘을 수 없다`() {
-        val cells = List(10) { y -> List(10) { x -> Cell(x, y) } }.flatten()
-        val mines = Mines.of(cells)
+        val mines = Mines.of(getDefaultCellPool(10, 10))
         val mineMap = MineMap.of(10, 10)
         assertThat(mines.size).isEqualTo(100)
         assertThrows<IllegalArgumentException> { MineBoard(mineMap, mines) }

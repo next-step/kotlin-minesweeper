@@ -2,8 +2,8 @@ package minesweeper.view
 
 import minesweeper.model.Cell
 import minesweeper.model.MineBoard
-import minesweeper.model.MineMap
 import minesweeper.model.MineMap.Companion.INIT_INDEX
+import minesweeper.model.getDefaultCellPool
 
 object OutputView {
     private const val MINE_SYMBOL = "*"
@@ -11,14 +11,18 @@ object OutputView {
     private const val NEW_LINE = "\n"
 
     fun printMineBoard(mineBoard: MineBoard) {
-        println("\n지뢰찾기 게임 시작")
-        printMap(mineBoard.mineMap, mineBoard::checkMine)
+        print("\n지뢰찾기 게임 시작")
+        val mineMap = mineBoard.mineMap
+        val cellPool = getDefaultCellPool(mineMap.rowSize, mineMap.columnSize)
+        printMineBoardMap(cellPool, mineBoard)
     }
 
-    private fun printMap(mineMap: MineMap, checkMine: (Cell) -> Boolean) {
-        mineMap.forEach { cell ->
-            print(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
-            print(if (checkMine(cell)) MINE_SYMBOL else "${cell.nearMineCount}")
+    private fun printMineBoardMap(cells: List<Cell>, board: MineBoard) {
+        val builder = StringBuilder()
+        cells.forEach { cell ->
+            builder.append(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
+            builder.append(if (board.checkMine(cell)) MINE_SYMBOL else board.getNearCount(cell))
         }
+        println(builder)
     }
 }
