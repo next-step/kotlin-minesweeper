@@ -1,6 +1,7 @@
+package model
+
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import model.Cell
 
 class CellTest : StringSpec({
     "이름을 C 로 같는 셀 객체를 생성한다" {

@@ -7,7 +7,7 @@ object MineCreator {
         rows: Int,
         cols: Int,
         mineCount: Int,
-        mines: MutableSet<Location>
+        mines: MutableSet<Location> = mutableSetOf()
     ): MutableSet<Location> =
         when (mines.size) {
             mineCount -> mines

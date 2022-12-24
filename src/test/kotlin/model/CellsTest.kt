@@ -1,6 +1,7 @@
+package model
+
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import model.Cells
 
 class CellsTest : StringSpec({
     "가로 세로 지뢰수를 받는 cells 객체를 생성한다" {
