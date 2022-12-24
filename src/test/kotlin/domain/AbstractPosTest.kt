@@ -5,7 +5,6 @@ import domain.pos.RelativePos
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -14,10 +13,13 @@ internal class AbstractPosTest {
 
     @ParameterizedTest
     @ValueSource(ints = [0, 1, 10, 100])
-    internal fun `위치가 생성된다`(input: Int) {
+    internal fun `위치가 input 값으로 잘 생성된다`(input: Int) {
         // given
-        // when, then
-        assertDoesNotThrow { AbstractPos.of(input) }
+        // when
+        val pos = AbstractPos.of(input)
+
+        // then
+        assertThat(pos.value).isEqualTo(input)
     }
 
     @Test
