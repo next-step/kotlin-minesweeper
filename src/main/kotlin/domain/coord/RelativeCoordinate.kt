@@ -6,7 +6,7 @@ import domain.pos.RelativePos
 data class RelativeCoordinate(
     override val y: Pos,
     override val x: Pos
-) : Coord {
+) : Coordinate {
 
     constructor(y: Int, x: Int) : this(RelativePos.of(y), RelativePos.of(x))
 }

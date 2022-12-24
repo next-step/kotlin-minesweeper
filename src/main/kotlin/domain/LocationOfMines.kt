@@ -1,15 +1,15 @@
 package domain
 
-import domain.coord.Coord
+import domain.coord.AbstractCoordinate
 import domain.coord.Coordinate
 import domain.coord.RelativeCoordinate
 
 class LocationOfMines(
-    private val mines: List<Coordinate>
+    private val mines: List<AbstractCoordinate>
 ) {
-    fun exist(coordinate: Coord) = mines.contains(coordinate)
+    fun exist(coordinate: Coordinate) = mines.contains(coordinate)
 
-    fun countByNearMines(coordinate: Coordinate): Int {
+    fun countByNearMines(coordinate: AbstractCoordinate): Int {
         return relativeOfCoords.count { coordinate.isPossiblePlus(it) && exist(coordinate + it) }
     }
 

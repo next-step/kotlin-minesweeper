@@ -2,7 +2,7 @@ package domain.generator
 
 import domain.Field
 import domain.LocationOfMines
-import domain.coord.Coordinate
+import domain.coord.AbstractCoordinate
 
 class RandomFieldGenerator : FieldGenerator {
     override fun generate(height: Int, width: Int, mineCount: Int): Field {
@@ -18,7 +18,7 @@ class RandomFieldGenerator : FieldGenerator {
             }.shuffled().subList(0, mineCount)
         )
 
-    private fun Int.coordinates(maxWidth: Int): List<Coordinate> = (MIN_VALUE until maxWidth).map { x -> Coordinate(this, x) }
+    private fun Int.coordinates(maxWidth: Int): List<AbstractCoordinate> = (MIN_VALUE until maxWidth).map { x -> AbstractCoordinate(this, x) }
 
     companion object {
         private const val MIN_VALUE = 0

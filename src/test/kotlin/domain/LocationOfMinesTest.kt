@@ -1,6 +1,6 @@
 package domain
 
-import domain.coord.Coordinate
+import domain.coord.AbstractCoordinate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -17,19 +17,19 @@ internal class LocationOfMinesTest {
         // given
         val mines = LocationOfMines(
             listOf(
-                Coordinate(0, 1),
-                Coordinate(1, 1),
-                Coordinate(1, 2),
-                Coordinate(2, 2),
+                AbstractCoordinate(0, 1),
+                AbstractCoordinate(1, 1),
+                AbstractCoordinate(1, 2),
+                AbstractCoordinate(2, 2),
             )
         )
 
         // when, then
         assertAll(
-            { assertThat(mines.countByNearMines(Coordinate(0, 0))).isEqualTo(2) },
-            { assertThat(mines.countByNearMines(Coordinate(0, 2))).isEqualTo(3) },
-            { assertThat(mines.countByNearMines(Coordinate(2, 1))).isEqualTo(3) },
-            { assertThat(mines.countByNearMines(Coordinate(2, 3))).isEqualTo(2) }
+            { assertThat(mines.countByNearMines(AbstractCoordinate(0, 0))).isEqualTo(2) },
+            { assertThat(mines.countByNearMines(AbstractCoordinate(0, 2))).isEqualTo(3) },
+            { assertThat(mines.countByNearMines(AbstractCoordinate(2, 1))).isEqualTo(3) },
+            { assertThat(mines.countByNearMines(AbstractCoordinate(2, 3))).isEqualTo(2) }
         )
     }
 }

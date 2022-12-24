@@ -1,6 +1,6 @@
 package domain
 
-import domain.coord.Coordinate
+import domain.coord.AbstractCoordinate
 
 class Field(
     val rows: List<Row>
@@ -14,7 +14,7 @@ class Field(
 
         private fun Int.rows(maxWidth: Int, mines: LocationOfMines) = Row(
             (0 until maxWidth).map { x ->
-                Cell(Coordinate(this, x).toBlock(mines))
+                Cell(AbstractCoordinate(this, x).toBlock(mines))
             }
         )
     }
