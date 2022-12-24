@@ -1,40 +1,29 @@
 package com.nextstep.minesweeper.domain
 
-class MineField(height: Int, width: Int) {
+class MineField(height: Int, width: Int, private val calculatePolicy: (Iterable<Int>) -> List<Int>) {
     private val _fields: Array<MineRow> = Array(height) { MineRow(width) }
 
     val fields: Array<MineRow>
         get() = _fields.copyOf()
 
     fun dispense(mineCounts: Int) {
-        val width = fields.first().size()
-        val height = fields.size
-        val total = width * height
+        val width = Size(fields.first().size())
+        val height = Size(fields.size)
+        val total = width.multiple(height)
 
         validateDispense(total, mineCounts)
-        val positions = calculatePositions(total, mineCounts, width)
+        val positions = MineDispenseHelper.calculatePositions(total, mineCounts, width, calculatePolicy)
         doDispense(positions)
     }
 
-    private fun calculatePositions(
-        total: Int,
-        mineCounts: Int,
-        width: Int
-    ): List<Pair<Int, Int>> {
-        val positions = (0 until total).toList().shuffled().take(mineCounts)
-        return positions.map { Pair(it / width, it % width) }
-    }
-
-    private fun doDispense(positions: List<Pair<Int, Int>>) {
-        for (pair in positions) {
-            val row = pair.first
-            val col = pair.second
-            fields[row].dispense(col)
+    private fun doDispense(positions: List<Position>) {
+        for (position in positions) {
+            fields[position.x].dispense(position.y)
         }
     }
 
-    private fun validateDispense(total: Int, mineCounts: Int) {
-        require(total >= mineCounts) { "지뢰 매설 수량 초과 하였습니다" }
+    private fun validateDispense(total: Size, mineCounts: Int) {
+        require(total.isGreaterThan(mineCounts)) { "지뢰 매설 수량 초과 하였습니다" }
         require(!isDispensed()) { "이미 매설 되었습니다" }
     }
 

@@ -1,5 +1,6 @@
 package com.nextstep.minesweeper.domain
 
+import com.nextstep.minesweeper.domain.TestHelper.Companion.shuffled
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -8,7 +9,7 @@ import java.lang.IllegalArgumentException
 class MineFieldTest : FunSpec({
     context("MineField") {
         test("지뢰 이중 매설 불가") {
-            val mineField = MineField(10, 10)
+            val mineField = MineField(10, 10, shuffled())
             mineField.dispense(5)
 
             val exception = shouldThrow<IllegalArgumentException> {
@@ -18,7 +19,7 @@ class MineFieldTest : FunSpec({
         }
 
         test("지뢰 초과 매설 불가") {
-            val mineField = MineField(10, 10)
+            val mineField = MineField(10, 10, shuffled())
 
             val exception = shouldThrow<IllegalArgumentException> {
                 mineField.dispense(200)
