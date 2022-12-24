@@ -16,11 +16,12 @@ fun main() {
 
 private fun initMineCells(height: Int, width: Int, mineCount: Int): Array<Array<MineCell>> {
     val mineCells = Array(height) { Array(width) { MineCell() } }
-    repeat(mineCount) {
-        val randomIndex = Random.nextInt(height * width)
-        val randomHeight = randomIndex / width
-        val randomWidth = randomIndex % width
-        mineCells[randomHeight][randomWidth] = MineCell(true)
-    }
+    (0 until height * width).shuffled()
+        .take(mineCount)
+        .forEach { randomIndex ->
+            val randomHeight = randomIndex / width
+            val randomWidth = randomIndex % width
+            mineCells[randomHeight][randomWidth] = MineCell(true)
+        }
     return mineCells
 }
