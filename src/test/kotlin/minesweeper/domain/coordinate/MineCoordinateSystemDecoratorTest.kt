@@ -33,7 +33,7 @@ class MineCoordinateSystemDecoratorTest : FreeSpec({
         }
 
         "지뢰 목록을 확인할 수 있다" {
-            mineCoordinateSystemDecorator.mineList.size shouldBe 10
+            mineCoordinateSystemDecorator.mines.shouldNotBeNull()
         }
 
         "생성시 지뢰의 개수가 좌표의 개수보다 크면 에러가 발생한다." {

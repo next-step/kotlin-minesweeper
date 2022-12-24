@@ -2,13 +2,14 @@ package minesweeper.domain.coordinate
 
 import minesweeper.domain.Mine
 import minesweeper.domain.MineGenerator
+import minesweeper.domain.Mines
 
 class MineCoordinateSystemDecorator(
     private val coordinateSystem: CoordinateSystem,
     mineGenerator: MineGenerator,
     mineCount: Int
 ) : CoordinateSystem by coordinateSystem {
-    val mineList: List<Mine>
+    val mines: Mines
 
     init {
         require(mineCount <= height * width) { "좌표의 개수보다 지뢰의 개수가 많을 수 없다" }
@@ -17,6 +18,6 @@ class MineCoordinateSystemDecorator(
             val mine = mineGenerator.generate(height, width)
             mutableSet.add(mine)
         }
-        mineList = mutableSet.toList()
+        mines = Mines(mineList = mutableSet.toList())
     }
 }
