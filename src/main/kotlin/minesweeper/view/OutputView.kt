@@ -14,8 +14,10 @@ object OutputView {
     }
 
     private fun printRow(row: List<Cell>, board: MineBoard) {
-        println(row.joinToString(CELL_SPACE) { cell ->
-            if (board.checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
-        })
+        println(
+            row.joinToString(CELL_SPACE) { cell ->
+                if (board.checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
+            }
+        )
     }
 }

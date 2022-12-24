@@ -12,9 +12,7 @@ class MineMap private constructor(
     val columnSize = value.first().size
 
     fun checkBounds(cell: Cell) =
-        cell.x in INIT_INDEX until INIT_INDEX + columnSize
-                && cell.y in INIT_INDEX until INIT_INDEX + rowSize
-
+        cell.x in INIT_INDEX until INIT_INDEX + columnSize && cell.y in INIT_INDEX until INIT_INDEX + rowSize
 
     companion object {
         private const val INIT_INDEX = 0
