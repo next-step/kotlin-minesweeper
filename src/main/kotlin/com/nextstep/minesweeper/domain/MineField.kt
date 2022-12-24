@@ -1,13 +1,13 @@
 package com.nextstep.minesweeper.domain
 
 class MineField(height: Int, width: Int) {
-    private val _fields: Array<Array<Mine>> = Array(height) { Array(width) { Mine.GROUND } }
+    private val _fields: Array<MineRow> = Array(height) { MineRow(width) }
 
-    val fields: Array<Array<Mine>>
+    val fields: Array<MineRow>
         get() = _fields.copyOf()
 
     fun dispense(mineCounts: Int) {
-        val width = fields.first().size
+        val width = fields.first().size()
         val height = fields.size
         val total = width * height
 
@@ -29,7 +29,7 @@ class MineField(height: Int, width: Int) {
         for (pair in positions) {
             val row = pair.first
             val col = pair.second
-            fields[row][col] = Mine.MINED
+            fields[row].dispense(col)
         }
     }
 
@@ -39,6 +39,6 @@ class MineField(height: Int, width: Int) {
     }
 
     private fun isDispensed(): Boolean {
-        return fields.flatten().any { it == Mine.MINED }
+        return fields.any { it.isMined() }
     }
 }

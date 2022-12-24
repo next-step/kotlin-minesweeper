@@ -19,8 +19,8 @@ object OutputView {
     fun printMineFields(mineField: MineField) {
         val sb = StringBuilder()
         val fields = mineField.fields
-        for (field in fields) {
-            field.forEach { sb.append("${it.symbol} ") }
+        for (mineRow in fields) {
+            mineRow.getRows().forEach { sb.append("${it.symbol} ") }
             sb.append("\n")
         }
         println(sb.toString())

@@ -2,19 +2,11 @@ package com.nextstep.minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import java.lang.IllegalArgumentException
 
 class MineFieldTest : FunSpec({
     context("MineField") {
-        test("지뢰 매설") {
-            val mineField = MineField(10, 10)
-            mineField.dispense(5)
-
-            mineField.fields.flatten() shouldContain Mine.GROUND
-        }
-
         test("지뢰 이중 매설 불가") {
             val mineField = MineField(10, 10)
             mineField.dispense(5)
