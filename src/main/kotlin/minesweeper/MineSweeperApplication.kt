@@ -13,7 +13,7 @@ class MineSweeperApplication {
         val mineCount = InputView.readMineCount()
 
         val map = MineMap.of(height, width)
-        val mines = MineCellSelector.randomMines(map, mineCount)
+        val mines = MineCellSelector.selectRandomMines(map, mineCount)
         val mineBoard = MineBoard(map, mines)
 
         OutputView.printMineBoard(mineBoard)
