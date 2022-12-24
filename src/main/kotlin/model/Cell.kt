@@ -1,10 +1,6 @@
 package model
 
-class Cell {
-
-    var name = "C"
-        private set
-
+data class Cell(var name: String = "C") {
     fun change(name: String) {
         this.name = name
     }
