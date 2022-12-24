@@ -15,9 +15,18 @@ fun main() {
     OutputView.printMineCountMessage()
     val mineCounts = InputView.inputMessage()
 
-    val mineField = MineField(height.toInt(), width.toInt(), defaultCalculatePolicy())
-    mineField.dispense(mineCounts.toInt())
+    val mineField = createMineField(height, width, mineCounts)
 
     OutputView.printMineFields(mineField)
+}
+
+private fun createMineField(
+    height: String,
+    width: String,
+    mineCounts: String
+): MineField {
+    val mineField = MineField(height.toInt(), width.toInt(), defaultCalculatePolicy())
+    mineField.dispense(mineCounts.toInt())
+    return mineField
 }
 
