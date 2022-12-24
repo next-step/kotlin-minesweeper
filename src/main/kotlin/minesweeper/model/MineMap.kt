@@ -14,6 +14,14 @@ class MineMap private constructor(
     fun checkBounds(cell: Cell) =
         cell.x in INIT_INDEX until INIT_INDEX + columnSize && cell.y in INIT_INDEX until INIT_INDEX + rowSize
 
+    fun selectRandomMines(mineCount: Int): Mines {
+        val shuffledMines = value.flatten()
+            .shuffled()
+            .take(mineCount)
+            .toSet()
+        return Mines(shuffledMines)
+    }
+
     companion object {
         private const val INIT_INDEX = 0
         fun of(height: Int, width: Int): MineMap {
