@@ -3,7 +3,7 @@ package minesweeper.domain.coordinate
 import minesweeper.common.value.CoordinateValue
 import minesweeper.domain.Position
 
-class BoardCoordinateSystem(
+class BaseCoordinateSystem(
     height: Int,
     width: Int
 ) : CoordinateSystem {

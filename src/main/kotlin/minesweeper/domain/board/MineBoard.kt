@@ -5,7 +5,7 @@ import minesweeper.domain.MineGenerator
 import minesweeper.domain.component.Component
 import minesweeper.domain.component.Components
 import minesweeper.domain.component.DefaultComponent
-import minesweeper.domain.coordinate.BoardCoordinateSystem
+import minesweeper.domain.coordinate.BaseCoordinateSystem
 import minesweeper.domain.coordinate.MineCoordinateSystemDecorator
 
 class MineBoard(
@@ -24,8 +24,8 @@ class MineBoard(
         get() = coordinateSystem.width
 
     init {
-        val boardCoordinateSystem = BoardCoordinateSystem(height = height, width = width)
-        coordinateSystem = MineCoordinateSystemDecorator(coordinateSystem = boardCoordinateSystem, mineGenerator, mineCount)
+        val baseCoordinateSystem = BaseCoordinateSystem(height = height, width = width)
+        coordinateSystem = MineCoordinateSystemDecorator(coordinateSystem = baseCoordinateSystem, mineGenerator, mineCount)
     }
 
     override fun components(): List<Component> {

@@ -13,11 +13,11 @@ class MineCoordinateSystemDecoratorTest : FreeSpec({
         val width = 10
         val mineCount = 10
 
-        val boardCoordinateSystem = BoardCoordinateSystem(height = height, width = width)
+        val baseCoordinateSystem = BaseCoordinateSystem(height = height, width = width)
         val mineGenerator = RandomMineGenerator
 
         val mineCoordinateSystemDecorator =
-            MineCoordinateSystemDecorator(coordinateSystem = boardCoordinateSystem, mineGenerator = mineGenerator, mineCount = mineCount)
+            MineCoordinateSystemDecorator(coordinateSystem = baseCoordinateSystem, mineGenerator = mineGenerator, mineCount = mineCount)
 
         "높이를 확인할 수 있다" {
             mineCoordinateSystemDecorator.height shouldBe 10
@@ -37,7 +37,7 @@ class MineCoordinateSystemDecoratorTest : FreeSpec({
         }
 
         "생성시 지뢰의 개수가 좌표의 개수보다 크면 에러가 발생한다." {
-            shouldThrow<IllegalArgumentException> { MineCoordinateSystemDecorator(coordinateSystem = boardCoordinateSystem, mineGenerator = mineGenerator, mineCount = 101) }
+            shouldThrow<IllegalArgumentException> { MineCoordinateSystemDecorator(coordinateSystem = baseCoordinateSystem, mineGenerator = mineGenerator, mineCount = 101) }
         }
     }
 })
