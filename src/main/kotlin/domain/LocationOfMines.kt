@@ -7,11 +7,11 @@ import domain.coord.RelativeCoordinate
 class LocationOfMines(
     private val mines: List<AbstractCoordinate>
 ) {
-    fun exist(coordinate: Coordinate) = mines.contains(coordinate)
-
     fun countByNearMines(coordinate: AbstractCoordinate): Int {
         return relativeOfCoords.count { coordinate.isPossiblePlus(it) && exist(coordinate + it) }
     }
+
+    fun exist(coordinate: Coordinate) = mines.contains(coordinate)
 
     companion object {
         private val relativeOfCoords: List<RelativeCoordinate> = listOf(
