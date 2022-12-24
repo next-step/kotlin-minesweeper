@@ -18,17 +18,17 @@ internal class MatrixTest {
     fun `Matrix에 x,y 값을 통해 값을 구할 수 있다`() {
         val matrix = Matrix.of(2, 2)
 
-        matrix.get(Coordinate(0, 0)) shouldBe matrix.rows[0].fields[0]
+        matrix.field(Coordinate(0, 0)) shouldBe matrix.rows[0].fields[0]
     }
 
     @Test
     fun `Matrix에 x,y 값을 통해 값을 설정할 수 있다`() {
         val matrix = Matrix.of(2, 2)
         val mine = Mine()
-        matrix.set(Coordinate(0, 0), mine)
+        matrix.land(Coordinate(0, 0), mine)
 
-        matrix.get(Coordinate(0, 0)) shouldBe mine
-        matrix.get(Coordinate(0, 1)) shouldNotBe mine
+        matrix.field(Coordinate(0, 0)) shouldBe mine
+        matrix.field(Coordinate(0, 1)) shouldNotBe mine
         matrix.rows[0].fields[1] shouldNotBe mine
     }
 
@@ -37,8 +37,8 @@ internal class MatrixTest {
         val matrix = Matrix.of(2, 2)
         val coordinate = Coordinate(0, 0)
 
-        matrix.get(coordinate) shouldBe matrix.rows[0].fields[0]
-        matrix.get(coordinate) shouldNotBe matrix.rows[0].fields[1]
+        matrix.field(coordinate) shouldBe matrix.rows[0].fields[0]
+        matrix.field(coordinate) shouldNotBe matrix.rows[0].fields[1]
     }
 
     @Test
@@ -46,11 +46,11 @@ internal class MatrixTest {
         val matrix = Matrix.of(2, 2)
         val coordinate = Coordinate(0, 0)
         val mine = Mine()
-        matrix.set(coordinate, mine)
+        matrix.land(coordinate, mine)
 
-        matrix.get(coordinate) shouldBe mine
+        matrix.field(coordinate) shouldBe mine
         matrix.rows[0].fields[0] shouldBe mine
-        matrix.get(Coordinate(0, 1)) shouldNotBe mine
+        matrix.field(Coordinate(0, 1)) shouldNotBe mine
         matrix.rows[0].fields[1] shouldNotBe mine
     }
 }

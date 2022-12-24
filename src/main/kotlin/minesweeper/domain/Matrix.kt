@@ -1,13 +1,13 @@
 package minesweeper.domain
 
 class Matrix(val rows: List<Row>) {
-    fun set(coordinate: Coordinate, dot: Field) {
+    fun land(coordinate: Coordinate, field: Field) {
         require(coordinate.y in rows.indices)
 
-        this.rows[coordinate.y].fields[coordinate.x] = dot
+        this.rows[coordinate.y].fields[coordinate.x] = field
     }
 
-    fun get(coordinate: Coordinate): Field {
+    fun field(coordinate: Coordinate): Field {
         require(coordinate.y in rows.indices)
 
         return rows[coordinate.y].fields[coordinate.x]
