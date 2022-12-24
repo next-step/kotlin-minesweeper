@@ -22,14 +22,6 @@ data class AbstractCoordinate(
     }
 
     fun isPossiblePlus(target: Coordinate): Boolean {
-        if (y.isNotPossiblePlus(target.y)) {
-            return false
-        }
-
-        if (x.isNotPossiblePlus(target.x)) {
-            return false
-        }
-
-        return true
+        return y.isPossiblePlus(target.y) && x.isPossiblePlus(target.x)
     }
 }

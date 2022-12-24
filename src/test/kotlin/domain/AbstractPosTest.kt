@@ -50,29 +50,29 @@ internal class AbstractPosTest {
     }
 
     @Test
-    internal fun `두 Pos의 합이 음수이면 true가 반환된다`() {
+    internal fun `두 Pos의 합이 음수이면 false가 반환된다`() {
         // given
         val abstractPos1 = AbstractPos.of(0)
         val abstractPos2 = RelativePos.of(-1)
 
         // when
-        val isNotPossiblePlus = abstractPos1.isNotPossiblePlus(abstractPos2)
+        val isNotPossiblePlus = abstractPos1.isPossiblePlus(abstractPos2)
 
         // then
-        assertThat(isNotPossiblePlus).isTrue
+        assertThat(isNotPossiblePlus).isFalse
     }
 
     @ParameterizedTest
     @CsvSource(value = ["0, 1", "1, -1"])
-    internal fun `두 Pos의 합이 0 또는 양수이면 false가 반환된다`(input1: Int, input2: Int) {
+    internal fun `두 Pos의 합이 0 또는 양수이면 true가 반환된다`(input1: Int, input2: Int) {
         // given
         val pos1 = AbstractPos.of(input1)
         val pos2 = RelativePos.of(input2)
 
         // when
-        val isNotPossiblePlus = pos1.isNotPossiblePlus(pos2)
+        val isNotPossiblePlus = pos1.isPossiblePlus(pos2)
 
         // then
-        assertThat(isNotPossiblePlus).isFalse
+        assertThat(isNotPossiblePlus).isTrue
     }
 }
