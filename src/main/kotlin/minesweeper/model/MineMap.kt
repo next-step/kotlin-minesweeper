@@ -1,5 +1,7 @@
 package minesweeper.model
 
+import minesweeper.service.CellSelector.getSurroundingCells
+
 class MineMap private constructor(
     private val value: List<List<Cell>>
 ) {
@@ -12,7 +14,15 @@ class MineMap private constructor(
     val columnSize = value.first().size
 
     fun checkBounds(cell: Cell) =
-        cell.x in INIT_INDEX until INIT_INDEX + columnSize && cell.y in INIT_INDEX until INIT_INDEX + rowSize
+        cell.x in INIT_INDEX until INIT_INDEX + columnSize &&
+            cell.y in INIT_INDEX until INIT_INDEX + rowSize
+
+    fun increaseSurroundingCount(mine: Cell) {
+        val surroundings = getSurroundingCells(mine)
+        value.flatten() // 밸류 자체를 flatten()으로 만드는게 나을듯?
+            .filter { surroundings.contains(it) }
+            .forEach { it.increaseCount() }
+    }
 
     fun selectRandomMines(mineCount: Int): Mines {
         val shuffledMines = value.flatten()

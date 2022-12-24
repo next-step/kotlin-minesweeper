@@ -4,7 +4,6 @@ import minesweeper.model.Cell
 import minesweeper.model.MineBoard
 
 object OutputView {
-    private const val BLANK_SYMBOL = "C"
     private const val MINE_SYMBOL = "*"
     private const val CELL_SPACE = " "
 
@@ -17,7 +16,7 @@ object OutputView {
     private fun printRow(row: List<Cell>, checkMine: (Cell) -> Boolean) {
         println(
             row.joinToString(CELL_SPACE) { cell ->
-                if (checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
+                if (checkMine(cell)) MINE_SYMBOL else "${cell.surroundingMineCount}"
             }
         )
     }
