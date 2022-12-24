@@ -7,22 +7,22 @@ class MineField(height: Int, width: Int) {
         get() = _fields.copyOf()
 
     fun dispense(mineCounts: Int) {
-        val width = fields.size
-        val height = fields.first().size
+        val width = fields.first().size
+        val height = fields.size
         val total = width * height
 
         validateDispense(total, mineCounts)
-        val positions = calculatePositions(total, mineCounts, height)
+        val positions = calculatePositions(total, mineCounts, width)
         doDispense(positions)
     }
 
     private fun calculatePositions(
         total: Int,
         mineCounts: Int,
-        height: Int
+        width: Int
     ): List<Pair<Int, Int>> {
-        val positions = (0 until total - 1).toList().shuffled().take(mineCounts)
-        return positions.map { Pair(it / height, it % height) }
+        val positions = (0 until total).toList().shuffled().take(mineCounts)
+        return positions.map { Pair(it / width, it % width) }
     }
 
     private fun doDispense(positions: List<Pair<Int, Int>>) {
