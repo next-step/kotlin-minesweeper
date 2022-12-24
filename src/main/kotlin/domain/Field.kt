@@ -1,5 +1,6 @@
 package domain
 
+import domain.block.BlockFactory
 import domain.coord.AbstractCoordinate
 
 class Field(
@@ -14,7 +15,7 @@ class Field(
 
         private fun Int.rows(maxWidth: Int, mines: LocationOfMines) = Row(
             (0 until maxWidth).map { x ->
-                Cell(AbstractCoordinate(this, x).toBlock(mines))
+                BlockFactory.create(AbstractCoordinate(this, x), mines)
             }
         )
     }

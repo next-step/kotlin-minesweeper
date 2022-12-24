@@ -1,5 +1,7 @@
 package domain
 
+import domain.block.Block
+
 data class Row(
-    val cells: List<Cell>
+    val cells: List<Block>
 )

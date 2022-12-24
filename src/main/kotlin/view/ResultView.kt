@@ -1,8 +1,8 @@
 package view
 
-import domain.Cell
 import domain.Field
 import domain.Row
+import domain.block.Block
 import domain.block.Land
 import domain.block.Mine
 
@@ -18,8 +18,8 @@ object ResultView {
 
     private fun Field.stringForPrint(): String = this.rows.joinToString(separator = "\n") { row -> row.stringForPrint() }
     private fun Row.stringForPrint(): String = this.cells.joinToString(separator = " ") { it.desc() }
-    private fun Cell.desc() = when (block) {
-        is Land -> block.nearMineCount.toString()
+    private fun Block.desc() = when (this) {
+        is Land -> nearMineCount.toString()
         is Mine -> "*"
     }
 }
