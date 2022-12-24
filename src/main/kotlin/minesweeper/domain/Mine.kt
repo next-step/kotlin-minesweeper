@@ -1,4 +1,5 @@
 package minesweeper.domain
 
-class Mine {
-}
+class Mine(
+    val position: Position
+)
