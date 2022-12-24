@@ -1,6 +1,6 @@
 package minesweeper.model
 
-import minesweeper.service.CellSelector.getSurroundingCells
+import minesweeper.service.CellSelector
 
 class MineMap private constructor(
     val rowSize: Int,
@@ -20,8 +20,8 @@ class MineMap private constructor(
             cell.y in INIT_INDEX until INIT_INDEX + rowSize
 
     fun plantMine(mine: Cell) {
-        val surroundings = getSurroundingCells(mine)
-        cellPool.filter { surroundings.contains(it) }
+        val nearCells = CellSelector.nearCellsOf(mine)
+        cellPool.filter { nearCells.contains(it) }
             .forEach { it.increaseCount() }
     }
 

@@ -10,7 +10,7 @@ object CellSelector {
     private val delta = listOf(PREV_INDEX, HERE_INDEX, NEXT_INDEX)
     private val deltaCells = delta.flatMap { x -> delta.map { y -> Cell(x, y) } }
 
-    fun getSurroundingCells(target: Cell): List<Cell> {
+    fun nearCellsOf(target: Cell): List<Cell> {
         return deltaCells.map { deltaCell -> target + deltaCell }
             .filterNot { it == target }
     }

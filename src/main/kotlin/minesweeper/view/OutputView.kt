@@ -18,7 +18,7 @@ object OutputView {
     private fun printMap(mineMap: MineMap, checkMine: (Cell) -> Boolean) {
         mineMap.forEach { cell ->
             print(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
-            print(if (checkMine(cell)) MINE_SYMBOL else "${cell.surroundingMineCount}")
+            print(if (checkMine(cell)) MINE_SYMBOL else "${cell.nearMineCount}")
         }
     }
 }
