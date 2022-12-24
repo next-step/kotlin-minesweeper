@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 
 class BoardCoordinateSystemTest : FreeSpec({
     "보드 좌표 시스템은" - {
-
         val height = 10
         val width = 10
 
