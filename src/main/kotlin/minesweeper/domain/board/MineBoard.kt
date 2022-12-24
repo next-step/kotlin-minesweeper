@@ -1,10 +1,10 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.Mine
+import minesweeper.domain.MineGenerator
 import minesweeper.domain.component.Component
 import minesweeper.domain.component.Components
 import minesweeper.domain.component.DefaultComponent
-import minesweeper.domain.Mine
-import minesweeper.domain.MineGenerator
 import minesweeper.domain.coordinate.BoardCoordinateSystem
 import minesweeper.domain.coordinate.MineCoordinateSystemDecorator
 
@@ -35,7 +35,7 @@ class MineBoard(
             val isMine = minePositionList.contains(it)
             DefaultComponent(position = it, isMine = isMine)
         }.sortedWith(
-            compareBy({it.position.x}, {it.position.y})
+            compareBy({ it.position.x }, { it.position.y })
         )
     }
 }
