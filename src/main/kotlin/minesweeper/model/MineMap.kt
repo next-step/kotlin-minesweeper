@@ -3,43 +3,43 @@ package minesweeper.model
 import minesweeper.service.CellSelector.getSurroundingCells
 
 class MineMap private constructor(
-    private val value: List<List<Cell>>
+    val rowSize: Int,
+    val columnSize: Int
 ) {
-    init {
-        require(value.isNotEmpty()) { "행의 크기는 0이 될 수 없습니다." }
-        require(value.first().isNotEmpty()) { "열의 크기는 0이 될 수 없습니다." }
-    }
+    private val cellPool: List<Cell> =
+        List(rowSize) { y -> List(columnSize) { x -> Cell(x, y) } }
+            .flatten()
+            .sortedWith(compareBy({ it.y }, { it.x }))
 
-    val rowSize = value.size
-    val columnSize = value.first().size
+    init {
+        require(cellPool.isNotEmpty()) { "지뢰 맵의 크기는 0이 될 수 없습니다." }
+    }
 
     fun checkBounds(cell: Cell) =
         cell.x in INIT_INDEX until INIT_INDEX + columnSize &&
             cell.y in INIT_INDEX until INIT_INDEX + rowSize
 
-    fun increaseSurroundingCount(mine: Cell) {
+    fun plantMine(mine: Cell) {
         val surroundings = getSurroundingCells(mine)
-        value.flatten() // 밸류 자체를 flatten()으로 만드는게 나을듯?
-            .filter { surroundings.contains(it) }
+        cellPool.filter { surroundings.contains(it) }
             .forEach { it.increaseCount() }
     }
 
     fun selectRandomMines(mineCount: Int): Mines {
-        val shuffledMines = value.flatten()
-            .shuffled()
+        val shuffledMines = cellPool.shuffled()
             .take(mineCount)
             .toSet()
         return Mines(shuffledMines)
     }
 
-    fun forEach(action: (List<Cell>) -> Unit) {
-        value.forEach(action)
+    fun forEach(action: (Cell) -> Unit) {
+        cellPool.forEach(action)
     }
 
     companion object {
-        private const val INIT_INDEX = 0
+        const val INIT_INDEX = 0
         fun of(height: Int, width: Int): MineMap {
-            return MineMap(List(height) { y -> List(width) { x -> Cell(x, y) } })
+            return MineMap(height, width)
         }
     }
 }
