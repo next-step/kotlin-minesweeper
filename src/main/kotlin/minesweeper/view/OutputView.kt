@@ -13,11 +13,11 @@ object OutputView {
     fun printMineBoard(mineBoard: MineBoard) {
         print("\n지뢰찾기 게임 시작")
         val mineMap = mineBoard.mineMap
-        val cellPool = getDefaultCellPool(mineMap.rowSize, mineMap.columnSize)
-        printMineBoardMap(cellPool, mineBoard)
+        val cellPoolKeys = getDefaultCellPool(mineMap.rowSize, mineMap.columnSize).keys
+        printMineBoardMap(cellPoolKeys, mineBoard)
     }
 
-    private fun printMineBoardMap(cells: List<Cell>, board: MineBoard) {
+    private fun printMineBoardMap(cells: Set<Cell>, board: MineBoard) {
         val builder = StringBuilder()
         cells.forEach { cell ->
             builder.append(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
