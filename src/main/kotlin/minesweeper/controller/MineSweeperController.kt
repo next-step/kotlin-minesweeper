@@ -24,7 +24,5 @@ class MineSweeperController(
 
         mineSweeperView.printlnMineSweeperBeforeStart()
         mineBoardView.printlnMineBoard(mineBoard)
-
-
     }
 }

@@ -5,7 +5,7 @@ import minesweeper.domain.position.Positions
 
 class Buttons private constructor(
     private val buttonGraph: List<List<Button>>
-): List<List<Button>> by buttonGraph {
+) : List<List<Button>> by buttonGraph {
 
     companion object {
         fun of(height: Int, width: Int, totalMineCount: Int): Buttons {
