@@ -8,7 +8,11 @@ class MineDetector(
         return Directions.values().count { direction ->
             val targetX = x + direction.value.first
             val targetY = y + direction.value.second
-            (boardInfo.isContainRange(targetX, targetY) && board.isMineCell(Coordinate.from(targetX, targetY)))
+            isCountMine(targetX, targetY)
         }
+    }
+
+    private fun isCountMine(targetX: Int, targetY: Int): Boolean {
+        return (boardInfo.isContainRange(targetX, targetY) && board.isMineCell(Coordinate.from(targetX, targetY)))
     }
 }
