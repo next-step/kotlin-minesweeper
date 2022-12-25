@@ -16,8 +16,8 @@ class Board(
         return fields.getField(coordinate)
     }
 
-    fun getNearByMine(height: Int, width: Int): List<Field> {
+    fun getNearByMineCount(height: Int, width: Int): Int {
         val coordinate = Coordinate(height, width)
-        return fields.getNearByFields(coordinate).filterIsInstance<Mine>()
+        return fields.getNearByFields(coordinate).filterIsInstance<Mine>().count()
     }
 }

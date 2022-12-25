@@ -1,7 +1,7 @@
 package domain
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.shouldBe
 
 internal class CoordinateTest : BehaviorSpec({
     Given("좌표가 주어졌을 때, ") {
@@ -21,7 +21,7 @@ internal class CoordinateTest : BehaviorSpec({
                     Coordinate(2, 1),
                     Coordinate(2, 2),
                 )
-                nearByCoordinates shouldContainAll expectedNearByCoordinates
+                nearByCoordinates shouldBe expectedNearByCoordinates
             }
         }
     }

@@ -21,7 +21,7 @@ object OutputView {
 
     private fun printField(board: Board, height: Int, width: Int) {
         when (board.getField(height, width)) {
-            is Land -> print("${board.getNearByMine(height, width).count()} ")
+            is Land -> print("${board.getNearByMineCount(height, width)} ")
             is Mine -> print("$MINE_STRING ")
         }
     }

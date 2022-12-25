@@ -9,7 +9,7 @@ data class Coordinate(
         return range.flatMap { dx ->
             range.map { dy ->
                 Coordinate(row + dx, col + dy)
-            }
+            }.filter { it != this }
         }
     }
 }
