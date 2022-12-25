@@ -17,7 +17,7 @@ class MineBoard(
     private fun calculateBoardSize(): Int = rowCount * columnCount
 
     private fun make(): Coordinates {
-        return Coordinates.Of(
+        return Coordinates.of(
             List(size) { index ->
                 if (index in mineCount.makeMinePositionList()) return@List Coordinate(CoordinateType.MINE)
                 Coordinate(CoordinateType.NONE)
