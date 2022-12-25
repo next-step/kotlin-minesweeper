@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.button
 
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions

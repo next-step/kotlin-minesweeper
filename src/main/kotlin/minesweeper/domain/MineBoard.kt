@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.button.Buttons
+
 class MineBoard(
     val height: Int,
     val width: Int,
