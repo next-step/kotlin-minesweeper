@@ -7,10 +7,10 @@ internal class GameTest : StringSpec({
     "가지고 있는 상태들로 지뢰찾기 보드를 만든다." {
         val row = Row(5)
         val column = Column(5)
-        val game = Game(row, column, MineCount(5))
+        val mineCount = MineCount(5)
+        val boardInfo = BoardInfo(row, column, mineCount)
 
-        val board = game.createBoard()
-
+        val board = Game(boardInfo).createBoard()
         board.shouldBeInstanceOf<Board>()
     }
 })

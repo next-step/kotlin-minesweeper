@@ -1,11 +1,23 @@
 package domain
 
 class Game(
-    private val row: Row,
-    val column: Column,
-    private val mineCount: MineCount
+    val boardInfo: BoardInfo
 ) {
     fun createBoard(): Board {
-        return Board.from(row, column, mineCount)
+        val allLocations = List(boardInfo.getCellSize()) { it }
+        val randomMineLocations = getRandomLocations()
+
+        val mineCells = MineGenerator(randomMineLocations, boardInfo).generate()
+        val blankLocations = allLocations - randomMineLocations.toSet()
+        val board = Board(mineCells)
+
+        val blankCells = BlankGenerator(blankLocations, boardInfo, board).generate()
+        board.addAll(blankCells)
+
+        return board
+    }
+
+    private fun getRandomLocations(): List<Int> {
+        return (0 until boardInfo.getCellSize()).shuffled().take(boardInfo.getMineCount())
     }
 }
