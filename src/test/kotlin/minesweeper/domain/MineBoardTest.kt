@@ -9,7 +9,8 @@ class MineBoardTest : StringSpec({
         val mineBoard = MineBoard.createBoard(5, 5, 10)
         //when
         val mineCount = mineBoard.mineCells.sumOf {
-            it.mineCells.filter { cell -> cell.state == "*" }.size }
+            it.mineCells.filter { cell -> cell.state == "*" }.size
+        }
         //then
         mineCount shouldBe 10
     }
