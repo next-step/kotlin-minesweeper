@@ -7,4 +7,3 @@ class MineBoard(
             : this(twoDimensionMineCell.map { MineBoardRow(it) }.toTypedArray())
 }
 
-class MineBoardRow(val mineCells: Array<MineCell>)
