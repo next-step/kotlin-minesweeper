@@ -1,4 +1,6 @@
 package minesweeper.domain
 
-data class CleanCell(override val state: String = "C") : Cell {
+private const val CLEAN_SIGN = "C"
+
+data class CleanCell(override val state: String = CLEAN_SIGN) : Cell {
 }
