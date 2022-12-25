@@ -7,10 +7,13 @@ data class BoardInfo(
 ) {
     fun getCellSize() = row * column
     fun getRow() = row.value
-    fun getColumn() = column.value
+    private fun getColumn() = column.value
     fun getMineCount() = mineCount.value
 
     fun isContainRange(x: Int, y: Int): Boolean {
-        return x >= 1 && x <= getRow() && y >= 1 && y <= getColumn()
+        val rowRange = 1..getRow()
+        val columnRange = 1..getColumn()
+
+        return x in rowRange && y in columnRange
     }
 }
