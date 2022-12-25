@@ -2,7 +2,7 @@ package domain
 
 interface CellGenerator {
     val locations: List<Int>
-    val row: Row
+    val boardInfo: BoardInfo
 
     fun generate(): List<Cell>
 }
