@@ -1,12 +1,12 @@
 package domain
 
 class BlankGenerator(
-    override val locations: List<Int>,
+    override val locations: Locations,
     override val boardInfo: BoardInfo,
     private val board: Board
 ) : CellGenerator {
     override fun generate(): List<Blank> {
-        return locations.map {
+        return locations.values.map {
             val x = it / boardInfo.getRow() + 1
             val y = it % boardInfo.getRow() + 1
             Blank.from(x, y, searchMinesAroundCount(x, y))

@@ -4,11 +4,11 @@ class Game(
     val boardInfo: BoardInfo
 ) {
     fun createBoard(): Board {
-        val allLocations = List(boardInfo.getCellSize()) { it }
+        val allLocations = Locations.from(boardInfo.getCellSize(), List(boardInfo.getCellSize()) { it })
         val randomMineLocations = getRandomLocations()
 
         val mineCells = MineGenerator(randomMineLocations, boardInfo).generate()
-        val blankLocations = allLocations - randomMineLocations.toSet()
+        val blankLocations = allLocations - randomMineLocations
         val board = Board(mineCells)
 
         val blankCells = BlankGenerator(blankLocations, boardInfo, board).generate()
@@ -17,7 +17,8 @@ class Game(
         return board
     }
 
-    private fun getRandomLocations(): List<Int> {
-        return (0 until boardInfo.getCellSize()).shuffled().take(boardInfo.getMineCount())
+    private fun getRandomLocations(): Locations {
+        val list = (0 until boardInfo.getCellSize()).shuffled().take(boardInfo.getMineCount())
+        return Locations.from(boardInfo.getCellSize(), list)
     }
 }
