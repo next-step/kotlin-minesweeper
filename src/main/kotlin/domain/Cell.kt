@@ -10,8 +10,12 @@ data class Mine(override val coordinate: Coordinate) : Cell() {
     }
 }
 
-data class Blank(override val coordinate: Coordinate) : Cell() {
+data class Blank(
+    override val coordinate: Coordinate,
+    val minesAroundCount: Int = 0
+) : Cell() {
     companion object {
-        fun from(x: Int, y: Int) = Blank(Coordinate(Row(x), Column(y)))
+        fun from(x: Int, y: Int, minesAroundCount: Int) =
+            Blank(Coordinate(Row(x), Column(y)), minesAroundCount)
     }
 }

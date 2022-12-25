@@ -5,7 +5,7 @@ class MineGenerator(
     override val boardInfo: BoardInfo
 ) : CellGenerator {
 
-    override fun generate(): List<Cell> {
+    override fun generate(): List<Mine> {
         return locations.map {
             Mine.from(it / boardInfo.getRow() + 1, it % boardInfo.getRow() + 1)
         }
