@@ -1,5 +1,6 @@
 package controller
 
+import domain.BoardInfo
 import domain.Game
 import dto.BoardDto
 import view.InputView
@@ -10,10 +11,11 @@ class MinesweeperController {
         val row = InputView.inputHeight()
         val column = InputView.inputWidth()
         val mineCount = InputView.inputMineCount(row, column)
+        val boardInfo = BoardInfo(row, column, mineCount)
+        val game = Game(boardInfo)
 
-        val game = Game(row, column, mineCount)
         val board = game.createBoard()
-        ResultView.printBoard(game, BoardDto.from(board))
+        ResultView.printBoard(boardInfo, BoardDto.from(board))
     }
 }
 
