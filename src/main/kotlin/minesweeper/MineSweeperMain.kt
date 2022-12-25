@@ -14,14 +14,14 @@ fun main() {
     OutputView.printMineBoard(mineBoard)
 }
 
-private fun initMineCells(height: Int, width: Int, mineCount: Int): Array<Array<MineCell>> {
-    val mineCells = Array(height) { Array(width) { MineCell() } }
+private fun initMineCells(height: Int, width: Int, mineCount: Int): Array<Array<Cell>> {
+    val mineCells: Array<Array<Cell>> = Array(height) { Array(width) { CleanCell() } }
     (0 until height * width).shuffled()
         .take(mineCount)
         .forEach { randomIndex ->
             val randomHeight = randomIndex / width
             val randomWidth = randomIndex % width
-            mineCells[randomHeight][randomWidth] = MineCell(true)
+            mineCells[randomHeight][randomWidth] = MineCell()
         }
     return mineCells
 }
