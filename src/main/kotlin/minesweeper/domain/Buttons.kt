@@ -5,17 +5,7 @@ import minesweeper.domain.position.Positions
 
 class Buttons private constructor(
     private val buttonGraph: List<List<Button>>
-) {
-
-    override fun toString(): String =
-        buildString {
-            buttonGraph.forEach { columns ->
-                columns.forEach {
-                    append(it)
-                }
-                append("\n")
-            }
-        }
+): List<List<Button>> by buttonGraph {
 
     companion object {
         fun of(height: Int, width: Int, totalMineCount: Int): Buttons {

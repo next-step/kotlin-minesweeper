@@ -5,7 +5,9 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import minesweeper.view.MineBoardView
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 
 class MineBoardTest : FunSpec({
 
@@ -23,8 +25,25 @@ class MineBoardTest : FunSpec({
             mineBoard.height shouldBe height
             mineBoard.width shouldBe width
             mineBoard.totalMineCount shouldBe totalMineCount
+            mineBoard.buttons shouldNotBe null
+            mineBoard.buttons.flatMap { it }.count { it is Mine } shouldBe totalMineCount
+        }
+    }
 
-            mineBoard.toString().count { it == Mine.MINE_STRING.first() } shouldBe totalMineCount
+    context("높이와 너비, 지뢰 개수 검증을 통해 IllegalArgumentException이 발생한다.") {
+        withData(
+            nameFn = { "$it" },
+            listOf(
+                Tuple3(-10, 10, 10),
+                Tuple3(10, -10, 10),
+                Tuple3(10, 10, -10),
+                Tuple3(10, 10, 101),
+
+            )
+        ) { (height, width, totalMineCount) ->
+            assertThrows<IllegalArgumentException> {
+                MineBoard(height, width, totalMineCount)
+            }
         }
     }
 
@@ -38,14 +57,11 @@ class MineBoardTest : FunSpec({
             )
         ) { (height, width, totalMineCount) ->
             val mineBoard = MineBoard(height, width, totalMineCount)
+            val mineBoardView = MineBoardView()
 
             assertDoesNotThrow {
-                println(mineBoard)
+                mineBoardView.printlnMineBoard(mineBoard)
             }
-
-            val mineBoardString = mineBoard.toString()
-            mineBoardString.split("\n").size shouldBe height + 1
-            mineBoardString.split("\n").any { it.length == width } shouldBe true
         }
     }
 })
