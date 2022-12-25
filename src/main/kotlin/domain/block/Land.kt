@@ -1,3 +1,5 @@
 package domain.block
 
-class Land : Block()
+class Land(
+    val nearMineCount: Int
+) : Block()

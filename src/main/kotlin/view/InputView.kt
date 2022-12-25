@@ -1,7 +1,6 @@
 package view
 
 object InputView {
-
     fun readHeight(): Int {
         println("높이를 입력하세요.")
 
