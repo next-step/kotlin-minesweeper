@@ -11,7 +11,7 @@ data class BoardDto(
     companion object {
         fun from(board: Board): BoardDto {
             return BoardDto(
-                board.cells.map {
+                getSortedCells(board).map {
                     toString(it)
                 }
             )
@@ -20,8 +20,12 @@ data class BoardDto(
         private fun toString(cell: Cell): String {
             return when (cell) {
                 is Mine -> "*"
-                is Blank -> "C"
+                is Blank -> cell.minesAroundCount.toString()
             }
+        }
+
+        private fun getSortedCells(board: Board): List<Cell> {
+            return board.cells.sortedWith(compareBy({ it.coordinate.x.value }, { it.coordinate.y.value }))
         }
     }
 }
