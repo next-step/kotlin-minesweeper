@@ -3,7 +3,7 @@ package domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-internal class MineDetectorTest: StringSpec({
+internal class MineDetectorTest : StringSpec({
     lateinit var boardInfo: BoardInfo
 
     beforeEach {
