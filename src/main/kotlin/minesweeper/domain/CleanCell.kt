@@ -1,4 +1,4 @@
 package minesweeper.domain
 
-class CleanCell(override val state: String = "C") : Cell {
+data class CleanCell(override val state: String = "C") : Cell {
 }
