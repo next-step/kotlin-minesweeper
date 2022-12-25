@@ -6,18 +6,14 @@ class BlankGenerator(
     private val board: Board
 ) : CellGenerator {
     override fun generate(): List<Blank> {
+        val mineDetector = MineDetector(boardInfo, board)
+
         return locations.values.map {
             val x = it / boardInfo.getRow() + 1
             val y = it % boardInfo.getRow() + 1
-            Blank.from(x, y, searchMinesAroundCount(x, y))
-        }
-    }
+            val minesAroundCount = mineDetector.getMinesAroundCount(x, y)
 
-    private fun searchMinesAroundCount(x: Int, y: Int): Int {
-        return Directions.values().count { direction ->
-            val targetX = x + direction.value.first
-            val targetY = y + direction.value.second
-            (boardInfo.isContainRange(targetX, targetY) && board.isMineCell(Coordinate.from(targetX, targetY)))
+            Blank.from(x, y, minesAroundCount)
         }
     }
 }
