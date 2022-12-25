@@ -1,23 +1,28 @@
-package minesweeper
+package minesweeper.domain
 
 class MineBoard(
     val mineCells: Array<MineBoardRow>,
 ) {
-    constructor(twoDimensionMineCell: Array<Array<Cell>>)
-            : this(twoDimensionMineCell.map { MineBoardRow(it) }.toTypedArray())
+    constructor(height: Int, width: Int) : this(Array(height) { MineBoardRow(width) })
+
+    private fun plantMine(height: Int, width: Int) {
+        this.mineCells[height].plantMine(width)
+    }
 
     companion object {
+
         fun createBoard(height: Int, width: Int, mineCount: Int): MineBoard {
-            val mineCells: Array<Array<Cell>> = Array(height) { Array(width) { CleanCell() } }
+            val mineBoard = MineBoard(height, width)
+
             getRandomPositions(height, width)
                 .take(mineCount)
-                .forEach { mineCells[it.height][it.width] = MineCell() }
-            return MineBoard(mineCells)
+                .forEach { mineBoard.plantMine(it.height, it.width) }
+
+            return mineBoard
         }
 
         private fun getRandomPositions(height: Int, width: Int) = (0 until height * width).shuffled()
             .map { Position(it / width, it % width) }
-
     }
 }
 
