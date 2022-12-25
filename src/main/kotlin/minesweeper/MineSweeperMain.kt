@@ -1,8 +1,8 @@
 package minesweeper
 
+import minesweeper.domain.MineBoard
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
-import kotlin.random.Random
 
 fun main() {
     val height = InputView.askHeight()

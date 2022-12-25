@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.MineBoard
+import minesweeper.domain.MineBoard
 
 object OutputView {
     fun printMineBoard(mineBoard: MineBoard) {
