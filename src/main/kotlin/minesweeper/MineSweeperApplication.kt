@@ -2,6 +2,7 @@ package minesweeper
 
 import minesweeper.model.MineBoard
 import minesweeper.model.MineMap
+import minesweeper.service.CellSelector
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -12,7 +13,7 @@ class MineSweeperApplication {
         val mineCount = InputView.readMineCount()
 
         val map = MineMap.of(height, width)
-        val mines = map.selectRandomMines(mineCount)
+        val mines = CellSelector.selectRandomCells(map, mineCount)
         val mineBoard = MineBoard(map, mines)
 
         OutputView.printMineBoard(mineBoard)

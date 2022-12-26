@@ -18,21 +18,13 @@ class MineMap private constructor(
 
     private fun plantMine(mine: Cell) {
         require(checkBounds(mine)) { "지뢰 좌표가 지뢰맵의 범위를 넘어갑니다." }
-        val nearCells = CellSelector.nearCellsOf(mine)
+        val nearCells = CellSelector.selectNearCellsOf(mine)
         nearCells.mapNotNull { cellPool[it] }
             .forEach { it.increaseCount() }
     }
 
     fun plantMines(mines: Mines) {
         mines.forEach(this::plantMine)
-    }
-
-    fun selectRandomMines(mineCount: Int): Mines {
-        val shuffledMines = cellPool.keys
-            .shuffled()
-            .take(mineCount)
-            .toSet()
-        return Mines(shuffledMines)
     }
 
     fun getNearCount(cell: Cell): Int {

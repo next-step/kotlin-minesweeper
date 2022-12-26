@@ -15,7 +15,7 @@ class CellSelectorTest {
             Cell(0, 1), Cell(1, 1), Cell(2, 1),
         )
 
-        val actualCells = CellSelector.nearCellsOf(target)
+        val actualCells = CellSelector.selectNearCellsOf(target)
 
         assertThat(actualCells).containsExactlyInAnyOrder(*expectedCells)
     }
