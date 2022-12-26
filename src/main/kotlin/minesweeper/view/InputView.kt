@@ -16,8 +16,9 @@ object InputView {
 
     fun askMineCount(maximumCount: Int): Int {
         println("지뢰는 몇 개인가요?")
-        val mineCount = readln().toIntOrNull() ?: throw IllegalArgumentException("지뢰의 개수는 숫자를 입력해야 합니다.")
-        if (mineCount > maximumCount) throw IllegalArgumentException("지뢰의 개수가 너무 많습니다.")
+        val mineCount = readln().toIntOrNull()
+        requireNotNull(mineCount) { "지뢰의 개수는 숫자를 입력해야 합니다." }
+        require(mineCount <= maximumCount) { "지뢰의 개수는 높이 x 너비 (${maximumCount})이하로 입력해야 합니다." }
         return mineCount
     }
 }
