@@ -12,7 +12,7 @@ class LandTest {
     fun `Land - 문자열 타일 목록 반환 테스트`() {
         // given
         val tiles = Tiles(
-            arrayListOf(
+            listOf(
                 Mine(Coordinate.of(0, 0)), NotChecked(Coordinate.of(0, 1), false),
                 NotChecked(Coordinate.of(1, 0), false), Mine(Coordinate.of(1, 1))
             )
