@@ -11,13 +11,7 @@ class BlockCreator(
     companion object {
         private fun createNormalBlocks(height: Int, width: Int, mineCount: Int): List<Block.Normal> {
             val blockCount = height * width - mineCount
-            val blockList = ArrayList<Block.Normal>()
-
-            repeat(blockCount) {
-                blockList.add(Block.Normal())
-            }
-
-            return blockList
+            return List(blockCount) { Block.Normal() }
         }
 
         private fun createMineBlocks(mineCount: Int): List<Block.LandMine> {
