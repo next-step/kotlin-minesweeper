@@ -27,4 +27,19 @@ class BoardFactoryTest {
             block.getMineCount() shouldBe 1
         }
     }
+
+    /**
+     * 1 X 1
+     * 1 1 1
+     * 0 0 0
+     */
+    @Test
+    fun `1,1 위치에 지뢰를 가진 3x3 사이즈의 보드 생성`() {
+        val rectangle = Rectangle(Width(3), Height(3))
+        val mineCount = MineCount(1)
+        val minePosition: List<Position> = listOf(Position.of(1, 0))
+        val board = BoardFactory().generate(rectangle, mineCount)
+        val block = board.getBlockByPosition(Position.of(0, 0))
+    }
+
 }

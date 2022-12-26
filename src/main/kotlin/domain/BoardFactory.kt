@@ -3,10 +3,12 @@ package domain
 import domain.strategy.MinePositionsSelectStrategy
 import domain.strategy.RandomMinePositionsSelectStrategy
 
-class BoardFactory(
-    private val positionsSelectStrategy: MinePositionsSelectStrategy = RandomMinePositionsSelectStrategy()
-) {
-    fun generate(rectangle: Rectangle, mineCount: MineCount): Board {
+class BoardFactory {
+    fun generate(
+        rectangle: Rectangle,
+        mineCount: MineCount,
+        positionsSelectStrategy: MinePositionsSelectStrategy = RandomMinePositionsSelectStrategy()
+    ): Board {
         val positions = rectangle.toPositions()
         val minePositions = positionsSelectStrategy.getMinePositions(positions, mineCount)
         val blocks = createBlocks(positions, minePositions)

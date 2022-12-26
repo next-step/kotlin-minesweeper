@@ -5,6 +5,22 @@ data class Position private constructor(
     val y: Int
 ) : Comparable<Position> {
 
+    fun top(): Position = copy(y = y.plus(1))
+
+    fun topLeft(): Position = copy(x = x.minus(1), y = y.plus(1))
+
+    fun topRight(): Position = copy(x = x.plus(1), y = y.plus(1))
+
+    fun left(): Position = copy(x = x.minus(1))
+
+    fun right(): Position = copy(x = x.plus(1))
+
+    fun bottom(): Position = copy(y = y.minus(1))
+
+    fun bottomLeft(): Position = copy(x = x.minus(1), y = y.minus(1))
+
+    fun bottomRight(): Position = copy(x = x.plus(1), y = y.minus(1))
+
     override fun compareTo(other: Position): Int {
         return when {
             this.x != other.x -> this.x compareTo other.x
@@ -14,17 +30,11 @@ data class Position private constructor(
     }
 
     fun surroundings(): List<Position> {
-        return (UP..DOWN).flatMap { x ->
-            (LEFT..RIGHT).map { y -> of(this.x + x, this.y + y) }
-        } - this
+        return listOf(top(), topLeft(), topRight(), left(), right(), bottom(), bottomLeft(), bottomRight())
     }
 
     companion object {
         const val POSITION_START = 0
-        private const val UP = -1
-        private const val DOWN = 1
-        private const val LEFT = -1
-        private const val RIGHT = 1
 
         private val cache = mutableMapOf<Pair<Int, Int>, Position>()
 
