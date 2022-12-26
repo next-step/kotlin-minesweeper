@@ -1,7 +1,6 @@
 package view
 
 import domain.Board
-import domain.Field
 import domain.Land
 import domain.Mine
 
@@ -14,16 +13,16 @@ object OutputView {
         println(START_MINE_SWEEPER)
         (0 until board.height.value).forEach { height ->
             (0 until board.width.value).forEach { width ->
-                printField(board.getField(height, width))
+                printField(board, height, width)
             }
             println()
         }
     }
 
-    private fun printField(field: Field) {
-        return when (field) {
-            is Land -> print(LAND_STRING)
-            is Mine -> print(MINE_STRING)
+    private fun printField(board: Board, height: Int, width: Int) {
+        when (board.getField(height, width)) {
+            is Land -> print("${board.getNearByMineCount(height, width)} ")
+            is Mine -> print("$MINE_STRING ")
         }
     }
 }

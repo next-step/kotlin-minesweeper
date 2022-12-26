@@ -26,15 +26,16 @@ class RandomMineBoardGenerateStrategy : BoardGenerateStrategy {
     }
 
     private fun generateFieldMap(height: Height, width: Width, mineCoordinate: List<Coordinate>): Map<Coordinate, Field> {
-        val map = mutableMapOf<Coordinate, Field>()
-        repeat(getMaxCoordinateSize(height, width)) { number ->
-            val coordinate = Coordinate(getCoordinateHeight(number, width), getCoordinateWidth(number, width))
-            when (coordinate in mineCoordinate) {
-                true -> map[coordinate] = Mine()
-                false -> map[coordinate] = Land()
+        return (0..height.value).flatMap { h ->
+            (0..width.value).map { w ->
+                val coordinate = Coordinate(h, w)
+                val field = when (coordinate in mineCoordinate) {
+                    true -> Mine()
+                    false -> Land()
+                }
+                coordinate to field
             }
-        }
-        return map
+        }.toMap()
     }
 
     private fun getCoordinateHeight(number: Int, width: Width) = number / width.value
