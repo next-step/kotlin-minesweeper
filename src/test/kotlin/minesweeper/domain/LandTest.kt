@@ -4,6 +4,7 @@ import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.state.set.Mine
 import minesweeper.domain.tile.state.set.NotChecked
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LandTest {
@@ -27,7 +28,7 @@ class LandTest {
             listOf("C", "*")
         )
 
-        assert(actual == expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
