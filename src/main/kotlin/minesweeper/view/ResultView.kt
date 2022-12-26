@@ -2,6 +2,7 @@ package minesweeper.view
 
 import minesweeper.domain.Block
 import minesweeper.domain.MineBlock
+import minesweeper.domain.Point
 
 object ResultView {
 
@@ -9,14 +10,17 @@ object ResultView {
     private const val DEFAULT_MINE_CHARACTER = "*"
     private const val BLANK = " "
 
-    fun renderInitialBoard(state: List<List<Block>>) {
+    fun renderInitialBoard(state: Map<Point, Block>) {
         println()
         println("지뢰찾기 게임 시작")
         renderBoard(state)
     }
 
-    private fun renderBoard(state: List<List<Block>>) {
-        state.forEach(::renderRow)
+    private fun renderBoard(state: Map<Point, Block>) {
+        val yList = state.toList().groupBy { it.first.y }
+        yList.forEach {
+            renderRow(it.value.map { pair -> pair.second })
+        }
     }
 
     private fun renderRow(row: List<Block>) {

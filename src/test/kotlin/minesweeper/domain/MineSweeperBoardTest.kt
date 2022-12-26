@@ -1,6 +1,5 @@
-package minesweeper
+package minesweeper.domain
 
-import minesweeper.domain.MineSweeperBoard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -8,13 +7,12 @@ import org.junit.jupiter.api.assertThrows
 class MineSweeperBoardTest {
 
     @Test
-    fun `render 메소드는 가로와 세로의 길이에 맞는 2차원 배열을 반환한다`() {
+    fun `render 메소드는 가로 * 세로와 같은 맵을 반환한다`() {
         val width = 3
         val height = 5
 
         val board = MineSweeperBoard(width, height)
-        assertThat(board.state.size).isEqualTo(height)
-        assertThat(board.state[0].size).isEqualTo(width)
+        assertThat(board.state.size).isEqualTo(15)
         assertThat(board.mineCount).isEqualTo(0)
     }
 
@@ -24,8 +22,7 @@ class MineSweeperBoardTest {
         val height = 2
 
         val board = MineSweeperBoard(width, height, mineCount = 1)
-        assertThat(board.state.size).isEqualTo(height)
-        assertThat(board.state[0].size).isEqualTo(width)
+        assertThat(board.state.size).isEqualTo(4)
         assertThat(board.mineCount).isEqualTo(1)
     }
 
