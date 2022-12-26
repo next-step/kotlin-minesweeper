@@ -1,5 +1,5 @@
 package minesweeper.domain
 
-interface Cell {
+sealed class Cell (
     val state: String
-}
+)
