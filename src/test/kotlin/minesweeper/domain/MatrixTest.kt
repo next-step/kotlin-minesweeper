@@ -10,15 +10,15 @@ internal class MatrixTest {
         val matrix = Matrix.of(2, 2)
 
         matrix.rows.size shouldBe 2
-        matrix.rows[0].fields.size shouldBe 2
-        matrix.rows[1].fields.size shouldBe 2
+        matrix.rows[0].size shouldBe 2
+        matrix.rows[1].size shouldBe 2
     }
 
     @Test
     fun `Matrix에 x,y 값을 통해 값을 구할 수 있다`() {
         val matrix = Matrix.of(2, 2)
 
-        matrix.field(Coordinate(0, 0)) shouldBe matrix.rows[0].fields[0]
+        matrix.field(Coordinate(0, 0)) shouldBe matrix.rows[0][0]
     }
 
     @Test
@@ -29,7 +29,7 @@ internal class MatrixTest {
 
         matrix.field(Coordinate(0, 0)) shouldBe mine
         matrix.field(Coordinate(0, 1)) shouldNotBe mine
-        matrix.rows[0].fields[1] shouldNotBe mine
+        matrix.rows[0][1] shouldNotBe mine
     }
 
     @Test
@@ -37,8 +37,8 @@ internal class MatrixTest {
         val matrix = Matrix.of(2, 2)
         val coordinate = Coordinate(0, 0)
 
-        matrix.field(coordinate) shouldBe matrix.rows[0].fields[0]
-        matrix.field(coordinate) shouldNotBe matrix.rows[0].fields[1]
+        matrix.field(coordinate) shouldBe matrix.rows[0][0]
+        matrix.field(coordinate) shouldNotBe matrix.rows[0][1]
     }
 
     @Test
@@ -49,8 +49,8 @@ internal class MatrixTest {
         matrix.land(coordinate, mine)
 
         matrix.field(coordinate) shouldBe mine
-        matrix.rows[0].fields[0] shouldBe mine
+        matrix.rows[0][0] shouldBe mine
         matrix.field(Coordinate(0, 1)) shouldNotBe mine
-        matrix.rows[0].fields[1] shouldNotBe mine
+        matrix.rows[0][1] shouldNotBe mine
     }
 }

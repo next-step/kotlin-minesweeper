@@ -1,8 +1,8 @@
 package minesweeper.domain
 
 enum class CoordinateDirection(
-    val x: Int,
-    val y: Int,
+    val rows: Int,
+    val cols: Int,
 ) {
     RIGHT(1, 0),
     LEFT(-1, 0),
@@ -16,7 +16,7 @@ enum class CoordinateDirection(
 
     companion object {
         fun around(coordinate: Coordinate): List<Coordinate> = values().map {
-            Coordinate(coordinate.x + it.x, coordinate.y + it.y)
+            Coordinate(coordinate.rows + it.rows, coordinate.cols + it.cols)
         }
     }
 }

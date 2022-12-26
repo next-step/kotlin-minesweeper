@@ -1,33 +1,33 @@
 package minesweeper.domain
 
-class Matrix(val rows: List<Row>) {
+class Matrix(val rows: List<MutableList<Field>>) {
     fun land(coordinate: Coordinate, field: Field) {
-        require(coordinate.y in rows.indices)
+        validCoordinate(coordinate)
 
-        this.rows[coordinate.y].fields[coordinate.x] = field
+        this.rows[coordinate.rows][coordinate.cols] = field
     }
 
     fun field(coordinate: Coordinate): Field {
-        require(coordinate.y in rows.indices)
+        validCoordinate(coordinate)
 
-        return rows[coordinate.y].fields[coordinate.x]
+        return this.rows[coordinate.rows][coordinate.cols]
     }
 
-    fun width(): Int {
-        return rows[0].fields.size
+    private fun validCoordinate(coordinate: Coordinate) {
+        require(coordinate.rows in rows.indices && coordinate.cols in rows[coordinate.rows].indices) {
+            "지도 크기를 벗어나는 지역을 조회할 수는 없습니다."
+        }
     }
 
-    fun height(): Int {
-        return rows.size
-    }
+    fun width() = rows[0].size
+
+    fun height() = rows.size
 
     companion object {
-        fun of(width: Int, height: Int): Matrix {
-            return Matrix(
-                List(height) {
-                    Row.init(width)
-                }
-            )
-        }
+        fun of(width: Int, height: Int) = Matrix(createRows(height, width))
+
+        private fun createRows(height: Int, width: Int) = List(height) { createCols(width) }
+
+        private fun createCols(width: Int) = MutableList(width) { Field() }
     }
 }

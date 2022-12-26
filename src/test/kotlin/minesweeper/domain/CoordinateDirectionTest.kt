@@ -6,51 +6,51 @@ import org.junit.jupiter.api.Test
 
 internal class CoordinateDirectionTest {
     @Test
-    fun `오른쪽 좌표 값은 x를 1 더한 값이다`() {
-        CoordinateDirection.RIGHT.x shouldBe 1
-        CoordinateDirection.RIGHT.y shouldBe 0
+    fun `오른쪽 좌표 값은 cols를 1 더한 값이다`() {
+        CoordinateDirection.RIGHT.rows shouldBe 1
+        CoordinateDirection.RIGHT.cols shouldBe 0
     }
 
     @Test
-    fun `왼쪽 좌표 값은 x를 1 뺀 값이다`() {
-        CoordinateDirection.LEFT.x shouldBe -1
-        CoordinateDirection.LEFT.y shouldBe 0
+    fun `왼쪽 좌표 값은 cols를 1 뺀 값이다`() {
+        CoordinateDirection.LEFT.rows shouldBe -1
+        CoordinateDirection.LEFT.cols shouldBe 0
     }
 
     @Test
-    fun `위쪽 좌표 값은 y를 1 더한 값이다`() {
-        CoordinateDirection.UP.x shouldBe 0
-        CoordinateDirection.UP.y shouldBe 1
+    fun `위쪽 좌표 값은 rows를 1 더한 값이다`() {
+        CoordinateDirection.UP.rows shouldBe 0
+        CoordinateDirection.UP.cols shouldBe 1
     }
 
     @Test
-    fun `아래쪽 좌표 값은 y를 1 뺀 값이다`() {
-        CoordinateDirection.DOWN.x shouldBe 0
-        CoordinateDirection.DOWN.y shouldBe -1
+    fun `아래쪽 좌표 값은 rows를 1 뺀 값이다`() {
+        CoordinateDirection.DOWN.rows shouldBe 0
+        CoordinateDirection.DOWN.cols shouldBe -1
     }
 
     @Test
-    fun `오른쪽 위의 좌표 값은 x를 1 더하고 y를 1 더한 값이다`() {
-        CoordinateDirection.RIGHT_UP.x shouldBe 1
-        CoordinateDirection.RIGHT_UP.y shouldBe 1
+    fun `오른쪽 위의 좌표 값은 cols를 1 더하고 rows를 1 더한 값이다`() {
+        CoordinateDirection.RIGHT_UP.rows shouldBe 1
+        CoordinateDirection.RIGHT_UP.cols shouldBe 1
     }
 
     @Test
-    fun `왼쪽 위의 좌표 값은 x를 1 빼고 y를 1 더한 값이다`() {
-        CoordinateDirection.LEFT_UP.x shouldBe -1
-        CoordinateDirection.LEFT_UP.y shouldBe 1
+    fun `왼쪽 위의 좌표 값은 cols를 1 빼고 rows를 1 더한 값이다`() {
+        CoordinateDirection.LEFT_UP.rows shouldBe -1
+        CoordinateDirection.LEFT_UP.cols shouldBe 1
     }
 
     @Test
-    fun `오른쪽 아래의 좌표 값은 x를 1 더하고 y를 1 뺀 값이다`() {
-        CoordinateDirection.RIGHT_DOWN.x shouldBe 1
-        CoordinateDirection.RIGHT_DOWN.y shouldBe -1
+    fun `오른쪽 아래의 좌표 값은 cols를 1 더하고 rows를 1 뺀 값이다`() {
+        CoordinateDirection.RIGHT_DOWN.rows shouldBe 1
+        CoordinateDirection.RIGHT_DOWN.cols shouldBe -1
     }
 
     @Test
-    fun `왼쪽 아래의 좌표 값은 x를 1 빼고 y를 1 뺀 값이다`() {
-        CoordinateDirection.LEFT_DOWN.x shouldBe -1
-        CoordinateDirection.LEFT_DOWN.y shouldBe -1
+    fun `왼쪽 아래의 좌표 값은 cols를 1 빼고 rows를 1 뺀 값이다`() {
+        CoordinateDirection.LEFT_DOWN.rows shouldBe -1
+        CoordinateDirection.LEFT_DOWN.cols shouldBe -1
     }
 
     @Test

@@ -4,6 +4,6 @@ import minesweeper.domain.Board
 
 class Output {
     fun printBoard(board: Board) {
-        println(board.matrix.rows.joinToString("\n") { it.fields.joinToString(" ") })
+        println(board.matrix.rows.joinToString("\n") { it.joinToString(" ") })
     }
 }
