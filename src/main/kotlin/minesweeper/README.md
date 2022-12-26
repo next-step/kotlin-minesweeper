@@ -22,9 +22,9 @@
 
 ### 피드백 목록
 
-- [ ] `abstract` -> `sealed` 로 변경하여 확장에 제한두기
-- [ ] `buildList` 로직을 더 깔끔하게 변경
-- [ ] 불필요한 `OrNull` 제거
+- [x] `abstract` -> `sealed` 로 변경하여 확장에 제한두기
+- [x] `buildList` 로직을 더 깔끔하게 변경
+- [x] 불필요한 `OrNull` 제거
 - [ ] `Custom Exception` 사용
 - [ ] 지뢰의 수를 측정하는 메소드와 변수 정리
 - [ ] `View` 를 `Interface`로 두고 `Controller`에 테스트 추가
