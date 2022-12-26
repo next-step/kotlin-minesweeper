@@ -11,7 +11,7 @@ fun main() {
     val width = inputView.inputWidth()
     val mineCount = inputView.inputLandMine()
 
-    val blockRepository = BlockRepository(height, width, mineCount)
-    val blocks = Blocks(blockRepository.normalBlocks, blockRepository.mineBlocks)
+    val blockCreator = BlockCreator(height, width, mineCount)
+    val blocks = Blocks(blockCreator.normalBlocks, blockCreator.mineBlocks)
     resultView.printBlocks(blocks.blocks.chunked(width))
 }

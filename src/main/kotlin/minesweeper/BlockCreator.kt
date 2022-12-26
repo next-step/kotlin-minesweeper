@@ -1,6 +1,6 @@
 package minesweeper
 
-class BlockRepository(
+class BlockCreator(
     height: Int,
     width: Int,
     mineCount: Int,
