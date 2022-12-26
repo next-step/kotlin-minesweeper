@@ -15,5 +15,20 @@ object ResultView {
     }
 
     fun printMessage(message: Message) = println(message.context)
-    
+
+    fun printMap(cells: List<Cell>, columSize: Int) {
+        cells.chunked(columSize)
+            .forEach { rowCells ->
+                val row = toMark(rowCells)
+                println(row)
+            }
+    }
+
+    private fun toMark(rowCells: List<Cell>): String =
+        rowCells.joinToString(SPACE) { cell ->
+            when (cell) {
+                is Cell.Mine -> MINE
+                is Cell.Blank -> BLANK
+            }
+        }
 }
