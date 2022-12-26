@@ -1,19 +1,12 @@
 package minesweeper
 
-import minesweeper.domain.BlockCreator
-import minesweeper.domain.Blocks
-import minesweeper.ui.InputView
-import minesweeper.ui.ResultView
+import minesweeper.ui.ConsoleInputView
+import minesweeper.ui.ConsoleResultView
 
 fun main() {
-    val inputView = InputView()
-    val resultView = ResultView()
+    val consoleInputView = ConsoleInputView()
+    val consoleResultView = ConsoleResultView()
 
-    val height = inputView.inputHeight()
-    val width = inputView.inputWidth()
-    val mineCount = inputView.inputLandMine()
-
-    val blockCreator = BlockCreator(height, width, mineCount)
-    val blocks = Blocks(blockCreator.normalBlocks, blockCreator.mineBlocks)
-    resultView.printBlocks(blocks.blocks.chunked(width))
+    val controller = Controller(consoleInputView, consoleResultView)
+    controller.drawMineSweeper()
 }
