@@ -21,12 +21,7 @@ class BlockRepository(
         }
 
         private fun createMineBlocks(mineCount: Int): List<Block.LandMine> {
-            val blockList = ArrayList<Block.LandMine>()
-            repeat(mineCount) {
-                blockList.add(Block.LandMine())
-            }
-
-            return blockList
+            return List(mineCount) { Block.LandMine() }
         }
     }
 }
