@@ -3,6 +3,11 @@ package minesweeper.domain
 class MineBoard(
     val mineCells: Array<MineBoardRow>,
 ) {
+    private val height: Int
+        get() = mineCells.size
+    private val width: Int
+        get() = mineCells[0].width
+
     constructor(height: Int, width: Int) : this(Array(height) { MineBoardRow(width) })
 
     private fun plantMine(height: Int, width: Int) {
