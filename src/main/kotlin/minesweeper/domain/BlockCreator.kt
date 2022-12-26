@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class BlockCreator(
     height: Int,

@@ -1,5 +1,7 @@
 package minesweeper
 
+import minesweeper.domain.BlockCreator
+import minesweeper.domain.Blocks
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 

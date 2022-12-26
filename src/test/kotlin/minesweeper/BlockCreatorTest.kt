@@ -2,6 +2,9 @@ package minesweeper
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Block
+import minesweeper.domain.BlockCreator
+import minesweeper.domain.Blocks
 
 class BlockCreatorTest : StringSpec({
     "입력 받은 높이와 넓이에 맞게 블록을 가져온다" {

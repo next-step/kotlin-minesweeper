@@ -1,6 +1,6 @@
 package minesweeper.ui
 
-import minesweeper.Block
+import minesweeper.domain.Block
 
 class ResultView {
     fun printBlocks(blocks: List<List<Block>>) {
