@@ -12,6 +12,6 @@ class GameController(private val input: ConsoleInput, private val output: Consol
 
         val mineLocatorMap = MineLocatorMap(width = width, height = height, countOfMine)
 
-        output.printMap(width, height, mineLocatorMap.sites.map { it.hasMine })
+        output.printMap(width, mineLocatorMap.sites.map { it.hasMine })
     }
 }
