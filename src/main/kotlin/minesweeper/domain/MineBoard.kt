@@ -14,15 +14,27 @@ class MineBoard(
         this.mineCells[height].plantMine(width)
     }
 
-    companion object {
+    private fun incrementNearMineCount(position: Position) {
+        this.mineCells[position.height]
+            .incrementNearMineCount(position.width)
+    }
 
+    private fun updateNearMineCount(position: Position) {
+        position.getNearPositions()
+            .filter { it.rangeIn(height, width) }
+            .forEach(::incrementNearMineCount)
+    }
+
+    companion object {
         fun createBoard(height: Int, width: Int, mineCount: Int): MineBoard {
             val mineBoard = MineBoard(height, width)
 
             getRandomPositions(height, width)
                 .take(mineCount)
-                .forEach { mineBoard.plantMine(it.height, it.width) }
-
+                .forEach {
+                    mineBoard.plantMine(it.height, it.width)
+                    mineBoard.updateNearMineCount(it)
+                }
             return mineBoard
         }
 
@@ -30,4 +42,3 @@ class MineBoard(
             .map { Position(it / width, it % width) }
     }
 }
-

@@ -8,7 +8,7 @@ class MineBoardRow(val mineCells: Array<Cell>) {
         mineCells[width] = MineCell()
     }
 
-    fun increaseNearMineCount(width: Int) {
+    fun incrementNearMineCount(width: Int) {
         val cleanCell = mineCells[width]
         if (cleanCell is CleanCell) {
             cleanCell.nearMineIncrement()
