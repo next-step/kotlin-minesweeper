@@ -16,5 +16,6 @@ class Application {
         val minesCount = inputView.inputMinesCount()
 
         val mineSweeperGame = MineSweeperGame(height = height, width = width, mineCount = minesCount, randomCoordinateGenerator)
+        outputView.printCells(mineSweeperGame.cells)
     }
 }
