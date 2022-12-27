@@ -9,6 +9,11 @@ object InputView {
     private const val INPUT_WIDTH = "너비를 입력하세요."
     private const val INPUT_MINE_CNT = "지뢰는 몇 개인가요?"
     private const val INVALID_OPEN_COORDINATE = "좌표를 올바르게 입력해주세요."
+    private const val INVALID_HEIGHT = "높이는 1부터 최대 높이까지 가능해요."
+    private const val INVALID_WIDTH = "너비는 1부터 최대 높이까지 가능해요."
+    private const val COORDINATE_SIZE = 2
+    private const val COORDINATE_MIN_VALUE = 1
+    private const val COORDINATE_THRESHOLD = 1
 
     fun readMineSweeperInput(): MineInputDto {
         println(INPUT_HEIGHT)
@@ -28,13 +33,13 @@ object InputView {
         print("open: ")
         val input = readln()
         val openCoordinate = Parser.parse(input).apply { validateOpenCoordinate(height, width, this) }
-        return OpenCoordinate(openCoordinate[0] - 1, openCoordinate[1] - 1)
+        return OpenCoordinate(openCoordinate[0] - COORDINATE_THRESHOLD, openCoordinate[1] - COORDINATE_THRESHOLD)
     }
 
     private fun validateOpenCoordinate(height: Int, width: Int, openCoordinate: List<Int>) {
-        require(openCoordinate.size == 2) { INVALID_OPEN_COORDINATE }
-        require(openCoordinate[0] in 1..height) { "높이는 1부터 최대 높이까지 가능해요." }
-        require(openCoordinate[1] in 1..width) { "너비는 1부터 최대 높이까지 가능해요." }
+        require(openCoordinate.size == COORDINATE_SIZE) { INVALID_OPEN_COORDINATE }
+        require(openCoordinate[0] in COORDINATE_MIN_VALUE..height) { INVALID_HEIGHT }
+        require(openCoordinate[1] in COORDINATE_MIN_VALUE..width) { INVALID_WIDTH }
     }
 
     private fun readInt(): Int {
