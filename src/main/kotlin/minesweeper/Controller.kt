@@ -1,5 +1,6 @@
 package minesweeper
 
+import minesweeper.domain.Block
 import minesweeper.domain.BlockCreator
 import minesweeper.domain.Blocks
 import minesweeper.ui.InputView
@@ -12,12 +13,14 @@ class Controller(private val inputView: InputView, private val resultView: Resul
         val mineCount = inputView.inputLandMine()
 
         val blockCreator = BlockCreator(height, width, mineCount)
-        val blocks = Blocks(blockCreator.normalBlocks, blockCreator.mineBlocks)
-        val blockRows = blocks.blocks.chunked(width)
+        val blocks = Blocks(height, width, blockCreator.blocks)
 
-        val drawBlocks = blockRows.map { blockRow ->
+        val drawBlocks = blocks.blockBoard.map { blockRow ->
             blockRow.map { block ->
-                block.blockText
+                when (block) {
+                    is Block.LandMine -> "*"
+                    is Block.Normal -> "C"
+                }
             }
         }
 

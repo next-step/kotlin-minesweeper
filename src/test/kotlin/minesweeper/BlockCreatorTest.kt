@@ -13,17 +13,18 @@ class BlockCreatorTest : StringSpec({
         val mineCount = 3
 
         val creator = BlockCreator(height, width, mineCount)
-        val blocks = Blocks(creator.normalBlocks, creator.mineBlocks)
-        val chunkedBlocks: List<List<Block>> = blocks.blocks.chunked(width)
+        val blocks = Blocks(height, width, creator.blocks)
 
-        chunkedBlocks.size shouldBe height
-        chunkedBlocks[0].size shouldBe width
+        blocks.blockBoard.size shouldBe height
+        blocks.blockBoard[0].size shouldBe width
     }
 
     "입력 받은 지뢰 개수에 맞게 지뢰를 가져온다" {
         val mineCount = 3
         val creator = BlockCreator(3, 5, mineCount)
 
-        creator.mineBlocks.size shouldBe mineCount
+        val landMineBlocks = creator.blocks.filterIsInstance<Block.LandMine>()
+
+        landMineBlocks.size shouldBe mineCount
     }
 })
