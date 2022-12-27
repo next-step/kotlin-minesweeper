@@ -15,8 +15,8 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
         get() = countMine()
 
     init {
-        require(width * height >= mineCount) {
-            "지뢰의 개수는 총 블록의 개수보다 많을 수 없습니다."
+        if (width * height < mineCount) {
+            throw MineSweeperException(ExceptionReason.MINE_COUNT_OVER_BLOCKS)
         }
         _mineCount = 0
         _state = buildBoard(width, height).toMutableMap()

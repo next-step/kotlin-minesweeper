@@ -31,10 +31,10 @@ class MineSweeperBoardTest {
         val width = 2
         val height = 2
 
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<MineSweeperException> {
             MineSweeperBoard(width, height, mineCount = 5)
         }
 
-        assertThat(exception.message).isEqualTo("지뢰의 개수는 총 블록의 개수보다 많을 수 없습니다.")
+        assertThat(exception.reason).isEqualTo(ExceptionReason.MINE_COUNT_OVER_BLOCKS)
     }
 }

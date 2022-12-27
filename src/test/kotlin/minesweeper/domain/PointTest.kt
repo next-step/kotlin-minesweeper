@@ -8,20 +8,20 @@ class PointTest {
 
     @Test
     fun `좌표값 x는 음수가 될 수 없다`() {
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<MineSweeperException> {
             Point(-1, 1)
         }
 
-        assertThat(exception.message).isEqualTo("좌표 값은 음수가 될 수 없습니다.")
+        assertThat(exception.reason).isEqualTo(ExceptionReason.NEGATIVE_POINT_VALUE)
     }
 
     @Test
     fun `좌표값 y는 음수가 될 수 없다`() {
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<MineSweeperException> {
             Point(-1, 1)
         }
 
-        assertThat(exception.message).isEqualTo("좌표 값은 음수가 될 수 없습니다.")
+        assertThat(exception.reason).isEqualTo(ExceptionReason.NEGATIVE_POINT_VALUE)
     }
 
     @Test
