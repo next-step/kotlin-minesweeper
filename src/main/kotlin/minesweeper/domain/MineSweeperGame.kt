@@ -1,9 +1,17 @@
 package minesweeper.domain
 
 class MineSweeperGame(
-    private val height: Int,
+    height: Int,
     private val width: Int,
-    private val mineCount: Int
+    mineCount: Int,
+    randomCoordinateGenerator: RandomCoordinateGenerator
 ) {
     val cells = Array(height) { Array(width) { Cell() } }
+    private val minesCoordinates = randomCoordinateGenerator.generate(width, height, mineCount)
+
+    init {
+        minesCoordinates.forEach {
+            cells[it.y][it.x].locateMine()
+        }
+    }
 }
