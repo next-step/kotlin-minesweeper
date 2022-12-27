@@ -26,8 +26,8 @@ class RandomMineBoardGenerateStrategy : BoardGenerateStrategy {
     }
 
     private fun generateFieldMap(height: Height, width: Width, mineCoordinate: List<Coordinate>): Map<Coordinate, Field> {
-        return (0..height.value).flatMap { h ->
-            (0..width.value).map { w ->
+        return (0 until height.value).flatMap { h ->
+            (0 until width.value).map { w ->
                 val coordinate = Coordinate(h, w)
                 val field = when (coordinate in mineCoordinate) {
                     true -> Mine()
