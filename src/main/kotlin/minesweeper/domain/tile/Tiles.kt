@@ -1,5 +1,7 @@
 package minesweeper.domain.tile
 
+import minesweeper.domain.tile.state.Tile
+
 @JvmInline
 value class Tiles(private val value: List<Tile>) {
     init {

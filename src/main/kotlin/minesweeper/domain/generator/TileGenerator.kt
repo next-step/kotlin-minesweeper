@@ -1,6 +1,6 @@
 package minesweeper.domain.generator
 
-import minesweeper.domain.tile.Tile
+import minesweeper.domain.tile.state.Tile
 import minesweeper.domain.tile.strategy.GenerateStrategy
 
 @JvmInline

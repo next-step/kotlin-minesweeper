@@ -1,8 +1,9 @@
-package minesweeper.domain.tile
+package minesweeper.domain.tile.state
 
+import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.pos.Coordinate
 
-interface Tile {
+sealed interface Tile {
     val coordinate: Coordinate
 
     val isMine: Boolean
