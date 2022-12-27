@@ -25,7 +25,7 @@ class MineMapTest {
     }
 
     @Test
-    internal fun `지뢰를 심으면 주변 숫자가 증가한다`() {
+    internal fun `특정 셀의 주변 지뢰 숫자를 구한다`() {
         val mines = Mines(setOf(Cell(0, 0), Cell(1, 1), Cell(1, 2)))
         val mineMap = MineMap.of(3, 3)
         val mineBoard = MineBoard(mineMap, mines)
