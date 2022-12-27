@@ -26,7 +26,7 @@
 - [x] `buildList` 로직을 더 깔끔하게 변경
 - [x] 불필요한 `OrNull` 제거
 - [x] `Custom Exception` 사용
-- [ ] 지뢰의 수를 측정하는 메소드와 변수 정리
+- [x] 지뢰의 수를 측정하는 메소드와 변수 정리
 - [ ] `View` 를 `Interface`로 두고 `Controller`에 테스트 추가
   - [x] `View`를 `Interface`로 변경
 - [x] `View` 에서 처리해야할 로직들 이동

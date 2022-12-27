@@ -9,18 +9,18 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
     val state: Map<Point, Block>
         get() = _state.toMap()
 
-    private var _mineCount: Int
+    private var _mineCount: Int = 0
 
     val mineCount
-        get() = countMine()
+        get() = _mineCount
 
     init {
         if (width * height < mineCount) {
             throw MineSweeperException(ExceptionReason.MINE_COUNT_OVER_BLOCKS)
         }
-        _mineCount = 0
         _state = buildBoard(width, height).toMutableMap()
         plantMines(mineCount)
+        _mineCount = countMine()
     }
 
     private fun buildBoard(maxXAxis: Int, maxYAxis: Int): Map<Point, Block> {
@@ -44,7 +44,7 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
     }
 
     private fun plantMines(plantingMineCount: Int) {
-        while (mineCount < plantingMineCount) {
+        while (countMine() < plantingMineCount) {
             val width = Random().nextInt(width)
             val height = Random().nextInt(height)
             _state[Point(width, height)] = MineBlock()
