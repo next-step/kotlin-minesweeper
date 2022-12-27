@@ -1,58 +1,61 @@
 package minesweeper.domain
 
-class Position(private val rows: Int, private val columns: Int, private val position: Int) {
+class Position(rows: Int, columns: Int, private val position: Int) {
 
-    val top = makeTop()
-    val topLeft = makeTopLeft()
-    val topRight = makeTopRight()
+    val top = makeTop(position, columns)
+    val topLeft = makeTopLeft(columns)
+    val topRight = makeTopRight(columns)
 
-    val left = makeLeft()
-    val right = makeRight()
+    val left = makeLeft(position, columns)
+    val right = makeRight(position, columns)
 
-    val bottom = makeBottom()
-    val bottomLeft = makeBottomLeft()
-    val bottomRight = makeBottomRight()
+    val bottom = makeBottom(position, rows, columns)
+    val bottomLeft = makeBottomLeft(columns)
+    val bottomRight = makeBottomRight(columns)
 
-    private fun makeBottomRight(): Int {
+    private fun makeBottomRight(columns: Int): Int {
         if (bottom < 0) return -1
-        if ((bottom + 1) % columns <= 0) return -1
-        return bottom + 1
+        val bottomRight = bottom + 1
+        if (bottomRight % columns <= 0) return -1
+        return bottomRight
     }
 
-    private fun makeBottomLeft(): Int {
+    private fun makeBottomLeft(columns: Int): Int {
         if (bottom % columns <= 0) return -1
         return bottom - 1
     }
 
-    private fun makeBottom(): Int {
+    private fun makeBottom(position: Int, rows: Int, columns: Int): Int {
         val diff = position + columns
         if (diff > (rows * columns - 1)) return -1
         return diff
     }
 
-    private fun makeRight(): Int {
-        if ((position + 1) % columns <= 0) return -1
-        return position + 1
+    private fun makeRight(position: Int, columns: Int): Int {
+        val right = position + 1
+        if (right % columns <= 0) return -1
+        return right
     }
 
-    private fun makeLeft(): Int {
+    private fun makeLeft(position: Int, columns: Int): Int {
         if (position == 0) return -1
         if (position % columns <= 0) return -1
         return position - 1
     }
 
-    private fun makeTopRight(): Int {
+    private fun makeTopRight(columns: Int): Int {
         if (top < 0) return -1
-        if ((top + 1) % columns <= 0) return -1
-        return top + 1
+        val topRight = top + 1
+        if (topRight % columns <= 0) return -1
+        return topRight
     }
 
-    private fun makeTopLeft(): Int {
+    private fun makeTopLeft(columns: Int): Int {
         if (top % columns <= 0) return -1
         return top - 1
     }
 
-    private fun makeTop(): Int {
+    private fun makeTop(position: Int, columns: Int): Int {
         val diff = position - columns
         if (diff < 0) return -1
         return diff
