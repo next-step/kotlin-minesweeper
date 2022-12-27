@@ -33,6 +33,6 @@ class ResultView {
 
     private fun getCoordinateText(coordinate: Coordinate): String {
         if (coordinate.isMine()) return "* "
-        return "C "
+        return coordinate.count.toString() + " "
     }
 }
