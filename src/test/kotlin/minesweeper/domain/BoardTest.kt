@@ -73,4 +73,26 @@ internal class BoardTest {
         board.matrix[0].size shouldBe 2
         board.matrix[1].size shouldBe 2
     }
+
+    @Test
+    fun `지뢰가 열려있으면 게임 패배`() {
+        val board = Board.of(2, 2, 2)
+
+        board.matrix[0][0] = Mine()
+        board.open(Coordinate(0, 0))
+
+        board.isLose() shouldBe true
+    }
+
+    @Test
+    fun `지뢰를 제외한 모든 필드가 열려있으면 게임 승리`() {
+        val board = Board.of(2, 2, 0)
+
+        board.matrix[0][0] = Mine()
+        board.open(Coordinate(0, 1))
+        board.open(Coordinate(1, 1))
+        board.open(Coordinate(1, 1))
+
+        board.isWin() shouldBe true
+    }
 }

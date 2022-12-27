@@ -13,9 +13,10 @@ fun main() {
 
     val board = Board.of(width, height, input.getMineCount())
 
-    while (board.open(input.getCoordinate())) {
+    while (!board.isLose()) {
+        board.open(input.getCoordinate())
         output.printBoard(board)
-    }
 
-    output.printBoard(board)
+        if (board.isWin()) break
+    }
 }

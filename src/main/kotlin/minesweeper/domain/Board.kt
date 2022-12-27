@@ -16,30 +16,47 @@ class Board(val matrix: List<MutableList<Field>>, mineCount: Int) {
             .forEach { matrix[it.rows][it.cols] = Mine() }
     }
 
-    fun open(coordinate: Coordinate): Boolean {
+    fun open(coordinate: Coordinate) {
         val field = matrix[coordinate.rows][coordinate.cols]
         field.open()
 
-        CoordinateDirection.around(coordinate)
-            .asSequence()
-            .filter { it.rows in 0 until width() && it.cols in 0 until height() }
-            .filter { !matrix[it.rows][it.cols].isOpened() }
-            .filter { matrix[it.rows][it.cols] is Safe && (matrix[it.rows][it.cols] as Safe).aroundMineCount == 0 }
-            .forEach { this.openAround(it) }
+        if (field is Safe && field.aroundMineCount == 0) this.openAround(coordinate)
 
-        return field is Safe
+        canOpenFields(coordinate)
+            .filter { noMinesAround(it) }
+            .forEach { this.openAround(it) }
+    }
+
+    fun isWin(): Boolean {
+        return coordinates().filter { matrix[it.rows][it.cols] is Safe }
+            .all { matrix[it.rows][it.cols].isOpened() }
+    }
+
+    fun isLose(): Boolean {
+        return coordinates().filter { matrix[it.rows][it.cols] is Mine }
+            .any { matrix[it.rows][it.cols].isOpened() }
     }
 
     private fun openAround(coordinate: Coordinate) {
-        matrix[coordinate.rows][coordinate.cols]
-            .open()
+        matrix[coordinate.rows][coordinate.cols].open()
 
+        canOpenFields(coordinate)
+            .filter { !noMinesAround(it) }
+            .forEach { matrix[it.rows][it.cols].open() }
+
+        canOpenFields(coordinate)
+            .filter { noMinesAround(it) }
+            .forEach { openAround(it) }
+    }
+
+    private fun canOpenFields(coordinate: Coordinate) =
         CoordinateDirection.around(coordinate)
             .asSequence()
-            .filter { it.rows in 0 until width() && it.cols in 0 until height() }
-            .filter { !matrix[coordinate.rows][coordinate.cols].isOpened() }
-            .forEach { this.open(it) }
-    }
+            .filter { it.rows in 0 until height() && it.cols in 0 until width() }
+            .filter { !matrix[it.rows][it.cols].isOpened() }
+
+    private fun noMinesAround(coordinate: Coordinate) =
+        matrix[coordinate.rows][coordinate.cols] is Safe && (matrix[coordinate.rows][coordinate.cols] as Safe).aroundMineCount == 0
 
     private fun createSafe() {
         coordinates()
