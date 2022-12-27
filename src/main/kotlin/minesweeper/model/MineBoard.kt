@@ -19,7 +19,7 @@ class MineBoard(private val mineMap: MineMap, private val mines: Mines) {
 
     fun findAllNearMineNumbers(): Map<Cell, Int> {
         return mineMap.selectAllCells()
-            .filter { checkMine(it) }
+            .filter { !checkMine(it) }
             .associateWith { countNearMines(it) }
     }
 }
