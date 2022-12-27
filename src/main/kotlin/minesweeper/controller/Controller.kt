@@ -4,6 +4,7 @@ import minesweeper.domain.Land
 import minesweeper.domain.generator.TileGenerator
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.strategy.RandomGenerateStrategy
+import minesweeper.dto.LandDto
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -21,6 +22,6 @@ object Controller {
         val land = Land(width, tiles)
 
         ResultView.printGameStartMessage()
-        ResultView.printLand(width.getCalibratedPosition(), land.getTiles())
+        ResultView.printLand(LandDto(land))
     }
 }

@@ -9,7 +9,7 @@ value class Tiles(private val value: List<Tile>) {
         require(value.size == value.toSet().size) { "타일은 중복될 수 없습니다." }
     }
 
-    fun getListAsString(): List<String> {
-        return value.map { tile -> tile.marking.symbol }
+    fun getList(): List<Marking> {
+        return value.map { tile -> tile.marking }
     }
 }

@@ -36,10 +36,10 @@ class TilesTest {
         val tiles = Tiles(listOf(tile1, tile2, tile3))
 
         // when
-        val actual = tiles.getListAsString()
+        val actual = tiles.getList()
 
         // then
-        assertThat(actual.count { it == Marking.MINE.symbol }).isEqualTo(1)
-        assertThat(actual.count { it == Marking.CLOSED.symbol }).isEqualTo(2)
+        assertThat(actual.count { it == Marking.MINE }).isEqualTo(1)
+        assertThat(actual.count { it == Marking.CLOSED }).isEqualTo(2)
     }
 }

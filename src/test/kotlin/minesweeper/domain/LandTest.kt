@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.state.set.Mine
@@ -23,7 +24,7 @@ class LandTest {
         val actual = land.getTiles()
 
         // then
-        val expected = listOf("*", "C", "C", "*")
+        val expected = listOf(Marking.MINE, Marking.CLOSED, Marking.CLOSED, Marking.MINE)
 
         assertThat(actual).isEqualTo(expected)
     }

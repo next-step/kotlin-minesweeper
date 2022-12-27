@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.dto.LandDto
+
 object ResultView {
     private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
 
@@ -11,9 +13,9 @@ object ResultView {
         println()
     }
 
-    fun printLand(width: Int, tiles: List<String>) {
-        val land = tiles.joinToString("") { tile -> "$tile " }
-        val landWithLineFeed = land.chunked(width * 2)
+    fun printLand(landDto: LandDto) {
+        val land = landDto.getTiles().joinToString("") { tile -> "$tile " }
+        val landWithLineFeed = land.chunked(landDto.getWidth() * 2)
         landWithLineFeed.forEach { tile -> println(tile) }
     }
 }
