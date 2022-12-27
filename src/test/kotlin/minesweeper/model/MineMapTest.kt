@@ -28,18 +28,17 @@ class MineMapTest {
     internal fun `지뢰를 심으면 주변 숫자가 증가한다`() {
         val mines = Mines(setOf(Cell(0, 0), Cell(1, 1), Cell(1, 2)))
         val mineMap = MineMap.of(3, 3)
-
-        mineMap.plantMines(mines)
+        val mineBoard = MineBoard(mineMap, mines)
 
         // 테스트 지뢰판 모양
         // * 2 1
         // 3 * 2
         // 2 * 2
-        assertThat(mineMap.getNearCount(Cell(1, 0))).isEqualTo(2)
-        assertThat(mineMap.getNearCount(Cell(2, 0))).isEqualTo(1)
-        assertThat(mineMap.getNearCount(Cell(0, 1))).isEqualTo(3)
-        assertThat(mineMap.getNearCount(Cell(2, 1))).isEqualTo(2)
-        assertThat(mineMap.getNearCount(Cell(0, 2))).isEqualTo(2)
-        assertThat(mineMap.getNearCount(Cell(2, 2))).isEqualTo(2)
+        assertThat(mineBoard.countNearMines(Cell(1, 0))).isEqualTo(2)
+        assertThat(mineBoard.countNearMines(Cell(2, 0))).isEqualTo(1)
+        assertThat(mineBoard.countNearMines(Cell(0, 1))).isEqualTo(3)
+        assertThat(mineBoard.countNearMines(Cell(2, 1))).isEqualTo(2)
+        assertThat(mineBoard.countNearMines(Cell(0, 2))).isEqualTo(2)
+        assertThat(mineBoard.countNearMines(Cell(2, 2))).isEqualTo(2)
     }
 }

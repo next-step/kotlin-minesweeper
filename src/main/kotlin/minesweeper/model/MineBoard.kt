@@ -4,7 +4,6 @@ class MineBoard(val mineMap: MineMap, private val mines: Mines) {
     init {
         require(checkCount(mineMap, mines)) { "맵 크기보다 많은 수의 지뢰를 배치할 수 없습니다." }
         require(checkBounds(mineMap, mines)) { "맵 크기를 벗어나는 곳에 지뢰를 배치할 수 없습니다." }
-        mineMap.plantMines(mines)
     }
 
     private fun checkCount(map: MineMap, mines: Mines) = mines.size < map.rowSize * map.columnSize
@@ -14,7 +13,7 @@ class MineBoard(val mineMap: MineMap, private val mines: Mines) {
         return mines.contains(cell)
     }
 
-    fun getNearCount(cell: Cell): Int {
-        return mineMap.getNearCount(cell)
+    fun countNearMines(cell: Cell): Int {
+        return cell.getNearCells().count(mines::contains)
     }
 }

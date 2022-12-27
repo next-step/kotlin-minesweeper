@@ -21,7 +21,7 @@ object OutputView {
         val builder = StringBuilder()
         cells.forEach { cell ->
             builder.append(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
-            builder.append(if (board.checkMine(cell)) MINE_SYMBOL else board.getNearCount(cell))
+            builder.append(if (board.checkMine(cell)) MINE_SYMBOL else board.countNearMines(cell))
         }
         println(builder)
     }
