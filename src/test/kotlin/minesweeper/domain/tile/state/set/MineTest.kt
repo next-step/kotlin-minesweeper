@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class MineTest {
     @Test
-    fun `Mine - 심볼 확인 테스트`() {
+    fun `Mine - 심볼 확인(MINE) 테스트`() {
         // given
         val given = Mine(Coordinate.of(0, 0))
 

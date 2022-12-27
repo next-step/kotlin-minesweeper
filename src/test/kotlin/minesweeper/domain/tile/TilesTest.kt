@@ -28,7 +28,7 @@ class TilesTest {
     }
 
     @Test
-    fun `Tiles - 문자열 타일 목록 반환 테스트`() {
+    fun `Tiles - 생성 확인 테스트(Mine 1개, NotChecked 2개)`() {
         // given
         val tile1 = NotChecked(Coordinate.of(0, 0), false)
         val tile2 = Mine(Coordinate.of(0, 1))

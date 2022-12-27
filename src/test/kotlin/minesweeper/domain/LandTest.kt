@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class LandTest {
     @Test
-    fun `Land - 문자열 타일 목록 반환 테스트`() {
+    fun `Land - 생성 확인 테스트(2x2, Mine NotChecked Mine NotChecked)`() {
         // given
         val tiles = Tiles(
             listOf(

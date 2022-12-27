@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class TileGeneratorTest {
     @Test
-    fun `TileGenerator - 타일 생성 테스트`() {
+    fun `TileGenerator - 지뢰 갯수 확인 테스트`() {
         // given
         val tileGenerator = TileGenerator(
             MineFirstGenerateStrategy(
