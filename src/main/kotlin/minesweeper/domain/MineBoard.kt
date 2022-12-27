@@ -20,7 +20,7 @@ class MineBoard(
         val coordinates: Coordinates = Coordinates.of(
             List(size) { index ->
                 val position = Position(rowSize(), columnSize(), index)
-                if (index in mineCount.makeMinePositionList()) return@List Coordinate(position, CoordinateType.MINE)
+                if (index in mineCount.minePositionList) return@List Coordinate(position, CoordinateType.MINE)
                 Coordinate(position, CoordinateType.NONE)
             }
         )
