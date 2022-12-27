@@ -8,7 +8,8 @@ object InputFilter {
     fun inputPosition(message: String): Position {
         return try {
             println(message)
-            Position(InputParser.parsePosition(InputView.inputNumber()))
+            val position = InputParser.parsePosition(InputView.inputNumber())
+            Position(position)
         } catch (e: Exception) {
             InputView.printError(e.message!!)
             inputPosition(message)
