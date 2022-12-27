@@ -17,16 +17,13 @@ class LandTest {
                 NotChecked(Coordinate.of(1, 0), false), Mine(Coordinate.of(1, 1))
             )
         )
-        val land = Land.of(FIXED_CALIBRATED_POSITION, FIXED_CALIBRATED_POSITION, tiles)
+        val land = Land.of(FIXED_CALIBRATED_POSITION, tiles)
 
         // when
         val actual = land.getTiles()
 
         // then
-        val expected = listOf(
-            listOf("*", "C"),
-            listOf("C", "*")
-        )
+        val expected = listOf("*", "C", "C", "*")
 
         assertThat(actual).isEqualTo(expected)
     }

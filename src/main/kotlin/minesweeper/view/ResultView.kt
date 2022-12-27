@@ -11,16 +11,9 @@ object ResultView {
         println()
     }
 
-    fun printLand(tiles: List<List<String>>) {
-        for (row in tiles) {
-            printRow(row)
-        }
-    }
-
-    private fun printRow(row: List<String>) {
-        for (tile in row) {
-            print("$tile ")
-        }
-        println()
+    fun printLand(width: Int, tiles: List<String>) {
+        val land = tiles.joinToString("") { tile -> "$tile " }
+        val landWithLineFeed = land.chunked(width * 2)
+        landWithLineFeed.forEach { tile -> println(tile) }
     }
 }
