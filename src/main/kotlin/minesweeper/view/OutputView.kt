@@ -1,23 +1,24 @@
 package minesweeper.view
 
 import minesweeper.model.Cell
-import minesweeper.model.MineBoard
+import minesweeper.model.MineMap.Companion.INIT_INDEX
 
 object OutputView {
-    private const val BLANK_SYMBOL = "C"
     private const val MINE_SYMBOL = "*"
     private const val CELL_SPACE = " "
+    private const val NEW_LINE = "\n"
 
-    fun printMineBoard(mineBoard: MineBoard) {
-        println("\n지뢰찾기 게임 시작")
-        mineBoard.map.forEach { row -> printRow(row, mineBoard) }
+    fun printAllNearMineNumbers(allCells: List<Cell>, nearMineNumberMap: Map<Cell, Int>) {
+        print("\n지뢰찾기 게임 시작")
+        printMineBoardMap(allCells, nearMineNumberMap)
     }
 
-    private fun printRow(row: List<Cell>, board: MineBoard) {
-        println(
-            row.joinToString(CELL_SPACE) { cell ->
-                if (board.checkMine(cell)) MINE_SYMBOL else BLANK_SYMBOL
-            }
-        )
+    private fun printMineBoardMap(cellPoll: List<Cell>, nearMineNumberMap: Map<Cell, Int>) {
+        val builder = StringBuilder()
+        cellPoll.forEach { cell ->
+            builder.append(if (cell.x == INIT_INDEX) NEW_LINE else CELL_SPACE)
+            builder.append(nearMineNumberMap[cell] ?: MINE_SYMBOL)
+        }
+        println(builder)
     }
 }
