@@ -26,11 +26,11 @@ class BlockMap(
         MutableList(height) { BlockRow(it, width) }.forEach(_blockRows::add)
     }
 
-    private fun maxMineCount(width: Int, height: Int): Int = width * height
-
     companion object {
         const val MIN_MINE_COUNT = 1
         const val MIN_WIDTH = 1
         const val MIN_HEIGHT = 1
     }
 }
+
+fun maxMineCount(width: Int, height: Int): Int = width * height
