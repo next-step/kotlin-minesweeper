@@ -26,8 +26,18 @@ internal class BoardTest : BehaviorSpec({
             }
         }
 
+        // Board (땅 O, 지뢰 X)
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
         val testBoard = Board(Height(10), Width(10), MineCnt(10), TestMineBoardGenerateStrategy())
-        val coordinate = Coordinate(5, 5)
 
         When("주변에 지뢰가 있다면 ") {
             Then("정상적으로 가져온다.") {
@@ -35,6 +45,17 @@ internal class BoardTest : BehaviorSpec({
             }
         }
 
+        // Board (땅 O, 지뢰 X)
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
+        // X O X O X O X O X O X
         val testBoard2 = Board(Height(10), Width(10), MineCnt(10), TestMineBoardGenerateStrategy())
         When("모든 땅이 열려있지 않다면 ") {
             val isGameOver = testBoard2.isGameOver()
@@ -44,8 +65,8 @@ internal class BoardTest : BehaviorSpec({
         }
 
         When("모든 땅이 열렸다면 ") {
-            (0..10).forEach() { h ->
-                (0..10).forEach() { w ->
+            (0 until 10).forEach() { h ->
+                (0 until 10).forEach() { w ->
                     when (val field = testBoard2.getField(h, w)) {
                         is Land -> field.open()
                         is Mine -> Unit
@@ -58,16 +79,47 @@ internal class BoardTest : BehaviorSpec({
             }
         }
 
+        // Board (땅 O, 지뢰 X)
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // X X X X X X X X X X O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
         val testBoard3 = Board(Height(10), Width(10), MineCnt(10), SecondColMineBoardGenerateStrategy())
         When("땅을 연다면 주의에 지뢰가 없다면 ") {
             testBoard3.open(0, 0)
             Then("인근 땅도 다 열린다.") {
-                val openedLandCount = (0..10).count { w ->
+                val openedLandCount = (0 until 10).count { w ->
                     val field = testBoard3.getField(0, w)
                     field is Land && field.isOpened
                 }
 
-                openedLandCount shouldBe 11
+                openedLandCount shouldBe 10
+            }
+        }
+
+        // Board (땅 O, 지뢰 X)
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // X X X X X X X X X X O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        // O O O O O O O O O O O
+        val testBoard4 = Board(Height(10), Width(10), MineCnt(10), SecondColMineBoardGenerateStrategy())
+        When("땅을 여는데 올바르지 않은 좌표라면 ") {
+            Then("예외를 던진다.") {
+                shouldThrow<IllegalArgumentException> {
+                    testBoard4.open(15, 15)
+                }
             }
         }
     }
@@ -76,8 +128,8 @@ internal class BoardTest : BehaviorSpec({
 class TestMineBoardGenerateStrategy : BoardGenerateStrategy {
     override fun generate(height: Height, width: Width, mineCnt: MineCnt): Fields {
         return Fields(
-            (0..height.value).flatMap { h ->
-                (0..width.value).map { w ->
+            (0 until height.value).flatMap { h ->
+                (0 until width.value).map { w ->
                     val coordinate = Coordinate(h, w)
                     val field = when (h % 2 == 0) {
                         true -> Mine()
@@ -93,8 +145,8 @@ class TestMineBoardGenerateStrategy : BoardGenerateStrategy {
 class SecondColMineBoardGenerateStrategy : BoardGenerateStrategy {
     override fun generate(height: Height, width: Width, mineCnt: MineCnt): Fields {
         return Fields(
-            (0..height.value).flatMap { h ->
-                (0..width.value).map { w ->
+            (0 until height.value).flatMap { h ->
+                (0 until width.value).map { w ->
                     val coordinate = Coordinate(h, w)
                     val field = when (h == 2) {
                         true -> Mine()

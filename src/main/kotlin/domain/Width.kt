@@ -1,7 +1,9 @@
 package domain
 
 @JvmInline
-value class Width(val value: Int) {
+value class Width(
+    val value: Int,
+) {
     init {
         require(value > THRESHOLD) { NOT_POSITIVE_WIDTH }
     }

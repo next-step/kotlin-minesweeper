@@ -1,7 +1,9 @@
 package domain
 
 @JvmInline
-value class Height(val value: Int) {
+value class Height(
+    val value: Int,
+) {
     init {
         require(value > THRESHOLD) { NOT_POSITIVE_HEIGHT }
     }

@@ -3,7 +3,7 @@ package domain
 import dto.FieldWithCoordinate
 
 class Fields(
-    private val fields: Map<Coordinate, Field>
+    private val fields: Map<Coordinate, Field>,
 ) {
     fun getField(coordinate: Coordinate): Field {
         return fields[coordinate] ?: throw IllegalArgumentException(NOT_EXIST_FIELD)
@@ -11,16 +11,14 @@ class Fields(
 
     fun getNearByFields(coordinate: Coordinate): List<FieldWithCoordinate> {
         val nearByCoordinates = coordinate.getNearByCoordinates()
-        return nearByCoordinates.mapNotNull { coordinate ->
-            fields[coordinate]?.let { field -> FieldWithCoordinate(coordinate, field) }
+        return nearByCoordinates.mapNotNull { nearByCoordinate ->
+            fields[nearByCoordinate]?.let { field -> FieldWithCoordinate(nearByCoordinate, field) }
         }
     }
 
     fun isLandAllOpened(): Boolean {
-        val notOpenedLandCount = fields.values.filterIsInstance<Land>()
-            .count { it.isOpened.not() }
-
-        return notOpenedLandCount == 0
+        return fields.values.filterIsInstance<Land>()
+            .all { it.isOpened }
     }
 
     fun open(coordinate: Coordinate) {

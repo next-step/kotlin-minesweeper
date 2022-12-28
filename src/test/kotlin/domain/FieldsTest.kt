@@ -68,7 +68,7 @@ internal class FieldsTest : BehaviorSpec({
         }
 
         When("지뢰를 연다면 ") {
-            Then("열린다.") {
+            Then("예외를 던진다.") {
                 shouldThrow<IllegalStateException> {
                     fourthFields.open(secondLand)
                 }

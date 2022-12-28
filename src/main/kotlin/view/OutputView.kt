@@ -7,7 +7,6 @@ import domain.Mine
 object OutputView {
     private const val START_MINE_SWEEPER = "지뢰찾기 게임 시작"
     private const val LAND_STRING = "C"
-    private const val MINE_STRING = "*"
     private const val WIN_GAME = "Win Game."
     private const val LOSE_GAME = "Lose Game."
 

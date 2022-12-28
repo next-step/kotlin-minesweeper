@@ -5,5 +5,5 @@ import domain.Field
 
 data class FieldWithCoordinate(
     val coordinate: Coordinate,
-    val field: Field
+    val field: Field,
 )

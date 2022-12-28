@@ -3,7 +3,7 @@ package domain
 sealed class Field
 
 class Land(
-    isOpened: Boolean = false
+    isOpened: Boolean = false,
 ) : Field() {
     var isOpened = isOpened
         private set
