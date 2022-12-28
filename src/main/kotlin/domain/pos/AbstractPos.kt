@@ -14,6 +14,7 @@ data class AbstractPos private constructor(
         private const val MAX_CACHE_VALUE = 10
 
         private val cache: Map<Int, AbstractPos> = (MIN_VALUE..MAX_CACHE_VALUE).associateWith { AbstractPos(it) }
+
         fun of(value: Int): AbstractPos {
             return cache[value] ?: AbstractPos(value)
         }
