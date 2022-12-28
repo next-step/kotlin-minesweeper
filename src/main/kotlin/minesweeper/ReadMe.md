@@ -28,4 +28,5 @@
    1. Blocks 구현 및 테스트
    2. GameMap의 List<Block>을 Blocks로 변경 및 리팩토링
 3. Controller, InputView, OutputView 구현 및 테스트
-   1. Controller, InputView, OutputView 간단 구현
+   1. 간단 구현
+   2. 테스트 및 리팩토링

@@ -17,9 +17,9 @@ data class GameMapDisplayDto(
                         return@map "□"
                     }
                     if (it.javaClass == MineBlock::class.java) {
-                        return@map "※"
+                        return@map "♣"
                     }
-                    throw IllegalStateException()
+                    throw IllegalArgumentException()
                 }
             )
         }
