@@ -5,7 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class PositionTest : StringSpec({
-    "Position.getNearPositions() 함수는 현재 위치의 주변 8개 위치가 포함됨을 확인한다." {
+    "Position.getNearPositions() 함수는 현재 위치(1,1)의 주변 8개 위치가 포함됨을 확인한다." {
         //given
         val position = Position(1, 1)
         //when
