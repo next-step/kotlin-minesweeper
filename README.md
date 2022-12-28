@@ -16,10 +16,10 @@
 - [x] 블록 열(BlockRow)
   - [x] 블록들을 가진다.
   - [x] 블록열의 길이는 입력된 width 동일하다.
-- [] 블록 맵(BlockMap)
+- [x] 블록 맵(BlockMap)
     - [x] 콘솔 창으로 부터 입력 받은 width, height, mineCount 를 가진다.
     - [x] 입력된 height 수 만큰 블록 열(길이 width)을 가진다.
-    - [] 랜덤 지뢰생성기를 통해 mineCount 만큼 랜덤한 위치에 블록을 지뢰로 설정한다.
+    - [x] 랜덤 지뢰생성기를 통해 mineCount 만큼 랜덤한 위치에 블록을 지뢰로 설정한다.
 - [x] 랜덤 지뢰생성기 (RandomMineGenerator)
   - [x] 입력된 width, height, mineCount 에 맞는 랜덤한 지뢰 위치를 생성한다.
 - [] 입력 창(InputView)

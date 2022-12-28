@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.model.Point
+import minesweeper.state.BlockState.Mine
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
@@ -68,5 +70,22 @@ internal class BlockMapTest {
             BlockMap(width, height, mineCount)
         }
             .withMessage("지뢰 개수는 너비 * 높이 보다 작거나 같아야 합니다.")
+    }
+
+    @Test
+    fun `지뢰 생성기를 통해서 지뢰 블락을 생성할 수 있다`() {
+        // given
+        val width = 10
+        val height = 10
+        val mineCount = 10
+        val point = Point(2, 1)
+        val mines = listOf(point)
+        val mineGenerator = FakeMinGenerator(mines)
+
+        // when
+        val blockMap = BlockMap(width, height, mineCount, mineGenerator)
+
+        // then
+        assertThat(blockMap.find(point)?.state?.isMine()).isTrue
     }
 }
