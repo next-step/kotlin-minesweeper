@@ -1,7 +1,6 @@
 package minesweeper.domain
 
 import org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
