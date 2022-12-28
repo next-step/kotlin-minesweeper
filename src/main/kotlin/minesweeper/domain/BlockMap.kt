@@ -23,7 +23,7 @@ class BlockMap(
         get() = _blockRows.toList()
 
     val width: Int
-        get() = blocks.first().blocks.size
+        get() = blocks.first().length
 
     val height: Int
         get() = blocks.size
