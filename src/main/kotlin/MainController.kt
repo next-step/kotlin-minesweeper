@@ -1,3 +1,4 @@
+import domain.GameStatus
 import domain.generator.RandomFieldGenerator
 import view.InputView
 import view.ResultView
@@ -10,5 +11,14 @@ fun main() {
     val generator = RandomFieldGenerator()
     val field = generator.generate(height, width, mineCount)
 
-    ResultView.printGameStart(field)
+    ResultView.printGameStartWording()
+    var result: GameStatus = GameStatus.PROGRESSING
+
+    while (result.isProgressing) {
+        val coordinate = InputView.readOpenCoordinate()
+        result = field.openBlock(coordinate[0], coordinate[1])
+        ResultView.printGameField(field)
+    }
+
+    ResultView.printGameResult(result)
 }
