@@ -4,6 +4,8 @@ class MineBoardRow(val mineCells: Array<Cell>) {
     val width: Int
         get() = mineCells.size
 
+    constructor(width: Int) : this(Array(width) { CleanCell() })
+
     fun plantMine(width: Int) {
         mineCells[width] = MineCell()
     }
@@ -14,6 +16,4 @@ class MineBoardRow(val mineCells: Array<Cell>) {
             cleanCell.nearMineIncrement()
         }
     }
-
-    constructor(width: Int) : this(Array(width) { CleanCell() })
 }
