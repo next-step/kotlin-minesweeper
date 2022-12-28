@@ -6,5 +6,5 @@ class FakeMinGenerator(
     private val mines: List<Point>,
 ) : MineGenerator {
 
-    override fun generate(): List<Point> = mines
+    override fun generate(mineCount: Int, height: Int, width: Int): List<Point> = mines
 }

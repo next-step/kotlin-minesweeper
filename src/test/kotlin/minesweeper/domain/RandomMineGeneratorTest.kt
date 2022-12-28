@@ -14,10 +14,9 @@ internal class RandomMineGeneratorTest {
         // given
         val width = 10
         val height = 10
-        val randomMineGenerator = RandomMineGenerator(mineCount = number, width = width, height = height)
 
         // when
-        val mine = randomMineGenerator.generate()
+        val mine = RandomMineGenerator().generate(mineCount = number, width = width, height = height)
 
         // then
         assertThat(mine.size).isEqualTo(number)
@@ -30,7 +29,7 @@ internal class RandomMineGeneratorTest {
         val mineCount = 0
 
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            RandomMineGenerator(mineCount, width, height)
+            RandomMineGenerator().generate(mineCount, width, height)
         }
             .withMessage("지뢰 개수는 1개 이상이어야 합니다.")
     }
@@ -42,7 +41,7 @@ internal class RandomMineGeneratorTest {
         val mineCount = 101
 
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            RandomMineGenerator(mineCount = mineCount, width = width, height = height)
+            RandomMineGenerator().generate(mineCount = mineCount, width = width, height = height)
         }
             .withMessage("지뢰 개수는 너비 * 높이 보다 작거나 같아야 합니다.")
     }
@@ -55,10 +54,10 @@ internal class RandomMineGeneratorTest {
         val height = 10
 
         // when
-        val randomMineGenerator = RandomMineGenerator(mineCount = number, width = width, height = height)
-
         val lastBlock =
-            randomMineGenerator.generate().sortedWith(compareBy({ it.x }, { it.y })).last()
+            RandomMineGenerator().generate(mineCount = number, width = width, height = height)
+                .sortedWith(compareBy({ it.x }, { it.y }))
+                .last()
         // then
         assertThat(((lastBlock.x + 1) * (lastBlock.y * 1)) <= (width * height)).isTrue
     }

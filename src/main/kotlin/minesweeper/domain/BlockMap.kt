@@ -6,7 +6,7 @@ class BlockMap(
     width: Int,
     height: Int,
     mineCount: Int,
-    mineGenerator: MineGenerator = RandomMineGenerator(mineCount, width, height),
+    mineGenerator: MineGenerator = RandomMineGenerator(),
     private val _blockRows: MutableList<BlockRow> = mutableListOf(),
 ) {
     val blockRows: List<BlockRow>
@@ -24,7 +24,7 @@ class BlockMap(
         require(mineCount >= MIN_MINE_COUNT) { "지뢰 개수는 ${MIN_MINE_COUNT}개 이상이어야 합니다." }
         require(mineCount <= maxMineCount(width, height)) { "지뢰 개수는 너비 * 높이 보다 작거나 같아야 합니다." }
 
-        val mines = mineGenerator.generate()
+        val mines = mineGenerator.generate(mineCount, height, width)
 
         MutableList(height) {
             val row = BlockRow(it, width)
