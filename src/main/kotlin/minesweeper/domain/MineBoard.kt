@@ -1,44 +1,29 @@
 package minesweeper.domain
 
+import minesweeper.domain.Position.Companion.getAllPosition
+import minesweeper.domain.Position.Companion.getRandomPositions
+
 class MineBoard(
-    val mineCells: Array<MineBoardRow>,
+    val mineCells: Map<Position, Cell>,
+    private val height: Int,
+    private val width: Int,
 ) {
-    private val height: Int
-        get() = mineCells.size
-    private val width: Int
-        get() = mineCells[0].width
-
-    constructor(height: Int, width: Int) : this(Array(height) { MineBoardRow(width) })
-
-    private fun plantMine(height: Int, width: Int) {
-        this.mineCells[height].plantMine(width)
-    }
-
-    private fun incrementNearMineCount(position: Position) {
-        this.mineCells[position.height]
-            .incrementNearMineCount(position.width)
-    }
-
-    private fun updateNearMineCount(position: Position) {
-        position.getNearPositions()
-            .filter { it.rangeIn(height, width) }
-            .forEach(::incrementNearMineCount)
+    fun snapshot() = (0 until height).map { row ->
+        (0 until width).map { column ->
+            mineCells[Position(row, column)] ?: throw IllegalStateException("해당 지뢰 셀을 찾을 수 없습니다. 위치: (${row},${column})")
+        }
     }
 
     companion object {
         fun createBoard(height: Int, width: Int, mineCount: Int): MineBoard {
-            val mineBoard = MineBoard(height, width)
-
-            getRandomPositions(height, width)
-                .take(mineCount)
+            val mineCells = HashMap<Position, Cell>()
+            val minePositions = getRandomPositions(height, width, mineCount)
+            getAllPosition(height, width)
                 .forEach {
-                    mineBoard.plantMine(it.height, it.width)
-                    mineBoard.updateNearMineCount(it)
+                    mineCells[it] = if (minePositions.contains(it)) MineCell(it) else CleanCell(it, minePositions)
                 }
-            return mineBoard
+            return MineBoard(mineCells, height, width)
         }
 
-        private fun getRandomPositions(height: Int, width: Int) = (0 until height * width).shuffled()
-            .map { Position(it / width, it % width) }
     }
 }
