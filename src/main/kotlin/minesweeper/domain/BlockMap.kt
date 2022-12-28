@@ -19,14 +19,14 @@ class BlockMap(
         MineCount(mineCount),
     )
 
-    val blockRows: List<BlockRow>
+    val blocks: List<BlockRow>
         get() = _blockRows.toList()
 
     val width: Int
-        get() = blockRows.first().blocks.size
+        get() = blocks.first().blocks.size
 
     val height: Int
-        get() = blockRows.size
+        get() = blocks.size
 
     init {
         val mines = mineGenerator.generate(mineCount, height, width)
@@ -41,7 +41,7 @@ class BlockMap(
             .forEach(_blockRows::add)
     }
 
-    fun find(point: Point): Block? = blockRows.find { it.contains(point) }?.find(point)
+    fun find(point: Point): Block? = blocks.find { it.contains(point) }?.find(point)
 
     companion object {
         const val MIN_MINE_COUNT = 1

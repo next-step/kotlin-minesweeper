@@ -18,4 +18,6 @@ class Block(initialState: BlockState) {
     fun mine() {
         _state = state.mine()
     }
+
+    override fun toString(): String = state.toString()
 }

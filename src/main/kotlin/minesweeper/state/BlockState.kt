@@ -12,11 +12,15 @@ sealed interface BlockState {
         override fun isMine(): Boolean = false
 
         override fun mine(): BlockState = Mine(point)
+
+        override fun toString(): String = "C"
     }
 
     data class Mine(override val point: Point) : BlockState {
         override fun isMine(): Boolean = true
 
         override fun mine(): BlockState = throw IllegalStateException("이미 지뢰입니다.")
+
+        override fun toString(): String = "*"
     }
 }

@@ -1,8 +1,6 @@
 package minesweeper.domain
 
-import minesweeper.model.Height
 import minesweeper.model.Point
-import minesweeper.model.Width
 
 class BlockRow(
     val blocks: List<Block>,
@@ -18,4 +16,6 @@ class BlockRow(
     fun contains(point: Point): Boolean = blocks.any { it.point == point }
 
     fun find(point: Point): Block? = blocks.find { it.point == point }
+
+    override fun toString(): String = blocks.joinToString(" ")
 }
