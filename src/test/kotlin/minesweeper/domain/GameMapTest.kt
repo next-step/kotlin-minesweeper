@@ -17,8 +17,5 @@ class GameMapTest : ExpectSpec({
 
         gameMap.width shouldBe 3
         gameMap.height shouldBe 3
-        gameMap.blocks.size shouldBe 9
-        gameMap.blocks.filter { it.javaClass == CleanBlock::class.java }.size shouldBe 6
-        gameMap.blocks.filter { it.javaClass == MineBlock::class.java }.size shouldBe 3
     }
 })
