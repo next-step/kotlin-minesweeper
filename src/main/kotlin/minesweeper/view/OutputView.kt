@@ -2,14 +2,13 @@ package minesweeper.view
 
 import minesweeper.domain.Cell
 import minesweeper.domain.CleanCell
-import minesweeper.domain.MineBoard
 import minesweeper.domain.MineCell
 
 object OutputView {
-    fun printMineBoard(mineBoard: MineBoard) {
+    fun printMineBoard(mineBoard: List<List<Cell>>) {
         println("지뢰찾기 게임 시작")
-        mineBoard.mineCells.forEach { row ->
-            println(row.mineCells.joinToString(separator = " ") {
+        mineBoard.forEach { row ->
+            println(row.joinToString(separator = " ") {
                 mineCellAsString(it)
             })
         }
