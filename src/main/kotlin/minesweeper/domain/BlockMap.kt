@@ -1,14 +1,24 @@
 package minesweeper.domain
 
+import minesweeper.model.Height
+import minesweeper.model.MineCount
 import minesweeper.model.Point
+import minesweeper.model.Width
 
 class BlockMap(
-    width: Int,
-    height: Int,
-    mineCount: Int,
+    height: Height,
+    width: Width,
+    mineCount: MineCount,
     mineGenerator: MineGenerator = RandomMineGenerator(),
     private val _blockRows: MutableList<BlockRow> = mutableListOf(),
 ) {
+
+    constructor(width: Int, height: Int, mineCount: Int) : this(
+        Height(height),
+        Width(width),
+        MineCount(mineCount),
+    )
+
     val blockRows: List<BlockRow>
         get() = _blockRows.toList()
 
@@ -19,15 +29,10 @@ class BlockMap(
         get() = blockRows.size
 
     init {
-        require(width >= MIN_WIDTH) { "너비는 ${MIN_WIDTH}개 이상이어야 합니다." }
-        require(height >= MIN_HEIGHT) { "높이는 ${MIN_HEIGHT}개 이상이어야 합니다." }
-        require(mineCount >= MIN_MINE_COUNT) { "지뢰 개수는 ${MIN_MINE_COUNT}개 이상이어야 합니다." }
-        require(mineCount <= maxMineCount(width, height)) { "지뢰 개수는 너비 * 높이 보다 작거나 같아야 합니다." }
-
         val mines = mineGenerator.generate(mineCount, height, width)
 
-        MutableList(height) {
-            val row = BlockRow(it, width)
+        MutableList(height.value) {
+            val row = BlockRow(it, width.value)
             mines.forEach { mine ->
                 if (row.contains(mine)) row.find(mine)?.mine()
             }

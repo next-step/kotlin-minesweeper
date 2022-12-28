@@ -1,7 +1,9 @@
 package minesweeper.domain
 
+import minesweeper.model.Height
+import minesweeper.model.MineCount
 import minesweeper.model.Point
-import minesweeper.state.BlockState.Mine
+import minesweeper.model.Width
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
@@ -75,15 +77,15 @@ internal class BlockMapTest {
     @Test
     fun `지뢰 생성기를 통해서 지뢰 블락을 생성할 수 있다`() {
         // given
-        val width = 10
-        val height = 10
-        val mineCount = 10
+        val width = Width(10)
+        val height = Height(10)
+        val mineCount = MineCount(10)
         val point = Point(2, 1)
         val mines = listOf(point)
         val mineGenerator = FakeMinGenerator(mines)
 
         // when
-        val blockMap = BlockMap(width, height, mineCount, mineGenerator)
+        val blockMap = BlockMap(height = height, width = width, mineCount = mineCount, mineGenerator = mineGenerator)
 
         // then
         assertThat(blockMap.find(point)?.state?.isMine()).isTrue

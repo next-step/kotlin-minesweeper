@@ -1,6 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.model.Height
 import minesweeper.model.Point
+import minesweeper.model.Width
 
 class BlockRow(
     val blocks: List<Block>,
