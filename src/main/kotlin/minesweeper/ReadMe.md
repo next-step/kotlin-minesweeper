@@ -24,3 +24,6 @@
 ## 구현 순서
 1. 지뢰 찾기에 필요한 최소 2개 : GameMap, Block 구현 및 테스트
    1. 지뢰 위치를 신경쓰지 않고 우선 입력 숫자에 맞는 개수를 생성한다
+2. GameMap의 Block list를 Blocks로 분리한다.
+   1. Blocks 구현 및 테스트
+   2. GameMap의 List<Block>을 Blocks로 변경
