@@ -12,4 +12,6 @@ data class AbstractCoordinate(
     fun isPossiblePlus(target: Coordinate): Boolean {
         return y.isPossiblePlus(target.y) && x.isPossiblePlus(target.x)
     }
+
+    override fun plus(target: Coordinate): Coordinate = AbstractCoordinate(y + target.y, x + target.x)
 }

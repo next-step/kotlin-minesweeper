@@ -9,4 +9,6 @@ data class RelativeCoordinate(
 ) : Coordinate {
 
     constructor(y: Int, x: Int) : this(RelativePos.of(y), RelativePos.of(x))
+
+    override fun plus(target: Coordinate): Coordinate = RelativeCoordinate(y + target.y, x + target.x)
 }
