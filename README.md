@@ -22,9 +22,9 @@
     - [x] 랜덤 지뢰생성기를 통해 mineCount 만큼 랜덤한 위치에 블록을 지뢰로 설정한다.
 - [x] 랜덤 지뢰생성기 (RandomMineGenerator)
   - [x] 입력된 width, height, mineCount 에 맞는 랜덤한 지뢰 위치를 생성한다.
-- [] 입력 창(InputView)
-  - [] 콘솔 창으로 부터 width, height 입력을 받는다.
-  - [] 콘솔 창으로 부터 mineCount 입력을 받는다.
+- [x] 입력 창(InputView)
+  - [x] 콘솔 창으로 부터 width, height 입력을 받는다.
+  - [x] 콘솔 창으로 부터 mineCount 입력을 받는다.
 - [] 블록 출력기(ResultView)
   - [] 블록을 출력한다.
   - [] 블록의 상태에 따라 출력을 달리한다.
