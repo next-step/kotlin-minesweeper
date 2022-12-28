@@ -10,7 +10,7 @@ data class Position(val row: Int, val column: Int) {
         }.filter { it != this }
 
     companion object {
-        fun getAllPosition(height: Int, width: Int): List<Position> =
+        fun getAllPositions(height: Int, width: Int): List<Position> =
             (0 until height).flatMap { row ->
                 (0 until width).map { column ->
                     Position(row, column)
