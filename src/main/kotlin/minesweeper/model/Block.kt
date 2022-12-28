@@ -3,6 +3,7 @@ package minesweeper.model
 import minesweeper.state.BlockState
 
 data class Block(val state: BlockState) {
+    constructor(height: Int, width: Int) : this(BlockState.Normal(Point(height, width)))
     val point: Point
         get() = state.point
 
