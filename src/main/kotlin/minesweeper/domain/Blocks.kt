@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Blocks(
+data class Blocks(
     val blocks: List<Block>
 ) {
 

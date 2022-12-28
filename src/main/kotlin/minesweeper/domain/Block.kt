@@ -1,3 +1,3 @@
 package minesweeper.domain
 
-interface Block
+sealed class Block

@@ -3,23 +3,23 @@ package minesweeper.controller.dto
 import minesweeper.domain.CleanBlock
 import minesweeper.domain.GameMap
 import minesweeper.domain.MineBlock
+import minesweeper.view.model.BlockModel
+import minesweeper.view.model.HideBlockModel
+import minesweeper.view.model.MineBlockModel
 
 data class GameMapDisplayDto(
     val width: Int,
-    val patterns: List<String>
+    val blocks: List<BlockModel>
 ) {
     companion object {
         fun from(gameMap: GameMap): GameMapDisplayDto {
             return GameMapDisplayDto(
                 width = gameMap.width,
-                patterns = gameMap.blocks.blocks.map {
-                    if (it.javaClass == CleanBlock::class.java) {
-                        return@map "□"
+                blocks = gameMap.blocks.blocks.map {
+                    when (it) {
+                        is CleanBlock -> return@map HideBlockModel()
+                        is MineBlock -> return@map MineBlockModel()
                     }
-                    if (it.javaClass == MineBlock::class.java) {
-                        return@map "♣"
-                    }
-                    throw IllegalArgumentException()
                 }
             )
         }

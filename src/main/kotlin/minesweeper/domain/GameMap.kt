@@ -6,11 +6,14 @@ class GameMap(
     val blocks: Blocks
 ) {
     init {
-        require(height >= 3) { "세로 길이 3 이상이어야합니다" }
-        require(width >= 3) { "가로 길이 3 이상이어야합니다" }
+        require(height >= MIN_HEIGHT) { "세로 길이 $MIN_HEIGHT 이상이어야합니다" }
+        require(width >= MIN_WIDTH) { "가로 길이 $MIN_WIDTH 이상이어야합니다" }
     }
 
     companion object {
+        private const val MIN_HEIGHT = 3
+        private const val MIN_WIDTH = 3
+
         fun of(height: Int, width: Int, mineCount: Int): GameMap {
             return GameMap(
                 height,
