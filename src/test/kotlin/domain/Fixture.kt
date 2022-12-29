@@ -1,24 +1,24 @@
 package domain
 
 fun coordinateOf(x: Int, y: Int): Coordinate {
-    return Coordinate(Row(x), Column(y))
+    return Coordinate(Number(x), Number(y))
 }
 
 fun coordinateListOf(vararg coordinates: Pair<Int, Int>): List<Coordinate> {
     return coordinates.map {
-        Coordinate(Row(it.first), Column(it.second))
+        Coordinate(Number(it.first), Number(it.second))
     }
 }
 
 fun mineCellListOf(vararg coordinates: Pair<Int, Int>): List<Mine> {
     return coordinates.map {
-        Mine(Coordinate(Row(it.first), Column(it.second)))
+        Mine(Coordinate(Number(it.first), Number(it.second)))
     }
 }
 
 fun blankCellListOf(vararg coordinates: Pair<Int, Int>): List<Blank> {
     return coordinates.map {
-        Blank(Coordinate(Row(it.first), Column(it.second)))
+        Blank(Coordinate(Number(it.first), Number(it.second)))
     }
 }
 

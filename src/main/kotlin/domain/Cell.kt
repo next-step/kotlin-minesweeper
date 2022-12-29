@@ -6,7 +6,7 @@ sealed class Cell {
 
 data class Mine(override val coordinate: Coordinate) : Cell() {
     companion object {
-        fun of(x: Int, y: Int) = Mine(Coordinate(Row(x), Column(y)))
+        fun of(x: Int, y: Int) = Mine(Coordinate(Number(x), Number(y)))
     }
 }
 
@@ -21,7 +21,7 @@ data class Blank(
     companion object {
         private const val INITIAL_MINES_AROUND_COUNT = 0
         fun of(x: Int, y: Int): Blank {
-            return Blank(Coordinate(Row(x), Column(y)))
+            return Blank(Coordinate(Number(x), Number(y)))
         }
     }
 }
