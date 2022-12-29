@@ -1,3 +1,6 @@
 package minesweepertest
 
-interface Block
+interface Block {
+    fun getNearbyMineCount(): Int
+    fun setNearbyMineCount(mineCount: Int)
+}

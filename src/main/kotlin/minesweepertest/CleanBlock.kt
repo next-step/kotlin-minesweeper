@@ -1,7 +1,13 @@
 package minesweepertest
 
 class CleanBlock(
-    private var nearbyMineCount: Int = 0
+    private var _nearbyMineCount: Int = 0
 ) : Block {
-    fun getValue() = nearbyMineCount
+    override fun getNearbyMineCount(): Int {
+        return _nearbyMineCount
+    }
+
+    override fun setNearbyMineCount(mineCount: Int) {
+        _nearbyMineCount = mineCount
+    }
 }
