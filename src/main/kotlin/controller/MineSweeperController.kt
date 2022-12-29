@@ -9,12 +9,31 @@ import view.OutputView
 
 class MineSweeperController {
     fun execute() {
-        val mineInputDto = InputView.readMineSweeperInput()
+        val (height, width, mineCnt) = InputView.readMineSweeperInput()
         val board = Board(
-            height = Height(mineInputDto.height),
-            width = Width(mineInputDto.width),
-            mineCnt = MineCnt(mineInputDto.mineCnt)
+            height = Height(height),
+            width = Width(width),
+            mineCnt = MineCnt(mineCnt)
         )
+
+        OutputView.printStartGame()
+        playGame(board)
+    }
+
+    private tailrec fun playGame(board: Board) {
+        if (board.isGameOver()) {
+            OutputView.printWinGame()
+            return
+        }
+
+        val (height, width) = InputView.readOpenCoordinate(board.height.value, board.width.value)
+        if (board.isMine(height, width)) {
+            OutputView.printLoseGame()
+            return
+        }
+
+        board.open(height, width)
         OutputView.printBoard(board)
+        playGame(board)
     }
 }

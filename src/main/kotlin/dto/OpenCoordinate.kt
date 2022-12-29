@@ -1,7 +1,6 @@
 package dto
 
-data class MineInputDto(
+data class OpenCoordinate(
     val height: Int,
     val width: Int,
-    val mineCnt: Int,
 )

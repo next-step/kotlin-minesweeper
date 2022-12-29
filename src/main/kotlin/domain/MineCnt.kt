@@ -2,7 +2,7 @@ package domain
 
 @JvmInline
 value class MineCnt(
-    val value: Int
+    val value: Int,
 ) {
     init {
         require(value > THRESHOLD) { NOT_POSITIVE_MINE_CNT }
