@@ -21,8 +21,8 @@ class Blocks(private val width: Int, private val height: Int, val blockBoard: Li
     }
 
     private fun getBlockLocation(block: Block.Normal): Location {
-        var x = 0
-        var y = 0
+        var x = -1
+        var y = -1
 
         blockBoard.forEachIndexed { index, blocks ->
             val blockX = blocks.indexOf(block)
@@ -33,7 +33,7 @@ class Blocks(private val width: Int, private val height: Int, val blockBoard: Li
             }
         }
 
-        require(x >= 0 || y >= 0) { "block not found" }
+        require(x >= 0 && y >= 0) { "block not found" }
         return Location(x, y)
     }
 
