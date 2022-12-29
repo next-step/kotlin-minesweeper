@@ -7,12 +7,9 @@ class Locations(val values: List<Int>) {
         return Locations(result)
     }
 
-    companion object {
-        fun from(cellSize: Int, list: List<Int>): Locations {
-            val range = List(cellSize) { it }
-            if (!range.containsAll(list)) throw IndexOutOfBoundsException()
+    fun makeRandomLocations(mineCount: MineCount): Locations {
+        val list = values.shuffled().take(mineCount.value)
 
-            return Locations(list)
-        }
+        return Locations(list)
     }
 }

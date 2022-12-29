@@ -1,27 +1,24 @@
 package domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 
 internal class LocationsTest : StringSpec({
-    "셀 사이즈가 넘는 범위의 리스트를 받으면 에러가 발생한다." {
+    "셀 사이즈 만큼의 위치 리스트를 생성한다. " {
         val cellSize = 9
-        val list = listOf(-1, 1, 3, 5, 8, 10, 12, 13)
+        val allLocations = Locations(List(cellSize) { it })
 
-        shouldThrow<IndexOutOfBoundsException> {
-            Locations.from(cellSize, list)
-        }
+        allLocations.values.size shouldBe cellSize
     }
 
-    "셀 사이즈 범위에 포함되는 리스트는 Locations 인스턴스를 생성한다." {
+    "지뢰 개수 만큼 랜덤 위치 리스트를 생성한다." {
         val cellSize = 9
-        val list = listOf(0, 2, 3, 4, 5)
+        val allLocations = Locations(List(cellSize) { it })
+        val mineCount = MineCount(5)
 
-        val locations = Locations.from(cellSize, list)
+        val randomLocations = allLocations.makeRandomLocations(mineCount)
 
-        locations.shouldBeInstanceOf<Locations>()
+        randomLocations.values.size shouldBe mineCount.value
     }
 
     "[1,2,3] 에서 [1,2] 를 빼면 [3] 이 남는다." {
