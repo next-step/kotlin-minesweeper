@@ -1,5 +1,6 @@
 package domain
 
+import domain.strategy.RandomGenerateStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.types.shouldBeInstanceOf
 
@@ -9,8 +10,9 @@ internal class GameTest : StringSpec({
         val column = Column(5)
         val mineCount = MineCount(5)
         val boardInfo = BoardInfo(row, column, mineCount)
+        val strategy = RandomGenerateStrategy()
 
-        val board = Game(boardInfo).createBoard()
+        val board = Game(boardInfo, strategy).createBoard()
         board.shouldBeInstanceOf<Board>()
     }
 })

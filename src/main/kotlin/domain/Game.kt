@@ -1,24 +1,17 @@
 package domain
 
+import domain.strategy.CellGenerateStrategy
+
 class Game(
-    val boardInfo: BoardInfo
+    val boardInfo: BoardInfo,
+    private val strategy: CellGenerateStrategy
 ) {
     fun createBoard(): Board {
-        val allLocations = Locations.from(boardInfo.getCellSize(), List(boardInfo.getCellSize()) { it })
-        val randomMineLocations = getRandomLocations()
+        val allLocations = Locations(List(boardInfo.getCellSize()) { it })
+        val randomLocations = strategy.generate(allLocations, boardInfo.mineCount)
+        val blankLocations = allLocations - randomLocations
 
-        val mineCells = MineGenerator(randomMineLocations, boardInfo).generate()
-        val blankLocations = allLocations - randomMineLocations
-        val board = Board(mineCells)
-
-        val blankCells = BlankGenerator(blankLocations, boardInfo, board).generate()
-        board.addAll(blankCells)
-
-        return board
-    }
-
-    private fun getRandomLocations(): Locations {
-        val list = (0 until boardInfo.getCellSize()).shuffled().take(boardInfo.getMineCount())
-        return Locations.from(boardInfo.getCellSize(), list)
+        val cells = CellGenerator().generate(randomLocations, blankLocations, boardInfo.row)
+        return Board(cells)
     }
 }

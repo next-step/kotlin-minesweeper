@@ -2,6 +2,7 @@ package controller
 
 import domain.BoardInfo
 import domain.Game
+import domain.strategy.RandomGenerateStrategy
 import dto.BoardDto
 import view.InputView
 import view.ResultView
@@ -12,7 +13,7 @@ class MinesweeperController {
         val column = InputView.inputWidth()
         val mineCount = InputView.inputMineCount(row, column)
         val boardInfo = BoardInfo(row, column, mineCount)
-        val game = Game(boardInfo)
+        val game = Game(boardInfo, RandomGenerateStrategy())
 
         val board = game.createBoard()
         ResultView.printBoard(boardInfo, BoardDto.from(board))

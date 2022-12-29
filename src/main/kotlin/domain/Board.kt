@@ -8,8 +8,4 @@ class Board(cells: List<Cell>) {
     fun isMineCell(coordinate: Coordinate): Boolean {
         return cells.find { it.coordinate == coordinate } is Mine
     }
-
-    fun addAll(addCells: List<Cell>) {
-        _cells.addAll(addCells)
-    }
 }
