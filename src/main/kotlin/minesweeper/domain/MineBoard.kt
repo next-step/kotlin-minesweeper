@@ -1,28 +1,32 @@
 package minesweeper.domain
 
-class MineBoard(
-    val mineCells: Array<MineBoardRow>,
-) {
-    constructor(height: Int, width: Int) : this(Array(height) { MineBoardRow(width) })
+import minesweeper.domain.Position.Companion.getAllPositions
+import minesweeper.domain.Position.Companion.getRandomPositions
 
-    private fun plantMine(height: Int, width: Int) {
-        this.mineCells[height].plantMine(width)
+class MineBoard(
+    private val mineCells: Map<Position, Cell>,
+    private val height: Int,
+    private val width: Int,
+) {
+    fun snapshot() = (0 until height).map { row ->
+        (0 until width).map { column ->
+            mineCells[Position(row, column)]
+                ?: throw IllegalStateException("해당 지뢰 셀을 찾을 수 없습니다. 위치: (${row},${column})")
+        }
     }
 
     companion object {
-
         fun createBoard(height: Int, width: Int, mineCount: Int): MineBoard {
-            val mineBoard = MineBoard(height, width)
-
-            getRandomPositions(height, width)
-                .take(mineCount)
-                .forEach { mineBoard.plantMine(it.height, it.width) }
-
-            return mineBoard
+            val mineCells: HashMap<Position, Cell> = linkedMapOf(
+                *positionToCell(getAllPositions(height, width), getRandomPositions(height, width, mineCount))
+            )
+            return MineBoard(mineCells, height, width)
         }
 
-        private fun getRandomPositions(height: Int, width: Int) = (0 until height * width).shuffled()
-            .map { Position(it / width, it % width) }
+        private fun positionToCell(
+            allPositions: List<Position>,
+            minePositions: List<Position>,
+        ) = allPositions.map { it to if (minePositions.contains(it)) MineCell(it) else CleanCell(it, minePositions) }
+            .toTypedArray()
     }
 }
-

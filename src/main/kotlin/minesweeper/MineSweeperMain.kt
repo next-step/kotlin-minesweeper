@@ -10,5 +10,5 @@ fun main() {
     val mineCount = InputView.askMineCount(height * width)
 
     val mineBoard = MineBoard.createBoard(height, width, mineCount)
-    OutputView.printMineBoard(mineBoard)
+    OutputView.printMineBoard(mineBoard.snapshot())
 }

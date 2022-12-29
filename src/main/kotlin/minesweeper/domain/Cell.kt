@@ -1,5 +1,6 @@
 package minesweeper.domain
 
-interface Cell {
-    val state: String
-}
+sealed class Cell(
+    open val position: Position,
+    val state: String,
+)
