@@ -24,7 +24,7 @@ internal class MineDetectorTest : StringSpec({
         val board = Board(mineCells)
 
         val detector = MineDetector(boardInfo, board)
-        val result = detector.getMinesAroundCount(2, 2)
+        val result = detector.getMinesAroundCount(coordinateOf(2, 2))
 
         result shouldBe 1
     }
@@ -39,7 +39,7 @@ internal class MineDetectorTest : StringSpec({
         val board = Board(mineCells)
 
         val detector = MineDetector(boardInfo, board)
-        val result = detector.getMinesAroundCount(2, 2)
+        val result = detector.getMinesAroundCount(coordinateOf(2, 2))
 
         result shouldBe 3
     }
@@ -54,7 +54,7 @@ internal class MineDetectorTest : StringSpec({
         val board = Board(mineCells)
 
         val detector = MineDetector(boardInfo, board)
-        val result = detector.getMinesAroundCount(1, 1)
+        val result = detector.getMinesAroundCount(coordinateOf(1, 1))
 
         result shouldBe 1
     }
@@ -70,7 +70,7 @@ internal class MineDetectorTest : StringSpec({
         val board = Board(blankCells)
 
         val detector = MineDetector(boardInfo, board)
-        val result = detector.getMinesAroundCount(2, 2)
+        val result = detector.getMinesAroundCount(coordinateOf(2, 2))
 
         result shouldBe 0
     }

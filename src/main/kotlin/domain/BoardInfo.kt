@@ -6,14 +6,13 @@ data class BoardInfo(
     val mineCount: MineCount
 ) {
     fun getCellSize() = row * column
-    fun getRow() = row.value
+    private fun getRow() = row.value
     private fun getColumn() = column.value
-    fun getMineCount() = mineCount.value
 
-    fun isContainRange(x: Int, y: Int): Boolean {
+    fun isContainRange(coordinate: Coordinate): Boolean {
         val rowRange = 1..getRow()
         val columnRange = 1..getColumn()
 
-        return x in rowRange && y in columnRange
+        return coordinate.x.value in rowRange && coordinate.y.value in columnRange
     }
 }

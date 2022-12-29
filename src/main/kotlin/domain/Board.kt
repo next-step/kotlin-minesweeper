@@ -13,7 +13,7 @@ class Board(cells: List<Cell>) {
         val mineDetector = MineDetector(boardInfo, this)
 
         cells.filterIsInstance<Blank>().forEach() {
-            val minesAroundCount = mineDetector.getMinesAroundCount(it.coordinate.x.value, it.coordinate.y.value)
+            val minesAroundCount = mineDetector.getMinesAroundCount(it.coordinate)
             it.changeMinesAroundCount(minesAroundCount)
         }
     }
