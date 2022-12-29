@@ -1,7 +1,7 @@
 package minesweeper.domain.tile.pos
 
-data class Coordinate(private val posX: Position, private val posY: Position) {
+data class Coordinate(private val positionX: Position, private val positionY: Position) {
     companion object {
-        fun of(posX: Int, posY: Int) = Coordinate(Position(posX), Position(posY))
+        fun of(positionX: Int, positionY: Int) = Coordinate(Position(positionX), Position(positionY))
     }
 }
