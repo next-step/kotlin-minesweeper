@@ -5,9 +5,6 @@ import minesweeper.domain.position.Position
 sealed class Button(
     val position: Position
 ) {
-    val row: Int = position.row
-    val col: Int = position.col
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -26,18 +23,8 @@ sealed class Button(
 
 class Mine(
     position: Position
-) : Button(position) {
-
-    companion object {
-        fun of(row: Int, col: Int): Mine = Mine(Position(row, col))
-    }
-}
+) : Button(position)
 
 class PushableButton(
     position: Position
-) : Button(position) {
-
-    companion object {
-        fun of(row: Int, col: Int): PushableButton = PushableButton(Position(row, col))
-    }
-}
+) : Button(position)

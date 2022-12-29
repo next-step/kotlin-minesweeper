@@ -20,7 +20,10 @@ class MineBoardView {
         rowButtons().joinToString(ROW_BUTTONS_SEPARATOR) { it.toContentString() }
 
     private fun Buttons.toContentString(): String =
-        joinToString(BUTTON_SEPARATOR) { it.toContentString() }
+        sortedBy { it.position }
+            .joinToString(BUTTON_SEPARATOR) {
+                it.toContentString()
+            }
 
     private fun Button.toContentString(): String = when (this) {
         is Mine -> MINE

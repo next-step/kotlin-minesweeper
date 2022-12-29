@@ -1,33 +1,28 @@
 package minesweeper.domain
 
 import minesweeper.domain.button.ButtonGraph
-import minesweeper.domain.position.Position
-import minesweeper.domain.position.Positions
+import minesweeper.domain.button.vendor.ButtonVendor
 
 class MineSweeperGame(
-    val buttonGraph: ButtonGraph
+    height: Int,
+    width: Int,
+    mineCount: Int
 ) {
-    val height: Int = buttonGraph.height
+    val buttonGraph: ButtonGraph
 
-    val width: Int = buttonGraph.width
-
-    val totalMineCount: Int = buttonGraph.totalMineCount
+    private val buttonVendor: ButtonVendor
 
     init {
-        require(buttonGraph.isNotEmpty()) {
-            "Buttons should not be empty"
+        require(height > 0 && width > 0) {
+            "height and width must be greater than 0"
         }
-    }
 
-    companion object {
-        fun of(height: Int, width: Int, totalMineCount: Int, vararg minePosition: Position): MineSweeperGame =
-            MineSweeperGame(
-                ButtonGraph.of(height, width, totalMineCount, Positions(minePosition.toList()))
-            )
+        require(mineCount in (0..height * width)) {
+            "Mine count should be between ${(0..height * width)}"
+        }
 
-        fun of(height: Int, width: Int, totalMineCount: Int, minePositions: Positions): MineSweeperGame =
-            MineSweeperGame(
-                ButtonGraph.of(height, width, totalMineCount, minePositions)
-            )
+        buttonVendor = ButtonVendor(height, width)
+
+        buttonGraph = buttonVendor.getButtonGraph(mineCount = mineCount)
     }
 }

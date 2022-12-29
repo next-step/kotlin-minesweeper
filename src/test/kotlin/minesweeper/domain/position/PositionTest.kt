@@ -5,16 +5,18 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import minesweeper.util.cartesianProduct
 import org.junit.jupiter.api.assertThrows
 
 class PositionTest : FunSpec({
 
     context("Position 객체가 정상적으로 생성된다") {
+        val givenHeight = 20
+        val givenWidth = 20
+
         withData(
             nameFn = { "$it" },
-            listOf((0..20), (0..20)).cartesianProduct()
-                .map { it[0] to it[1] }
+            (givenHeight.indexRange() comma givenWidth.indexRange())
+                .map { it.row to it.col }
         ) { (row, col) ->
             row shouldBeGreaterThanOrEqual 0
             col shouldBeGreaterThanOrEqual 0
@@ -36,7 +38,6 @@ class PositionTest : FunSpec({
                 -4 to -2
             )
         ) { (row, col) ->
-
             assertThrows<IllegalArgumentException> {
                 Position(row, col)
             }

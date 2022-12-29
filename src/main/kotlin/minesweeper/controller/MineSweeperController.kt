@@ -1,17 +1,14 @@
 package minesweeper.controller
 
 import minesweeper.domain.MineSweeperGame
-import minesweeper.domain.position.vendor.PositionsVendor
 import minesweeper.infra.io.MineSweeperReader
-import minesweeper.util.indexRange
 import minesweeper.view.MineBoardView
 import minesweeper.view.MineSweeperView
 
 class MineSweeperController(
     private val reader: MineSweeperReader = MineSweeperReader(),
     private val mineSweeperView: MineSweeperView = MineSweeperView(),
-    private val mineBoardView: MineBoardView = MineBoardView(),
-    private val positionsVendor: PositionsVendor = PositionsVendor()
+    private val mineBoardView: MineBoardView = MineBoardView()
 ) {
     fun run() {
         mineSweeperView.printlnHeightInputPrompt()
@@ -21,14 +18,9 @@ class MineSweeperController(
         val width = reader.readInt()
 
         mineSweeperView.printlnTotalMineCountInputPrompt()
-        val totalMineCount = reader.readInt()
+        val mineCount = reader.readInt()
 
-        val minePositions = positionsVendor.randomPositions(
-            rowIndexRange = height.indexRange(),
-            colIndexRange = width.indexRange(),
-            totalCount = totalMineCount
-        )
-        val mineSweeperGame = MineSweeperGame.of(height, width, totalMineCount, minePositions)
+        val mineSweeperGame = MineSweeperGame(height, width, mineCount)
 
         mineSweeperView.printlnMineSweeperBeforeStart()
         mineBoardView.printlnMineBoard(mineSweeperGame)
