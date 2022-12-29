@@ -23,7 +23,7 @@ class BlockCreatorTest : StringSpec({
         val mineCount = 3
         val creator = BlockCreator(3, 5, mineCount)
 
-        val landMineBlocks = creator.blocks.filterIsInstance<Block.LandMine>()
+        val landMineBlocks = creator.blocks.flatMap { it.filterIsInstance<Block.LandMine>() }
 
         landMineBlocks.size shouldBe mineCount
     }
