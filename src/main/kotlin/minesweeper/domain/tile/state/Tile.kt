@@ -15,8 +15,8 @@ sealed class Tile {
     abstract val marking: Marking
 
     companion object {
-        fun of(coordinate: Coordinate, isMine: Boolean): Tile {
-            return if (isMine) Mine(coordinate) else NotChecked(coordinate, false)
+        fun of(coordinate: Coordinate, mountCount: Int): Tile {
+            return if (mountCount > 0) Mine(coordinate) else NotChecked(coordinate, false)
         }
     }
 }

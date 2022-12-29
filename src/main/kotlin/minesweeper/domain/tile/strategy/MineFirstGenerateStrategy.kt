@@ -12,7 +12,7 @@ class MineFirstGenerateStrategy(override val width: Position, override val heigh
 
         for (x in 0..width.value) for (y in 0..height.value) {
             val coordinate = Coordinate(Position(x), Position(y))
-            tiles.add(mountCount--.let { if (it > 0) Tile.of(coordinate, true) else Tile.of(coordinate, false) })
+            tiles.add(Tile.of(coordinate, mountCount--))
         }
         return tiles.toList()
     }
