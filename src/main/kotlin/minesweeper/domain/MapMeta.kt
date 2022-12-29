@@ -5,5 +5,6 @@ class MapMeta(val height: Int, val width: Int, val mineCount: Int) {
         require(height >= 1) { "높이는 최소 1 이상이여야 합니다." }
         require(width >= 1) { "너비는 최소 1 이상이여야 합니다." }
         require(mineCount >= 1) { "지뢰 갯수는 최소 1 이상이여야 합니다." }
+        require(mineCount <= height * width) { "지뢰 갯수는 ${height * width} 이하 합니다." }
     }
 }
