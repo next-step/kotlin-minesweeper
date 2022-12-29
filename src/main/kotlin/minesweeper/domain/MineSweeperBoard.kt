@@ -24,13 +24,9 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
     }
 
     private fun buildBoard(maxXAxis: Int, maxYAxis: Int): Map<Point, Block> {
-        val pairs = mutableListOf<Pair<Point, Block>>()
-
-        (0 until maxXAxis).forEach { currentXAixs ->
-            pairs.addAll(buildLine(currentXAixs, maxYAxis))
-        }
-
-        return pairs.toMap()
+        return (0 until maxXAxis).flatMap { currentXAixs ->
+            buildLine(currentXAixs, maxYAxis)
+        }.toMap()
     }
 
     private fun buildLine(currentXAxis: Int, maxYAxis: Int): List<Pair<Point, Block>> {
