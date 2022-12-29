@@ -12,9 +12,9 @@ class GameMapTest : ExpectSpec({
 
         val gameMap = GameMap(
             listOf(
-                mutableListOf(0, 1, 1),
-                mutableListOf(0, 1, "*"),
-                mutableListOf(0, 1, 1),
+                mutableListOf(CleanBlock(0), CleanBlock(1), CleanBlock(1)),
+                mutableListOf(CleanBlock(0), CleanBlock(1), MineBlock()),
+                mutableListOf(CleanBlock(0), CleanBlock(1), CleanBlock(1)),
             )
         )
 
@@ -23,21 +23,24 @@ class GameMapTest : ExpectSpec({
 
         for (x in 0 until width) {
             for (y in 0 until height) {
-                if (gameMap.blocks[y][x] == "*") continue
+                if (gameMap.blocks[y][x] is MineBlock) continue
 
                 val mineCountNearby = listOf(
-                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x - 1) ?: 0,
-                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x) ?: 0,
-                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x + 1) ?: 0,
-                    gameMap.blocks.getOrNull(y)?.getOrNull(x - 1) ?: 0,
+                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x - 1),
+                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x),
+                    gameMap.blocks.getOrNull(y - 1)?.getOrNull(x + 1),
+                    gameMap.blocks.getOrNull(y)?.getOrNull(x - 1),
                     gameMap.blocks[y][x],
-                    gameMap.blocks.getOrNull(y)?.getOrNull(x + 1) ?: 0,
-                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x - 1) ?: 0,
-                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x) ?: 0,
-                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x + 1) ?: 0,
-                ).count { it == "*" }
+                    gameMap.blocks.getOrNull(y)?.getOrNull(x + 1),
+                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x - 1),
+                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x),
+                    gameMap.blocks.getOrNull(y + 1)?.getOrNull(x + 1),
+                ).count { it is MineBlock }
 
-                gameMap.blocks[y][x] shouldBe mineCountNearby
+                val actualBlock = gameMap.blocks[y][x]
+                if(actualBlock is CleanBlock) {
+                    actualBlock.getValue() shouldBe mineCountNearby
+                }
             }
         }
     }
