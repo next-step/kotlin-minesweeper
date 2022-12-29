@@ -32,3 +32,11 @@
 - [x] `View` 에서 처리해야할 로직들 이동
    - [x] `Blcok` 클래스의 `mark` 삭제 -> `View`로 이동
    - [x] 모델들의 `toString()` -> `View`로 이동
+
+
+## 2단계
+- [ ] 주변의 지뢰 숫자를 보여주는 기능
+  - [ ] `Point` - 근처의 포인트 객체들 받아오기
+  - [ ] `SafeBlock` - 주변의 지뢰 수를 가지는 프로퍼티 생성
+  - [ ] `MineSweeperBoard` - 지뢰를 심은 뒤에 지뢰의 수를 반영하는 메소드 생성
+  - [ ] `ResultView` - SafeBlock 표기 방식 변경
