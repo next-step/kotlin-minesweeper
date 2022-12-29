@@ -28,4 +28,10 @@ class InputView {
         if (mineCount <= 0) return inputMineCount(boardSize)
         return MineCount(mineCount, boardSize)
     }
+
+    fun inputOpen(): String {
+        print("open: ")
+        val coordinateText = readlnOrNull() ?: ""
+        return coordinateText.ifBlank { inputOpen() }
+    }
 }

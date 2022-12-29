@@ -22,5 +22,7 @@ fun main() {
     }
 
     val resultView = ResultView()
+    resultView.showStartGame()
+    inputView.inputOpen()
     resultView.showBoard(board)
 }

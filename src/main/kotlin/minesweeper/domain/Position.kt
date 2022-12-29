@@ -69,4 +69,19 @@ class Position(rows: Int, columns: Int, private val position: Int) {
             |$bottomLeft|$bottom|$bottomRight|
         """.trimIndent()
     }
+
+    companion object {
+        private val tokenRegex = "[,:]".toRegex()
+
+        fun transform(columnSize: Int, positionText: String): Int {
+            val result: List<String> = positionText.split(tokenRegex)
+            val rowIndex = result[0].toIntOrNull()
+            val columnIndex = result[1].toIntOrNull()
+
+            requireNotNull(rowIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
+            requireNotNull(columnIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
+
+            return rowIndex * columnSize + columnIndex
+        }
+    }
 }

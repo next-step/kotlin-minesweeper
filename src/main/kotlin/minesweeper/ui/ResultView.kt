@@ -5,9 +5,12 @@ import minesweeper.domain.MineBoard
 
 class ResultView {
 
-    fun showBoard(board: MineBoard) {
+    fun showStartGame() {
         println()
         println("지뢰찾기 게임 시작")
+    }
+
+    fun showBoard(board: MineBoard) {
         print(makeBoardText(board))
     }
 
