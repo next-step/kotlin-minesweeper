@@ -23,10 +23,10 @@ class Map(val cells: List<Cell>) {
                 }
 
         private fun initPosition(rowCells: List<Cell>, rowIndex: Int): List<Cell> =
-            rowCells.mapIndexed { columIndex, columCell ->
-                when (columCell) {
-                    is Cell.Blank -> Cell.Blank(rowIndex, columIndex)
-                    is Cell.Mine -> Cell.Mine(rowIndex, columIndex)
+            rowCells.mapIndexed { columnIndex, columnCell ->
+                when (columnCell) {
+                    is Cell.Blank -> Cell.Blank(rowIndex, columnIndex)
+                    is Cell.Mine -> Cell.Mine(rowIndex, columnIndex)
                 }
             }
     }

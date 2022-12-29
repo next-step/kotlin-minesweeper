@@ -10,7 +10,7 @@ class MinesWeeper {
         val height = InputView.requestPositiveNumber()
 
         ResultView.printMessage(ResultView.Message.REQUEST_WIDTH)
-        val with = InputView.requestPositiveNumber()
+        val width = InputView.requestPositiveNumber()
 
         ResultView.printMessage(ResultView.Message.REQUEST_MINE)
         val mineCount = InputView.requestPositiveNumber()
@@ -18,11 +18,11 @@ class MinesWeeper {
         ResultView.printMessage(ResultView.Message.START)
         val map = Map.create(
             height = height,
-            width = with,
+            width = width,
             mineCount = mineCount
         )
 
-        ResultView.printMap(map.cells, with)
+        ResultView.printMap(map.cells, width)
     }
 }
 
