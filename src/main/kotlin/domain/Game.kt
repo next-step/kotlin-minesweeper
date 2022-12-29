@@ -14,4 +14,8 @@ class Game(
         val cells = CellGenerator().generate(randomLocations, blankLocations, boardInfo.row)
         return Board(cells)
     }
+
+    fun markMinesAroundCountInBoard(board: Board) {
+        board.markMinesAroundCount(boardInfo)
+    }
 }

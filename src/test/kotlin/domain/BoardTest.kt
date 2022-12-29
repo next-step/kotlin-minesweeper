@@ -1,5 +1,6 @@
 package domain
 
+import domain.strategy.CellGenerateStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -24,5 +25,47 @@ internal class BoardTest : StringSpec({
             val result = board.isMineCell(it)
             result shouldBe false
         }
+    }
+
+    /**
+     * 1 X 1
+     * 1 1 1
+     * 0 0 0
+     */
+    "3x3 보드에 (1,2) 좌표에 지뢰가 있다면 1 지뢰 카운트를 가진 빈칸이 5개, 0 지뢰 카운트를 가진 빈칸이 3개이다." {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(1))
+        val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(1)) }
+        val game = Game(boardInfo, customGenerateStrategy)
+        val board = game.createBoard()
+        board.markMinesAroundCount(boardInfo)
+
+        val blankCells = board.cells.filterIsInstance<Blank>()
+        val countOne = blankCells.count { it.minesAroundCount == 1 }
+        val countZero = blankCells.count { it.minesAroundCount == 0 }
+
+        countOne shouldBe 5
+        countZero shouldBe 3
+    }
+
+    /**
+     * 1 X 1
+     * 1 2 2
+     * 0 1 X
+     */
+    "3x3 보드에 (1,2), (3,3) 좌표에 지뢰가 있다면 2 지뢰 카운트를 가진 빈칸 2개, 1 지뢰 카운트를 가진 빈칸 4개, 0 지뢰 카운트를 가진 빈칸이 1개이다. " {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(1, 8)) }
+        val game = Game(boardInfo, customGenerateStrategy)
+        val board = game.createBoard()
+        board.markMinesAroundCount(boardInfo)
+
+        val blankCells = board.cells.filterIsInstance<Blank>()
+        val countTwo = blankCells.count { it.minesAroundCount == 2 }
+        val countOne = blankCells.count { it.minesAroundCount == 1 }
+        val countZero = blankCells.count { it.minesAroundCount == 0 }
+
+        countTwo shouldBe 2
+        countOne shouldBe 4
+        countZero shouldBe 1
     }
 })
