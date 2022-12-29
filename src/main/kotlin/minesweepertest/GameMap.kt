@@ -1,5 +1,5 @@
 package minesweepertest
 
 class GameMap(
-    val blocks: List<MutableList<Any>>
+    val blocks: Map<Pair<Int, Int>, Block>
 )

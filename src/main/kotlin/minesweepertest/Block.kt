@@ -1,3 +1,3 @@
 package minesweepertest
 
-class MineBlock : Block
+interface Block
