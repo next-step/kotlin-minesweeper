@@ -10,8 +10,17 @@ class MineBlock : Block() {
     }
 }
 
-class SafeBlock : Block() {
+class SafeBlock(val nearMineCount: Int = 0) : Block() {
+
+    init {
+        if (nearMineCount !in nearMineRange) throw MineSweeperException(ExceptionReason.ILLEGAL_NEAR_MINE_RANGE)
+    }
+
     override fun open() {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+        private val nearMineRange = (0..8)
     }
 }
