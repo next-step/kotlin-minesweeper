@@ -12,8 +12,8 @@ class BlockCreatorTest : StringSpec({
         val width = 5
         val mineCount = 3
 
-        val creator = BlockCreator(height, width, mineCount)
-        val blocks = Blocks(height, width, creator.blocks)
+        val creator = BlockCreator(width, height, mineCount)
+        val blocks = Blocks(width, height, creator.blocks)
 
         blocks.blockBoard.size shouldBe height
         blocks.blockBoard[0].size shouldBe width
