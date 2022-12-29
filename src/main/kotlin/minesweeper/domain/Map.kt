@@ -3,15 +3,15 @@ package minesweeper.domain
 class Map(val cells: List<Cell>) {
     companion object {
 
-        fun create(height: Int, width: Int, mineCount: Int): Map {
-            val totalCellCount = height * width
-            val blankCount = totalCellCount - mineCount
+        fun create(meta: MapMeta): Map {
+            val totalCellCount = meta.height * meta.width
+            val blankCount = totalCellCount - meta.mineCount
 
             val blankCells = List(blankCount) { Cell.Blank() }
-            val mineCell = List(mineCount) { Cell.Mine() }
+            val mineCell = List(meta.mineCount) { Cell.Mine() }
 
             val cells = blankCells.plus(mineCell).shuffled()
-            val repositionCells = arrange(cells, width)
+            val repositionCells = arrange(cells, meta.width)
 
             return Map(repositionCells)
         }
