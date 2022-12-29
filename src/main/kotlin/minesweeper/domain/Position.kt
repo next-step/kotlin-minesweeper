@@ -1,15 +1,15 @@
 package minesweeper.domain
 
-class Position(rows: Int, columns: Int, private val position: Int) {
+class Position(rows: Int, columns: Int, val index: Int) {
 
-    val top = makeTop(position, columns)
+    val top = makeTop(index, columns)
     val topLeft = makeTopLeft(columns)
     val topRight = makeTopRight(columns)
 
-    val left = makeLeft(position, columns)
-    val right = makeRight(position, columns)
+    val left = makeLeft(index, columns)
+    val right = makeRight(index, columns)
 
-    val bottom = makeBottom(position, rows, columns)
+    val bottom = makeBottom(index, rows, columns)
     val bottomLeft = makeBottomLeft(columns)
     val bottomRight = makeBottomRight(columns)
 
@@ -25,22 +25,22 @@ class Position(rows: Int, columns: Int, private val position: Int) {
         return bottom - 1
     }
 
-    private fun makeBottom(position: Int, rows: Int, columns: Int): Int {
-        val diff = position + columns
+    private fun makeBottom(index: Int, rows: Int, columns: Int): Int {
+        val diff = index + columns
         if (diff > (rows * columns - 1)) return -1
         return diff
     }
 
-    private fun makeRight(position: Int, columns: Int): Int {
-        val right = position + 1
+    private fun makeRight(index: Int, columns: Int): Int {
+        val right = index + 1
         if (right % columns <= 0) return -1
         return right
     }
 
-    private fun makeLeft(position: Int, columns: Int): Int {
-        if (position == 0) return -1
-        if (position % columns <= 0) return -1
-        return position - 1
+    private fun makeLeft(index: Int, columns: Int): Int {
+        if (index == 0) return -1
+        if (index % columns <= 0) return -1
+        return index - 1
     }
 
     private fun makeTopRight(columns: Int): Int {
@@ -55,17 +55,17 @@ class Position(rows: Int, columns: Int, private val position: Int) {
         return top - 1
     }
 
-    private fun makeTop(position: Int, columns: Int): Int {
-        val diff = position - columns
+    private fun makeTop(index: Int, columns: Int): Int {
+        val diff = index - columns
         if (diff < 0) return -1
         return diff
     }
 
     override fun toString(): String {
         return """
-            Position $position
+            Position $index
             |$topLeft|$top|$topRight|
-            |$left|$position|$right|
+            |$left|$index|$right|
             |$bottomLeft|$bottom|$bottomRight|
         """.trimIndent()
     }
@@ -73,7 +73,7 @@ class Position(rows: Int, columns: Int, private val position: Int) {
     companion object {
         private val tokenRegex = "[,:]".toRegex()
 
-        fun transform(columnSize: Int, positionText: String): Int {
+        fun toPosition(rowSize: Int, columnSize: Int, positionText: String): Position {
             val result: List<String> = positionText.split(tokenRegex)
             val rowIndex = result[0].toIntOrNull()
             val columnIndex = result[1].toIntOrNull()
@@ -81,7 +81,8 @@ class Position(rows: Int, columns: Int, private val position: Int) {
             requireNotNull(rowIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
             requireNotNull(columnIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
 
-            return rowIndex * columnSize + columnIndex
+            val index = rowIndex * columnSize + columnIndex
+            return Position(rowSize, columnSize, index)
         }
     }
 }
