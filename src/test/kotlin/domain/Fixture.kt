@@ -21,3 +21,7 @@ fun blankCellListOf(vararg coordinates: Pair<Int, Int>): List<Blank> {
         Blank(Coordinate(Row(it.first), Column(it.second)))
     }
 }
+
+fun locationsOf(vararg value: Int): Locations {
+    return Locations(value.map { it })
+}
