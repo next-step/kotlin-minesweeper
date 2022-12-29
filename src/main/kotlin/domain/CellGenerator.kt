@@ -1,7 +1,7 @@
 package domain
 
 class CellGenerator {
-    fun generate(mineLocations: Locations, BlankLocations: Locations, row: Row): List<Cell> {
+    operator fun invoke(mineLocations: Locations, BlankLocations: Locations, row: Row): List<Cell> {
         val mineCells = makeMines(mineLocations, row)
         val blankCells = makeBlanks(BlankLocations, row)
 

@@ -7,11 +7,13 @@ class Game(
     private val strategy: CellGenerateStrategy
 ) {
     fun createBoard(): Board {
-        val allLocations = Locations(List(boardInfo.getCellSize()) { it })
+        val cellGenerator = CellGenerator()
+
+        val allLocations = Locations(List(boardInfo.getCellSize().value) { it })
         val randomLocations = strategy.generate(allLocations, boardInfo.mineCount)
         val blankLocations = allLocations - randomLocations
+        val cells = cellGenerator(randomLocations, blankLocations, boardInfo.row)
 
-        val cells = CellGenerator().generate(randomLocations, blankLocations, boardInfo.row)
         return Board(cells)
     }
 
