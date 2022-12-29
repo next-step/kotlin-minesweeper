@@ -14,8 +14,9 @@ internal class FieldTest {
     @Test
     fun `열려있는 안전지대는 주변에 존재하는 마인 개수를 나타낸다`() {
         val safe = Safe(7)
+        safe.open()
 
-        safe.toString() shouldBe 7
+        safe.toString() shouldBe "7"
     }
 
     @Test
