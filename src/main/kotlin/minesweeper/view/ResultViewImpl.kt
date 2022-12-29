@@ -4,10 +4,6 @@ import minesweeper.domain.Block
 import minesweeper.domain.MineBlock
 import minesweeper.domain.Point
 
-private const val DEFAULT_BLOCK_CHARACTER = "C"
-private const val DEFAULT_MINE_CHARACTER = "*"
-private const val BLANK = " "
-
 class ResultViewImpl : ResultView {
     override fun renderInitialBoard(state: Map<Point, Block>) {
         println()
@@ -33,5 +29,11 @@ class ResultViewImpl : ResultView {
             else -> print(DEFAULT_BLOCK_CHARACTER)
         }
         print(BLANK)
+    }
+
+    companion object {
+        private const val DEFAULT_BLOCK_CHARACTER = "C"
+        private const val DEFAULT_MINE_CHARACTER = "*"
+        private const val BLANK = " "
     }
 }
