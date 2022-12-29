@@ -2,7 +2,7 @@ package domain
 
 @JvmInline
 value class Column(val value: Int) {
-    operator fun plus(column: Column): Column {
-        return Column(this.value.plus(column.value))
+    init {
+        require(value > 0) { "너비는 1 이상이여야 합니다." }
     }
 }
