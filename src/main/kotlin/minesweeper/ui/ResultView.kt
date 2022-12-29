@@ -1,7 +1,7 @@
 package minesweeper.ui
 
-import minesweeper.domain.Block
+import minesweeper.domain.Blocks
 
 interface ResultView {
-    fun drawBlocks(blocks: List<List<Block>>)
+    fun drawBlocks(blocks: Blocks)
 }

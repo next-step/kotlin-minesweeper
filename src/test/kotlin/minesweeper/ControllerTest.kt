@@ -3,6 +3,7 @@ package minesweeper
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Block
+import minesweeper.domain.Blocks
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 
@@ -20,8 +21,8 @@ class ControllerTest : StringSpec({
         }
 
         val resultView = object : ResultView {
-            override fun drawBlocks(blocks: List<List<Block>>) {
-                blockResult = blocks
+            override fun drawBlocks(blocks: Blocks) {
+                blockResult = blocks.blockBoard
             }
         }
 
