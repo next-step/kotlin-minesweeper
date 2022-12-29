@@ -16,6 +16,7 @@ class MinesweeperController {
         val game = Game(boardInfo, RandomGenerateStrategy())
 
         val board = game.createBoard()
+        game.markMinesAroundCountInBoard(board)
         ResultView.printBoard(boardInfo, BoardDto.from(board))
     }
 }
