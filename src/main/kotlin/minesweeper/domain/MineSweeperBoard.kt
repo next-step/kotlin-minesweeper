@@ -57,8 +57,8 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
 
     private fun buildSafeBlock() {
         val emptyBlockPoints = findEmptyBlockPoint()
-        emptyBlockPoints.forEach {
-            _state[it] = SafeBlock(countNearMine(it.getNearPoints()))
+        emptyBlockPoints.forEach { currentPoint: Point ->
+            _state[currentPoint] = SafeBlock(countNearMine(currentPoint.getNearPoints()))
         }
     }
 
