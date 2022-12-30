@@ -21,6 +21,7 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
         _state = buildBoard(width, height).toMutableMap()
         plantMines(mineCount)
         _mineCount = countMine()
+        buildSafeBlock()
     }
 
     private fun buildBoard(maxXAxis: Int, maxYAxis: Int): Map<Point, Block> {
@@ -31,11 +32,11 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
 
     private fun buildLine(currentXAxis: Int, maxYAxis: Int): List<Pair<Point, Block>> {
         return (0 until maxYAxis).map { y ->
-            buildBlock(currentXAxis, y)
+            buildEmptyBlock(currentXAxis, y)
         }
     }
 
-    private fun buildBlock(currentXAxis: Int, currentYAxis: Int): Pair<Point, Block> {
+    private fun buildEmptyBlock(currentXAxis: Int, currentYAxis: Int): Pair<Point, Block> {
         return Point(currentXAxis, currentYAxis) to EmptyBlock()
     }
 
@@ -52,6 +53,21 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
         if (!_state.containsKey(point)) {
             throw MineSweeperException(ExceptionReason.ILLEGAL_POINT)
         }
+    }
+
+    private fun buildSafeBlock() {
+        val emptyBlockPoints = findEmptyBlockPoint()
+        emptyBlockPoints.forEach {
+            _state[it] = SafeBlock(countNearMine(it.getNearPoints()))
+        }
+    }
+
+    private fun findEmptyBlockPoint(): Set<Point> {
+        return _state.filterValues { block: Block -> block is EmptyBlock }.keys
+    }
+
+    private fun countNearMine(points: List<Point>): Int {
+        return points.filter { _state[it] is MineBlock }.size
     }
 
     private fun countMine(): Int {
