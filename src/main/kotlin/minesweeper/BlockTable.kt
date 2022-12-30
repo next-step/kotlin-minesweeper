@@ -1,13 +1,13 @@
 package minesweeper
 
 class BlockTable(
-    val record: Map<Cord, Block>
+    val record: Map<MapCord, Block>
 ) {
 
     fun setUp() {
         record.keys.forEach { cord ->
             val mineCount = Cords.from(cord)
-                .cords
+                .mapCords
                 .count { record[it] is MineBlock }
 
             record[cord]?.setNearbyMineCount(mineCount)
@@ -21,7 +21,7 @@ class BlockTable(
                 List(mineCount) { MineBlock() }
 
             return BlockTable(
-                cords.cords.zip(blocks) { cord, block ->
+                cords.mapCords.zip(blocks) { cord, block ->
                     cord to block
                 }.toMap()
             )

@@ -13,22 +13,22 @@ class BlockTableTest : ExpectSpec({
 
         val blockTable = BlockTable(
             mapOf(
-                Cord(0, 0) to CleanBlock(0),
-                Cord(0, 1) to CleanBlock(1),
-                Cord(0, 2) to CleanBlock(1),
-                Cord(1, 0) to CleanBlock(0),
-                Cord(1, 1) to CleanBlock(1),
-                Cord(1, 2) to MineBlock(),
-                Cord(2, 0) to CleanBlock(0),
-                Cord(2, 1) to CleanBlock(1),
-                Cord(2, 2) to CleanBlock(1)
+                MapCord(0, 0) to CleanBlock(0),
+                MapCord(0, 1) to CleanBlock(1),
+                MapCord(0, 2) to CleanBlock(1),
+                MapCord(1, 0) to CleanBlock(0),
+                MapCord(1, 1) to CleanBlock(1),
+                MapCord(1, 2) to MineBlock(),
+                MapCord(2, 0) to CleanBlock(0),
+                MapCord(2, 1) to CleanBlock(1),
+                MapCord(2, 2) to CleanBlock(1)
             )
         )
 
         blockTable.record.entries.forEach { (cord, block) ->
             if (block is CleanBlock) {
                 val nearbyMineCount = Cords.from(cord)
-                    .cords
+                    .mapCords
                     .count { blockTable.record[it] is MineBlock }
 
                 nearbyMineCount shouldBe block.getNearbyMineCount()
@@ -38,15 +38,15 @@ class BlockTableTest : ExpectSpec({
 
     expect("BlockTable에 블록들을 넣고 setUp하면 각 블록들이 주변에 있는 지뢰 개수만큼으로 세팅된다.") {
         val blocks = mapOf(
-            Cord(0, 0) to CleanBlock(0),
-            Cord(0, 1) to CleanBlock(0),
-            Cord(0, 2) to CleanBlock(0),
-            Cord(1, 0) to CleanBlock(0),
-            Cord(1, 1) to CleanBlock(0),
-            Cord(1, 2) to MineBlock(),
-            Cord(2, 0) to CleanBlock(0),
-            Cord(2, 1) to CleanBlock(0),
-            Cord(2, 2) to CleanBlock(0)
+            MapCord(0, 0) to CleanBlock(0),
+            MapCord(0, 1) to CleanBlock(0),
+            MapCord(0, 2) to CleanBlock(0),
+            MapCord(1, 0) to CleanBlock(0),
+            MapCord(1, 1) to CleanBlock(0),
+            MapCord(1, 2) to MineBlock(),
+            MapCord(2, 0) to CleanBlock(0),
+            MapCord(2, 1) to CleanBlock(0),
+            MapCord(2, 2) to CleanBlock(0)
         )
 
         val blockTable = BlockTable(blocks)
@@ -54,15 +54,15 @@ class BlockTableTest : ExpectSpec({
 
         val actualBlockTable = BlockTable(
             mapOf(
-                Cord(0, 0) to CleanBlock(0),
-                Cord(0, 1) to CleanBlock(1),
-                Cord(0, 2) to CleanBlock(1),
-                Cord(1, 0) to CleanBlock(0),
-                Cord(1, 1) to CleanBlock(1),
-                Cord(1, 2) to MineBlock(),
-                Cord(2, 0) to CleanBlock(0),
-                Cord(2, 1) to CleanBlock(1),
-                Cord(2, 2) to CleanBlock(1)
+                MapCord(0, 0) to CleanBlock(0),
+                MapCord(0, 1) to CleanBlock(1),
+                MapCord(0, 2) to CleanBlock(1),
+                MapCord(1, 0) to CleanBlock(0),
+                MapCord(1, 1) to CleanBlock(1),
+                MapCord(1, 2) to MineBlock(),
+                MapCord(2, 0) to CleanBlock(0),
+                MapCord(2, 1) to CleanBlock(1),
+                MapCord(2, 2) to CleanBlock(1)
             )
         )
 
@@ -73,30 +73,30 @@ class BlockTableTest : ExpectSpec({
 
     expect("BlockTable에 블록들을 넣고 setUp하지 않으면 근처 지뢰 개수가 반영되지 않는다.") {
         val blocks = mapOf(
-            Cord(0, 0) to CleanBlock(0),
-            Cord(0, 1) to CleanBlock(0),
-            Cord(0, 2) to CleanBlock(0),
-            Cord(1, 0) to CleanBlock(0),
-            Cord(1, 1) to CleanBlock(0),
-            Cord(1, 2) to MineBlock(),
-            Cord(2, 0) to CleanBlock(0),
-            Cord(2, 1) to CleanBlock(0),
-            Cord(2, 2) to CleanBlock(0)
+            MapCord(0, 0) to CleanBlock(0),
+            MapCord(0, 1) to CleanBlock(0),
+            MapCord(0, 2) to CleanBlock(0),
+            MapCord(1, 0) to CleanBlock(0),
+            MapCord(1, 1) to CleanBlock(0),
+            MapCord(1, 2) to MineBlock(),
+            MapCord(2, 0) to CleanBlock(0),
+            MapCord(2, 1) to CleanBlock(0),
+            MapCord(2, 2) to CleanBlock(0)
         )
 
         val unSetUpBlockTable = BlockTable(blocks)
 
         val actualBlockTable = BlockTable(
             mapOf(
-                Cord(0, 0) to CleanBlock(0),
-                Cord(0, 1) to CleanBlock(1),
-                Cord(0, 2) to CleanBlock(1),
-                Cord(1, 0) to CleanBlock(0),
-                Cord(1, 1) to CleanBlock(1),
-                Cord(1, 2) to MineBlock(),
-                Cord(2, 0) to CleanBlock(0),
-                Cord(2, 1) to CleanBlock(1),
-                Cord(2, 2) to CleanBlock(1)
+                MapCord(0, 0) to CleanBlock(0),
+                MapCord(0, 1) to CleanBlock(1),
+                MapCord(0, 2) to CleanBlock(1),
+                MapCord(1, 0) to CleanBlock(0),
+                MapCord(1, 1) to CleanBlock(1),
+                MapCord(1, 2) to MineBlock(),
+                MapCord(2, 0) to CleanBlock(0),
+                MapCord(2, 1) to CleanBlock(1),
+                MapCord(2, 2) to CleanBlock(1)
             )
         )
 

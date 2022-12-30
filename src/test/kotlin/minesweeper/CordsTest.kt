@@ -15,17 +15,17 @@ class CordsTest : ExpectSpec({
 
         val cords = Cords.of(height, width)
 
-        cords.cords.size shouldBe 9
-        cords.cords shouldContainAll listOf(
-            Cord(0, 0),
-            Cord(0, 1),
-            Cord(0, 2),
-            Cord(1, 0),
-            Cord(1, 1),
-            Cord(1, 2),
-            Cord(2, 0),
-            Cord(2, 1),
-            Cord(2, 2),
+        cords.mapCords.size shouldBe 9
+        cords.mapCords shouldContainAll listOf(
+            MapCord(0, 0),
+            MapCord(0, 1),
+            MapCord(0, 2),
+            MapCord(1, 0),
+            MapCord(1, 1),
+            MapCord(1, 2),
+            MapCord(2, 0),
+            MapCord(2, 1),
+            MapCord(2, 2),
         )
     }
 
@@ -35,20 +35,20 @@ class CordsTest : ExpectSpec({
 
         val cords = Cords.of(height, width)
 
-        cords.cords.size shouldBe 12
-        cords.cords shouldContainAll listOf(
-            Cord(0, 0),
-            Cord(0, 1),
-            Cord(0, 2),
-            Cord(0, 3),
-            Cord(1, 0),
-            Cord(1, 1),
-            Cord(1, 2),
-            Cord(1, 3),
-            Cord(2, 0),
-            Cord(2, 1),
-            Cord(2, 2),
-            Cord(2, 3),
+        cords.mapCords.size shouldBe 12
+        cords.mapCords shouldContainAll listOf(
+            MapCord(0, 0),
+            MapCord(0, 1),
+            MapCord(0, 2),
+            MapCord(0, 3),
+            MapCord(1, 0),
+            MapCord(1, 1),
+            MapCord(1, 2),
+            MapCord(1, 3),
+            MapCord(2, 0),
+            MapCord(2, 1),
+            MapCord(2, 2),
+            MapCord(2, 3),
         )
     }
 })
