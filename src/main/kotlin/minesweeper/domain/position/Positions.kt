@@ -8,3 +8,6 @@ data class Positions(
 
     fun havePosition(row: Int, col: Int): Boolean = havePosition(Position(row, col))
 }
+
+fun List<Position>.toPositions(): Positions =
+    Positions(this)
