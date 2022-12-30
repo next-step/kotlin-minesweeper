@@ -1,5 +1,6 @@
 package minesweeper.controller.dto
 
+import minesweeper.domain.Block
 import minesweeper.domain.CleanBlock
 import minesweeper.domain.GameMap
 import minesweeper.domain.MineBlock
@@ -21,12 +22,16 @@ data class GameMapDisplayResponse(
             return GameMapDisplayResponse(
                 mapCords.filter { it.y == 0 }.size,
                 blocks.map { block ->
-                    when (block) {
-                        is CleanBlock -> HideBlockViewModel()
-                        is MineBlock -> MineBlockViewModel()
-                    }
+                    blockToViewModel(block)
                 }
             )
+        }
+
+        private fun blockToViewModel(block: Block): BlockViewModel {
+            return when (block) {
+                is CleanBlock -> HideBlockViewModel()
+                is MineBlock -> MineBlockViewModel()
+            }
         }
     }
 }
