@@ -22,6 +22,7 @@ class ResultViewImpl : ResultView {
             ExceptionReason.NEGATIVE_POINT_VALUE -> NEGATIVE_POINT_VALUE_TEXT
             ExceptionReason.MINE_COUNT_OVER_BLOCKS -> MINE_COUNT_OVER_BLOCKS_TEXT
             ExceptionReason.ILLEGAL_NEAR_MINE_RANGE -> ILLEGAL_NEAR_MINE_RANGE_TEXT
+            ExceptionReason.ILLEGAL_POINT -> CANT_CREATE_BLOCK
         }
     }
 
@@ -55,6 +56,7 @@ class ResultViewImpl : ResultView {
         private const val BLANK_CHARACTER = " "
         private const val NEGATIVE_POINT_VALUE_TEXT = "좌표 값은 음수가 될 수 없습니다."
         private const val MINE_COUNT_OVER_BLOCKS_TEXT = "지뢰의 개수는 총 블록의 개수보다 많을 수 없습니다."
-        private const val ILLEGAL_NEAR_MINE_RANGE_TEXT = "근처의 지뢰 범위는 0 이상 8 이하입니다"
+        private const val ILLEGAL_NEAR_MINE_RANGE_TEXT = "근처의 지뢰 범위는 0 이상 8 이하입니다."
+        private const val CANT_CREATE_BLOCK = "현재 보드에 없는 지점에 지뢰를 설치할 수 없습니다."
     }
 }

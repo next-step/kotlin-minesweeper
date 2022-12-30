@@ -36,14 +36,21 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
     }
 
     private fun buildBlock(currentXAxis: Int, currentYAxis: Int): Pair<Point, Block> {
-        return Point(currentXAxis, currentYAxis) to SafeBlock()
+        return Point(currentXAxis, currentYAxis) to EmptyBlock()
     }
 
     private fun plantMines(plantingMineCount: Int) {
         while (countMine() < plantingMineCount) {
             val width = Random().nextInt(width)
             val height = Random().nextInt(height)
+            validatePoint(Point(width, height))
             _state[Point(width, height)] = MineBlock()
+        }
+    }
+
+    private fun validatePoint(point: Point) {
+        if (!_state.containsKey(point)) {
+            throw MineSweeperException(ExceptionReason.ILLEGAL_POINT)
         }
     }
 
