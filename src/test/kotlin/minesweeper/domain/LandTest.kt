@@ -1,10 +1,9 @@
 package minesweeper.domain
 
+import minesweeper.Mine
+import minesweeper.NotChecked
 import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.Tiles
-import minesweeper.domain.tile.pos.Coordinate
-import minesweeper.domain.tile.state.set.Mine
-import minesweeper.domain.tile.state.set.NotChecked
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,8 +13,8 @@ class LandTest {
         // given
         val tiles = Tiles(
             listOf(
-                Mine(Coordinate.of(0, 0)), NotChecked(Coordinate.of(0, 1), false),
-                NotChecked(Coordinate.of(1, 0), false), Mine(Coordinate.of(1, 1))
+                Mine(0, 0), NotChecked(0, 1, false),
+                NotChecked(1, 0, false), Mine(1, 1)
             )
         )
         val land = Land.of(FIXED_CALIBRATED_POSITION, tiles)
