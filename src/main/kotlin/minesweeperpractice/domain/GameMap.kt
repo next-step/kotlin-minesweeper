@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeperpractice.domain
 
 class GameMap(
     val height: Int,

@@ -1,4 +1,4 @@
-package minesweepertest
+package minesweeper
 
 class BlockTable(
     val record: Map<Pair<Int, Int>, Block>

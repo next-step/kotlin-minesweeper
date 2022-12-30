@@ -1,4 +1,4 @@
-package minesweeper.view.model
+package minesweeperpractice.view.model
 
 class HideBlockModel(
     private val pattern: String = "□"

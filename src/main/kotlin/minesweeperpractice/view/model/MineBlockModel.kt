@@ -1,4 +1,4 @@
-package minesweeper.view.model
+package minesweeperpractice.view.model
 
 class MineBlockModel(
     private val pattern: String = "♣"

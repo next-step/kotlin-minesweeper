@@ -1,4 +1,4 @@
-package minesweepertest
+package minesweeper
 
 class GameMap(
     val blockTable: BlockTable

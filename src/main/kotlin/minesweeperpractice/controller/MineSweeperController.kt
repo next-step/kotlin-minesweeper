@@ -1,9 +1,9 @@
-package minesweeper.controller
+package minesweeperpractice.controller
 
-import minesweeper.controller.dto.GameMapDisplayDto
-import minesweeper.domain.GameMap
-import minesweeper.view.InputView
-import minesweeper.view.OutputView
+import minesweeperpractice.controller.dto.GameMapDisplayDto
+import minesweeperpractice.domain.GameMap
+import minesweeperpractice.view.InputView
+import minesweeperpractice.view.OutputView
 
 class MineSweeperController(
     private val inputView: InputView = InputView(),

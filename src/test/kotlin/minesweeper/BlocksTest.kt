@@ -1,4 +1,4 @@
-package minesweepertest
+package minesweeper
 
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.ints.shouldBeLessThan

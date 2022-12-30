@@ -1,11 +1,11 @@
-package minesweeper.controller.dto
+package minesweeperpractice.controller.dto
 
-import minesweeper.domain.CleanBlock
-import minesweeper.domain.GameMap
-import minesweeper.domain.MineBlock
-import minesweeper.view.model.BlockModel
-import minesweeper.view.model.HideBlockModel
-import minesweeper.view.model.MineBlockModel
+import minesweeperpractice.domain.CleanBlock
+import minesweeperpractice.domain.GameMap
+import minesweeperpractice.domain.MineBlock
+import minesweeperpractice.view.model.BlockModel
+import minesweeperpractice.view.model.HideBlockModel
+import minesweeperpractice.view.model.MineBlockModel
 
 data class GameMapDisplayDto(
     val width: Int,

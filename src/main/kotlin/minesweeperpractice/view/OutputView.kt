@@ -1,6 +1,6 @@
-package minesweeper.view
+package minesweeperpractice.view
 
-import minesweeper.controller.dto.GameMapDisplayDto
+import minesweeperpractice.controller.dto.GameMapDisplayDto
 
 class OutputView {
 

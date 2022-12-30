@@ -1,6 +1,6 @@
-package minesweeper.domain
+package minesweeperpractice.domain
 
-class MineBlock : Block() {
+class CleanBlock : Block() {
     override fun equals(other: Any?): Boolean {
         return this === other
     }

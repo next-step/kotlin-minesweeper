@@ -1,4 +1,4 @@
-package minesweepertest
+package minesweeper
 
 interface Block {
     fun getNearbyMineCount(): Int

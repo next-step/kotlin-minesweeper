@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeperpractice.domain
 
 data class Blocks(
     val blocks: List<Block>

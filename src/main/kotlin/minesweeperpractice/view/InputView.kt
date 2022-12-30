@@ -1,6 +1,6 @@
-package minesweeper.view
+package minesweeperpractice.view
 
-import minesweeper.controller.dto.GameMapRequestDto
+import minesweeperpractice.controller.dto.GameMapRequestDto
 
 class InputView {
 

@@ -1,4 +1,4 @@
-package minesweepertest
+package minesweeper
 
 class MineBlock(
     private var _nearbyMineCount: Int = 0

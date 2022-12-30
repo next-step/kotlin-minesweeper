@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeperpractice.domain
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrowExactly
