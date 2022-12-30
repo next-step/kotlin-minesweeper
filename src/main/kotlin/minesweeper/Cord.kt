@@ -1,6 +1,6 @@
 package minesweeper
 
-class Cord(
+data class Cord(
     val x: Int,
     val y: Int
 ) {
@@ -11,15 +11,23 @@ class Cord(
 }
 
 class CordBuilder(
-    private var _x: Int = -1,
-    private var _y: Int = -1
+    private val _x: Int = -1,
+    private val _y: Int = -1
 ) {
     fun setX(input: Int): CordBuilder {
-        return CordBuilder(_x = input, _y = _y)
+        return CordBuilder(input, _y)
     }
 
-    fun setY(input: Int): CordBuilder {
-        return CordBuilder(_x = _x, _y = input)
+    fun setX(range: IntRange): List<CordBuilder> {
+        return range.map { newX -> CordBuilder(newX, _y) }
+    }
+
+    fun setY(newY: Int): CordBuilder {
+        return CordBuilder(_x, newY)
+    }
+
+    fun setY(newYRange: IntRange): List<CordBuilder> {
+        return newYRange.map { newY -> CordBuilder(_x, newY) }
     }
 
     fun build(): Cord = Cord(_x, _y)

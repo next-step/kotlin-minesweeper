@@ -1,15 +1,19 @@
 package minesweeper
 
 class Cords(
-    val cords: List<Pair<Int, Int>>
+    val cords: List<Cord>
 ) {
 
     companion object {
         fun of(height: Int, width: Int): Cords {
+            val xCords = 0 until height
+            val yCords = 0 until width
+
             return Cords(
-                (0 until height).map { y ->
-                    (0 until width).map { x -> (y to x) }
-                }.flatten()
+                CordBuilder()
+                    .setX(xCords)
+                    .flatMap { it.setY(yCords) }
+                    .map { it.build() }
             )
         }
     }
