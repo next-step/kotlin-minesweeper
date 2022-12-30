@@ -4,9 +4,12 @@ data class Cord(
     val x: Int,
     val y: Int
 ) {
-    init {
-        require(x >= 0) { "x좌표는 음수일 수 없습니다" }
-        require(y >= 0) { "y좌표는 음수일 수 없습니다" }
+    operator fun plus(other: Cord): Cord {
+        return Cord(x + other.x, y + other.y)
+    }
+
+    operator fun minus(other: Cord): Cord {
+        return Cord(x - other.x, y - other.y)
     }
 }
 
