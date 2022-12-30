@@ -10,13 +10,13 @@ class CellGenerator {
 
     private fun makeMines(locations: Locations, row: Row): List<Mine> {
         return locations.values.map {
-            Mine.of(it / row.value + 1, it % row.value + 1)
+            Mine(it / row.value + 1, it % row.value + 1)
         }
     }
 
     private fun makeBlanks(locations: Locations, row: Row): List<Blank> {
         return locations.values.map {
-            Blank.of(it / row.value + 1, it % row.value + 1)
+            Blank(it / row.value + 1, it % row.value + 1)
         }
     }
 }
