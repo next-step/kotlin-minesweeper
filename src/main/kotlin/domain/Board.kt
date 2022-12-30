@@ -10,7 +10,7 @@ import dto.Row
 class Board(
     val height: Height,
     val width: Width,
-    val mineCnt: MineCnt,
+    mineCnt: MineCnt,
     strategy: BoardGenerateStrategy = RandomMineBoardGenerateStrategy(),
 ) {
     private val fields: Fields = strategy.generate(height, width, mineCnt)

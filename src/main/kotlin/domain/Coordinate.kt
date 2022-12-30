@@ -7,9 +7,8 @@ data class Coordinate(
     fun getNearByCoordinates(): List<Coordinate> {
         val range = (-1..1)
         return range.flatMap { dx ->
-            range.map { dy ->
-                Coordinate(row + dx, col + dy)
-            }.filter { it != this }
+            range.map { dy -> Coordinate(row + dx, col + dy) }
+                .filter { it != this }
         }
     }
 }
