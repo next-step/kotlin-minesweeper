@@ -97,4 +97,15 @@ internal class BoardTest : StringSpec({
         val result = board.findOrNull(Coordinate(5 to 2))
         result shouldBe null
     }
+
+    "처음 보드를 생성했을 때 모든 셀은 닫혀있다." {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val game = Game(boardInfo, RandomGenerateStrategy())
+        val board = game.createBoard()
+
+        board.cells.forEach {
+            val result = it.status
+            result shouldBe Status.CLOSE
+        }
+    }
 })
