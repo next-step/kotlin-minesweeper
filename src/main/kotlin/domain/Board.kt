@@ -2,7 +2,10 @@ package domain
 
 import domain.strategy.BoardGenerateStrategy
 import domain.strategy.RandomMineBoardGenerateStrategy
+import dto.BoardDto
+import dto.Col
 import dto.FieldWithCoordinate
+import dto.Row
 
 class Board(
     val height: Height,
@@ -12,9 +15,11 @@ class Board(
 ) {
     private val fields: Fields = strategy.generate(height, width, mineCnt)
 
-    fun getField(height: Int, width: Int): Field {
-        val coordinate = getCoordinateByHeightAndWidth(height, width)
-        return fields.getField(coordinate)
+    fun getBoardCondition(): BoardDto {
+        val rows = (0 until height.value).map { height ->
+            Row((0 until width.value).map { width -> Col(getLandInfo(height, width)) })
+        }
+        return BoardDto(rows)
     }
 
     fun getNearByMineCount(height: Int, width: Int): Int {
@@ -65,9 +70,29 @@ class Board(
         require(coordinate.col in COORDINATE_MIN_VALUE until width.value) { INVALID_WIDTH }
     }
 
+    private fun getLandInfo(height: Int, width: Int): String {
+        return when (val field = getField(height, width)) {
+            is Land -> getMineCntOrLandString(height, width, field.isOpened)
+            is Mine -> LAND_STRING
+        }
+    }
+
+    private fun getField(height: Int, width: Int): Field {
+        val coordinate = getCoordinateByHeightAndWidth(height, width)
+        return fields.getField(coordinate)
+    }
+
+    private fun getMineCntOrLandString(height: Int, width: Int, isOpened: Boolean): String {
+        return when (isOpened) {
+            true -> getNearByMineCount(height, width).toString()
+            false -> LAND_STRING
+        }
+    }
+
     companion object {
         private const val INVALID_HEIGHT = "올바르지 않은 높이를 열기 위해 시도하고 있어요"
         private const val INVALID_WIDTH = "올바르지 않은 너비를 열기 위해 시도하고 있어요"
         private const val COORDINATE_MIN_VALUE = 0
+        private const val LAND_STRING = "C"
     }
 }

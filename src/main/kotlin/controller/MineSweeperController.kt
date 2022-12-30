@@ -33,7 +33,7 @@ class MineSweeperController {
         }
 
         board.open(height, width)
-        OutputView.printBoard(board)
+        OutputView.printBoard(board.getBoardCondition())
         playGame(board)
     }
 }
