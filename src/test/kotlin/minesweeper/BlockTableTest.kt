@@ -3,6 +3,11 @@ package minesweeper
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.BlockTable
+import minesweeper.domain.CleanBlock
+import minesweeper.domain.MapCord
+import minesweeper.domain.MapCords
+import minesweeper.domain.MineBlock
 
 /**
  * @see BlockTable

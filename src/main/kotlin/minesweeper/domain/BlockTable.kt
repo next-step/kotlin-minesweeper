@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class BlockTable(
     val record: Map<MapCord, Block>

@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 sealed interface Block {
     fun getNearbyMineCount(): Int

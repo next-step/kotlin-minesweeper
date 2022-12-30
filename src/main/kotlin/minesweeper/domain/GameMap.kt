@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class GameMap(
     val blockTable: BlockTable

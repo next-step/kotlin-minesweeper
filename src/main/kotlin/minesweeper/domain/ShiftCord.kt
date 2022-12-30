@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 enum class ShiftCord(val x: Int, val y: Int) {
     LEFT_TOP(-1, -1),

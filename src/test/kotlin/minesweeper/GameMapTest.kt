@@ -3,6 +3,9 @@ package minesweeper
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.CleanBlock
+import minesweeper.domain.GameMap
+import minesweeper.domain.MineBlock
 
 /**
  * @see GameMap

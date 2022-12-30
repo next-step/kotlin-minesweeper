@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 data class MapCord(
     val x: Int,

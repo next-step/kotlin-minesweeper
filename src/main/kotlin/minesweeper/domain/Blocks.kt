@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class Blocks(
     val blocks: List<Block>
