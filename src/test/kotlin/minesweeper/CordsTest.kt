@@ -5,7 +5,7 @@ import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 /**
- * @see Cords
+ * @see MapCords
  */
 class CordsTest : ExpectSpec({
 
@@ -13,10 +13,10 @@ class CordsTest : ExpectSpec({
         val height = 3
         val width = 3
 
-        val cords = Cords.of(height, width)
+        val mapCords = MapCords.of(height, width)
 
-        cords.mapCords.size shouldBe 9
-        cords.mapCords shouldContainAll listOf(
+        mapCords.mapCords.size shouldBe 9
+        mapCords.mapCords shouldContainAll listOf(
             MapCord(0, 0),
             MapCord(0, 1),
             MapCord(0, 2),
@@ -33,10 +33,10 @@ class CordsTest : ExpectSpec({
         val height = 4
         val width = 3
 
-        val cords = Cords.of(height, width)
+        val mapCords = MapCords.of(height, width)
 
-        cords.mapCords.size shouldBe 12
-        cords.mapCords shouldContainAll listOf(
+        mapCords.mapCords.size shouldBe 12
+        mapCords.mapCords shouldContainAll listOf(
             MapCord(0, 0),
             MapCord(0, 1),
             MapCord(0, 2),

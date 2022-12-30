@@ -1,15 +1,15 @@
 package minesweeper
 
-data class Cords(
+data class MapCords(
     val mapCords: List<MapCord>
 ) {
 
     companion object {
-        fun of(height: Int, width: Int): Cords {
+        fun of(height: Int, width: Int): MapCords {
             val xCords = 0 until width
             val yCords = 0 until height
 
-            return Cords(
+            return MapCords(
                 MapCordBuilder()
                     .setX(xCords)
                     .flatMap { it.setY(yCords) }
@@ -17,8 +17,8 @@ data class Cords(
             )
         }
 
-        fun from(centerMapCord: MapCord): Cords {
-            return Cords(
+        fun from(centerMapCord: MapCord): MapCords {
+            return MapCords(
                 ShiftCord.values().mapNotNull {
                     centerMapCord + it
                 }

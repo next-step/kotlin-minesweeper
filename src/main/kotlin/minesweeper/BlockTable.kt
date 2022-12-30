@@ -6,7 +6,7 @@ class BlockTable(
 
     fun setUp() {
         record.keys.forEach { cord ->
-            val mineCount = Cords.from(cord)
+            val mineCount = MapCords.from(cord)
                 .mapCords
                 .count { record[it] is MineBlock }
 
@@ -16,12 +16,11 @@ class BlockTable(
 
     companion object {
         fun of(height: Int, width: Int, mineCount: Int): BlockTable {
-            val cords = Cords.of(height, width)
-            val blocks = List(height * width - mineCount) { CleanBlock() } +
-                List(mineCount) { MineBlock() }
+            val mapCords = MapCords.of(height, width)
+            val blocks = Blocks.of(height * width, mineCount)
 
             return BlockTable(
-                cords.mapCords.zip(blocks) { cord, block ->
+                mapCords.mapCords.zip(blocks.blocks) { cord, block ->
                     cord to block
                 }.toMap()
             )
