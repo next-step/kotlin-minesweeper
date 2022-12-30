@@ -18,6 +18,7 @@ class BlockTable(
         fun of(height: Int, width: Int, mineCount: Int): BlockTable {
             val mapCords = MapCords.of(height, width)
             val blocks = Blocks.of(height * width, mineCount)
+                .shuffle()
 
             return BlockTable(
                 mapCords.mapCords.zip(blocks.blocks) { cord, block ->
