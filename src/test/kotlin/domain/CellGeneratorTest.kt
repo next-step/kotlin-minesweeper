@@ -4,35 +4,33 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
 
 internal class CellGeneratorTest : StringSpec({
-    "높이 3 너비 3 의 보드가 있을 때 2개의 지뢰가 있다면 (1,1), (3,3)에 위치한다." {
-        val row = 3
+    /**
+     * 0 1 X
+     * X 4 5
+     * 6 7 8
+     */
+    "3 x 3 보드가 있을 때 2개의 지뢰가 있고 2, 3 의 위치에 존재한다면 (1,3), (2,1) 셀에 지뢰가 생성된다." {
+        val cellGenerator = CellGenerator()
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val mineLocations = locationsOf(2, 3)
+        val blankLocations = locationsOf(0, 1, 4, 5, 6, 7, 8)
+        val cells = cellGenerator(mineLocations, blankLocations, boardInfo.row)
 
-        val mineLocations = listOf(0, 8)
-        val generator = CellGenerator(mineLocations = mineLocations, row = Row(row))
-
-        val mineCells = generator.minesGenerate()
-        mineCells shouldContainAll listOf(
-            Mine(Coordinate(Row(1), Column(1))),
-            Mine(Coordinate(Row(3), Column(3)))
-        )
+        cells shouldContainAll mineCellListOf(1 to 3, 2 to 1)
     }
 
-    "높이 3 너비 3 의 보드가 있을 때 2개의 지뢰가 (1,1), (3,3) 에 위치한다면 나머지 칸은 빈칸이다" {
-        val row = 3
+    /**
+     * 0 1 X
+     * X 4 5
+     * 6 7 8
+     */
+    "3 x 3 보드가 있을 때 2개의 지뢰가 있고 2, 3 의 위치에 지뢰셀을 생성하면 나머지 셀은 빈칸이다." {
+        val cellGenerator = CellGenerator()
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val mineLocations = locationsOf(2, 3)
+        val blankLocations = locationsOf(0, 1, 4, 5, 6, 7, 8)
+        val cells = cellGenerator(mineLocations, blankLocations, boardInfo.row)
 
-        val blankLocations = listOf(1, 2, 3, 4, 5, 6, 7)
-
-        val generator = CellGenerator(blankLocations = blankLocations, row = Row(row))
-        val blankCells = generator.blanksGenerate()
-
-        blankCells shouldContainAll listOf(
-            Blank(Coordinate(Row(1), Column(2))),
-            Blank(Coordinate(Row(1), Column(3))),
-            Blank(Coordinate(Row(2), Column(1))),
-            Blank(Coordinate(Row(2), Column(2))),
-            Blank(Coordinate(Row(2), Column(3))),
-            Blank(Coordinate(Row(3), Column(1))),
-            Blank(Coordinate(Row(3), Column(2)))
-        )
+        cells shouldContainAll blankCellListOf(1 to 1, 1 to 2, 2 to 2, 2 to 3, 3 to 1, 3 to 2, 3 to 3)
     }
 })

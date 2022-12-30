@@ -5,13 +5,19 @@ sealed class Cell {
 }
 
 data class Mine(override val coordinate: Coordinate) : Cell() {
-    companion object {
-        fun from(x: Int, y: Int) = Mine(Coordinate(Row(x), Column(y)))
-    }
+    constructor(x: Int, y: Int) : this(Coordinate(Number(x), Number(y)))
 }
 
-data class Blank(override val coordinate: Coordinate) : Cell() {
+data class Blank(
+    override val coordinate: Coordinate,
+    var minesAroundCount: Int = INITIAL_MINES_AROUND_COUNT
+) : Cell() {
+    constructor(x: Int, y: Int) : this(Coordinate(Number(x), Number(y)))
+    fun changeMinesAroundCount(count: Int) {
+        minesAroundCount = count
+    }
+
     companion object {
-        fun from(x: Int, y: Int) = Blank(Coordinate(Row(x), Column(y)))
+        private const val INITIAL_MINES_AROUND_COUNT = 0
     }
 }

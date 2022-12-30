@@ -8,7 +8,7 @@ value class MineCount(val value: Int) {
 
     companion object {
         fun from(row: Row, column: Column, count: Int): MineCount {
-            require(row.times(column) > count) { "지뢰찾기 전체 칸수보다 지뢰개수가 클 수 없습니다." }
+            require(row.times(column).value > count) { "지뢰찾기 전체 칸수보다 지뢰개수가 클 수 없습니다." }
             return MineCount(count)
         }
     }

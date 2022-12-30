@@ -1,22 +1,20 @@
 package domain
 
 class Board(cells: List<Cell>) {
+    private val _cells: MutableList<Cell> = cells.toMutableList()
     val cells: List<Cell>
+        get() = _cells.toMutableList()
 
-    init {
-        this.cells = cells.sortedWith(compareBy({ it.coordinate.x.value }, { it.coordinate.y.value }))
+    fun isMineCell(coordinate: Coordinate): Boolean {
+        return cells.find { it.coordinate == coordinate } is Mine
     }
 
-    companion object {
-        fun from(row: Row, column: Column, mineCount: MineCount): Board {
-            val cellSize = row * column
+    fun markMinesAroundCount(boardInfo: BoardInfo) {
+        val mineDetector = MineDetector(boardInfo, this)
 
-            val locations = List(cellSize) { it }
-            val randomMineLocations = (0 until cellSize).shuffled().take(mineCount.value)
-            val blankLocations = locations - randomMineLocations.toSet()
-            val cellGenerator = CellGenerator(blankLocations, randomMineLocations, row)
-
-            return Board(cellGenerator.minesGenerate() + cellGenerator.blanksGenerate())
+        cells.filterIsInstance<Blank>().forEach() {
+            val minesAroundCount = mineDetector.getMinesAroundCount(it.coordinate)
+            it.changeMinesAroundCount(minesAroundCount)
         }
     }
 }

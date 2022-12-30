@@ -1,17 +1,17 @@
 package view
 
+import domain.BoardInfo
 import domain.Column
-import domain.Game
 import dto.BoardDto
 
 object ResultView {
-    fun printBoard(game: Game, boardDto: BoardDto) {
+    fun printBoard(boardInfo: BoardInfo, boardDto: BoardDto) {
         println("지뢰찾기 게임 시작")
 
         boardDto.cells.forEachIndexed { index, it ->
             print("$it ")
 
-            if (isSpace(index, game.column)) println()
+            if (isSpace(index, boardInfo.column)) println()
         }
     }
 
