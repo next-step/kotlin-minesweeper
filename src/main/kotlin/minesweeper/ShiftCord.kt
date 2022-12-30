@@ -8,5 +8,6 @@ enum class ShiftCord(val x: Int, val y: Int) {
     RIGHT(1, 0),
     LEFT_BOTTOM(-1, 1),
     CENTER_BOTTOM(0, 1),
-    RIGHT_BOTTOM(1, 1);
+    RIGHT_BOTTOM(1, 1)
+    ;
 }
