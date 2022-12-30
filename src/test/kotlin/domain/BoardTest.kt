@@ -1,6 +1,7 @@
 package domain
 
 import domain.strategy.CellGenerateStrategy
+import domain.strategy.RandomGenerateStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -67,5 +68,33 @@ internal class BoardTest : StringSpec({
         countTwo shouldBe 2
         countOne shouldBe 4
         countZero shouldBe 1
+    }
+
+    /**
+     * C C C
+     * C C C
+     * C C C
+     */
+    "좌표로 조회하고 존재하는 셀이라면 셀을 반환한다." {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val game = Game(boardInfo, RandomGenerateStrategy())
+        val board = game.createBoard()
+
+        val result = board.findOrNull(Coordinate(2 to 2))
+        result!!.coordinate shouldBe Coordinate(2 to 2)
+    }
+
+    /**
+     * C C C
+     * C C C
+     * C C C
+     */
+    "좌표로 조회하고 존재하지 않는 셀이라면 null 을 반환한다." {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val game = Game(boardInfo, RandomGenerateStrategy())
+        val board = game.createBoard()
+
+        val result = board.findOrNull(Coordinate(5 to 2))
+        result shouldBe null
     }
 })

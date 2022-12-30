@@ -9,6 +9,10 @@ class Board(cells: List<Cell>) {
         return cells.find { it.coordinate == coordinate } is Mine
     }
 
+    fun findOrNull(coordinate: Coordinate): Cell? {
+        return cells.find { it.coordinate == coordinate }
+    }
+
     fun markMinesAroundCount(boardInfo: BoardInfo) {
         val mineDetector = MineDetector(boardInfo, this)
 
