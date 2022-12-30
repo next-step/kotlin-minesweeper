@@ -13,7 +13,7 @@ object OutputView {
     }
 
     fun printBoard(boardDto: BoardDto) {
-        boardDto.forEach { row ->
+        boardDto.rows.forEach { row ->
             println(row.joinToString(DELIMITER))
         }
     }

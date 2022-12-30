@@ -13,7 +13,7 @@ internal class BoardTest : BehaviorSpec({
         When("정상적인 보드를 조회하면 ") {
             Then("정상적으로 조회한다.") {
                 shouldNotThrowAny {
-                    board.getBoardCondition()
+                    board.getField(Coordinate(5, 5))
                 }
             }
         }
@@ -33,7 +33,7 @@ internal class BoardTest : BehaviorSpec({
 
         When("주변에 지뢰가 있다면 ") {
             Then("정상적으로 가져온다.") {
-                testBoard.getNearByMineCount(5, 5) shouldBe 6
+                testBoard.getNearByMineCount(Coordinate(5, 5)) shouldBe 6
             }
         }
 
@@ -88,10 +88,13 @@ internal class BoardTest : BehaviorSpec({
         // O O O O O O O O O O O
         val testBoard3 = Board(Height(10), Width(10), MineCnt(10), SecondColMineBoardGenerateStrategy())
         When("땅을 연다면 주의에 지뢰가 없다면 ") {
-            testBoard3.open(0, 0)
+            testBoard3.open(Coordinate(0, 0))
             Then("인근 땅도 다 열린다.") {
-                val openedLandCount = testBoard3.getBoardCondition().sumOf { row ->
-                    row.count { it.value != "C" }
+                val openedLandCount = (0 until 10).sumOf { row ->
+                    (0 until 10).count { col ->
+                        val field = testBoard3.getField(Coordinate(row, col))
+                        field is Land && field.isOpened
+                    }
                 }
 
                 openedLandCount shouldBe 20
@@ -113,7 +116,7 @@ internal class BoardTest : BehaviorSpec({
         When("땅을 여는데 올바르지 않은 좌표라면 ") {
             Then("예외를 던진다.") {
                 shouldThrow<IllegalArgumentException> {
-                    testBoard4.open(10, 10)
+                    testBoard4.open(Coordinate(10, 10))
                 }
             }
         }
