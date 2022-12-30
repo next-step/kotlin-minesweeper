@@ -5,6 +5,7 @@ import minesweeper.domain.ExceptionReason
 import minesweeper.domain.MineBlock
 import minesweeper.domain.MineSweeperException
 import minesweeper.domain.Point
+import minesweeper.domain.SafeBlock
 
 class ResultViewImpl : ResultView {
     override fun renderInitialBoard(state: Map<Point, Block>) {
@@ -45,6 +46,7 @@ class ResultViewImpl : ResultView {
     private fun renderBlock(block: Block) {
         when (block) {
             is MineBlock -> print(DEFAULT_MINE_CHARACTER)
+            is SafeBlock -> print(block.nearMineCount)
             else -> print(DEFAULT_BLOCK_CHARACTER)
         }
         print(BLANK_CHARACTER)
