@@ -39,4 +39,25 @@ class PointTest {
 
         assertThat(sortedPoints).isEqualTo(listOf(Point(0, 0), Point(1, 0), Point(2, 0)))
     }
+
+    @Test
+    fun `꼭짓점 블록은 3개의 주변 블록을 가진다`() {
+        val point = Point(0, 0)
+
+        assertThat(point.getNearPoints().size).isEqualTo(3)
+    }
+
+    @Test
+    fun `모서리 블록은 5개의 주변 블록을 가진다`() {
+        val point = Point(1, 0)
+
+        assertThat(point.getNearPoints().size).isEqualTo(5)
+    }
+
+    @Test
+    fun `완전히 둘러쌓인 블록은 8개의 주변 블록을 가진다`() {
+        val point = Point(1, 1)
+
+        assertThat(point.getNearPoints().size).isEqualTo(8)
+    }
 }
