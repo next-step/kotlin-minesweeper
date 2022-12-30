@@ -27,16 +27,9 @@ class BlockTableTest : ExpectSpec({
 
         blockTable.record.entries.forEach { (cord, block) ->
             if (block is CleanBlock) {
-                val nearbyMineCount = listOf(
-                    cord + Cord(-1, -1),
-                    cord + Cord(0, -1),
-                    cord + Cord(1, -1),
-                    cord + Cord(-1, 0),
-                    cord + Cord(1, 0),
-                    cord + Cord(-1, 1),
-                    cord + Cord(0, 1),
-                    cord + Cord(1, 1),
-                ).count { blockTable.record[it] is MineBlock }
+                val nearbyMineCount = Cords.from(cord)
+                    .cords
+                    .count { blockTable.record[it] is MineBlock }
 
                 nearbyMineCount shouldBe block.getNearbyMineCount()
             }

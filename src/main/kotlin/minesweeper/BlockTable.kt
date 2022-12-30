@@ -6,16 +6,9 @@ class BlockTable(
 
     fun setUp() {
         record.keys.forEach { cord ->
-            val mineCount = listOf(
-                cord + Cord(-1, -1),
-                cord + Cord(0, -1),
-                cord + Cord(1, -1),
-                cord + Cord(-1, 0),
-                cord + Cord(1, 0),
-                cord + Cord(-1, 1),
-                cord + Cord(0, 1),
-                cord + Cord(1, 1),
-            ).count { record[it] is MineBlock }
+            val mineCount = Cords.from(cord)
+                .cords
+                .count { record[it] is MineBlock }
 
             record[cord]?.setNearbyMineCount(mineCount)
         }

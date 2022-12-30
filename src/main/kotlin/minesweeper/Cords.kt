@@ -1,6 +1,6 @@
 package minesweeper
 
-class Cords(
+data class Cords(
     val cords: List<Cord>
 ) {
 
@@ -14,6 +14,21 @@ class Cords(
                     .setX(xCords)
                     .flatMap { it.setY(yCords) }
                     .map { it.build() }
+            )
+        }
+
+        fun from(centerCord: Cord): Cords {
+            return Cords(
+                listOf(
+                    centerCord + Cord(-1, -1),
+                    centerCord + Cord(0, -1),
+                    centerCord + Cord(1, -1),
+                    centerCord + Cord(-1, 0),
+                    centerCord + Cord(1, 0),
+                    centerCord + Cord(-1, 1),
+                    centerCord + Cord(0, 1),
+                    centerCord + Cord(1, 1),
+                )
             )
         }
     }
