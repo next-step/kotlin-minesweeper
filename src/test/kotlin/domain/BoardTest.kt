@@ -79,10 +79,10 @@ internal class BoardTest : BehaviorSpec({
             }
         }
 
-        // Board (땅 O, 지뢰 X)
+        // Board (땅 O, 지뢰 X) -> 1,1을 열게되면 첫번째
         // O O O O O O O O O O O
         // O O O O O O O O O O O
-        // X X X X X X X X X X O
+        // X X X X X X X X X X X
         // O O O O O O O O O O O
         // O O O O O O O O O O O
         // O O O O O O O O O O O
@@ -94,19 +94,21 @@ internal class BoardTest : BehaviorSpec({
         When("땅을 연다면 주의에 지뢰가 없다면 ") {
             testBoard3.open(0, 0)
             Then("인근 땅도 다 열린다.") {
-                val openedLandCount = (0 until 10).count { w ->
-                    val field = testBoard3.getField(0, w)
-                    field is Land && field.isOpened
+                val openedLandCount = (0 until 10).sumOf { h ->
+                    (0 until 10).count { w ->
+                        val field = testBoard3.getField(h, w)
+                        field is Land && field.isOpened
+                    }
                 }
 
-                openedLandCount shouldBe 10
+                openedLandCount shouldBe 20
             }
         }
 
         // Board (땅 O, 지뢰 X)
         // O O O O O O O O O O O
         // O O O O O O O O O O O
-        // X X X X X X X X X X O
+        // X X X X X X X X X X X
         // O O O O O O O O O O O
         // O O O O O O O O O O O
         // O O O O O O O O O O O
@@ -118,7 +120,7 @@ internal class BoardTest : BehaviorSpec({
         When("땅을 여는데 올바르지 않은 좌표라면 ") {
             Then("예외를 던진다.") {
                 shouldThrow<IllegalArgumentException> {
-                    testBoard4.open(15, 15)
+                    testBoard4.open(10, 10)
                 }
             }
         }
