@@ -1,5 +1,6 @@
 package minesweeper.domain.tile
 
+import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.state.Tile
 
 @JvmInline
@@ -11,5 +12,9 @@ value class Tiles(private val value: List<Tile>) {
 
     fun getList(): List<Marking> {
         return value.map { tile -> tile.marking }
+    }
+
+    fun isMine(coordinate: Coordinate): Boolean {
+        return value.find { tile -> tile.coordinate == coordinate }?.isMine ?: false
     }
 }
