@@ -42,12 +42,6 @@ class BlockMap(
     }
 
     fun find(point: Point): Block? = blocks.find { it.contains(point) }?.find(point)
-
-    companion object {
-        const val MIN_MINE_COUNT = 1
-        const val MIN_WIDTH = 1
-        const val MIN_HEIGHT = 1
-    }
 }
 
 fun maxMineCount(width: Int, height: Int): Int = width * height
