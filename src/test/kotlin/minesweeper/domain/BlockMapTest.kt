@@ -51,6 +51,7 @@ internal class BlockMapTest {
 
         // then
         assertThat(blockMap.find(point)?.state?.isMine()).isTrue
+        assertThat(blockMap.find(Point(0, 0))?.state?.isMine()).isFalse
     }
 
     @Test
