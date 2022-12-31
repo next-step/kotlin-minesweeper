@@ -15,7 +15,14 @@ sealed class Cell(val cellPosition: CellPosition) {
         }
     }
 
-    class Blank(cellPosition: CellPosition, val mineCount: Int = 0) : Cell(cellPosition) {
+    class Blank(cellPosition: CellPosition, val mineCount: Int = 0, isOpen: Boolean = false) : Cell(cellPosition) {
+        var isOpen = isOpen
+            private set
+
+        fun open() {
+            this.isOpen = true
+        }
+
         companion object {
             fun init(): Blank {
                 val cellPosition = CellPosition(
