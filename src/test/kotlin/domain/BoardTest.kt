@@ -174,7 +174,7 @@ internal class BoardTest : StringSpec({
      * O X C X C
      * O X C C X
      */
-    "(3,1) 이 빈칸일 때 자신 포함 인접한 위치의 빈간들이 open 된다." {
+    "(3,1) 이 빈칸일 때 자신 포함 인접한 위치의 빈칸들이 open 된다." {
         val boardInfo = BoardInfo(Row(5), Column(5), MineCount(9))
         val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(5, 8, 11, 12, 13, 16, 18, 21, 24)) }
         val game = Game(boardInfo, customGenerateStrategy)
@@ -182,7 +182,7 @@ internal class BoardTest : StringSpec({
 
         val blank = board.findOrNull(Coordinate(3 to 1))!!
         board.openAdjacentBlanksBy(blank as Blank)
-        val expected = openBlankCellListOf(1 to 1, 1 to 2, 1 to 3, 1 to 4, 1 to 5, 2 to 2, 2 to 3, 2 to 5, 3 to 5, 4 to 5)
+        val expected = openBlankCellListOf(3 to 1, 4 to 1, 5 to 1)
 
         board.cells.forEach { cell ->
             if (cell in expected) {
