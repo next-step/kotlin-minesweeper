@@ -1,14 +1,12 @@
 package domain
 
-import domain.block.Block
 import domain.block.BlockFactory
 import domain.block.OpenAbleBlock
 import domain.coord.AbstractCoordinate
-import domain.coord.Coordinate
 import domain.coord.RelativeCoordinate.Companion.relativeOfCoords
 
 class Field(
-    val rows: List<Row>,
+    val rows: Rows,
 ) {
     fun openBlock(y: Int, x: Int): GameStatus {
         require(rows.isRangeRowOf(y)) { "y =$y 값은 범위를 초과할 수 없어요" }
@@ -16,7 +14,7 @@ class Field(
 
         val coordinate = AbstractCoordinate(y, x)
 
-        val block = blockOf(coordinate)
+        val block = rows.blockOf(coordinate)
 
         if (block.isMine()) {
             return GameStatus.LOSE
@@ -35,20 +33,18 @@ class Field(
         return GameStatus.PROGRESSING
     }
 
-    private fun blockOf(coordinate: Coordinate): Block {
-        return rows[coordinate.y.value].blockOf(coordinate.x)
-    }
-
     private fun AbstractCoordinate.getOpenAbleNearBlocks(): List<OpenAbleBlock> {
         return relativeOfCoords
             .filter { this.isPossiblePlus(it) }
-            .map { blockOf(this + it) }
+            .map { rows.blockOf(this + it) }
             .filterIsInstance<OpenAbleBlock>()
     }
 
     companion object {
         fun create(height: Int, width: Int, mines: LocationOfMines): Field {
-            val rows = (0 until height).map { y -> y.rows(width, mines) }
+            val rows = Rows(
+                (0 until height).map { y -> y.rows(width, mines) }
+            )
 
             return Field(rows)
         }
@@ -59,17 +55,4 @@ class Field(
             }
         )
     }
-}
-
-private fun List<Row>.allOpened(): Boolean {
-    return this.all { it.isAllOpened() }
-}
-
-private fun List<Row>.isRangeRowOf(value: Int): Boolean {
-    return value < this.size
-}
-
-private fun List<Row>.isRangeCellOf(value: Int): Boolean {
-    require(this.isNotEmpty()) { "row가 비어있을 수는 없어요." }
-    return this[0].isRangeLessThen(value)
 }

@@ -22,7 +22,7 @@ object ResultView {
         println()
     }
 
-    private fun Field.stringForPrint(): String = this.rows.joinToString(separator = "\n") { row -> row.stringForPrint() }
+    private fun Field.stringForPrint(): String = this.rows.items.joinToString(separator = "\n") { row -> row.stringForPrint() }
     private fun Row.stringForPrint(): String = this.cells.joinToString(separator = " ") { it.desc() }
     private fun Block.desc() = when (this) {
         is Land -> if (isOpened()) {
