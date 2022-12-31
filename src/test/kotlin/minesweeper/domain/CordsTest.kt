@@ -17,15 +17,9 @@ class CordsTest : ExpectSpec({
 
         mapCords.mapCords.size shouldBe 9
         mapCords.mapCords shouldContainAll listOf(
-            MapCord(0, 0),
-            MapCord(0, 1),
-            MapCord(0, 2),
-            MapCord(1, 0),
-            MapCord(1, 1),
-            MapCord(1, 2),
-            MapCord(2, 0),
-            MapCord(2, 1),
-            MapCord(2, 2),
+            MapCord(0, 0), MapCord(0, 1), MapCord(0, 2),
+            MapCord(1, 0), MapCord(1, 1), MapCord(1, 2),
+            MapCord(2, 0), MapCord(2, 1), MapCord(2, 2),
         )
     }
 
@@ -37,18 +31,10 @@ class CordsTest : ExpectSpec({
 
         mapCords.mapCords.size shouldBe 12
         mapCords.mapCords shouldContainAll listOf(
-            MapCord(0, 0),
-            MapCord(0, 1),
-            MapCord(0, 2),
-            MapCord(0, 3),
-            MapCord(1, 0),
-            MapCord(1, 1),
-            MapCord(1, 2),
-            MapCord(1, 3),
-            MapCord(2, 0),
-            MapCord(2, 1),
-            MapCord(2, 2),
-            MapCord(2, 3),
+            MapCord(0, 0), MapCord(0, 1), MapCord(0, 2),
+            MapCord(0, 3), MapCord(1, 0), MapCord(1, 1),
+            MapCord(1, 2), MapCord(1, 3), MapCord(2, 0),
+            MapCord(2, 1), MapCord(2, 2), MapCord(2, 3),
         )
     }
 })
