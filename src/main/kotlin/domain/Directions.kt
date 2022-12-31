@@ -8,5 +8,11 @@ enum class Directions(val coordinate: Coordinate) {
     RIGHT_DOWN_DIAGONAL(Coordinate(1 to 1)),
     DOWN(Coordinate(1 to 0)),
     LEFT_DOWN_DIAGONAL(Coordinate(1 to -1)),
-    LEFT(Coordinate(0 to -1))
+    LEFT(Coordinate(0 to -1));
+
+    companion object {
+        fun getFourDirection(): List<Directions> {
+            return listOf(UP, RIGHT, DOWN, LEFT)
+        }
+    }
 }
