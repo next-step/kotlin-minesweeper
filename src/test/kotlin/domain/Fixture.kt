@@ -25,3 +25,9 @@ fun blankCellListOf(vararg coordinates: Pair<Int, Int>): List<Blank> {
 fun locationsOf(vararg value: Int): Locations {
     return Locations(value.map { it })
 }
+
+fun openBlankCellListOf(vararg coordinates: Pair<Int, Int>): List<Blank> {
+    return coordinates.map {
+        Blank(Coordinate(Number(it.first), Number(it.second)), Status.OPEN)
+    }
+}

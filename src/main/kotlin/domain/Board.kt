@@ -5,6 +5,13 @@ class Board(cells: List<Cell>) {
     val cells: List<Cell>
         get() = _cells.toMutableList()
 
+    val isOpenAllBlank: Boolean
+        get() {
+            val blanks = cells.filterIsInstance<Blank>()
+            val openBlanks = blanks.filter { it.status == Status.OPEN }
+            return blanks.size == openBlanks.size
+        }
+
     fun isMineCell(coordinate: Coordinate): Boolean {
         return cells.find { it.coordinate == coordinate } is Mine
     }

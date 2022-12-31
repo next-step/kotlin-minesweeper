@@ -108,4 +108,24 @@ internal class BoardTest : StringSpec({
             result shouldBe Status.CLOSE
         }
     }
+
+    "보드의 모든 빈칸이 open 되어있다면 true 를 반환한다." {
+        val boardInfo = BoardInfo(Row(3), Column(3), MineCount(2))
+        val game = Game(boardInfo, RandomGenerateStrategy())
+        val board = game.createBoard()
+
+        board.cells.filterIsInstance<Blank>().map { it.open() }
+        val result = board.isOpenAllBlank
+
+        result shouldBe true
+    }
+
+    "보드의 모든 빈칸이 open 되어 있지 않다면 false 를 반환한다." {
+        val openBlankCells = openBlankCellListOf(1 to 1, 1 to 2)
+        val closeBlankCells = blankCellListOf(1 to 3, 1 to 4)
+        val board = Board(openBlankCells + closeBlankCells)
+
+        val result = board.isOpenAllBlank
+        result shouldBe false
+    }
 })
