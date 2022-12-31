@@ -13,7 +13,6 @@ internal class PointTest {
             Point(x, y)
         }
             .withMessage("x 좌표는 0 이상이어야 합니다.")
-
     }
 
     @Test
@@ -25,6 +24,5 @@ internal class PointTest {
             Point(x, y)
         }
             .withMessage("y 좌표는 0 이상이어야 합니다.")
-
     }
 }
