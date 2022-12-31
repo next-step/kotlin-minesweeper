@@ -24,7 +24,22 @@ class MinesWeeperGame {
         )
         val map = Map.create(meta)
 
-        ResultView.printMap(map.cells, width)
+        playGame(map, width)
+    }
+
+    private fun playGame(map: Map, width: Int) {
+        while (map.isProcessing()) {
+            ResultView.printMessage(ResultView.Message.OPEN)
+            val cellPosition = InputView.requestCellPosition()
+            val status = map.open(cellPosition)
+
+            if (!status.isProcess()) {
+                ResultView.printResult(status)
+                return
+            }
+
+            ResultView.printMap(map.cells, width)
+        }
     }
 }
 

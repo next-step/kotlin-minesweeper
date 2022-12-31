@@ -4,8 +4,40 @@ import java.util.LinkedList
 import java.util.Queue
 
 class Map(val cells: List<Cell>) {
-    companion object {
+    private var status: Status = Status.PROCESSING
 
+    fun isProcessing(): Boolean = status == Status.PROCESSING
+
+    fun open(cellPosition: CellPosition): Status {
+        val cell = cells.find { cell -> cell.cellPosition == cellPosition }
+            ?: throw IllegalArgumentException("좌표에 벗어난 값입니다.")
+
+        if (cell.isMine()) {
+            status = status.next(EVENT.LOSE)
+            return status
+        }
+
+        val nearBlankCells = getNearBlankCells(cell)
+        nearBlankCells.forEach { blankCell -> blankCell.open() }
+
+        if (isAllOpen()) {
+            status = status.next(EVENT.WIN)
+        }
+
+        return status
+    }
+
+    private fun isAllOpen(): Boolean = cells.filterIsInstance<Cell.Blank>()
+        .all { cell -> cell.isOpen }
+
+    private fun getNearBlankCells(targetCell: Cell): List<Cell.Blank> {
+        val nearCellPositions = targetCell.cellPosition.getNear()
+
+        return cells.filter { cell -> nearCellPositions.contains(cell.cellPosition) }
+            .filterIsInstance<Cell.Blank>()
+    }
+
+    companion object {
         fun create(meta: MapMeta): Map {
             val totalCellCount = meta.height * meta.width
             val blankCount = totalCellCount - meta.mineCount
@@ -51,9 +83,9 @@ class Map(val cells: List<Cell>) {
             }
 
         private fun countNearMine(cells: List<Cell>, cellPosition: CellPosition): Int {
-            val findNearCells = cellPosition.getNear()
+            val nearCells = cellPosition.getNear()
 
-            return cells.filter { cell -> cell.isIn(findNearCells) }
+            return cells.filter { cell -> cell.isIn(nearCells) }
                 .count { cell -> cell.isMine() }
         }
     }
