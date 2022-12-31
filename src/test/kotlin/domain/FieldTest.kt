@@ -58,14 +58,14 @@ internal class FieldTest {
 
         // then
         assertAll(
-            { assertThat((field.rows[0].cells[0] as Land).isOpened).isFalse },
-            { assertThat((field.rows[1].cells[0] as Land).isOpened).isTrue },
-            { assertThat((field.rows[2].cells[0] as Land).isOpened).isTrue },
-            { assertThat((field.rows[2].cells[1] as Land).isOpened).isTrue },
-            { assertThat((field.rows[3].cells[0] as Land).isOpened).isTrue },
-            { assertThat((field.rows[3].cells[1] as Land).isOpened).isTrue },
-            { assertThat((field.rows[3].cells[2] as Land).isOpened).isTrue },
-            { assertThat((field.rows[3].cells[3] as Land).isOpened).isFalse },
+            { assertThat((field.rows[0].cells[0] as Land).isOpened()).isFalse },
+            { assertThat((field.rows[1].cells[0] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[2].cells[0] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[2].cells[1] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[3].cells[0] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[3].cells[1] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[3].cells[2] as Land).isOpened()).isTrue },
+            { assertThat((field.rows[3].cells[3] as Land).isOpened()).isFalse },
         )
     }
 }

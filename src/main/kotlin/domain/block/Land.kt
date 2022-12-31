@@ -3,12 +3,9 @@ package domain.block
 class Land(
     val nearMineCount: Int,
     private var _isOpened: Boolean = false
-) : Block() {
+) : OpenAbleBlock {
 
-    val isOpened
-        get() = _isOpened
-
-    override fun availableOpen(): Boolean = !_isOpened
+    override fun isOpened() = _isOpened
     override fun isMine() = false
 
     override fun openBlock() {

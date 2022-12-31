@@ -2,6 +2,7 @@ package domain
 
 import domain.block.Block
 import domain.block.BlockFactory
+import domain.block.OpenAbleBlock
 import domain.coord.AbstractCoordinate
 import domain.coord.Coordinate
 import domain.coord.RelativeCoordinate.Companion.relativeOfCoords
@@ -21,8 +22,11 @@ class Field(
             return GameStatus.LOSE
         }
 
-        block.openBlock()
-        openNearBlocks(coordinate)
+        if (block is OpenAbleBlock) {
+            block.openBlock()
+            val openAbleBlocks = coordinate.getOpenAbleNearBlocks()
+            openAbleBlocks.forEach { it.openBlock() }
+        }
 
         if (rows.allOpened()) {
             return GameStatus.WIN
@@ -31,16 +35,15 @@ class Field(
         return GameStatus.PROGRESSING
     }
 
-    private fun openNearBlocks(coordinate: AbstractCoordinate) {
-        relativeOfCoords
-            .filter { coordinate.isPossiblePlus(it) }
-            .map { block(coordinate + it) }
-            .filter { it.availableOpen() }
-            .forEach { block -> block.openBlock() }
-    }
-
     private fun block(coordinate: Coordinate): Block {
         return rows[coordinate.y.value].cells[coordinate.x.value]
+    }
+
+    private fun AbstractCoordinate.getOpenAbleNearBlocks(): List<OpenAbleBlock> {
+        return relativeOfCoords
+            .filter { this.isPossiblePlus(it) }
+            .map { block(this + it) }
+            .filterIsInstance<OpenAbleBlock>()
     }
 
     companion object {
