@@ -1,7 +1,6 @@
 package minesweeper.domain
 
 import minesweeper.Mine
-import minesweeper.NotChecked
 import minesweeper.NotMines
 import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.Tiles
@@ -15,8 +14,8 @@ class LandTest {
         // given
         val tiles = Tiles(
             listOf(
-                Mine(0, 0), NotChecked(0, 1, false),
-                NotChecked(1, 0, false), Mine(1, 1)
+                Mine(0, 0), NotMines(0, 1, Marking.TWO),
+                NotMines(1, 0, Marking.TWO), Mine(1, 1)
             )
         )
         val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
@@ -25,7 +24,7 @@ class LandTest {
         val actual = land.getTiles()
 
         // then
-        val expected = listOf(Marking.MINE, Marking.CLOSED, Marking.CLOSED, Marking.MINE)
+        val expected = listOf(Marking.MINE, Marking.TWO, Marking.TWO, Marking.MINE)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -35,9 +34,9 @@ class LandTest {
         // given
         val tiles = Tiles(
             listOf(
-                Mine(0, 0), NotMines(0, 1), Mine(0, 2),
-                NotMines(1, 0), NotMines(1, 1), NotMines(1, 2),
-                Mine(2, 0), NotMines(2, 1), Mine(2, 2)
+                Mine(0, 0), NotMines(0, 1, Marking.TWO), Mine(0, 2),
+                NotMines(1, 0, Marking.TWO), NotMines(1, 1, Marking.FOUR), NotMines(1, 2, Marking.TWO),
+                Mine(2, 0), NotMines(2, 1, Marking.TWO), Mine(2, 2)
             )
         )
         val land = Land.of(THREE - CORRECTION_VALUE, THREE - CORRECTION_VALUE, tiles)
@@ -54,8 +53,8 @@ class LandTest {
         // given
         val tiles = Tiles(
             listOf(
-                NotMines(0, 0), Mine(0, 1),
-                Mine(1, 0), NotMines(1, 1)
+                NotMines(0, 0, Marking.TWO), Mine(0, 1),
+                Mine(1, 0), NotMines(1, 1, Marking.TWO)
             )
         )
         val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
