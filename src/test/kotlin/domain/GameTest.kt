@@ -2,6 +2,7 @@ package domain
 
 import domain.strategy.RandomGenerateStrategy
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 internal class GameTest : StringSpec({
@@ -14,5 +15,20 @@ internal class GameTest : StringSpec({
 
         val board = Game(boardInfo, strategy).createBoard()
         board.shouldBeInstanceOf<Board>()
+    }
+
+    "모든 빈칸을 open 했다면 지뢰찾기 게임에서 승리한다." {
+        val boardInfo = BoardInfo(Row(5), Column(5), MineCount(9))
+        val game = Game(boardInfo, RandomGenerateStrategy())
+        val board = game.createBoard()
+        board.cells.filterIsInstance<Blank>().forEach { it.open() }
+
+        val result = game.play(
+            board,
+            { Coordinate(1 to 1) },
+            { print(it) }
+        )
+
+        result shouldBe ResultStatus.WIN
     }
 })
