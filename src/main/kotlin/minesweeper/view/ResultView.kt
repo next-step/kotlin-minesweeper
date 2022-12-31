@@ -3,7 +3,6 @@ package minesweeper.view
 import minesweeper.domain.Cell
 
 object ResultView {
-    private const val BLANK = "C"
     private const val MINE = "*"
     private const val SPACE = " "
 
@@ -28,7 +27,7 @@ object ResultView {
         rowCells.joinToString(SPACE) { cell ->
             when (cell) {
                 is Cell.Mine -> MINE
-                is Cell.Blank -> BLANK
+                is Cell.Blank -> cell.minCount.toString()
             }
         }
 }

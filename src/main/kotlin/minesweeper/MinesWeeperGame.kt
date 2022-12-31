@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.Map
+import minesweeper.domain.MapMeta
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -10,19 +11,20 @@ class MinesWeeper {
         val height = InputView.requestPositiveNumber()
 
         ResultView.printMessage(ResultView.Message.REQUEST_WIDTH)
-        val with = InputView.requestPositiveNumber()
+        val width = InputView.requestPositiveNumber()
 
         ResultView.printMessage(ResultView.Message.REQUEST_MINE)
         val mineCount = InputView.requestPositiveNumber()
 
         ResultView.printMessage(ResultView.Message.START)
-        val map = Map.create(
+        val meta = MapMeta(
             height = height,
-            width = with,
+            width = width,
             mineCount = mineCount
         )
+        val map = Map.create(meta)
 
-        ResultView.printMap(map.cells, with)
+        ResultView.printMap(map.cells, width)
     }
 }
 

@@ -1,7 +1,16 @@
 package minesweeper.domain
 
-sealed class Cell(private val xPosition: Position, private val yPosition: Position) {
+sealed class Cell(val xPosition: Position, val yPosition: Position) {
 
-    class Blank(xPosition: Int = 0, yPosition: Int = 0) : Cell(Position(xPosition), Position(yPosition))
-    class Mine(xPosition: Int = 0, yPosition: Int = 0) : Cell(Position(xPosition), Position(yPosition))
+    class Mine(xPosition: Position, yPosition: Position) : Cell(xPosition, yPosition) {
+        companion object {
+            fun init(): Mine = Mine(Position(0), Position(0))
+        }
+    }
+
+    class Blank(xPosition: Position, yPosition: Position, val minCount: Int = 0) : Cell(xPosition, yPosition) {
+        companion object {
+            fun init(): Blank = Blank(Position(0), Position(0))
+        }
+    }
 }
