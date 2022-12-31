@@ -19,7 +19,7 @@ object Controller {
 
         val tileGenerator = TileGenerator(RandomGenerateStrategy(width, height, mineCount))
         val tiles = Tiles(tileGenerator.generate())
-        val land = Land(width, tiles)
+        val land = Land(width, height, tiles)
 
         ResultView.printGameStartMessage()
         ResultView.printLand(LandDto(land))
