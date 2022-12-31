@@ -1,19 +1,14 @@
 package minesweeper.domain
 
-class Blocks(
+data class Blocks(
     val blocks: List<Block>
 ) {
 
-    fun shuffle(): Blocks {
-        return Blocks(blocks.shuffled())
-    }
-
     companion object {
-        fun of(wholeCount: Int, mineCount: Int): Blocks {
-            return Blocks(
-                List(wholeCount - mineCount) { CleanBlock() } +
-                    List(mineCount) { MineBlock() }
-            )
+        fun of(wholeCount: Int, mineLocation: List<Int>): Blocks {
+            val blocks: MutableList<Block> = MutableList(wholeCount) { CleanBlock() }
+            mineLocation.forEach { blocks[it] = MineBlock() }
+            return Blocks(blocks)
         }
     }
 }

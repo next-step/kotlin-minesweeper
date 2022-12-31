@@ -5,10 +5,13 @@ class GameMap(
 ) {
 
     companion object {
-        fun of(height: Int, width: Int, mineCount: Int): GameMap {
+        fun of(height: Int, width: Int, mineCount: Int, mineSettingStrategy: MineSettingStrategy): GameMap {
+            val mapCords = MapCords.of(height, width)
+            val mineBlockLocations = mineSettingStrategy.getLocations(height * width, mineCount)
+            val blocks = Blocks.of(height * width, mineBlockLocations)
+
             return GameMap(
-                BlockTable.of(height, width, mineCount)
-                    .apply { setUp() }
+                BlockTable.of(mapCords, blocks)
             )
         }
     }

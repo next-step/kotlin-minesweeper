@@ -1,10 +1,8 @@
-package minesweeper
+package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.MapCord
-import minesweeper.domain.MapCordBuilder
 
 /**
  * @see MapCord

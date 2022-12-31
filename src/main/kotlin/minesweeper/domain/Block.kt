@@ -1,27 +1,33 @@
 package minesweeper.domain
 
 sealed interface Block {
+    fun addNearBlocks(blocks: List<Block>)
     fun getNearbyMineCount(): Int
-    fun setNearbyMineCount(mineCount: Int)
 }
 
 class CleanBlock(
-    private var _nearbyMineCount: Int = 0
+    private val nearBlocks: MutableList<Block> = mutableListOf()
 ) : Block {
-    override fun getNearbyMineCount(): Int {
-        return _nearbyMineCount
+    override fun addNearBlocks(blocks: List<Block>) {
+        check(nearBlocks.isEmpty())
+        nearBlocks.addAll(blocks)
     }
 
-    override fun setNearbyMineCount(mineCount: Int) {
-        _nearbyMineCount = mineCount
+    override fun getNearbyMineCount(): Int {
+        check(nearBlocks.isNotEmpty())
+        return nearBlocks.count { it is MineBlock }
     }
 }
 
 class MineBlock(
-    private var _nearbyMineCount: Int = 0
+    private val nearBlocks: MutableList<Block> = mutableListOf()
 ) : Block {
-    override fun setNearbyMineCount(mineCount: Int) {}
+    override fun addNearBlocks(blocks: List<Block>) {
+        check(nearBlocks.isEmpty())
+        nearBlocks.addAll(blocks)
+    }
     override fun getNearbyMineCount(): Int {
-        return _nearbyMineCount
+        check(nearBlocks.isNotEmpty())
+        return nearBlocks.count { it is MineBlock }
     }
 }

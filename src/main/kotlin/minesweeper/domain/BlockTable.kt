@@ -1,29 +1,32 @@
 package minesweeper.domain
 
 class BlockTable(
-    val record: Map<MapCord, Block>
+    private val _record: MutableMap<MapCord, Block>
 ) {
 
-    fun setUp() {
-        record.keys.forEach { cord ->
-            val mineCount = MapCords.from(cord)
-                .mapCords
-                .count { record[it] is MineBlock }
+    val record
+        get() = _record.toMap()
 
-            record[cord]?.setNearbyMineCount(mineCount)
+    init {
+        setUp()
+    }
+
+    private fun setUp() {
+        record.keys.forEach { cord ->
+            val nearCords = MapCords.from(cord)
+                .mapCords
+            val nearBlocks = nearCords.mapNotNull { _record[it] }
+
+            _record[cord]?.addNearBlocks(nearBlocks)
         }
     }
 
     companion object {
-        fun of(height: Int, width: Int, mineCount: Int): BlockTable {
-            val mapCords = MapCords.of(height, width)
-            val blocks = Blocks.of(height * width, mineCount)
-                .shuffle()
-
+        fun of(mapCords: MapCords, blocks: Blocks): BlockTable {
             return BlockTable(
                 mapCords.mapCords.zip(blocks.blocks) { cord, block ->
                     cord to block
-                }.toMap()
+                }.toMap().toMutableMap()
             )
         }
     }
