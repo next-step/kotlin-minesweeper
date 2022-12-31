@@ -5,9 +5,6 @@ import minesweeper.model.Point
 class BlockRow(
     val blocks: List<Block>,
 ) {
-    constructor(height: Int, width: Int) : this(
-        MutableList(width) { Block(height, it) }
-    )
 
     val length: Int
         get() = blocks.size
@@ -15,6 +12,10 @@ class BlockRow(
     init {
         require(blocks.isNotEmpty()) { "BlockRow는 최소 1개의 Block을 가져야 합니다." }
     }
+
+    constructor(height: Int, width: Int) : this(
+        MutableList(width) { Block(height, it) }
+    )
 
     fun contains(point: Point): Boolean = blocks.any { it.point == point }
 

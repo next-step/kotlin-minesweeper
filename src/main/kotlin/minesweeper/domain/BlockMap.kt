@@ -12,13 +12,6 @@ class BlockMap(
     mineGenerator: MineGenerator = RandomMineGenerator(),
     private val _blockRows: MutableList<BlockRow> = mutableListOf(),
 ) {
-
-    constructor(width: Int, height: Int, mineCount: Int) : this(
-        Height(height),
-        Width(width),
-        MineCount(mineCount),
-    )
-
     val blocks: List<BlockRow>
         get() = _blockRows.toList()
 
@@ -40,6 +33,12 @@ class BlockMap(
         }
             .forEach(_blockRows::add)
     }
+
+    constructor(width: Int, height: Int, mineCount: Int) : this(
+        Height(height),
+        Width(width),
+        MineCount(mineCount),
+    )
 
     fun find(point: Point): Block? = blocks.find { it.contains(point) }?.find(point)
 }
