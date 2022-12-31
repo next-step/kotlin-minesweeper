@@ -23,7 +23,7 @@ internal class BlockMapTest {
         assertThat(blockMap.width).isEqualTo(width)
         assertThat(blockMap.height).isEqualTo(height)
     }
-    
+
     @Test
     fun `지뢰 개수가 너비 * 높이 보다 많으면 에러가 발생한다`() {
         val width = 10
