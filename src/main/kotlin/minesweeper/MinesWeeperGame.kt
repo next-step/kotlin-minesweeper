@@ -5,7 +5,7 @@ import minesweeper.domain.MapMeta
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
-class MinesWeeper {
+class MinesWeeperGame {
     fun play() {
         ResultView.printMessage(ResultView.Message.REQUEST_HEIGHT)
         val height = InputView.requestPositiveNumber()
@@ -29,5 +29,5 @@ class MinesWeeper {
 }
 
 fun main() {
-    MinesWeeper().play()
+    MinesWeeperGame().play()
 }

@@ -27,7 +27,7 @@ object ResultView {
         rowCells.joinToString(SPACE) { cell ->
             when (cell) {
                 is Cell.Mine -> MINE
-                is Cell.Blank -> cell.minCount.toString()
+                is Cell.Blank -> cell.mineCount.toString()
             }
         }
 }
