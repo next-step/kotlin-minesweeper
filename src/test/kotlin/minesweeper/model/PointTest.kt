@@ -16,7 +16,7 @@ internal class PointTest {
     }
 
     @Test
-    fun `y 좌표가 0 이상이어야 한다2`() {
+    fun `y 좌표가 0 이상이어야 한다`() {
         val x = 10
         val y = -1
 
