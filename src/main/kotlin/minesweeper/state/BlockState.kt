@@ -14,7 +14,7 @@ sealed interface BlockState {
 
         override fun mine(): BlockState = Mine(point)
 
-        override fun toString(): String = "C"
+        override fun toString(): String = "$countOfSurroundMines"
     }
 
     data class Mine(override val point: Point) : BlockState {
