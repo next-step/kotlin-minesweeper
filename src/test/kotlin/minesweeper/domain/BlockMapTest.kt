@@ -82,7 +82,7 @@ internal class BlockMapTest {
         val mineCount = MineCount(10)
         val point = Point(2, 1)
         val mines = listOf(point)
-        val mineGenerator = FakeMinGenerator(mines)
+        val mineGenerator = FakeMineGenerator(mines)
 
         // when
         val blockMap = BlockMap(height = height, width = width, mineCount = mineCount, mineGenerator = mineGenerator)
