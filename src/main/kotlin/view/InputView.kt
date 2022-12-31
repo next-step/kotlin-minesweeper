@@ -24,7 +24,9 @@ object InputView {
 
     fun inputCellToOpen(): Coordinate {
         print("open: ")
-        val input = readln().trim().split(",")
+        val input = readln()
+            .replace(" ", "")
+            .split(",")
         return Coordinate(input[0].toInt() to input[1].toInt())
     }
 }
