@@ -42,5 +42,3 @@ class BlockMap(
 
     fun find(point: Point): Block? = blocks.find { it.contains(point) }?.find(point)
 }
-
-fun maxMineCount(width: Int, height: Int): Int = width * height

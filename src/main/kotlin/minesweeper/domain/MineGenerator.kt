@@ -22,4 +22,6 @@ class RandomMineGenerator : MineGenerator {
             } while (size < mineCount.value)
         }
     }
+
+    private fun maxMineCount(width: Int, height: Int): Int = width * height
 }
