@@ -28,4 +28,25 @@ class Board(cells: List<Cell>) {
             it.changeMinesAroundCount(minesAroundCount)
         }
     }
+
+    fun openAdjacentBlanksBy(blank: Blank) {
+        blank.open()
+        changeOpenAdjacentBlanks(getTargetBlanks(blank.coordinate))
+    }
+
+    private fun changeOpenAdjacentBlanks(list: List<Blank>) {
+        list.forEach {
+            it.open()
+            changeOpenAdjacentBlanks(getTargetBlanks(it.coordinate))
+        }
+    }
+
+    private fun getTargetBlanks(coordinate: Coordinate): List<Blank> {
+        return Directions.getFourDirection()
+            .map { direction ->
+                findOrNull(coordinate.movedCoordinate(direction))
+            }
+            .filterIsInstance<Blank>()
+            .filter { blank -> blank.status == Status.CLOSE }
+    }
 }

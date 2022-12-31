@@ -38,7 +38,6 @@ internal class BoardTest : StringSpec({
         val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(1)) }
         val game = Game(boardInfo, customGenerateStrategy)
         val board = game.createBoard()
-        board.markMinesAroundCount(boardInfo)
 
         val blankCells = board.cells.filterIsInstance<Blank>()
         val countOne = blankCells.count { it.minesAroundCount == 1 }
@@ -58,7 +57,6 @@ internal class BoardTest : StringSpec({
         val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(1, 8)) }
         val game = Game(boardInfo, customGenerateStrategy)
         val board = game.createBoard()
-        board.markMinesAroundCount(boardInfo)
 
         val blankCells = board.cells.filterIsInstance<Blank>()
         val countTwo = blankCells.count { it.minesAroundCount == 2 }
@@ -127,5 +125,71 @@ internal class BoardTest : StringSpec({
 
         val result = board.isOpenAllBlank
         result shouldBe false
+    }
+
+    /**
+     * T: Target
+     * C: Close
+     * X: Mine
+     * O: Open
+     *
+     * AS-IS
+     * T C C C C
+     * X C C X C
+     * C X X X C
+     * C X C X C
+     * C X C C X
+     *
+     * TO-BE
+     * O O O O O
+     * X O O X O
+     * C X X X O
+     * C X C X O
+     * C X C C X
+     */
+    "(1,1) 이 빈칸일 때 자신 포함 인접한 위치의 빈칸들이 open 된다." {
+        val boardInfo = BoardInfo(Row(5), Column(5), MineCount(9))
+        val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(5, 8, 11, 12, 13, 16, 18, 21, 24)) }
+        val game = Game(boardInfo, customGenerateStrategy)
+        val board = game.createBoard()
+
+        val blank = board.findOrNull(Coordinate(1 to 1))!!
+        board.openAdjacentBlanksBy(blank as Blank)
+        val expected = openBlankCellListOf(1 to 1, 1 to 2, 1 to 3, 1 to 4, 1 to 5, 2 to 2, 2 to 3, 2 to 5, 3 to 5, 4 to 5)
+
+        board.cells.forEach { cell ->
+            if (cell in expected) {
+                val result = cell.status
+                result shouldBe Status.OPEN
+            }
+        }
+        board.cells.filter { it.status == Status.OPEN }.size shouldBe expected.size
+    }
+
+    /**
+     * TO-BE
+     * C C C C C
+     * X C C X C
+     * T X X X C
+     * O X C X C
+     * O X C C X
+     */
+    "(3,1) 이 빈칸일 때 자신 포함 인접한 위치의 빈간들이 open 된다." {
+        val boardInfo = BoardInfo(Row(5), Column(5), MineCount(9))
+        val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(5, 8, 11, 12, 13, 16, 18, 21, 24)) }
+        val game = Game(boardInfo, customGenerateStrategy)
+        val board = game.createBoard()
+
+        val blank = board.findOrNull(Coordinate(3 to 1))!!
+        board.openAdjacentBlanksBy(blank as Blank)
+        val expected = openBlankCellListOf(1 to 1, 1 to 2, 1 to 3, 1 to 4, 1 to 5, 2 to 2, 2 to 3, 2 to 5, 3 to 5, 4 to 5)
+
+        board.cells.forEach { cell ->
+            if (cell in expected) {
+                val result = cell.status
+                result shouldBe Status.OPEN
+            }
+        }
+        board.cells.filter { it.status == Status.OPEN }.size shouldBe expected.size
     }
 })
