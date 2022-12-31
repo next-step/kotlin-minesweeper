@@ -24,13 +24,13 @@ class Game(
     fun play(
         board: Board,
         inputCoordinate: () -> Coordinate,
-        printBoard: (BoardInfo, BoardDto) -> Unit
+        printBoard: (BoardDto) -> Unit
     ): ResultStatus {
         while (!board.isOpenAllBlank) {
             val coordinate = inputCoordinate.invoke()
             if (board.isMineCell(coordinate)) return ResultStatus.LOSE
             findAndOpenAdjacentBlanks(coordinate, board)
-            printBoard(boardInfo, BoardDto.from(board))
+            printBoard(BoardDto.from(board, boardInfo.column))
         }
 
         board.openAllCells()

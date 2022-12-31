@@ -2,6 +2,7 @@ package controller
 
 import domain.BoardInfo
 import domain.Game
+import domain.ResultStatus
 import domain.strategy.RandomGenerateStrategy
 import dto.BoardDto
 import view.InputView
@@ -14,10 +15,17 @@ class MinesweeperController {
         val mineCount = InputView.inputMineCount(row, column)
         val boardInfo = BoardInfo(row, column, mineCount)
         val game = Game(boardInfo, RandomGenerateStrategy())
-
         val board = game.createBoard()
-        game.markMinesAroundCountInBoard(board)
-        ResultView.printBoard(boardInfo, BoardDto.from(board))
+
+        ResultView.printStart()
+        val result =
+            game.play(
+                board,
+                inputCoordinate = { InputView.inputCellToOpen() },
+                printBoard = { ResultView.printBoard(it) }
+            )
+        if (result == ResultStatus.WIN) ResultView.printWin(BoardDto.from(board, column))
+        else ResultView.printLose()
     }
 }
 
