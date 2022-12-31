@@ -2,7 +2,6 @@ package controller
 
 import domain.BoardInfo
 import domain.Game
-import domain.ResultStatus
 import domain.strategy.RandomGenerateStrategy
 import dto.BoardDto
 import view.InputView
@@ -24,8 +23,7 @@ class MinesweeperController {
                 inputCoordinate = { InputView.inputCellToOpen() },
                 printBoard = { ResultView.printBoard(it) }
             )
-        if (result == ResultStatus.WIN) ResultView.printWin(BoardDto.from(board, column))
-        else ResultView.printLose()
+        ResultView.printResult(result, BoardDto.from(board, column))
     }
 }
 
