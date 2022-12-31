@@ -4,6 +4,7 @@ import domain.Blank
 import domain.Board
 import domain.Cell
 import domain.Mine
+import domain.Status
 
 data class BoardDto(
     val cells: List<String>
@@ -18,6 +19,8 @@ data class BoardDto(
         }
 
         private fun toString(cell: Cell): String {
+            if (cell.status == Status.CLOSE) return "C"
+
             return when (cell) {
                 is Mine -> "*"
                 is Blank -> cell.minesAroundCount.toString()
