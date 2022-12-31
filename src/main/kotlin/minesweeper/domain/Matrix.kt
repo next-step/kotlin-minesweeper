@@ -1,45 +1,15 @@
 package minesweeper.domain
 
-class Matrix(val rows: List<Row>) {
-    operator fun set(x: Int, y: Int, dot: Field) {
-        require(y in rows.indices)
+class Matrix(val rows: List<MutableList<Field>>) {
+    fun width() = rows[0].size
 
-        this.rows[y][x] = dot
-    }
-
-    operator fun set(coordinate: Coordinate, dot: Field) {
-        require(coordinate.y in rows.indices)
-
-        this.rows[coordinate.y][coordinate.x] = dot
-    }
-
-    operator fun get(x: Int, y: Int): Field {
-        require(y in rows.indices)
-
-        return rows[y][x]
-    }
-
-    operator fun get(coordinate: Coordinate): Field {
-        require(coordinate.y in rows.indices)
-
-        return rows[coordinate.y][coordinate.x]
-    }
-
-    fun width(): Int {
-        return rows[0].fields.size
-    }
-
-    fun height(): Int {
-        return rows.size
-    }
+    fun height() = rows.size
 
     companion object {
-        fun of(width: Int, height: Int): Matrix {
-            return Matrix(
-                List(height) {
-                    Row.init(width)
-                }
-            )
-        }
+        fun of(width: Int, height: Int) = Matrix(createRows(height, width))
+
+        private fun createRows(height: Int, width: Int) = List(height) { createCols(width) }
+
+        private fun createCols(width: Int) = MutableList(width) { Field() }
     }
 }
