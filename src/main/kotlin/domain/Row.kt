@@ -7,6 +7,8 @@ import domain.pos.Pos
 data class Row(
     val cells: List<Block>
 ) {
+    constructor(vararg blocks: Block) : this(blocks.toList())
+
     fun blockOf(pos: Pos): Block {
         return cells[pos.value]
     }

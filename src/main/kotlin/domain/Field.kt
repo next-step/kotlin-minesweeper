@@ -26,7 +26,7 @@ class Field(
             openAbleBlocks.forEach { it.openBlock() }
         }
 
-        if (rows.allOpened()) {
+        if (rows.isAllOpened()) {
             return GameStatus.WIN
         }
 

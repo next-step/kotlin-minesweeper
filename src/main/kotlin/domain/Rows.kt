@@ -6,12 +6,13 @@ import domain.coord.Coordinate
 class Rows(
     val items: List<Row>
 ) {
+    constructor(vararg rows: Row) : this(rows.toList())
 
     fun blockOf(coordinate: Coordinate): Block {
         return items[coordinate.y.value].blockOf(coordinate.x)
     }
 
-    fun allOpened(): Boolean {
+    fun isAllOpened(): Boolean {
         return items.all { it.isAllOpened() }
     }
 
