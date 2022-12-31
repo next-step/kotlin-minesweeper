@@ -29,6 +29,12 @@ class Board(cells: List<Cell>) {
         }
     }
 
+    fun openAllCells() {
+        cells
+            .filter { it.status == Status.CLOSE }
+            .map { it.open() }
+    }
+
     fun openAdjacentBlanksBy(blank: Blank) {
         blank.open()
         changeOpenAdjacentBlanks(getTargetBlanks(blank.coordinate))

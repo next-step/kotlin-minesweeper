@@ -1,5 +1,7 @@
 package domain
 
+import domain.strategy.RandomGenerateStrategy
+
 fun coordinateOf(x: Int, y: Int): Coordinate {
     return Coordinate(Number(x), Number(y))
 }
@@ -30,4 +32,10 @@ fun openBlankCellListOf(vararg coordinates: Pair<Int, Int>): List<Blank> {
     return coordinates.map {
         Blank(Coordinate(Number(it.first), Number(it.second)), Status.OPEN)
     }
+}
+
+fun get5x5RandomBoard(): Board {
+    val boardInfo = BoardInfo(Row(5), Column(5), MineCount(9))
+    val game = Game(boardInfo, RandomGenerateStrategy())
+    return game.createBoard()
 }

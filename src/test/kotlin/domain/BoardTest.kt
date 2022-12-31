@@ -192,4 +192,14 @@ internal class BoardTest : StringSpec({
         }
         board.cells.filter { it.status == Status.OPEN }.size shouldBe expected.size
     }
+
+    "개방되지 않은 모든 셀을 open 한다." {
+        val board = get5x5RandomBoard()
+
+        val closedCellSize = board.cells.filter { it.status == Status.CLOSE }
+        board.openAllCells()
+        val openCellSize = board.cells.filter { it.status == Status.OPEN }
+
+        openCellSize shouldBe closedCellSize
+    }
 })
