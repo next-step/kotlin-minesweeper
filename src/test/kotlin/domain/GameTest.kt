@@ -1,5 +1,6 @@
 package domain
 
+import domain.strategy.CellGenerateStrategy
 import domain.strategy.RandomGenerateStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -30,5 +31,20 @@ internal class GameTest : StringSpec({
         )
 
         result shouldBe ResultStatus.WIN
+    }
+
+    "지뢰를 밟은 경우 지뢰찾기 게임에서 패배한다." {
+        val boardInfo = BoardInfo(Row(5), Column(5), MineCount(1))
+        val customGenerateStrategy = CellGenerateStrategy { _, _ -> Locations(listOf(1)) }
+        val game = Game(boardInfo, customGenerateStrategy)
+        val board = game.createBoard()
+
+        val result = game.play(
+            board,
+            { Coordinate(1 to 2) },
+            { print(it) }
+        )
+
+        result shouldBe ResultStatus.LOSE
     }
 })
