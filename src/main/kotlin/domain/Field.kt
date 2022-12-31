@@ -11,12 +11,12 @@ class Field(
     val rows: List<Row>,
 ) {
     fun openBlock(y: Int, x: Int): GameStatus {
-        require(y < rows.size) { "y =$y 값은 범위를 초과할 수 없어요" }
-        require(x < rows[0].cells.size) { "x =$x 값은 범위를 초과할 수 없어요" }
+        require(rows.isRangeRowOf(y)) { "y =$y 값은 범위를 초과할 수 없어요" }
+        require(rows.isRangeCellOf(x)) { "x =$x 값은 범위를 초과할 수 없어요" }
 
         val coordinate = AbstractCoordinate(y, x)
 
-        val block = block(coordinate)
+        val block = blockOf(coordinate)
 
         if (block.isMine()) {
             return GameStatus.LOSE
@@ -35,14 +35,14 @@ class Field(
         return GameStatus.PROGRESSING
     }
 
-    private fun block(coordinate: Coordinate): Block {
-        return rows[coordinate.y.value].cells[coordinate.x.value]
+    private fun blockOf(coordinate: Coordinate): Block {
+        return rows[coordinate.y.value].blockOf(coordinate.x)
     }
 
     private fun AbstractCoordinate.getOpenAbleNearBlocks(): List<OpenAbleBlock> {
         return relativeOfCoords
             .filter { this.isPossiblePlus(it) }
-            .map { block(this + it) }
+            .map { blockOf(this + it) }
             .filterIsInstance<OpenAbleBlock>()
     }
 
@@ -63,4 +63,13 @@ class Field(
 
 private fun List<Row>.allOpened(): Boolean {
     return this.all { it.isAllOpened() }
+}
+
+private fun List<Row>.isRangeRowOf(value: Int): Boolean {
+    return value < this.size
+}
+
+private fun List<Row>.isRangeCellOf(value: Int): Boolean {
+    require(this.isNotEmpty()) { "row가 비어있을 수는 없어요." }
+    return this[0].isRangeLessThen(value)
 }
