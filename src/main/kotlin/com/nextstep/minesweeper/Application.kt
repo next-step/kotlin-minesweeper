@@ -14,5 +14,5 @@ fun main() {
 
     val board = Board(height, width, numberOfMines)
 
-    outputView.printGameStart()
+    outputView.printGameStart(board.cells)
 }

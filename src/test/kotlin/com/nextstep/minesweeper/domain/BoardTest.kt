@@ -5,6 +5,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class BoardTest : BehaviorSpec({
@@ -42,6 +43,14 @@ class BoardTest : BehaviorSpec({
         When("Board 를 생성하면") {
             Then("초기화된 보드가 생성된다") {
                 shouldNotThrowAny { Board(5, 5, 3) }
+            }
+
+            Then("지뢰 개수만큼 지뢰가 배치된다") {
+                val board = Board(5, 5, 3)
+                val cells = board.cells
+                val numberOfMines = cells.flatMap { it.asIterable() }.count { it == 1 }
+
+                numberOfMines shouldBe 3
             }
         }
     }
