@@ -5,15 +5,12 @@ import minesweeper.model.Point
 import minesweeper.model.Width
 
 interface MineDetector {
-    val mapWidth: Width
-    val mapHeight: Height
-
     fun detect(point: Point, minePoints: List<Point>): Int
 }
 
 class BlockMineDetector(
-    override val mapWidth: Width,
-    override val mapHeight: Height
+    private val mapWidth: Width,
+    private val mapHeight: Height,
 ) : MineDetector {
 
     override fun detect(point: Point, minePoints: List<Point>): Int =

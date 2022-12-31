@@ -13,7 +13,8 @@ class Block(initialState: BlockState) {
     val point: Point
         get() = state.point
 
-    constructor(pointY: Int, pointX: Int) : this(Normal(Point(pointY, pointX)))
+    constructor(point: Point, block: (Point) -> Int = { 0 }) :
+        this(Normal(point, block.invoke(point)))
 
     fun isMine(): Boolean = state.isMine()
     fun mine() {

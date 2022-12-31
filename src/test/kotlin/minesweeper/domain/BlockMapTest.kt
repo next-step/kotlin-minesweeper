@@ -79,7 +79,7 @@ internal class BlockMapTest {
         // given
         val width = Width(10)
         val height = Height(10)
-        val mineCount = MineCount(10)
+        val mineCount = MineCount(1)
         val point = Point(2, 1)
         val mines = listOf(point)
         val mineGenerator = FakeMineGenerator(mines)
@@ -89,5 +89,28 @@ internal class BlockMapTest {
 
         // then
         assertThat(blockMap.find(point)?.state?.isMine()).isTrue
+    }
+
+    @Test
+    fun `일반 블락의 주변 지뢰 개수를 확인할 수 있다`() {
+        // given
+        val width = Width(10)
+        val height = Height(10)
+        val mineCount = MineCount(1)
+        val point = Point(2, 1)
+        val mineGenerator = FakeMineGenerator(emptyList())
+        val mineDetector = FakeMineDetector(point, 3)
+
+        // when
+        val blockMap = BlockMap(
+            height = height,
+            width = width,
+            mineCount = mineCount,
+            mineGenerator = mineGenerator,
+            mineDetector = mineDetector
+        )
+
+        // then
+        assertThat(blockMap.find(point)?.state?.countOfSurroundMines).isEqualTo(3)
     }
 }

@@ -38,4 +38,21 @@ internal class BlockStateTest {
         }
             .withMessage("이미 지뢰입니다.")
     }
+
+    @Test
+    fun `일반 블록은 자신의 주변 지뢰 개수를 알 수 있다`() {
+        val blockState = Normal(Point(0, 0), 2)
+
+        assertThat(blockState.countOfSurroundMines).isEqualTo(2)
+    }
+
+    @Test
+    fun `지뢰 블록은 자신의 주변 지뢰 개수를 가질 수 없다`() {
+        val blockState = Mine(Point(0, 0))
+
+        assertThatExceptionOfType(IllegalStateException::class.java).isThrownBy {
+            blockState.countOfSurroundMines
+        }
+            .withMessage("지뢰는 주변 지뢰 개수를 가지지 않습니다.")
+    }
 }

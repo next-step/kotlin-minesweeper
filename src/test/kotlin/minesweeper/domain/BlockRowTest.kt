@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import minesweeper.model.Point
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ internal class BlockRowTest {
 
     @Test
     fun `0개 이상의 Block리스트를 포함해야 한다`() {
-        val blocks = listOf(Block(0, 0), Block(0, 1))
+        val blocks = listOf(Block(Point(0, 0)), Block(Point(0, 1)))
         val blockRow = BlockRow(blocks)
 
         assertThat(blockRow).isNotNull

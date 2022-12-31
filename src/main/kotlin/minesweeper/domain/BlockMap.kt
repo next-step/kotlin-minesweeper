@@ -10,6 +10,7 @@ class BlockMap(
     width: Width,
     mineCount: MineCount,
     mineGenerator: MineGenerator = RandomMineGenerator(),
+    mineDetector: MineDetector = BlockMineDetector(width, height),
     private val _blockRows: MutableList<BlockRow> = mutableListOf(),
 ) {
     val blocks: List<BlockRow>
@@ -25,7 +26,9 @@ class BlockMap(
         val mines = mineGenerator.generate(mineCount, height, width)
 
         MutableList(height.value) {
-            val row = BlockRow(it, width.value)
+            val row = BlockRow(it, width.value) { point ->
+                mineDetector.detect(point, mines)
+            }
             mines.forEach { mine ->
                 if (row.contains(mine)) row.find(mine)?.mine()
             }
