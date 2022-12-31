@@ -48,7 +48,7 @@ class BoardTest : BehaviorSpec({
             Then("지뢰 개수만큼 지뢰가 배치된다") {
                 val board = Board(5, 5, 3)
                 val cells = board.cells
-                val numberOfMines = cells.flatMap { it.asIterable() }.count { it == 1 }
+                val numberOfMines = cells.flatMap { it.asIterable() }.count { Icon.isMine(it) }
 
                 numberOfMines shouldBe 3
             }

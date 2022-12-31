@@ -1,5 +1,7 @@
 package com.nextstep.minesweeper.domain
 
+import com.nextstep.minesweeper.domain.Icon.BLANK
+import com.nextstep.minesweeper.domain.Icon.MINE
 import kotlin.random.Random
 
 class Board(
@@ -7,8 +9,8 @@ class Board(
     private val width: Int,
     private val numberOfMines: Int
 ) {
-    private val _cells: Array<IntArray>
-    val cells: Array<IntArray>
+    private val _cells: Array<Array<Icon>>
+    val cells: Array<Array<Icon>>
         get() = _cells.clone()
 
     init {
@@ -17,7 +19,7 @@ class Board(
             "지뢰의 수는 1보다 크거나 같고, 입력한 보드의 크기보다 작아야합니다. numberOfMines: $numberOfMines"
         }
 
-        _cells = Array(height) { IntArray(width) }
+        _cells = Array(height) { Array(width) { BLANK } }
         placeMines()
     }
 
@@ -26,8 +28,8 @@ class Board(
         while (count < numberOfMines) {
             val y = Random.nextInt(height)
             val x = Random.nextInt(width)
-            if (_cells[x][y] == 0) {
-                _cells[x][y] = 1
+            if (_cells[x][y] == BLANK) {
+                _cells[x][y] = MINE
                 count++
             }
         }
