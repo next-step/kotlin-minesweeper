@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.domain.tile.Marking
+import minesweeper.domain.tile.Marking.Companion.toMarkingAsInt
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.pos.Position
@@ -43,21 +44,6 @@ data class Land(private val width: Position, private val height: Position, priva
             false
         } else {
             _tiles.isMine(Coordinate.of(positionX, positionY))
-        }
-    }
-
-    private fun toMarkingAsInt(mineCount: Int): Marking {
-        return when (mineCount) {
-            0 -> Marking.EMPTY
-            1 -> Marking.ONE
-            2 -> Marking.TWO
-            3 -> Marking.THREE
-            4 -> Marking.FOUR
-            5 -> Marking.FIVE
-            6 -> Marking.SIX
-            7 -> Marking.SEVEN
-            8 -> Marking.EIGHT
-            else -> throw IllegalArgumentException("지뢰 개수는 0~8개만 가능합니다.")
         }
     }
 
