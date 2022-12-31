@@ -15,7 +15,10 @@ class BlockRow(
 
     constructor(height: Int, width: Int) : this(
         MutableList(width) { Block(height, it) }
-    )
+    ) {
+        require(width >= 0) { "BlockRow의 width는 0 이상이어야 합니다." }
+        require(height >= 0) { "BlockRow의 height는 0 이상이어야 합니다." }
+    }
 
     fun contains(point: Point): Boolean = blocks.any { it.point == point }
 
