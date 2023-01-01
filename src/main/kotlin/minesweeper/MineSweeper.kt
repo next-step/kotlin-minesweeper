@@ -9,7 +9,6 @@ import minesweeper.view.OutputView.printWidth
 import minesweeper.view.OutputView.startGame
 
 fun main() {
-
     val height = inputHeight()
     printHeight(height)
 
