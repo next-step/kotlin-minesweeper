@@ -27,7 +27,7 @@ class MapCordBuilder(
         return MapCordBuilder(input, _y)
     }
 
-    fun setX(range: IntRange): List<MapCordBuilder> {
+    fun setX(range: IntProgression): List<MapCordBuilder> {
         return range.map { newX -> MapCordBuilder(newX, _y) }
     }
 
@@ -35,7 +35,7 @@ class MapCordBuilder(
         return MapCordBuilder(_x, newY)
     }
 
-    fun setY(newYRange: IntRange): List<MapCordBuilder> {
+    fun setY(newYRange: IntProgression): List<MapCordBuilder> {
         return newYRange.map { newY -> MapCordBuilder(_x, newY) }
     }
 
