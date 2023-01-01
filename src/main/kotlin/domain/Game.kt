@@ -1,7 +1,6 @@
 package domain
 
 import domain.strategy.CellGenerateStrategy
-import dto.BoardDto
 
 class Game(
     val boardInfo: BoardInfo,
@@ -21,26 +20,13 @@ class Game(
         return board
     }
 
-    fun play(
-        board: Board,
-        inputCoordinate: () -> Coordinate,
-        printBoard: (BoardDto) -> Unit
-    ): ResultStatus {
-        while (!board.isOpenAllBlank) {
-            val coordinate = inputCoordinate.invoke()
-            if (board.isMineCell(coordinate)) return ResultStatus.LOSE
-            findAndOpenAdjacentBlanks(coordinate, board)
-            printBoard(BoardDto.from(board, boardInfo.column))
-        }
+    fun getBlankCell(coordinate: Coordinate, board: Board): Blank {
+        val cell = board.findOrNull(coordinate)
 
-        board.openAllCells()
-        return ResultStatus.WIN
+        return if (cell is Blank) cell else throw IllegalArgumentException(ERROR_MESSAGE_NOT_EXIST_COORDINATE)
     }
 
-    private fun findAndOpenAdjacentBlanks(coordinate: Coordinate, board: Board) {
-        val cell = board.findOrNull(coordinate)
-        if (cell is Blank) {
-            board.openAdjacentBlanksBy(cell)
-        }
+    companion object {
+        private const val ERROR_MESSAGE_NOT_EXIST_COORDINATE = "존재하지 않는 좌표입니다."
     }
 }

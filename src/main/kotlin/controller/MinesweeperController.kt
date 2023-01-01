@@ -1,5 +1,6 @@
 package controller
 
+import domain.Board
 import domain.BoardInfo
 import domain.Game
 import domain.strategy.RandomGenerateStrategy
@@ -17,13 +18,19 @@ class MinesweeperController {
         val board = game.createBoard()
 
         ResultView.printStart()
-        val result =
-            game.play(
-                board,
-                inputCoordinate = { InputView.inputCellToOpen() },
-                printBoard = { ResultView.printBoard(it) }
-            )
-        ResultView.printResult(result, BoardDto.from(board, column))
+        play(board, game)
+    }
+
+    private fun play(board: Board, game: Game) {
+        while (!board.isOpenAllBlank) {
+            val coordinate = InputView.inputCellToOpen()
+            if (board.isMineCell(coordinate)) return ResultView.printLose()
+            val blank = game.getBlankCell(coordinate, board)
+            board.openAdjacentBlanksBy(blank)
+            ResultView.printBoard(BoardDto.from(board, game.boardInfo.column))
+        }
+        board.openAllCells()
+        ResultView.printWin(BoardDto.from(board, game.boardInfo.column))
     }
 }
 
