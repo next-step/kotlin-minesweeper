@@ -7,18 +7,15 @@ class BaseCoordinateSystem(
     height: Int,
     width: Int
 ) : CoordinateSystem {
-    override val coordinate: List<Position>
-        get() = field.toList()
-
-    init {
-        val list = mutableListOf<Position>()
-        for (y in 0 until height) {
-            for (x in 0 until width) {
-                list.add(Position(x = CoordinateValue(value = x), y = CoordinateValue(value = y)))
+    override val coordinate: List<Position> = buildList {
+        repeat(height) { y ->
+            repeat(width) { x ->
+                this.add(Position(x = CoordinateValue(value = x), y = CoordinateValue(value = y)))
             }
         }
-        this.coordinate = list.toList()
+        this.toList()
     }
+        get() = field.toList()
 
     override val height: Int = coordinate.filter { it.x == CoordinateValue(value = 0) }.size
     override val width: Int = coordinate.filter { it.y == CoordinateValue(value = 0) }.size
