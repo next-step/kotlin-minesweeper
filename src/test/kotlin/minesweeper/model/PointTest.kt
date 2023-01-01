@@ -13,11 +13,10 @@ internal class PointTest {
             Point(x, y)
         }
             .withMessage("x 좌표는 0 이상이어야 합니다.")
-
     }
 
     @Test
-    fun `y 좌표가 0 이상이어야 한다2`() {
+    fun `y 좌표가 0 이상이어야 한다`() {
         val x = 10
         val y = -1
 
@@ -25,6 +24,5 @@ internal class PointTest {
             Point(x, y)
         }
             .withMessage("y 좌표는 0 이상이어야 합니다.")
-
     }
 }

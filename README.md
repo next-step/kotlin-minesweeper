@@ -13,6 +13,7 @@
 - [x] 블록(Block)
     - [x] 일반, 마인 상태를 가진다.
     - [x] 본인의 위치(Point)를 가진다.
+    - [x] 본인 기준 주변(최대 8개, 사면) 블록에 지뢰가 몇개인지 정보를 가진다.
 - [x] 블록 열(BlockRow)
   - [x] 블록들을 가진다.
   - [x] 블록열의 길이는 입력된 width 동일하다.
@@ -22,6 +23,8 @@
     - [x] 랜덤 지뢰생성기를 통해 mineCount 만큼 랜덤한 위치에 블록을 지뢰로 설정한다.
 - [x] 랜덤 지뢰생성기 (RandomMineGenerator)
   - [x] 입력된 width, height, mineCount 에 맞는 랜덤한 지뢰 위치를 생성한다.
+- [x] 지뢰 탐지기 (MineDetector)
+  - [x] 입력된 위치(Point) 기준으로 주변(최대 8개, 사면) 블록에 지뢰가 몇개인지 확인할 수 있다
 - [x] 입력 창(InputView)
   - [x] 콘솔 창으로 부터 width, height 입력을 받는다.
   - [x] 콘솔 창으로 부터 mineCount 입력을 받는다.

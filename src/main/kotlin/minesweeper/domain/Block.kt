@@ -5,7 +5,6 @@ import minesweeper.state.BlockState
 import minesweeper.state.BlockState.Normal
 
 class Block(initialState: BlockState) {
-    constructor(height: Int, width: Int) : this(Normal(Point(height, width)))
 
     private var _state: BlockState = initialState
     val state: BlockState
@@ -13,6 +12,9 @@ class Block(initialState: BlockState) {
 
     val point: Point
         get() = state.point
+
+    constructor(point: Point, block: (Point) -> Int = { 0 }) :
+        this(Normal(point, block.invoke(point)))
 
     fun isMine(): Boolean = state.isMine()
     fun mine() {

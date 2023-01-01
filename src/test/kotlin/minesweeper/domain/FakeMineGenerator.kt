@@ -5,7 +5,7 @@ import minesweeper.model.MineCount
 import minesweeper.model.Point
 import minesweeper.model.Width
 
-class FakeMinGenerator(
+class FakeMineGenerator(
     private val mines: List<Point>,
 ) : MineGenerator {
 

@@ -9,7 +9,7 @@ interface MineGenerator {
     fun generate(mineCount: MineCount, height: Height, width: Width): List<Point>
 }
 
-class RandomMineGenerator() : MineGenerator {
+class RandomMineGenerator : MineGenerator {
 
     override fun generate(mineCount: MineCount, height: Height, width: Width): List<Point> {
         require(mineCount.value <= maxMineCount(width.value, height.value)) { "지뢰 개수는 너비 * 높이 보다 작거나 같아야 합니다." }
@@ -22,4 +22,6 @@ class RandomMineGenerator() : MineGenerator {
             } while (size < mineCount.value)
         }
     }
+
+    private fun maxMineCount(width: Int, height: Int): Int = width * height
 }
