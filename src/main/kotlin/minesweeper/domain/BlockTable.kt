@@ -1,11 +1,8 @@
 package minesweeper.domain
 
 class BlockTable(
-    private val _record: MutableMap<MapCord, Block>
+    val record: Map<MapCord, Block>
 ) {
-
-    val record
-        get() = _record.toMap()
 
     init {
         setUp()
@@ -15,9 +12,9 @@ class BlockTable(
         record.keys.forEach { cord ->
             val nearCords = MapCords.from(cord)
                 .mapCords
-            val nearBlocks = nearCords.mapNotNull { _record[it] }
+            val nearBlocks = nearCords.mapNotNull { record[it] }
 
-            _record[cord]?.addNearBlocks(nearBlocks)
+            record[cord]?.addNearBlocks(nearBlocks)
         }
     }
 
