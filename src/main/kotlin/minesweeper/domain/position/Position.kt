@@ -12,8 +12,18 @@ data class Position(
         }
     }
 
-    override fun compareTo(other: Position): Int =
+    override operator fun compareTo(other: Position): Int =
         comparator().compare(this, other)
+
+    private operator fun plus(movingDirection: Direction): Position? =
+        try {
+            Position(row + movingDirection.row, col + movingDirection.col)
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+
+    fun getAroundPositions(): List<Position> =
+        Direction.values().mapNotNull { this + it }
 
     companion object {
         const val BASE_INDEX: Int = 0

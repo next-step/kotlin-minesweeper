@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 class PositionVendorTest : FunSpec({
     context("높이와 너비를 통해 PositionVendor 정상적으로 생성된다.") {
         withData(
-            nameFn = { "$it" },
+            nameFn = { "height: ${it.a}, width: ${it.b}, mineCount: ${it.c}" },
             listOf(
                 Tuple3(10, 10, 10),
                 Tuple3(10, 10, 100),
@@ -35,7 +35,7 @@ class PositionVendorTest : FunSpec({
 
     context("높이와 너비가 0이하 일때, IllegalArgumentException 발생") {
         withData(
-            nameFn = { "$it" },
+            nameFn = { "height: ${it.first}, width: ${it.second}" },
             listOf(
                 Pair(-10, 10),
                 Pair(10, -10),

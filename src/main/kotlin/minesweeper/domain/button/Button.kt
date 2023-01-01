@@ -27,4 +27,13 @@ class Mine(
 
 class PushableButton(
     position: Position
-) : Button(position)
+) : Button(position) {
+    var aroundMineCount: Int? = null
+        set(value) {
+            require(field == null) {
+                "AroundMineCount is already set"
+            }
+
+            field = value
+        }
+}

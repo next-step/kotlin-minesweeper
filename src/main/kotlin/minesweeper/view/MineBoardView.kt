@@ -13,27 +13,27 @@ class MineBoardView {
         println(mineSweeperGame.toContentString())
     }
 
-    private fun MineSweeperGame.toContentString(): String =
-        buttonGraph.toContentString()
-
-    private fun ButtonGraph.toContentString(): String =
-        rowButtons().joinToString(ROW_BUTTONS_SEPARATOR) { it.toContentString() }
-
-    private fun Buttons.toContentString(): String =
-        sortedBy { it.position }
-            .joinToString(BUTTON_SEPARATOR) {
-                it.toContentString()
-            }
-
-    private fun Button.toContentString(): String = when (this) {
-        is Mine -> MINE
-        is PushableButton -> PUSHABLE_BUTTON
-    }
-
     companion object {
-        private const val BUTTON_SEPARATOR: String = " "
-        private const val ROW_BUTTONS_SEPARATOR: String = "\n"
-        private const val MINE = "*"
-        private const val PUSHABLE_BUTTON = "C"
+        const val BUTTON_SEPARATOR: String = " "
+        const val ROW_BUTTONS_SEPARATOR: String = "\n"
+        const val MINE = "*"
+        const val PUSHABLE_BUTTON = "C"
     }
+}
+
+fun MineSweeperGame.toContentString(): String =
+    buttonGraph.toContentString()
+
+fun ButtonGraph.toContentString(): String =
+    rowButtons().joinToString(MineBoardView.ROW_BUTTONS_SEPARATOR) { it.toContentString() }
+
+fun Buttons.toContentString(): String =
+    sortedBy { it.position }
+        .joinToString(MineBoardView.BUTTON_SEPARATOR) {
+            it.toContentString()
+        }
+
+fun Button.toContentString(): String = when (this) {
+    is Mine -> MineBoardView.MINE
+    is PushableButton -> this.aroundMineCount.toString()
 }
