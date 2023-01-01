@@ -1,1 +1,1 @@
-# kotlin-minesweeper
+# kotlin-minesweeperpractice

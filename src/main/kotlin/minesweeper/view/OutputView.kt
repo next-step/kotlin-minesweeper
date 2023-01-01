@@ -1,14 +1,12 @@
 package minesweeper.view
 
-import minesweeper.controller.dto.GameMapDisplayDto
+import minesweeper.controller.dto.GameMapDisplayResponse
 
 class OutputView {
 
-    fun gameStart(dto: GameMapDisplayDto) {
-        println("지뢰찾기 게임 시작")
-        val slicedPatterns = dto.blocks.chunked(dto.width)
-        slicedPatterns.forEach { slicedPattern ->
-            println(slicedPattern.joinToString(" "))
+    fun displayMap(dto: GameMapDisplayResponse) {
+        dto.blocksModels.chunked(dto.width).forEach { blockViewModelList ->
+            println(blockViewModelList.joinToString(" "))
         }
     }
 }

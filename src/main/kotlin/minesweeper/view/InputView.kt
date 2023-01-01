@@ -1,22 +1,31 @@
 package minesweeper.view
 
-import minesweeper.controller.dto.GameMapRequestDto
+import minesweeper.controller.dto.BuildMapRequest
 
 class InputView {
 
-    fun createMap(): GameMapRequestDto {
-        // 높이 입력
+    fun enterMapRequest(): BuildMapRequest {
+        val height = enterHeight()
+
+        val width = enterWidth()
+
+        val mineCount = enterMineCount()
+
+        return BuildMapRequest(height, width, mineCount)
+    }
+
+    private fun enterHeight(): Int {
         println("높이를 입력하세요.")
-        val height = readln().toInt()
+        return readln().toInt()
+    }
 
-        // 너비 입력
+    private fun enterWidth(): Int {
         println("너비를 입력하세요.")
-        val width = readln().toInt()
+        return readln().toInt()
+    }
 
-        // 지뢰 개수 입력
+    private fun enterMineCount(): Int {
         println("지뢰는 몇 개인가요?")
-        val mineCount = readln().toInt()
-
-        return GameMapRequestDto(height, width, mineCount)
+        return readln().toInt()
     }
 }

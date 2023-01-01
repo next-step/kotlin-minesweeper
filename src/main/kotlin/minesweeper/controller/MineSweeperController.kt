@@ -1,7 +1,7 @@
 package minesweeper.controller
 
-import minesweeper.controller.dto.GameMapDisplayDto
-import minesweeper.domain.GameMap
+import minesweeper.controller.dto.GameMapDisplayResponse
+import minesweeper.domain.RandomMineSettingStrategy
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -11,20 +11,13 @@ class MineSweeperController(
 ) {
 
     fun start() {
-        // 맵 만들기
-        val gameMap = buildMap()
+        val buildMapRequest = inputView.enterMapRequest()
 
-        // 게임 시작
-        startGame(gameMap)
-    }
+        val randomSettingStrategy = RandomMineSettingStrategy()
+        val gameMap = buildMapRequest.toGameMap(randomSettingStrategy)
 
-    private fun buildMap(): GameMap {
-        val buildMapRequest = inputView.createMap()
-        return buildMapRequest.toGameMap()
-    }
-
-    private fun startGame(gameMap: GameMap) {
-        val gameMapDisplayDto = GameMapDisplayDto.from(gameMap)
-        outputView.gameStart(gameMapDisplayDto)
+        outputView.displayMap(
+            GameMapDisplayResponse.from(gameMap)
+        )
     }
 }
