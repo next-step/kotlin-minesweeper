@@ -1,7 +1,7 @@
 package controller
 
 import domain.Board
-import domain.Coordinate
+import domain.CoordinateFactory
 import domain.Height
 import domain.MineCnt
 import domain.Width
@@ -29,7 +29,7 @@ class MineSweeperController {
         }
 
         val (height, width) = InputView.readOpenCoordinate(board.height.value, board.width.value)
-        val coordinate = Coordinate(height, width, board.height, board.width)
+        val coordinate = CoordinateFactory.create(height, width, board.height, board.width)
         if (board.isMine(coordinate)) {
             OutputView.printLoseGame()
             return
