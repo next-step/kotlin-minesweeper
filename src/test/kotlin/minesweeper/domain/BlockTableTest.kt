@@ -39,9 +39,9 @@ class BlockTableTest : ExpectSpec({
     context("근처에 블록이") {
         val mapCords = MapCords(
             listOf(
-                MapCord(0, 0), MapCord(0, 1), MapCord(0, 2),
-                MapCord(1, 0), MapCord(1, 1), MapCord(1, 2),
-                MapCord(2, 0), MapCord(2, 1), MapCord(2, 2)
+                MapCord(0, 0), MapCord(1, 0), MapCord(2, 0),
+                MapCord(0, 1), MapCord(1, 1), MapCord(2, 1),
+                MapCord(0, 2), MapCord(1, 2), MapCord(2, 2)
             )
         )
 
@@ -147,6 +147,81 @@ class BlockTableTest : ExpectSpec({
             val blockTable = BlockTable.of(mapCords, blocks)
 
             blockTable.record.values.toList().get(4).getNearbyMineCount() shouldBe 8
+        }
+    }
+
+    context("블록을 열었을 때") {
+        val mapCords = MapCords(
+            listOf(
+                MapCord(0, 0), MapCord(1, 0), MapCord(2, 0),
+                MapCord(0, 1), MapCord(1, 1), MapCord(2, 1),
+                MapCord(0, 2), MapCord(1, 2), MapCord(2, 2)
+            )
+        )
+        val blocks = Blocks(
+            listOf(
+                CleanBlock(), CleanBlock(), CleanBlock(),
+                CleanBlock(), CleanBlock(), MineBlock(),
+                CleanBlock(), CleanBlock(), CleanBlock(),
+            )
+        )
+        val blockTable = BlockTable.of(mapCords, blocks)
+
+        expect("지뢰 블록이라면 게임 패배가 된다") {
+            val mineCord = MapCord(2, 1)
+            blockTable.open(mineCord) shouldBe GameState.LOSE
+        }
+
+        expect("지뢰 블록이 아니라면 맞닿은 블록들 중 주변에 지뢰 블록이 없는 블록을 모두 연다") {
+            val cord = MapCord(0, 0)
+            blockTable.open(cord)
+
+            assertSoftly(blockTable.record) {
+                get(MapCord(0, 0))!!.isOpen() shouldBe true
+                get(MapCord(1, 0))!!.isOpen() shouldBe true
+                get(MapCord(2, 0))!!.isOpen() shouldBe false
+                get(MapCord(0, 1))!!.isOpen() shouldBe true
+                get(MapCord(1, 1))!!.isOpen() shouldBe true
+                get(MapCord(2, 1))!!.isOpen() shouldBe false
+                get(MapCord(0, 2))!!.isOpen() shouldBe true
+                get(MapCord(1, 2))!!.isOpen() shouldBe true
+                get(MapCord(2, 2))!!.isOpen() shouldBe false
+            }
+        }
+
+        expect("지뢰 블록이 아니고 아직 열지 않은 일반 블록이 있다면 게임 진행 상태를 반환한다.") {
+            val cord = MapCord(0, 0)
+            blockTable.open(cord) shouldBe GameState.PLAYING
+
+            assertSoftly(blockTable.record) {
+                get(MapCord(0, 0))!!.isOpen() shouldBe true
+                get(MapCord(1, 0))!!.isOpen() shouldBe true
+                get(MapCord(2, 0))!!.isOpen() shouldBe false
+                get(MapCord(0, 1))!!.isOpen() shouldBe true
+                get(MapCord(1, 1))!!.isOpen() shouldBe true
+                get(MapCord(2, 1))!!.isOpen() shouldBe false
+                get(MapCord(0, 2))!!.isOpen() shouldBe true
+                get(MapCord(1, 2))!!.isOpen() shouldBe true
+                get(MapCord(2, 2))!!.isOpen() shouldBe false
+            }
+        }
+
+        expect("지뢰 블록이 아니고 일반 블록을 모두 열었다면 게임 승리 상태를 반환한다.") {
+            val cords = listOf(MapCord(0, 0), MapCord(2, 0), MapCord(2, 2))
+            val results = cords.map { cord -> blockTable.open(cord) }
+            results.last() shouldBe GameState.WIN
+
+            assertSoftly(blockTable.record) {
+                get(MapCord(0, 0))!!.isOpen() shouldBe true
+                get(MapCord(1, 0))!!.isOpen() shouldBe true
+                get(MapCord(2, 0))!!.isOpen() shouldBe true
+                get(MapCord(0, 1))!!.isOpen() shouldBe true
+                get(MapCord(1, 1))!!.isOpen() shouldBe true
+                get(MapCord(2, 1))!!.isOpen() shouldBe false
+                get(MapCord(0, 2))!!.isOpen() shouldBe true
+                get(MapCord(1, 2))!!.isOpen() shouldBe true
+                get(MapCord(2, 2))!!.isOpen() shouldBe true
+            }
         }
     }
 })

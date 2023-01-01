@@ -38,4 +38,46 @@ class GameMapTest : ExpectSpec({
             }
         }
     }
+
+    context("좌표를 입력했을 때") {
+        val height = 3
+        val width = 3
+        val mineCount = 2
+        val mockRandomMineSettingStrategy = mockk<RandomMineSettingStrategy>()
+        every { mockRandomMineSettingStrategy.getLocations(any(), any()) } returns listOf(1, 3)
+
+        val gameMap = GameMap.of(height, width, mineCount, mockRandomMineSettingStrategy)
+
+        expect("지뢰라면 게임이 끝난다") {
+            val mineCord = MapCord(0, 1)
+
+            gameMap.open(mineCord)
+
+            gameMap.getGameProgress() shouldBe GameState.LOSE
+            gameMap.isFinished() shouldBe true
+        }
+
+        expect("지뢰가 아니고 아직 열리지 않은 일반 블록이 있다면 게임 진행을 계속할 수 있다.") {
+            val mineCord = MapCord(0, 0)
+
+            gameMap.open(mineCord)
+
+            gameMap.getGameProgress() shouldBe GameState.PLAYING
+            gameMap.isFinished() shouldBe false
+        }
+
+        expect("지뢰가 아니고 모든 일반 블록이 열렸다면 게임에 승리한다.") {
+            val mineCords = listOf(
+                MapCord(0, 0),
+                MapCord(0, 2),
+                MapCord(2, 0),
+                MapCord(2, 2),
+            )
+
+            mineCords.forEach { gameMap.open(it) }
+
+            gameMap.getGameProgress() shouldBe GameState.WIN
+            gameMap.isFinished() shouldBe true
+        }
+    }
 })
