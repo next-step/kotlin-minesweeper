@@ -3,7 +3,6 @@ package minesweeper.domain.board
 import minesweeper.domain.MineGenerator
 import minesweeper.domain.Mines
 import minesweeper.domain.component.Component
-import minesweeper.domain.component.Components
 import minesweeper.domain.component.DefaultComponent
 import minesweeper.domain.coordinate.BaseCoordinateSystem
 import minesweeper.domain.coordinate.MineCoordinateSystemDecorator
@@ -13,7 +12,7 @@ class MineBoard(
     width: Int,
     mineCount: Int,
     mineGenerator: MineGenerator
-) : Board, Components {
+) : Board {
     private val coordinateSystem: MineCoordinateSystemDecorator
     private val mineList: Mines
         get() = coordinateSystem.mines
