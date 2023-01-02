@@ -12,7 +12,7 @@ class Controller(private val inputView: InputView, private val resultView: Resul
         val mineCount = inputView.inputLandMine()
 
         val blockCreator = BlockCreator(width, height, mineCount)
-        val blocks = Blocks(width, height, blockCreator.blocks)
+        val blocks = Blocks(width, height, blockCreator.createBlocks())
 
         resultView.drawBlocks(blocks)
     }

@@ -1,12 +1,12 @@
 package minesweeper.domain
 
 class BlockCreator(
-    width: Int,
-    height: Int,
-    mineCount: Int,
+    private val width: Int,
+    private val height: Int,
+    private val mineCount: Int,
 ) {
 
-    val blocks: List<List<Block>> = (createNormalBlocks(width, height, mineCount) + createMineBlocks(mineCount)).shuffled().chunked(width)
+    fun createBlocks(): List<List<Block>> = (createNormalBlocks(width, height, mineCount) + createMineBlocks(mineCount)).shuffled().chunked(width)
 
     private fun createNormalBlocks(width: Int, height: Int, mineCount: Int): List<Block.Normal> {
         val blockCount = height * width - mineCount
