@@ -13,10 +13,12 @@ fun main() {
     do {
         val point = InputView.point()
         val result = blockMap.open(point.first, pointY = point.second)
-        if (result == BlockOpenResult.MINE) {
-            break
+        when (result) {
+            BlockOpenResult.MINE -> break
+            BlockOpenResult.OPENED -> ResultView.printBlocks(blockMap.blocks)
+
+            BlockOpenResult.ALREADY_OPENED -> ResultView.printAlreadyOpened()
         }
-        ResultView.printBlocks(blockMap.blocks)
     } while (!blockMap.allOpen())
 
     if (blockMap.allOpen()) {

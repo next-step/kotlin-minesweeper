@@ -21,4 +21,8 @@ object ResultView {
     fun printLose() {
         println("Lose Game.")
     }
+
+    fun printAlreadyOpened() {
+        println("이미 열려있는 블록입니다.")
+    }
 }
