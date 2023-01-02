@@ -4,8 +4,6 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.mockk.every
-import io.mockk.mockk
 
 /**
  * @see GameMap
@@ -16,10 +14,13 @@ class GameMapTest : ExpectSpec({
         val height = 3
         val width = 3
         val mineCount = 2
-        val mockRandomMineSettingStrategy = mockk<RandomMineSettingStrategy>()
-        every { mockRandomMineSettingStrategy.getLocations(any(), any()) } returns listOf(1, 3)
+        val fixedMineSettingStrategy = object : MineSettingStrategy {
+            override fun getLocations(wholeBlockCount: Int, mineCount: Int): List<Int> {
+                return listOf(1, 3)
+            }
+        }
 
-        val gameMap = GameMap.of(height, width, mineCount, mockRandomMineSettingStrategy)
+        val gameMap = GameMap.of(height, width, mineCount, fixedMineSettingStrategy)
 
         assertSoftly(gameMap.blockTable.record.values) { blocks ->
             blocks.count { it is CleanBlock } shouldBe 7
@@ -43,10 +44,13 @@ class GameMapTest : ExpectSpec({
         val height = 3
         val width = 3
         val mineCount = 2
-        val mockRandomMineSettingStrategy = mockk<RandomMineSettingStrategy>()
-        every { mockRandomMineSettingStrategy.getLocations(any(), any()) } returns listOf(1, 3)
+        val fixedMineSettingStrategy = object : MineSettingStrategy {
+            override fun getLocations(wholeBlockCount: Int, mineCount: Int): List<Int> {
+                return listOf(1, 3)
+            }
+        }
 
-        val gameMap = GameMap.of(height, width, mineCount, mockRandomMineSettingStrategy)
+        val gameMap = GameMap.of(height, width, mineCount, fixedMineSettingStrategy)
 
         expect("지뢰라면 게임이 끝난다") {
             val mineCord = MapCord(0, 1)

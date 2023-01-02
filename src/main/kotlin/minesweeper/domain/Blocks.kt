@@ -13,10 +13,8 @@ data class Blocks(
         }
 
         private fun decideBlock(location: Int, mineLocation: List<Int>): Block {
-            return when (location in mineLocation) {
-                true -> MineBlock()
-                false -> CleanBlock()
-            }
+            if (location in mineLocation) return MineBlock()
+            return CleanBlock()
         }
     }
 }
