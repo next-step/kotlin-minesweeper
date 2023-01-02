@@ -9,7 +9,6 @@ class BlocksTest : StringSpec({
     "블록 주변 지뢰개수를 가져온다." {
         val height = 3
         val width = 5
-        val mineCount = 8
 
         val checkBlock1 = Block.Normal()
         val checkBlock2 = Block.Normal()
@@ -21,7 +20,7 @@ class BlocksTest : StringSpec({
 
         val blocks = Blocks(width, height, listOf(row1, row2, row3).mapIndexed { index, blockList -> index to blockList }.toMap())
 
-        blocks.getAroundMineCount(checkBlock1) shouldBe mineCount
+        blocks.getAroundMineCount(checkBlock1) shouldBe 8
         blocks.getAroundMineCount(checkBlock2) shouldBe 3
         blocks.getAroundMineCount(checkBlock3) shouldBe 0
     }
