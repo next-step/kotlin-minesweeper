@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.field
 
 enum class FieldStatus {
     OPEN,
