@@ -1,7 +1,5 @@
 package minesweeper.domain
 
-import kotlin.math.min
-
 class MineMap(
     private val mineCells: MutableMap<Position, Cell>,
 ) {
@@ -35,8 +33,8 @@ class MineMap(
     companion object {
         fun createMineMap(height: Int, width: Int, mineCount: Int): MineMap {
             val positions = Positions(height, width)
-            val minePositions = positions.getRandoms(mineCount)
-            val mineCells: MutableMap<Position, Cell> = positions.all()
+            val minePositions = positions.values.shuffled().take(mineCount)
+            val mineCells: MutableMap<Position, Cell> = positions.values
                 .associateWith { createCell(minePositions, it) }
                 .toMutableMap()
 
