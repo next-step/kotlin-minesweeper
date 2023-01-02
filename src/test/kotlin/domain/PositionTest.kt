@@ -23,8 +23,10 @@ class PositionTest {
         val surroundingPositions = Position.of(x, y).surroundings()
         surroundingPositions.size shouldBe 8
         surroundingPositions shouldContainAll listOf(
-            Position.of(x - 1, y - 1), Position.of(x + 1, y + 1),
-            Position.of(x + 1, y - 1), Position.of(x + 1, y - 1)
+            Position.of(x - 1, y - 1), Position.of(x, y + 1),
+            Position.of(x + 1, y + 1), Position.of(x - 1, y),
+            Position.of(x + 1, y), Position.of(x - 1, y - 1),
+            Position.of(x, y - 1), Position.of(x + 1, y + 1)
         )
     }
 }
