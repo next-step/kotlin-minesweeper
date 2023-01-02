@@ -61,25 +61,18 @@ class Position(rows: Int, columns: Int, val index: Int) {
         return diff
     }
 
-    override fun toString(): String {
-        return """
-            Position $index
-            |$topLeft|$top|$topRight|
-            |$left|$index|$right|
-            |$bottomLeft|$bottom|$bottomRight|
-        """.trimIndent()
-    }
-
     companion object {
         private val tokenRegex = "[,:]".toRegex()
 
         fun toPosition(rowSize: Int, columnSize: Int, positionText: String): Position {
             val result: List<String> = positionText.split(tokenRegex)
-            val rowIndex = result[0].toIntOrNull()
-            val columnIndex = result[1].toIntOrNull()
+            val rowIndex = result[0].toIntOrNull()?.minus(1)
+            val columnIndex = result[1].toIntOrNull()?.minus(1)
 
-            requireNotNull(rowIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
-            requireNotNull(columnIndex) { "입력된 좌표는 숫자 값이어야 합니다" }
+            requireNotNull(rowIndex) { "입력된 행 좌표는 숫자 값이어야 합니다" }
+            requireNotNull(columnIndex) { "입력된 열 좌표는 숫자 값이어야 합니다" }
+            require(rowIndex >= 0) { "입력된 행 좌표는 양수 이어야 합니다." }
+            require(columnIndex >= 0) { "입력된 열 좌표는 양수 이어야 합니다." }
 
             val index = rowIndex * columnSize + columnIndex
             return Position(rowSize, columnSize, index)
