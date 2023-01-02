@@ -9,12 +9,11 @@ object OutputView {
     private const val SEPARATOR_ROW = "\n"
     private const val SEPARATOR_BLOCK = " "
 
-    fun printGameStart(board: Board) {
+    fun printGameStart() {
         println("지뢰찾기 게임 시작")
-        printBoard(board)
     }
 
-    private fun printBoard(board: Board) {
+    fun printBoard(board: Board) {
         println(
             getBlocksAsView(board.getBlocks())
                 .chunked(board.getWidth())
