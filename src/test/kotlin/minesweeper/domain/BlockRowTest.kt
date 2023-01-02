@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.CsvSource
 internal class BlockRowTest {
     @ParameterizedTest
     @CsvSource(value = ["1:-1", "-1:1"], delimiter = ':')
-    fun `너비, 높이 둘중 하나가 1개 미만으로 입력시 에러가 발생한다`(width: Int, height: Int) {
+    fun `xIndex, row length 둘중 하나가 1개 미만으로 입력시 에러가 발생한다`(xIndex: Int, length: Int) {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            BlockRow(width, height)
+            BlockRow(xIndex, length)
         }
     }
 
