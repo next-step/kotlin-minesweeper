@@ -25,7 +25,7 @@ class MineMap(
         .sortedBy { it.row }
         .map { getCell(it) }
 
-    fun countClosedCellEqualsMineCell() = mineCells.values.count { it.state == CellState.CLOSED } == mineCount
+    fun countClosedCellNotEqualsMineCell() = mineCells.values.count { it.state == CellState.CLOSED } != mineCount
 
     companion object {
         fun createMineMap(height: Int, width: Int, mineCount: Int): MineMap {

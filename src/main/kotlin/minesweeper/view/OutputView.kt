@@ -27,11 +27,11 @@ object OutputView {
         println("지뢰찾기 게임 시작")
     }
 
-    fun printResult(win: Boolean) {
-        if (win) {
-            println("Win Game.")
-        } else {
+    fun printResult(notClear: Boolean) {
+        if (notClear) {
             println("Lose Game.")
+        } else {
+            println("Win Game.")
         }
     }
 }

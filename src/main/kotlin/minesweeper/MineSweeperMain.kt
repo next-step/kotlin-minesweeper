@@ -18,7 +18,7 @@ fun main() {
         val (row, column) = InputView.askOpenPosition(height, width)
         val cellOpenResult = mineBoard.openCell(Position(row, column))
         OutputView.printMineBoard(mineBoard.snapshot())
-    } while (!cellOpenResult.lose() && !mineBoard.win())
+    } while (cellOpenResult.isNotMine() && mineBoard.isNotGameClear())
 
-    OutputView.printResult(mineBoard.win())
+    OutputView.printResult(mineBoard.isNotGameClear())
 }

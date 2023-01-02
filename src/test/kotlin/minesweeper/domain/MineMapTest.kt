@@ -37,17 +37,17 @@ class MineMapTest : StringSpec({
         //given
         val mineMap = MineMap.createMineMap(5, 5, 5)
         //when
-        val equals = mineMap.countClosedCellEqualsMineCell()
+        val equals = mineMap.countClosedCellNotEqualsMineCell()
         //then
-        equals shouldBe false
+        equals shouldBe true
     }
 
     "countClosedCellEqualsMineCell 함수를 호출한 결과 닫힌 셀의 개수와 지뢰 셀의 개수가 같으면 true를 리턴한다." {
         //given
         val mineMap = MineMap.createMineMap(5, 5, 25)
         //when
-        val equals = mineMap.countClosedCellEqualsMineCell()
+        val equals = mineMap.countClosedCellNotEqualsMineCell()
         //then
-        equals shouldBe true
+        equals shouldBe false
     }
 })
