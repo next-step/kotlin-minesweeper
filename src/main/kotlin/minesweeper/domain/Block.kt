@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.model.Point
+import minesweeper.model.Point.Companion.MIN_VALUE
 import minesweeper.state.BlockState
 import minesweeper.state.BlockState.Normal
 
@@ -14,7 +15,11 @@ class Block(initialState: BlockState) {
         get() = state.point
 
     constructor(point: Point, block: (Point) -> Int = { 0 }) :
-        this(Normal(point, block.invoke(point)))
+        this(Normal(point, block.invoke(point))) {
+
+        require(point.x >= MIN_VALUE) { "x 좌표는 $MIN_VALUE 이상이어야 합니다." }
+        require(point.y >= MIN_VALUE) { "y 좌표는 $MIN_VALUE 이상이어야 합니다." }
+    }
 
     fun isMine(): Boolean = state.isMine()
     fun mine() {
