@@ -2,6 +2,8 @@ package minesweeper
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Block
+import minesweeper.domain.Blocks
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 
@@ -10,7 +12,7 @@ class ControllerTest : StringSpec({
         val height = 3
         val width = 5
         val mineCount = 3
-        var blockResult: List<List<String>>? = null
+        var blockResult: List<List<Block>>? = null
 
         val inputView = object : InputView {
             override fun inputHeight(): Int = height
@@ -19,8 +21,8 @@ class ControllerTest : StringSpec({
         }
 
         val resultView = object : ResultView {
-            override fun drawBlocks(blocks: List<List<String>>) {
-                blockResult = blocks
+            override fun drawBlocks(blocks: Blocks) {
+                blockResult = blocks.blockBoard.values.map { it }
             }
         }
 
