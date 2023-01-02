@@ -20,6 +20,7 @@
 - [x] 블록 열(BlockRow)
   - [x] 블록들을 가진다.
   - [x] 블록열의 길이는 입력된 width 동일하다.
+  - [x] 자신이 가지고 있는 블록들의 전체 열림 상태를 확인 할 수 있다.
 - [x] 블록 맵(BlockMap)
     - [x] 콘솔 창으로 부터 입력 받은 width, height, mineCount 를 가진다.
     - [x] 입력된 height 수 만큰 블록 열(길이 width)을 가진다.

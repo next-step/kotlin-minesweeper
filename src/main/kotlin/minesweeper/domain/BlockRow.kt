@@ -24,6 +24,8 @@ class BlockRow(
 
     fun find(point: Point): Block? = blocks.find { it.point == point }
 
+    fun allOpen(): Boolean = blocks.all { !it.state.isMine() && it.state.isOpen() }
+
     override fun toString(): String = blocks.joinToString(" ")
 
     companion object {
