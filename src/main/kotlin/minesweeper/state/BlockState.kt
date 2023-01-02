@@ -41,7 +41,7 @@ sealed interface BlockState {
 
             override fun open(): BlockState = Open(point, countOfSurroundMines)
 
-            override fun toString(): String = "$countOfSurroundMines"
+            override fun toString(): String = "C"
         }
 
         companion object {
@@ -60,6 +60,6 @@ sealed interface BlockState {
         override fun isOpen(): Boolean = throw IllegalStateException("지뢰는 열리지 않습니다.")
         override fun open(): BlockState = throw IllegalStateException("지뢰는 열 수 없습니다.")
 
-        override fun toString(): String = "*"
+        override fun toString(): String = "C"
     }
 }

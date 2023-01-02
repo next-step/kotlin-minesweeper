@@ -25,6 +25,8 @@
     - [x] 콘솔 창으로 부터 입력 받은 width, height, mineCount 를 가진다.
     - [x] 입력된 height 수 만큰 블록 열(길이 width)을 가진다.
     - [x] 랜덤 지뢰생성기를 통해 mineCount 만큼 랜덤한 위치에 블록을 지뢰로 설정한다.
+    - [x] 유저로 부터 입력 받은 위치의 블록을 열 수 있다.
+    - [x] 블록을 열 때 지뢰가 없는 인접한 칸이 모두 열리게 한다.
 - [x] 랜덤 지뢰생성기 (RandomMineGenerator)
   - [x] 입력된 width, height, mineCount 에 맞는 랜덤한 지뢰 위치를 생성한다.
 - [x] 지뢰 탐지기 (MineDetector)
