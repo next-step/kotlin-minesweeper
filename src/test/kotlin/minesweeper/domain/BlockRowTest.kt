@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.CsvSource
 internal class BlockRowTest {
     @ParameterizedTest
     @CsvSource(value = ["1:-1", "-1:1"], delimiter = ':')
-    fun `너비, 높이 둘중 하나가 1개 미만으로 입력시 에러가 발생한다`(width: Int, height: Int) {
+    fun `xIndex, row length 둘중 하나가 1개 미만으로 입력시 에러가 발생한다`(xIndex: Int, length: Int) {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            BlockRow(width, height)
+            BlockRow(xIndex, length)
         }
     }
 
@@ -30,5 +30,25 @@ internal class BlockRowTest {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
             BlockRow(emptyList())
         }
+    }
+
+    @Test
+    fun `Block 리스트의 블록들이 전체 열린 상태인지 확인할 수 있다`() {
+        val first = Block(Point(0, 0)).also { it.open() }
+        val second = Block(Point(0, 1)).also { it.open() }
+        val blocks = listOf(first, second)
+        val blockRow = BlockRow(blocks)
+
+        assertThat(blockRow.allOpen()).isTrue
+    }
+
+    @Test
+    fun `Block 리스트의 블록 중 하나라도 열리지 않으면 전체 열린 상태가 아니다`() {
+        val first = Block(Point(0, 0)).also { it.open() }
+        val second = Block(Point(0, 1))
+        val blocks = listOf(first, second)
+        val blockRow = BlockRow(blocks)
+
+        assertThat(blockRow.allOpen()).isFalse
     }
 }
