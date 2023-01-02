@@ -1,7 +1,9 @@
 package minesweeper.domain
 
+import kotlin.math.min
+
 class MineMap(
-    private val mineCells: HashMap<Position, Cell>,
+    private val mineCells: MutableMap<Position, Cell>,
 ) {
     private val mineCount: Int
         get() = mineCells.values
@@ -33,15 +35,18 @@ class MineMap(
     companion object {
         fun createMineMap(height: Int, width: Int, mineCount: Int): MineMap {
             val positions = Positions(height, width)
-            val mineCells: HashMap<Position, Cell> = linkedMapOf(
-                *createPositionToCells(positions.all(), positions.getRandoms(mineCount))
-            )
+            val minePositions = positions.getRandoms(mineCount)
+            val mineCells: MutableMap<Position, Cell> = positions.all()
+                .associateWith { createCell(minePositions, it) }
+                .toMutableMap()
+
             return MineMap(mineCells)
         }
 
-        private fun createPositionToCells(
-            allPositions: List<Position>,
+        private fun createCell(
             minePositions: List<Position>,
-        ): Array<Pair<Position, Cell>> = allPositions.map { PositionToCell(it, minePositions).pair }.toTypedArray()
+            position: Position,
+        ) = if (minePositions.contains(position)) MineCell(position)
+        else CleanCell(position, minePositions)
     }
 }
