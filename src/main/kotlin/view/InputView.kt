@@ -20,4 +20,9 @@ object InputView {
 
         return readln().toInt()
     }
+
+    fun readOpenCoordinate(): List<Int> {
+        print("open: ")
+        return readln().split(", ").map { it.toInt() }
+    }
 }

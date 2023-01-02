@@ -2,7 +2,7 @@ package domain
 
 import domain.coord.AbstractCoordinate
 import domain.coord.Coordinate
-import domain.coord.RelativeCoordinate
+import domain.coord.RelativeCoordinate.Companion.relativeOfCoords
 
 class LocationOfMines(
     private val mines: List<AbstractCoordinate>
@@ -12,17 +12,4 @@ class LocationOfMines(
     }
 
     fun exist(coordinate: Coordinate) = mines.contains(coordinate)
-
-    companion object {
-        private val relativeOfCoords: List<RelativeCoordinate> = listOf(
-            RelativeCoordinate(-1, -1),
-            RelativeCoordinate(-1, 0),
-            RelativeCoordinate(-1, 1),
-            RelativeCoordinate(0, -1),
-            RelativeCoordinate(0, 1),
-            RelativeCoordinate(1, -1),
-            RelativeCoordinate(1, 0),
-            RelativeCoordinate(1, 1)
-        )
-    }
 }

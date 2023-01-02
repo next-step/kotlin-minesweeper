@@ -1,3 +1,6 @@
 package domain.block
 
-class Mine : Block()
+class Mine : Block {
+
+    override fun isMine(): Boolean = true
+}

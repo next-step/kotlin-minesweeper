@@ -16,7 +16,7 @@ internal class RandomFieldGeneratorTest {
         val field = fieldGenerator.generate(width, height, 10)
 
         // then
-        assertThat(field.rows).hasSize(10)
-        assertThat(field.rows[0].cells).hasSize(10)
+        assertThat(field.rows.items).hasSize(10)
+        assertThat(field.rows.items[0].cells).hasSize(10)
     }
 }

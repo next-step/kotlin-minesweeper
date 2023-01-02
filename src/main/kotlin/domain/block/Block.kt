@@ -1,3 +1,5 @@
 package domain.block
 
-sealed class Block
+sealed interface Block {
+    fun isMine(): Boolean
+}
