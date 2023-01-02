@@ -22,7 +22,7 @@ class ControllerTest : StringSpec({
 
         val resultView = object : ResultView {
             override fun drawBlocks(blocks: Blocks) {
-                blockResult = blocks.blockBoard
+                blockResult = blocks.blockBoard.values.map { it }
             }
         }
 

@@ -6,7 +6,10 @@ class BlockCreator(
     private val mineCount: Int,
 ) {
 
-    fun createBlocks(): List<List<Block>> = (createNormalBlocks(width, height, mineCount) + createMineBlocks(mineCount)).shuffled().chunked(width)
+    fun createBlocks(): Map<Int, List<Block>> {
+        val blocks = (createNormalBlocks(width, height, mineCount) + createMineBlocks(mineCount)).shuffled().chunked(width)
+        return blocks.mapIndexed { index, blockList -> index to blockList }.toMap()
+    }
 
     private fun createNormalBlocks(width: Int, height: Int, mineCount: Int): List<Block.Normal> {
         val blockCount = height * width - mineCount

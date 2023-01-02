@@ -16,14 +16,15 @@ class BlockCreatorTest : StringSpec({
         val blocks = Blocks(width, height, creator.createBlocks())
 
         blocks.blockBoard.size shouldBe height
-        blocks.blockBoard[0].size shouldBe width
+        blocks.blockBoard[0]?.size shouldBe width
     }
 
     "입력 받은 지뢰 개수에 맞게 지뢰를 가져온다" {
         val mineCount = 3
         val creator = BlockCreator(3, 5, mineCount)
 
-        val landMineBlocks = creator.createBlocks().flatMap { it.filterIsInstance<Block.LandMine>() }
+        val blocks = creator.createBlocks().values.flatMap { blocks -> blocks.map { it } }
+        val landMineBlocks = blocks.filterIsInstance(Block.LandMine::class.java)
 
         landMineBlocks.size shouldBe mineCount
     }

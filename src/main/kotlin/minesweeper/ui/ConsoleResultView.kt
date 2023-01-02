@@ -6,7 +6,8 @@ import minesweeper.domain.Blocks
 class ConsoleResultView : ResultView {
     override fun drawBlocks(blocks: Blocks) {
         println("지뢰찾기 게임 시작")
-        blocks.blockBoard.forEach { rowBlocks ->
+        val blockList = blocks.blockBoard.values.map { it }
+        blockList.forEach { rowBlocks ->
             println(
                 rowBlocks.joinToString {
                     when (it) {

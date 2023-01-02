@@ -19,7 +19,7 @@ class BlocksTest : StringSpec({
         val row2 = listOf(Block.LandMine, checkBlock1, Block.LandMine, checkBlock2, Block.Normal())
         val row3 = listOf(Block.LandMine, Block.LandMine, Block.LandMine, Block.Normal(), checkBlock3)
 
-        val blocks = Blocks(width, height, listOf(row1, row2, row3))
+        val blocks = Blocks(width, height, listOf(row1, row2, row3).mapIndexed { index, blockList -> index to blockList }.toMap())
 
         blocks.getAroundMineCount(checkBlock1) shouldBe mineCount
         blocks.getAroundMineCount(checkBlock2) shouldBe 3
