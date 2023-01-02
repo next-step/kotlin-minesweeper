@@ -15,8 +15,9 @@ class MinesweeperController {
         val mineCount = inputView.inputMineCount()
 
         val rectangle = Rectangle(width, height)
-        val mineField = BoardFactory().generate(rectangle, mineCount)
-        outputView.printGameStart(mineField)
+        val board = BoardFactory().generate(rectangle, mineCount)
+        outputView.printGameStart()
+        outputView.printBoard(board)
     }
 }
 

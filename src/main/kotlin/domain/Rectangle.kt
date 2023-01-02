@@ -1,5 +1,7 @@
 package domain
 
+import domain.Position.Companion.POSITION_START
+
 data class Rectangle(
     private val width: Width,
     private val height: Height
@@ -8,6 +10,8 @@ data class Rectangle(
     fun getHeight(): Int = height.value
 
     fun toPositions(): List<Position> {
-        return Position.createAll(this)
+        return (POSITION_START until height.value).flatMap { y ->
+            (POSITION_START until width.value).map { Position.of(it, y) }
+        }
     }
 }

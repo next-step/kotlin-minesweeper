@@ -1,6 +1,25 @@
 package domain
 
-data class Position(val x: Int, val y: Int) : Comparable<Position> {
+data class Position private constructor(
+    val x: Int,
+    val y: Int
+) : Comparable<Position> {
+
+    fun top(): Position = copy(y = y.plus(1))
+
+    fun topLeft(): Position = copy(x = x.minus(1), y = y.plus(1))
+
+    fun topRight(): Position = copy(x = x.plus(1), y = y.plus(1))
+
+    fun left(): Position = copy(x = x.minus(1))
+
+    fun right(): Position = copy(x = x.plus(1))
+
+    fun bottom(): Position = copy(y = y.minus(1))
+
+    fun bottomLeft(): Position = copy(x = x.minus(1), y = y.minus(1))
+
+    fun bottomRight(): Position = copy(x = x.plus(1), y = y.minus(1))
 
     override fun compareTo(other: Position): Int {
         return when {
@@ -10,13 +29,18 @@ data class Position(val x: Int, val y: Int) : Comparable<Position> {
         }
     }
 
-    companion object {
-        private val START_POSITION: Position = Position(0, 0)
+    fun surroundings(): List<Position> {
+        return listOf(top(), topLeft(), topRight(), left(), right(), bottom(), bottomLeft(), bottomRight())
+    }
 
-        fun createAll(rectangle: Rectangle, startPosition: Position = START_POSITION): List<Position> {
-            return (startPosition.x until rectangle.getWidth()).flatMap { y ->
-                (startPosition.y until rectangle.getHeight()).map { Position(it, y) }
-            }
+    companion object {
+        const val POSITION_START = 0
+
+        private val cache = mutableMapOf<Pair<Int, Int>, Position>()
+
+        fun of(x: Int, y: Int): Position {
+            val position = x to y
+            return cache.computeIfAbsent(position) { Position(x, y) }
         }
     }
 }
