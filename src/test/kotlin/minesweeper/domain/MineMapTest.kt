@@ -33,20 +33,20 @@ class MineMapTest : StringSpec({
         closedCells shouldContainExactly listOf(Position(0, 1), Position(1, 1))
     }
 
-    "countClosedCellEqualsMineCell 함수를 호출한 결과 닫힌 셀의 개수와 지뢰 셀의 개수가 다르면 false를 리턴한다." {
+    "isNotGameClear 함수를 호출한 결과 닫힌 셀의 개수와 지뢰 셀의 개수가 다르면 true를 리턴한다." {
         //given
         val mineMap = MineMap.createMineMap(5, 5, 5)
         //when
-        val equals = mineMap.countClosedCellNotEqualsMineCell()
+        val equals = mineMap.isNotGameClear()
         //then
         equals shouldBe true
     }
 
-    "countClosedCellEqualsMineCell 함수를 호출한 결과 닫힌 셀의 개수와 지뢰 셀의 개수가 같으면 true를 리턴한다." {
+    "isNotGameClear 함수를 호출한 결과 닫힌 셀의 개수와 지뢰 셀의 개수가 같으면 false를 리턴한다." {
         //given
         val mineMap = MineMap.createMineMap(5, 5, 25)
         //when
-        val equals = mineMap.countClosedCellNotEqualsMineCell()
+        val equals = mineMap.isNotGameClear()
         //then
         equals shouldBe false
     }

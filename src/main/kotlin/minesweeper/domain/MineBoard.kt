@@ -19,6 +19,6 @@ class MineBoard(
 
     fun snapshot() = mineMap.snapshot()
 
-    fun isNotGameClear(): Boolean = mineMap.countClosedCellNotEqualsMineCell()
+    fun isNotGameClear(): Boolean = mineMap.isNotGameClear()
 
 }

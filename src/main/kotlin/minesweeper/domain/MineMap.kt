@@ -25,7 +25,10 @@ class MineMap(
         .sortedBy { it.row }
         .map { getCell(it) }
 
-    fun countClosedCellNotEqualsMineCell() = mineCells.values.count { it.state == CellState.CLOSED } != mineCount
+    fun isNotGameClear(): Boolean {
+        val closedCells = mineCells.values.filter { it.state == CellState.CLOSED }
+        return !(closedCells.all { it is MineCell } && closedCells.count() == mineCount)
+    }
 
     companion object {
         fun createMineMap(height: Int, width: Int, mineCount: Int): MineMap {
