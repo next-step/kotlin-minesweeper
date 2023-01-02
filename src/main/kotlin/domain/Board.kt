@@ -7,23 +7,23 @@ import dto.FieldWithCoordinate
 class Board(
     val height: Height,
     val width: Width,
-    val mineCnt: MineCnt,
+    mineCnt: MineCnt,
     strategy: BoardGenerateStrategy = RandomMineBoardGenerateStrategy(),
 ) {
     private val fields: Fields = strategy.generate(height, width, mineCnt)
 
-    fun getField(height: Int, width: Int): Field {
-        val coordinate = Coordinate(height, width)
+    fun getField(coordinate: Coordinate): Field {
+        validateCoordinate(coordinate)
         return fields.getField(coordinate)
     }
 
-    fun getNearByMineCount(height: Int, width: Int): Int {
-        val coordinate = Coordinate(height, width)
+    fun getNearByMineCount(coordinate: Coordinate): Int {
+        validateCoordinate(coordinate)
         return fields.getNearByFields(coordinate).count { it.field is Mine }
     }
 
-    fun isMine(height: Int, width: Int): Boolean {
-        val coordinate = Coordinate(height, width)
+    fun isMine(coordinate: Coordinate): Boolean {
+        validateCoordinate(coordinate)
         return fields.getField(coordinate) is Mine
     }
 
@@ -31,13 +31,10 @@ class Board(
         return fields.isLandAllOpened()
     }
 
-    fun open(height: Int, width: Int) {
-        val coordinate = Coordinate(height, width).apply { validateCoordinate(this) }
+    fun open(coordinate: Coordinate) {
+        validateCoordinate(coordinate)
         fields.open(coordinate)
-
-        getNotOpenedLandAndHasNoMineWithCoordinate(coordinate).forEach { land ->
-            open(land.coordinate.row, land.coordinate.col)
-        }
+        getNotOpenedLandAndHasNoMineWithCoordinate(coordinate).forEach { open(it.coordinate) }
     }
 
     private fun getNotOpenedLandAndHasNoMineWithCoordinate(coordinate: Coordinate): List<FieldWithCoordinate> {
