@@ -18,10 +18,10 @@ class GameController(
             gameBoard
         } catch (e: MineSweeperException) {
             resultView.printKnownException(e)
-            null
+            throw e
         } catch (e: Exception) {
             resultView.printUnknownException(e)
-            null
+            throw e
         }
     }
 
