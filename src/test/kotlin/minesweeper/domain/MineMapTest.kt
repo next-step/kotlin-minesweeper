@@ -1,9 +1,11 @@
 package minesweeper.domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.shouldForAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 
 class MineMapTest : StringSpec({
     "MineMap을 생성하면 모두 닫힌 셀이 생성됨을 확인한다." {
@@ -21,6 +23,15 @@ class MineMapTest : StringSpec({
         val openCell = mineMap.openCell(Position(0, 0))
         //then
         openCell.state shouldBe CellState.OPENED
+    }
+
+    "openCell 함수를 호출할 때 해당 셀이 없다면 IllegalStateExceptinon이 발생한다." {
+        //given
+        val mineMap = MineMap.createMineMap(5, 5, 5)
+        //when
+        //then
+        shouldThrow<IllegalStateException> { mineMap.openCell(Position(6, 0)) }
+            .shouldHaveMessage("해당 위치의 셀을 찾을 수 없습니다. 위치: (6,0)")
     }
 
     "getClosedNearPositions 함수를 호출한 결과 해당 셀의 주변의 닫힌 셀을 리턴함을 확인한다." {
