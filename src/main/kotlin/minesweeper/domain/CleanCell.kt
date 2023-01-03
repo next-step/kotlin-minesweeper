@@ -1,13 +1,21 @@
 package minesweeper.domain
 
-private const val CLEAN_SIGN = "C"
-
 data class CleanCell(
     override val position: Position,
-    var nearMineCount: Int = 0,
-) : Cell(position, CLEAN_SIGN) {
-    constructor(position: Position, minePositions: List<Position>) : this(position, position.getNearPositions()
-        .count { minePositions.contains(it) })
+    val nearMineCount: Int,
+    override val state: CellState = CellState.CLOSED,
+) : Cell(position, state) {
+    constructor(position: Position, minePositions: List<Position>) : this(
+        position,
+        position.getNearPositions().count { minePositions.contains(it) },
+        CellState.CLOSED
+    )
 
+    override fun openResult(): CellOpenResult =
+        if (noNearMine()) CellOpenResult.SPREAD_NEEDED else CellOpenResult.MINE_NOT_FOUND
+
+    override fun copyWithOpen(): CleanCell = this.copy(state = CellState.OPENED)
+
+    private fun noNearMine(): Boolean = nearMineCount == 0
 }
 
