@@ -8,13 +8,13 @@ class MineBoard(
 
     private val size: Int = rowCount * columnCount
 
-    val coordinates: Coordinates = make()
+    val coordinates: Coordinates = makeCoordinates()
 
     fun rowSize(): Int = rowCount.count
 
     fun columnSize(): Int = columnCount.count
 
-    private fun make(): Coordinates {
+    private fun makeCoordinates(): Coordinates {
         val coordinates: Coordinates = Coordinates.of(
             List(size) { index ->
                 val position = Position(rowSize(), columnSize(), index)
