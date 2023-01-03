@@ -12,16 +12,12 @@ object ResultView {
             print("$it ")
             if (isSpace(index, boardDto.column)) println()
         }
+        println()
     }
 
-    fun printLose() {
-        println("Lose Game.")
-    }
+    fun printLose() = println("Lose Game.")
 
-    fun printWin(boardDto: BoardDto) {
-        println("Win Game!")
-        printBoard(boardDto)
-    }
+    fun printWin() = println("Win Game!")
 
     private fun isSpace(index: Int, column: Column): Boolean {
         return (index + 1) % column.value == 0
