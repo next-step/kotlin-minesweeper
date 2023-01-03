@@ -12,6 +12,9 @@ data class BoardDto(
     val cells: List<String>
 ) {
     companion object {
+        private const val CLOSED_CELL = "▣"
+        private const val MINE_CELL = "*"
+
         fun from(board: Board, column: Column): BoardDto {
             return BoardDto(
                 column,
@@ -22,10 +25,10 @@ data class BoardDto(
         }
 
         private fun toString(cell: Cell): String {
-            if (cell.status == Status.CLOSE) return "C"
+            if (cell.status == Status.CLOSE) return CLOSED_CELL
 
             return when (cell) {
-                is Mine -> "*"
+                is Mine -> MINE_CELL
                 is Blank -> cell.minesAroundCount.toString()
             }
         }
