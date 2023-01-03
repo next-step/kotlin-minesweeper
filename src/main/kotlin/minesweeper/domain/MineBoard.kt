@@ -6,15 +6,13 @@ class MineBoard(
     private val mineCount: MineCount
 ) {
 
-    private val size: Int = calculateBoardSize()
+    private val size: Int = rowCount * columnCount
 
     val coordinates: Coordinates = make()
 
     fun rowSize(): Int = rowCount.count
 
     fun columnSize(): Int = columnCount.count
-
-    private fun calculateBoardSize(): Int = rowCount * columnCount
 
     private fun make(): Coordinates {
         val coordinates: Coordinates = Coordinates.of(
