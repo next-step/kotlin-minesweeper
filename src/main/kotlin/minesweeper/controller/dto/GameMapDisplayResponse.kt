@@ -6,6 +6,7 @@ import minesweeper.domain.GameMap
 import minesweeper.domain.MineBlock
 import minesweeper.view.model.BlockViewModel
 import minesweeper.view.model.CleanBlockViewModel
+import minesweeper.view.model.HideBlockViewModel
 import minesweeper.view.model.MineBlockViewModel
 
 data class GameMapDisplayResponse(
@@ -28,6 +29,8 @@ data class GameMapDisplayResponse(
         }
 
         private fun blockToViewModel(block: Block): BlockViewModel {
+            if (block.isOpen().not()) return HideBlockViewModel()
+
             return when (block) {
                 is CleanBlock -> CleanBlockViewModel(
                     block.getNearbyMineCount().toString()

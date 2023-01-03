@@ -7,12 +7,12 @@ data class MapCords(
     companion object {
         fun of(height: Int, width: Int): MapCords {
             val xCords = 0 until width
-            val yCords = 0 until height
+            val yCords = height - 1 downTo 0
 
             return MapCords(
                 MapCordBuilder()
-                    .setX(xCords)
-                    .flatMap { it.setY(yCords) }
+                    .setY(yCords)
+                    .flatMap { it.setX(xCords) }
                     .map { it.build() }
             )
         }

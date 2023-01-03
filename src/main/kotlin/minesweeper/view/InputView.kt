@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.controller.dto.BuildMapRequest
+import minesweeper.controller.dto.OpenCordRequest
 
 class InputView {
 
@@ -27,5 +28,10 @@ class InputView {
     private fun enterMineCount(): Int {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
+    }
+
+    fun enterCord(): OpenCordRequest {
+        print("open: ")
+        return OpenCordRequest(readln())
     }
 }

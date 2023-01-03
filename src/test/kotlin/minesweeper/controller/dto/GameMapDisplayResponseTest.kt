@@ -4,8 +4,7 @@ import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.GameMap
 import minesweeper.domain.RandomMineSettingStrategy
-import minesweeper.view.model.CleanBlockViewModel
-import minesweeper.view.model.MineBlockViewModel
+import minesweeper.view.model.HideBlockViewModel
 
 /**
  * @see GameMapDisplayResponse
@@ -18,8 +17,7 @@ class GameMapDisplayResponseTest : ExpectSpec({
 
         with(gameMapDisplayResponse.blocksModels) {
             size shouldBe 9
-            count { it is CleanBlockViewModel } shouldBe 7
-            count { it is MineBlockViewModel } shouldBe 2
+            count { it is HideBlockViewModel } shouldBe 9
         }
     }
 })

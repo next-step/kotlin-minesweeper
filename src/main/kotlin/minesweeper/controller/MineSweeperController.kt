@@ -1,6 +1,8 @@
 package minesweeper.controller
 
+import minesweeper.controller.dto.GameFinishedResponse
 import minesweeper.controller.dto.GameMapDisplayResponse
+import minesweeper.domain.GameMap
 import minesweeper.domain.RandomMineSettingStrategy
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -16,8 +18,23 @@ class MineSweeperController(
         val randomSettingStrategy = RandomMineSettingStrategy()
         val gameMap = buildMapRequest.toGameMap(randomSettingStrategy)
 
-        outputView.displayMap(
-            GameMapDisplayResponse.from(gameMap)
+        while (gameMap.isFinished().not()) {
+            val mapCord = inputView.enterCord().toMapCord()
+            gameMap.open(mapCord)
+
+            gameMap.displayResult()
+        }
+    }
+
+    private fun GameMap.displayResult() {
+        if (this.isFinished()) {
+            outputView.display(
+                GameFinishedResponse.from(this.getGameProgress())
+            )
+            return
+        }
+        outputView.display(
+            GameMapDisplayResponse.from(this)
         )
     }
 }
