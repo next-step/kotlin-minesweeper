@@ -1,7 +1,6 @@
 package minesweeper
 
 import minesweeper.domain.ColumnCount
-import minesweeper.domain.Game
 import minesweeper.domain.MineBoard
 import minesweeper.domain.MineCount
 import minesweeper.domain.RowCount
@@ -23,12 +22,5 @@ fun main() {
     }
 
     val resultView = ResultView()
-    resultView.showStartGame()
-
-    val game = Game(board)
-    val openPosition: String = inputView.inputOpen()
-
-    game.start(openPosition)
-
-    resultView.showBoard(board)
+    resultView.showStartGame(inputView, board)
 }

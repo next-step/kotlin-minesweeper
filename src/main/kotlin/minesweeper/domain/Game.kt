@@ -2,9 +2,13 @@ package minesweeper.domain
 
 class Game(private val board: MineBoard) {
 
-    fun start(targetPositionText: String) {
+    fun start(targetPositionText: String): Boolean {
         val position: Position = Position.toPosition(board.rowSize(), board.columnSize(), targetPositionText)
+        val targetPosition = position.index
+        val target: Coordinate = board.coordinates[targetPosition]
+        if (target.isMine()) return false
         open(position.index)
+        return true
     }
 
     private fun open(targetPosition: Int) {
