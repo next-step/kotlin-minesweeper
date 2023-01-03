@@ -29,15 +29,27 @@ class Board(cells: List<Cell>) {
         }
     }
 
-    fun openAllCells() {
+    fun openRemainCells() {
         cells
             .filter { it.status == Status.CLOSE }
+            .map { it.open() }
+    }
+
+    fun openAllMineCells() {
+        cells
+            .filterIsInstance<Mine>()
             .map { it.open() }
     }
 
     fun openAdjacentBlanksBy(blank: Blank) {
         blank.open()
         changeOpenAdjacentBlanks(getTargetBlanks(blank.coordinate))
+    }
+
+    fun getBlankCell(coordinate: Coordinate): Blank {
+        val cell = findOrNull(coordinate)
+
+        return if (cell is Blank) cell else throw IllegalArgumentException(ERROR_MESSAGE_NOT_EXIST_COORDINATE)
     }
 
     private fun changeOpenAdjacentBlanks(list: List<Blank>) {
@@ -54,5 +66,9 @@ class Board(cells: List<Cell>) {
             }
             .filterIsInstance<Blank>()
             .filter { blank -> blank.status == Status.CLOSE }
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE_NOT_EXIST_COORDINATE = "존재하지 않는 좌표입니다."
     }
 }

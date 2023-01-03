@@ -197,9 +197,19 @@ internal class BoardTest : StringSpec({
         val board = get5x5RandomBoard()
 
         val closedCellSize = board.cells.filter { it.status == Status.CLOSE }
-        board.openAllCells()
+        board.openRemainCells()
         val openCellSize = board.cells.filter { it.status == Status.OPEN }
 
         openCellSize shouldBe closedCellSize
+    }
+
+    "모든 지뢰칸을 개방한다." {
+        val board = get5x5RandomBoard()
+        val initialClosedMineCellsSize = board.cells.filterIsInstance<Mine>().count()
+
+        board.openAllMineCells()
+        val openAllMineCellsSize = board.cells.filterIsInstance<Mine>().count()
+
+        openAllMineCellsSize shouldBe initialClosedMineCellsSize
     }
 })
