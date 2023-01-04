@@ -14,4 +14,12 @@ object InputParser {
         require(inputNumber.toInt() in MINIMUM_INPUT_POSITION..MAXIMUM_OUTPUT_POSITION) { "1~20 사이의 숫자를 입력해주세요." }
         return inputNumber.toInt() - CORRECTION_VALUE
     }
+
+    fun parseCoordinate(input: String): Pair<Int, Int> {
+        val (x, y) = input.split(", ").let {
+            require(it.size == 2) { "좌표는 x, y 형식으로 입력해주세요." }
+            it.map(::parsePosition)
+        }
+        return Pair(x, y)
+    }
 }

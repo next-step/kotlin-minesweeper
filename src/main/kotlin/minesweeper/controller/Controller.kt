@@ -22,6 +22,8 @@ object Controller {
         val land = Land(width, height, tiles)
 
         ResultView.printGameStartMessage()
+
+        val inputCoordinate = InputFilter.inputCoordinate(InputView.INPUT_COORDINATE_MESSAGE)
         ResultView.printLand(LandDto(land))
     }
 }
