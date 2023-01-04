@@ -7,18 +7,15 @@ import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.pos.Position
 
-data class Land(private val width: Position, private val height: Position, private val tiles: Tiles) {
-    private var _tiles = tiles
+data class Land(private val width: Position, private val height: Position, private var _tiles: Tiles) {
+    val tiles: List<Marking>
+        get() = _tiles.getList()
 
     init {
         for (x in 0..width.value) for (y in 0..height.value) {
             val coordinate = Coordinate(Position(x), Position(y))
             _tiles = _tiles.checkTile(coordinate, toMarking(getMineCount(coordinate)))
         }
-    }
-
-    fun getTiles(): List<Marking> {
-        return _tiles.getList()
     }
 
     fun getWidth() = width.getCalibratedPosition()

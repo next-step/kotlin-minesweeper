@@ -21,7 +21,7 @@ class LandTest {
         val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
 
         // when
-        val actual = land.getTiles()
+        val actual = land.tiles
 
         // then
         val expected = listOf(Marking.MINE, Marking.TWO, Marking.TWO, Marking.MINE)
