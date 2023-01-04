@@ -1,17 +1,17 @@
 package minesweeper.domain.tile
 
-sealed class Marking {
-    object MINE : Marking()
-    object EMPTY : Marking()
-    object ONE : Marking()
-    object TWO : Marking()
-    object THREE : Marking()
-    object FOUR : Marking()
-    object FIVE : Marking()
-    object SIX : Marking()
-    object SEVEN : Marking()
-    object EIGHT : Marking()
-    object CLOSED : Marking()
+enum class Marking {
+    MINE,
+    EMPTY,
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    CLOSED;
 
     companion object {
         fun toMarking(mineCount: Int): Marking {
