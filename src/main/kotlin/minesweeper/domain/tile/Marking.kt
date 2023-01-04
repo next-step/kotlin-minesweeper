@@ -14,7 +14,7 @@ sealed class Marking {
     object CLOSED : Marking()
 
     companion object {
-        fun toMarkingAsInt(mineCount: Int): Marking {
+        fun toMarking(mineCount: Int): Marking {
             return when (mineCount) {
                 0 -> EMPTY
                 1 -> ONE

@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.domain.tile.Marking
-import minesweeper.domain.tile.Marking.Companion.toMarkingAsInt
+import minesweeper.domain.tile.Marking.Companion.toMarking
 import minesweeper.domain.tile.SurroundingTiles
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
@@ -13,7 +13,7 @@ data class Land(private val width: Position, private val height: Position, priva
     init {
         for (x in 0..width.value) for (y in 0..height.value) {
             val coordinate = Coordinate(Position(x), Position(y))
-            _tiles = _tiles.checkTile(coordinate, toMarkingAsInt(getMineCount(coordinate)))
+            _tiles = _tiles.checkTile(coordinate, toMarking(getMineCount(coordinate)))
         }
     }
 
@@ -26,7 +26,7 @@ data class Land(private val width: Position, private val height: Position, priva
     fun getMineCount(coordinate: Coordinate): Int {
         var mineCount = 0
         for (surroundingTiles in SurroundingTiles.values()) {
-            val (x, y) = coordinate.getSurroundTilesCoordinateAsPair(surroundingTiles)
+            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
             if (isExistMine(x, y)) mineCount++
         }
         return mineCount
