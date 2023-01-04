@@ -62,6 +62,10 @@ data class Land(private val width: Position, private val height: Position, priva
         return positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value
     }
 
+    fun isAllOpened(): Boolean {
+        return _tiles.isAllOpened()
+    }
+
     companion object {
         private const val ZERO = 0
 

@@ -4,6 +4,8 @@ import minesweeper.dto.LandDto
 
 object ResultView {
     private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
+    private const val LOSE_GAME_MESSAGE = "Lose Game."
+    private const val GAME_OVER_MESSAGE = "Game Over. You Win!"
 
     fun printGameStartMessage() {
         println(GAME_START_MESSAGE)
@@ -17,5 +19,13 @@ object ResultView {
         val land = landDto.getTiles().joinToString("") { tile -> "$tile " }
         val landWithLineFeed = land.chunked(landDto.getWidth() * 2)
         landWithLineFeed.forEach { tile -> println(tile) }
+    }
+
+    fun printLoseGameMessage() {
+        println(LOSE_GAME_MESSAGE)
+    }
+
+    fun printGameOverMessage() {
+        println(GAME_OVER_MESSAGE)
     }
 }

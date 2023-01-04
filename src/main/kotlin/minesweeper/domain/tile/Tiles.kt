@@ -37,4 +37,10 @@ value class Tiles(private val value: List<Tile>) {
         }
         return tile
     }
+
+    fun isAllOpened(): Boolean {
+        val notMinesCount = value.count { tile -> tile is NotMines }
+        val mineCount = value.count { tile -> tile.isMine }
+        return value.size == notMinesCount + mineCount
+    }
 }

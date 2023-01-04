@@ -132,6 +132,43 @@ class LandTest {
         assertThat(actual).isFalse
     }
 
+    @Test
+    fun `Land - 모든 타일이 체크되었는지 확인(true)`() {
+        // given
+        val tiles = Tiles(
+            NotChecked(0, 0, false), NotChecked(1, 0, false),
+            NotChecked(0, 1, false), NotChecked(1, 1, true)
+        )
+        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+
+        // when
+        land.selectTile(Coordinate.of(0, 0))
+        land.selectTile(Coordinate.of(1, 0))
+        land.selectTile(Coordinate.of(0, 1))
+        val actual = land.isAllOpened()
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    fun `Land - 모든 타일이 체크되었는지 확인(false)`() {
+        // given
+        val tiles = Tiles(
+            NotChecked(0, 0, false), NotChecked(1, 0, false),
+            NotChecked(0, 1, false), NotChecked(1, 1, true)
+        )
+        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+
+        // when
+        land.selectTile(Coordinate.of(0, 0))
+        land.selectTile(Coordinate.of(1, 0))
+        val actual = land.isAllOpened()
+
+        // then
+        assertThat(actual).isFalse
+    }
+
     companion object {
         private const val TWO = 2
         private const val THREE = 3
