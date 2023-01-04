@@ -7,6 +7,8 @@ import minesweeper.domain.tile.state.set.NotMines
 
 @JvmInline
 value class Tiles(private val value: List<Tile>) {
+    constructor(vararg tiles: Tile) : this(tiles.toList())
+
     init {
         require(value.isNotEmpty()) { "타일은 적어도 1개 이상이어야 합니다." }
         require(value.size == value.toSet().size) { "타일은 중복될 수 없습니다." }
