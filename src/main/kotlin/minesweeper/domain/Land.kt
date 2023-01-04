@@ -24,12 +24,10 @@ data class Land(private val width: Position, private val height: Position, priva
     fun getWidth() = width.getCalibratedPosition()
 
     fun getMineCount(coordinate: Coordinate): Int {
-        var mineCount = 0
-        for (surroundingTiles in SurroundingTiles.values()) {
+        return SurroundingTiles.values().count { surroundingTiles ->
             val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
-            if (isExistMine(x, y)) mineCount++
+            isExistMine(x, y)
         }
-        return mineCount
     }
 
     private fun isExistMine(positionX: Int, positionY: Int): Boolean {
