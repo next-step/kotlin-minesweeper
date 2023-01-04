@@ -11,7 +11,7 @@ object InputFilter {
             val position = InputParser.parsePosition(InputView.inputNumber())
             Position(position)
         } catch (e: Exception) {
-            e.message?.let { InputView.printError(it) }
+            e.message?.let(InputView::printError)
             inputPosition(message)
         }
     }
@@ -21,7 +21,7 @@ object InputFilter {
             println(message)
             MineCount(InputParser.parseNumber(InputView.inputNumber()), maxMineCount)
         } catch (e: Exception) {
-            e.message?.let { InputView.printError(it) }
+            e.message?.let(InputView::printError)
             inputMineCount(message, maxMineCount)
         }
     }
