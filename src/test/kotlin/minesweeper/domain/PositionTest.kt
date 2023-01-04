@@ -6,78 +6,131 @@ import org.junit.jupiter.api.Test
 
 class PositionTest {
 
-    @DisplayName(" 3x3 판에서 0번 위치 검증")
+    @DisplayName(" 3x3 판에서 4번 칸에서 좌상단 인덱스는 0이다")
+    @Test
+    fun topLeft() {
+        val position = Position.TopLeft.calculate(3, 3, 4)
+
+        position shouldBe 0
+    }
+
+    @DisplayName(" 3x3 판에서 4번 칸에서 상단 인덱스는 1이다")
     @Test
     fun top() {
-        val position = Position(3, 3, 0)
+        val position = Position.Top.calculate(3, 3, 4)
 
-        position.topLeft shouldBe -1
-        position.top shouldBe -1
-        position.topRight shouldBe -1
-        position.left shouldBe -1
-        position.right shouldBe 1
-        position.bottomLeft shouldBe -1
-        position.bottom shouldBe 3
-        position.bottomRight shouldBe 4
+        position shouldBe 1
     }
 
-    @DisplayName(" 3x3 판에서 3번 위치 검증")
+    @DisplayName(" 3x3 판에서 4번 칸에서 우상단 인덱스는 2이다")
+    @Test
+    fun topRight() {
+        val position = Position.TopRight.calculate(3, 3, 4)
+
+        position shouldBe 2
+    }
+
+    @DisplayName(" 3x3 판에서 4번 칸에서 좌측 인덱스는 3이다")
     @Test
     fun left() {
-        val position = Position(3, 3, 3)
+        val position = Position.Left.calculate(3, 3, 4)
 
-        position.topLeft shouldBe -1
-        position.top shouldBe 0
-        position.topRight shouldBe 1
-        position.left shouldBe -1
-        position.right shouldBe 4
-        position.bottomLeft shouldBe -1
-        position.bottom shouldBe 6
-        position.bottomRight shouldBe 7
+        position shouldBe 3
     }
 
-    @DisplayName(" 3x3 판에서 4번 중앙 위치 검증")
-    @Test
-    fun center() {
-        val position = Position(3, 3, 4)
-
-        position.topLeft shouldBe 0
-        position.top shouldBe 1
-        position.topRight shouldBe 2
-        position.left shouldBe 3
-        position.right shouldBe 5
-        position.bottomLeft shouldBe 6
-        position.bottom shouldBe 7
-        position.bottomRight shouldBe 8
-    }
-
-    @DisplayName(" 3x3 판에서 5번 위치 검증")
+    @DisplayName(" 3x3 판에서 4번 칸에서 우측 인덱스는 5이다")
     @Test
     fun right() {
-        val position = Position(3, 3, 5)
+        val position = Position.Right.calculate(3, 3, 4)
 
-        position.topLeft shouldBe 1
-        position.top shouldBe 2
-        position.topRight shouldBe -1
-        position.left shouldBe 4
-        position.right shouldBe -1
-        position.bottomLeft shouldBe 7
-        position.bottom shouldBe 8
-        position.bottomRight shouldBe -1
+        position shouldBe 5
     }
 
-    @DisplayName(" 3x3 판에서 7번 위치 검증")
+    @DisplayName(" 3x3 판에서 4번 칸에서 좌하단 인덱스는 6이다")
+    @Test
+    fun bottomLeft() {
+        val position = Position.BottomLeft.calculate(3, 3, 4)
+
+        position shouldBe 6
+    }
+
+    @DisplayName(" 3x3 판에서 4번 칸에서 하단 인덱스는 7이다")
     @Test
     fun bottom() {
-        val position = Position(3, 3, 7)
+        val position = Position.Bottom.calculate(3, 3, 4)
 
-        position.topLeft shouldBe 3
-        position.top shouldBe 4
-        position.topRight shouldBe 5
-        position.left shouldBe 6
-        position.right shouldBe 8
-        position.bottomLeft shouldBe -1
-        position.bottom shouldBe -1
-        position.bottomRight shouldBe -1
+        position shouldBe 7
+    }
+
+    @DisplayName(" 3x3 판에서 4번 칸에서 우하단 인덱스는 8이다")
+    @Test
+    fun bottomRight() {
+        val position = Position.BottomRight.calculate(3, 3, 4)
+
+        position shouldBe 8
+    }
+
+    @DisplayName(" 3x3 판에서 1번 칸에서 좌상단 인덱스는 음수이다")
+    @Test
+    fun invalidTopLeft() {
+        val position = Position.TopLeft.calculate(3, 3, 1)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 1번 칸에서 상단 인덱스는 음수이다")
+    @Test
+    fun invalidTop() {
+        val position = Position.Top.calculate(3, 3, 1)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 1번 칸에서 우상단 인덱스는 음수이다")
+    @Test
+    fun invalidTopRight() {
+        val position = Position.TopRight.calculate(3, 3, 1)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 3번 칸에서 좌측 인덱스는 음수이다")
+    @Test
+    fun invalidLeft() {
+        val position = Position.Left.calculate(3, 3, 3)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 5번 칸에서 우측 인덱스는 음수이다")
+    @Test
+    fun invalidRight() {
+        val position = Position.Right.calculate(3, 3, 5)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 7번 칸에서 좌하단 인덱스는 음수이다")
+    @Test
+    fun invalidBottomLeft() {
+        val position = Position.BottomLeft.calculate(3, 3, 7)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 7번 칸에서 하단 인덱스는 음수이다")
+    @Test
+    fun invalidBottom() {
+        val position = Position.Bottom.calculate(3, 3, 7)
+
+        position shouldBe -1
+    }
+
+    @DisplayName(" 3x3 판에서 7번 칸에서 우하단 인덱스는 음수이다")
+    @Test
+    fun invalidBottomRight() {
+        val position = Position.BottomRight.calculate(3, 3, 7)
+
+        position shouldBe -1
     }
 }

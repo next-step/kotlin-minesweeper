@@ -3,7 +3,7 @@ package minesweeper.domain
 import minesweeper.domain.State.CLOSE
 import minesweeper.domain.State.OPEN
 
-class Coordinate(val position: Position, private val type: CoordinateType = CoordinateType.NONE) {
+class Coordinate(private val type: CoordinateType = CoordinateType.NONE) {
 
     var count: Int = 0
         private set

@@ -9,7 +9,7 @@ class CoordinateTest {
     @DisplayName("지뢰 좌표 확인")
     @Test
     fun name() {
-        val coordinate = Coordinate(Position(3, 3, 3), CoordinateType.MINE)
+        val coordinate = Coordinate(CoordinateType.MINE)
 
         coordinate.isMine() shouldBe true
     }
