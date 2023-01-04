@@ -50,7 +50,6 @@ class ResultView {
     }
 
     private fun getCoordinateText(coordinate: Coordinate): String {
-        if (coordinate.isMine()) return "* "
         if (coordinate.isOpen()) return coordinate.count.toString() + " "
         return "C "
     }
