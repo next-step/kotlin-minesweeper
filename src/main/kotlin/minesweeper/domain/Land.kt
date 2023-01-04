@@ -11,27 +11,55 @@ data class Land(private val width: Position, private val height: Position, priva
     val tiles: List<Marking>
         get() = _tiles.getList()
 
-    init {
-        for (x in 0..width.value) for (y in 0..height.value) {
-            val coordinate = Coordinate(Position(x), Position(y))
-            _tiles = _tiles.checkTile(coordinate, toMarking(getMineCount(coordinate)))
-        }
-    }
-
     fun getWidth() = width.getCalibratedPosition()
 
     fun getMineCount(coordinate: Coordinate): Int {
         return SurroundingTiles.values().count { surroundingTiles ->
             val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
-            isExistMine(x, y)
+            isMine(x, y)
         }
     }
 
-    private fun isExistMine(positionX: Int, positionY: Int): Boolean {
-        if (positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value) {
+    fun selectTile(coordinate: Coordinate): Boolean {
+        val (positionX, positionY) = coordinate.getPositionXY()
+        if (isMine(positionX, positionY)) {
+            return false
+        }
+        checkSurroundingTiles(positionX, positionY)
+        return true
+    }
+
+    private fun checkSurroundingTiles(positionX: Int, positionY: Int) {
+        if (isInvalidCoordinate(positionX, positionY)) {
+            return
+        }
+
+        val coordinate = Coordinate.of(positionX, positionY)
+        if (_tiles.isChecked(coordinate)) {
+            return
+        }
+
+        val mineCount = getMineCount(coordinate)
+        _tiles = _tiles.checkTile(coordinate, toMarking(mineCount))
+        if (toMarking(mineCount) != Marking.EMPTY) {
+            return
+        }
+
+        for (surroundingTiles in SurroundingTiles.values()) {
+            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
+            checkSurroundingTiles(x, y)
+        }
+    }
+
+    private fun isMine(positionX: Int, positionY: Int): Boolean {
+        if (isInvalidCoordinate(positionX, positionY)) {
             return false
         }
         return _tiles.isMine(Coordinate.of(positionX, positionY))
+    }
+
+    private fun isInvalidCoordinate(positionX: Int, positionY: Int): Boolean {
+        return positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value
     }
 
     companion object {

@@ -25,6 +25,10 @@ value class Tiles(private val value: List<Tile>) {
         return Tiles(tiles)
     }
 
+    fun isChecked(coordinate: Coordinate): Boolean {
+        return value.find { tile -> tile.coordinate == coordinate }?.isChecked ?: false
+    }
+
     private fun checkTile(tile: Tile, coordinate: Coordinate, marking: Marking): Tile {
         if (tile.coordinate == coordinate && tile is NotChecked) {
             return NotMines(coordinate, marking)

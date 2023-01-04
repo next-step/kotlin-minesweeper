@@ -31,7 +31,7 @@ object InputFilter {
         return try {
             print(message)
             val coordinate = InputParser.parseCoordinate(readln())
-            Coordinate(Position(coordinate.first), Position(coordinate.second))
+            Coordinate.of(coordinate.first, coordinate.second)
         } catch (e: Exception) {
             e.message?.let(InputView::printError)
             inputCoordinate(message)

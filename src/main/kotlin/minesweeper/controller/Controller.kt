@@ -23,7 +23,8 @@ object Controller {
 
         ResultView.printGameStartMessage()
 
-        val inputCoordinate = InputFilter.inputCoordinate(InputView.INPUT_COORDINATE_MESSAGE)
-        ResultView.printLand(LandDto(land))
+        while (land.selectTile(InputFilter.inputCoordinate(InputView.INPUT_COORDINATE_MESSAGE))) {
+            ResultView.printLand(LandDto(land))
+        }
     }
 }
