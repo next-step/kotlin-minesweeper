@@ -72,13 +72,13 @@ enum class Position {
 
         fun toIndex(columnSize: Int, positionText: String): Int {
             val result: List<String> = positionText.split(tokenRegex)
-            val rowIndex = result[0].toIntOrNull()?.minus(1)
-            val columnIndex = result[1].toIntOrNull()?.minus(1)
+            val columnIndex = result[0].toIntOrNull()?.minus(1)
+            val rowIndex = result[1].toIntOrNull()?.minus(1)
 
-            requireNotNull(rowIndex) { "입력된 행 좌표는 숫자 값이어야 합니다" }
-            requireNotNull(columnIndex) { "입력된 열 좌표는 숫자 값이어야 합니다" }
-            require(rowIndex >= 0) { "입력된 행 좌표는 양수 이어야 합니다." }
-            require(columnIndex >= 0) { "입력된 열 좌표는 양수 이어야 합니다." }
+            requireNotNull(columnIndex) { "입력된 행 좌표는 숫자 값이어야 합니다" }
+            requireNotNull(rowIndex) { "입력된 열 좌표는 숫자 값이어야 합니다" }
+            require(columnIndex >= 0) { "입력된 행 좌표는 양수 이어야 합니다." }
+            require(rowIndex >= 0) { "입력된 열 좌표는 양수 이어야 합니다." }
 
             return rowIndex * columnSize + columnIndex
         }
