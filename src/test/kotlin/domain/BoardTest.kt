@@ -113,7 +113,7 @@ internal class BoardTest : StringSpec({
         val board = game.createBoard()
 
         board.cells.filterIsInstance<Blank>().map { it.open() }
-        val result = board.isOpenAllBlank
+        val result = board.isOpenAllBlank()
 
         result shouldBe true
     }
@@ -123,7 +123,7 @@ internal class BoardTest : StringSpec({
         val closeBlankCells = blankCellListOf(1 to 3, 1 to 4)
         val board = Board(openBlankCells + closeBlankCells)
 
-        val result = board.isOpenAllBlank
+        val result = board.isOpenAllBlank()
         result shouldBe false
     }
 
