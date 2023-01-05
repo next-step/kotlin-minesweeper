@@ -24,24 +24,11 @@ class Game(
         return board
     }
 
-    fun openCell(board: Board, coordinate: Coordinate) {
-        if (board.isMineCell(coordinate)) {
-            changeStatus(GameStatus.LOSE)
-            board.openAllMineCells()
-            return
-        }
-
-        val blankCell = board.getBlankCell(coordinate)
-        board.openAdjacentBlanksBy(blankCell)
-
-        if (board.isOpenAllBlank) {
-            changeStatus(GameStatus.WIN)
-            board.openRemainCells()
-            return
-        }
+    fun openBlankCell(board: Board, blank: Blank) {
+        board.openAdjacentBlanksBy(blank)
     }
 
-    private fun changeStatus(status: GameStatus) {
+    fun changeStatus(status: GameStatus) {
         this.status = status
     }
 
