@@ -21,6 +21,7 @@ object OutputView {
                 .chunked(board.getWidth())
                 .joinMineField()
         )
+        println()
     }
 
     private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {

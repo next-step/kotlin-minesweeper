@@ -17,8 +17,10 @@ class MinesweeperController {
         val board = initBoard()
         outputView.printGameStart()
 
-        nextRound(Running(board = board))
-        println("game end")
+        val resultState = nextRound(Running(board = board))
+
+        resultState as Finished
+        println(resultState.getGameResult().label)
     }
 
     private tailrec fun nextRound(state: State): State {
@@ -26,6 +28,7 @@ class MinesweeperController {
             return state
         }
         val position = inputView.inputOpenPosition()
+        println(position)
         val nextState = state.open(position)
         outputView.printBoard(nextState.board)
         return nextRound(nextState)

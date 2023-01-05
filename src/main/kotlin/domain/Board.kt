@@ -14,37 +14,40 @@ data class Board(
 
     fun open(position: Position): Board {
         val targetBlock = getBlockByPosition(position) ?: throw IllegalArgumentException("존재하지 않는 위치입니다.")
+        check(!targetBlock.visible) { "이미 열려있는 블록입니다." }
         if (targetBlock.isMine()) {
             return openAll()
         }
 
-        val opendBlockList = blocks.values.map { if (it == targetBlock) it.open() else it }
-        return Board(openSurroundings(opendBlockList, position))
+        val openedBlockList = blocks.values.toList().openBlock(targetBlock)
+        return Board(openSurroundings(openedBlockList, targetBlock))
     }
 
-    private fun openAll(): Board = Board(blocks.map { it.value.open() })
+    private fun List<Block>.openBlock(targetBlock: Block): List<Block> {
+        return this.map { if (it == targetBlock) it.open() else it }
+    }
 
-    private tailrec fun openSurroundings(blockList: List<Block>, targetPosition: Position): List<Block> {
-        var targetBlocks = filterOpenTargets(blockList, targetPosition)
-        if (!targetBlocks.isAllOpen()) {
-            return blockList
+    fun openAll(): Board = Board(blocks.map { it.value.open() })
+
+    fun isClear(): Boolean = !isAllOpen() && blocks.count { it.value.isOpenable() } == 0
+    fun isAllOpen(): Boolean = blocks.count { !it.value.visible } == 0
+
+    private tailrec fun openSurroundings(blockList: List<Block>, targetBlock: Block): List<Block> {
+        if (!targetBlock.isZero()) {
+            return blockList.openBlock(targetBlock)
         }
 
-        var result = blockList.map {
-            if (targetBlocks.contains(it)) {
-                it.open()
-            } else {
-                it
-            }
-        }
+        var targetBlocks = surroundingsOpenTargets(blockList, targetBlock)
 
-        targetBlocks.forEach { result = openSurroundings(result, it.position) }
+        var result = blockList
+
+        targetBlocks.forEach { result = openSurroundings(result.openBlock(it), it) }
         return result
     }
 
-    private fun List<Block>.isAllOpen(): Boolean = this.isNotEmpty() && this.count { !it.isZero() } == 0
-
-    private fun filterOpenTargets(blockList: List<Block>, targetPosition: Position): List<Block> {
-        return blockList.filter { targetPosition.surroundings().contains(it.position) && !it.visible }
+    private fun surroundingsOpenTargets(blockList: List<Block>, targetBlock: Block): List<Block> {
+        return blockList.filter { targetBlock.position.surroundings().contains(it.position) && it.isOpenable() }
     }
+
+//    private fun List<Block>.isAllOpen(): Boolean = this.isNotEmpty() && this.count { !it.isZero() } == 0
 }
