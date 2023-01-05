@@ -5,6 +5,8 @@ import domain.Board
 import domain.Position
 
 object OutputView {
+
+    private const val MARK_NOT_VISIBLE_BLOCK = "C"
     private const val MARK_MINE_BLOCK = "*"
     private const val SEPARATOR_ROW = "\n"
     private const val SEPARATOR_BLOCK = " "
@@ -22,7 +24,13 @@ object OutputView {
     }
 
     private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {
-        return blocks.map { getBlockView(it.value) }
+        return blocks.map {
+            if (it.value.visible) {
+                getBlockView(it.value)
+            } else {
+                MARK_NOT_VISIBLE_BLOCK
+            }
+        }
     }
 
     private fun List<List<String>>.joinMineField(): String {
