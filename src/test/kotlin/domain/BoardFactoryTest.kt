@@ -19,7 +19,7 @@ class BoardFactoryTest {
     fun `보드 생성시 각 블록은 주변 지뢰 수를 계산하여 가지고 생성된다`() {
         val mineCount = MineCount(1)
         val board = BoardFactory().generate(rectangle(2, 2), mineCount)
-        val block = board.getBlockByPosition(Position.of(0, 0))
+        val block = board.getBlockByPosition(Position.of(1, 1))
         require(block != null)
         if (block.isMine()) {
             block.getMineCount() shouldBe 0

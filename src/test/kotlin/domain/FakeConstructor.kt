@@ -13,5 +13,5 @@ fun fakeBlocks(positions: List<Position>, minePosition: Position = Position.of(0
 
 fun fakeBoard(width: Int, height: Int, mine: Pair<Int, Int> = 0 to 0): Board {
     val blocks = fakeBlocks(positions(width, height), Position.of(mine.first, mine.second))
-    return Board(rectangle(width, height), blocks)
+    return Board(blocks)
 }
