@@ -1,9 +1,12 @@
 package domain
 
-sealed interface Block {
+interface Block {
     val position: Position
     val mineCount: MineCount
+    val visible: Boolean
 
-    fun isMine(): Boolean
     fun getMineCount(): Int = mineCount.value
+    fun isMine(): Boolean
+    fun isZero(): Boolean = !isMine() && getMineCount() == 0
+    fun open(): Block
 }
