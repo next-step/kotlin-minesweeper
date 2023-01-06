@@ -7,6 +7,8 @@ import minesweeper.domain.tile.state.set.NotMines
 
 @JvmInline
 value class Tiles(private val value: List<Tile>) {
+    constructor(vararg tiles: Tile) : this(tiles.toList())
+
     init {
         require(value.isNotEmpty()) { "타일은 적어도 1개 이상이어야 합니다." }
         require(value.size == value.toSet().size) { "타일은 중복될 수 없습니다." }
@@ -25,10 +27,20 @@ value class Tiles(private val value: List<Tile>) {
         return Tiles(tiles)
     }
 
+    fun isChecked(coordinate: Coordinate): Boolean {
+        return value.find { tile -> tile.coordinate == coordinate }?.isChecked ?: false
+    }
+
     private fun checkTile(tile: Tile, coordinate: Coordinate, marking: Marking): Tile {
         if (tile.coordinate == coordinate && tile is NotChecked) {
             return NotMines(coordinate, marking)
         }
         return tile
+    }
+
+    fun isAllOpened(): Boolean {
+        val notMinesCount = value.count { tile -> tile is NotMines }
+        val mineCount = value.count { tile -> tile.isMine }
+        return value.size == notMinesCount + mineCount
     }
 }

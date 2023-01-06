@@ -1,42 +1,69 @@
 package minesweeper.domain
 
 import minesweeper.domain.tile.Marking
-import minesweeper.domain.tile.Marking.Companion.toMarkingAsInt
+import minesweeper.domain.tile.Marking.Companion.toMarking
 import minesweeper.domain.tile.SurroundingTiles
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
 import minesweeper.domain.tile.pos.Position
 
-data class Land(private val width: Position, private val height: Position, private val tiles: Tiles) {
-    private var _tiles = tiles
-
-    init {
-        for (x in 0..width.value) for (y in 0..height.value) {
-            val coordinate = Coordinate(Position(x), Position(y))
-            _tiles = _tiles.checkTile(coordinate, toMarkingAsInt(getMineCount(coordinate)))
-        }
-    }
-
-    fun getTiles(): List<Marking> {
-        return _tiles.getList()
-    }
+data class Land(private val width: Position, private val height: Position, private var _tiles: Tiles) {
+    val tiles: List<Marking>
+        get() = _tiles.getList()
 
     fun getWidth() = width.getCalibratedPosition()
 
     fun getMineCount(coordinate: Coordinate): Int {
-        var mineCount = 0
-        for (surroundingTiles in SurroundingTiles.values()) {
-            val (x, y) = coordinate.getSurroundTilesCoordinateAsPair(surroundingTiles)
-            if (isExistMine(x, y)) mineCount++
+        return SurroundingTiles.values().count { surroundingTiles ->
+            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
+            isMine(x, y)
         }
-        return mineCount
     }
 
-    private fun isExistMine(positionX: Int, positionY: Int): Boolean {
-        if (positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value) {
+    fun selectTile(coordinate: Coordinate): Boolean {
+        val (positionX, positionY) = coordinate.getPositionXY()
+        if (isMine(positionX, positionY)) {
+            return false
+        }
+        checkSurroundingTiles(positionX, positionY)
+        return true
+    }
+
+    private fun checkSurroundingTiles(positionX: Int, positionY: Int) {
+        if (isInvalidCoordinate(positionX, positionY)) {
+            return
+        }
+
+        val coordinate = Coordinate.of(positionX, positionY)
+        if (_tiles.isChecked(coordinate)) {
+            return
+        }
+
+        val mineCount = getMineCount(coordinate)
+        _tiles = _tiles.checkTile(coordinate, toMarking(mineCount))
+        if (toMarking(mineCount) != Marking.EMPTY) {
+            return
+        }
+
+        for (surroundingTiles in SurroundingTiles.values()) {
+            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
+            checkSurroundingTiles(x, y)
+        }
+    }
+
+    private fun isMine(positionX: Int, positionY: Int): Boolean {
+        if (isInvalidCoordinate(positionX, positionY)) {
             return false
         }
         return _tiles.isMine(Coordinate.of(positionX, positionY))
+    }
+
+    private fun isInvalidCoordinate(positionX: Int, positionY: Int): Boolean {
+        return positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value
+    }
+
+    fun isAllOpened(): Boolean {
+        return _tiles.isAllOpened()
     }
 
     companion object {

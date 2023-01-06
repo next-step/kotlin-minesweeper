@@ -6,12 +6,12 @@ import minesweeper.domain.tile.Marking
 @JvmInline
 value class LandDto(private val land: Land) {
     fun getTiles(): List<String> {
-        return land.getTiles().map { getMarkingAsString(it) }
+        return land.tiles.map { getMarking(it) }
     }
 
     fun getWidth() = land.getWidth()
 
-    private fun getMarkingAsString(marking: Marking): String {
+    private fun getMarking(marking: Marking): String {
         return when (marking) {
             Marking.MINE -> "*"
             Marking.EMPTY -> "0"

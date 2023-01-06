@@ -20,7 +20,7 @@ sealed class Tile {
         }
 
         fun of(coordinate: Coordinate, isMine: Boolean): Tile {
-            return if (isMine) Mine(coordinate) else NotChecked(coordinate, false)
+            return NotChecked(coordinate, isMine)
         }
     }
 }
