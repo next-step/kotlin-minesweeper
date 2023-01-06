@@ -6,9 +6,15 @@ import domain.Position
 class Running(override val board: Board) : State {
     override fun open(position: Position): State {
         val result = board.open(position)
-        if (result.isClear() || result.isAllOpen()) {
-            return Finished(result)
+        if (result.isAllOpen()) {
+            return Finished.Boom(result)
         }
-        return Running(result)
+        return if (result.isClear()) {
+            Finished.Clear(result)
+        } else {
+            Running(result)
+        }
     }
+
+    override fun isFinished(): Boolean = false
 }

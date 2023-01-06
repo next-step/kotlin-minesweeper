@@ -3,6 +3,8 @@ package view
 import domain.Block
 import domain.Board
 import domain.Position
+import domain.state.Finished
+import domain.state.State
 
 object OutputView {
 
@@ -22,6 +24,14 @@ object OutputView {
                 .joinMineField()
         )
         println()
+    }
+
+    fun printGameResult(state: State) {
+        if (state is Finished.Clear) {
+            println("Game Win!")
+        } else {
+            println("Lose Game.")
+        }
     }
 
     private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {
