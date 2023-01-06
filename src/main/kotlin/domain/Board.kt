@@ -7,13 +7,14 @@ data class Board(
     constructor(blocks: List<Block>) : this(blocks = blocks.associateBy { it.position })
 
     fun getBlocks(): Map<Position, Block> = blocks
-
     fun getWidth(): Int = blocks.maxOf { it.key.x }
-
     fun getBlockByPosition(position: Position): Block? = blocks[position]
+    fun isClear(): Boolean = !isAllOpen() && blocks.count { it.value.isOpenable() } == 0
+    fun isAllOpen(): Boolean = blocks.count { !it.value.visible } == 0
 
     fun open(position: Position): Board {
-        val targetBlock = getBlockByPosition(position) ?: throw IllegalArgumentException("존재하지 않는 위치입니다.")
+        val targetBlock = getBlockByPosition(position)
+        requireNotNull(targetBlock) { "존재하지 않는 위치입니다." }
         check(!targetBlock.visible) { "이미 열려있는 블록입니다." }
         if (targetBlock.isMine()) {
             return openAll()
@@ -23,24 +24,13 @@ data class Board(
         return Board(openSurroundings(openedBlockList, targetBlock))
     }
 
-    private fun List<Block>.openBlock(targetBlock: Block): List<Block> {
-        return this.map { if (it == targetBlock) it.open() else it }
-    }
-
-    fun openAll(): Board = Board(blocks.map { it.value.open() })
-
-    fun isClear(): Boolean = !isAllOpen() && blocks.count { it.value.isOpenable() } == 0
-    fun isAllOpen(): Boolean = blocks.count { !it.value.visible } == 0
-
     private tailrec fun openSurroundings(blockList: List<Block>, targetBlock: Block): List<Block> {
         if (!targetBlock.isZero()) {
             return blockList.openBlock(targetBlock)
         }
 
-        var targetBlocks = surroundingsOpenTargets(blockList, targetBlock)
-
+        val targetBlocks = surroundingsOpenTargets(blockList, targetBlock)
         var result = blockList
-
         targetBlocks.forEach { result = openSurroundings(result.openBlock(it), it) }
         return result
     }
@@ -49,5 +39,9 @@ data class Board(
         return blockList.filter { targetBlock.position.surroundings().contains(it.position) && it.isOpenable() }
     }
 
-//    private fun List<Block>.isAllOpen(): Boolean = this.isNotEmpty() && this.count { !it.isZero() } == 0
+    private fun openAll(): Board = Board(blocks.map { it.value.open() })
+
+    private fun List<Block>.openBlock(targetBlock: Block): List<Block> {
+        return this.map { if (it == targetBlock) it.open() else it }
+    }
 }

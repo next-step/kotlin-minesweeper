@@ -15,7 +15,7 @@ class BoardFactory {
         return Board(blocks)
     }
 
-    private fun createBlocks(positions: List<Position>, minePositions: List<Position>): Map<Position, Block> {
+    fun createBlocks(positions: List<Position>, minePositions: List<Position>): Map<Position, Block> {
         return positions.associateWith {
             val mineCount = getMineCountFromSurroundings(it, minePositions)
             if (minePositions.contains(it)) {

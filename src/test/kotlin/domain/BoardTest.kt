@@ -35,7 +35,7 @@ class BoardTest {
      */
     @Test
     fun `open시, 지뢰가 아니면, 지뢰가 아닌 주변 블록까지 open한다`() {
-        val position = Position.of(1, 1)
+        val position = Position.of(1, 4)
         var board = fakeBoard(3, 4, 3 to 3)
         board = board.open(position)
         board.getBlocks().map {
