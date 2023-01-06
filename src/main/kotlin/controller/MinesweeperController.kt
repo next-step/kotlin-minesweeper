@@ -3,7 +3,6 @@ package controller
 import domain.Board
 import domain.BoardFactory
 import domain.Rectangle
-import domain.state.Finished
 import domain.state.Running
 import domain.state.State
 import view.InputView
@@ -15,23 +14,33 @@ class MinesweeperController {
 
     fun play() {
         val board = initBoard()
-        outputView.printGameStart()
 
-        val resultState = nextRound(Running(board = board))
-
-        resultState as Finished
-        println(resultState.getGameResult().label)
+        var state = initState(board)
+        while (!state.isFinished()) {
+            runCatching {
+                state = playNextRound(state)
+            }
+                .onFailure {
+                    println(it.message)
+                    state = playNextRound(state)
+                }
+        }
+        outputView.printGameResult(state)
     }
 
-    private tailrec fun nextRound(state: State): State {
-        if (state is Finished) {
+    private tailrec fun playNextRound(state: State): State {
+        if (state.isFinished()) {
             return state
         }
         val position = inputView.inputOpenPosition()
-        println(position)
         val nextState = state.open(position)
         outputView.printBoard(nextState.board)
-        return nextRound(nextState)
+        return playNextRound(nextState)
+    }
+
+    private fun initState(board: Board): State {
+        outputView.printGameStart()
+        return Running(board)
     }
 
     private fun initBoard(): Board {
