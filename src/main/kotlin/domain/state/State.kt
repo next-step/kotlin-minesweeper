@@ -8,4 +8,5 @@ interface State {
 
     fun open(position: Position): State
     fun isClear(): Boolean = board.isClear()
+    fun isFinished(): Boolean
 }
