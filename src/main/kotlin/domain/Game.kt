@@ -4,8 +4,12 @@ import domain.strategy.CellGenerateStrategy
 
 class Game(
     val boardInfo: BoardInfo,
-    private val strategy: CellGenerateStrategy
+    private val strategy: CellGenerateStrategy,
+    var status: GameStatus = INITIAL_GAME_STATUS,
 ) {
+    val isProceeding: Boolean
+        get() = status == GameStatus.PROCEEDING
+
     fun createBoard(): Board {
         val cellGenerator = CellGenerator()
 
@@ -14,10 +18,21 @@ class Game(
         val blankLocations = allLocations - randomLocations
         val cells = cellGenerator(randomLocations, blankLocations, boardInfo.row)
 
-        return Board(cells)
+        val board = Board(cells)
+        board.markMinesAroundCount(boardInfo)
+
+        return board
     }
 
-    fun markMinesAroundCountInBoard(board: Board) {
-        board.markMinesAroundCount(boardInfo)
+    fun openBlankCell(board: Board, blank: Blank) {
+        board.openAdjacentBlanksBy(blank)
+    }
+
+    fun changeStatus(status: GameStatus) {
+        this.status = status
+    }
+
+    companion object {
+        private val INITIAL_GAME_STATUS = GameStatus.PROCEEDING
     }
 }

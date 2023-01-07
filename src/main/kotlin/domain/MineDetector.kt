@@ -6,9 +6,8 @@ class MineDetector(
 ) {
     fun getMinesAroundCount(coordinate: Coordinate): Int {
         return Directions.values().count { direction ->
-            val targetX = coordinate.x + direction.coordinate.x
-            val targetY = coordinate.y + direction.coordinate.y
-            isCountMine(Coordinate(targetX, targetY))
+            val targetCoordinate = coordinate.movedCoordinate(direction)
+            isCountMine(targetCoordinate)
         }
     }
 

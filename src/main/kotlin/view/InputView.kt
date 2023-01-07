@@ -1,6 +1,7 @@
 package view
 
 import domain.Column
+import domain.Coordinate
 import domain.MineCount
 import domain.Row
 
@@ -19,5 +20,13 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         val number = readln().toInt()
         return MineCount.from(row, column, number)
+    }
+
+    fun inputCellToOpen(): Coordinate {
+        print("open: ")
+        val input = readln()
+            .replace(" ", "")
+            .split(",")
+        return Coordinate(input[0].toInt() to input[1].toInt())
     }
 }
