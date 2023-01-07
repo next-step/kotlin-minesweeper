@@ -18,7 +18,7 @@ class MineSweeperController(
 
         val mineBoard = MineBoard(height = height, width = width, mineCount = mineCount, mineGenerator = mineGenerator)
         val components = mineBoard.components()
-        val componentData = components.map { ComponentDto(it.position.x.value, it.position.y.value, it.isMine) }
+        val componentData = components.map { ComponentDto(it.position.x.value, it.position.y.value, it.isMine, it.nearMineCount.value) }
         OutputConsole.printComponents(componentData, width)
     }
 }

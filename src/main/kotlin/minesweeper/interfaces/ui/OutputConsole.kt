@@ -4,7 +4,7 @@ object OutputConsole {
     fun printComponents(components: List<ComponentDto>, width: Int) {
         println("지뢰찾기 게임 시작")
         components.forEach {
-            val mine = if (it.isMine) "*" else "C"
+            val mine = if (it.isMine) "*" else it.count
             print("$mine ")
             if (isLastString(y = it.y, width = width)) {
                 println()
@@ -19,5 +19,6 @@ object OutputConsole {
 data class ComponentDto(
     val x: Int,
     val y: Int,
-    val isMine: Boolean
+    val isMine: Boolean,
+    val count: Int
 )
