@@ -1,19 +1,19 @@
 package minesweeper.controller
 
 import minesweeper.domain.MineCount
+import minesweeper.domain.land.state.Size
 import minesweeper.domain.tile.pos.Coordinate
-import minesweeper.domain.tile.pos.Position
 import minesweeper.view.InputView
 
 object InputFilter {
-    fun inputPosition(message: String): Position {
+    fun inputSize(message: String): Size {
         return try {
             println(message)
-            val position = InputParser.parsePosition(readln())
-            Position(position)
+            val size = InputParser.parseNumber(readln())
+            Size(size)
         } catch (e: Exception) {
             e.message?.let(InputView::printError)
-            inputPosition(message)
+            inputSize(message)
         }
     }
 

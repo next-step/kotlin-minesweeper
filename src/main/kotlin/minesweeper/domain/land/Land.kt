@@ -1,17 +1,17 @@
 package minesweeper.domain.land
 
+import minesweeper.domain.land.state.Area
 import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.Marking.Companion.toMarking
 import minesweeper.domain.tile.SurroundingTiles
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.pos.Coordinate
-import minesweeper.domain.tile.pos.Position
 
-data class Land(private val width: Position, private val height: Position, private var _tiles: Tiles) {
+data class Land(private val area: Area, private var _tiles: Tiles) {
     val tiles: List<Marking>
         get() = _tiles.getList()
 
-    fun getWidth() = width.getCalibratedPosition()
+    fun getWidth() = area.width
 
     fun getMineCount(coordinate: Coordinate): Int {
         return SurroundingTiles.values().count { surroundingTiles ->
@@ -59,7 +59,7 @@ data class Land(private val width: Position, private val height: Position, priva
     }
 
     private fun isInvalidCoordinate(positionX: Int, positionY: Int): Boolean {
-        return positionX < ZERO || positionX > width.value || positionY < ZERO || positionY > height.value
+        return positionX < ZERO || positionX > area.width || positionY < ZERO || positionY > area.height
     }
 
     fun isAllOpened(): Boolean {
@@ -70,7 +70,7 @@ data class Land(private val width: Position, private val height: Position, priva
         private const val ZERO = 0
 
         fun of(width: Int, height: Int, tile: Tiles): Land {
-            return Land(Position(width), Position(height), tile)
+            return Land(Area(width, height), tile)
         }
     }
 }

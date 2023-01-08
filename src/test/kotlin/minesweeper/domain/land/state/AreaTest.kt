@@ -1,6 +1,5 @@
 package minesweeper.domain.land.state
 
-import minesweeper.Area
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
