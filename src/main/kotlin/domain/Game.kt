@@ -11,12 +11,11 @@ class Game(
         get() = status == GameStatus.PROCEEDING
 
     fun createBoard(): Board {
-        val cellGenerator = CellGenerator()
 
         val allLocations = Locations(List(boardInfo.getCellSize().value) { it })
         val randomLocations = strategy.generate(allLocations, boardInfo.mineCount)
         val blankLocations = allLocations - randomLocations
-        val cells = cellGenerator(randomLocations, blankLocations, boardInfo.row)
+        val cells = CellGenerator(randomLocations, blankLocations, boardInfo.row).generate()
 
         val board = Board(cells)
         board.markMinesAroundCount(boardInfo)
