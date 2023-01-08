@@ -1,13 +1,20 @@
 package minesweeper.domain
 
+import minesweeper.domain.GameState.PROGRESS
+import minesweeper.domain.GameState.TERMINATE
+
 class Game(private val board: MineBoard) {
 
-    fun start(targetPositionText: String): Boolean {
+    fun open(targetPositionText: String): GameState {
         val index: Int = Position.toIndex(board.columnSize(), targetPositionText)
         val target: Coordinate = board.coordinates[index]
-        if (target.isMine()) return false
+        target.open()
+        if (target.isMine()) return TERMINATE
+        if (target.count > 0) return PROGRESS
+
         open(board.rowSize(), board.columnSize(), index)
-        return true
+
+        return PROGRESS
     }
 
     private fun open(rows: Int, columns: Int, index: Int) {
