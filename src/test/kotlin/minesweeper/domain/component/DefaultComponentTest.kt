@@ -16,5 +16,6 @@ class DefaultComponentTest : FreeSpec({
         val component = DefaultComponent(position = position, isMine = isMine, nearMineCount = nearMineCount)
         component.isMine.shouldBeTrue()
         component.position.shouldNotBeNull()
+        component.nearMineCount.shouldNotBeNull()
     }
 })

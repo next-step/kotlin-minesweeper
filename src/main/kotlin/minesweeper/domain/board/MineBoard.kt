@@ -7,6 +7,7 @@ import minesweeper.domain.component.Components
 import minesweeper.domain.component.DefaultComponent
 import minesweeper.domain.coordinate.BaseCoordinateSystem
 import minesweeper.domain.coordinate.MineCoordinateSystemDecorator
+import minesweeper.domain.coordinate.MineCountingCoordinateSystemDecorator
 
 class MineBoard(
     height: Int,
@@ -14,7 +15,7 @@ class MineBoard(
     mineCount: Int,
     mineGenerator: MineGenerator
 ) : Components {
-    private val coordinateSystem: MineCoordinateSystemDecorator
+    private val coordinateSystem: MineCountingCoordinateSystemDecorator
     private val mineList: Mines
         get() = coordinateSystem.mines
 
@@ -25,13 +26,15 @@ class MineBoard(
 
     init {
         val baseCoordinateSystem = BaseCoordinateSystem(height = height, width = width)
-        coordinateSystem = MineCoordinateSystemDecorator(coordinateSystem = baseCoordinateSystem, mineGenerator, mineCount)
+        val mineCoordinateSystemDecorator = MineCoordinateSystemDecorator(baseCoordinateSystem, mineGenerator, mineCount)
+        coordinateSystem = MineCountingCoordinateSystemDecorator(mineCoordinateSystemDecorator)
     }
 
     override fun components(): List<Component> {
         return this.coordinateSystem.coordinate.map {
             val isMine = mineList.positionList.contains(it)
-            DefaultComponent(position = it, isMine = isMine)
+            val countNumber = coordinateSystem.mineCountNumbers.getMineCountNumber(it)
+            DefaultComponent(position = it, isMine = isMine, nearMineCount = countNumber)
         }.sortedWith(
             compareBy({ it.position.x }, { it.position.y })
         )
