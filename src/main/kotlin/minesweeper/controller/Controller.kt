@@ -1,7 +1,7 @@
 package minesweeper.controller
 
-import minesweeper.domain.Land
 import minesweeper.domain.generator.TileGenerator
+import minesweeper.domain.land.Land
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.strategy.RandomGenerateStrategy
 import minesweeper.dto.LandDto

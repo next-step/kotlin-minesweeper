@@ -1,6 +1,6 @@
 package minesweeper.dto
 
-import minesweeper.domain.Land
+import minesweeper.domain.land.Land
 import minesweeper.domain.tile.Marking
 
 @JvmInline

@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.land
 
 import minesweeper.domain.tile.Marking
 import minesweeper.domain.tile.Marking.Companion.toMarking

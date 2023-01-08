@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.land
 
 import minesweeper.Mine
 import minesweeper.NotChecked
