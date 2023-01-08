@@ -3,7 +3,6 @@ package minesweeper.ui
 import minesweeper.domain.Coordinate
 import minesweeper.domain.Game
 import minesweeper.domain.GameState
-import minesweeper.domain.GameState.PROGRESS
 import minesweeper.domain.GameState.TERMINATE
 import minesweeper.domain.MineBoard
 
@@ -20,7 +19,7 @@ class ResultView {
             val openPosition: String = inputView.inputOpen()
             state = game.open(openPosition)
             showBoard(board, state)
-        } while (state == PROGRESS)
+        } while (state != TERMINATE)
     }
 
     private fun showBoard(board: MineBoard, state: GameState) {
@@ -53,7 +52,6 @@ class ResultView {
     }
 
     private fun getCoordinateText(coordinate: Coordinate): String {
-        if (coordinate.isMine()) return "* "
         if (coordinate.isOpen()) return coordinate.count.toString() + " "
         return "C "
     }

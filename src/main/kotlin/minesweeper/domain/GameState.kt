@@ -1,5 +1,5 @@
 package minesweeper.domain
 
 enum class GameState {
-    PROGRESS, TERMINATE
+    PROGRESS, TERMINATE, SKIP
 }
