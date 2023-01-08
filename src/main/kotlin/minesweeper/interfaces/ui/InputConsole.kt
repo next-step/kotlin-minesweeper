@@ -16,13 +16,13 @@ object InputConsole {
             println("지뢰는 몇 개인가요?")
         }
 
-    private fun queryNumber(lambda:() -> Unit): Int {
+    private fun queryNumber(lambda: () -> Unit): Int {
         return try {
             lambda.invoke()
             queryNumber()
         } catch (e: NumberFormatException) {
             println("숫자를 입력해주세요")
-            queryNumber {  }
+            queryNumber { }
         }
     }
 

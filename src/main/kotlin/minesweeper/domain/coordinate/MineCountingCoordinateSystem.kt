@@ -7,7 +7,7 @@ import minesweeper.domain.Mines
 import minesweeper.domain.NearMineCount
 import minesweeper.domain.Position
 
-sealed interface MineCountingCoordinateSystem: CoordinateSystem {
+sealed interface MineCountingCoordinateSystem : CoordinateSystem {
     val mineCountNumbers: MineCountNumbers
 }
 
@@ -17,7 +17,7 @@ class MineCountingCoordinateSystemDecorator(
     override val mineCountNumbers: MineCountNumbers
 
     init {
-         val mineCountNumberList = buildList {
+        val mineCountNumberList = buildList {
             coordinate.forEach {
                 val mineCountNumber = countNearMine(it, mines)
                 this.add(mineCountNumber)

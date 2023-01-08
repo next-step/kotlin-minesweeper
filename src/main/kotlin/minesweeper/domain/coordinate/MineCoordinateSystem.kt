@@ -3,7 +3,7 @@ package minesweeper.domain.coordinate
 import minesweeper.domain.MineGenerator
 import minesweeper.domain.Mines
 
-sealed interface MineCoordinateSystem: CoordinateSystem {
+sealed interface MineCoordinateSystem : CoordinateSystem {
     val mines: Mines
 }
 
