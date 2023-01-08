@@ -34,5 +34,16 @@ class BaseCoordinateSystemTest : FreeSpec({
                 baseCoordinateSystem.maxY.value shouldBe height - 1
             }
         }
+
+        "최소 x 좌표 및 y 좌표를 확인할 수 있다" - {
+
+            "최소 x 좌표는 0 이다" {
+                baseCoordinateSystem.minX.value shouldBe 0
+            }
+
+            "최소 y 좌표는 0 이다" {
+                baseCoordinateSystem.minY.value shouldBe 0
+            }
+        }
     }
 })
