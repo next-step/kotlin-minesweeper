@@ -23,5 +23,16 @@ class BaseCoordinateSystemTest : FreeSpec({
             baseCoordinateSystem.coordinate.shouldNotBeNull()
             baseCoordinateSystem.coordinate.size shouldBe 100
         }
+
+        "최대 x 좌표 및 y 좌표를 확인할 수 있다" - {
+
+            "최대 x 좌표는 좌표의 길이보다 1이 작은 수 이다" {
+                baseCoordinateSystem.maxX.value shouldBe width - 1
+            }
+
+            "최대 y 좌표는 좌표의 길이보다 1이 작은 수 이다" {
+                baseCoordinateSystem.maxY.value shouldBe height - 1
+            }
+        }
     }
 })
