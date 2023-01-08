@@ -21,7 +21,7 @@ data class Mine(
 data class Blank(
     override val coordinate: Coordinate,
     override var status: Status = INITIAL_STATUS,
-    private var minesAroundCount: Int = INITIAL_MINES_AROUND_COUNT
+    var minesAroundCount: Int = INITIAL_MINES_AROUND_COUNT
 ) : Cell() {
     constructor(x: Int, y: Int) : this(Coordinate(Number(x), Number(y)))
 
