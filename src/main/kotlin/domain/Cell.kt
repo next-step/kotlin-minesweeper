@@ -21,15 +21,11 @@ data class Mine(
 data class Blank(
     override val coordinate: Coordinate,
     override var status: Status = INITIAL_STATUS,
-    var minesAroundCount: Int = INITIAL_MINES_AROUND_COUNT
+    var minesAroundCount: MinesAroundCount = MinesAroundCount.ZERO
 ) : Cell() {
     constructor(x: Int, y: Int) : this(Coordinate(Number(x), Number(y)))
 
     fun changeMinesAroundCount(count: Int) {
-        minesAroundCount = count
-    }
-
-    companion object {
-        private const val INITIAL_MINES_AROUND_COUNT = 0
+        minesAroundCount = MinesAroundCount(count)
     }
 }
