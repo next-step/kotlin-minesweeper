@@ -12,13 +12,16 @@ class MineSweeperController(
 ) : Executable {
 
     override fun execute() {
+        val mineBoard = generateMineBoard()
+        val components = mineBoard.components()
+        val componentData = components.map { ComponentDto(it.position.x.value, it.position.y.value, it.isMine, it.nearMineCount.value) }
+        OutputConsole.printComponents(componentData, mineBoard.width)
+    }
+
+    private fun generateMineBoard(): MineBoard {
         val height = InputConsole.queryHeight()
         val width = InputConsole.queryWidth()
         val mineCount = InputConsole.queryMineCount()
-
-        val mineBoard = MineBoard(height = height, width = width, mineCount = mineCount, mineGenerator = mineGenerator)
-        val components = mineBoard.components()
-        val componentData = components.map { ComponentDto(it.position.x.value, it.position.y.value, it.isMine, it.nearMineCount.value) }
-        OutputConsole.printComponents(componentData, width)
+        return MineBoard(height = height, width = width, mineCount = mineCount, mineGenerator = mineGenerator)
     }
 }

@@ -55,23 +55,9 @@ class MineCountingCoordinateSystemDecorator(
     }
 
     private fun MutableSet<Position>.addPosition(nearCoordinateX: NearCoordinate, targetCoordinate: CoordinateValue) {
-        getPosition(nearCoordinateX.prev, targetCoordinate)?.let { this.add(it) }
-        getPosition(nearCoordinateX.current, targetCoordinate)?.let { this.add(it) }
-        getPosition(nearCoordinateX.next, targetCoordinate)?.let { this.add(it) }
-    }
-
-    private fun getPosition(x: CoordinateValue, y: CoordinateValue): Position? {
-        if (x > maxX || y > maxY || x < minX || y < minY) {
-            return null
-        }
-
-        coordinate.forEach {
-            if ((it.x == x) && (it.y == y)) {
-                return it
-            }
-        }
-
-        throw IllegalArgumentException("존재하지 않는 위치입니다.")
+        coordinate.find { it == Position(nearCoordinateX.prev, targetCoordinate) }?.let { this.add(it) }
+        coordinate.find { it == Position(nearCoordinateX.current, targetCoordinate) }?.let { this.add(it) }
+        coordinate.find { it == Position(nearCoordinateX.next, targetCoordinate) }?.let { this.add(it) }
     }
 
     data class NearCoordinate(
