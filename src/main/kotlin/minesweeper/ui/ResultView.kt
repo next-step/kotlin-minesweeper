@@ -1,28 +1,18 @@
 package minesweeper.ui
 
 import minesweeper.domain.Coordinate
-import minesweeper.domain.Game
 import minesweeper.domain.GameState
 import minesweeper.domain.GameState.TERMINATE
 import minesweeper.domain.MineBoard
 
 class ResultView {
 
-    fun showStartGame(inputView: InputView, board: MineBoard) {
+    fun printStartGame() {
         println()
         println("지뢰찾기 게임 시작")
-
-        val game = Game(board)
-
-        var state: GameState
-        do {
-            val openPosition: String = inputView.inputOpen()
-            state = game.open(openPosition)
-            showBoard(board, state)
-        } while (state != TERMINATE)
     }
 
-    private fun showBoard(board: MineBoard, state: GameState) {
+    fun showBoard(board: MineBoard, state: GameState) {
         if (state == TERMINATE) {
             println("Lose Game.")
             return
