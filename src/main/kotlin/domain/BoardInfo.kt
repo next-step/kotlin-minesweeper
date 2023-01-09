@@ -10,9 +10,13 @@ data class BoardInfo(
     private fun getColumn() = column.value
 
     fun isContainRange(coordinate: Coordinate): Boolean {
-        val rowRange = 1..getRow()
-        val columnRange = 1..getColumn()
+        val rowRange = START_RANGE..getRow()
+        val columnRange = START_RANGE..getColumn()
 
         return coordinate.x.value in rowRange && coordinate.y.value in columnRange
+    }
+
+    companion object {
+        private const val START_RANGE = 1
     }
 }

@@ -40,8 +40,8 @@ internal class BoardTest : StringSpec({
         val board = game.createBoard()
 
         val blankCells = board.cells.filterIsInstance<Blank>()
-        val countOne = blankCells.count { it.minesAroundCount == 1 }
-        val countZero = blankCells.count { it.minesAroundCount == 0 }
+        val countOne = blankCells.count { it.minesAroundCount == MinesAroundCount(1) }
+        val countZero = blankCells.count { it.minesAroundCount == MinesAroundCount(0) }
 
         countOne shouldBe 5
         countZero shouldBe 3
@@ -59,9 +59,9 @@ internal class BoardTest : StringSpec({
         val board = game.createBoard()
 
         val blankCells = board.cells.filterIsInstance<Blank>()
-        val countTwo = blankCells.count { it.minesAroundCount == 2 }
-        val countOne = blankCells.count { it.minesAroundCount == 1 }
-        val countZero = blankCells.count { it.minesAroundCount == 0 }
+        val countTwo = blankCells.count { it.minesAroundCount == MinesAroundCount(2) }
+        val countOne = blankCells.count { it.minesAroundCount == MinesAroundCount(1) }
+        val countZero = blankCells.count { it.minesAroundCount == MinesAroundCount(0) }
 
         countTwo shouldBe 2
         countOne shouldBe 4

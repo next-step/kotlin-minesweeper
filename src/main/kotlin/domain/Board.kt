@@ -19,7 +19,7 @@ class Board(val cells: List<Cell>) {
     fun markMinesAroundCount(boardInfo: BoardInfo) {
         val mineDetector = MineDetector(boardInfo, this)
 
-        cells.filterIsInstance<Blank>().forEach() {
+        cells.filterIsInstance<Blank>().forEach {
             val minesAroundCount = mineDetector.getMinesAroundCount(it.coordinate)
             it.changeMinesAroundCount(minesAroundCount)
         }
