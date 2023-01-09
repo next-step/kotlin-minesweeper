@@ -1,21 +1,16 @@
 package minesweeper.domain
 
-sealed class Block
-
-class EmptyBlock : Block()
-
-sealed class OpenableBlcok : Block() {
-
+sealed class Block {
     abstract fun open()
 }
 
-class MineBlock : OpenableBlcok() {
+class MineBlock : Block() {
     override fun open() {
         TODO("Not yet implemented")
     }
 }
 
-class SafeBlock(val nearMineCount: Int = 0) : OpenableBlcok() {
+class SafeBlock(val nearMineCount: Int = 0) : Block() {
 
     init {
         if (nearMineCount !in nearMineRange) throw MineSweeperException(ExceptionReason.ILLEGAL_NEAR_MINE_RANGE)

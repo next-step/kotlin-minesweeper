@@ -47,13 +47,11 @@ class ResultViewImpl : ResultView {
         when (block) {
             is MineBlock -> print(DEFAULT_MINE_CHARACTER)
             is SafeBlock -> print(block.nearMineCount)
-            else -> print(DEFAULT_BLOCK_CHARACTER)
         }
         print(BLANK_CHARACTER)
     }
 
     companion object {
-        private const val DEFAULT_BLOCK_CHARACTER = "C"
         private const val DEFAULT_MINE_CHARACTER = "*"
         private const val BLANK_CHARACTER = " "
         private const val NEGATIVE_POINT_VALUE_TEXT = "좌표 값은 음수가 될 수 없습니다."
