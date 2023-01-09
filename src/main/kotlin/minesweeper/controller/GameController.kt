@@ -1,7 +1,7 @@
 package minesweeper.controller
 
 import minesweeper.domain.MineSweeperBoard
-import minesweeper.domain.MineSweeperException
+import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.plant_strategy.RemainderPlantStrategy
 import minesweeper.view.InputView
 import minesweeper.view.InputViewImpl

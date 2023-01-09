@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
+
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
 
     init {

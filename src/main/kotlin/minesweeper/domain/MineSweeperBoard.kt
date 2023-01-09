@@ -1,5 +1,10 @@
 package minesweeper.domain
 
+import minesweeper.domain.block.Block
+import minesweeper.domain.block.MineBlock
+import minesweeper.domain.block.SafeBlock
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.plant_strategy.PlantStrategy
 import minesweeper.domain.plant_strategy.RemainderPlantStrategy
 

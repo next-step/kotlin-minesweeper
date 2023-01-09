@@ -1,14 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.block
 
-sealed class Block {
-    abstract fun open()
-}
-
-class MineBlock : Block() {
-    override fun open() {
-        TODO("Not yet implemented")
-    }
-}
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
 
 class SafeBlock(val nearMineCount: Int = 0) : Block() {
 

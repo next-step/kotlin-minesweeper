@@ -1,11 +1,11 @@
 package minesweeper.view
 
-import minesweeper.domain.Block
-import minesweeper.domain.ExceptionReason
-import minesweeper.domain.MineBlock
-import minesweeper.domain.MineSweeperException
+import minesweeper.domain.block.Block
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.block.MineBlock
+import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.Point
-import minesweeper.domain.SafeBlock
+import minesweeper.domain.block.SafeBlock
 
 class ResultViewImpl : ResultView {
     override fun renderInitialBoard(state: Map<Point, Block>) {

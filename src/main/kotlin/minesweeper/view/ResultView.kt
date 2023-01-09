@@ -1,7 +1,7 @@
 package minesweeper.view
 
-import minesweeper.domain.Block
-import minesweeper.domain.MineSweeperException
+import minesweeper.domain.block.Block
+import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.Point
 
 interface ResultView {

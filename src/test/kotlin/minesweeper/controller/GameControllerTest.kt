@@ -1,7 +1,7 @@
 package minesweeper.controller
 
-import minesweeper.domain.MineBlock
 import minesweeper.domain.MineSweeperBoard
+import minesweeper.domain.block.MineBlock
 import minesweeper.view.FakeInputView
 import minesweeper.view.ResultViewImpl
 import org.assertj.core.api.Assertions.assertThat
