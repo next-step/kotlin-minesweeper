@@ -17,25 +17,21 @@ value class Tiles(private val value: List<Tile>) {
         require(value.size == value.toSet().size) { "타일은 중복될 수 없습니다." }
     }
 
-    fun getMineCount(coordinate: Coordinate): Int {
-        val surroundingTiles = SurroundingTiles.values()
-        return surroundingTiles.count {
-            coordinate.getSurroundTilesCoordinate(it)?.let(::isMine) ?: false
-        }
-    }
+    fun isMine(coordinate: Coordinate): Boolean = findTile(coordinate)?.isMine ?: false
 
-    fun isMine(coordinate: Coordinate): Boolean {
-        return findTile(coordinate)?.isMine ?: false
-    }
-
-    fun isChecked(coordinate: Coordinate): Boolean {
-        return findTile(coordinate)?.isChecked ?: false
-    }
+    fun isChecked(coordinate: Coordinate): Boolean = findTile(coordinate)?.isChecked ?: false
 
     fun isAllOpened(): Boolean {
         val notMinesCount = value.count { tile -> tile is NotMines }
         val mineCount = value.count(Tile::isMine)
         return value.size == notMinesCount + mineCount
+    }
+
+    fun getMineCount(coordinate: Coordinate): Int {
+        val surroundingTiles = SurroundingTiles.values()
+        return surroundingTiles.count {
+            coordinate.getSurroundTilesCoordinate(it)?.let(::isMine) ?: false
+        }
     }
 
     fun checkTile(coordinate: Coordinate, marking: Marking): Tiles {
@@ -50,7 +46,5 @@ value class Tiles(private val value: List<Tile>) {
         return tile
     }
 
-    private fun findTile(coordinate: Coordinate): Tile? = value.find {
-        it.coordinate == coordinate
-    }
+    private fun findTile(coordinate: Coordinate): Tile? = value.find { it.coordinate == coordinate }
 }
