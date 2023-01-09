@@ -56,7 +56,7 @@ class MineSweeperBoard(
     private fun updateSafeBlock() {
         val safeBlockPoints = _state.filterValues { block: Block -> block is SafeBlock }.keys
         safeBlockPoints.forEach { currentPoint: Point ->
-            _state[currentPoint] = SafeBlock(sumNearPointMines(currentPoint.getNearPoints()))
+            _state[currentPoint] = SafeBlock(sumNearPointMines(currentPoint.getNearPoints(width, height)))
         }
     }
 
