@@ -1,40 +1,74 @@
 package minesweeper.domain
 
-class Map(val cells: List<Cell>) {
-    companion object {
+import java.util.LinkedList
+import java.util.Queue
 
+class Map(val cells: List<Cell>) {
+    private var status: Status = Status.PROCESSING
+
+    fun isProcessing(): Boolean = status == Status.PROCESSING
+
+    fun open(cellPosition: CellPosition): Status {
+        val cell = cells.find { cell -> cell.cellPosition == cellPosition }
+            ?: throw IllegalArgumentException("좌표에 벗어난 값입니다.")
+
+        if (cell.isMine()) {
+            status = status.next(EVENT.LOSE)
+            return status
+        }
+
+        val nearBlankCells = getNearBlankCells(cell)
+        nearBlankCells.forEach { blankCell -> blankCell.open() }
+
+        if (isAllOpen()) {
+            status = status.next(EVENT.WIN)
+        }
+
+        return status
+    }
+
+    private fun isAllOpen(): Boolean = cells.filterIsInstance<Cell.Blank>()
+        .all { cell -> cell.isOpen }
+
+    private fun getNearBlankCells(targetCell: Cell): List<Cell.Blank> {
+        val nearCellPositions = targetCell.cellPosition.getNear()
+
+        return cells.filter { cell -> nearCellPositions.contains(cell.cellPosition) }
+            .filterIsInstance<Cell.Blank>()
+    }
+
+    companion object {
         fun create(meta: MapMeta): Map {
             val totalCellCount = meta.height * meta.width
             val blankCount = totalCellCount - meta.mineCount
 
-            val blankCells = List(blankCount) { Cell.Blank.init() }
-            val mineCell = List(meta.mineCount) { Cell.Mine.init() }
+            val cellPositions = initPosition(meta.width, meta.height).shuffled()
+            val cells = iniCell(
+                cellPositions = cellPositions.toCollection(LinkedList()),
+                blankCellCount = blankCount,
+                mineCellCount = meta.mineCount
+            )
 
-            val cells = blankCells.plus(mineCell).shuffled()
-            val repositionCells = arrange(cells, meta.width)
+            val sortedCells = initMineCount(cells).sortedBy { cell -> cell.cellPosition }
 
-            return Map(repositionCells)
+            return Map(sortedCells)
         }
 
-        private fun arrange(cells: List<Cell>, columSize: Int): List<Cell> {
-            val arrangedCells = cells.chunked(columSize)
-                .flatMapIndexed { rowIndex, rowCells ->
-                    initPosition(rowCells, rowIndex)
-                }
-
-            return initMineCount(arrangedCells)
-        }
-
-        private fun initPosition(rowCells: List<Cell>, rowIndex: Int): List<Cell> =
-            rowCells.mapIndexed { columnIndex, columnCell ->
-                val xPosition = Position(rowIndex)
-                val yPosition = Position(columnIndex)
-
-                when (columnCell) {
-                    is Cell.Blank -> Cell.Blank(xPosition, yPosition)
-                    is Cell.Mine -> Cell.Mine(xPosition, yPosition)
+        private fun initPosition(rowSize: Int, columSize: Int): List<CellPosition> =
+            (0 until rowSize).flatMap { row ->
+                List(columSize) { colum ->
+                    val xPosition = Position(row)
+                    val yPosition = Position(colum)
+                    CellPosition(xPosition, yPosition)
                 }
             }
+
+        private fun iniCell(cellPositions: Queue<CellPosition>, blankCellCount: Int, mineCellCount: Int): List<Cell> {
+            val blankCells = List(blankCellCount) { Cell.Blank(cellPositions.poll()) }
+            val mineCells = List(mineCellCount) { Cell.Mine(cellPositions.poll()) }
+
+            return blankCells + mineCells
+        }
 
         private fun initMineCount(cells: List<Cell>): List<Cell> =
             cells.map { cell ->
@@ -42,24 +76,17 @@ class Map(val cells: List<Cell>) {
 
                 val mineCount = countNearMine(
                     cells = cells,
-                    xPosition = cell.xPosition,
-                    yPosition = cell.yPosition
+                    cellPosition = cell.cellPosition
                 )
 
-                Cell.Blank(cell.xPosition, cell.yPosition, mineCount)
+                Cell.Blank(cell.cellPosition, mineCount)
             }
 
-        private fun countNearMine(cells: List<Cell>, xPosition: Position, yPosition: Position): Int {
-            val xPositionRange = xPosition.getNear()
-            val yPositionRange = yPosition.getNear()
+        private fun countNearMine(cells: List<Cell>, cellPosition: CellPosition): Int {
+            val nearCells = cellPosition.getNear()
 
-            val findNearCells = xPositionRange.flatMap { nearX ->
-                yPositionRange.flatMap { nearY ->
-                    cells.filter { cell -> cell.xPosition == nearX && cell.yPosition == nearY }
-                }
-            }
-
-            return findNearCells.count { cell -> cell is Cell.Mine }
+            return cells.filter { cell -> cell.isIn(nearCells) }
+                .count { cell -> cell.isMine() }
         }
     }
 }

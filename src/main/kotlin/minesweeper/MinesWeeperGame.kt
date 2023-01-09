@@ -5,7 +5,7 @@ import minesweeper.domain.MapMeta
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
-class MinesWeeper {
+class MinesWeeperGame {
     fun play() {
         ResultView.printMessage(ResultView.Message.REQUEST_HEIGHT)
         val height = InputView.requestPositiveNumber()
@@ -24,10 +24,25 @@ class MinesWeeper {
         )
         val map = Map.create(meta)
 
-        ResultView.printMap(map.cells, width)
+        playGame(map, width)
+    }
+
+    private fun playGame(map: Map, width: Int) {
+        while (map.isProcessing()) {
+            ResultView.printMessage(ResultView.Message.OPEN)
+            val cellPosition = InputView.requestCellPosition()
+            val status = map.open(cellPosition)
+
+            if (!status.isProcess()) {
+                ResultView.printResult(status)
+                return
+            }
+
+            ResultView.printMap(map.cells, width)
+        }
     }
 }
 
 fun main() {
-    MinesWeeper().play()
+    MinesWeeperGame().play()
 }

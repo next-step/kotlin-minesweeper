@@ -59,14 +59,19 @@ class MapMetaTest : StringSpec({
     }
 
     "맵의 지뢰 갯수가 맵의 Cell 수 보다 많을 경우 예외가 발생한다." {
-        val message = shouldThrow<IllegalArgumentException> {
-            MapMeta(
-                height = 10,
-                width = 10,
-                mineCount = 120
-            )
-        }
+        forAll(
+            row(101),
+            row(120)
+        ) { mineCount ->
+            val message = shouldThrow<IllegalArgumentException> {
+                MapMeta(
+                    height = 10,
+                    width = 10,
+                    mineCount = mineCount
+                )
+            }
 
-        message shouldHaveMessage "지뢰 갯수는 100 이하 합니다."
+            message shouldHaveMessage "지뢰 갯수는 100 이하 합니다."
+        }
     }
 })
