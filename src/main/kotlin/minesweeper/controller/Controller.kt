@@ -40,7 +40,7 @@ object Controller {
     }
 
     private fun isAllOpened(land: Land): Boolean {
-        if (land.isAllOpened()) {
+        if (land.isAllOpened) {
             ResultView.printGameOverMessage()
             return true
         }

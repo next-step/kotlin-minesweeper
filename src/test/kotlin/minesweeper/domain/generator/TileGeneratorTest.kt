@@ -1,7 +1,7 @@
 package minesweeper.domain.generator
 
+import minesweeper.Area
 import minesweeper.domain.MineCount
-import minesweeper.domain.land.state.Area
 import minesweeper.domain.tile.strategy.MineFirstGenerateStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

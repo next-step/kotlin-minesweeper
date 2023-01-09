@@ -21,8 +21,8 @@ data class Coordinate(val positionX: Position, val positionY: Position) {
         }
     }
 
-    fun isInArea(area: Area): Boolean {
-        return positionX.value < area.width && positionY.value < area.height
+    fun isNotInArea(area: Area): Boolean {
+        return !(positionX.value < area.width && positionY.value < area.height)
     }
 
     companion object {

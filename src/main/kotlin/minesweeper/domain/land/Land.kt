@@ -9,18 +9,18 @@ import minesweeper.domain.tile.pos.Coordinate
 
 data class Land(private val area: Area, private var _tiles: Tiles) {
     val tiles: List<Marking>
-        get() = _tiles.getList()
+        get() = _tiles.list
 
-    fun getWidth() = area.width
+    val width: Int
+        get() = area.width
 
-    fun getMineCount(coordinate: Coordinate): Int {
-        return SurroundingTiles.values().count {
-            coordinate.getSurroundTilesCoordinate(it)?.let(::isMine) ?: false
-        }
-    }
+    val isAllOpened: Boolean
+        get() = _tiles.isAllOpened()
+
+    fun getMineCount(coordinate: Coordinate): Int = _tiles.getMineCount(coordinate)
 
     fun selectTile(coordinate: Coordinate): Boolean {
-        if (isMine(coordinate)) {
+        if (_tiles.isMine(coordinate)) {
             return false
         }
         checkSurroundingTiles(coordinate)
@@ -28,7 +28,7 @@ data class Land(private val area: Area, private var _tiles: Tiles) {
     }
 
     private fun checkSurroundingTiles(coordinate: Coordinate) {
-        if (_tiles.isChecked(coordinate) || !coordinate.isInArea(area)) {
+        if (_tiles.isChecked(coordinate) || coordinate.isNotInArea(area)) {
             return
         }
 
@@ -40,20 +40,6 @@ data class Land(private val area: Area, private var _tiles: Tiles) {
 
         for (surroundingTiles in SurroundingTiles.values()) {
             coordinate.getSurroundTilesCoordinate(surroundingTiles)?.let(::checkSurroundingTiles)
-        }
-    }
-
-    private fun isMine(coordinate: Coordinate): Boolean {
-        return _tiles.isMine(Coordinate(coordinate.positionX, coordinate.positionY))
-    }
-
-    fun isAllOpened(): Boolean {
-        return _tiles.isAllOpened()
-    }
-
-    companion object {
-        fun of(width: Int, height: Int, tile: Tiles): Land {
-            return Land(Area(width, height), tile)
         }
     }
 }
