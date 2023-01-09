@@ -10,7 +10,7 @@ value class Tiles(private val value: List<Tile>) {
     constructor(vararg tiles: Tile) : this(tiles.toList())
 
     val list: List<Marking>
-        get() = value.map { tile -> tile.marking }
+        get() = value.map(Tile::marking)
 
     init {
         require(value.isNotEmpty()) { "타일은 적어도 1개 이상이어야 합니다." }
@@ -18,23 +18,23 @@ value class Tiles(private val value: List<Tile>) {
     }
 
     fun getMineCount(coordinate: Coordinate): Int {
-        return SurroundingTiles.values().count {
+        val surroundingTiles = SurroundingTiles.values()
+        return surroundingTiles.count {
             coordinate.getSurroundTilesCoordinate(it)?.let(::isMine) ?: false
         }
     }
 
     fun isMine(coordinate: Coordinate): Boolean {
-        return value.find { tile -> tile.coordinate == coordinate }?.isMine ?: false
+        return findTile(coordinate)?.isMine ?: false
     }
 
-
     fun isChecked(coordinate: Coordinate): Boolean {
-        return value.find { tile -> tile.coordinate == coordinate }?.isChecked ?: false
+        return findTile(coordinate)?.isChecked ?: false
     }
 
     fun isAllOpened(): Boolean {
         val notMinesCount = value.count { tile -> tile is NotMines }
-        val mineCount = value.count { tile -> tile.isMine }
+        val mineCount = value.count(Tile::isMine)
         return value.size == notMinesCount + mineCount
     }
 
@@ -48,5 +48,9 @@ value class Tiles(private val value: List<Tile>) {
             return NotMines(coordinate, marking)
         }
         return tile
+    }
+
+    private fun findTile(coordinate: Coordinate): Tile? = value.find {
+        it.coordinate == coordinate
     }
 }
