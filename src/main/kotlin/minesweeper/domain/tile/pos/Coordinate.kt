@@ -4,16 +4,16 @@ import minesweeper.domain.land.state.Area
 import minesweeper.domain.tile.SurroundingTiles
 
 data class Coordinate(val positionX: Position, val positionY: Position) {
+    fun isNotInArea(area: Area): Boolean {
+        return !(positionX.value < area.width && positionY.value < area.height)
+    }
+
     fun getSurroundTilesCoordinate(surroundingTiles: SurroundingTiles): Coordinate? {
         return try {
             getSurroundingTilesCoordinate(surroundingTiles)
         } catch (e: IllegalArgumentException) {
             null
         }
-    }
-
-    fun isNotInArea(area: Area): Boolean {
-        return !(positionX.value < area.width && positionY.value < area.height)
     }
 
     private fun getSurroundingTilesCoordinate(surroundingTiles: SurroundingTiles) =
