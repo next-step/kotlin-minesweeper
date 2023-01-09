@@ -2,6 +2,7 @@ package minesweeper.controller
 
 import minesweeper.domain.MineSweeperBoard
 import minesweeper.domain.MineSweeperException
+import minesweeper.domain.plant_strategy.RemainderPlantStrategy
 import minesweeper.view.InputView
 import minesweeper.view.InputViewImpl
 import minesweeper.view.ResultView
@@ -30,6 +31,6 @@ class GameController(
         val width = inputView.readWidth()
         val mineCount = inputView.readMineCount()
 
-        return MineSweeperBoard(height, width, mineCount)
+        return MineSweeperBoard(height, width, mineCount, RemainderPlantStrategy())
     }
 }

@@ -1,8 +1,14 @@
 package minesweeper.domain
 
-import java.util.Random
+import minesweeper.domain.plant_strategy.PlantStrategy
+import minesweeper.domain.plant_strategy.RemainderPlantStrategy
 
-class MineSweeperBoard(private val width: Int, private val height: Int, mineCount: Int = 0) {
+class MineSweeperBoard(
+    private val width: Int,
+    private val height: Int,
+    mineCount: Int = 0,
+    private val strategy: PlantStrategy = RemainderPlantStrategy()
+) {
 
     private val _state: MutableMap<Point, Block>
 
@@ -20,54 +26,42 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
         }
         _state = buildBoard(width, height).toMutableMap()
         plantMines(mineCount)
-        _mineCount = countMine()
-        buildSafeBlock()
     }
 
     private fun buildBoard(maxXAxis: Int, maxYAxis: Int): Map<Point, Block> {
-        return (0 until maxXAxis).flatMap { currentXAixs ->
-            buildLine(currentXAixs, maxYAxis)
+        return (0 until maxXAxis).flatMap { currentXAxis ->
+            buildLine(currentXAxis, maxYAxis)
         }.toMap()
     }
 
     private fun buildLine(currentXAxis: Int, maxYAxis: Int): List<Pair<Point, Block>> {
         return (0 until maxYAxis).map { y ->
-            buildEmptyBlock(currentXAxis, y)
+            buildBlock(currentXAxis, y)
         }
     }
 
-    private fun buildEmptyBlock(currentXAxis: Int, currentYAxis: Int): Pair<Point, Block> {
-        return Point(currentXAxis, currentYAxis) to EmptyBlock()
+    private fun buildBlock(currentXAxis: Int, currentYAxis: Int): Pair<Point, Block> {
+        return Point(currentXAxis, currentYAxis) to SafeBlock()
     }
 
     private fun plantMines(plantingMineCount: Int) {
-        while (countMine() < plantingMineCount) {
-            val width = Random().nextInt(width)
-            val height = Random().nextInt(height)
-            validatePoint(Point(width, height))
-            _state[Point(width, height)] = MineBlock()
+        val minePoints = strategy.createMines(width, height, plantingMineCount)
+        minePoints.forEach {
+            _state[it] = MineBlock()
+        }
+        _mineCount = countMine()
+        updateSafeBlock()
+    }
+
+    private fun updateSafeBlock() {
+        val safeBlockPoints = _state.filterValues { block: Block -> block is SafeBlock }.keys
+        safeBlockPoints.forEach { currentPoint: Point ->
+            _state[currentPoint] = SafeBlock(sumNearPointMines(currentPoint.getNearPoints()))
         }
     }
 
-    private fun validatePoint(point: Point) {
-        if (!_state.containsKey(point)) {
-            throw MineSweeperException(ExceptionReason.ILLEGAL_POINT)
-        }
-    }
-
-    private fun buildSafeBlock() {
-        val emptyBlockPoints = findEmptyBlockPoint()
-        emptyBlockPoints.forEach { currentPoint: Point ->
-            _state[currentPoint] = SafeBlock(countNearMine(currentPoint.getNearPoints()))
-        }
-    }
-
-    private fun findEmptyBlockPoint(): Set<Point> {
-        return _state.filterValues { block: Block -> block is EmptyBlock }.keys
-    }
-
-    private fun countNearMine(points: List<Point>): Int {
-        return points.filter { _state[it] is MineBlock }.size
+    private fun sumNearPointMines(points: List<Point>): Int {
+        return points.count { _state[it] is MineBlock }
     }
 
     private fun countMine(): Int {
