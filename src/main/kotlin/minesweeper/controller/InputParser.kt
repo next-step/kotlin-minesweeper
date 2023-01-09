@@ -1,9 +1,6 @@
 package minesweeper.controller
 
 object InputParser {
-    private const val MINIMUM_INPUT_POSITION = 1
-    private const val MAXIMUM_OUTPUT_POSITION = 20
-    private const val CORRECTION_VALUE = 1
     private const val NUMBER_OF_COORDINATES = 2
 
     fun parseNumber(inputNumber: String): Int {
