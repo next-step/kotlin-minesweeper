@@ -17,7 +17,7 @@ class LandTest {
             Mine(0, 0), NotMines(1, 0, Marking.TWO),
             NotMines(0, 1, Marking.TWO), Mine(1, 1)
         )
-        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+        val land = Land.of(2, 2, tiles)
 
         // when
         val actual = land.tiles
@@ -39,7 +39,7 @@ class LandTest {
             NotMines(0, 1, Marking.TWO), NotMines(1, 1, Marking.FOUR), NotMines(2, 1, Marking.TWO),
             Mine(0, 2), NotMines(1, 2, Marking.TWO), Mine(2, 2)
         )
-        val land = Land.of(THREE - CORRECTION_VALUE, THREE - CORRECTION_VALUE, tiles)
+        val land = Land.of(3, 3, tiles)
 
         // when
         val actual = land.getMineCount(Coordinate.of(1, 1))
@@ -55,7 +55,7 @@ class LandTest {
             NotMines(0, 0, Marking.TWO), Mine(1, 0),
             Mine(0, 1), NotMines(1, 1, Marking.TWO)
         )
-        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+        val land = Land.of(2, 2, tiles)
 
         // when
         val actual = land.getMineCount(Coordinate.of(0, 0))
@@ -72,7 +72,7 @@ class LandTest {
             NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, false),
             NotChecked(0, 2, true), NotChecked(1, 2, false), NotChecked(2, 2, true)
         )
-        val land = Land.of(THREE - CORRECTION_VALUE, THREE - CORRECTION_VALUE, tiles)
+        val land = Land.of(3, 3, tiles)
 
         // when
         land.selectTile(Coordinate.of(1, 1))
@@ -100,7 +100,7 @@ class LandTest {
             NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, true),
             NotChecked(0, 2, true), NotChecked(1, 2, true), NotChecked(2, 2, false)
         )
-        val land = Land.of(THREE - CORRECTION_VALUE, THREE - CORRECTION_VALUE, tiles)
+        val land = Land.of(3, 3, tiles)
 
         // when
         land.selectTile(Coordinate.of(0, 0))
@@ -117,13 +117,69 @@ class LandTest {
     }
 
     @Test
+    fun `Land - 연쇄 확인 테스트`() {
+        // given
+        val tiles = Tiles(
+            NotChecked(0, 0, false), NotChecked(1, 0, false), NotChecked(2, 0, false), NotChecked(3, 0, false), NotChecked(4, 0, false),
+            NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, false), NotChecked(3, 1, false), NotChecked(4, 1, false),
+            NotChecked(0, 2, false), NotChecked(1, 2, false), NotChecked(2, 2, false), NotChecked(3, 2, false), NotChecked(4, 2, false),
+            NotChecked(0, 3, false), NotChecked(1, 3, false), NotChecked(2, 3, false), NotChecked(3, 3, false), NotChecked(4, 3, false),
+            NotChecked(0, 4, false), NotChecked(1, 4, false), NotChecked(2, 4, false), NotChecked(3, 4, false), NotChecked(4, 4, true)
+        )
+        val land = Land.of(5, 5, tiles)
+
+        // when
+        land.selectTile(Coordinate.of(0, 0))
+        val actual = land.tiles
+
+        // then
+        assertThat(actual).isEqualTo(
+            listOf(
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY,
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY,
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY,
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.ONE, Marking.ONE,
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.ONE, Marking.CLOSED,
+            )
+        )
+    }
+
+    @Test
+    fun `Land - 연쇄 확인 테스트2`() {
+        // given
+        val tiles = Tiles(
+            NotChecked(0, 0, false), NotChecked(1, 0, false), NotChecked(2, 0, false), NotChecked(3, 0, false), NotChecked(4, 0, false),
+            NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, false), NotChecked(3, 1, false), NotChecked(4, 1, false),
+            NotChecked(0, 2, true), NotChecked(1, 2, false), NotChecked(2, 2, true), NotChecked(3, 2, false), NotChecked(4, 2, true),
+            NotChecked(0, 3, false), NotChecked(1, 3, false), NotChecked(2, 3, false), NotChecked(3, 3, false), NotChecked(4, 3, false),
+            NotChecked(0, 4, false), NotChecked(1, 4, false), NotChecked(2, 4, false), NotChecked(3, 4, false), NotChecked(4, 4, false)
+        )
+        val land = Land.of(5, 5, tiles)
+
+        // when
+        land.selectTile(Coordinate.of(0, 0))
+        val actual = land.tiles
+
+        // then
+        assertThat(actual).isEqualTo(
+            listOf(
+                Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY, Marking.EMPTY,
+                Marking.ONE, Marking.TWO, Marking.ONE, Marking.TWO, Marking.ONE,
+                Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED,
+                Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED,
+                Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED, Marking.CLOSED,
+            )
+        )
+    }
+
+    @Test
     fun `Land - 지뢰 폭발`() {
         // given
         val tiles = Tiles(
             Mine(0, 0), Mine(1, 0),
             Mine(0, 1), Mine(1, 1)
         )
-        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+        val land = Land.of(2, 2, tiles)
 
         // when
         val actual = land.selectTile(Coordinate.of(0, 0))
@@ -139,7 +195,7 @@ class LandTest {
             NotChecked(0, 0, false), NotChecked(1, 0, false),
             NotChecked(0, 1, false), NotChecked(1, 1, true)
         )
-        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+        val land = Land.of(2, 2, tiles)
 
         // when
         land.selectTile(Coordinate.of(0, 0))
@@ -158,7 +214,7 @@ class LandTest {
             NotChecked(0, 0, false), NotChecked(1, 0, false),
             NotChecked(0, 1, false), NotChecked(1, 1, true)
         )
-        val land = Land.of(TWO - CORRECTION_VALUE, TWO - CORRECTION_VALUE, tiles)
+        val land = Land.of(2, 2, tiles)
 
         // when
         land.selectTile(Coordinate.of(0, 0))
@@ -167,11 +223,5 @@ class LandTest {
 
         // then
         assertThat(actual).isFalse
-    }
-
-    companion object {
-        private const val TWO = 2
-        private const val THREE = 3
-        private const val CORRECTION_VALUE = 1
     }
 }

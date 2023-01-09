@@ -14,28 +14,21 @@ data class Land(private val area: Area, private var _tiles: Tiles) {
     fun getWidth() = area.width
 
     fun getMineCount(coordinate: Coordinate): Int {
-        return SurroundingTiles.values().count { surroundingTiles ->
-            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
-            isMine(x, y)
+        return SurroundingTiles.values().count {
+            coordinate.getSurroundTilesCoordinate(it)?.let(::isMine) ?: false
         }
     }
 
     fun selectTile(coordinate: Coordinate): Boolean {
-        val (positionX, positionY) = coordinate.getPositionXY()
-        if (isMine(positionX, positionY)) {
+        if (isMine(coordinate)) {
             return false
         }
-        checkSurroundingTiles(positionX, positionY)
+        checkSurroundingTiles(coordinate)
         return true
     }
 
-    private fun checkSurroundingTiles(positionX: Int, positionY: Int) {
-        if (isInvalidCoordinate(positionX, positionY)) {
-            return
-        }
-
-        val coordinate = Coordinate.of(positionX, positionY)
-        if (_tiles.isChecked(coordinate)) {
+    private fun checkSurroundingTiles(coordinate: Coordinate) {
+        if (_tiles.isChecked(coordinate) || !coordinate.isInArea(area)) {
             return
         }
 
@@ -46,20 +39,12 @@ data class Land(private val area: Area, private var _tiles: Tiles) {
         }
 
         for (surroundingTiles in SurroundingTiles.values()) {
-            val (x, y) = coordinate.getSurroundTilesCoordinate(surroundingTiles)
-            checkSurroundingTiles(x, y)
+            coordinate.getSurroundTilesCoordinate(surroundingTiles)?.let(::checkSurroundingTiles)
         }
     }
 
-    private fun isMine(positionX: Int, positionY: Int): Boolean {
-        if (isInvalidCoordinate(positionX, positionY)) {
-            return false
-        }
-        return _tiles.isMine(Coordinate.of(positionX, positionY))
-    }
-
-    private fun isInvalidCoordinate(positionX: Int, positionY: Int): Boolean {
-        return positionX < ZERO || positionX > area.width || positionY < ZERO || positionY > area.height
+    private fun isMine(coordinate: Coordinate): Boolean {
+        return _tiles.isMine(Coordinate(coordinate.positionX, coordinate.positionY))
     }
 
     fun isAllOpened(): Boolean {
@@ -67,8 +52,6 @@ data class Land(private val area: Area, private var _tiles: Tiles) {
     }
 
     companion object {
-        private const val ZERO = 0
-
         fun of(width: Int, height: Int, tile: Tiles): Land {
             return Land(Area(width, height), tile)
         }
