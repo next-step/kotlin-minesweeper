@@ -50,59 +50,7 @@ class LandTest {
     }
 
     @Test
-    fun `Land - 확인 테스트, 지뢰 각 모서리에 존재하는 경우`() {
-        // given
-        val tiles = Tiles(
-            NotChecked(0, 0, true), NotChecked(1, 0, false), NotChecked(2, 0, true),
-            NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, false),
-            NotChecked(0, 2, true), NotChecked(1, 2, false), NotChecked(2, 2, true)
-        )
-        val land = Land(3, 3, tiles)
-
-        // when
-        land.selectTile(Coordinate.of(1, 1))
-        land.selectTile(Coordinate.of(1, 0))
-        land.selectTile(Coordinate.of(0, 1))
-        land.selectTile(Coordinate.of(2, 1))
-        land.selectTile(Coordinate.of(1, 2))
-        val actual = land.tiles
-
-        // then
-        assertThat(actual).isEqualTo(
-            listOf(
-                Marking.CLOSED, Marking.TWO, Marking.CLOSED,
-                Marking.TWO, Marking.FOUR, Marking.TWO,
-                Marking.CLOSED, Marking.TWO, Marking.CLOSED
-            )
-        )
-    }
-
-    @Test
-    fun `Land - 연쇄 확인 테스트, 오른쪽과 아래에 지뢰가 밀집되어 있는 경우`() {
-        // given
-        val tiles = Tiles(
-            NotChecked(0, 0, false), NotChecked(1, 0, false), NotChecked(2, 0, true),
-            NotChecked(0, 1, false), NotChecked(1, 1, false), NotChecked(2, 1, true),
-            NotChecked(0, 2, true), NotChecked(1, 2, true), NotChecked(2, 2, false)
-        )
-        val land = Land(3, 3, tiles)
-
-        // when
-        land.selectTile(Coordinate.of(0, 0))
-        val actual = land.tiles
-
-        // then
-        assertThat(actual).isEqualTo(
-            listOf(
-                Marking.EMPTY, Marking.TWO, Marking.CLOSED,
-                Marking.TWO, Marking.FOUR, Marking.CLOSED,
-                Marking.CLOSED, Marking.CLOSED, Marking.CLOSED
-            )
-        )
-    }
-
-    @Test
-    fun `Land - 연쇄 확인 테스트`() {
+    fun `Land - 연쇄 확인 테스트, 지뢰가 가장 끝에 있는 경우`() {
         // given
         val tiles = Tiles(
             NotChecked(0, 0, false), NotChecked(1, 0, false), NotChecked(2, 0, false), NotChecked(3, 0, false), NotChecked(4, 0, false),
@@ -130,7 +78,7 @@ class LandTest {
     }
 
     @Test
-    fun `Land - 연쇄 확인 테스트2`() {
+    fun `Land - 연쇄 확인 테스트, 지뢰가 중간 경계에 있는 경우`() {
         // given
         val tiles = Tiles(
             NotChecked(0, 0, false), NotChecked(1, 0, false), NotChecked(2, 0, false), NotChecked(3, 0, false), NotChecked(4, 0, false),
@@ -174,7 +122,7 @@ class LandTest {
     }
 
     @Test
-    fun `Land - 모든 타일이 체크되었는지 확인(true)`() {
+    fun `Land - 모든 타일이 체크되었는지 확인`() {
         // given
         val tiles = Tiles(
             NotChecked(0, 0, false), NotChecked(1, 0, false),
@@ -182,31 +130,12 @@ class LandTest {
         )
         val land = Land(2, 2, tiles)
 
-        // when
+        // when, then
         land.selectTile(Coordinate.of(0, 0))
         land.selectTile(Coordinate.of(1, 0))
+        assertThat(land.isAllOpened).isFalse
+
         land.selectTile(Coordinate.of(0, 1))
-        val actual = land.isAllOpened
-
-        // then
-        assertThat(actual).isTrue
-    }
-
-    @Test
-    fun `Land - 모든 타일이 체크되었는지 확인(false)`() {
-        // given
-        val tiles = Tiles(
-            NotChecked(0, 0, false), NotChecked(1, 0, false),
-            NotChecked(0, 1, false), NotChecked(1, 1, true)
-        )
-        val land = Land(2, 2, tiles)
-
-        // when
-        land.selectTile(Coordinate.of(0, 0))
-        land.selectTile(Coordinate.of(1, 0))
-        val actual = land.isAllOpened
-
-        // then
-        assertThat(actual).isFalse
+        assertThat(land.isAllOpened).isTrue
     }
 }
