@@ -9,13 +9,11 @@ data class Board(
     fun getBlocks(): Map<Position, Block> = blocks
     fun getWidth(): Int = blocks.maxOf { it.key.x }
     fun getBlockByPosition(position: Position): Block? = blocks[position]
-    fun isClear(): Boolean = !isAllOpen() && blocks.count { it.value.isOpenable() } == 0
-    fun isAllOpen(): Boolean = blocks.count { !it.value.visible } == 0
+    fun isAllOpen(): Boolean = blocks.filterValues { !it.isMine() }.count { !it.value.isVisible } == 0
 
     fun open(position: Position): Board {
-        val targetBlock = getBlockByPosition(position)
-        requireNotNull(targetBlock) { "존재하지 않는 위치입니다." }
-        check(!targetBlock.visible) { "이미 열려있는 블록입니다." }
+        val targetBlock = getBlockByPosition(position) ?: return this
+        check(!targetBlock.isVisible) { "이미 열려있는 블록입니다." }
         if (targetBlock.isMine()) {
             return openAll()
         }

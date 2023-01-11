@@ -22,9 +22,9 @@ class BoardTest {
     fun `open시 해당 블록 isVisible은 true로 변경`() {
         val position = Position.of(1, 1)
         val board = fakeBoard(3, 3)
-        board.getBlockByPosition(position)?.visible shouldBe false
+        board.getBlockByPosition(position)?.isVisible shouldBe false
         val block = board.open(position).getBlockByPosition(position)
-        block?.visible shouldBe true
+        block?.isVisible shouldBe true
     }
 
     /**
@@ -40,9 +40,9 @@ class BoardTest {
         board = board.open(position)
         board.getBlocks().map {
             if (listOf(Position.of(3, 3), Position.of(3, 4)).contains(it.key)) {
-                it.value.visible shouldBe false
+                it.value.isVisible shouldBe false
             } else {
-                it.value.visible shouldBe true
+                it.value.isVisible shouldBe true
             }
         }
     }
@@ -57,7 +57,7 @@ class BoardTest {
         val position = Position.of(3, 3)
         val board = fakeBoard(3, 3, 3 to 3)
         board.open(position).getBlocks().map {
-            it.value.visible shouldBe true
+            it.value.isVisible shouldBe true
         }
     }
 }

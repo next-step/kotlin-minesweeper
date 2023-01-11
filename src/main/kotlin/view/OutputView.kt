@@ -27,7 +27,7 @@ object OutputView {
     }
 
     fun printGameResult(state: State) {
-        if (state is Finished.Clear) {
+        if (state is Finished.Win) {
             println("Game Win!")
         } else {
             println("Lose Game.")
@@ -36,7 +36,7 @@ object OutputView {
 
     private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {
         return blocks.map {
-            if (it.value.visible) {
+            if (it.value.isVisible) {
                 getBlockView(it.value)
             } else {
                 MARK_NOT_VISIBLE_BLOCK

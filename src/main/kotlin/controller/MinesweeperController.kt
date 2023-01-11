@@ -28,6 +28,20 @@ class MinesweeperController {
         outputView.printGameResult(state)
     }
 
+    private fun initBoard(): Board {
+        val height = inputView.inputHeight()
+        val width = inputView.inputWidth()
+        val mineCount = inputView.inputMineCount()
+
+        val rectangle = Rectangle(width, height)
+        return BoardFactory().generate(rectangle, mineCount)
+    }
+
+    private fun initState(board: Board): State {
+        outputView.printGameStart()
+        return Running(board)
+    }
+
     private tailrec fun playNextRound(state: State): State {
         if (state.isFinished()) {
             return state
@@ -36,20 +50,6 @@ class MinesweeperController {
         val nextState = state.open(position)
         outputView.printBoard(nextState.board)
         return playNextRound(nextState)
-    }
-
-    private fun initState(board: Board): State {
-        outputView.printGameStart()
-        return Running(board)
-    }
-
-    private fun initBoard(): Board {
-        val height = inputView.inputHeight()
-        val width = inputView.inputWidth()
-        val mineCount = inputView.inputMineCount()
-
-        val rectangle = Rectangle(width, height)
-        return BoardFactory().generate(rectangle, mineCount)
     }
 }
 

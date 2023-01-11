@@ -7,6 +7,6 @@ interface State {
     val board: Board
 
     fun open(position: Position): State
-    fun isClear(): Boolean = board.isClear()
+    fun isAllOpen(): Boolean = board.isAllOpen()
     fun isFinished(): Boolean
 }

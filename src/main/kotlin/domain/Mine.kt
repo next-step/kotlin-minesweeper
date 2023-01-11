@@ -3,8 +3,8 @@ package domain
 data class Mine(
     override val position: Position,
     override val mineCount: MineCount = MineCount(0),
-    override val visible: Boolean = false
+    override val isVisible: Boolean = false
 ) : Block {
-    override fun open(): Block = copy(visible = true)
+    override fun open(): Block = copy(isVisible = true)
     override fun isMine(): Boolean = true
 }

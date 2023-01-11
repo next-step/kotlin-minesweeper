@@ -32,8 +32,8 @@ class StateTest {
     }
 
     @Test
-    fun `Finished 상태는 open 예외 처리`() {
-        val state = Finished.Clear(board)
+    fun `Finished 상태는 열 수 없다`() {
+        val state = Finished.Win(board)
         shouldThrow<IllegalArgumentException> { state.open(Position.of(0, 0)) }
     }
 }

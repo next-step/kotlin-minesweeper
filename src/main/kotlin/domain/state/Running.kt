@@ -5,12 +5,12 @@ import domain.Position
 
 class Running(override val board: Board) : State {
     override fun open(position: Position): State {
-        val result = board.open(position)
-        if (result.isAllOpen()) {
-            return Finished.Boom(result)
+        if (board.getBlockByPosition(position)!!.isMine()) {
+            return Finished.Lose(board)
         }
-        return if (result.isClear()) {
-            Finished.Clear(result)
+        val result = board.open(position)
+        return if (result.isAllOpen()) {
+            Finished.Win(result)
         } else {
             Running(result)
         }

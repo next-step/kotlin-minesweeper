@@ -10,7 +10,7 @@ sealed class Finished(override val board: Board) : State {
 
     override fun isFinished(): Boolean = true
 
-    data class Clear(override val board: Board) : Finished(board)
+    data class Win(override val board: Board) : Finished(board)
 
-    data class Boom(override val board: Board) : Finished(board)
+    data class Lose(override val board: Board) : Finished(board)
 }

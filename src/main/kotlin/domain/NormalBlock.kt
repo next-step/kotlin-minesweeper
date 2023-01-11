@@ -3,8 +3,8 @@ package domain
 data class NormalBlock(
     override val position: Position,
     override val mineCount: MineCount,
-    override val visible: Boolean = false
+    override val isVisible: Boolean = false
 ) : Block {
     override fun isMine(): Boolean = false
-    override fun open(): Block = copy(visible = true)
+    override fun open(): Block = copy(isVisible = true)
 }
