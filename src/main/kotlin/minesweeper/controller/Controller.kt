@@ -1,7 +1,8 @@
 package minesweeper.controller
 
-import minesweeper.domain.Land
 import minesweeper.domain.generator.TileGenerator
+import minesweeper.domain.land.Land
+import minesweeper.domain.land.state.Area
 import minesweeper.domain.tile.Tiles
 import minesweeper.domain.tile.strategy.RandomGenerateStrategy
 import minesweeper.dto.LandDto
@@ -14,16 +15,19 @@ object Controller {
     }
 
     private fun init(): Land {
-        val height = InputFilter.inputPosition(InputView.INPUT_HEIGHT_MESSAGE)
+        val height = InputFilter.inputSize(InputView.INPUT_HEIGHT_MESSAGE)
         ResultView.printLineFeed()
-        val width = InputFilter.inputPosition(InputView.INPUT_WIDTH_MESSAGE)
-        ResultView.printLineFeed()
-        val mineCount = InputFilter.inputMineCount(InputView.INPUT_MINE_COUNT_MESSAGE, height.getCalibratedPosition() * width.getCalibratedPosition())
+        val width = InputFilter.inputSize(InputView.INPUT_WIDTH_MESSAGE)
         ResultView.printLineFeed()
 
-        val tileGenerator = TileGenerator(RandomGenerateStrategy(width, height, mineCount))
+        val area = Area(width, height)
+
+        val mineCount = InputFilter.inputMineCount(InputView.INPUT_MINE_COUNT_MESSAGE, area.size())
+        ResultView.printLineFeed()
+
+        val tileGenerator = TileGenerator(RandomGenerateStrategy(area, mineCount))
         val tiles = Tiles(tileGenerator.generate())
-        return Land(width, height, tiles)
+        return Land(area, tiles)
     }
 
     private fun play(land: Land) {
@@ -36,7 +40,7 @@ object Controller {
     }
 
     private fun isAllOpened(land: Land): Boolean {
-        if (land.isAllOpened()) {
+        if (land.isAllOpened) {
             ResultView.printGameOverMessage()
             return true
         }

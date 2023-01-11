@@ -1,15 +1,15 @@
 package minesweeper.dto
 
-import minesweeper.domain.Land
+import minesweeper.domain.land.Land
 import minesweeper.domain.tile.Marking
 
 @JvmInline
 value class LandDto(private val land: Land) {
-    fun getTiles(): List<String> {
-        return land.tiles.map { getMarking(it) }
-    }
+    val tiles: List<String>
+        get() = land.tiles.map { getMarking(it) }
 
-    fun getWidth() = land.getWidth()
+    val width: Int
+        get() = land.width
 
     private fun getMarking(marking: Marking): String {
         return when (marking) {

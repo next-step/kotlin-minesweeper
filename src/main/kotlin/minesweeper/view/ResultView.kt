@@ -16,9 +16,9 @@ object ResultView {
     }
 
     fun printLand(landDto: LandDto) {
-        val land = landDto.getTiles().joinToString("") { tile -> "$tile " }
-        val landWithLineFeed = land.chunked(landDto.getWidth() * 2)
-        landWithLineFeed.forEach { tile -> println(tile) }
+        val land = landDto.tiles.joinToString("") { tile -> "$tile " }
+        val landWithLineFeed = land.chunked(landDto.width * 2)
+        landWithLineFeed.forEach(::println)
     }
 
     fun printLoseGameMessage() {

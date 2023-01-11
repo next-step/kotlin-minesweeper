@@ -34,7 +34,7 @@ class TilesTest {
         val tiles = Tiles(tile1, tile2, tile3)
 
         // when
-        val actual = tiles.getList()
+        val actual = tiles.list
 
         // then
         assertThat(actual.count { it == Marking.MINE }).isEqualTo(1)

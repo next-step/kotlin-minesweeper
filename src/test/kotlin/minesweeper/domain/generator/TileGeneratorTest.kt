@@ -1,7 +1,7 @@
 package minesweeper.domain.generator
 
+import minesweeper.Area
 import minesweeper.domain.MineCount
-import minesweeper.domain.tile.pos.Position
 import minesweeper.domain.tile.strategy.MineFirstGenerateStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,9 +12,8 @@ class TileGeneratorTest {
         // given
         val tileGenerator = TileGenerator(
             MineFirstGenerateStrategy(
-                Position(FIXED_POSITION),
-                Position(FIXED_POSITION),
-                MineCount(FIXED_MINE_COUNT, FIXED_CALIBRATED_POSITION * FIXED_CALIBRATED_POSITION)
+                Area(FIXED_SIZE, FIXED_SIZE),
+                MineCount(FIXED_MINE_COUNT, FIXED_SIZE * FIXED_SIZE)
             )
         )
 
@@ -28,9 +27,7 @@ class TileGeneratorTest {
     }
 
     companion object {
-        private const val FIXED_POSITION = 2
+        private const val FIXED_SIZE = 3
         private const val FIXED_MINE_COUNT = 5
-        private const val CORRECTION_VALUE = 1
-        private const val FIXED_CALIBRATED_POSITION = FIXED_POSITION + CORRECTION_VALUE
     }
 }
