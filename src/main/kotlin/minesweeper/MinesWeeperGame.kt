@@ -28,17 +28,20 @@ class MinesWeeperGame {
     }
 
     private fun playGame(map: Map, width: Int) {
-        while (map.isProcessing()) {
+        var nextMap = map
+
+        while (nextMap.isProcessing()) {
             ResultView.printMessage(ResultView.Message.OPEN)
             val cellPosition = InputView.requestCellPosition()
-            val status = map.open(cellPosition)
+            nextMap = nextMap.open(cellPosition)
+            val status = nextMap.status
 
             if (!status.isProcess()) {
                 ResultView.printResult(status)
                 return
             }
 
-            ResultView.printMap(map.cells, width)
+            ResultView.printMap(nextMap.cells, width)
         }
     }
 }

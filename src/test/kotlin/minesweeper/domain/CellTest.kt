@@ -9,9 +9,9 @@ import io.kotest.matchers.shouldBe
 class CellTest : StringSpec({
     "Blank 셀은 오픈 상태로 변경하다." {
         val blank = Cell.Blank.init()
-        blank.open()
+        val openedCell = blank.open()
 
-        blank.isOpen.shouldBeTrue()
+        openedCell.isOpen.shouldBeTrue()
     }
 
     "Mine 셀 여부를 확인하다." {
