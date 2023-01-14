@@ -3,32 +3,38 @@ package minesweeper.domain
 import java.util.LinkedList
 import java.util.Queue
 
-class Map(val cells: List<Cell>) {
-    private var status: Status = Status.PROCESSING
+class Map(val cells: List<Cell>, val status: Status = Status.PROCESSING) {
 
     fun isProcessing(): Boolean = status == Status.PROCESSING
 
-    fun open(cellPosition: CellPosition): Status {
+    fun open(cellPosition: CellPosition): Map {
         val cell = cells.find { cell -> cell.cellPosition == cellPosition }
             ?: throw IllegalArgumentException("좌표에 벗어난 값입니다.")
 
         if (cell.isMine()) {
-            status = status.next(EVENT.LOSE)
-            return status
+            return Map(cells, status.next(EVENT.LOSE))
         }
 
-        val nearBlankCells = getNearBlankCells(cell)
-        nearBlankCells.forEach { blankCell -> blankCell.open() }
+        val openedCells = getNearBlankCells(cell)
+            .plus(cell as Cell.Blank)
+            .map { blankCell: Cell.Blank -> blankCell.open() }
 
-        if (isAllOpen()) {
-            status = status.next(EVENT.WIN)
-        }
+        val newCells = replaceCell(openedCells)
 
-        return status
+        val nextStatus = if (isAllOpen(newCells)) status.next(EVENT.WIN) else status
+
+        return Map(newCells, nextStatus)
     }
 
-    private fun isAllOpen(): Boolean = cells.filterIsInstance<Cell.Blank>()
-        .all { cell -> cell.isOpen }
+    private fun replaceCell(openedCells: List<Cell.Blank>): List<Cell> =
+        cells.map { cell ->
+            val findCell = openedCells.find { openCell -> openCell.cellPosition == cell.cellPosition }
+            findCell ?: cell
+        }
+
+    private fun isAllOpen(cells: List<Cell>): Boolean =
+        cells.filterIsInstance<Cell.Blank>()
+            .all { cell -> cell.isOpen }
 
     private fun getNearBlankCells(targetCell: Cell): List<Cell.Blank> {
         val nearCellPositions = targetCell.cellPosition.getNear()
@@ -43,7 +49,7 @@ class Map(val cells: List<Cell>) {
             val blankCount = totalCellCount - meta.mineCount
 
             val cellPositions = initPosition(meta.width, meta.height).shuffled()
-            val cells = iniCell(
+            val cells = initCell(
                 cellPositions = cellPositions.toCollection(LinkedList()),
                 blankCellCount = blankCount,
                 mineCellCount = meta.mineCount
@@ -63,7 +69,7 @@ class Map(val cells: List<Cell>) {
                 }
             }
 
-        private fun iniCell(cellPositions: Queue<CellPosition>, blankCellCount: Int, mineCellCount: Int): List<Cell> {
+        private fun initCell(cellPositions: Queue<CellPosition>, blankCellCount: Int, mineCellCount: Int): List<Cell> {
             val blankCells = List(blankCellCount) { Cell.Blank(cellPositions.poll()) }
             val mineCells = List(mineCellCount) { Cell.Mine(cellPositions.poll()) }
 
@@ -83,10 +89,9 @@ class Map(val cells: List<Cell>) {
             }
 
         private fun countNearMine(cells: List<Cell>, cellPosition: CellPosition): Int {
-            val nearCells = cellPosition.getNear()
+            val nearCells: List<CellPosition> = cellPosition.getNear()
 
-            return cells.filter { cell -> cell.isIn(nearCells) }
-                .count { cell -> cell.isMine() }
+            return cells.count { cell -> cell.mineCountIn(nearCells) }
         }
     }
 }

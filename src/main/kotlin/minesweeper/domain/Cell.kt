@@ -19,9 +19,7 @@ sealed class Cell(val cellPosition: CellPosition) {
         var isOpen = isOpen
             private set
 
-        fun open() {
-            this.isOpen = true
-        }
+        fun open(): Blank = Blank(cellPosition, mineCount, true)
 
         companion object {
             fun init(): Blank {
@@ -40,4 +38,8 @@ sealed class Cell(val cellPosition: CellPosition) {
 
     fun isMine(): Boolean =
         this is Mine
+
+    fun mineCountIn(cellPositions: List<CellPosition>): Boolean =
+        isIn(cellPositions) && isMine()
+
 }
