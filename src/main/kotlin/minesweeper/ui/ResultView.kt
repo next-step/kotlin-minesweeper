@@ -1,14 +1,24 @@
 package minesweeper.ui
 
 import minesweeper.domain.Coordinate
+import minesweeper.domain.GameState
+import minesweeper.domain.GameState.TERMINATE
 import minesweeper.domain.MineBoard
 
 class ResultView {
 
-    fun showBoard(board: MineBoard) {
+    fun printStartGame() {
         println()
         println("지뢰찾기 게임 시작")
+    }
+
+    fun showBoard(board: MineBoard, state: GameState) {
+        if (state == TERMINATE) {
+            println("Lose Game.")
+            return
+        }
         print(makeBoardText(board))
+        println()
     }
 
     private fun makeBoardText(board: MineBoard): String {
@@ -32,7 +42,7 @@ class ResultView {
     }
 
     private fun getCoordinateText(coordinate: Coordinate): String {
-        if (coordinate.isMine()) return "* "
-        return coordinate.count.toString() + " "
+        if (coordinate.isOpen()) return coordinate.count.toString() + " "
+        return "C "
     }
 }

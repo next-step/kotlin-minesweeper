@@ -6,22 +6,19 @@ class MineBoard(
     private val mineCount: MineCount
 ) {
 
-    private val size: Int = calculateBoardSize()
+    private val size: Int = rowCount * columnCount
 
-    val coordinates: Coordinates = make()
+    val coordinates: Coordinates = makeCoordinates()
 
     fun rowSize(): Int = rowCount.count
 
     fun columnSize(): Int = columnCount.count
 
-    private fun calculateBoardSize(): Int = rowCount * columnCount
-
-    private fun make(): Coordinates {
+    private fun makeCoordinates(): Coordinates {
         val coordinates: Coordinates = Coordinates.of(
             List(size) { index ->
-                val position = Position(rowSize(), columnSize(), index)
-                if (index in mineCount.minePositionList) return@List Coordinate(position, CoordinateType.MINE)
-                Coordinate(position, CoordinateType.NONE)
+                if (index in mineCount.minePositionList) return@List Coordinate(CoordinateType.MINE)
+                Coordinate(CoordinateType.NONE)
             }
         )
         calculateRectMineCount(coordinates)
@@ -39,16 +36,13 @@ class MineBoard(
         repeat(columnSize()) { columnIndex ->
             val index = level + columnIndex
             val coordinate = coordinates[index]
-            val position = coordinates[index].position
 
-            if (position.topLeft >= 0 && coordinates[position.topLeft].isMine()) coordinate.counting()
-            if (position.top >= 0 && coordinates[position.top].isMine()) coordinate.counting()
-            if (position.topRight >= 0 && coordinates[position.topRight].isMine()) coordinate.counting()
-            if (position.left >= 0 && coordinates[position.left].isMine()) coordinate.counting()
-            if (position.right >= 0 && coordinates[position.right].isMine()) coordinate.counting()
-            if (position.bottomLeft >= 0 && coordinates[position.bottomLeft].isMine()) coordinate.counting()
-            if (position.bottom >= 0 && coordinates[position.bottom].isMine()) coordinate.counting()
-            if (position.bottomRight >= 0 && coordinates[position.bottomRight].isMine()) coordinate.counting()
+            val positionArray = Position.values()
+            repeat(positionArray.size) {
+                val position = positionArray[it]
+                val aroundIndex = position.calculate(rowSize(), columnSize(), index)
+                if (aroundIndex >= 0 && coordinates[aroundIndex].isMine()) coordinate.counting()
+            }
         }
     }
 }
