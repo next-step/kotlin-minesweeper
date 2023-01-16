@@ -1,13 +1,13 @@
 package minesweeper.view
 
-import minesweeper.domain.block.Block
-import minesweeper.domain.exception.ExceptionReason
-import minesweeper.domain.block.MineBlock
-import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.Point
+import minesweeper.domain.block.Block
+import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.SafeBlock
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
 
-class ResultViewImpl : ResultView {
+class ConsoleResultView : ResultView {
     override fun renderInitialBoard(state: Map<Point, Block>) {
         println()
         println("지뢰찾기 게임 시작")

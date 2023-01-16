@@ -3,14 +3,14 @@ package minesweeper.controller
 import minesweeper.domain.MineSweeperBoard
 import minesweeper.domain.exception.MineSweeperException
 import minesweeper.domain.plant_strategy.RemainderPlantStrategy
+import minesweeper.view.ConsoleResultView
 import minesweeper.view.InputView
 import minesweeper.view.InputViewImpl
 import minesweeper.view.ResultView
-import minesweeper.view.ResultViewImpl
 
 class GameController(
     private val inputView: InputView = InputViewImpl(),
-    private val resultView: ResultView = ResultViewImpl()
+    private val resultView: ResultView = ConsoleResultView()
 ) {
     fun run(): MineSweeperBoard? {
         return try {

@@ -2,8 +2,8 @@ package minesweeper.controller
 
 import minesweeper.domain.MineSweeperBoard
 import minesweeper.domain.block.MineBlock
+import minesweeper.view.ConsoleResultView
 import minesweeper.view.FakeInputView
-import minesweeper.view.ResultViewImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +17,7 @@ class GameControllerTest {
         val userInputMineCount = 1
 
         val controller =
-            GameController(FakeInputView(userInputHeight, userInputWidth, userInputMineCount), ResultViewImpl())
+            GameController(FakeInputView(userInputHeight, userInputWidth, userInputMineCount), ConsoleResultView())
 
         val board = controller.run()
         assertThat(board).isExactlyInstanceOf(MineSweeperBoard::class.java)
@@ -33,7 +33,7 @@ class GameControllerTest {
         val userInputMineCount = 5
 
         val controller =
-            GameController(FakeInputView(userInputHeight, userInputWidth, userInputMineCount), ResultViewImpl())
+            GameController(FakeInputView(userInputHeight, userInputWidth, userInputMineCount), ConsoleResultView())
 
         val board = controller.run()
         assertThat(board).isEqualTo(null)
