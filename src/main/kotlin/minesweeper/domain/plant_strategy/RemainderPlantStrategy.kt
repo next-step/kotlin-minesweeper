@@ -16,7 +16,6 @@ class RemainderPlantStrategy : PlantStrategy {
             minePoints.add(Point(currentWidth, currentHeight))
         }
 
-
         return minePoints
     }
 }

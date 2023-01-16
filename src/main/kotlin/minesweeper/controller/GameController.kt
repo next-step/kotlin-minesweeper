@@ -14,7 +14,7 @@ class GameController(
 ) {
     fun run(): MineSweeperBoard? {
         return try {
-            val gameBoard = setUp()
+            val gameBoard: MineSweeperBoard = setUp()
             resultView.renderInitialBoard(gameBoard.state)
             gameBoard
         } catch (e: MineSweeperException) {
