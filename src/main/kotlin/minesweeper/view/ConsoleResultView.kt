@@ -4,6 +4,7 @@ import minesweeper.domain.Point
 import minesweeper.domain.block.Block
 import minesweeper.domain.block.MineBlock
 import minesweeper.domain.block.SafeBlock
+import minesweeper.domain.block.UnOpenedBlock
 import minesweeper.domain.exception.ExceptionReason
 import minesweeper.domain.exception.MineSweeperException
 
@@ -45,6 +46,7 @@ class ConsoleResultView : ResultView {
 
     private fun renderBlock(block: Block) {
         when (block) {
+            is UnOpenedBlock -> print(UNOPENED_BLOCK_CHARACTER)
             is MineBlock -> print(DEFAULT_MINE_CHARACTER)
             is SafeBlock -> print(block.nearMineCount)
         }
@@ -53,6 +55,7 @@ class ConsoleResultView : ResultView {
 
     companion object {
         private const val DEFAULT_MINE_CHARACTER = "*"
+        private const val UNOPENED_BLOCK_CHARACTER = "C"
         private const val BLANK_CHARACTER = " "
         private const val NEGATIVE_POINT_VALUE_TEXT = "좌표 값은 음수가 될 수 없습니다."
         private const val MINE_COUNT_OVER_BLOCKS_TEXT = "지뢰의 개수는 총 블록의 개수보다 많을 수 없습니다."
