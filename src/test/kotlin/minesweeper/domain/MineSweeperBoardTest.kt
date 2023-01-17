@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

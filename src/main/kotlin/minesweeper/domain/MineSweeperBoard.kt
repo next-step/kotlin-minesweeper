@@ -1,8 +1,19 @@
 package minesweeper.domain
 
-import java.util.Random
+import minesweeper.domain.block.Block
+import minesweeper.domain.block.MineBlock
+import minesweeper.domain.block.SafeBlock
+import minesweeper.domain.exception.ExceptionReason
+import minesweeper.domain.exception.MineSweeperException
+import minesweeper.domain.plant_strategy.PlantStrategy
+import minesweeper.domain.plant_strategy.RemainderPlantStrategy
 
-class MineSweeperBoard(private val width: Int, private val height: Int, mineCount: Int = 0) {
+class MineSweeperBoard(
+    private val width: Int,
+    private val height: Int,
+    mineCount: Int = 0,
+    private val strategy: PlantStrategy = RemainderPlantStrategy()
+) {
 
     private val _state: MutableMap<Point, Block>
 
@@ -20,17 +31,12 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
         }
         _state = buildBoard(width, height).toMutableMap()
         plantMines(mineCount)
-        _mineCount = countMine()
     }
 
     private fun buildBoard(maxXAxis: Int, maxYAxis: Int): Map<Point, Block> {
-        val pairs = mutableListOf<Pair<Point, Block>>()
-
-        (0 until maxXAxis).forEach { currentXAixs ->
-            pairs.addAll(buildLine(currentXAixs, maxYAxis))
-        }
-
-        return pairs.toMap()
+        return (0 until maxXAxis).flatMap { currentXAxis ->
+            buildLine(currentXAxis, maxYAxis)
+        }.toMap()
     }
 
     private fun buildLine(currentXAxis: Int, maxYAxis: Int): List<Pair<Point, Block>> {
@@ -44,11 +50,24 @@ class MineSweeperBoard(private val width: Int, private val height: Int, mineCoun
     }
 
     private fun plantMines(plantingMineCount: Int) {
-        while (countMine() < plantingMineCount) {
-            val width = Random().nextInt(width)
-            val height = Random().nextInt(height)
-            _state[Point(width, height)] = MineBlock()
+        val minePoints = strategy.createMines(width, height, plantingMineCount)
+        minePoints.forEach {
+            _state[it] = MineBlock()
         }
+        _mineCount = countMine()
+        updateSafeBlock()
+    }
+
+    private fun updateSafeBlock() {
+        val safeBlockPoints = _state.filterValues { block: Block -> block is SafeBlock }.keys
+        safeBlockPoints.forEach { currentPoint: Point ->
+            val block = SafeBlock(sumNearPointMines(currentPoint.getNearPoints(width, height)))
+            _state[currentPoint] = block
+        }
+    }
+
+    private fun sumNearPointMines(points: List<Point>): Int {
+        return points.count { _state[it] is MineBlock }
     }
 
     private fun countMine(): Int {
