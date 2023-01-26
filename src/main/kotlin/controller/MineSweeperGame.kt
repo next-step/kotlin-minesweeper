@@ -1,16 +1,19 @@
 package controller
 
 import model.BoardHeight
+import model.BoardMaker
 import model.BoardWidth
-import model.MineSize
+import model.Mine
 import view.InputView
 
 class MineSweeperGame {
     private val inputView = InputView()
 
     fun run() {
-        BoardHeight(inputView.getHeight())
-        BoardWidth(inputView.getWidth())
-        MineSize(inputView.getMineNumber())
+        val boardHeight = BoardHeight(inputView.getHeight())
+        val boardWidth = BoardWidth(inputView.getWidth())
+        val mine = Mine(inputView.getMineNumber())
+        val boardMaker = BoardMaker()
+        boardMaker.run(boardHeight, boardWidth, mine)
     }
 }
