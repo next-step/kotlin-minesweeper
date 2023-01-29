@@ -1,9 +1,18 @@
 package domains
 
 @JvmInline
-value class GameMap private constructor(val value: List<Block>) {
+value class GameMap private constructor(val value: Blocks) {
     fun getBlockByPosition(position: Position): Block {
-        return this.value.single { it.position == position }
+        return this.value.getBlockByPosition(position)
+    }
+
+    fun setNormalBlocks() {
+        val normalBlocks = this.value.findNormalBlocks()
+        val mineBlocks = this.value.findMineBlocks()
+
+        normalBlocks.forEach { normalBlock ->
+            normalBlock.updateMarkerByAroundMines(mineBlocks)
+        }
     }
 
     companion object {
@@ -16,8 +25,7 @@ value class GameMap private constructor(val value: List<Block>) {
                     map.add(block)
                 }
             }
-            return GameMap(map.toList())
+            return GameMap(Blocks(map.toList()))
         }
-
     }
 }

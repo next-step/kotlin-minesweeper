@@ -25,6 +25,6 @@ internal class GameMapTest {
         val actual = sut.from(gameSize = gameSize, minePositions = minePositions)
 
         // Assert
-        assertThat(actual.value.size).isEqualTo(100)
+        assertThat(actual.value.values.size).isEqualTo(100)
     }
 }

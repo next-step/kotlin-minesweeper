@@ -12,7 +12,8 @@ fun main() {
     val mineCount = getMine()
 
     val gameSize = GameSize(mapWidth, mapHeight)
-    val minePosition = MinePositionGenerator(gameSize, mineCount).generateMinePositions()
-    val gameMap = GameMap.from(gameSize, minePosition)
+    val minePositions = MinePositionGenerator(gameSize, mineCount).generateMinePositions()
+    val gameMap = GameMap.from(gameSize, minePositions)
+    gameMap.setNormalBlocks()
     showMap(gameSize, gameMap)
 }
