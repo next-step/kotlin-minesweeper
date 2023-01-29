@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-internal class MapGeneratorTest {
+internal class GameMapTest {
     @Test
     @DisplayName("게임 사이즈를 통해서 게임 맵을 생성한다")
     fun `sut generate game map by gameSize`() {
@@ -19,10 +19,10 @@ internal class MapGeneratorTest {
                 Position(8, 8),
             )
         )
-        val sut = MapGenerator(gameSize, minePositions)
+        val sut = GameMap
 
         // Act
-        val actual = sut.generateMap()
+        val actual = sut.from(gameSize = gameSize, minePositions = minePositions)
 
         // Assert
         assertThat(actual.value.size).isEqualTo(100)

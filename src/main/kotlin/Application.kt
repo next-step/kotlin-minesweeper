@@ -1,5 +1,5 @@
+import domains.GameMap
 import domains.GameSize
-import domains.MapGenerator
 import domains.MinePositionGenerator
 import views.Input.getHeight
 import views.Input.getMine
@@ -13,6 +13,6 @@ fun main() {
 
     val gameSize = GameSize(mapWidth, mapHeight)
     val minePosition = MinePositionGenerator(gameSize, mineCount).generateMinePositions()
-    val gameMap = MapGenerator(gameSize, minePosition).generateMap()
+    val gameMap = GameMap.from(gameSize, minePosition)
     showMap(gameSize, gameMap)
 }
