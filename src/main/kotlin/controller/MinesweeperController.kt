@@ -17,13 +17,7 @@ class MinesweeperController {
 
         var state = initState(board)
         while (!state.isFinished()) {
-            runCatching {
-                state = playNextRound(state)
-            }
-                .onFailure {
-                    println(it.message)
-                    state = playNextRound(state)
-                }
+            state = playNextRound(state)
         }
         outputView.printGameResult(state)
     }
@@ -42,14 +36,14 @@ class MinesweeperController {
         return Running(board)
     }
 
-    private tailrec fun playNextRound(state: State): State {
+    private fun playNextRound(state: State): State {
         if (state.isFinished()) {
             return state
         }
         val position = inputView.inputOpenPosition()
         val nextState = state.open(position)
         outputView.printBoard(nextState.board)
-        return playNextRound(nextState)
+        return nextState
     }
 }
 
