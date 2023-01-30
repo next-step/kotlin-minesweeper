@@ -1,7 +1,7 @@
 package domain
 
-enum class GameResult(val label: String) {
-    WIN("Win Game!"), LOSE("Lose Game.");
+enum class GameResult {
+    WIN, LOSE;
 
     companion object {
         fun of(isClear: Boolean): GameResult {
