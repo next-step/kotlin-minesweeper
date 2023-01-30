@@ -19,6 +19,12 @@ class BoardTest {
     }
 
     @Test
+    fun `보드에 없는 position로 open시 그대로 반환`() {
+        val board = fakeBoard(3, 3)
+        board.open(Position.of(9, 9)) shouldBe board
+    }
+
+    @Test
     fun `open시 해당 블록 isVisible은 true로 변경`() {
         val position = Position.of(1, 1)
         val board = fakeBoard(3, 3)

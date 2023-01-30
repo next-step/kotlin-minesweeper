@@ -10,10 +10,13 @@ data class Board(
     fun getWidth(): Int = blocks.maxOf { it.key.x }
     fun getBlockByPosition(position: Position): Block? = blocks[position]
     fun isAllOpen(): Boolean = blocks.filterValues { !it.isMine() }.count { !it.value.isVisible } == 0
+    fun isMine(position: Position): Boolean = blocks[position]?.isMine() == true
 
     fun open(position: Position): Board {
         val targetBlock = getBlockByPosition(position) ?: return this
-        check(!targetBlock.isVisible) { "이미 열려있는 블록입니다." }
+        if (targetBlock.isVisible) {
+            return this
+        }
         if (targetBlock.isMine()) {
             return openAll()
         }
@@ -34,7 +37,8 @@ data class Board(
     }
 
     private fun surroundingsOpenTargets(blockList: List<Block>, targetBlock: Block): List<Block> {
-        return blockList.filter { targetBlock.position.surroundings().contains(it.position) && it.isOpenable() }
+        val surroundingsPositions = targetBlock.position.surroundings()
+        return blockList.filter { surroundingsPositions.contains(it.position) && it.isOpenable() }
     }
 
     private fun openAll(): Board = Board(blocks.map { it.value.open() })
