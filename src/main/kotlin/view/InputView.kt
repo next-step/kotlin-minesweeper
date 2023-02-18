@@ -2,6 +2,7 @@ package view
 
 import domain.Height
 import domain.MineCount
+import domain.Position
 import domain.Width
 
 object InputView {
@@ -25,4 +26,15 @@ object InputView {
         println()
         return mineCount
     }
+
+    fun inputOpenPosition(): Position {
+        print("open: ")
+        val input = readln()
+        val (x, y) = input.splitPosition()
+        return Position.of(x, y)
+    }
+
+    private fun String.splitPosition(): List<Int> = this.split(DELIMITER_POSITION).map { it.trim().toInt() }
+
+    private const val DELIMITER_POSITION = ","
 }

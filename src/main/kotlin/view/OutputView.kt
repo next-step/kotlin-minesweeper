@@ -3,8 +3,12 @@ package view
 import domain.Block
 import domain.Board
 import domain.Position
+import domain.state.Finished
+import domain.state.State
 
 object OutputView {
+
+    private const val MARK_NOT_VISIBLE_BLOCK = "C"
     private const val MARK_MINE_BLOCK = "*"
     private const val SEPARATOR_ROW = "\n"
     private const val SEPARATOR_BLOCK = " "
@@ -19,10 +23,25 @@ object OutputView {
                 .chunked(board.getWidth())
                 .joinMineField()
         )
+        println()
+    }
+
+    fun printGameResult(state: State) {
+        if (state is Finished.Win) {
+            println("Game Win!")
+        } else {
+            println("Lose Game.")
+        }
     }
 
     private fun getBlocksAsView(blocks: Map<Position, Block>): List<String> {
-        return blocks.map { getBlockView(it.value) }
+        return blocks.map {
+            if (it.value.isVisible) {
+                getBlockView(it.value)
+            } else {
+                MARK_NOT_VISIBLE_BLOCK
+            }
+        }
     }
 
     private fun List<List<String>>.joinMineField(): String {

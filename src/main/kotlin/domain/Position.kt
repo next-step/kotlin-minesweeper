@@ -34,7 +34,7 @@ data class Position private constructor(
     }
 
     companion object {
-        const val POSITION_START = 0
+        const val POSITION_START = 1
 
         private val cache = mutableMapOf<Pair<Int, Int>, Position>()
 

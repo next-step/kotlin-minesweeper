@@ -12,10 +12,10 @@ class BoardFactory {
         val positions = rectangle.toPositions()
         val minePositions = positionsSelectStrategy.getMinePositions(positions, mineCount)
         val blocks = createBlocks(positions, minePositions)
-        return Board(rectangle, blocks)
+        return Board(blocks)
     }
 
-    private fun createBlocks(positions: List<Position>, minePositions: List<Position>): Map<Position, Block> {
+    fun createBlocks(positions: List<Position>, minePositions: List<Position>): Map<Position, Block> {
         return positions.associateWith {
             val mineCount = getMineCountFromSurroundings(it, minePositions)
             if (minePositions.contains(it)) {
