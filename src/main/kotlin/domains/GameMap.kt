@@ -2,11 +2,16 @@ package domains
 
 @JvmInline
 value class GameMap private constructor(val value: Blocks) {
+
+    init {
+        this.setNormalBlocks()
+    }
+
     fun getBlockByPosition(position: Position): Block {
         return this.value.getBlockByPosition(position)
     }
 
-    fun setNormalBlocks() {
+    private fun setNormalBlocks() {
         val normalBlocks = this.value.findNormalBlocks()
         val mineBlocks = this.value.findMineBlocks()
 
@@ -17,15 +22,22 @@ value class GameMap private constructor(val value: Blocks) {
 
     companion object {
         fun from(gameSize: GameSize, minePositions: Positions): GameMap {
-            val map: MutableList<Block> = mutableListOf()
-            (0 until gameSize.width).forEach { width ->
-                (0 until gameSize.height).forEach { height ->
-                    val position = Position(width, height)
-                    val block = Block.from(position, minePositions)
-                    map.add(block)
-                }
+            val blocks: MutableList<Block> = mutableListOf()
+            repeat(gameSize.width) { width ->
+                blocks.addAll(generateBlocks(width, gameSize.height, minePositions))
             }
-            return GameMap(Blocks(map.toList()))
+            return GameMap(Blocks(blocks.toList()))
+        }
+
+        private fun generateBlocks(
+            currentWidth: Int,
+            maxHeight: Int,
+            minePositions: Positions,
+        ): List<Block> {
+            return (0 until maxHeight).map { height ->
+                val position = Position(currentWidth, height)
+                Block.from(position, minePositions)
+            }.toList()
         }
     }
 }
