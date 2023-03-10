@@ -20,6 +20,6 @@ class MinePositionGenerator(
     private fun generatePosition(): Position {
         val x = Random.nextInt(gameSize.width)
         val y = Random.nextInt(gameSize.height)
-        return Position(x, y)
+        return Position.fromApplication(x, y)
     }
 }
