@@ -1,14 +1,19 @@
 package domains
 
 class NormalBlock(override val position: Position) : Block(position) {
-    override var marker: String = "0"
+    private var surroundingMines: Int = 0
+    override fun openBlock() {
+        marker = surroundingMines.toString()
+    }
+
+    fun isZeroSurroundingMines(): Boolean = surroundingMines == 0
 
     fun updateMarkerByAroundMines(mineBlocks: List<MineBlock>) {
         val aroundPositions = getAroundPositions()
         val aroundMineCount = mineBlocks
             .map { mineBlock -> aroundPositions.contains(mineBlock.position) }
             .count { it }
-        marker = aroundMineCount.toString()
+        surroundingMines = aroundMineCount
     }
 
     private fun getAroundPositions(): List<Position> {
@@ -18,7 +23,7 @@ class NormalBlock(override val position: Position) : Block(position) {
             aroundY.map { y ->
                 val movedX = position.x + x
                 val movedY = position.y + y
-                Position(movedX, movedY)
+                Position.fromApplication(movedX, movedY)
             }
         }.flatten()
     }

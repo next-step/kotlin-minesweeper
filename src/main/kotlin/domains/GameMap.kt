@@ -1,19 +1,56 @@
 package domains
 
-@JvmInline
-value class GameMap private constructor(val value: Blocks) {
-
+class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
     init {
         this.setNormalBlocks()
     }
 
+    fun checkOpenedMineBlock(): OpenResult {
+        return OpenResult.fromMineBlockCheck(blocks.isMineOpen())
+    }
+
+    fun isWin(): OpenResult {
+        return OpenResult.fromNormalBlockCheck(blocks.isAllOpenNormalBlock())
+    }
+
     fun getBlockByPosition(position: Position): Block {
-        return this.value.getBlockByPosition(position)
+        return this.blocks.getBlockByPosition(position)
+    }
+
+    fun checkAlreadyOpened(position: Position): Boolean {
+        return getBlockByPosition(position).isOpened
+    }
+
+    fun open(position: Position) {
+        val block = getBlockByPosition(position)
+        block.open()
+        if (block is NormalBlock) {
+            if (block.isZeroSurroundingMines()) {
+                openNormalBlock(block)
+            }
+        }
+    }
+
+    private fun openNormalBlock(block: NormalBlock) {
+        val que = ArrayDeque<NormalBlock>()
+        que.add(block)
+        while (que.isNotEmpty()) {
+            val normalBlock = que.removeFirst()
+            if (normalBlock.isZeroSurroundingMines()) {
+                val positions = normalBlock.position.getSurroundingPositions(gameSize)
+                val blocks = positions.values
+                    .map { getBlockByPosition(it) }
+                    .map { it as NormalBlock }
+                val isZeroSurroundingMinesBlocks = blocks.filter { it.isZeroSurroundingMines() && !it.isOpened }
+                blocks.forEach { it.open() }
+                que.addAll(isZeroSurroundingMinesBlocks)
+            }
+        }
     }
 
     private fun setNormalBlocks() {
-        val normalBlocks = this.value.findNormalBlocks()
-        val mineBlocks = this.value.findMineBlocks()
+        val normalBlocks = this.blocks.findNormalBlocks()
+        val mineBlocks = this.blocks.findMineBlocks()
 
         normalBlocks.forEach { normalBlock ->
             normalBlock.updateMarkerByAroundMines(mineBlocks)
@@ -26,7 +63,7 @@ value class GameMap private constructor(val value: Blocks) {
             repeat(gameSize.width) { width ->
                 blocks.addAll(generateBlocks(width, gameSize.height, minePositions))
             }
-            return GameMap(Blocks(blocks.toList()))
+            return GameMap(gameSize, Blocks(blocks.toList()))
         }
 
         private fun generateBlocks(
@@ -35,7 +72,7 @@ value class GameMap private constructor(val value: Blocks) {
             minePositions: Positions,
         ): List<Block> {
             return (0 until maxHeight).map { height ->
-                val position = Position(currentWidth, height)
+                val position = Position.fromApplication(currentWidth, height)
                 Block.from(position, minePositions)
             }.toList()
         }

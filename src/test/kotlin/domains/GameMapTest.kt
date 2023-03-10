@@ -12,11 +12,11 @@ internal class GameMapTest {
         val gameSize = GameSize(10, 10)
         val minePositions = Positions(
             listOf(
-                Position(0, 0),
-                Position(1, 2),
-                Position(3, 5),
-                Position(4, 7),
-                Position(8, 8),
+                Position.fromApplication(0, 0),
+                Position.fromApplication(1, 2),
+                Position.fromApplication(3, 5),
+                Position.fromApplication(4, 7),
+                Position.fromApplication(8, 8),
             )
         )
         val sut = GameMap
@@ -25,6 +25,6 @@ internal class GameMapTest {
         val actual = sut.from(gameSize = gameSize, minePositions = minePositions)
 
         // Assert
-        assertThat(actual.value.values.size).isEqualTo(100)
+        assertThat(actual.blocks.values.size).isEqualTo(100)
     }
 }
