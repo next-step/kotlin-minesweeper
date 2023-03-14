@@ -3,17 +3,15 @@ package domains
 @JvmInline
 value class Blocks(val values: List<Block>) {
 
-    fun isMineOpen(): Boolean {
-        val mineBlocks = values.filterIsInstance<MineBlock>()
-        mineBlocks.firstOrNull { it.isOpened } ?: return false
-        return true
-    }
+    fun isMineOpen(): Boolean =
+        values
+            .filterIsInstance<MineBlock>()
+            .any { it.isOpened }
 
-    fun isAllOpenNormalBlock(): Boolean {
-        val normalBlocks = values.filterIsInstance<NormalBlock>()
-        if (!normalBlocks.all { it.isOpened }) return false
-        return true
-    }
+    fun isAllOpenNormalBlock(): Boolean =
+        values
+            .filterIsInstance<NormalBlock>()
+            .all { it.isOpened }
 
     fun getBlockByPosition(position: Position): Block {
         return this.values.single { it.position == position }

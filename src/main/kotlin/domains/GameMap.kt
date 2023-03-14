@@ -5,11 +5,19 @@ class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
         this.setNormalBlocks()
     }
 
-    fun checkOpenedMineBlock(): OpenResult {
+    fun evaluateGameResult(): OpenResult {
+        val gameResultForLose = evaluateGameResultForLose()
+        if (gameResultForLose == OpenResult.LOSE) {
+            return gameResultForLose
+        }
+        return evaluateGameResultForWin()
+    }
+
+    private fun evaluateGameResultForLose(): OpenResult {
         return OpenResult.fromMineBlockCheck(blocks.isMineOpen())
     }
 
-    fun isWin(): OpenResult {
+    private fun evaluateGameResultForWin(): OpenResult {
         return OpenResult.fromNormalBlockCheck(blocks.isAllOpenNormalBlock())
     }
 
@@ -32,9 +40,8 @@ class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
     }
 
     private fun openNormalBlock(block: NormalBlock) {
-        val que = ArrayDeque<NormalBlock>()
-        que.add(block)
-        while (que.isNotEmpty()) {
+        val que = ArrayDeque<NormalBlock>().apply { this.add(block) }
+        do {
             val normalBlock = que.removeFirst()
             if (normalBlock.isZeroSurroundingMines()) {
                 val positions = normalBlock.position.getSurroundingPositions(gameSize)
@@ -45,7 +52,7 @@ class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
                 blocks.forEach { it.open() }
                 que.addAll(isZeroSurroundingMinesBlocks)
             }
-        }
+        } while (que.isNotEmpty())
     }
 
     private fun setNormalBlocks() {

@@ -34,14 +34,11 @@ fun pickOpen(gameMap: GameMap): OpenResult {
         }
         gameMap.open(openPosition)
 
-        openResult = gameMap.checkOpenedMineBlock()
-        if (openResult == OpenResult.LOSE) {
+        openResult = gameMap.evaluateGameResult()
+        if (openResult == OpenResult.LOSE || openResult == OpenResult.WIN) {
             break
         }
-        openResult = gameMap.isWin()
-        if (openResult == OpenResult.WIN) {
-            break
-        }
+
         Output.showMap(gameMap)
     }
     return openResult
