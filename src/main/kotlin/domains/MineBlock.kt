@@ -1,5 +1,11 @@
 package domains
 
+import views.Output
+
 class MineBlock(override val position: Position) : Block(position) {
-    override val marker: String = "*"
+
+    override fun openBlock() {
+        Output.clickMineBlock()
+        isOpened = true
+    }
 }

@@ -1,7 +1,14 @@
 package domains
 
-abstract class Block protected constructor(open val position: Position) {
-    abstract val marker: String
+abstract class Block constructor(open val position: Position) {
+    open var marker: String = "C"
+    var isOpened: Boolean = false
+    protected abstract fun openBlock()
+
+    fun open() {
+        openBlock()
+        isOpened = true
+    }
 
     companion object {
         fun from(position: Position, minePositions: Positions): Block {
