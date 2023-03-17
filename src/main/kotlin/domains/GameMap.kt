@@ -13,14 +13,6 @@ class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
         return evaluateGameResultForWin()
     }
 
-    private fun evaluateGameResultForLose(): OpenResult {
-        return OpenResult.fromMineBlockCheck(blocks.isMineOpen())
-    }
-
-    private fun evaluateGameResultForWin(): OpenResult {
-        return OpenResult.fromNormalBlockCheck(blocks.isAllOpenNormalBlock())
-    }
-
     fun getBlockByPosition(position: Position): Block {
         return this.blocks.getBlockByPosition(position)
     }
@@ -37,6 +29,14 @@ class GameMap private constructor(val gameSize: GameSize, val blocks: Blocks) {
                 openNormalBlock(block)
             }
         }
+    }
+
+    private fun evaluateGameResultForLose(): OpenResult {
+        return OpenResult.fromMineBlockCheck(blocks.isMineOpen())
+    }
+
+    private fun evaluateGameResultForWin(): OpenResult {
+        return OpenResult.fromNormalBlockCheck(blocks.isAllOpenNormalBlock())
     }
 
     private fun openNormalBlock(block: NormalBlock) {
