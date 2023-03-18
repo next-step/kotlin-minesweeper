@@ -18,4 +18,32 @@ class PositionTest {
         // Assert
         assertThat(act.values.size).isEqualTo(5)
     }
+
+    @Test
+    @DisplayName("사용자에게 입력값을 받아서 생성한다")
+    fun `sut create position when user input data`() {
+        // Arrange
+        val sut = Position
+
+        // Act
+        val act = sut.fromUserInput(10, 5)
+
+        // Assert
+        assertThat(act.x).isEqualTo(9)
+        assertThat(act.y).isEqualTo(4)
+    }
+
+    @Test
+    @DisplayName("앱에서 생성한다")
+    fun `sut create position by application`() {
+        // Arrange
+        val sut = Position
+
+        // Act
+        val act = sut.fromApplication(10, 5)
+
+        // Assert
+        assertThat(act.x).isEqualTo(10)
+        assertThat(act.y).isEqualTo(5)
+    }
 }
