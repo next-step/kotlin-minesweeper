@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-data class Point(
+data class MinePoint(
     val x: Int,
     val y: Int,
     val symbol: SymbolType

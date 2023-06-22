@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 enum class SymbolType(val value: String) {
+    BLIND("C"),
     ONE("1"),
     TWO("2"),
     THREE("3"),

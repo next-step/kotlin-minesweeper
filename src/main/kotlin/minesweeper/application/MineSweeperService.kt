@@ -1,10 +1,10 @@
 package minesweeper.application
 
 import minesweeper.request.MineBoardCreateRequest
-import minesweeper.strategy.MineCreateStrategy
+import minesweeper.strategy.MineBoardCreateStrategy
 
 class MineSweeperService(
-    private val mineCreateStrategy: MineCreateStrategy
+    private val mineBoardCreateStrategy: MineBoardCreateStrategy
 ) {
 
     fun createMineBoard(request: MineBoardCreateRequest) {

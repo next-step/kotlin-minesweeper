@@ -1,4 +1,4 @@
 package minesweeper.domain
 
 @JvmInline
-value class Line(private val points: List<Point>) : List<Point> by points
+value class Line(private val minePoints: List<MinePoint>) : List<MinePoint> by minePoints
