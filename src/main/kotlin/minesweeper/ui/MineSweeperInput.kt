@@ -1,3 +1,7 @@
 package minesweeper.ui
 
-interface MineSweeperInput
+interface MineSweeperInput {
+    fun requestWidth(): Int
+    fun requestHeight(): Int
+    fun requestMineCapacity(): Int
+}

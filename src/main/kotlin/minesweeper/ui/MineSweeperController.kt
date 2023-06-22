@@ -1,6 +1,7 @@
 package minesweeper.ui
 
 import minesweeper.application.MineSweeperService
+import minesweeper.request.MineBoardCreateRequest
 
 class MineSweeperController(
     private val mineSweeperInput: MineSweeperInput,
@@ -9,6 +10,14 @@ class MineSweeperController(
 ) {
 
     fun play() {
-        TODO("지뢰찾기 진행 로직 구현 필요")
+        val request = MineBoardCreateRequest(
+            width = mineSweeperInput.requestWidth(),
+            height = mineSweeperInput.requestHeight(),
+            mineCapacity = mineSweeperInput.requestMineCapacity()
+        )
+
+        val mineBoard = mineSweeperService.createMineBoard(request)
+
+        mineSweeperOutput.printMineBoard(mineBoard)
     }
 }
