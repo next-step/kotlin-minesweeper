@@ -6,6 +6,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import minesweeper.domain.PositiveNumber
 
 class PositiveTest : StringSpec({
 
