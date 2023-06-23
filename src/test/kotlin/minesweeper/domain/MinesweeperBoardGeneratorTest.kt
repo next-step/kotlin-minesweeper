@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.throwable.shouldHaveMessage
+import minesweeper.domain.flag.MineFlag
 
 class MinesweeperBoardGeneratorTest : BehaviorSpec({
 
@@ -38,10 +39,15 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
                 mineCount = mine,
             )
 
+            val blocks = board.sortedBlocks()
+
             Then(name = "지뢰찾기 객체가 생성된다.") {
-                board.sortedBlocks() shouldHaveSize (width * height).value
+                blocks shouldHaveSize (width * height).value
+            }
+
+            Then(name = "입력한 지뢰 개수만큼 개수가 생성된다.") {
+                blocks.map { it.flag }.filterIsInstance<MineFlag>() shouldHaveSize mine.value
             }
         }
     }
-
 })
