@@ -6,8 +6,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import minesweeper.domain.BoardPoint
-import minesweeper.domain.Point
+import minesweeper.domain.BoardSize
 
 class BoardPointTest : StringSpec({
 
@@ -20,7 +19,7 @@ class BoardPointTest : StringSpec({
             row(99),
             row(0),
         ) { pointNumber ->
-            val point = BoardPoint(value = pointNumber)
+            val point = BoardSize(value = pointNumber)
 
             point.value shouldBe pointNumber
         }
@@ -34,7 +33,7 @@ class BoardPointTest : StringSpec({
             row(101),
         ) { pointNumber ->
             val exception = shouldThrow<IllegalArgumentException> {
-                BoardPoint(value = pointNumber)
+                BoardSize(value = pointNumber)
             }
 
             exception shouldHaveMessage "점은 ${0..100} 사이에 위치해야 합니다. 입력값 : $pointNumber"
