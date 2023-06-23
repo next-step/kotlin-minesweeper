@@ -33,15 +33,15 @@ object MinesweeperBoardGenerator {
         .run(::MinesweeperBoard)
 
     private fun createBlock(
-        boardSize: BoardSize,
         x: Int,
+        boardSize: BoardSize,
         flagDeque: ArrayDeque<Flag>,
     ): List<Block> = boardSize.rangeHeight()
         .map { y ->
             Block(
                 coordinate = Coordinate(
-                    x = Point(value = x),
-                    y = Point(value = y),
+                    x = x,
+                    y = y,
                 ),
                 flag = flagDeque.removeLast(),
             )

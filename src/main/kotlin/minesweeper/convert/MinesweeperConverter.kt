@@ -6,7 +6,7 @@ import minesweeper.view.model.BlockRowsView
 import minesweeper.view.model.BoardView
 
 fun MinesweeperBoard.convertToView(): BoardView = this.sortedBlocks()
-    .groupBy { it.coordinate.x.value }
+    .groupBy { it.coordinate.x }
     .mapValues { it.value.convertToView() }
     .run(::BoardView)
 
