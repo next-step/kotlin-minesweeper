@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.BoardSize
 
-class BoardPointTest : StringSpec({
+class BoardSizeTest : StringSpec({
 
     "범위 내 위치하는 점을 입력하면 정상적으로 생성된다." {
         forAll(
@@ -18,10 +18,10 @@ class BoardPointTest : StringSpec({
             row(9),
             row(99),
             row(0),
-        ) { pointNumber ->
-            val point = BoardSize(value = pointNumber)
+        ) { size ->
+            val boardSize = BoardSize(width = size, height = size)
 
-            point.value shouldBe pointNumber
+            boardSize.area() shouldBe size * size
         }
     }
 
@@ -31,12 +31,12 @@ class BoardPointTest : StringSpec({
             row(-10),
             row(1000),
             row(101),
-        ) { pointNumber ->
+        ) { size ->
             val exception = shouldThrow<IllegalArgumentException> {
-                BoardSize(value = pointNumber)
+                BoardSize(width = size, height = size)
             }
 
-            exception shouldHaveMessage "점은 ${0..100} 사이에 위치해야 합니다. 입력값 : $pointNumber"
+            exception shouldHaveMessage "점은 ${0..100} 사이에 위치해야 합니다. 입력값 : $size, $size"
         }
     }
 })

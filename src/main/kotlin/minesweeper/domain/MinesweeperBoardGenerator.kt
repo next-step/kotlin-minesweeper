@@ -7,8 +7,8 @@ import minesweeper.domain.flag.MineFlag
 
 object MinesweeperBoardGenerator {
 
-    fun generate(width: BoardSize, height: BoardSize, mineCount: PositiveNumber): MinesweeperBoard {
-        val minesweeperArea = (width * height).value
+    fun generate(boardSize: BoardSize, mineCount: PositiveNumber): MinesweeperBoard {
+        val minesweeperArea = boardSize.area()
         val mineArea = mineCount.value
 
         require(value = minesweeperArea >= mineArea) {
@@ -19,26 +19,24 @@ object MinesweeperBoardGenerator {
         val emptyFlags = List(size = minesweeperArea - mineArea) { EmptyFlag() }
 
         return createMinesweeperBoard(
-            width = width,
-            height = height,
+            boardSize = boardSize,
             flagDeque = ArrayDeque(elements = (mineFlags + emptyFlags).shuffled()),
         )
     }
 
     private fun createMinesweeperBoard(
-        width: BoardSize,
-        height: BoardSize,
+        boardSize: BoardSize,
         flagDeque: ArrayDeque<Flag>,
-    ): MinesweeperBoard = width.rangeZeroToSize()
-        .flatMap { createBlock(height = height, x = it, flagDeque = flagDeque) }
+    ): MinesweeperBoard = boardSize.rangeWidth()
+        .flatMap { createBlock(boardSize = boardSize, x = it, flagDeque = flagDeque) }
         .associateBy { it.coordinate }
         .run(::MinesweeperBoard)
 
     private fun createBlock(
-        height: BoardSize,
+        boardSize: BoardSize,
         x: Int,
         flagDeque: ArrayDeque<Flag>,
-    ): List<Block> = height.rangeZeroToSize()
+    ): List<Block> = boardSize.rangeHeight()
         .map { y ->
             Block(
                 coordinate = Coordinate(

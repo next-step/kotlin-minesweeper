@@ -1,17 +1,18 @@
 package minesweeper.domain
 
-@JvmInline
-value class BoardSize(val value: Int) {
+class BoardSize(private val width: Int, private val height: Int) {
 
     init {
-        require(value = value in BOARD_SIZE_RANGE) {
-            "점은 $BOARD_SIZE_RANGE 사이에 위치해야 합니다. 입력값 : $value"
+        require(value = width in BOARD_SIZE_RANGE && height in BOARD_SIZE_RANGE) {
+            "점은 $BOARD_SIZE_RANGE 사이에 위치해야 합니다. 입력값 : $width, $height"
         }
     }
 
-    operator fun times(boardSize: BoardSize): BoardSize = BoardSize(value = boardSize.value * this.value)
+    fun area(): Int = width * height
 
-    fun rangeZeroToSize(): IntRange = START_INDEX until value
+    fun rangeWidth(): IntRange = START_INDEX until width
+
+    fun rangeHeight(): IntRange = START_INDEX until height
 
     companion object {
         private const val START_INDEX: Int = 0

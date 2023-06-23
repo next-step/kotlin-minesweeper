@@ -8,10 +8,16 @@ import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
 fun main() {
+    val boardSize = BoardSize(
+        width = InputView.readWidth(),
+        height = InputView.readHeight(),
+    )
+
+    val mineCount = PositiveNumber(value = InputView.readMineCount())
+
     val minesweeperBoard = MinesweeperBoardGenerator.generate(
-        width = BoardSize(value = InputView.readWidth()),
-        height = BoardSize(value = InputView.readHeight()),
-        mineCount = PositiveNumber(value = InputView.readMineCount()),
+        boardSize = boardSize,
+        mineCount = mineCount,
     )
 
     ResultView.printCurrentMinesweeperBoard(
