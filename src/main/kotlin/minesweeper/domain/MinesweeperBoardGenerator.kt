@@ -17,7 +17,7 @@ object MinesweeperBoardGenerator {
         boardSize: BoardSize,
         mineCount: PositiveNumber,
     ): Map<Coordinate, Block> {
-        val minesweeperArea = boardSize.area()
+        val minesweeperArea = boardSize.area
         val mineArea = mineCount.value
 
         require(value = minesweeperArea >= mineArea) {
@@ -57,7 +57,7 @@ object MinesweeperBoardGenerator {
 
     private fun updatedAroundMineBoard(board: Map<Coordinate, Block>): MinesweeperBoard {
         val mineAroundCoordinateMap = board.filter { it.value.flag is MineFlag }
-            .flatMap { it.key.aroundCoordinates() }
+            .flatMap { it.key.getAroundCoordinates() }
             .groupingBy { it }
             .eachCount()
 

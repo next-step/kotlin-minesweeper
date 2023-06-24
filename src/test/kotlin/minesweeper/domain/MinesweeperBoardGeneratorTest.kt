@@ -25,7 +25,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
             }
 
             Then(name = "지뢰의 수는 보드의 영역보다 클 수 없다는 에러가 발생한다.") {
-                val area = invalidBoardSize.area()
+                val area = invalidBoardSize.area
                 exception shouldHaveMessage "지뢰의 수는 ${area}보다 클 수 없습니다. 지뢰 수 : ${invalidMine.value}"
             }
         }
@@ -42,7 +42,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
             val blocks = board.sortedBlocks()
 
             Then(name = "지뢰찾기 객체가 생성된다.") {
-                blocks shouldHaveSize boardSize.area()
+                blocks shouldHaveSize boardSize.area
             }
 
             Then(name = "입력한 지뢰 개수만큼 개수가 생성된다.") {

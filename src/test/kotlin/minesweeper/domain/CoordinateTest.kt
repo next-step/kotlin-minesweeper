@@ -8,7 +8,7 @@ class CoordinateTest : StringSpec({
 
     "좌표를 생성한 뒤 주변 8개의 좌표를 받아올 수 있다." {
         val coordinate = Coordinate(x = 10, y = 5)
-        val aroundCoordinates = coordinate.aroundCoordinates()
+        val aroundCoordinates = coordinate.getAroundCoordinates()
 
         aroundCoordinates shouldHaveSize 8
         aroundCoordinates shouldContainAll listOf(
