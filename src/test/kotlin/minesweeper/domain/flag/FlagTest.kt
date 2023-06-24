@@ -11,12 +11,12 @@ class FlagTest : StringSpec({
 
     "플래그에서 상태를 바꿀 수 있으며, 현재 상태를 알 수 있다." {
         val blockFlag = BlockFlag()
-        blockFlag.currentState() shouldBe "0"
+        blockFlag.getCurrentState() shouldBe "0"
 
         blockFlag.updateAroundMineCount(aroundMineCount = 8)
-        blockFlag.currentState() shouldBe "8"
+        blockFlag.getCurrentState() shouldBe "8"
 
-        MineFlag().currentState() shouldBe "*"
+        MineFlag().getCurrentState() shouldBe "*"
     }
 
     "플래그에서 상태를 바꿀 수 있는 값은 0부터 8까지다." {

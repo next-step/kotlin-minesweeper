@@ -12,7 +12,7 @@ class BlockFlag : Flag() {
         this.aroundMineCount = aroundMineCount
     }
 
-    override fun currentState(): String = aroundMineCount.toString()
+    override fun getCurrentState(): String = aroundMineCount.toString()
 
     companion object {
         private const val DEFAULT_MINE_COUNT: Int = 0
