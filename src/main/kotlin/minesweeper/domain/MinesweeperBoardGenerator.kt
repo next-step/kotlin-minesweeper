@@ -1,13 +1,22 @@
 package minesweeper.domain
 
 import minesweeper.domain.board.MinesweeperBoard
-import minesweeper.domain.flag.EmptyFlag
+import minesweeper.domain.flag.BlockFlag
 import minesweeper.domain.flag.Flag
 import minesweeper.domain.flag.MineFlag
 
 object MinesweeperBoardGenerator {
 
     fun generate(boardSize: BoardSize, mineCount: PositiveNumber): MinesweeperBoard {
+        val initBoard = generateBoard(boardSize = boardSize, mineCount = mineCount)
+
+        return updatedAroundMineBoard(board = initBoard)
+    }
+
+    private fun generateBoard(
+        boardSize: BoardSize,
+        mineCount: PositiveNumber,
+    ): Map<Coordinate, Block> {
         val minesweeperArea = boardSize.area()
         val mineArea = mineCount.value
 
@@ -16,21 +25,20 @@ object MinesweeperBoardGenerator {
         }
 
         val mineFlags = List(size = mineArea) { MineFlag() }
-        val emptyFlags = List(size = minesweeperArea - mineArea) { EmptyFlag() }
+        val blockFlags = List(size = minesweeperArea - mineArea) { BlockFlag() }
 
-        return createMinesweeperBoard(
+        return createMinesweeperMap(
             boardSize = boardSize,
-            flagDeque = ArrayDeque(elements = (mineFlags + emptyFlags).shuffled()),
+            flagDeque = ArrayDeque(elements = (mineFlags + blockFlags).shuffled()),
         )
     }
 
-    private fun createMinesweeperBoard(
+    private fun createMinesweeperMap(
         boardSize: BoardSize,
         flagDeque: ArrayDeque<Flag>,
-    ): MinesweeperBoard = boardSize.rangeWidth()
+    ): Map<Coordinate, Block> = boardSize.rangeWidth()
         .flatMap { createBlock(boardSize = boardSize, x = it, flagDeque = flagDeque) }
         .associateBy { it.coordinate }
-        .run(::MinesweeperBoard)
 
     private fun createBlock(
         x: Int,
@@ -46,4 +54,17 @@ object MinesweeperBoardGenerator {
                 flag = flagDeque.removeLast(),
             )
         }
+
+    private fun updatedAroundMineBoard(board: Map<Coordinate, Block>): MinesweeperBoard {
+        val mineAroundCoordinateMap = board.filter { it.value.flag is MineFlag }
+            .flatMap { it.key.aroundCoordinates() }
+            .groupingBy { it }
+            .eachCount()
+
+        mineAroundCoordinateMap.forEach { (coordinate, aroundMineCount) ->
+            board[coordinate]?.updateBlock(aroundMineCount = aroundMineCount)
+        }
+
+        return MinesweeperBoard(board = board)
+    }
 }
