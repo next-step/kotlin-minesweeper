@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-data class Coordinate(val x: Int, val y: Int) {
+data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
     fun getAroundCoordinates(): List<Coordinate> = x.generateAroundCoordinates()
         .flatMap(::createAroundCoordinates)
@@ -11,14 +11,13 @@ data class Coordinate(val x: Int, val y: Int) {
 
     private fun Int.generateAroundCoordinates(): List<Int> = listOf(this, this - AROUND_BLOCK, this + AROUND_BLOCK)
 
-    operator fun compareTo(other: Coordinate): Int = compareValuesBy(
-        a = this,
-        b = other,
-        { x },
-        { y },
-    )
-
     companion object {
         private const val AROUND_BLOCK: Int = 1
+        private const val EQUALS: Int = 0
+    }
+
+    override fun compareTo(other: Coordinate): Int = when (val xOrder = this.x compareTo other.x) {
+        EQUALS -> this.y compareTo other.y
+        else -> xOrder
     }
 }
