@@ -4,7 +4,7 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
     fun getAroundCoordinates(): List<Coordinate> = x.generateAroundCoordinates()
         .flatMap(::createAroundCoordinates)
-        .filter { this != it }
+        .filterNot { this == it }
 
     private fun createAroundCoordinates(x: Int): List<Coordinate> =
         y.generateAroundCoordinates().map { y -> Coordinate(x = x, y = y) }
