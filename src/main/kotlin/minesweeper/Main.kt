@@ -28,4 +28,6 @@ fun main() {
 
         currentBoardEvent = { ResultView.printCurrentMinesweeperBoard(boardView = it.convertToView()) },
     )
+
+    ResultView.printMatchState(matchStateView = matchState.convertToView())
 }

@@ -2,8 +2,10 @@ package minesweeper.convert
 
 import minesweeper.domain.Block
 import minesweeper.domain.board.MinesweeperBoard
+import minesweeper.domain.flag.MatchState
 import minesweeper.view.model.BlockRowsView
 import minesweeper.view.model.BoardView
+import minesweeper.view.model.MatchStateView
 
 fun MinesweeperBoard.convertToView(): BoardView = this.sortedBlocks()
     .groupBy { it.coordinate.x }
@@ -12,3 +14,5 @@ fun MinesweeperBoard.convertToView(): BoardView = this.sortedBlocks()
 
 fun List<Block>.convertToView(): BlockRowsView = this.map { it.blockState.exposureName }
     .run(::BlockRowsView)
+
+fun MatchState.convertToView(): MatchStateView = MatchStateView.valueOf(value = this.name)

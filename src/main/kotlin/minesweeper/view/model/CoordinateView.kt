@@ -7,14 +7,17 @@ class CoordinateView(inputCoordinate: String) {
 
     init {
         val (x, y) = inputCoordinate.split(DELIMITER, limit = INPUT_LIMIT)
-            .map { it.toInt() }
+            .map {
+                it.trim()
+                    .toInt()
+            }
 
         this.x = x
         this.y = y
     }
 
     companion object {
-        private const val DELIMITER: String = ", "
+        private const val DELIMITER: Char = ','
         private const val INPUT_LIMIT: Int = 2
     }
 }
