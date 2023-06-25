@@ -21,7 +21,7 @@ class BoardSizeTest : StringSpec({
         ) { size ->
             val boardSize = BoardSize(width = size, height = size)
 
-            boardSize.area() shouldBe size * size
+            boardSize.area shouldBe size * size
         }
     }
 

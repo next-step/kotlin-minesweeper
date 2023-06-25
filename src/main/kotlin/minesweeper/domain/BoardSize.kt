@@ -8,7 +8,7 @@ class BoardSize(private val width: Int, private val height: Int) {
         }
     }
 
-    fun area(): Int = width * height
+    val area: Int = width * height
 
     fun rangeWidth(): IntRange = START_INDEX until width
 

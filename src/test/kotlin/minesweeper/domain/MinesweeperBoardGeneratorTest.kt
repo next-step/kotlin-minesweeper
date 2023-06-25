@@ -2,8 +2,12 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import minesweeper.domain.flag.BlockFlag
 import minesweeper.domain.flag.MineFlag
 
 class MinesweeperBoardGeneratorTest : BehaviorSpec({
@@ -21,7 +25,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
             }
 
             Then(name = "지뢰의 수는 보드의 영역보다 클 수 없다는 에러가 발생한다.") {
-                val area = invalidBoardSize.area()
+                val area = invalidBoardSize.area
                 exception shouldHaveMessage "지뢰의 수는 ${area}보다 클 수 없습니다. 지뢰 수 : ${invalidMine.value}"
             }
         }
@@ -38,11 +42,37 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
             val blocks = board.sortedBlocks()
 
             Then(name = "지뢰찾기 객체가 생성된다.") {
-                blocks shouldHaveSize boardSize.area()
+                blocks shouldHaveSize boardSize.area
             }
 
             Then(name = "입력한 지뢰 개수만큼 개수가 생성된다.") {
                 blocks.map { it.flag }.filterIsInstance<MineFlag>() shouldHaveSize mine.value
+            }
+        }
+    }
+
+    Given(name = "2 X 2칸 보드가 주어지면") {
+        val boardSize = BoardSize(width = 2, height = 2)
+
+        Then(name = "지뢰 개수에 따라 노출 블록이 달라진다.") {
+            forAll(
+                row(3),
+                row(2),
+                row(1),
+            ) { mineCount ->
+                val mine = PositiveNumber(value = mineCount)
+
+                val board = MinesweeperBoardGenerator.generate(
+                    boardSize = boardSize,
+                    mineCount = mine,
+                )
+
+                val blocks = board.sortedBlocks()
+                    .filter { it.flag is BlockFlag }
+
+                blocks.forEach {
+                    it.flag.getCurrentState() shouldBe mineCount.toString()
+                }
             }
         }
     }
