@@ -9,7 +9,6 @@ object ResultView {
 
     fun printGameStartMessage() = println(message = GAME_START_MESSAGE)
 
-
     fun printCurrentMinesweeperBoard(boardView: BoardView) = boardView.forEach { _, rows ->
         println(message = rows.toString())
     }
