@@ -69,7 +69,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
                     .filterNot { it.hasMine }
 
                 blocks.forEach {
-                    it.open().exposureName shouldBe mineCount.toString()
+                    it.open().value shouldBe mineCount.toString()
                 }
             }
         }
