@@ -32,7 +32,7 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
     ): MatchState = when (openBlock(coordinate = openCoordinate)) {
         BlockState.MINE -> MatchState.LOSE
         BlockState.ZERO -> {
-            openAroundBlock(coordinates = openCoordinate.getAroundCoordinates())
+            openAroundBlock(coordinates = openCoordinate.getFourDirections())
             runGameEvent(currentBoardEvent = currentBoardEvent, openCoordinateEvent = openCoordinateEvent)
         }
 
@@ -53,7 +53,7 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
     }.open()
 
     private fun openAroundBlock(coordinates: List<Coordinate>) {
-        coordinates.flatMap { it.getAroundCoordinates() }
+        coordinates.flatMap { it.getFourDirections() }
             .mapNotNull { board[it] }
             .filter { it.open() == BlockState.ZERO }
             .takeIf { it.isNotEmpty() }

@@ -41,7 +41,7 @@ object MinesweeperBoardGenerator {
             Block(coordinate = boardCoordinates.removeLast(), flag = MineFlag())
         }
 
-        val mineAroundCoordinateMap = mineBlocks.flatMap { it.coordinate.getAroundCoordinates() }
+        val mineAroundCoordinateMap = mineBlocks.flatMap { it.coordinate.getEightDirections() }
             .groupingBy { it }
             .eachCount()
 
