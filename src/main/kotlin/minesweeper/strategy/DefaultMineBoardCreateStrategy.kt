@@ -14,7 +14,7 @@ object DefaultMineBoardCreateStrategy : MineBoardCreateStrategy() {
         }
 
         val symbols = (0 until area).map {
-            if (it < request.mineCapacity) SymbolType.MINE else SymbolType.BLIND
+            if (it < request.mineCapacity) SymbolType.MINE else SymbolType.ZERO
         }.shuffled()
 
         return MineBoard(

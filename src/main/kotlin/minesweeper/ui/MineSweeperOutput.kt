@@ -9,6 +9,7 @@ sealed class MineSweeperOutput {
 
     protected fun convertToSymbol(point: MinePoint): String = when (point.symbol) {
         SymbolType.BLIND -> "C"
+        SymbolType.ZERO -> "0"
         SymbolType.MINE -> "*"
         SymbolType.ONE -> "1"
         SymbolType.TWO -> "2"
