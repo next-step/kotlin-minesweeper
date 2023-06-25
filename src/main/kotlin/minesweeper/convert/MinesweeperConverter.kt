@@ -9,7 +9,7 @@ import minesweeper.view.model.BoardView
 import minesweeper.view.model.MatchStateView
 
 fun MinesweeperBoard.convertToView(): BoardView = this.sortedBlocks()
-    .groupBy { it.coordinate.x }
+    .groupBy { it.coordinate.y }
     .mapValues { it.value.convertToView() }
     .run(::BoardView)
 
