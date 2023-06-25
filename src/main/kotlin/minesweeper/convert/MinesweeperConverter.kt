@@ -10,5 +10,5 @@ fun MinesweeperBoard.convertToView(): BoardView = this.sortedBlocks()
     .mapValues { it.value.convertToView() }
     .run(::BoardView)
 
-fun List<Block>.convertToView(): BlockRowsView = this.map { it.flag.getCurrentState() }
+fun List<Block>.convertToView(): BlockRowsView = this.map { it.flag.blockState.exposureName }
     .run(::BlockRowsView)

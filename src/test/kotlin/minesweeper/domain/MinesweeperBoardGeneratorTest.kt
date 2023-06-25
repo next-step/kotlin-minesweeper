@@ -71,7 +71,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
                     .filter { it.flag is BlockFlag }
 
                 blocks.forEach {
-                    it.flag.getCurrentState() shouldBe mineCount.toString()
+                    it.flag.blockState.exposureName shouldBe mineCount.toString()
                 }
             }
         }
