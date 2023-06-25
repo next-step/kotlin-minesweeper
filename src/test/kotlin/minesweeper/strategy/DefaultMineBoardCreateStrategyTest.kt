@@ -8,7 +8,7 @@ import minesweeper.domain.SymbolType
 import minesweeper.request.MinesCreateRequest
 
 class DefaultMineBoardCreateStrategyTest : BehaviorSpec({
-    val mineBoardCreateStrategy = DefaultMineBoardCreateStrategy()
+    val mineBoardCreateStrategy = DefaultMineBoardCreateStrategy
 
     Given("유효한 높이와 너비정보가 있다.") {
         val width = 10

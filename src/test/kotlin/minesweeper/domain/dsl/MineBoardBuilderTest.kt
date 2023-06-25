@@ -12,7 +12,7 @@ class MineBoardBuilderTest : BehaviorSpec({
         val width = 10
         val height = 8
         val mineCapacity = 20
-        val strategy = DefaultMineBoardCreateStrategy()
+        val strategy = DefaultMineBoardCreateStrategy
 
         When("모든 유효한 값으로 지뢰찾기 생성 DSL을 호출할 경우 ") {
             val actual = buildMineBoard {

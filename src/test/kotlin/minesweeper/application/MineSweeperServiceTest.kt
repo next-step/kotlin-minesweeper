@@ -3,32 +3,34 @@ package minesweeper.application
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.SymbolType
+import minesweeper.domain.SymbolType.BLIND
+import minesweeper.domain.SymbolType.MINE
+import minesweeper.fixture.TestMineBoardCreateStrategy
 import minesweeper.request.MineBoardCreateRequest
-import minesweeper.strategy.DefaultMineBoardCreateStrategy
 
 class MineSweeperServiceTest : FunSpec({
-    val service = MineSweeperService(mineBoardCreateStrategy = DefaultMineBoardCreateStrategy())
+    val service = MineSweeperService(mineBoardCreateStrategy = TestMineBoardCreateStrategy)
 
     test("유효한 요청 정보를 전달하면 지뢰찾기 보드를 생성해 반환한다.") {
-        val width = 5
-        val height = 5
-        val mineCapacity = 5
-        val actual = service.createMineBoard(
-            request = MineBoardCreateRequest(
-                height = height, width = width, mineCapacity = mineCapacity
-            )
+        val request = MineBoardCreateRequest(height = 3, width = 3, mineCapacity = 5)
+        val inputLines = listOf(
+            listOf(BLIND, MINE, BLIND),
+            listOf(BLIND, MINE, MINE),
+            listOf(MINE, BLIND, MINE)
         )
 
-        actual.height shouldBe height
-        actual.width shouldBe width
+        TestMineBoardCreateStrategy.updateBoardSetUp(input = inputLines.flatten())
 
-        actual.lines shouldHaveSize height
-        actual.lines.forEach {
-            it shouldHaveSize width
+        service.createMineBoard(request).apply {
+            height shouldBe request.height
+            width shouldBe request.width
+            lines shouldHaveSize request.height
+
+            lines.zip(inputLines) { line, expectedLine ->
+                line.zip(expectedLine) { cell, expectedCell ->
+                    cell.symbol shouldBe expectedCell
+                }
+            }
         }
-        actual.lines.sumOf {
-            it.count { point -> point.symbol == SymbolType.MINE }
-        } shouldBe mineCapacity
     }
 })
