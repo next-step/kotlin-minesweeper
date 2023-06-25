@@ -11,13 +11,13 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
     private fun Int.generateAroundCoordinates(): List<Int> = listOf(this, this - AROUND_BLOCK, this + AROUND_BLOCK)
 
-    companion object {
-        private const val AROUND_BLOCK: Int = 1
-        private const val EQUALS: Int = 0
-    }
-
     override fun compareTo(other: Coordinate): Int = when (val xOrder = this.x compareTo other.x) {
         EQUALS -> this.y compareTo other.y
         else -> xOrder
+    }
+
+    companion object {
+        private const val AROUND_BLOCK: Int = 1
+        private const val EQUALS: Int = 0
     }
 }
