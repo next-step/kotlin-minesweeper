@@ -2,25 +2,30 @@ package minesweeper
 
 import minesweeper.convert.convertToView
 import minesweeper.domain.BoardSize
+import minesweeper.domain.Coordinate
 import minesweeper.domain.MinesweeperBoardGenerator
 import minesweeper.domain.PositiveNumber
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
 fun main() {
-    val boardSize = BoardSize(
-        width = InputView.readWidth(),
-        height = InputView.readHeight(),
-    )
-
-    val mineCount = PositiveNumber(value = InputView.readMineCount())
-
     val minesweeperBoard = MinesweeperBoardGenerator.generate(
-        boardSize = boardSize,
-        mineCount = mineCount,
+        boardSize = BoardSize(
+            width = InputView.readWidth(),
+            height = InputView.readHeight(),
+        ),
+
+        mineCount = PositiveNumber(value = InputView.readMineCount()),
     )
 
-    ResultView.printCurrentMinesweeperBoard(
-        boardView = minesweeperBoard.convertToView(),
+    ResultView.printGameStartMessage()
+
+    val matchState = minesweeperBoard.start(
+        openCoordinateEvent = {
+            val openCoordinate = InputView.readOpenCoordinate()
+            Coordinate(x = openCoordinate.x, y = openCoordinate.y)
+        },
+
+        currentBoardEvent = { ResultView.printCurrentMinesweeperBoard(boardView = it.convertToView()) },
     )
 }

@@ -12,6 +12,7 @@ enum class BlockState(val exposureName: String) {
     SIX(exposureName = "6"),
     SEVEN(exposureName = "7"),
     EIGHT(exposureName = "8"),
+    ALREADY_OPEN(exposureName = "T"),
     ;
 
     companion object {
