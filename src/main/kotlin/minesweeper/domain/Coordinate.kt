@@ -9,7 +9,7 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
     private fun createAroundCoordinates(x: Int): List<Coordinate> =
         y.generateAroundCoordinates().map { y -> Coordinate(x = x, y = y) }
 
-    private fun Int.generateAroundCoordinates(): List<Int> = listOf(this, this - AROUND_BLOCK, this + AROUND_BLOCK)
+    private fun Int.generateAroundCoordinates(): List<Int> = (this - AROUND_BLOCK..this + AROUND_BLOCK).toList()
 
     override fun compareTo(other: Coordinate): Int = when (val xOrder = this.x compareTo other.x) {
         EQUALS -> this.y compareTo other.y
