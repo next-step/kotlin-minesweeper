@@ -27,7 +27,7 @@ object MinesweeperBoardGenerator {
     private fun createShuffledCoordinates(boardSize: BoardSize): ArrayDeque<Coordinate> = boardSize.rangeWidth()
         .flatMap { createCoordinates(boardSize = boardSize, x = it) }
         .shuffled()
-        .run(::ArrayDeque)
+        .toCollection(ArrayDeque())
 
     private fun createCoordinates(x: Int, boardSize: BoardSize): List<Coordinate> = boardSize.rangeHeight()
         .map { y -> Coordinate(x = x, y = y) }
