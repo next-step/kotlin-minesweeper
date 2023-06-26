@@ -1,6 +1,6 @@
 package minesweeper.domain.flag
 
-sealed class Flag {
+sealed class Flag(private val blockState: BlockState) {
 
-    abstract fun getCurrentState(): String
+    fun getOpenedBlockStatus(): BlockState = blockState
 }

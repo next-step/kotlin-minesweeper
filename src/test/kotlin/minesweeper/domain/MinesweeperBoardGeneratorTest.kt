@@ -7,8 +7,6 @@ import io.kotest.data.row
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import minesweeper.domain.flag.BlockFlag
-import minesweeper.domain.flag.MineFlag
 
 class MinesweeperBoardGeneratorTest : BehaviorSpec({
 
@@ -46,7 +44,7 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
             }
 
             Then(name = "입력한 지뢰 개수만큼 개수가 생성된다.") {
-                blocks.map { it.flag }.filterIsInstance<MineFlag>() shouldHaveSize mine.value
+                blocks.filter { it.hasMine } shouldHaveSize mine.value
             }
         }
     }
@@ -68,10 +66,10 @@ class MinesweeperBoardGeneratorTest : BehaviorSpec({
                 )
 
                 val blocks = board.sortedBlocks()
-                    .filter { it.flag is BlockFlag }
+                    .filterNot { it.hasMine }
 
                 blocks.forEach {
-                    it.flag.getCurrentState() shouldBe mineCount.toString()
+                    it.open().value shouldBe mineCount
                 }
             }
         }

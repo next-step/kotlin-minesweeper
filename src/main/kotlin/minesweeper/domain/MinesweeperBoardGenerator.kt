@@ -2,21 +2,13 @@ package minesweeper.domain
 
 import minesweeper.domain.board.MinesweeperBoard
 import minesweeper.domain.flag.BlockFlag
-import minesweeper.domain.flag.Flag
 import minesweeper.domain.flag.MineFlag
 
 object MinesweeperBoardGenerator {
 
+    private const val DEFAULT_MINE_COUNT: Int = 0
+
     fun generate(boardSize: BoardSize, mineCount: PositiveNumber): MinesweeperBoard {
-        val initBoard = generateBoard(boardSize = boardSize, mineCount = mineCount)
-
-        return updatedAroundMineBoard(board = initBoard)
-    }
-
-    private fun generateBoard(
-        boardSize: BoardSize,
-        mineCount: PositiveNumber,
-    ): Map<Coordinate, Block> {
         val minesweeperArea = boardSize.area
         val mineArea = mineCount.value
 
@@ -24,47 +16,53 @@ object MinesweeperBoardGenerator {
             "지뢰의 수는 ${minesweeperArea}보다 클 수 없습니다. 지뢰 수 : $mineArea"
         }
 
-        val mineFlags = List(size = mineArea) { MineFlag() }
-        val blockFlags = List(size = minesweeperArea - mineArea) { BlockFlag() }
-
-        return createMinesweeperMap(
-            boardSize = boardSize,
-            flagDeque = ArrayDeque(elements = (mineFlags + blockFlags).shuffled()),
-        )
+        return createInitBlocks(
+            mineArea = mineArea,
+            boardCoordinates = createShuffledCoordinates(boardSize = boardSize),
+            minesweeperArea = minesweeperArea,
+        ).associateBy { it.coordinate }
+            .run(::MinesweeperBoard)
     }
 
-    private fun createMinesweeperMap(
-        boardSize: BoardSize,
-        flagDeque: ArrayDeque<Flag>,
-    ): Map<Coordinate, Block> = boardSize.rangeWidth()
-        .flatMap { createBlock(boardSize = boardSize, x = it, flagDeque = flagDeque) }
-        .associateBy { it.coordinate }
+    private fun createShuffledCoordinates(boardSize: BoardSize): ArrayDeque<Coordinate> = boardSize.rangeWidth()
+        .flatMap { createCoordinates(boardSize = boardSize, x = it) }
+        .shuffled()
+        .toCollection(ArrayDeque())
 
-    private fun createBlock(
-        x: Int,
-        boardSize: BoardSize,
-        flagDeque: ArrayDeque<Flag>,
-    ): List<Block> = boardSize.rangeHeight()
-        .map { y ->
-            Block(
-                coordinate = Coordinate(
-                    x = x,
-                    y = y,
-                ),
-                flag = flagDeque.removeLast(),
-            )
+    private fun createCoordinates(x: Int, boardSize: BoardSize): List<Coordinate> = boardSize.rangeHeight()
+        .map { y -> Coordinate(x = x, y = y) }
+
+    private fun createInitBlocks(
+        mineArea: Int,
+        boardCoordinates: ArrayDeque<Coordinate>,
+        minesweeperArea: Int,
+    ): List<Block> {
+        val mineBlocks = List(size = mineArea) {
+            Block(coordinate = boardCoordinates.removeLast(), flag = MineFlag())
         }
 
-    private fun updatedAroundMineBoard(board: Map<Coordinate, Block>): MinesweeperBoard {
-        val mineAroundCoordinateMap = board.filter { it.value.flag is MineFlag }
-            .flatMap { it.key.getAroundCoordinates() }
+        val mineAroundCoordinateMap = mineBlocks.flatMap { it.coordinate.getEightDirections() }
             .groupingBy { it }
             .eachCount()
 
-        mineAroundCoordinateMap.forEach { (coordinate, aroundMineCount) ->
-            board[coordinate]?.updateBlock(aroundMineCount = aroundMineCount)
+        val numberBlocks = List(size = minesweeperArea - mineArea) {
+            val coordinate = boardCoordinates.removeLast()
+            createNumberBlock(coordinate = coordinate, mineAroundCoordinateMap = mineAroundCoordinateMap)
         }
 
-        return MinesweeperBoard(board = board)
+        return mineBlocks + numberBlocks
     }
+
+    private fun createNumberBlock(
+        coordinate: Coordinate,
+        mineAroundCoordinateMap: Map<Coordinate, Int>,
+    ): Block = Block(
+        coordinate = coordinate,
+        flag = BlockFlag(
+            aroundMineCount = mineAroundCoordinateMap.getOrDefault(
+                key = coordinate,
+                defaultValue = DEFAULT_MINE_COUNT,
+            ),
+        ),
+    )
 }
