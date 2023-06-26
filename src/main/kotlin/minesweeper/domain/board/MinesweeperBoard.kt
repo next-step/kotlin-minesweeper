@@ -53,13 +53,12 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
     }.open()
 
     private fun openAroundBlock(coordinates: List<Coordinate>) {
-        coordinates.flatMap { it.getFourDirections() }
-            .mapNotNull { board[it] }
+        coordinates.mapNotNull { board[it] }
             .filter { it.open() == BlockState.ZERO }
             .takeIf { it.isNotEmpty() }
             ?.let { block ->
                 openAroundBlock(
-                    coordinates = block.map { it.coordinate },
+                    coordinates = block.flatMap { it.coordinate.getFourDirections() },
                 )
             }
     }
