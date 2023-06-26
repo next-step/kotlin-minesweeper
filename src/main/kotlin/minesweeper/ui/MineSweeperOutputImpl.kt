@@ -5,7 +5,7 @@ import minesweeper.domain.MineBoard
 
 private const val BOARD_DELIMITER = " "
 
-object MineSweeperOutputImpl : MineSweeperOutput {
+object MineSweeperOutputImpl : MineSweeperOutput() {
     override fun printMineBoard(mineBoard: MineBoard) {
         buildString {
             append("\n지뢰찾기 게임 시작\n")
@@ -16,7 +16,5 @@ object MineSweeperOutputImpl : MineSweeperOutput {
     }
 
     private fun convertToString(line: Line): String =
-        line.joinToString(separator = BOARD_DELIMITER) {
-            it.symbol.value
-        }
+        line.joinToString(separator = BOARD_DELIMITER) { convertToSymbol(it) }
 }

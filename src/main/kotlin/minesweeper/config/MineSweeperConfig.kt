@@ -31,6 +31,6 @@ object MineSweeperConfig {
     }
 
     private val mineBoardCreateStrategy: MineBoardCreateStrategy by lazy {
-        DefaultMineBoardCreateStrategy()
+        DefaultMineBoardCreateStrategy
     }
 }
