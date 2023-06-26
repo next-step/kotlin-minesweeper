@@ -12,29 +12,18 @@ class MineBoard(
         lines.flatten().forEach(::updateSymbol)
     }
 
-    private fun updateSymbol(minePoint: MinePoint) =
-        getAdjacentPoints(minePoint)
-            .filter { it.symbol == SymbolType.MINE }
-            .forEach { _ -> minePoint.updateNextSymbol() }
+    private fun updateSymbol(symbolPoint: SymbolPoint) =
+        getAdjacentPoints(symbolPoint)
+            .count { it.symbol == SymbolType.MINE }
+            .run(symbolPoint::updateSymbol)
 
-    private fun findPoint(x: Int, y: Int): MinePoint? =
-        when {
-            x in (0 until width) && y in (0 until height) -> lines[x][y]
-            else -> null
-        }
+    private fun getAdjacentPoints(point: SymbolPoint): List<SymbolPoint> =
+        findPoint(x = point.x, y = point.y).let(::getAdjacentPointsOf)
 
-    private fun getAdjacentPoints(point: MinePoint): List<MinePoint> {
-        val foundPoint = findPoint(x = point.x, y = point.y)
-        return if (foundPoint != null) {
-            getAdjacentPointsOf(foundPoint)
-        } else {
-            emptyList()
-        }
-    }
+    private fun getAdjacentPointsOf(point: SymbolPoint): List<SymbolPoint> =
+        AdjacentPoints.values().map { it.movePoint(point) }
+            .filter { it in lines }
+            .map { findPoint(x = it.x, y = it.y) }
 
-    private fun getAdjacentPointsOf(point: MinePoint): List<MinePoint> =
-        AdjacentPoints.values().mapNotNull {
-            val movingPoint = it.movePoint(point)
-            findPoint(x = movingPoint.x, y = movingPoint.y)
-        }
+    private fun findPoint(x: Int, y: Int): SymbolPoint = lines.findPoint(Point(x = x, y = y))
 }

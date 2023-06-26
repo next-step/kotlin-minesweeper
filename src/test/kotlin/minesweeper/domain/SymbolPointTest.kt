@@ -12,22 +12,23 @@ import minesweeper.domain.SymbolType.THREE
 import minesweeper.domain.SymbolType.TWO
 import minesweeper.domain.SymbolType.ZERO
 
-class MinePointTest : FunSpec({
+class SymbolPointTest : FunSpec({
 
-    test("지뢰 좌표 정보의 심볼이 0~7이라면 다음 심볼로 업데이트할 수 있다.") {
+    test("포인트의 심볼 정보를 업데이트할 수 있다.") {
         listOf(
-            ZERO to ONE,
-            ONE to TWO,
-            TWO to THREE,
-            THREE to FOUR,
-            FOUR to FIVE,
-            FIVE to SIX,
-            SIX to SEVEN,
-            SEVEN to EIGHT
+            0 to ZERO,
+            1 to ONE,
+            2 to TWO,
+            3 to THREE,
+            4 to FOUR,
+            5 to FIVE,
+            6 to SIX,
+            7 to SEVEN,
+            8 to EIGHT
         ).forEach { (current, expected) ->
-            val actual = MinePoint(x = 1, y = 1, symbol = current)
+            val actual = SymbolPoint(x = 1, y = 1, symbol = ZERO)
 
-            actual.updateNextSymbol()
+            actual.updateSymbol(current)
             actual.symbol shouldBe expected
         }
     }

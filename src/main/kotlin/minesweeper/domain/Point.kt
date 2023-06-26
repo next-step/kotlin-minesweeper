@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-open class Point(
+data class Point(
     val x: Int,
     val y: Int
 )

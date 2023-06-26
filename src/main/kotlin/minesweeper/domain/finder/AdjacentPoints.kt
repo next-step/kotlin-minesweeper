@@ -1,9 +1,9 @@
 package minesweeper.domain.finder
 
-import minesweeper.domain.MinePoint
 import minesweeper.domain.Point
+import minesweeper.domain.SymbolPoint
 
-typealias movePoint = (MinePoint) -> Point
+typealias movePoint = (SymbolPoint) -> Point
 
 private const val MOVING_POINT = 1
 

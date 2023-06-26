@@ -1,14 +1,14 @@
 package minesweeper.fixture
 
+import minesweeper.domain.Lines
 import minesweeper.domain.MineBoard
-import minesweeper.domain.SymbolType
 import minesweeper.request.MinesCreateRequest
 import minesweeper.strategy.MineBoardCreateStrategy
 
 object TestMineBoardCreateStrategy : MineBoardCreateStrategy() {
-    private var items: List<SymbolType> = mutableListOf()
+    private var items: Lines = Lines(emptyList())
 
-    fun updateBoardSetUp(input: List<SymbolType>) {
+    fun updateBoardSetUp(input: Lines) {
         items = input
     }
 
@@ -16,7 +16,7 @@ object TestMineBoardCreateStrategy : MineBoardCreateStrategy() {
         return MineBoard(
             width = request.width,
             height = request.height,
-            lines = convertToLines(symbols = items, request)
+            lines = items
         )
     }
 }

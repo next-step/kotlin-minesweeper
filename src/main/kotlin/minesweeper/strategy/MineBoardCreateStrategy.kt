@@ -3,7 +3,7 @@ package minesweeper.strategy
 import minesweeper.domain.Line
 import minesweeper.domain.Lines
 import minesweeper.domain.MineBoard
-import minesweeper.domain.MinePoint
+import minesweeper.domain.SymbolPoint
 import minesweeper.domain.SymbolType
 import minesweeper.request.MinesCreateRequest
 
@@ -17,6 +17,6 @@ abstract class MineBoardCreateStrategy {
 
     private fun convertToLine(y: Int, line: List<SymbolType>): Line =
         line.mapIndexed { x, symbol ->
-            MinePoint(x = x, y = y, symbol = symbol)
+            SymbolPoint(x = x, y = y, symbol = symbol)
         }.let(::Line)
 }
