@@ -43,11 +43,16 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
 
     private fun isWinGame() = board.values
         .filterNot { it.hasMine }
-        .none { it.blockState == BlockState.HIDDEN }
+        .none { it.isHidden() }
 
-    private fun openBlock(coordinate: Coordinate): BlockState = checkNotNull(value = board[coordinate]) {
-        "보드 범위에 존재하는 블록을 열어야 합니다. 입력 좌표 : ${coordinate.x}, ${coordinate.y}"
-    }.open()
+    private fun openBlock(coordinate: Coordinate): BlockState {
+        val board = board[coordinate]
+            ?: throw IllegalStateException(
+                "보드 범위에 존재하는 블록을 열어야 합니다. 입력 좌표 : ${coordinate.x}, ${coordinate.y}"
+            )
+
+        return board.open()
+    }
 
     private fun openAroundBlock(coordinates: List<Coordinate>) {
         coordinates.mapNotNull { board[it] }
