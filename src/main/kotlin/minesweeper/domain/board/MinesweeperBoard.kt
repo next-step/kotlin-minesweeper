@@ -5,16 +5,13 @@ import minesweeper.domain.Coordinate
 import minesweeper.domain.flag.BlockState
 import minesweeper.domain.flag.MatchState
 
-private typealias OpenCoordinateEvent = () -> Coordinate
-private typealias CurrentBoardEvent = (MinesweeperBoard) -> Unit
-
 class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
 
     fun sortedBlocks(): List<Block> = board.values.sortedBy { it.coordinate }
 
     fun start(
-        openCoordinateEvent: OpenCoordinateEvent,
-        currentBoardEvent: CurrentBoardEvent,
+        openCoordinateEvent: () -> Coordinate,
+        currentBoardEvent: (MinesweeperBoard) -> Unit,
     ): MatchState = if (isWinGame()) {
         MatchState.WIN
     } else {
@@ -27,8 +24,8 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
 
     private fun progressGame(
         openCoordinate: Coordinate,
-        currentBoardEvent: CurrentBoardEvent,
-        openCoordinateEvent: OpenCoordinateEvent,
+        openCoordinateEvent: () -> Coordinate,
+        currentBoardEvent: (MinesweeperBoard) -> Unit,
     ): MatchState = when (openBlock(coordinate = openCoordinate)) {
         BlockState.MINE -> MatchState.LOSE
         BlockState.ZERO -> {
@@ -64,8 +61,8 @@ class MinesweeperBoard(private val board: Map<Coordinate, Block>) {
     }
 
     private fun runGameEvent(
-        currentBoardEvent: CurrentBoardEvent,
-        openCoordinateEvent: OpenCoordinateEvent,
+        openCoordinateEvent: () -> Coordinate,
+        currentBoardEvent: (MinesweeperBoard) -> Unit,
     ): MatchState {
         currentBoardEvent(this)
         return start(openCoordinateEvent = openCoordinateEvent, currentBoardEvent = currentBoardEvent)
