@@ -14,7 +14,6 @@ fun main() {
             width = InputView.readWidth(),
             height = InputView.readHeight(),
         ),
-
         mineCount = PositiveNumber(value = InputView.readMineCount()),
     )
 
@@ -25,7 +24,6 @@ fun main() {
             val openCoordinate = InputView.readOpenCoordinate()
             Coordinate(x = openCoordinate.x, y = openCoordinate.y)
         },
-
         currentBoardEvent = { ResultView.printCurrentMinesweeperBoard(boardView = it.convertToView()) },
     )
 
