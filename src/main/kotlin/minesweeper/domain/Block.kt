@@ -6,7 +6,8 @@ import minesweeper.domain.flag.MineFlag
 
 class Block(val coordinate: Coordinate, private val flag: Flag) {
 
-    private var blockState: BlockState = BlockState.HIDDEN
+    var blockState: BlockState = BlockState.HIDDEN
+        private set
 
     val hasMine: Boolean = flag is MineFlag
 
