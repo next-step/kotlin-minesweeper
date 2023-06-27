@@ -29,7 +29,7 @@ class SymbolPointTest : FunSpec({
             val actual = SymbolPoint(x = 1, y = 1, symbol = ZERO)
 
             actual.updateSymbol(current)
-            actual.symbol shouldBe expected
+            actual.getSymbol() shouldBe expected
         }
     }
 })

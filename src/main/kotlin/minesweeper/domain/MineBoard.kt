@@ -14,7 +14,7 @@ class MineBoard(
 
     private fun updateSymbol(symbolPoint: SymbolPoint) =
         getAdjacentPoints(symbolPoint)
-            .count { it.symbol == SymbolType.MINE }
+            .count { it.getSymbol() == SymbolType.MINE }
             .run(symbolPoint::updateSymbol)
 
     private fun getAdjacentPoints(point: SymbolPoint): List<SymbolPoint> =
