@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.application.MineSweeperService
+import minesweeper.domain.SymbolType.BLIND
 import minesweeper.domain.SymbolType.MINE
 import minesweeper.domain.SymbolType.ONE
 import minesweeper.domain.SymbolType.THREE
@@ -48,11 +49,47 @@ class MineBoardTest : FunSpec({
         TestMineBoardCreateStrategy.updateBoardSetUp(input = inputLines)
 
         service.createMineBoard(request).apply {
-            height shouldBe request.height
-            width shouldBe request.width
+            area.height shouldBe request.height
+            area.width shouldBe request.width
             lines shouldHaveSize request.height
 
             lines shouldContainExactly expectedLines
+        }
+    }
+
+    test("지뢰찾기 보드 생성시 보드의 크기와 동일한 커버 프로퍼티를 가진다. ") {
+        val request = MineBoardCreateRequest(height = 3, width = 3, mineCapacity = 3)
+
+        /**
+         *  0 X 0
+         *  0 0 0
+         *  X 0 X
+         */
+        val inputLines = Lines(
+            listOf(
+                Line(listOf(SymbolPoint(0, 0, ZERO), SymbolPoint(1, 0, MINE), SymbolPoint(2, 0, ZERO))),
+                Line(listOf(SymbolPoint(0, 1, ZERO), SymbolPoint(1, 1, ZERO), SymbolPoint(2, 1, ZERO))),
+                Line(listOf(SymbolPoint(0, 2, MINE), SymbolPoint(1, 2, ZERO), SymbolPoint(2, 2, MINE)))
+            )
+        )
+
+        /**
+         *  C C C
+         *  C C C
+         *  C C C
+         */
+        val expectedLines = Lines(
+            listOf(
+                Line(listOf(SymbolPoint(0, 0, BLIND), SymbolPoint(1, 0, BLIND), SymbolPoint(2, 0, BLIND))),
+                Line(listOf(SymbolPoint(0, 1, BLIND), SymbolPoint(1, 1, BLIND), SymbolPoint(2, 1, BLIND))),
+                Line(listOf(SymbolPoint(0, 2, BLIND), SymbolPoint(1, 2, BLIND), SymbolPoint(2, 2, BLIND)))
+            )
+        )
+
+        TestMineBoardCreateStrategy.updateBoardSetUp(input = inputLines)
+
+        service.createMineBoard(request).apply {
+            coverLines shouldContainExactly expectedLines
         }
     }
 })

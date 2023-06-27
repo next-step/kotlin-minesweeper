@@ -3,10 +3,11 @@ package minesweeper.domain
 import minesweeper.domain.finder.AdjacentPoints
 
 class MineBoard(
-    val height: Int,
-    val width: Int,
-    val lines: Lines
+    val area: Area,
+    val lines: Lines,
+    val coverLines: Lines = Lines.createCoverLines(area)
 ) {
+    constructor(width: Int, height: Int, lines: Lines) : this(Area(width, height), lines)
 
     init {
         lines.flatten().forEach(::updateSymbol)

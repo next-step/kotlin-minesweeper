@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Area
 import minesweeper.domain.SymbolType
 import minesweeper.request.MinesCreateRequest
 
@@ -26,8 +27,7 @@ class DefaultMineBoardCreateStrategyTest : BehaviorSpec({
                     )
                 )
 
-                actual.width shouldBe width
-                actual.height shouldBe height
+                actual.area shouldBe Area(width, height)
 
                 actual.lines.forEach {
                     it shouldHaveSize width

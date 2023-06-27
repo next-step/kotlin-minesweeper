@@ -3,6 +3,7 @@ package minesweeper.domain.dsl
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Area
 import minesweeper.domain.SymbolType
 import minesweeper.strategy.DefaultMineBoardCreateStrategy
 
@@ -23,8 +24,7 @@ class MineBoardBuilderTest : BehaviorSpec({
             }
 
             Then("정상적으로 지뢰찾기 보드가 생성된다.") {
-                actual.height shouldBe height
-                actual.width shouldBe width
+                actual.area shouldBe Area(width, height)
 
                 actual.lines shouldHaveSize height
                 actual.lines.forEach {

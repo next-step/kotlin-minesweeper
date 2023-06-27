@@ -11,4 +11,9 @@ class Lines(private val values: List<Line>) : List<Line> by values {
     fun findPoint(point: Point): SymbolPoint =
         if (point.y in (0 until this.size)) values[point.y].findPoint(point)
         else throw IndexOutOfBoundsException("적절한 좌표가 아닙니다. [line size:${this.size}, input index: ${point.y}]")
+
+    companion object {
+        fun createCoverLines(area: Area): Lines =
+            Lines(List(area.height) { Line.createCoverLine(indexY = it, area.width) })
+    }
 }
