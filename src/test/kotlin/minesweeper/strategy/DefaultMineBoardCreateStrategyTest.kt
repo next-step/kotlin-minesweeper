@@ -33,8 +33,8 @@ class DefaultMineBoardCreateStrategyTest : BehaviorSpec({
                     it shouldHaveSize width
                 }
 
-                actual.lines.sumOf {
-                    it.count { point -> point.getSymbol() == SymbolType.MINE }
+                actual.lines.sumOf { line ->
+                    line.count { it.equalsTo(SymbolType.MINE) }
                 } shouldBe mineCapacity
             }
         }

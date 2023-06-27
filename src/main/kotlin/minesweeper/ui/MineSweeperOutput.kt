@@ -7,6 +7,14 @@ import minesweeper.domain.SymbolType
 sealed class MineSweeperOutput {
     abstract fun printMineBoard(mineBoard: MineBoard)
 
+    abstract fun printWin()
+
+    abstract fun printLose()
+
+    abstract fun printStartGame()
+
+    abstract fun printException(message: String?)
+
     protected fun convertToSymbol(point: SymbolPoint): String = when (point.getSymbol()) {
         SymbolType.BLIND -> "C"
         SymbolType.ZERO -> "0"

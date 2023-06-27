@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 data class SymbolPoint(
-    private val point: Point,
+    val point: Point,
     private var symbol: SymbolType,
     private var marked: Boolean = false
 ) {
@@ -19,8 +19,13 @@ data class SymbolPoint(
 
     fun isMarked(): Boolean = marked
 
-    fun marking() {
-        marked = true
+    fun marking(): Boolean {
+        return if (!marked) {
+            marked = true
+            true
+        } else {
+            false
+        }
     }
 
     fun updateSymbol(mineCount: Int) {

@@ -31,7 +31,7 @@ class MineBoardBuilderTest : BehaviorSpec({
                     it shouldHaveSize width
                 }
                 actual.lines.sumOf {
-                    it.count { point -> point.getSymbol() == SymbolType.MINE }
+                    it.count { it.equalsTo(SymbolType.MINE) }
                 } shouldBe mineCapacity
             }
         }

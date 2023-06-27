@@ -51,6 +51,7 @@ class SymbolPointTest : FunSpec({
 
         actual.isMarked() shouldBe false
     }
+
     test("체크하는 기능을 가진다. ") {
         val actual = SymbolPoint(point = Point(0, 0), symbol = ONE)
 
