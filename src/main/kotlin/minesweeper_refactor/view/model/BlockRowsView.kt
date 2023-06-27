@@ -1,4 +1,4 @@
-package minesweeper.view.model
+package minesweeper_refactor.view.model
 
 @JvmInline
 value class BlockRowsView(private val rows: List<BlockStateView>) {

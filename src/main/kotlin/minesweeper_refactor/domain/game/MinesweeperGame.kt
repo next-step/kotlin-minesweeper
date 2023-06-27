@@ -12,16 +12,16 @@ class MinesweeperGame(private val minesweeperBoard: MinesweeperBoard) {
 
         val openCoordinate = gameEvent.openCoordinateEvent()
 
-        return when (minesweeperBoard.openBlock(coordinate = openCoordinate)) {
-            OpenState.MINE -> MatchState.LOSE
-            OpenState.DO_NOTHING -> start(gameEvent = gameEvent)
-            OpenState.CHAIN_OPEN -> {
-                minesweeperBoard.openAroundBlock(
-                    coordinates = openCoordinate.toAroundDirections(aroundDecision = FourDirectionsDecision),
-                )
-                gameEvent.currentBoardEvent(this)
-                start(gameEvent = gameEvent)
-            }
+        when (minesweeperBoard.openBlock(coordinate = openCoordinate)) {
+            OpenState.MINE -> return MatchState.LOSE
+            OpenState.CHAIN_OPEN -> minesweeperBoard.openAroundBlock(
+                coordinates = openCoordinate.toAroundDirections(aroundDecision = FourDirectionsDecision),
+            )
+
+            else -> Unit
         }
+
+        gameEvent.currentBoardEvent(minesweeperBoard)
+        return start(gameEvent = gameEvent)
     }
 }

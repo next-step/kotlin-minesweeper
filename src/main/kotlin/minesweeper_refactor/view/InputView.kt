@@ -1,6 +1,6 @@
-package minesweeper.view
+package minesweeper_refactor.view
 
-import minesweeper.view.model.CoordinateView
+import minesweeper_refactor.view.model.CoordinateInput
 
 object InputView {
 
@@ -24,8 +24,8 @@ object InputView {
         return readln().toInt()
     }
 
-    fun readOpenCoordinate(): CoordinateView {
+    fun readOpenCoordinate(): CoordinateInput {
         print(message = ENTER_OPEN_COORDINATE)
-        return CoordinateView(inputCoordinate = readln())
+        return CoordinateInput(inputCoordinate = readln())
     }
 }

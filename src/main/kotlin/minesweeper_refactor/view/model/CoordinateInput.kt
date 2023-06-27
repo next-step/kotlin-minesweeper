@@ -1,6 +1,6 @@
-package minesweeper.view.model
+package minesweeper_refactor.view.model
 
-class CoordinateView(inputCoordinate: String) {
+class CoordinateInput(inputCoordinate: String) {
 
     val x: Int
     val y: Int

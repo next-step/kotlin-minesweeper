@@ -1,7 +1,7 @@
-package minesweeper.view
+package minesweeper_refactor.view
 
-import minesweeper.view.model.BoardView
-import minesweeper.view.model.MatchStateView
+import minesweeper_refactor.view.model.BoardView
+import minesweeper_refactor.view.model.MatchStateView
 
 object ResultView {
 

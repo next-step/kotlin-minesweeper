@@ -39,5 +39,5 @@ class MinesweeperBoard(numberBlocks: Blocks, mineBlocks: Blocks) {
         }
 
         openAroundBlock(coordinates = aroundBlocks)
-    } 
+    }
 }

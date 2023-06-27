@@ -10,7 +10,7 @@ import minesweeper_refactor.domain.coordinate.Coordinate
 import minesweeper_refactor.domain.game.GameEvent
 import minesweeper_refactor.domain.game.MinesweeperGame
 
-class MinesweeperBoardTest: StringSpec({
+class MinesweeperBoardTest : StringSpec({
 
     "지뢰 보드판을 생성한 뒤 모든 보드판이 열리면 승리한다." {
         val minesweeperBoard = minesweeperBoard {

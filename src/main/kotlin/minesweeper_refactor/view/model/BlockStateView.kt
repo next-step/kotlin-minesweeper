@@ -1,4 +1,4 @@
-package minesweeper.view.model
+package minesweeper_refactor.view.model
 
 enum class BlockStateView(val exposureName: String) {
     HIDDEN(exposureName = "C"),

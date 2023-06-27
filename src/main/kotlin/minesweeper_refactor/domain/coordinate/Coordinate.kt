@@ -1,6 +1,6 @@
 package minesweeper_refactor.domain.coordinate
 
-data class Coordinate(private val x: Int, private val y: Int) : Comparable<Coordinate> {
+data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
 
     fun toAroundDirections(aroundDecision: AroundDecision): List<Coordinate> = aroundDecision.decide()
         .map(this::plus)
