@@ -14,5 +14,7 @@ data class Coordinate(private val x: Int, private val y: Int) : Comparable<Coord
 
     companion object {
         private const val EQUALS: Int = 0
+
+        fun createCoordinates(x: Int, yRange: IntRange): List<Coordinate> = yRange.map { y -> Coordinate(x = x, y = y) }
     }
 }

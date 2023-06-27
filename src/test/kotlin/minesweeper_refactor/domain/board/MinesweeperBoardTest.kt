@@ -1,0 +1,3 @@
+package minesweeper_refactor.domain.board
+
+internal class MinesweeperBoardTest

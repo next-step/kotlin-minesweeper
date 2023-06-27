@@ -12,4 +12,14 @@ class Block(val coordinate: Coordinate, val blockState: BlockState) {
     } else {
         OpenState.valueOf(blockState = blockState)
     }
+
+    companion object {
+
+        fun of(coordinate: Coordinate, aroundMineCount: Int): Block = Block(
+            coordinate = coordinate,
+            blockState = BlockState.valueOf(aroundMineCount = aroundMineCount),
+        )
+
+        fun createBlock()
+    }
 }
