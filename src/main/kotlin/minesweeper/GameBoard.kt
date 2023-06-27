@@ -1,21 +1,36 @@
 package minesweeper
 
 class GameBoard(
-    val height: Int,
-    val width: Int,
-    val mineNumber: Int,
+    private val height: Int,
+    private val width: Int,
+    mineNumber: Int,
     private val mineLocationGenerator: MineLocationGenerator
 ) {
     private var board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
+    private val mineLocationValidator = MineLocationValidator()
 
     init {
-        generateMine(mineNumber, width, height)
+        generateMines(mineNumber, width, height)
     }
 
-    private fun generateMine(mineNumber: Int, maximumOfX: Int, maximumOfY: Int) {
+    private fun generateMines(mineNumber: Int, maximumOfX: Int, maximumOfY: Int) {
         repeat(mineNumber) {
-            mineLocationGenerator.generateMineLocation(maximumOfX, maximumOfY)
+            val generatedMineLoation = generateMineLoation(maximumOfX, maximumOfY)
+            insertMine(generatedMineLoation)
         }
+    }
+
+    private fun generateMineLoation(maximumOfX: Int, maximumOfY: Int): Location {
+        var generateMineLocation: Location
+        do {
+            generateMineLocation = mineLocationGenerator.generateMineLocation(maximumOfX, maximumOfY)
+        } while (mineLocationValidator.isDuplicatedMineLocation(getBoard(), generateMineLocation))
+        return generateMineLocation
+    }
+
+    private fun insertMine(location: Location) {
+        val (x, y) = location
+        board[x][y] = '*'
     }
 
     fun getBoard(): Array<Array<Char>> {
