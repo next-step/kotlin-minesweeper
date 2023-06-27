@@ -4,7 +4,7 @@ import minesweeper_refactor.domain.coordinate.AroundDecision.Companion.MOVE_BACK
 import minesweeper_refactor.domain.coordinate.AroundDecision.Companion.MOVE_FORWARD
 import minesweeper_refactor.domain.coordinate.AroundDecision.Companion.STOP
 
-object EightDirectionsDecision: AroundDecision {
+object EightDirectionsDecision : AroundDecision {
 
     override fun decide(): List<Coordinate> = listOf(
         Coordinate(x = MOVE_BACKWARD, y = MOVE_BACKWARD),
