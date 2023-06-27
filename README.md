@@ -117,3 +117,45 @@ C C C C C C C C C C
 - LSP (리스코브 치환의 원칙: The Liskov Substitution Principle): 서브 타입은 언제나 기반 타입으로 교체할 수 있어야 한다. 즉, 서브 타입은 언제나 기반 타입과 호환될 수 있어야 한다.
 - ISP (인터페이스 분리의 원칙: Interface Segregation Principle): 한 클래스는 자신이 사용하지 않는 인터페이스는 구현하지 말아야 한다.
 - DIP (의존성역전의 원칙: Dependency Inversion Principle): 구조적 디자인에서 발생하던 하위 레벨 모듈의 변경이 상위 레벨 모듈의 변경을 요구하는 위계관계를 끊는 의미의 역전 원칙이다.
+
+
+# 3단계 - 지뢰 찾기(게임 실행)
+## 기능 추가 요구사항
+- 지뢰가 없는 인접한 칸이 모두 열리게 된다.
+- 지뢰판은 
+  - [ ] 지뢰판 위를 덮는 커버 프로퍼티를 갖는다.
+  - [ ] 남은 지뢰 갯수 프로퍼티를 갖는다.
+  - [ ] 입력받은 좌표정보에 대해서 
+    - [ ] 유효한 좌표인지 검사하고, 유효하지 않으면 예외를 던진다.
+    - [ ] 해당 좌표의 SymbolType을 반환한다.
+    - [ ] 해당 좌표의 SymbolType이 지뢰가 아니라면
+      - [ ] 해당 좌표의 인접 8개 좌표 중 BLIND 상태 좌표 목록을 조회한다.
+      - [ ] 실제 좌표정보와 비교해 MINE이 아닌 경우 커버 좌표를 업데이트 한다. 
+
+## 실행 결과
+```text
+높이를 입력하세요.
+10
+
+너비를 입력하세요.
+10
+
+지뢰는 몇 개인가요?
+10
+
+지뢰찾기 게임 시작
+open: 1, 1
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+1 1 C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+
+open: 4, 1
+Lose Game.
+```
