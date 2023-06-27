@@ -5,9 +5,11 @@ import minesweeper.domain.finder.AdjacentPoints
 class MineBoard(
     val area: Area,
     val lines: Lines,
-    val coverLines: Lines = Lines.createCoverLines(area)
 ) {
     constructor(width: Int, height: Int, lines: Lines) : this(Area(width, height), lines)
+
+    var remainMinCount = area.size
+        private set
 
     init {
         lines.flatten().forEach(::updateSymbol)
@@ -15,7 +17,7 @@ class MineBoard(
 
     private fun updateSymbol(symbolPoint: SymbolPoint) =
         getAdjacentPoints(symbolPoint)
-            .count { it.getSymbol() == SymbolType.MINE }
+            .count { it.equalsTo(SymbolType.MINE) }
             .run(symbolPoint::updateSymbol)
 
     private fun getAdjacentPoints(point: SymbolPoint): List<SymbolPoint> =
