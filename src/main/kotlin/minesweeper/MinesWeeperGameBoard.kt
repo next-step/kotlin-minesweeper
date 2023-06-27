@@ -1,6 +1,6 @@
 package minesweeper
 
-class GameBoard(
+class MinesWeeperGameBoard(
     private val height: Int,
     private val width: Int,
     mineNumber: Int,
