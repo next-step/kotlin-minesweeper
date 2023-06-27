@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-data class MinesweeperMap(private val map: List<MinesweeperMapRow>) : Iterable<MinesweeperMapRow> by map {
+class MinesweeperMap(private val map: List<MinesweeperMapRow>) : Iterable<MinesweeperMapRow> by map {
 
     companion object {
         const val INVALID_MAP_SIZE_ERROR_MESSAGE = "맵의 한변의 길이가 0이하일 수 없습니다"

@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-object RandomMineLocationGenerator : MineLocationGenerator {
-    override fun generateLocation(height: Int, width: Int, mineCount: Int): MineLocations {
-        val mineIndices = (0 until height * width).shuffled().take(mineCount)
-        return MineLocations.of(mineIndices, height, width)
+object RandomMineLocationGenerator : MineLocationGenerator() {
+
+    override fun getMineIndices(height: Int, width: Int, mineCount: Int): MineIndices {
+        return MineIndices((0 until height * width).shuffled().take(mineCount))
     }
 }
