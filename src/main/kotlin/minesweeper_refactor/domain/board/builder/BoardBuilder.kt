@@ -4,6 +4,8 @@ import kotlin.properties.Delegates
 import minesweeper_refactor.domain.board.BoardSize
 import minesweeper_refactor.domain.board.MinesweeperBoard
 
+fun minesweeperBoard(block: BoardBuilder.() -> Unit): MinesweeperBoard = BoardBuilder().apply(block = block).build()
+
 class BoardBuilder : DslBuilder<MinesweeperBoard>() {
 
     private lateinit var boardSize: BoardSize

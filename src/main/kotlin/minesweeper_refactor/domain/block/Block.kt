@@ -19,7 +19,5 @@ class Block(val coordinate: Coordinate, val blockState: BlockState) {
             coordinate = coordinate,
             blockState = BlockState.valueOf(aroundMineCount = aroundMineCount),
         )
-
-        fun createBlock()
     }
 }
