@@ -33,6 +33,7 @@ C C C C C C C C C C
 ```
 
 ### 기능 분석
+- [x] 높이, 넓이, 지뢰 수는 0보다 커야 한다. - PositiveNumber
 - [ ] 높이, 넓이, 지뢰 개수를 입력 받는다. - Minesweeper
 - [ ] 일반 블럭 or 지뢰 - Block
 - [ ] 지뢰는 랜덤으로 배치 한다. - Mines
