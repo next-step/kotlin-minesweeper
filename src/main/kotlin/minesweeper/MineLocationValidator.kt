@@ -2,8 +2,8 @@ package minesweeper
 
 class MineLocationValidator {
 
-    fun isDuplicatedMineLocation(board: Array<Array<Char>>, location: Location): Boolean {
-        val (x, y) = location.location
+    fun isDuplicatedMineLocation(board: Array<Array<Char>>, mineLocation: MineLocation): Boolean {
+        val (x, y) = mineLocation.location
         return board[x][y] == '*'
     }
 }

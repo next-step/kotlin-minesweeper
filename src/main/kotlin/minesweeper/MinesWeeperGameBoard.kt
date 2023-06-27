@@ -20,16 +20,16 @@ class MinesWeeperGameBoard(
         }
     }
 
-    private fun generateMineLoation(maximumOfX: Int, maximumOfY: Int): Location {
-        var generateMineLocation: Location
+    private fun generateMineLoation(maximumOfX: Int, maximumOfY: Int): MineLocation {
+        var generateMineMineLocation: MineLocation
         do {
-            generateMineLocation = mineLocationGenerator.generateMineLocation(maximumOfX, maximumOfY)
-        } while (mineLocationValidator.isDuplicatedMineLocation(getBoard(), generateMineLocation))
-        return generateMineLocation
+            generateMineMineLocation = mineLocationGenerator.generateMineLocation(maximumOfX, maximumOfY)
+        } while (mineLocationValidator.isDuplicatedMineLocation(getBoard(), generateMineMineLocation))
+        return generateMineMineLocation
     }
 
-    private fun insertMine(location: Location) {
-        val (x, y) = location
+    private fun insertMine(mineLocation: MineLocation) {
+        val (x, y) = mineLocation
         board[x][y] = '*'
     }
 
