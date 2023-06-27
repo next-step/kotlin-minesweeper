@@ -3,26 +3,24 @@ package minesweeper.domain
 data class MinesweeperMapRow(private val mapRow: List<MapElement>) : Iterable<MapElement> by mapRow {
 
     companion object {
-        private const val MINE_INDICES_SIZE_EXCEED_WIDTH_ERROR_MESSAGE = "한줄의 지뢰 개수가 맵의 너비보다 많을 수 없습니다"
         private const val INVALID_WIDTH_ERROR_MESSAGE = "너비가 0이하일 수 없습니다"
-
-        fun of(row: MineLocationRow, width: Int): MinesweeperMapRow {
+        fun of(rowNumber: Int, width: Int, mineCounter: MineCounter): MinesweeperMapRow {
             require(width > 0) { INVALID_WIDTH_ERROR_MESSAGE }
-            require(row.count() <= width) { MINE_INDICES_SIZE_EXCEED_WIDTH_ERROR_MESSAGE }
-
-            val mapRow = List(width) { isMineToMapElement(row.contains(it)) }
+            val mapRow = List(width) { colNumber -> mineCounter.getMapElement(colNumber, rowNumber) }
             return MinesweeperMapRow(mapRow)
-        }
-
-        fun isMineToMapElement(isMine: Boolean): MapElement {
-            if (isMine) {
-                return MapElement.MINE
-            }
-            return MapElement.NORMAL
         }
     }
 }
 
 enum class MapElement {
-    NORMAL, MINE
+    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, MINE;
+
+    companion object {
+        private val INVALID_VALUE_ERROR_MESSAGE = "지뢰 숫자는 ${ZERO.ordinal} ~ ${EIGHT.ordinal}사이여야 합니다"
+
+        fun of(value: Int): MapElement {
+            require(value in ZERO.ordinal..EIGHT.ordinal) { INVALID_VALUE_ERROR_MESSAGE }
+            return values().first { it.ordinal == value }
+        }
+    }
 }

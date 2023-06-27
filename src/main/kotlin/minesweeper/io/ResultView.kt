@@ -15,7 +15,7 @@ object ResultView {
     private fun mapElementToString(element: MapElement): String {
         return when (element) {
             MapElement.MINE -> "*"
-            MapElement.NORMAL -> "C"
+            else -> element.ordinal.toString()
         }
     }
 }
