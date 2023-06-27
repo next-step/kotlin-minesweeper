@@ -4,10 +4,9 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Coordinate
+import minesweeper_refactor.domain.coordinate.Coordinate
 import minesweeper_refactor.domain.coordinate.EightDirectionsDecision
 import minesweeper_refactor.domain.coordinate.FourDirectionsDecision
-import org.junit.jupiter.api.Assertions.*
 
 class CoordinateTest : StringSpec({
 
