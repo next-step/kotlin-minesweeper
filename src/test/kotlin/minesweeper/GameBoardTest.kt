@@ -10,7 +10,12 @@ class GameBoardTest {
         val height = 10
         val width = 10
         val answer = Array(height) { Array(width) { 'C' } }
-        val actual = GameBoard(height, width).getBoard()
+        val actual = GameBoard(
+            height,
+            width,
+            0,
+            RandomMineLocationGenerator()
+        ).getBoard()
 
         Assertions.assertThat(actual).isEqualTo(answer)
     }
