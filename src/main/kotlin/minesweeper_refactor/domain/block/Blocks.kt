@@ -1,6 +1,5 @@
 package minesweeper_refactor.domain.block
 
-import minesweeper_refactor.domain.board.MinesweeperBoard
 import minesweeper_refactor.domain.coordinate.Coordinate
 import minesweeper_refactor.domain.coordinate.EightDirectionsDecision
 
@@ -12,8 +11,11 @@ value class Blocks(private val blocks: List<Block>) {
         .groupingBy { it }
         .eachCount()
 
-    fun toMinesweeperBoard(): MinesweeperBoard = blocks.associateBy { it.coordinate }
-        .run(::MinesweeperBoard)
+    fun toMinesweeperBoard(): Map<Coordinate, Block> = blocks.associateBy { it.coordinate }
 
-    operator fun plus(other: Blocks): Blocks = Blocks(blocks = blocks + other.blocks)
+    fun toMutableSet(): MutableSet<Block> = blocks.toMutableSet()
+
+    operator fun plus(other: Blocks): Blocks = Blocks(
+        blocks = (blocks + other.blocks).toMutableList(),
+    )
 }

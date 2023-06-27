@@ -33,7 +33,7 @@ class BoardBuilder : DslBuilder<MinesweeperBoard>() {
             mineAroundCoordinateMap.getOrDefault(key = it, DEFAULT_MINE_COUNT)
         }
 
-        return (mineBlocks + numberBlocks).toMinesweeperBoard()
+        return MinesweeperBoard(numberBlocks = numberBlocks, mineBlocks = mineBlocks)
     }
 
     companion object {

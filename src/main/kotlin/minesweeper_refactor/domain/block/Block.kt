@@ -10,6 +10,7 @@ class Block(val coordinate: Coordinate, val blockState: BlockState) {
     fun open(): OpenState = if (isHidden.not()) {
         OpenState.DO_NOTHING
     } else {
+        isHidden = false
         OpenState.valueOf(blockState = blockState)
     }
 
