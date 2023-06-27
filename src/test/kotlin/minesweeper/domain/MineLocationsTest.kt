@@ -45,7 +45,7 @@ class MineLocationsTest : BehaviorSpec({
         val mineIndices = List(height * width / 2) { it * 2 }
         When("해당 정보로 지뢰의 위치를 생성하면") {
             Then("정상적으로 지뢰 좌표가 생성된다") {
-                val expectedRow = IntArray(width / 2) { it * 2 }
+                val expectedRow = MineLocationRow(List(width / 2) { it * 2 })
                 val expectedLocation = MineLocations(List(height) { expectedRow })
                 MineLocations.of(mineIndices, height, width) shouldBe expectedLocation
             }

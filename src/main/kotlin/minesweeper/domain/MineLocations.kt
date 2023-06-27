@@ -1,20 +1,7 @@
 package minesweeper.domain
 
-data class MineLocations(private val mineLocations: List<IntArray>) {
+data class MineLocations(private val mineLocations: List<MineLocationRow>) {
     operator fun get(index: Int) = mineLocations[index]
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is MineLocations) {
-            return false
-        }
-        val indexedLocation = mineLocations.withIndex()
-
-        return indexedLocation.find { !(it.value contentEquals other.mineLocations[it.index]) } == null
-    }
-
-    override fun hashCode(): Int {
-        return super.hashCode()
-    }
 
     companion object {
 
@@ -24,9 +11,11 @@ data class MineLocations(private val mineLocations: List<IntArray>) {
 
             val mineLocationMap = mineIndices.groupBy({ it / width }, { it % width })
             val mineLocationList = List(height) {
-                (mineLocationMap[it] ?: emptyList()).toIntArray()
+                MineLocationRow(mineLocationMap[it] ?: emptyList())
             }
             return MineLocations(mineLocationList)
         }
     }
 }
+
+data class MineLocationRow(private val row: List<Int>) : Iterable<Int> by row
