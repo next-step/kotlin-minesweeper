@@ -1,4 +1,6 @@
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+import minesweeper.domain.Point
 import kotlin.random.Random
 
 class Playground: StringSpec({
@@ -16,5 +18,9 @@ class Playground: StringSpec({
         println(list.subList(3, 6))
         println(list.subList(6, 9))
         println(list)
+    }
+    "Set" {
+        val set = setOf(Point(1, 1), Point(1, 2), Point(1, 1))
+        set.size shouldBe  2
     }
 })

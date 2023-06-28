@@ -1,21 +1,15 @@
 package minesweeper
 
-import minesweeper.domain.MineSweeperMap
-import minesweeper.ui.MineSweeperGameConfigurer
-import minesweeper.ui.MineSweeperMapPrinter
+import minesweeper.domain.Board
+import minesweeper.ui.BoardHeightReader
+import minesweeper.ui.BoardPrinter
 
 fun main() {
+    val height = BoardHeightReader.read()
+    val width = BoardHeightReader.read()
+    val countOfMine = BoardHeightReader.read()
 
-    val height = MineSweeperGameConfigurer.height()
-    println()
+    val board = Board.of(height, width, countOfMine)
 
-    val width = MineSweeperGameConfigurer.width()
-    println()
-
-    val mine = MineSweeperGameConfigurer.mine()
-    println()
-
-    val mineSweeperMap = MineSweeperMap.of(height, width, mine)
-
-    MineSweeperMapPrinter.print(mineSweeperMap)
+    BoardPrinter.print(board)
 }
