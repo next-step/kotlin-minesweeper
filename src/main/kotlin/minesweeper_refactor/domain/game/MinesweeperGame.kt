@@ -18,7 +18,7 @@ class MinesweeperGame(private val minesweeperBoard: MinesweeperBoard) {
                 coordinates = openCoordinate.toAroundDirections(aroundDecision = FourDirectionsDecision),
             )
 
-            else -> Unit
+            OpenState.DO_NOTHING -> Unit
         }
 
         gameEvent.currentBoardEvent(minesweeperBoard)
