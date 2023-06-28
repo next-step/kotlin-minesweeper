@@ -1,13 +1,11 @@
 package minesweeper.domain
 
-class SymbolPoint(
-    x: Int,
-    y: Int,
-    symbol: SymbolType
+data class SymbolPoint(
+    val point: Point,
+    private var symbol: SymbolType,
+    private var marked: Boolean = false
 ) {
-    private val point: Point = Point(x = x, y = y)
-    var symbol: SymbolType = symbol
-        private set
+    constructor(x: Int, y: Int, symbol: SymbolType, marked: Boolean = false) : this(Point(x, y), symbol, marked)
 
     val x: Int
         get() = point.x
@@ -15,23 +13,26 @@ class SymbolPoint(
     val y: Int
         get() = point.y
 
+    fun getSymbol(): SymbolType =
+        if (marked) symbol
+        else SymbolType.BLIND
+
+    fun isMarked(): Boolean = marked
+
+    fun marking(): Boolean {
+        return if (!marked) {
+            marked = true
+            true
+        } else {
+            false
+        }
+    }
+
     fun updateSymbol(mineCount: Int) {
         if (symbol.isUpdatable()) {
             symbol = SymbolType.from(mineCount)
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is SymbolPoint) {
-            this.point == other.point && this.symbol == other.symbol
-        } else {
-            false
-        }
-    }
-
-    override fun hashCode(): Int {
-        var result = point.hashCode()
-        result = 31 * result + symbol.hashCode()
-        return result
-    }
+    fun equalsTo(otherSymbol: SymbolType): Boolean = symbol == otherSymbol
 }

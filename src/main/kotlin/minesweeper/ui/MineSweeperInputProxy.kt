@@ -34,4 +34,15 @@ class MineSweeperInputProxy(private val target: MineSweeperInput) : MineSweeperI
             requestMineCapacity()
         }
     }
+
+    override fun requestMarkingPoint(): List<Int> {
+        val answer = target.requestMarkingPoint()
+
+        return if (answer.size == 2) {
+            answer
+        } else {
+            println("유효한 좌표 정보를 입력해 주세요(ex: 1, 1)")
+            requestMarkingPoint()
+        }
+    }
 }

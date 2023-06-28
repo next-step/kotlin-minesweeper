@@ -33,8 +33,8 @@ class MineSweeperServiceTest : FunSpec({
         TestMineBoardCreateStrategy.updateBoardSetUp(input = inputLines)
 
         service.createMineBoard(request).apply {
-            height shouldBe request.height
-            width shouldBe request.width
+            area.height shouldBe request.height
+            area.width shouldBe request.width
             lines shouldHaveSize request.height
             lines shouldBe inputLines
         }
