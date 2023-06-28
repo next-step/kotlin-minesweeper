@@ -16,9 +16,8 @@ class MinesweeperMap(private val map: List<MinesweeperMapRow>) : Iterable<Minesw
             require(height * width >= mineCount) { MINE_COUNT_EXCEED_MAP_SIZE_ERROR_MESSAGE }
 
             val mineLocation = mineLocationGenerator.generateLocation(height, width, mineCount)
-            val mineCounter = MineCounter(height, width, mineLocation)
             val minesweeperMapRowList = List(height) { rowNumber ->
-                MinesweeperMapRow.of(rowNumber, width, mineCounter)
+                MinesweeperMapRow.of(rowNumber, width, mineLocation)
             }
             return MinesweeperMap(minesweeperMapRowList)
         }

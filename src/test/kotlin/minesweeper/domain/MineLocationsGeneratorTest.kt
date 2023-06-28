@@ -52,7 +52,7 @@ class MineLocationsGeneratorTest : BehaviorSpec({
         When("해당 정보로 지뢰의 위치를 생성하면") {
             Then("정상적으로 지뢰 좌표가 생성된다") {
                 val expectedRow = MineLocationRow(List(width / 2) { it * 2 })
-                val expectedLocation = MineLocations(List(height) { expectedRow })
+                val expectedLocation = MineLocations(List(height) { expectedRow }, width, height)
                 BinaryMineLocationGenerator.generateLocation(height, width, mineCount) shouldBe expectedLocation
             }
         }

@@ -10,7 +10,7 @@ abstract class MineLocationGenerator {
         val mineLocationList = List(height) {
             MineLocationRow(mineLocationMap[it] ?: emptyList())
         }
-        return MineLocations(mineLocationList)
+        return MineLocations(mineLocationList, width, height)
     }
 
     protected abstract fun getMineIndices(height: Int, width: Int, mineCount: Int): MineIndices
