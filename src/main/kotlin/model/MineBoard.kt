@@ -3,19 +3,15 @@ package model
 class MineBoard(elements: Map<Position, MineMark>) {
 
     init {
-        require(
-            (0..elements.keys.maxOf { it.x }).flatMap { x ->
-                (0..elements.keys.maxOf { it.y }).map { y -> Position(x, y) }
-            }.all { elements.containsKey(it) }
-        ) {
+        require(isAllFilled(elements)) {
             "elements must be filled with all positions. but provided `$elements`"
         }
     }
 
     val elements: Map<Position, MineMark> = elements.toMap()
     val size = elements.size
-    val maxXPosition get() = elements.keys.maxOf { it.x }
-    val maxYPosition get() = elements.keys.maxOf { it.y }
+    val maxXPosition: Int by lazy { elements.keys.maxOf { it.x } }
+    val maxYPosition: Int by lazy { elements.keys.maxOf { it.y } }
 
     fun contains(position: Position): Boolean {
         return elements.containsKey(position)
@@ -30,6 +26,22 @@ class MineBoard(elements: Map<Position, MineMark>) {
         validateContainsPosition(position)
         return MineBoard(elements.toMutableMap().apply { this[position] = mark })
     }
+
+    private fun isAllFilled(elements: Map<Position, MineMark>): Boolean {
+        return zeroToRange(elements.keys.maxOf { it.x })
+            .flatMap { x -> positions(x, elements.keys.maxOf { it.y }) }
+            .all { elements.containsKey(it) }
+    }
+
+    private fun positions(
+        x: Int,
+        maxY: Int,
+    ): Collection<Position> {
+        return zeroToRange(maxY)
+            .map { y -> Position(x, y) }
+    }
+
+    private fun zeroToRange(count: Int): IntRange = (0..count)
 
     private fun validateContainsPosition(position: Position) {
         if (contains(position).not()) {

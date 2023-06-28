@@ -13,7 +13,7 @@ class MineInstallation(
         validateMineBoardSize(mineBoard)
         var currentMineBoard: MineBoard = mineBoard
         repeat(count) {
-            val position = differentMarkPosition(currentMineBoard)
+            val position: Position = differentMarkPosition(currentMineBoard)
             currentMineBoard = currentMineBoard.replacedMark(position, mark)
         }
         return currentMineBoard
