@@ -9,9 +9,9 @@ class MineLocations(
 
     fun getMapElement(colNumber: Int, rowNumber: Int): MapElement {
         if (isMine(colNumber, rowNumber)) {
-            return MapElement.MINE
+            return MineMapElement
         }
-        return MapElement.of(getMineCount(colNumber, rowNumber))
+        return NumberMapElement(getMineCount(colNumber, rowNumber))
     }
 
     private fun getMineCount(x: Int, y: Int): Int {

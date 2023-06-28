@@ -12,15 +12,27 @@ data class MinesweeperMapRow(private val mapRow: List<MapElement>) : Iterable<Ma
     }
 }
 
-enum class MapElement {
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, MINE;
+sealed interface MapElement
+
+object MineMapElement : MapElement {
+    private const val MINE_STRING = "*"
+    override fun toString(): String {
+        return MINE_STRING
+    }
+}
+
+data class NumberMapElement(private val value: Int) : MapElement {
+    init {
+        require(value in MIN_MINE_COUNT..MAX_MINE_COUNT) { INVALID_VALUE_ERROR_MESSAGE }
+    }
+
+    override fun toString(): String {
+        return value.toString()
+    }
 
     companion object {
-        private val INVALID_VALUE_ERROR_MESSAGE = "지뢰 숫자는 ${ZERO.ordinal} ~ ${EIGHT.ordinal}사이여야 합니다"
-
-        fun of(value: Int): MapElement {
-            require(value in ZERO.ordinal..EIGHT.ordinal) { INVALID_VALUE_ERROR_MESSAGE }
-            return values().first { it.ordinal == value }
-        }
+        private const val MIN_MINE_COUNT = 0
+        private const val MAX_MINE_COUNT = 8
+        private const val INVALID_VALUE_ERROR_MESSAGE = "지뢰 숫자는 $MIN_MINE_COUNT ~ ${MAX_MINE_COUNT}사이여야 합니다"
     }
 }
