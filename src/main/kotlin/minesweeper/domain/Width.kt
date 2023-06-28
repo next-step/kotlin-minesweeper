@@ -7,7 +7,7 @@ value class Width(private val width: String) {
             "너비는 숫자이어야함"
         }
 
-        require(width.toInt () > MINIMUIM_WIDTH) {
+        require(width.toInt () > MINIMUM_WIDTH) {
             "너비는 0보다 커야함"
         }
     }
@@ -17,6 +17,6 @@ value class Width(private val width: String) {
     }
 
     companion object {
-        const val MINIMUIM_WIDTH = 0
+        const val MINIMUM_WIDTH = 0
     }
 }

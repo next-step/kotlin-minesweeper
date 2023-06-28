@@ -7,7 +7,7 @@ value class Height(private val height: String) {
             "높이는 숫자이어야함"
         }
 
-        require(height.toInt () > MINIMUIM_HEIGHT) {
+        require(height.toInt () > MINIMUM_HEIGHT) {
             "높이는 0보다 커야함"
         }
     }
@@ -17,6 +17,6 @@ value class Height(private val height: String) {
     }
 
     companion object {
-        const val MINIMUIM_HEIGHT = 0
+        const val MINIMUM_HEIGHT = 0
     }
 }

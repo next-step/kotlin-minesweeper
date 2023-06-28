@@ -3,10 +3,8 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.shouldBe
 
-class WidthTest : AnnotationSpec(){
+class WidthTest : AnnotationSpec() {
 
     @Test
     fun `너비는 숫자이어야함`() {
