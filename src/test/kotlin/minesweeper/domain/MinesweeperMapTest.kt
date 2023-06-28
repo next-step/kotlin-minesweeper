@@ -46,8 +46,47 @@ class MinesweeperMapTest : BehaviorSpec({
         val mineCount = height * width / 2
         When("해당 정보로 지뢰찾기 맵을 생성하면") {
             Then("정상적으로 생성된다") {
-                val expectedRow = MinesweeperMapRow(List(width) { MinesweeperMapRow.isMineToMapElement(it % 2 == 0) })
-                val expectedMap = MinesweeperMap(List(height) { expectedRow })
+                val expectedTopBottomRow = MinesweeperMapRow(
+                    listOf(
+                        MineMapElement,
+                        NumberMapElement(4),
+                        MineMapElement,
+                        NumberMapElement(4),
+                        MineMapElement,
+                        NumberMapElement(4),
+                        MineMapElement,
+                        NumberMapElement(4),
+                        MineMapElement,
+                        NumberMapElement(2),
+                    ),
+                )
+                val expectedMiddleRow = MinesweeperMapRow(
+                    listOf(
+                        MineMapElement,
+                        NumberMapElement(6),
+                        MineMapElement,
+                        NumberMapElement(6),
+                        MineMapElement,
+                        NumberMapElement(6),
+                        MineMapElement,
+                        NumberMapElement(6),
+                        MineMapElement,
+                        NumberMapElement(3),
+                    ),
+                )
+                val expectedRowList = listOf(
+                    expectedTopBottomRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedMiddleRow,
+                    expectedTopBottomRow,
+                )
+                val expectedMap = MinesweeperMap(expectedRowList)
                 MinesweeperMap.of(height, width, mineCount, BinaryMineLocationGenerator) shouldBe expectedMap
             }
         }

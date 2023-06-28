@@ -1,53 +1,41 @@
 package minesweeper.domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.headers
+import io.kotest.data.row
+import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
 class MineLocationsTest : BehaviorSpec({
+    val height = 3
+    val width = 10
+    val row = MineLocationRow(List(width / 2) { it * 2 })
+    val rowList = List(height) { row }
+    val systemUnderTest = MineLocations(rowList, width, height)
 
-    Given("맵의 높이가 0이하로 주어졌다") {
-        val height = 0
-        val width = 10
-        val mineIndices = emptyList<Int>()
-        When("해당 정보로 지뢰의 좌표를 생성하면") {
-            Then("예외가 던져진다") {
-                shouldThrow<IllegalArgumentException> { MineLocations.of(mineIndices, height, width) }
+    Given("지뢰의 좌표가 주어졌다") {
+        When("주변 지뢰의 개수를 구하면") {
+            Then("해당 좌표가 지뢰임이 반환된다") {
+                systemUnderTest.getMapElement(0, 0) shouldBe MineMapElement
             }
         }
     }
 
-    Given("맵의 너비가 0이하로 주어졌다") {
-        val height = 10
-        val width = 0
-        val mineIndices = emptyList<Int>()
-        When("해당 정보로 지뢰의 좌표를 생성하면") {
-            Then("예외가 던져진다") {
-                shouldThrow<IllegalArgumentException> { MineLocations.of(mineIndices, height, width) }
-            }
-        }
-    }
-
-    Given("지뢰의 위치가 맵의 크기보다 많다") {
-        val height = 10
-        val width = 10
-        val mineIndices = List(height * width + 1) { it }
-        When("해당 정보로 지뢰의 좌표를 생성하면") {
-            Then("예외가 던져진다") {
-                shouldThrow<IllegalArgumentException> { MineLocations.of(mineIndices, height, width) }
-            }
-        }
-    }
-
-    Given("올바른 지뢰 위치 정보가 주어졌다") {
-        val height = 10
-        val width = 10
-        val mineIndices = List(height * width / 2) { it * 2 }
-        When("해당 정보로 지뢰의 위치를 생성하면") {
-            Then("정상적으로 지뢰 좌표가 생성된다") {
-                val expectedRow = IntArray(width / 2) { it * 2 }
-                val expectedLocation = MineLocations(List(height) { expectedRow })
-                MineLocations.of(mineIndices, height, width) shouldBe expectedLocation
+    forAll(
+        table(
+            headers("X", "Y", "예상결과"),
+            row(1, 0, NumberMapElement(4)),
+            row(width - 1, 0, NumberMapElement(2)),
+            row(width - 1, 1, NumberMapElement(3)),
+            row(1, 1, NumberMapElement(6)),
+        ),
+    ) { x, y, expectedResult ->
+        Given("지뢰가 아닌 좌표($x,$y)가 주어졌다") {
+            When("주변 지뢰의 개수를 구하면") {
+                Then("해당 좌표 근처의 지뢰 개수가 반환된다") {
+                    systemUnderTest.getMapElement(x, y) shouldBe expectedResult
+                }
             }
         }
     }

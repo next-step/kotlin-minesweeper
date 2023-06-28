@@ -1,32 +1,57 @@
 package minesweeper.domain
 
-data class MineLocations(private val mineLocations: List<IntArray>) {
+class MineLocations(
+    private val mineLocations: List<MineLocationRow>,
+    private val mapWidth: Int,
+    private val mapHeight: Int,
+) {
     operator fun get(index: Int) = mineLocations[index]
+
+    fun getMapElement(colNumber: Int, rowNumber: Int): MapElement {
+        if (isMine(colNumber, rowNumber)) {
+            return MineMapElement
+        }
+        return NumberMapElement(getMineCount(colNumber, rowNumber))
+    }
+
+    private fun getMineCount(x: Int, y: Int): Int {
+        return MOVE.count { (xMove, yMove) -> isMine(x + xMove, y + yMove) }
+    }
+
+    private fun isMine(x: Int, y: Int): Boolean {
+        if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight) {
+            return false
+        }
+        return mineLocations[y].contains(x)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (other !is MineLocations) {
             return false
         }
-        val indexedLocation = mineLocations.withIndex()
 
-        return indexedLocation.find { !(it.value contentEquals other.mineLocations[it.index]) } == null
+        return mineLocations == other.mineLocations && mapWidth == other.mapWidth && mapHeight == other.mapHeight
     }
 
     override fun hashCode(): Int {
-        return super.hashCode()
+        var result = mineLocations.hashCode()
+        result = result * 31 + mapWidth
+        result = result * 31 + mapHeight
+        return result
     }
 
     companion object {
-
-        fun of(mineIndices: List<Int>, height: Int, width: Int): MineLocations {
-            require(height > 0 && width > 0) { MinesweeperMap.INVALID_MAP_SIZE_ERROR_MESSAGE }
-            require(mineIndices.size <= height * width) { MinesweeperMap.MINE_COUNT_EXCEED_MAP_SIZE_ERROR_MESSAGE }
-
-            val mineLocationMap = mineIndices.groupBy({ it / width }, { it % width })
-            val mineLocationList = List(height) {
-                (mineLocationMap[it] ?: emptyList()).toIntArray()
-            }
-            return MineLocations(mineLocationList)
-        }
+        private val MOVE = listOf(
+            Pair(-1, -1),
+            Pair(-1, 0),
+            Pair(-1, 1),
+            Pair(0, -1),
+            Pair(0, 1),
+            Pair(1, -1),
+            Pair(1, 0),
+            Pair(1, 1),
+        )
     }
 }
+
+data class MineLocationRow(private val row: List<Int>) : Iterable<Int> by row
