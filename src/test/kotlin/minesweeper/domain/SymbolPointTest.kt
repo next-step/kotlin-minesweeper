@@ -12,6 +12,8 @@ import minesweeper.domain.SymbolType.SIX
 import minesweeper.domain.SymbolType.THREE
 import minesweeper.domain.SymbolType.TWO
 import minesweeper.domain.SymbolType.ZERO
+import minesweeper.domain.point.Point
+import minesweeper.domain.point.SymbolPoint
 
 class SymbolPointTest : FunSpec({
 

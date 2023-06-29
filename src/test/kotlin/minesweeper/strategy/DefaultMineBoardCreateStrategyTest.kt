@@ -2,7 +2,6 @@ package minesweeper.strategy
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Area
 import minesweeper.domain.SymbolType
@@ -29,12 +28,12 @@ class DefaultMineBoardCreateStrategyTest : BehaviorSpec({
 
                 actual.area shouldBe Area(width, height)
 
-                actual.lines.forEach {
-                    it shouldHaveSize width
+                actual.rows.forEach {
+                    it.realSize shouldBe width
                 }
 
-                actual.lines.sumOf { line ->
-                    line.count { it.equalsTo(SymbolType.MINE) }
+                actual.rows.sumOf { line ->
+                    line.count { it.hasSymbolType(SymbolType.MINE) }
                 } shouldBe mineCapacity
             }
         }

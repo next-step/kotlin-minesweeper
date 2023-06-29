@@ -2,7 +2,7 @@ package minesweeper.ui
 
 import minesweeper.application.MineSweeperService
 import minesweeper.domain.MineBoard
-import minesweeper.domain.Point
+import minesweeper.domain.point.Point
 import minesweeper.domain.state.ResultState
 import minesweeper.request.MineBoardCreateRequest
 
@@ -26,11 +26,16 @@ class MineSweeperController(
     }
 
     private fun playByMineBoard(mineBoard: MineBoard) {
-        val requestPoint: Point = mineSweeperInput.requestMarkingPoint().let { Point(x = it[0] - 1, y = it[1] - 1) }
+        val requestPoint: Point = mineSweeperInput.requestMarkingPoint().let { (x, y) ->
+            Point(x = x, y = y)
+        }
 
         runCatching {
             when (mineBoard.marking(requestPoint)) {
-                ResultState.WIN -> mineSweeperOutput.printWin()
+                ResultState.WIN -> {
+                    mineSweeperOutput.printMineBoard(mineBoard)
+                    mineSweeperOutput.printWin()
+                }
                 ResultState.LOSE -> mineSweeperOutput.printLose()
                 ResultState.CONTINUABLE -> {
                     mineSweeperOutput.printMineBoard(mineBoard)

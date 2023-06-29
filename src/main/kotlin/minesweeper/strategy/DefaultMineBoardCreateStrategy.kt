@@ -18,7 +18,7 @@ object DefaultMineBoardCreateStrategy : MineBoardCreateStrategy() {
         }.shuffled()
 
         return MineBoard(
-            height = request.height, width = request.width, lines = convertToLines(symbols, request)
+            height = request.height, width = request.width, rows = convertToLines(symbols, request)
         )
     }
 }

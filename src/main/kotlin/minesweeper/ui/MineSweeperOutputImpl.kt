@@ -1,21 +1,21 @@
 package minesweeper.ui
 
-import minesweeper.domain.Line
 import minesweeper.domain.MineBoard
+import minesweeper.domain.Row
 
 private const val BOARD_DELIMITER = " "
 
 object MineSweeperOutputImpl : MineSweeperOutput() {
     override fun printMineBoard(mineBoard: MineBoard) {
         buildString {
-            mineBoard.lines.forEach {
+            mineBoard.rows.forEach {
                 append("${convertToString(it)}\n")
             }
         }.run(::println)
     }
 
-    private fun convertToString(line: Line): String =
-        line.joinToString(separator = BOARD_DELIMITER) { convertToSymbol(it) }
+    private fun convertToString(row: Row): String =
+        row.joinToString(separator = BOARD_DELIMITER) { convertToSymbol(it) }
 
     override fun printStartGame() {
         println("지뢰찾기 게임 시작")

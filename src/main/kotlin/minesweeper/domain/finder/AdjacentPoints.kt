@@ -1,7 +1,7 @@
 package minesweeper.domain.finder
 
-import minesweeper.domain.Point
-import minesweeper.domain.SymbolPoint
+import minesweeper.domain.point.Point
+import minesweeper.domain.point.SymbolPoint
 
 typealias movePoint = (SymbolPoint) -> Point
 

@@ -3,14 +3,16 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.application.MineSweeperService
+import minesweeper.domain.SymbolType.BOUNDARY
 import minesweeper.domain.SymbolType.MINE
 import minesweeper.domain.SymbolType.ONE
 import minesweeper.domain.SymbolType.THREE
 import minesweeper.domain.SymbolType.TWO
 import minesweeper.domain.SymbolType.ZERO
+import minesweeper.domain.point.Point
+import minesweeper.domain.point.SymbolPoint
 import minesweeper.domain.state.ResultState
 import minesweeper.fixture.TestMineBoardCreateStrategy
 import minesweeper.request.MineBoardCreateRequest
@@ -26,11 +28,53 @@ class MineBoardTest : FreeSpec({
          *  2 3 2
          *  X 2 X
          */
-        val expectedLines = Lines(
+        val expectedRows = Rows(
             listOf(
-                Line(listOf(SymbolPoint(0, 0, ONE), SymbolPoint(1, 0, MINE), SymbolPoint(2, 0, ONE))),
-                Line(listOf(SymbolPoint(0, 1, TWO), SymbolPoint(1, 1, THREE), SymbolPoint(2, 1, TWO))),
-                Line(listOf(SymbolPoint(0, 2, MINE), SymbolPoint(1, 2, TWO), SymbolPoint(2, 2, MINE)))
+                Row(
+                    listOf(
+                        SymbolPoint(0, 0, BOUNDARY),
+                        SymbolPoint(1, 0, BOUNDARY),
+                        SymbolPoint(2, 0, BOUNDARY),
+                        SymbolPoint(3, 0, BOUNDARY),
+                        SymbolPoint(4, 0, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 1, BOUNDARY),
+                        SymbolPoint(1, 1, ONE),
+                        SymbolPoint(2, 1, MINE),
+                        SymbolPoint(3, 1, ONE),
+                        SymbolPoint(4, 1, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 2, BOUNDARY),
+                        SymbolPoint(1, 2, TWO),
+                        SymbolPoint(2, 2, THREE),
+                        SymbolPoint(3, 2, TWO),
+                        SymbolPoint(4, 2, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 3, BOUNDARY),
+                        SymbolPoint(1, 3, MINE),
+                        SymbolPoint(2, 3, TWO),
+                        SymbolPoint(3, 3, MINE),
+                        SymbolPoint(4, 3, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 4, BOUNDARY),
+                        SymbolPoint(1, 4, BOUNDARY),
+                        SymbolPoint(2, 4, BOUNDARY),
+                        SymbolPoint(3, 4, BOUNDARY),
+                        SymbolPoint(4, 4, BOUNDARY)
+                    )
+                )
             )
         )
 
@@ -39,15 +83,15 @@ class MineBoardTest : FreeSpec({
         service.createMineBoard(request).apply {
             area.height shouldBe request.height
             area.width shouldBe request.width
-            lines shouldHaveSize request.height
+            rows.realSize shouldBe request.height
 
-            lines shouldContainExactly expectedLines
+            rows shouldContainExactly expectedRows
         }
     }
 
     "3x3의 지뢰판이 있다고 할 때 " - {
         "유효한 좌표정보로 마킹할 수 있다." {
-            val targetPoint = Point(0, 0)
+            val targetPoint = Point(1, 1)
             val request = MineBoardCreateRequest(height = 3, width = 3, mineCapacity = 3)
             TestMineBoardCreateStrategy.updateBoardSetUp(input = createFixtureLines())
             val mineBoard = service.createMineBoard(request)
@@ -71,7 +115,7 @@ class MineBoardTest : FreeSpec({
 
         "마킹을 시도한 좌표 정보가" - {
             "지뢰일 경우 Lose 결과를 반환한다." {
-                val targetPoint = Point(1, 0)
+                val targetPoint = Point(2, 1)
                 val request = MineBoardCreateRequest(height = 3, width = 3, mineCapacity = 3)
                 TestMineBoardCreateStrategy.updateBoardSetUp(input = createFixtureLines())
                 val mineBoard = service.createMineBoard(request)
@@ -88,9 +132,10 @@ class MineBoardTest : FreeSpec({
                 TestMineBoardCreateStrategy.updateBoardSetUp(input = createFixtureLines())
                 val mineBoard = service.createMineBoard(request)
 
-                listOf(Point(0, 0), Point(2, 0)).forEach(mineBoard::marking)
+                listOf(Point(1, 1), Point(1, 2), Point(2, 2), Point(3, 1), Point(3, 2))
+                    .forEach(mineBoard::marking)
 
-                val actual = mineBoard.marking(Point(1, 2))
+                val actual = mineBoard.marking(Point(2, 3))
 
                 actual shouldBe ResultState.WIN
             }
@@ -103,10 +148,52 @@ class MineBoardTest : FreeSpec({
  *  0 0 0
  *  X 0 X
  */
-fun createFixtureLines(): Lines = Lines(
+fun createFixtureLines(): Rows = Rows(
     listOf(
-        Line(listOf(SymbolPoint(0, 0, ZERO), SymbolPoint(1, 0, MINE), SymbolPoint(2, 0, ZERO))),
-        Line(listOf(SymbolPoint(0, 1, ZERO), SymbolPoint(1, 1, ZERO), SymbolPoint(2, 1, ZERO))),
-        Line(listOf(SymbolPoint(0, 2, MINE), SymbolPoint(1, 2, ZERO), SymbolPoint(2, 2, MINE)))
+        Row(
+            listOf(
+                SymbolPoint(0, 0, BOUNDARY),
+                SymbolPoint(1, 0, BOUNDARY),
+                SymbolPoint(2, 0, BOUNDARY),
+                SymbolPoint(3, 0, BOUNDARY),
+                SymbolPoint(4, 0, BOUNDARY)
+            )
+        ),
+        Row(
+            listOf(
+                SymbolPoint(0, 1, BOUNDARY),
+                SymbolPoint(1, 1, ZERO),
+                SymbolPoint(2, 1, MINE),
+                SymbolPoint(3, 1, ZERO),
+                SymbolPoint(4, 1, BOUNDARY)
+            )
+        ),
+        Row(
+            listOf(
+                SymbolPoint(0, 2, BOUNDARY),
+                SymbolPoint(1, 2, ZERO),
+                SymbolPoint(2, 2, ZERO),
+                SymbolPoint(3, 2, ZERO),
+                SymbolPoint(4, 2, BOUNDARY)
+            )
+        ),
+        Row(
+            listOf(
+                SymbolPoint(0, 3, BOUNDARY),
+                SymbolPoint(1, 3, MINE),
+                SymbolPoint(2, 3, ZERO),
+                SymbolPoint(3, 3, MINE),
+                SymbolPoint(4, 3, BOUNDARY)
+            )
+        ),
+        Row(
+            listOf(
+                SymbolPoint(0, 4, BOUNDARY),
+                SymbolPoint(1, 4, BOUNDARY),
+                SymbolPoint(2, 4, BOUNDARY),
+                SymbolPoint(3, 4, BOUNDARY),
+                SymbolPoint(4, 4, BOUNDARY)
+            )
+        )
     )
 )

@@ -1,49 +1,59 @@
 package minesweeper.domain
 
 import minesweeper.domain.finder.AdjacentPoints
+import minesweeper.domain.point.Point
+import minesweeper.domain.point.SymbolPoint
 import minesweeper.domain.state.ResultState
+
+typealias adjacentFilter = (SymbolPoint) -> Boolean
 
 class MineBoard(
     val area: Area,
-    val lines: Lines,
+    val rows: Rows,
 ) {
-    constructor(width: Int, height: Int, lines: Lines) : this(Area(width, height), lines)
+    constructor(width: Int, height: Int, rows: Rows) : this(Area(width, height), rows)
 
-    var remainPointCount = area.size
-        private set
+    private val remainPointCount = RemainPointCount(area.size)
 
     init {
-        val flattenSymbols = lines.flatten()
+        val flattenSymbols = rows.flatten().filterNot { it.hasSymbolType(SymbolType.BOUNDARY) }
         flattenSymbols.forEach(::updateSymbol)
-        remainPointCount -= flattenSymbols.count { it.equalsTo(SymbolType.MINE) }
+        remainPointCount.decreaseAndGet(flattenSymbols.count { !it.isMarkableSymbol() })
     }
 
     private fun updateSymbol(symbolPoint: SymbolPoint) =
-        getAdjacentPoints(symbolPoint)
-            .count { it.equalsTo(SymbolType.MINE) }
+        getAdjacentPointsByFilter(symbolPoint)
+            .count { it.hasSymbolType(SymbolType.MINE) }
             .run(symbolPoint::updateSymbol)
 
-    private fun getAdjacentPoints(symbolPoint: SymbolPoint): List<SymbolPoint> =
-        findPoint(point = symbolPoint.point).let(::getAdjacentPointsOf)
+    private fun getAdjacentPointsByFilter(
+        symbolPoint: SymbolPoint,
+        filter: adjacentFilter = { true }
+    ): List<SymbolPoint> =
+        findPoint(point = symbolPoint.point)
+            .let(::getAdjacentPointsOf)
+            .filter(filter)
 
     private fun getAdjacentPointsOf(point: SymbolPoint): List<SymbolPoint> =
         AdjacentPoints.values().map { it.movePoint(point) }
-            .filter { it in lines }
+            .filter { it in rows }
             .map(::findPoint)
 
-    fun findPoint(point: Point): SymbolPoint = lines.findPoint(point)
+    fun findPoint(point: Point): SymbolPoint = rows.findPoint(point)
 
     fun marking(targetPoint: Point): ResultState {
         val foundPoint = findPoint(targetPoint)
-        if (foundPoint.equalsTo(SymbolType.MINE)) {
+        if (foundPoint.hasSymbolType(SymbolType.MINE)) {
             return ResultState.LOSE
         }
 
-        foundPoint.marking().takeIf { it }?.run {
-            revealAdjacentPoints(foundPoint)
-        }
+        foundPoint.marking().takeIf { it }
+            ?.run {
+                remainPointCount.decreaseAndGet()
+                revealAdjacentPoints(foundPoint)
+            }
 
-        return if (remainPointCount == 0) {
+        return if (remainPointCount.isZero()) {
             ResultState.WIN
         } else {
             ResultState.CONTINUABLE
@@ -51,11 +61,26 @@ class MineBoard(
     }
 
     private fun revealAdjacentPoints(point: SymbolPoint) {
-        remainPointCount--
-        getAdjacentPoints(point).filter { !it.isMarked() && !it.equalsTo(SymbolType.MINE) }
-            .forEach {
-                remainPointCount--
-                it.marking()
-            }
+        if (!point.hasSymbolType(SymbolType.ZERO)) {
+            return
+        }
+
+        val adjacentPoints = getAdjacentPointsByFilter(point) {
+            !it.isMarked() && it.isMarkableSymbol()
+        }
+
+        adjacentPoints.forEach { adjacentPoint ->
+            markingAdjacentPoint(adjacentPoint)
+        }
+    }
+
+    private fun markingAdjacentPoint(adjacentPoint: SymbolPoint) {
+        if (adjacentPoint.hasSymbolType(SymbolType.ZERO)) {
+            marking(adjacentPoint.point)
+        } else {
+            adjacentPoint.marking()
+                .takeIf { it }
+                ?.run { remainPointCount.decreaseAndGet() }
+        }
     }
 }
