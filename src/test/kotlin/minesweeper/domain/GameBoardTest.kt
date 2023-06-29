@@ -12,7 +12,7 @@ class GameBoardTest {
 
         board.setMine({ 0 }, { 0 })
 
-        val firstPin = board.pins.getPinAt(0, 0)
+        val firstPin = board.getPin(0, 0)
 
         (firstPin is MinePin) shouldBe true
     }

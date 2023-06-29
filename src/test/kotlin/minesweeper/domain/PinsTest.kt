@@ -20,9 +20,9 @@ class PinsTest {
         val width = 10
         val size = GameBoardSize(height, width)
         val pins = Pins.of(size)
-        pins.changeMine(0, 0)
+        pins.changeMine(0)
 
-        val pin = pins.getPinAt(0, 0)
+        val pin = pins.getPinAt(0)
 
         (pin is MinePin) shouldBe true
     }

@@ -5,16 +5,13 @@ class Pins(private val values: MutableList<Pin>) {
         return values.size
     }
 
-    fun getPinAt(height: Int, width: Int): Pin {
-        val index = (height + 1) * width
-        require(index <= getPinsSize()) { "높이 : $height, 너비: $width 는 올바른 위치가 아닙니다" }
+    fun getPinAt(index: Int): Pin {
+        require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
         return values[index]
     }
 
-    fun changeMine(height: Int, width: Int) {
-        val index = (height + 1) * width
-
-        require(index <= getPinsSize()) { "높이 : $height, 너비: $width 는 올바른 위치가 아닙니다" }
+    fun changeMine(index: Int) {
+        require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
 
         values[index] = MinePin()
     }
