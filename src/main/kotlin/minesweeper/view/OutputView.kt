@@ -14,7 +14,7 @@ object OutputView {
     private fun showMindSweeperInSameHeight(height: Int, gameBoard: GameBoard) {
         val width = gameBoard.size.width - 1
         for (j in 0..width) {
-            print(gameBoard.getPin(height, j).getMark())
+            print(gameBoard.getPin(height, j).getMark() + " ")
         }
         println()
     }

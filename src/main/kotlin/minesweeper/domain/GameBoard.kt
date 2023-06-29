@@ -8,7 +8,7 @@ class GameBoard(
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
     }
 
-    fun setMine(heightPositionStrategy: () -> Int, widthPositionStrategy: () -> Int) {
+    fun setMine(heightPositionStrategy: () -> Int, widthPositionStrategy: () -> Int): Boolean {
         val height = heightPositionStrategy()
         val width = widthPositionStrategy()
 
@@ -16,7 +16,13 @@ class GameBoard(
         require(width < size.width) { "보드에서 너비가 맞지 않습니다" }
 
         val index = getIndex(height, width)
+
+        if (pins.getPinAt(index) is MinePin) {
+            return false
+        }
+
         pins.changeMine(index)
+        return true
     }
 
     fun getPin(height: Int, width: Int): Pin {

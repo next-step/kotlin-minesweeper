@@ -29,13 +29,21 @@ fun readyGameBoard(size: GameBoardSize): GameBoard {
 
 fun readyMine(board: GameBoard) {
     val mineNumber = Inputview.askMineNumber()
-    val height = board.size.height
-    val width = board.size.width
     repeat(mineNumber) {
-        val heightGenerator: () -> Int = { Random.nextInt(height) }
-        val widthGenerator: () -> Int = { Random.nextInt(width) }
-        board.setMine(heightGenerator, widthGenerator)
+        randomGenerator(board)
     }
+}
+
+private fun randomGenerator(board: GameBoard) {
+    do {
+        val heightBoundary = board.size.height
+        val widthBoundary = board.size.width
+
+        val heightGenerator: () -> Int = { Random.nextInt(heightBoundary) }
+        val widthGenerator: () -> Int = { Random.nextInt(widthBoundary) }
+
+        val result = board.setMine(heightGenerator, widthGenerator)
+    } while (!result)
 }
 
 fun showResult(board: GameBoard) {
