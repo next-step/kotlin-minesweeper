@@ -48,29 +48,29 @@ class MinesweeperMapTest : BehaviorSpec({
             Then("정상적으로 생성된다") {
                 val expectedTopBottomRow = MinesweeperMapRow(
                     listOf(
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(4),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(4),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(4),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(4),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(2),
                     ),
                 )
                 val expectedMiddleRow = MinesweeperMapRow(
                     listOf(
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(6),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(6),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(6),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(6),
-                        MineMapElement,
+                        MineMapElement(),
                         NumberMapElement(3),
                     ),
                 )

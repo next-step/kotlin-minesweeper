@@ -17,7 +17,7 @@ class MineLocationsTest : BehaviorSpec({
     Given("지뢰의 좌표가 주어졌다") {
         When("주변 지뢰의 개수를 구하면") {
             Then("해당 좌표가 지뢰임이 반환된다") {
-                systemUnderTest.getMapElement(0, 0) shouldBe MineMapElement
+                systemUnderTest.getMapElement(0, 0) shouldBe MineMapElement()
             }
         }
     }

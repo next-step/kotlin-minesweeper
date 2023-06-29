@@ -11,23 +11,3 @@ data class MinesweeperMapRow(private val mapRow: List<MapElement>) : Iterable<Ma
         }
     }
 }
-
-sealed interface MapElement
-
-object MineMapElement : MapElement
-
-data class NumberMapElement(private val value: Int) : MapElement {
-    init {
-        require(value in MIN_MINE_COUNT..MAX_MINE_COUNT) { INVALID_VALUE_ERROR_MESSAGE }
-    }
-
-    override fun toString(): String {
-        return value.toString()
-    }
-
-    companion object {
-        private const val MIN_MINE_COUNT = 0
-        private const val MAX_MINE_COUNT = 8
-        private const val INVALID_VALUE_ERROR_MESSAGE = "지뢰 숫자는 $MIN_MINE_COUNT ~ ${MAX_MINE_COUNT}사이여야 합니다"
-    }
-}

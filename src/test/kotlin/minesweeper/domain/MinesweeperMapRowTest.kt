@@ -27,15 +27,15 @@ class MinesweeperMapRowTest : BehaviorSpec({
         When("해당 정보로 지뢰찾기 맵 한줄을 만들면") {
             Then("맵 한줄이 정상적으로 생성된다") {
                 val expectedRow = listOf(
-                    MineMapElement,
+                    MineMapElement(),
                     NumberMapElement(2),
-                    MineMapElement,
+                    MineMapElement(),
                     NumberMapElement(2),
-                    MineMapElement,
+                    MineMapElement(),
                     NumberMapElement(2),
-                    MineMapElement,
+                    MineMapElement(),
                     NumberMapElement(2),
-                    MineMapElement,
+                    MineMapElement(),
                     NumberMapElement(1),
                 )
                 MinesweeperMapRow.of(rowNumber, width, mineLocations) shouldBe MinesweeperMapRow(expectedRow)
