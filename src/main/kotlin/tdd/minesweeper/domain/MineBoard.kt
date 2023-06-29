@@ -5,12 +5,21 @@ import tdd.minesweeper.domain.type.GameProgressStatus
 import tdd.minesweeper.domain.type.SymbolType
 
 class MineBoard(
-    private val area: Area,
-    private val rows: Rows,
+    private var id: Int? = null,
+    val area: Area,
+    val rows: Rows,
 ) {
     private val remainCount: Count = Count(
         area.size - rows.findByFilter { it.equalsSymbol(SymbolType.MINE) }.count()
     )
+
+    fun updateId(value: Int) {
+        if (id != null && id != value) {
+            id = value
+        }
+    }
+
+    fun getId(): Int? = id
 
     fun getRemainCount(): Int = remainCount.current
 
@@ -41,5 +50,18 @@ class MineBoard(
             .forEach { marking(it.point) }
     }
 
+    override fun equals(other: Any?): Boolean =
+        if (other is MineBoard) {
+            this.id == other.id
+        } else {
+            false
+        }
 
+    override fun hashCode(): Int {
+        var result = area.hashCode()
+        result = 31 * result + rows.hashCode()
+        result = 31 * result + (id ?: 0)
+        result = 31 * result + remainCount.hashCode()
+        return result
+    }
 }

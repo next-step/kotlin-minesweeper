@@ -42,5 +42,4 @@ class SymbolPointTest : FunSpec({
         actual.isMarkable() shouldBe false
         actual.mark() shouldBe false
     }
-
 })

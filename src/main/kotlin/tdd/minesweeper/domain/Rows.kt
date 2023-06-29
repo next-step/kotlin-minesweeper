@@ -19,7 +19,6 @@ class Rows(values: List<Row>) {
         }
     }
 
-
     fun findByPoint(point: Point): SymbolPoint =
         cacheMap[point] ?: throw IllegalArgumentException("해당 위치에 정보가 존재하지 않습니다. Input: $point")
 

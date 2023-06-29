@@ -26,5 +26,4 @@ object DefaultRowsProvider : RowsProvider {
         symbolTypes.mapIndexed { x, symbol ->
             SymbolPoint(x = x, y = y, symbol)
         }.let(::Row)
-
 }

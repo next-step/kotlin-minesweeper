@@ -18,8 +18,7 @@ enum class SymbolType(val value: Int) {
     companion object {
         private val MARKABLE_SYMBOLS = listOf(ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN)
 
-        fun from(capacity: Int) : SymbolType = values().find { it.value == capacity }
+        fun from(capacity: Int): SymbolType = values().find { it.value == capacity }
             ?: throw IllegalArgumentException("유효한 인자가 아닙니다.(ex: $ZERO ~ $EIGHT) Input: $capacity")
     }
-
 }
