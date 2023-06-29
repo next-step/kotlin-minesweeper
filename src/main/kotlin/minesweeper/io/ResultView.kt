@@ -9,6 +9,7 @@ object ResultView {
     private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
     private const val MINE_STRING = "*"
     private const val GAME_OVER_MESSAGE = "Lose Game."
+    private const val GAME_CLEAR_MESSAGE = "Win Game."
 
     fun printGameStart() {
         println(GAME_START_MESSAGE)
@@ -33,5 +34,9 @@ object ResultView {
 
     fun printGameOver() {
         println(GAME_OVER_MESSAGE)
+    }
+
+    fun printGameClear() {
+        println(GAME_CLEAR_MESSAGE)
     }
 }

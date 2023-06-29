@@ -25,7 +25,12 @@ object MinesweeperController {
     private fun checkGameEnd(result: Result<Int>): Boolean {
         if (result.isFailure) {
             ResultView.printGameOver()
+            return true
         }
-        return result.isFailure
+        if (result.getOrThrow() == 0) {
+            ResultView.printGameClear()
+            return true
+        }
+        return false
     }
 }
