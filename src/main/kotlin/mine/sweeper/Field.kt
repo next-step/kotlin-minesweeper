@@ -1,6 +1,6 @@
 package mine.sweeper
 
-enum class Field(value: Int) {
-    SAFE_FIELD(0),
-    MINE_FIELD(1),
+enum class Field(value: Char) {
+    SAFE_FIELD('C'),
+    MINE_FIELD('*'),
 }

@@ -1,17 +1,19 @@
 package mine.sweeper
 
-class SweeperMap(height: Int, width: Int) {
-    private val places: List<List<Field>>
-    init {
-        require(height > 0 || width > 0)
-        places = List(height) {
-            List(width) {
-                Field.SAFE_FIELD
-            }
-        }
+class SweeperMap(private val option: MapOption) {
+    private val fields: Fields = Fields(option)
+    private val randomPosition: MutableList<Pair<Int, Int>> = option.randomPosition()
+
+    fun entireMap(): Array<Array<Field>> {
+        return fields.entire()
     }
 
-    fun entireMap(): List<List<Field>> {
-        return places
+    fun randomField(): Pair<Int, Int> {
+        check(randomPosition.isNotEmpty())
+        return randomPosition.removeFirst()
+    }
+
+    fun setMine(height: Int, width: Int) {
+        fields.changeField(height, width, Field.MINE_FIELD)
     }
 }
