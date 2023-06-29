@@ -14,12 +14,7 @@ data class MinesweeperMapRow(private val mapRow: List<MapElement>) : Iterable<Ma
 
 sealed interface MapElement
 
-object MineMapElement : MapElement {
-    private const val MINE_STRING = "*"
-    override fun toString(): String {
-        return MINE_STRING
-    }
-}
+object MineMapElement : MapElement
 
 data class NumberMapElement(private val value: Int) : MapElement {
     init {
