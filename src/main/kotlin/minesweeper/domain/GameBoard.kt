@@ -2,7 +2,7 @@ package minesweeper.domain
 
 class GameBoard(
     val size: GameBoardSize,
-    val pins: Pins = Pins.of(size)
+    private val pins: Pins = Pins.of(size)
 ) {
     init {
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
