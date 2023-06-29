@@ -6,7 +6,7 @@ import minesweeper_refactor.domain.coordinate.Coordinate
 
 class BlockGenerator(private val coordinates: ArrayDeque<Coordinate>) {
 
-    infix fun toMineBlocks(size: Int): Blocks {
+    fun createMineBlocks(size: Int): Blocks {
         val coordinatesSize = coordinates.size
 
         check(value = coordinatesSize >= size) {
@@ -20,7 +20,7 @@ class BlockGenerator(private val coordinates: ArrayDeque<Coordinate>) {
         )
     }
 
-    fun toRemainNumberBlocks(aroundMineCount: (Coordinate) -> Int): Blocks = Blocks(
+    fun createRemainNumberBlocks(aroundMineCount: (Coordinate) -> Int): Blocks = Blocks(
         blocks = List(size = coordinates.size) {
             val coordinate = coordinates.removeLast()
 

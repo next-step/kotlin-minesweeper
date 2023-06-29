@@ -27,9 +27,9 @@ class BoardBuilder : DslBuilder<MinesweeperBoard>() {
 
         val blockGenerator = boardSize.toBlockGenerator()
 
-        val mineBlocks = blockGenerator toMineBlocks mineArea
+        val mineBlocks = blockGenerator.createMineBlocks(size = mineArea)
         val mineAroundCoordinateMap = mineBlocks.toAroundCoordinateMap()
-        val numberBlocks = blockGenerator.toRemainNumberBlocks {
+        val numberBlocks = blockGenerator.createRemainNumberBlocks {
             mineAroundCoordinateMap.getOrDefault(key = it, DEFAULT_MINE_COUNT)
         }
 
