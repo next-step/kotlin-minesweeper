@@ -17,9 +17,12 @@ object ResultView {
     }
 
     private fun mapElementToString(element: MapElement): String {
+        if (element.isCovered()) {
+            return "C"
+        }
         return when (element) {
             is MineMapElement -> MINE_STRING
-            is NumberMapElement -> element.toString()
+            is NumberMapElement -> element.value.toString()
         }
     }
 }

@@ -32,13 +32,9 @@ class MineMapElement : MapElement() {
     }
 }
 
-class NumberMapElement(private val value: Int) : MapElement() {
+class NumberMapElement(val value: Int) : MapElement() {
     init {
         require(value in MIN_MINE_COUNT..MAX_MINE_COUNT) { INVALID_VALUE_ERROR_MESSAGE }
-    }
-
-    override fun toString(): String {
-        return value.toString()
     }
 
     override fun equals(other: Any?): Boolean {
