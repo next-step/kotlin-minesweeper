@@ -1,6 +1,6 @@
 package mine.sweeper
 
-class MapOption(
+class SweeperMapSetup(
     private val height: Int,
     private val width: Int,
 ) {
@@ -8,7 +8,7 @@ class MapOption(
         require(height > 0 && width > 0)
     }
 
-    fun initMap(): Array<Array<Field>> {
+    fun initFields(): Array<Array<Field>> {
         return Array(height) {
             Array(width) {
                 Field.SAFE_FIELD
@@ -16,7 +16,7 @@ class MapOption(
         }
     }
 
-    fun randomPosition(): MutableList<Pair<Int, Int>> {
+    fun initRandomPositions(): MutableList<Pair<Int, Int>> {
         return MutableList(height * width) {
             Pair(it / width, it % width)
         }.shuffled().toMutableList()

@@ -1,7 +1,6 @@
 package mine.sweeper
 
-class Fields(option: MapOption) {
-    private var fields = option.initMap()
+class Fields(private val fields: Array<Array<Field>>) {
 
     fun entire(): Array<Array<Field>> {
         return fields
