@@ -1,4 +1,4 @@
-package tdd.minesweeper.domain.type
+package tdd.minesweeper.domain
 
 data class Area(
     val width: Int,
