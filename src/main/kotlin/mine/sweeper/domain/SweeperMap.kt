@@ -1,6 +1,6 @@
-package mine.sweeper
+package mine.sweeper.domain
 
-class SweeperMap(setup: SweeperMapSetup) {
+class SweeperMap(setup: MapSetup) {
     private val fields: Fields = Fields(setup.initFields())
     private val randomPositions: MutableList<Pair<Int, Int>> = setup.initRandomPositions()
 

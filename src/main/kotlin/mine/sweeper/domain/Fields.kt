@@ -1,4 +1,4 @@
-package mine.sweeper
+package mine.sweeper.domain
 
 class Fields(private val fields: Array<Array<Field>>) {
 

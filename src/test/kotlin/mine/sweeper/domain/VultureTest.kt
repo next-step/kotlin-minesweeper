@@ -1,4 +1,4 @@
-package mine.sweeper
+package mine.sweeper.domain
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -13,7 +13,7 @@ class VultureTest : StringSpec({
             10,
         ).forAll { input ->
             val vulture = Vulture(input)
-            val option = SweeperMapSetup(height = 10, width = 10)
+            val option = MapSetup(height = 10, width = 10)
             val map = SweeperMap(option)
             vulture.layingMines(map)
             var count = 0

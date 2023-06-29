@@ -1,4 +1,4 @@
-package mine.sweeper
+package mine.sweeper.domain
 
 class Vulture(val mines: Int) {
     init {

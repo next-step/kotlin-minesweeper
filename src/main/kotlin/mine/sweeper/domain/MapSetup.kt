@@ -1,6 +1,6 @@
-package mine.sweeper
+package mine.sweeper.domain
 
-class SweeperMapSetup(
+class MapSetup(
     private val height: Int,
     private val width: Int,
 ) {
