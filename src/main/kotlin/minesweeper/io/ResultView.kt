@@ -9,11 +9,15 @@ object ResultView {
     private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
     private const val MINE_STRING = "*"
 
-    fun printGameStart(minesweeperMap: MinesweeperMap) {
+    fun printGameStart() {
         println(GAME_START_MESSAGE)
+    }
+
+    fun printMap(minesweeperMap: MinesweeperMap) {
         for (minesweeperMapRow in minesweeperMap) {
             println(minesweeperMapRow.joinToString(" ", transform = ::mapElementToString))
         }
+        println()
     }
 
     private fun mapElementToString(element: MapElement): String {

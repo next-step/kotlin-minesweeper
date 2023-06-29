@@ -10,6 +10,11 @@ class MinesweeperController {
         val width = InputView.getWidth()
         val mineCount = InputView.getMineCount()
         val minesweeperMap = MinesweeperMap.of(height, width, mineCount)
-        ResultView.printGameStart(minesweeperMap)
+        ResultView.printGameStart()
+        while (true) { // TODO 게임종료 조건이 있을것
+            val point = InputView.getOpenPoint()
+            minesweeperMap.open(point)
+            ResultView.printMap(minesweeperMap)
+        }
     }
 }

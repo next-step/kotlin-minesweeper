@@ -3,7 +3,7 @@ package minesweeper.domain
 sealed class MapElement {
     private var covered: Boolean = true
 
-    fun reveal() {
+    fun open() {
         covered = false
     }
 

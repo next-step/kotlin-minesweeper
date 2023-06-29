@@ -57,7 +57,7 @@ class MapElementTest : BehaviorSpec({
             }
 
             When("MapElement를 나타나게 하면") {
-                numberMapElement.reveal()
+                numberMapElement.open()
                 Then("MapElement가 드러난다") {
                     numberMapElement.isCovered() shouldBe false
                 }
@@ -74,7 +74,7 @@ class MapElementTest : BehaviorSpec({
         }
 
         When("MapElement를 나타나게 하면") {
-            mineMapElement.reveal()
+            mineMapElement.open()
             Then("MapElement가 드러난다") {
                 mineMapElement.isCovered() shouldBe false
             }
