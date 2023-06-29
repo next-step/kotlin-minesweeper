@@ -4,17 +4,28 @@ import minesweeper.domain.MinesweeperMap
 import minesweeper.io.InputView
 import minesweeper.io.ResultView
 
-class MinesweeperController {
+object MinesweeperController {
     fun start() {
         val height = InputView.getHeight()
         val width = InputView.getWidth()
         val mineCount = InputView.getMineCount()
         val minesweeperMap = MinesweeperMap.of(height, width, mineCount)
         ResultView.printGameStart()
-        while (true) { // TODO 게임종료 조건이 있을것
-            val point = InputView.getOpenPoint()
-            minesweeperMap.open(point)
+        while (nextTurn(minesweeperMap)) {
             ResultView.printMap(minesweeperMap)
         }
+    }
+
+    private fun nextTurn(minesweeperMap: MinesweeperMap): Boolean {
+        val point = InputView.getOpenPoint()
+        val result = minesweeperMap.open(point)
+        return !checkGameEnd(result)
+    }
+
+    private fun checkGameEnd(result: Result<Int>): Boolean {
+        if (result.isFailure) {
+            ResultView.printGameOver()
+        }
+        return result.isFailure
     }
 }

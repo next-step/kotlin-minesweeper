@@ -8,6 +8,7 @@ import minesweeper.domain.NumberMapElement
 object ResultView {
     private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
     private const val MINE_STRING = "*"
+    private const val GAME_OVER_MESSAGE = "Lose Game."
 
     fun printGameStart() {
         println(GAME_START_MESSAGE)
@@ -28,5 +29,9 @@ object ResultView {
             is MineMapElement -> MINE_STRING
             is NumberMapElement -> element.value.toString()
         }
+    }
+
+    fun printGameOver() {
+        println(GAME_OVER_MESSAGE)
     }
 }

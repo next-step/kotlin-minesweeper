@@ -16,7 +16,6 @@ class MinesweeperMap(private val height: Int, private val width: Int, private va
         if (!(point.x in 0 until width && point.y in 0 until height) || !map[point.y].isCovered(point.x) || map[point.y].isMine(point.x)) {
             return
         }
-        println(point)
         map[point.y].open(point.x)
         if (map[point.y].getNumber(point.x) != 0) {
             return
