@@ -2,7 +2,7 @@ package minesweeper_refactor.domain.block
 
 import minesweeper_refactor.domain.coordinate.Coordinate
 
-class Block(val coordinate: Coordinate, val blockState: BlockState) {
+class Block private constructor(val coordinate: Coordinate, val blockState: BlockState) {
 
     var isHidden: Boolean = true
         private set
@@ -16,9 +16,14 @@ class Block(val coordinate: Coordinate, val blockState: BlockState) {
 
     companion object {
 
-        fun of(coordinate: Coordinate, aroundMineCount: Int): Block = Block(
+        fun toNumberBlockOf(coordinate: Coordinate, aroundMineCount: Int): Block = Block(
             coordinate = coordinate,
             blockState = BlockState.valueOf(aroundMineCount = aroundMineCount),
+        )
+
+        fun toMineBlockFrom(coordinate: Coordinate): Block = Block(
+            coordinate = coordinate,
+            blockState = BlockState.MINE,
         )
     }
 }

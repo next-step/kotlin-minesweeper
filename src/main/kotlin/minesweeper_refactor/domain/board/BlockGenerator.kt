@@ -1,7 +1,6 @@
 package minesweeper_refactor.domain.board
 
 import minesweeper_refactor.domain.block.Block
-import minesweeper_refactor.domain.block.BlockState
 import minesweeper_refactor.domain.block.Blocks
 import minesweeper_refactor.domain.coordinate.Coordinate
 
@@ -16,7 +15,7 @@ class BlockGenerator(private val coordinates: ArrayDeque<Coordinate>) {
 
         return Blocks(
             blocks = List(size = size) {
-                Block(coordinate = coordinates.removeLast(), blockState = BlockState.MINE)
+                Block.toMineBlockFrom(coordinate = coordinates.removeLast())
             },
         )
     }
@@ -25,7 +24,7 @@ class BlockGenerator(private val coordinates: ArrayDeque<Coordinate>) {
         blocks = List(size = coordinates.size) {
             val coordinate = coordinates.removeLast()
 
-            Block.of(
+            Block.toNumberBlockOf(
                 coordinate = coordinate,
                 aroundMineCount = aroundMineCount(coordinate),
             )
