@@ -6,18 +6,18 @@ import mine.sweeper.domain.Vulture
 import mine.sweeper.view.OutputView
 
 class MineSweeperGame(
-    inputHeight: () -> Int,
-    inputWidth: () -> Int
+    height: Int,
+    width: Int
 ) {
-    private val setup = MapSetup(inputHeight(), inputWidth())
+    private val setup = MapSetup(height, width)
     private val map = SweeperMap(setup)
 
     fun printEntireMap() {
         OutputView.printMap(map.entireMap())
     }
 
-    fun setMines(inputMines: () -> Int) {
-        val vulture = Vulture(inputMines())
+    fun setMines(mines: Int) {
+        val vulture = Vulture(mines)
         vulture.layingMines(map)
     }
 }
