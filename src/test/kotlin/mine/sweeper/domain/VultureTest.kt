@@ -13,8 +13,8 @@ class VultureTest : StringSpec({
             10,
         ).forAll { input ->
             val vulture = Vulture(input)
-            val option = MapSetup(height = 10, width = 10)
-            val map = SweeperMap(option)
+            val mapInitializer = MapInitializer(height = 10, width = 10)
+            val map = mapInitializer.createMap()
             vulture.layingMines(map)
             var count = 0
 

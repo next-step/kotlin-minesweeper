@@ -1,16 +1,17 @@
 package mine.sweeper.domain
 
-class Fields(private val fields: Array<Array<Field>>) {
+class Fields(height: Int, width: Int) {
+    private val fields = Array(height) {
+        Array(width) {
+            Field.SAFE_FIELD
+        }
+    }
 
     fun entire(): Array<Array<Field>> {
         return fields
     }
 
-    fun find(height: Int, width: Int): Field {
-        return fields[height][width]
-    }
-
-    fun changeField(height: Int, width: Int, mineField: Field) {
+    fun update(height: Int, width: Int, mineField: Field) {
         fields[height][width] = mineField
     }
 }

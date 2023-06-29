@@ -1,11 +1,11 @@
 package mine.sweeper.domain
 
-class SweeperMap(setup: MapSetup) {
-    private val fields: Fields = Fields(setup.initFields())
-    private val randomPositions: MutableList<Pair<Int, Int>> = setup.initRandomPositions()
-
-    fun entireMap(): Array<Array<Field>> {
-        return fields.entire()
+class SweeperMap(
+    private val fields: Fields,
+    private val randomPositions: MutableList<Pair<Int, Int>>,
+) {
+    fun entireMap(): List<Array<Field>> {
+        return fields.entire().toList()
     }
 
     fun randomField(): Pair<Int, Int> {
@@ -14,6 +14,6 @@ class SweeperMap(setup: MapSetup) {
     }
 
     fun setMine(height: Int, width: Int) {
-        fields.changeField(height, width, Field.MINE_FIELD)
+        fields.update(height, width, Field.MINE_FIELD)
     }
 }
