@@ -4,7 +4,7 @@ import tdd.minesweeper.domain.type.AdjacentPoints
 import tdd.minesweeper.domain.type.SymbolType
 
 typealias symbolSearchFilter = (SymbolPoint) -> Boolean
-class Rows(values: List<Row>) {
+class Rows(private val values: List<Row>) {
     private val cacheMap: Map<Point, SymbolPoint> = values.flatten().associateBy(SymbolPoint::point)
 
     init {
@@ -24,6 +24,8 @@ class Rows(values: List<Row>) {
 
     fun findByFilter(filter: symbolSearchFilter): List<SymbolPoint> =
         cacheMap.values.filter(filter)
+
+    fun <T> convertTo(mapper: (SymbolPoint) -> T): List<List<T>> = values.map { it.convert(mapper) }
 
     operator fun contains(point: Point): Boolean = cacheMap.containsKey(point)
 }

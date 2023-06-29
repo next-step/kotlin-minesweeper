@@ -21,7 +21,7 @@ class MineSweeperServiceTest : FreeSpec({
         val givenRows = create3x3Rows()
         RowsFixtureProvider.updateFixtureRows(rows = givenRows)
 
-        val savedId =
+        val (savedId, _) =
             service.createMineBoard(request = MineBoardCreateRequest(width = 3, height = 3, mineCapacity = 2))
 
         val actual = service.findMineBoard(savedId)
@@ -31,7 +31,7 @@ class MineSweeperServiceTest : FreeSpec({
 
     "지뢰판 생성 이후 " - {
         RowsFixtureProvider.updateFixtureRows(rows = create3x3Rows())
-        val savedId =
+        val (savedId, _) =
             service.createMineBoard(request = MineBoardCreateRequest(width = 3, height = 3, mineCapacity = 2))
 
         "유효한 좌표로 마킹하면 진행할 수 있다는 상태와 지뢰판이 반환된다." {

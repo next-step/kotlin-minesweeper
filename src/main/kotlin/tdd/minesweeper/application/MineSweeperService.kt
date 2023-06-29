@@ -15,7 +15,7 @@ class MineSweeperService(
 
     fun findMineBoard(findId: Int): MineBoard = mineBoardRepository.find(findId)
 
-    fun createMineBoard(request: MineBoardCreateRequest): Int {
+    fun createMineBoard(request: MineBoardCreateRequest): Pair<Int, GameProgressStatus> {
         val area = Area(width = request.width, height = request.height)
         val rows = rowsProvider.provide(
             area = area,
@@ -27,7 +27,7 @@ class MineSweeperService(
                 area = area,
                 rows = rows
             )
-        )
+        ) to GameProgressStatus.CREATED
     }
 
     fun markPoint(id: Int, point: Point): Pair<MineBoard, GameProgressStatus> {

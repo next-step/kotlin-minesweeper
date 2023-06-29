@@ -1,9 +1,11 @@
 package tdd.minesweeper.ui
 
-import minesweeper.domain.MineBoard
+import tdd.minesweeper.domain.type.GameProgressStatus
+import tdd.minesweeper.domain.type.SymbolType
 
 interface GameOutput {
-    fun printMineBoard(mineBoard: MineBoard)
+    fun printMineBoard(response: List<List<SymbolType>>)
     fun printGameStart()
-    fun printFinished()
+    fun printFinished(status: GameProgressStatus)
+    fun printException(message: String?)
 }

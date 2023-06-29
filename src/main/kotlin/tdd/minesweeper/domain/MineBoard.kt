@@ -14,7 +14,7 @@ class MineBoard(
     )
 
     fun updateId(value: Int) {
-        if (id != null && id != value) {
+        if (id == null || id != value) {
             id = value
         }
     }
@@ -22,6 +22,8 @@ class MineBoard(
     fun getId(): Int? = id
 
     fun getRemainCount(): Int = remainCount.current
+
+    fun <T> convertRowsTo(mapper: (SymbolPoint) -> T): List<List<T>> = rows.convertTo(mapper)
 
     fun marking(point: Point): GameProgressStatus {
         val foundPoint = rows.findByPoint(point)
