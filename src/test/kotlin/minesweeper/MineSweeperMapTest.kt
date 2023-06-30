@@ -19,7 +19,7 @@ class MineSweeperMapTest {
 
         // [then]
         val actualMineCount = mineSweeperMap.value.map { row ->
-            row.count { pos -> pos == '*' }
+            row.count { pos -> pos == MineSweeperMap.MINE_CHAR }
         }.reduce { acc, i -> acc + i }
 
         actualMineCount shouldBe mineCount.value

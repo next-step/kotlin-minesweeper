@@ -12,7 +12,7 @@ class MineSweeperMap(height: PositiveNumber, width: PositiveNumber, mineCount: M
     }
 
     private fun initGameMap(height: Int, width: Int): Array<CharArray> {
-        return Array(height) { CharArray(width) { 'C' } }
+        return Array(height) { CharArray(width) { NON_MINE_CHAR } }
     }
 
     private fun setMine(height: Int, width: Int, mineCount: Int) {
@@ -26,6 +26,11 @@ class MineSweeperMap(height: PositiveNumber, width: PositiveNumber, mineCount: M
             numberSet.add(row to column)
         }
 
-        numberSet.forEach { (row, height) -> value[row][height] = '*' }
+        numberSet.forEach { (row, height) -> value[row][height] = MINE_CHAR }
+    }
+
+    companion object {
+        const val MINE_CHAR = '*'
+        const val NON_MINE_CHAR = 'C'
     }
 }
