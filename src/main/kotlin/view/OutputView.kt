@@ -1,17 +1,24 @@
 package view
 
-import model.InstalledMineBoard
+import model.CountedMineBoard
 import model.MineBoard
-import model.MineMark
 import model.Position
+import model.minemark.Mine
+import model.minemark.MineCount
+import model.minemark.MineMark
+import model.minemark.Safety
 
 object OutputView {
     private const val MINE_SYMBOL = "*"
     private const val SAFETY_SYMBOL = "C"
 
-    fun printBoard(installedMineBoard: InstalledMineBoard) {
-        groupedByY(positionsSortedYAndX(installedMineBoard.mineBoard))
-            .forEach { println(lineMarkSymbols(it)) }
+    fun printBoard(countedMineBoard: CountedMineBoard) {
+        groupedByY(positionsSortedYAndX(countedMineBoard.mineBoard))
+            .forEach { line -> printLine(line) }
+    }
+
+    private fun printLine(line: List<Pair<Position, MineMark>>) {
+        println(lineMarkSymbols(line.map { it.second }))
     }
 
     private fun positionsSortedYAndX(board: MineBoard): List<Pair<Position, MineMark>> {
@@ -24,11 +31,12 @@ object OutputView {
         return positions.groupBy { it.first.y }.values
     }
 
-    private fun lineMarkSymbols(it: List<Pair<Position, MineMark>>) =
-        it.joinToString(" ") { element ->
-            when (element.second) {
-                MineMark.MINE -> MINE_SYMBOL
-                MineMark.SAFETY -> SAFETY_SYMBOL
+    private fun lineMarkSymbols(marks: List<MineMark>) =
+        marks.joinToString(" ") {
+            when (it) {
+                is Mine -> MINE_SYMBOL
+                is Safety -> SAFETY_SYMBOL
+                is MineCount -> it.count.toString()
             }
         }
 }
