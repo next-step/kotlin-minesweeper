@@ -3,12 +3,12 @@ package domain
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class MineSweeperMap(height: Int, width: Int, mineCount: Int) {
+class MineSweeperMap(height: PositiveNumber, width: PositiveNumber, mineCount: MineCountNumber) {
     val value: Array<CharArray>
 
     init {
-        value = initGameMap(height, width)
-        setMine(height, width, mineCount)
+        value = initGameMap(height.value, width.value)
+        setMine(height.value, width.value, mineCount.value)
     }
 
     private fun initGameMap(height: Int, width: Int): Array<CharArray> {

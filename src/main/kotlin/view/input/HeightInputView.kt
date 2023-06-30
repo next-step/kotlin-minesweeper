@@ -1,14 +1,15 @@
 package view.input
 
+import domain.PositiveNumber
 import view.output.NewLineOutputView
 
-class HeightInputView : InputView<Int>() {
+class HeightInputView : InputView<Int, PositiveNumber>() {
     override val message: String = "높이를 입력하세요."
-    override val value: Int
+    override val value: PositiveNumber
 
     init {
         renderMessage()
-        value = readValue()
+        value = PositiveNumber(readValue())
         NewLineOutputView()
     }
 

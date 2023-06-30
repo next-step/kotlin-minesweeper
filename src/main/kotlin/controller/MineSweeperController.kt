@@ -11,7 +11,7 @@ class MineSweeperController {
     fun start() {
         val height = HeightInputView().value
         val width = WidthInputView().value
-        val mineCount = MineCountInputView().value
+        val mineCount = MineCountInputView(height, width).value
 
         val mineSweeperMap = MineSweeperMap(height, width, mineCount)
 

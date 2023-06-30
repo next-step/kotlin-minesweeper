@@ -1,8 +1,8 @@
 package view.input
 
-abstract class InputView<T> {
+abstract class InputView<T, V> {
     abstract val message: String
-    abstract val value: T
+    abstract val value: V
 
     fun renderMessage() {
         println(message)
