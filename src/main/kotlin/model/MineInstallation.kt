@@ -9,14 +9,14 @@ class MineInstallation(
         require(count > 0) { "install count must be positive. but provided `$count`" }
     }
 
-    fun installed(mineBoard: MineBoard): MineBoard {
+    fun installed(mineBoard: MineBoard): InstalledMineBoard {
         validateMineBoardSize(mineBoard)
         var currentMineBoard: MineBoard = mineBoard
         repeat(count) {
             val position: Position = differentMarkPosition(currentMineBoard)
             currentMineBoard = currentMineBoard.replacedMark(position, mark)
         }
-        return currentMineBoard
+        return InstalledMineBoard(currentMineBoard)
     }
 
     private fun validateMineBoardSize(mineBoard: MineBoard) {

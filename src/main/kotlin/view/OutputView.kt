@@ -1,5 +1,6 @@
 package view
 
+import model.InstalledMineBoard
 import model.MineBoard
 import model.MineMark
 import model.Position
@@ -8,8 +9,8 @@ object OutputView {
     private const val MINE_SYMBOL = "*"
     private const val SAFETY_SYMBOL = "C"
 
-    fun printBoard(board: MineBoard) {
-        groupedByY(positionsSortedYAndX(board))
+    fun printBoard(installedMineBoard: InstalledMineBoard) {
+        groupedByY(positionsSortedYAndX(installedMineBoard.mineBoard))
             .forEach { println(lineMarkSymbols(it)) }
     }
 

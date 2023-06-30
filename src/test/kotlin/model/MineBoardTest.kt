@@ -75,3 +75,12 @@ val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
         Position(1, 0) to MineMark.SAFETY,
     )
 )
+
+val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
+    mapOf(
+        Position(0, 0) to MineMark.SAFETY,
+        Position(1, 1) to MineMark.MINE,
+        Position(0, 1) to MineMark.SAFETY,
+        Position(1, 0) to MineMark.MINE,
+    )
+)

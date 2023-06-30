@@ -1,5 +1,6 @@
 package controller
 
+import model.InstalledMineBoard
 import model.MineBoard
 import model.MineBoardProvider
 import model.MineInstallation
@@ -12,8 +13,9 @@ object MineSweeperGame {
 
     fun start() {
         val mineBoard: MineBoard = MineBoardProvider(InputView.length, InputView.width).mineBoard
-        val installedMine: MineBoard = MineInstallation(InputView.mineCount, MineMark.MINE, ::nextRandomPosition)
-            .installed(mineBoard)
+        val installedMine: InstalledMineBoard =
+            MineInstallation(InputView.mineCount, MineMark.MINE, ::nextRandomPosition)
+                .installed(mineBoard)
         OutputView.printBoard(installedMine)
     }
 }

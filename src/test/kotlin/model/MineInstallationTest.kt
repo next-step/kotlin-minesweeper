@@ -26,15 +26,17 @@ class MineInstallationTest : StringSpec({
         // given
         val zeroPositionOneCountMineInstallation = MineInstallation(1, MineMark.MINE, ZERO_POSITION_SELECTOR)
         // when
-        val installedMineBoard: MineBoard =
+        val installedMineBoard: InstalledMineBoard =
             zeroPositionOneCountMineInstallation.installed(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         // then
-        installedMineBoard shouldBe MineBoard(
-            mapOf(
-                Position(0, 0) to MineMark.MINE,
-                Position(0, 1) to MineMark.SAFETY,
-                Position(1, 0) to MineMark.SAFETY,
-                Position(1, 1) to MineMark.SAFETY,
+        installedMineBoard shouldBe InstalledMineBoard(
+            MineBoard(
+                mapOf(
+                    Position(0, 0) to MineMark.MINE,
+                    Position(0, 1) to MineMark.SAFETY,
+                    Position(1, 0) to MineMark.SAFETY,
+                    Position(1, 1) to MineMark.SAFETY,
+                )
             )
         )
     }
