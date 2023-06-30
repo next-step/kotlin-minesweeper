@@ -1,6 +1,6 @@
 package map
 
-enum class MapElementType(val symbol: String) {
+enum class TileType(val symbol: String) {
     EMPTY("C"),
     MINE("*"),
 }

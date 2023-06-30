@@ -2,11 +2,11 @@ package map
 
 import map.position.Position
 
-class MapElement(
+class Tile(
     val position: Position,
-    private var type: MapElementType = MapElementType.EMPTY,
+    private var type: TileType = TileType.EMPTY,
 ) {
-    fun changeType(type: MapElementType) {
+    fun changeType(type: TileType) {
         this.type = type
     }
 
@@ -14,7 +14,7 @@ class MapElement(
         return type.symbol
     }
 
-    fun isMine() = type == MapElementType.MINE
+    fun isMine() = type == TileType.MINE
 
     override fun toString(): String {
         return getSymbol()

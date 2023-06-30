@@ -1,6 +1,6 @@
 package view
 
-import map.MapElement
+import map.Tile
 
 interface OutputView {
     fun drawMineMap(mineMap: List<List<String>>)
