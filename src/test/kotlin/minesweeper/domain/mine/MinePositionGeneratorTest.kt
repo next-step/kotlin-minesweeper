@@ -11,9 +11,9 @@ class MinePositionGeneratorTest {
         val mineQuantity = 3
         val boardRange = BoardRange(height = 3, width = 3)
 
-        val mineSweeperPositions =
+        val minePositions =
             MinePositionGenerator.createMinePositions(mineQuantity = mineQuantity, boardRange = boardRange)
 
-        mineSweeperPositions.size shouldBe mineQuantity
+        minePositions.size shouldBe mineQuantity
     }
 }

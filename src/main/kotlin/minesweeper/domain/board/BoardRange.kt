@@ -20,6 +20,12 @@ class BoardRange(height: Int, width: Int) {
         return widthRange.random()
     }
 
+    fun calculateArea(): Int = heightRange.max() * widthRange.max()
+
+    fun maxHeight(): Int = heightRange.max()
+
+    fun maxWidth(): Int = widthRange.max()
+
     companion object {
         private const val RANGE_MIN = 1
     }
