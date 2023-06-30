@@ -5,7 +5,7 @@ data class Board(private val height: BoardHeight, private val width: BoardWidth)
     fun width(): Int = width.width
 
     fun height(): Int = height.height
-    
+
     fun area(): Int = width() * height()
 
     companion object {

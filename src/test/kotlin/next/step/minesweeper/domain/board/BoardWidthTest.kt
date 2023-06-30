@@ -15,5 +15,4 @@ class BoardWidthTest : DescribeSpec({
             }
         }
     }
-
 })

@@ -18,7 +18,7 @@ data class MineBoard(private val board: Board, private val minePoints: MinePoint
 
     private fun requireMinHeight() =
         minePoints.forEach { require(it.y >= zero().y) { "지뢰 y 위치는 ${zero().y} 보다 작을 수 없습니다." } }
-    
+
     private fun requireMaxWidth() = minePoints.forEach { require(it.x < width()) { "지뢰 x 위치는 ${width()} 보다 작아야 합니다." } }
 
     private fun requireMinWidth() =
