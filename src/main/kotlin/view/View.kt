@@ -12,6 +12,11 @@ object InputView {
         println("넓이를 입력하세요.")
         return readlnOrNull()?.toInt() ?: throw IllegalArgumentException("넓이를 입력해주세요.")
     }
+
+    fun readMineCount(): Int {
+        println("지뢰는 몇 개인가요?")
+        return readlnOrNull()?.toInt() ?: throw IllegalArgumentException("지뢰 개수를 입력해주세요.")
+    }
 }
 
 object ResultView {
