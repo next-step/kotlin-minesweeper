@@ -17,6 +17,23 @@ class GameMap(field: List<List<Tile>>) {
         _field[point.y.value][point.x.value] = Mine(point)
     }
 
+    fun generateMines(mineCount: Int) {
+        repeat(mineCount) {
+            generateMine()
+        }
+    }
+
+    private fun generateMine() {
+        val height = field.size
+        val width = field[0].size
+
+        var point = RandomGenerator.point(width, height)
+        while (isMine(point)) {
+            point = RandomGenerator.point(width, height)
+        }
+        setMine(point)
+    }
+
     private fun validatePoint(point: Point) {
         require(point.y.value in _field.indices) { "y 값이 잘못되었습니다" }
         require(point.x.value in _field[0].indices) { "x 값이 잘못되었습니다" }
