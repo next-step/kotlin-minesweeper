@@ -1,5 +1,9 @@
 package model
 
+import model.minemark.Mine
+import model.minemark.MineMark
+import model.minemark.Safety
+
 class MineBoard(elements: Map<Position, MineMark>) {
 
     init {
@@ -25,6 +29,36 @@ class MineBoard(elements: Map<Position, MineMark>) {
     fun replacedMark(position: Position, mark: MineMark): MineBoard {
         validateContainsPosition(position)
         return MineBoard(elements.toMutableMap().apply { this[position] = mark })
+    }
+
+    fun doesNotContainsMark(mark: MineMark): Boolean {
+        return elements.values.contains(mark).not()
+    }
+
+    fun replacedOnlySafetyMarks(replaceMarkMapper: (Position) -> (MineMark)): MineBoard {
+        var current = this
+        elements.forEach {
+            current = replacedOnlySafetyMark(current, it, replaceMarkMapper)
+        }
+        return current
+    }
+
+    fun mineCount(positions: Collection<Position>): Int {
+        return positions.count {
+            validateContainsPosition(it)
+            elements[it] == Mine
+        }
+    }
+
+    private fun replacedOnlySafetyMark(
+        mineBoard: MineBoard,
+        element: Map.Entry<Position, MineMark>,
+        replaceMarkMapper: (Position) -> MineMark,
+    ): MineBoard {
+        if (element.value == Safety) {
+            return mineBoard.replacedMark(element.key, replaceMarkMapper(element.key))
+        }
+        return mineBoard
     }
 
     private fun isAllFilled(elements: Map<Position, MineMark>): Boolean {

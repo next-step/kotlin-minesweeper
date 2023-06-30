@@ -1,5 +1,7 @@
 package model
 
+import model.minemark.MineMark
+
 class MineInstallation(
     private val count: Int,
     private val mark: MineMark,
