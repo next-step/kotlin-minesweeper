@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 enum class SymbolType {
+    BOUNDARY,
     BLIND,
     ZERO,
     ONE,
@@ -14,9 +15,11 @@ enum class SymbolType {
     MINE;
 
     fun isUpdatable() = this !in IMMUTABLE_SYMBOLS
+    fun isMarkable() = this in MARKABLE_SYMBOLS
 
     companion object {
-        private val IMMUTABLE_SYMBOLS = listOf(EIGHT, BLIND, MINE)
+        private val IMMUTABLE_SYMBOLS = listOf(EIGHT, BLIND, MINE, BOUNDARY)
+        private val MARKABLE_SYMBOLS = listOf(ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT)
 
         fun from(count: Int): SymbolType =
             when (count) {

@@ -1,8 +1,8 @@
 package minesweeper.ui
 
 import minesweeper.domain.MineBoard
-import minesweeper.domain.SymbolPoint
 import minesweeper.domain.SymbolType
+import minesweeper.domain.point.SymbolPoint
 
 sealed class MineSweeperOutput {
     abstract fun printMineBoard(mineBoard: MineBoard)
@@ -16,6 +16,7 @@ sealed class MineSweeperOutput {
     abstract fun printException(message: String?)
 
     protected fun convertToSymbol(point: SymbolPoint): String = when (point.getSymbol()) {
+        SymbolType.BOUNDARY -> "□"
         SymbolType.BLIND -> "C"
         SymbolType.ZERO -> "0"
         SymbolType.MINE -> "*"

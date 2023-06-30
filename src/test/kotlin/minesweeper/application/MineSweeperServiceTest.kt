@@ -1,13 +1,13 @@
 package minesweeper.application
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Line
-import minesweeper.domain.Lines
-import minesweeper.domain.SymbolPoint
+import minesweeper.domain.Row
+import minesweeper.domain.Rows
 import minesweeper.domain.SymbolType.BLIND
+import minesweeper.domain.SymbolType.BOUNDARY
 import minesweeper.domain.SymbolType.MINE
+import minesweeper.domain.point.SymbolPoint
 import minesweeper.fixture.TestMineBoardCreateStrategy
 import minesweeper.request.MineBoardCreateRequest
 
@@ -22,21 +22,63 @@ class MineSweeperServiceTest : FunSpec({
          *  C X X
          *  X C X
          */
-        val inputLines = Lines(
+        val inputRows = Rows(
             listOf(
-                Line(listOf(SymbolPoint(0, 0, BLIND), SymbolPoint(1, 0, MINE), SymbolPoint(2, 0, BLIND))),
-                Line(listOf(SymbolPoint(0, 1, BLIND), SymbolPoint(1, 1, MINE), SymbolPoint(2, 1, MINE))),
-                Line(listOf(SymbolPoint(0, 2, MINE), SymbolPoint(1, 2, BLIND), SymbolPoint(2, 2, MINE)))
+                Row(
+                    listOf(
+                        SymbolPoint(0, 0, BOUNDARY),
+                        SymbolPoint(1, 0, BOUNDARY),
+                        SymbolPoint(2, 0, BOUNDARY),
+                        SymbolPoint(3, 0, BOUNDARY),
+                        SymbolPoint(4, 0, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 1, BOUNDARY),
+                        SymbolPoint(1, 1, BLIND),
+                        SymbolPoint(2, 1, MINE),
+                        SymbolPoint(3, 1, BLIND),
+                        SymbolPoint(4, 1, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 2, BOUNDARY),
+                        SymbolPoint(1, 2, BLIND),
+                        SymbolPoint(2, 2, MINE),
+                        SymbolPoint(3, 2, MINE),
+                        SymbolPoint(4, 2, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 3, BOUNDARY),
+                        SymbolPoint(1, 3, MINE),
+                        SymbolPoint(2, 3, BLIND),
+                        SymbolPoint(3, 3, MINE),
+                        SymbolPoint(4, 3, BOUNDARY)
+                    )
+                ),
+                Row(
+                    listOf(
+                        SymbolPoint(0, 4, BOUNDARY),
+                        SymbolPoint(1, 4, BOUNDARY),
+                        SymbolPoint(2, 4, BOUNDARY),
+                        SymbolPoint(3, 4, BOUNDARY),
+                        SymbolPoint(4, 4, BOUNDARY)
+                    )
+                )
             )
         )
 
-        TestMineBoardCreateStrategy.updateBoardSetUp(input = inputLines)
+        TestMineBoardCreateStrategy.updateBoardSetUp(input = inputRows)
 
         service.createMineBoard(request).apply {
             area.height shouldBe request.height
             area.width shouldBe request.width
-            lines shouldHaveSize request.height
-            lines shouldBe inputLines
+            rows.realSize shouldBe request.height
+            rows shouldBe inputRows
         }
     }
 })

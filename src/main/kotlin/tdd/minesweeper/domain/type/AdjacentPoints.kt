@@ -1,13 +1,13 @@
-package minesweeper.domain.finder
+package tdd.minesweeper.domain.type
 
-import minesweeper.domain.point.Point
-import minesweeper.domain.point.SymbolPoint
+import tdd.minesweeper.domain.Point
 
-typealias movePoint = (SymbolPoint) -> Point
-
+typealias movingAction = (Point) -> Point
 private const val MOVING_POINT = 1
 
-enum class AdjacentPoints(val movePoint: movePoint) {
+enum class AdjacentPoints(
+    val moving: movingAction
+) {
     // 북서쪽
     NORTHWESTWARD({ Point(x = it.x - MOVING_POINT, y = it.y - MOVING_POINT) }),
 

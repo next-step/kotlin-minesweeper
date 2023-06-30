@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.point
 
 data class Point(
     val x: Int,
