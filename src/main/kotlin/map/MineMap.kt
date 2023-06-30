@@ -20,7 +20,7 @@ class MineMap(
     }
 
     private fun draw(): List<List<Tile>> {
-        val defaultType = if(isFullOfMine())  TileType.MINE else TileType.EMPTY
+        val defaultType = if (isFullOfMine()) TileType.MINE else TileType.EMPTY
         val map = (0 until height()).map { y ->
             (0 until width()).map { x ->
                 Tile(Position(y, x), defaultType)
@@ -66,7 +66,7 @@ class MineMap(
         val mineCount: MineCount,
     ) {
         init {
-            require(height.value * width.value >= mineCount.value) { "지뢰의 갯수가 전체 타일의 갯수보다 크거나 같을수없습니다."}
+            require(height.value * width.value >= mineCount.value) { "지뢰의 갯수가 전체 타일의 갯수보다 크거나 같을수없습니다." }
         }
     }
 }
