@@ -2,7 +2,9 @@ package next.step.blackjack.view
 
 import next.step.minesweeper.domain.board.BoardPoint
 import next.step.minesweeper.domain.board.state.CoveredState
+import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
+import next.step.minesweeper.domain.board.state.NearMineState
 
 object OutputView {
 
@@ -19,10 +21,13 @@ object OutputView {
 
     private fun desc(boardPoints: List<BoardPoint>): List<String> = boardPoints.map { desc(it) }
 
-    private fun desc(boardPoint: BoardPoint): String = when (boardPoint.state()) {
-        CoveredState -> "C"
-        MineState -> "*"
-    }
+    private fun desc(boardPoint: BoardPoint): String =
+        when (val state = boardPoint.state()) {
+            CoveredState -> "C"
+            MineState -> "*"
+            MineFreeState -> "0"
+            is NearMineState -> state.count().toString()
+        }
 
     fun showError(msg: String?) {
         println(msg ?: UNKNOWN_ERR_MSG)
