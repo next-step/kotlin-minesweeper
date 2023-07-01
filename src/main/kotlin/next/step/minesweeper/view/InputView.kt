@@ -26,7 +26,7 @@ object InputView {
         }.getOrThrow()
     }
 
-    fun readWidth(): BoardWidth = read(ENTER_WIDTH) { BoardWidth.of(it.toInt()) }
+    fun readWidth(): BoardWidth = read(ENTER_WIDTH) { BoardWidth(it.toInt()) }
 
     fun readMineCnt(): MineCount = read(ENTER_MINE_CNT) { MineCount.of(it.toInt()) }
 }

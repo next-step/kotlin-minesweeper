@@ -12,7 +12,7 @@ import org.junit.jupiter.api.assertThrows
 class MineBoardTest : DescribeSpec({
 
     describe("MineBoard") {
-        val board = Board.of(BoardHeight(10), BoardWidth.of(10))
+        val board = Board.of(BoardHeight(10), BoardWidth(10))
         context("생성") {
             it("보드 크기보다 지뢰 개수가 더 많으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {

@@ -9,6 +9,5 @@ value class BoardWidth(val width: Int) {
 
     companion object {
         private const val MIN_WIDTH = 0
-        fun of(width: Int): BoardWidth = BoardWidth(width)
     }
 }

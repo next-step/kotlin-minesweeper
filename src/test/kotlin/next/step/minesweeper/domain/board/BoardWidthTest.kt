@@ -11,7 +11,7 @@ class BoardWidthTest : DescribeSpec({
             withData(
                 listOf(-1, 0)
             ) { width ->
-                assertThrows<IllegalArgumentException> { BoardWidth.of(width) }
+                assertThrows<IllegalArgumentException> { BoardWidth(width) }
             }
         }
     }
