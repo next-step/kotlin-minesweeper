@@ -17,3 +17,7 @@ value class PositiveNumber(val value: Int) {
         return value.compareTo(other.value)
     }
 }
+
+fun Int.toPositive(): PositiveNumber {
+    return PositiveNumber(this)
+}
