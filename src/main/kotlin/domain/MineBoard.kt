@@ -4,20 +4,12 @@ class MineBoard(
     val rows: List<Row>,
 ) : List<Row> by rows {
     companion object {
-        fun init(height: Int, width: Int, mineCount: Int, minePositionGenerator: MinePositionGenerator): MineBoard {
-            val minePositions: List<Position> = minePositionGenerator.generate(height, width, mineCount)
-
-            val rows = (1..height).map { row ->
-                val cells = (1..width).map { col ->
-                    val isMine = minePositions.contains(Position(row, col))
-                    if (isMine) Cell.MINE else Cell.CLOSED
-                }
-                Row(cells)
+        fun create(height: Int, width: Int, mineCount: Int, mineCoordinateGenerator: MineCoordinateGenerator): MineBoard {
+            val mineCoordinates: Set<Coordinate> = mineCoordinateGenerator.generate(mineCount)
+            val rows = (Coordinate.ROW_START_POSITION..height).map { row ->
+                Row.of(width, row, mineCoordinates)
             }
-
             return MineBoard(rows)
         }
-
-
     }
 }

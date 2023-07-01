@@ -6,4 +6,10 @@ enum class Cell(
     CLOSED("C"),
     MINE("*"),
     ;
+
+    companion object {
+        fun of(isMine: Boolean): Cell {
+            return if (isMine) MINE else CLOSED
+        }
+    }
 }

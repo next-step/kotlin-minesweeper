@@ -5,17 +5,17 @@ import io.kotest.matchers.shouldBe
 
 class MineBoardTest : FunSpec({
     test("지뢰찾기 보드를 만든다.") {
-        val minePositions: List<Position> = listOf(
-            Position(1, 1),
-            Position(2, 2),
-            Position(3, 3),
+        val mineCoordinates: Set<Coordinate> = setOf(
+            Coordinate(1, 1),
+            Coordinate(2, 2),
+            Coordinate(3, 3),
         )
 
-        val mineBoard = MineBoard.init(
+        val mineBoard = MineBoard.create(
             height = 3,
             width = 3,
             mineCount = 3,
-            minePositionGenerator = { _, _, _ -> minePositions },
+            mineCoordinateGenerator = { _ -> mineCoordinates },
         )
 
         mineBoard.rows shouldBe listOf(

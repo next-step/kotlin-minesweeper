@@ -1,14 +1,15 @@
 import domain.MineBoard
-import domain.RandomMinePositionGenerator
+import domain.RandomMineCoordinateGenerator
 import view.InputView
 import view.ResultView
 
 fun main() {
     val height = InputView.readHeight()
     val width = InputView.readWidth()
-    val mineCount = InputView.readMineCount()
+    val mineCount = InputView.readMineCount(height * width)
 
-    val mineBoard = MineBoard.init(height, width, mineCount, RandomMinePositionGenerator())
+    val mineCoordinateGenerator = RandomMineCoordinateGenerator(height, width)
+    val mineBoard = MineBoard.create(height, width, mineCount, mineCoordinateGenerator)
 
     ResultView.printMineBoards(mineBoard)
 }
