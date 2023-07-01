@@ -1,10 +1,10 @@
 package next.step.minesweeper.domain.mine
 
-import next.step.minesweeper.domain.point.Point
+import next.step.minesweeper.domain.position.Position
 
 @JvmInline
-value class MinePoints(private val points: Set<Point>) : Set<Point> by points {
+value class MinePoints(private val positions: Set<Position>) : Set<Position> by positions {
     companion object {
-        fun of(points: Set<Point>): MinePoints = MinePoints(points)
+        fun of(positions: Set<Position>): MinePoints = MinePoints(positions)
     }
 }

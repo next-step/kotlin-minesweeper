@@ -1,7 +1,7 @@
 package next.step.blackjack.view
 
 import next.step.minesweeper.domain.mine.MineBoard
-import next.step.minesweeper.domain.point.Point
+import next.step.minesweeper.domain.position.Position
 
 object OutputView {
 
@@ -18,11 +18,11 @@ object OutputView {
     fun showMineBoard(mineBoard: MineBoard) {
         println()
         println(MINE_BOARD_TITLE)
-        (Point.base().y until mineBoard.height()).forEach { println(row(mineBoard, it)) }
+        (Position.base().y until mineBoard.height()).forEach { println(row(mineBoard, it)) }
     }
 
     private fun row(mineBoard: MineBoard, y: Int): String =
-        (Point.base().x until mineBoard.width()).joinToString(" ") { x ->
-            if (mineBoard.isMineAt(Point(x, y))) MINE_DESC else PLAIN_DESC
+        (Position.base().x until mineBoard.width()).joinToString(" ") { x ->
+            if (mineBoard.isMineAt(Position(x, y))) MINE_DESC else PLAIN_DESC
         }
 }

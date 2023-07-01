@@ -1,7 +1,7 @@
 package next.step.minesweeper.domain.mine
 
 import next.step.minesweeper.domain.board.Board
-import next.step.minesweeper.domain.point.Point
+import next.step.minesweeper.domain.position.Position
 
 data class MineBoard(private val board: Board, private val minePoints: MinePoints) {
 
@@ -16,7 +16,7 @@ data class MineBoard(private val board: Board, private val minePoints: MinePoint
 
     private fun requireMaxWidth() = minePoints.forEach { require(it.x < width()) { "지뢰 x 위치는 ${width()} 보다 작아야 합니다." } }
 
-    fun isMineAt(point: Point) = minePoints.contains(point)
+    fun isMineAt(position: Position) = minePoints.contains(position)
 
     fun width() = board.width()
 
