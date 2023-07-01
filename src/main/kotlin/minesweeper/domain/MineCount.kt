@@ -1,22 +1,23 @@
 package minesweeper.domain
 
 @JvmInline
-value class MineCount(private val count: String) {
-    init {
-        require(count.toIntOrNull() != null) {
-            "지뢰 갯수는 숫자이어야함"
-        }
-
-        require(count.toInt () > MINIMUM_COUNT) {
-            "지뢰 갯수는 0보다 커야함"
-        }
-    }
+value class MineCount(private val count: Int) {
 
     fun getMineCount(): Int {
-        return count.toInt()
+        return count
     }
 
     companion object {
-        const val MINIMUM_COUNT = 0
+        private const val MINIMUM_COUNT = 0
+        fun of(value: String): MineCount {
+            require(value.toIntOrNull() != null) {
+                "지뢰 갯수는 숫자이어야함"
+            }
+            val count = value.toInt()
+            require(count > MINIMUM_COUNT) {
+                "지뢰 갯수는 0보다 커야함"
+            }
+            return MineCount(count)
+        }
     }
 }

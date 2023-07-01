@@ -2,33 +2,31 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.core.spec.style.FunSpec
 
-class WidthTest : AnnotationSpec() {
+class WidthTest : FunSpec( {
 
-    @Test
-    fun `너비는 숫자이어야함`() {
+    test("너비는 숫자이어야함") {
         shouldThrow<IllegalArgumentException> {
-            Width("f")
+            Width.of("f")
         }
 
         shouldNotThrow<IllegalArgumentException> {
-            Width("1")
+            Width.of("1")
         }
     }
 
-    @Test
-    fun `너비는 0보다 커야함`() {
+    test("너비는 0보다 커야함") {
         shouldThrow<IllegalArgumentException> {
-            Width("-1")
+            Width.of("-1")
         }
 
         shouldThrow<IllegalArgumentException> {
-            Width("0")
+            Width.of("0")
         }
 
         shouldNotThrow<IllegalArgumentException> {
-            Width("1")
+            Width.of("1")
         }
     }
-}
+})

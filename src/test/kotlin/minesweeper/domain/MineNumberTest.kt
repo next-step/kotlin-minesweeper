@@ -2,29 +2,27 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.core.spec.style.FunSpec
 
-class MineNumberTest : AnnotationSpec() {
+class MineNumberTest : FunSpec( {
 
-    @Test
-    fun `지뢰 갯수는 숫자이어야함`() {
+    test("지뢰 갯수는 숫자이어야함") {
         shouldThrow<IllegalArgumentException> {
-            MineCount("f")
+            MineCount.of("f")
         }
     }
 
-    @Test
-    fun `지뢰 갯수는 0보다 커야함`() {
+    test("지뢰 갯수는 0보다 커야함") {
         shouldThrow<IllegalArgumentException> {
-            MineCount("-1")
+            MineCount.of("-1")
         }
 
         shouldThrow<IllegalArgumentException> {
-            MineCount("0")
+            MineCount.of("0")
         }
 
         shouldNotThrow<IllegalArgumentException> {
-            MineCount("1")
+            MineCount.of("1")
         }
     }
-}
+})

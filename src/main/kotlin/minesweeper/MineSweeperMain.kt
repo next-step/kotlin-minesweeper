@@ -9,9 +9,9 @@ import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
 fun main() {
-    val height = Height(InputView.inputDataFromConsole(InputType.HEIGHT))
-    val width = Width(InputView.inputDataFromConsole(InputType.WIDTH))
-    val mineCount = MineCount(InputView.inputDataFromConsole(InputType.MINE_COUNT))
+    val height = Height.of(InputView.inputDataFromConsole(InputType.HEIGHT))
+    val width = Width.of(InputView.inputDataFromConsole(InputType.WIDTH))
+    val mineCount = MineCount.of(InputView.inputDataFromConsole(InputType.MINE_COUNT))
 
     val mineMap = MineMap(width, height)
     mineMap.makeMine(mineCount)

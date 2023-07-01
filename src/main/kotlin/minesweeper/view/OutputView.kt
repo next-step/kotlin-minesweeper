@@ -1,7 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.MineMap
-import minesweeper.domain.TileColumn
+import minesweeper.domain.TileRow
 
 object OutputView {
 
@@ -12,19 +12,19 @@ object OutputView {
         }
     }
 
-    private fun getTilesColumn(tileColumn: TileColumn?): String {
-        if(tileColumn == null) return ""
+    private fun getTilesColumn(tileRow: TileRow?): String {
+        if (tileRow == null) return ""
         val stringBuilder = StringBuilder()
-        repeat(tileColumn.size) {
-            val tile = getTile(tileColumn, it)
+        repeat(tileRow.size) {
+            val tile = getTile(tileRow, it)
             stringBuilder.append(tile)
         }
         return stringBuilder.toString()
     }
 
-    private fun getTile(tileColumn: TileColumn, position: Int): String {
+    private fun getTile(tileRow: TileRow, position: Int): String {
         var tile = "C "
-        if (tileColumn[position].isMine()) {
+        if (tileRow[position].isMine()) {
             tile = "* "
         }
         return tile
