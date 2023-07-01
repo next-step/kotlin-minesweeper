@@ -1,3 +1,3 @@
 package minesweeper.domain
 
-sealed interface Pin
+sealed class Pin

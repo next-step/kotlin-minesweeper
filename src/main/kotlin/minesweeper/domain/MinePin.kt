@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MinePin : Pin {
+class MinePin : Pin() {
     override fun equals(other: Any?): Boolean {
         return this === other
     }
