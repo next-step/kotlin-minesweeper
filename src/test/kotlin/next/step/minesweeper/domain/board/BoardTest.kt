@@ -23,9 +23,6 @@ class BoardTest : DescribeSpec({
             it("넓이 제공") {
                 board.area() shouldBe 9
             }
-            it("설명 제공") {
-                board.descs() shouldBe listOf(listOf("C", "C", "C"), listOf("C", "C", "C"), listOf("C", "C", "C"))
-            }
             it("지뢰 심기") {
                 board.plantMines(
                     MinePositions(
@@ -34,7 +31,9 @@ class BoardTest : DescribeSpec({
                             MinePosition(2, 2)
                         )
                     )
-                ) shouldBe listOf(
+                )
+
+                board.points() shouldBe listOf(
                     listOf(BoardPoint(CoveredState), BoardPoint(MineState), BoardPoint(CoveredState)),
                     listOf(BoardPoint(MineState), BoardPoint(CoveredState), BoardPoint(CoveredState)),
                     listOf(BoardPoint(CoveredState), BoardPoint(CoveredState), BoardPoint(MineState)),

@@ -9,7 +9,7 @@ fun main() {
     runCatching {
         val board = Board.covered(InputView.readHeight(), InputView.readWidth())
         board.plantMines(RandomMineGenerator.generate(board, InputView.readMineCnt()))
-        OutputView.showBoard(board)
+        OutputView.showBoardPoints(board.points())
     }.onFailure { e ->
         OutputView.showError(e.message)
         main()

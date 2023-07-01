@@ -18,7 +18,6 @@ class BoardRowTest : DescribeSpec({
 
                 assertSoftly {
                     boardRow.size() shouldBe 10
-                    boardRow.descs() shouldBe (1..10).map { "C" }
                 }
             }
         }
@@ -26,9 +25,9 @@ class BoardRowTest : DescribeSpec({
             it("특정 위치만 MineState로 바뀜") {
                 val boardRow = BoardRow.covered(BoardWidth(3))
 
-                val result = boardRow.plantMine(MinePosition(1, 0))
+                boardRow.plantMine(MinePosition(1, 0))
 
-                result shouldBe listOf(
+                boardRow.points shouldBe listOf(
                     BoardPoint(CoveredState),
                     BoardPoint(MineState),
                     BoardPoint(CoveredState)

@@ -14,8 +14,7 @@ class BoardPointTest : DescribeSpec({
                 val point = BoardPoint.covered()
 
                 assertSoftly {
-                    point shouldBe BoardPoint(CoveredState)
-                    point.desc() shouldBe "C"
+                    point.state() shouldBe CoveredState
                 }
             }
         }
@@ -27,8 +26,7 @@ class BoardPointTest : DescribeSpec({
                 point.plantMine()
 
                 assertSoftly {
-                    point shouldBe BoardPoint(MineState)
-                    point.desc() shouldBe "*"
+                    point.state() shouldBe MineState
                 }
             }
         }

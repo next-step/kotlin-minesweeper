@@ -12,17 +12,17 @@ value class Board(private val rows: List<BoardRow>) {
 
     fun height(): Int = rows.size
 
-    fun plantMines(positions: MinePositions): List<List<BoardPoint>> {
+    fun plantMines(positions: MinePositions) {
         require(positions.size <= area()) { "지뢰 개수는 ${area()}개보다 많을 수 없습니다." }
-        return positions.map { plantMine(it) }
+        positions.map { plantMine(it) }
     }
 
-    private fun plantMine(position: MinePosition): List<BoardPoint> {
+    private fun plantMine(position: MinePosition) {
         require(position.y < height()) { "지뢰 y 위치는 ${height()} 보다 작아야 합니다." }
-        return rows[position.y].plantMine(position)
+        rows[position.y].plantMine(position)
     }
 
-    fun descs(): List<List<String>> = rows.map { it.descs() }
+    fun points(): List<List<BoardPoint>> = rows.map { it.points }
 
     companion object {
 
