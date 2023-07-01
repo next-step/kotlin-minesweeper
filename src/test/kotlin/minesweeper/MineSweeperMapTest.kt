@@ -13,9 +13,10 @@ class MineSweeperMapTest {
         val height = PositiveNumber(3)
         val width = PositiveNumber(7)
         val mineCount = MineCountNumber(PositiveNumber(10), height, width)
+        val mineMapProperty = MineSweeperMap.Property(height, width, mineCount)
 
         // [when]
-        val mineSweeperMap = MineSweeperMap(height, width, mineCount)
+        val mineSweeperMap = MineSweeperMap(mineMapProperty)
 
         // [then]
         val actualMineCount = mineSweeperMap.value.map { row ->

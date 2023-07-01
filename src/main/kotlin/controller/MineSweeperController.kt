@@ -12,8 +12,9 @@ class MineSweeperController {
         val height = HeightInputView().value
         val width = WidthInputView().value
         val mineCount = MineCountInputView(height, width).value
+        val mineMapProperty = MineSweeperMap.Property(height, width, mineCount)
 
-        val mineSweeperMap = MineSweeperMap(height, width, mineCount)
+        val mineSweeperMap = MineSweeperMap(mineMapProperty)
 
         GameStartOutputView()
         GameMapOutputView(mineSweeperMap)
