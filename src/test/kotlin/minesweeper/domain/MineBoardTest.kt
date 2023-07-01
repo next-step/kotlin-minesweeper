@@ -53,6 +53,23 @@ class MineBoardTest : FunSpec({
             exception shouldHaveMessage "이미 지뢰가 배치되어 있습니다."
         }
 
+        test("지뢰를 배치한다.") {
+            val cells = listOf(
+                Cell(Row(0), Column(0), CellType.NONE),
+                Cell(Row(0), Column(1), CellType.NONE),
+                Cell(Row(1), Column(0), CellType.NONE),
+                Cell(Row(1), Column(1), CellType.NONE),
+            )
+            val mineBoard = MineBoard(
+                cells = cells,
+            ) { cells[1] }
+            mineBoard.placeMine(1)
+
+            val actual = mineBoard.cells.count { it.isMine() }
+            actual shouldBe 1
+            mineBoard.cells[1].cellType shouldBe CellType.MINE
+        }
+
         test("랜덤한 위치에 지뢰를 배치한다.") {
             val mineBoard = MineBoard(
                 listOf(

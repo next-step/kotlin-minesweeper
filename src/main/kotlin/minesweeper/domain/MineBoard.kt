@@ -1,13 +1,16 @@
 package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.strategy.MinePlacementStrategy
+import minesweeper.domain.strategy.RandomMinePlacementStrategy
 
 class MineBoard(
     val cells: List<Cell>,
+    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
 ) {
     fun placeMine(mineCount: Int) {
         validateMineCount(mineCount)
-        repeat(mineCount) { cells.filterNot { it.isMine() }.random().changeToMine() }
+        repeat(mineCount) { minePlacementStrategy.findPlantTargetCell(cells).changeToMine() }
     }
 
     fun currentBoard(): CellInfos =
