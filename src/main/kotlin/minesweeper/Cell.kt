@@ -1,6 +1,7 @@
 package minesweeper
 
-enum class Cell {
-    NONE,
-    MINE,
-}
+class Cell(
+    val row: Row,
+    val column: Column,
+    var cellType: CellType = CellType.NONE,
+)

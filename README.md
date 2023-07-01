@@ -19,8 +19,8 @@
 - none
 
 ### cell
-- [ ] cell은 cell type을 가진다.
-- [ ] cell은 row와 column을 가진다.
+- [x] cell은 cell type을 가진다.
+- [x] cell은 row와 column을 가진다.
 
 ### mine board
 - [ ] 지뢰 찾기 맵은 cell들로 구성된다.
