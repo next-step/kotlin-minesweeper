@@ -1,11 +1,22 @@
 package minesweeper.domain
 
+import kotlin.random.Random
+
 class GameBoard(
     val size: GameBoardSize,
     private val pins: Pins = Pins.of(size)
 ) {
     init {
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
+    }
+
+    fun setMineInRandom() {
+        do {
+            val heightGenerator: () -> Int = { Random.nextInt(size.height) }
+            val widthGenerator: () -> Int = { Random.nextInt(size.width) }
+
+            val result = setMine(heightGenerator, widthGenerator)
+        } while (!result)
     }
 
     fun setMine(heightPositionStrategy: () -> Int, widthPositionStrategy: () -> Int): Boolean {
