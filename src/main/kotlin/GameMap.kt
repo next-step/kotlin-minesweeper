@@ -1,5 +1,5 @@
 class GameMap(field: List<List<Tile>>) {
-    private val _field: List<MutableList<Tile>> = field.map { it.toMutableList() }.toList()
+    private val _field: List<List<Tile>> = field.map { it.toList() }.toList()
     val field: List<List<Tile>> get() = _field.map { it.toList() }.toList()
 
     init {
@@ -8,41 +8,14 @@ class GameMap(field: List<List<Tile>>) {
     }
 
     fun isMine(point: Point): Boolean {
-        validatePoint(point)
-        return _field[point.x.value][point.y.value] is Mine
-    }
-
-    fun setMine(point: Point) {
-        validatePoint(point)
-        _field[point.y.value][point.x.value] = Mine(point)
-    }
-
-    fun generateMines(mineCount: Int) {
-        repeat(mineCount) {
-            generateMine()
-        }
-    }
-
-    private fun generateMine() {
-        val height = field.size
-        val width = field[0].size
-
-        var point = RandomGenerator.point(width, height)
-        while (isMine(point)) {
-            point = RandomGenerator.point(width, height)
-        }
-        setMine(point)
-    }
-
-    private fun validatePoint(point: Point) {
-        require(point.y.value in _field.indices) { "y 값이 잘못되었습니다" }
-        require(point.x.value in _field[0].indices) { "x 값이 잘못되었습니다" }
+        require(point.y.value in field.indices) { "y값이 잘못되었습니다. 입력값: ${point.y.value}" }
+        require(point.x.value in field[0].indices) { "x값이 잘못되었습니다. 입력값: ${point.x.value}" }
+        return field[point.y.value][point.x.value] is Mine
     }
 
     companion object {
-        fun createEmptyMap(width: Int, height: Int): GameMap {
-            val field = List(height) { y -> List(width) { x -> Tile(Point.from(x, y)) } }
-            return GameMap(field)
+        fun createMap(width: Int, height: Int, mineCount: Int): GameMap {
+            return MapGenerator.generate(width, height, mineCount)
         }
     }
 }

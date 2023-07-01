@@ -1,6 +1,6 @@
 object OutputView {
     private const val MINE = "*"
-    private const val TILE = "C"
+    private const val UNOPENED = "C"
 
     fun printGameStart(map: GameMap) {
         println("지뢰찾기 게임 시작")
@@ -16,7 +16,7 @@ object OutputView {
     private fun printTile(tile: Tile) {
         val output = when (tile) {
             is Mine -> MINE
-            else -> TILE
+            is Unopened -> UNOPENED
         }
         print("$output ")
     }

@@ -1,1 +1,1 @@
-open class Tile(val point: Point)
+sealed class Tile(val point: Point)
