@@ -14,7 +14,6 @@ class PositionTest : DescribeSpec({
                     Position(0, -1)
                 }.shouldHaveMessage("위치 y는 0 보다 작을 수 없습니다.")
             }
-
             it("위치 x가 0보다 작으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
                     Position(-1, 0)

@@ -11,7 +11,7 @@ class BoardHeightTest : DescribeSpec({
             withData(
                 listOf(-1, 0)
             ) { height ->
-                assertThrows<IllegalArgumentException> { BoardHeight.of(height) }
+                assertThrows<IllegalArgumentException> { BoardHeight(height) }
             }
         }
     }

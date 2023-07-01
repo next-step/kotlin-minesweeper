@@ -13,7 +13,7 @@ class RandomMineGeneratorTest : DescribeSpec({
         context("지뢰 생성을 요청하면") {
             it("입력한 개수만큼 지뢰 제공") {
                 RandomMineGenerator.generate(
-                    Board.of(BoardHeight.of(10), BoardWidth.of(10)),
+                    Board.of(BoardHeight(10), BoardWidth.of(10)),
                     MineCount.of(10)
                 ) shouldHaveSize 10
             }

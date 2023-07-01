@@ -9,6 +9,5 @@ value class BoardHeight(val height: Int) {
 
     companion object {
         private const val MIN_HEIGHT = 0
-        fun of(height: Int): BoardHeight = BoardHeight(height)
     }
 }

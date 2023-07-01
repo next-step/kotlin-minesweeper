@@ -11,7 +11,7 @@ object InputView {
     private const val ENTER_WIDTH = "너비를 입력하세요."
     private const val ENTER_MINE_CNT = "지뢰는 몇 개인가요?"
 
-    fun readHeight(): BoardHeight = read(ENTER_HEIGHT) { BoardHeight.of(it.toInt()) }
+    fun readHeight(): BoardHeight = read(ENTER_HEIGHT) { BoardHeight(it.toInt()) }
 
     private fun <T> read(enterMsg: String, constructor: (String) -> T): T {
         return runCatching {
