@@ -7,7 +7,7 @@ import next.step.minesweeper.domain.position.Position
 
 object RandomMineGenerator : MineGenerator {
 
-    override fun generate(board: Board, count: MineCount): MinePoints = MinePoints.of(
+    override fun generate(board: Board, count: MineCount): MinePoints = MinePoints(
         (0 until board.area()).shuffled().take(count.count)
             .map { Position(it % board.width(), it / board.width()) }.toSet()
     )
