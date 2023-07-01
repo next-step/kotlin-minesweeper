@@ -2,8 +2,10 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
 
 class MineBoardTest : FunSpec({
 
@@ -60,6 +62,23 @@ class MineBoardTest : FunSpec({
             val actual = mineBoard.cells.count { it.isMine() }
 
             actual shouldBe 2
+        }
+    }
+
+    context("generateNewMineBoard") {
+        test("높이가 0이하인 경우 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> { generateNewMineBoard(0, 1) }
+            exception shouldHaveMessage "지뢰찾기맵 높이는 1이상이어야 합니다."
+        }
+
+        test("너비가 0이하인 경우 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> { generateNewMineBoard(1, 0) }
+            exception shouldHaveMessage "지뢰찾기맵 너비는 1이상이어야 합니다."
+        }
+
+        test("새로운 지뢰찾기맵을 생성한다.") {
+            val actual = generateNewMineBoard(2, 4)
+            actual.cells shouldHaveSize 8
         }
     }
 })
