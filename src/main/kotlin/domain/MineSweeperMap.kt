@@ -4,38 +4,40 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class MineSweeperMap(private val property: Property) {
-    val value: Array<CharArray>
+    val value: Array<Array<Cell>>
 
     init {
         value = initGameMap()
-        setMine()
     }
 
-    private fun initGameMap(): Array<CharArray> {
+    private fun initGameMap(): Array<Array<Cell>> {
+        val minePositionSet = getMinePositionSet()
+
         return with(property) {
-            Array(height.value) { CharArray(width.value) { NON_MINE_CHAR } }
+            (MAP_START_INDEX_VALUE..height.value).map { row ->
+                (MAP_START_INDEX_VALUE..width.value).map { column ->
+                    val position = Position(row.toPositiveNumber(), column.toPositiveNumber())
+                    val symbol = if (minePositionSet.contains(position)) Symbol.MINE else Symbol.NORMAL
+                    Cell(position, symbol)
+                }.toTypedArray()
+            }.toTypedArray()
         }
     }
 
-    private fun setMine() {
-        with(property) {
+    private fun getMinePositionSet(): Set<Position> {
+        return with(property) {
             val gameMapRange = 0 until height.value * width.value
-            val numberSet = mutableSetOf<Pair<Int, Int>>()
+            val numberSet = mutableSetOf<Position>()
 
             while (numberSet.size < mineCount.value) {
                 val randomNumber = Random.nextInt(gameMapRange)
-                val row = randomNumber / width.value
-                val column = randomNumber % width.value
-                numberSet.add(row to column)
+                val row = randomNumber / width.value + INDEX_VALUE_FOR_CONVENIENCE
+                val column = randomNumber % width.value + INDEX_VALUE_FOR_CONVENIENCE
+                numberSet.add(Position(row.toPositiveNumber(), column.toPositiveNumber()))
             }
 
-            numberSet.forEach { (row, height) -> value[row][height] = MINE_CHAR }
+            numberSet.toSet()
         }
-    }
-
-    companion object {
-        const val MINE_CHAR = '*'
-        const val NON_MINE_CHAR = 'C'
     }
 
     data class Property(
@@ -43,4 +45,9 @@ class MineSweeperMap(private val property: Property) {
         val width: PositiveNumber,
         val mineCount: MineCountNumber,
     )
+
+    companion object {
+        const val MAP_START_INDEX_VALUE = 1
+        const val INDEX_VALUE_FOR_CONVENIENCE = 1
+    }
 }

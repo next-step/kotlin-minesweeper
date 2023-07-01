@@ -1,5 +1,7 @@
 package domain
 
+fun Int.toPositiveNumber() = PositiveNumber(this)
+
 @JvmInline
 value class PositiveNumber(val value: Int) {
 

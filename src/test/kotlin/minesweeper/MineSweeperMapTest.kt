@@ -3,6 +3,7 @@ package minesweeper
 import domain.MineCountNumber
 import domain.MineSweeperMap
 import domain.PositiveNumber
+import domain.Symbol
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -20,7 +21,7 @@ class MineSweeperMapTest {
 
         // [then]
         val actualMineCount = mineSweeperMap.value.map { row ->
-            row.count { pos -> pos == MineSweeperMap.MINE_CHAR }
+            row.count { pos -> pos.symbol == Symbol.MINE }
         }.reduce { acc, i -> acc + i }
 
         actualMineCount shouldBe mineCount.value
