@@ -1,3 +1,7 @@
 package domain.cell
 
-object Cell
+sealed class Cell {
+
+    object Mine : Cell()
+    object Ground : Cell()
+}
