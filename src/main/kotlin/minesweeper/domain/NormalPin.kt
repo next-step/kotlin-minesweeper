@@ -1,11 +1,11 @@
 package minesweeper.domain
 
 class NormalPin() : Pin() {
-    var mineNumber: Int = 0
+    var surroundMineNumber: Int = 0
         private set
 
-    fun addMineNumber() {
-        mineNumber++
+    fun addsurroundMineNumber() {
+        surroundMineNumber++
     }
 
     override fun equals(other: Any?): Boolean {
