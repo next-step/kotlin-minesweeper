@@ -1,18 +1,21 @@
 package next.step.minesweeper.domain.board
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineState
+import next.step.minesweeper.domain.board.state.NearMineState
+import next.step.minesweeper.domain.mine.MineCount
 import next.step.minesweeper.domain.mine.MinePosition
 import next.step.minesweeper.domain.mine.MinePositions
+import next.step.minesweeper.domain.position.Position
 import org.junit.jupiter.api.assertThrows
 
 class BoardTest : DescribeSpec({
 
     describe("Board") {
-        val board = Board.covered(3, 3)
+        val board = Board.mineFree(BoardHeight(3), BoardWidth(3))
         context("method") {
             it("너비 제공") {
                 board.width() shouldBe 3
@@ -34,9 +37,21 @@ class BoardTest : DescribeSpec({
                 )
 
                 board.points() shouldBe listOf(
-                    listOf(BoardPoint(CoveredState), BoardPoint(MineState), BoardPoint(CoveredState)),
-                    listOf(BoardPoint(MineState), BoardPoint(CoveredState), BoardPoint(CoveredState)),
-                    listOf(BoardPoint(CoveredState), BoardPoint(CoveredState), BoardPoint(MineState)),
+                    listOf(
+                        BoardPoint(NearMineState(MineCount(2))),
+                        BoardPoint(MineState),
+                        BoardPoint(NearMineState(MineCount(1)))
+                    ),
+                    listOf(
+                        BoardPoint(MineState),
+                        BoardPoint(NearMineState(MineCount(3))),
+                        BoardPoint(NearMineState(MineCount(2)))
+                    ),
+                    listOf(
+                        BoardPoint(NearMineState(MineCount(1))),
+                        BoardPoint(NearMineState(MineCount(2))),
+                        BoardPoint(MineState)
+                    ),
                 )
             }
             it("board 전체 크기보다 지뢰를 많이 심으면 예외 발생") {
@@ -57,6 +72,24 @@ class BoardTest : DescribeSpec({
                         MinePositions(setOf(MinePosition(1, 3)))
                     )
                 }.shouldHaveMessage("지뢰 y 위치는 3 보다 작아야 합니다.")
+            }
+        }
+        context("position이 board를 벗어나면 false") {
+            withData(
+                listOf(Position(-1, -1), Position(3, 3))
+            ) { position ->
+                val board = Board.covered(3, 3)
+
+                (position in board) shouldBe false
+            }
+        }
+        context("position이 board 안에 있으면 true") {
+            withData(
+                listOf(Position(0, 0), Position(2, 2))
+            ) { position ->
+                val board = Board.covered(3, 3)
+
+                (position in board) shouldBe true
             }
         }
     }

@@ -2,19 +2,17 @@ package next.step.minesweeper.domain.board
 
 import next.step.minesweeper.domain.mine.MinePosition
 import next.step.minesweeper.domain.mine.MinePositions
+import next.step.minesweeper.domain.position.Position
 
 @JvmInline
 value class Board(private val rows: List<BoardRow>) {
 
-    fun area(): Int = width() * height()
-
-    fun width(): Int = rows.firstOrNull()?.size() ?: 0
-
-    fun height(): Int = rows.size
-
     fun plantMines(positions: MinePositions) {
         require(positions.size <= area()) { "지뢰 개수는 ${area()}개보다 많을 수 없습니다." }
-        positions.map { plantMine(it) }
+        positions.forEach {
+            plantMine(it)
+            notifyMine(it)
+        }
     }
 
     private fun plantMine(position: MinePosition) {
@@ -22,13 +20,31 @@ value class Board(private val rows: List<BoardRow>) {
         rows[position.y].plantMine(position)
     }
 
+    private fun notifyMine(position: MinePosition) =
+        position.nearMinePositions().filter { it in this }.forEach { pointAt(it).notifyMine() }
+
+    private fun pointAt(it: Position) = rows[it.y].points[it.x]
+
+    operator fun contains(position: Position): Boolean = inHeight(position) && inWidth(position)
+
+    private fun inHeight(position: Position) = BoardHeight(height()).inRange(position)
+
+    private fun inWidth(position: Position) = BoardWidth(width()).inRange(position)
+
+    fun area(): Int = width() * height()
+
+    fun width(): Int = rows.firstOrNull()?.size() ?: 0
+
+    fun height(): Int = rows.size
+
     fun points(): List<List<BoardPoint>> = rows.map { it.points }
 
     companion object {
 
-        fun covered(height: Int, width: Int): Board = covered(BoardHeight(height), BoardWidth(width))
+        fun covered(height: Int, width: Int): Board =
+            Board(BoardHeight(height).range().map { BoardRow.covered(BoardWidth(width)) })
 
-        fun covered(height: BoardHeight, width: BoardWidth): Board =
-            Board(height.range().map { BoardRow.covered(width) })
+        fun mineFree(height: BoardHeight, width: BoardWidth): Board =
+            Board(height.range().map { BoardRow.mineFree(width) })
     }
 }
