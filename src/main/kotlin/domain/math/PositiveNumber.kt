@@ -8,4 +8,12 @@ value class PositiveNumber(val value: Int) {
             "value should be positive. your input: $value"
         }
     }
+
+    operator fun times(other: PositiveNumber): PositiveNumber {
+        return PositiveNumber(value * other.value)
+    }
+
+    operator fun compareTo(other: PositiveNumber): Int {
+        return value.compareTo(other.value)
+    }
 }
