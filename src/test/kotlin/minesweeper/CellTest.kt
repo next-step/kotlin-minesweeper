@@ -29,5 +29,13 @@ class CellTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { cell.changeToMine() }
             exception shouldHaveMessage "지뢰는 지뢰로 변경할 수 없습니다."
         }
+
+        test("지뢰로 변경한다.") {
+            val cell = Cell(Row(0), Column(0), NONE)
+            cell.changeToMine()
+            val actual = cell.cellType
+
+            actual shouldBe MINE
+        }
     }
 })
