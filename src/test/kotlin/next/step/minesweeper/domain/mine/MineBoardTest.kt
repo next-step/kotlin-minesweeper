@@ -4,15 +4,13 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.board.Board
-import next.step.minesweeper.domain.board.BoardHeight
-import next.step.minesweeper.domain.board.BoardWidth
 import next.step.minesweeper.domain.position.Position
 import org.junit.jupiter.api.assertThrows
 
 class MineBoardTest : DescribeSpec({
 
     describe("MineBoard") {
-        val board = Board.of(BoardHeight(10), BoardWidth(10))
+        val board = Board.of(10, 10)
         context("생성") {
             it("보드 크기보다 지뢰 개수가 더 많으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {

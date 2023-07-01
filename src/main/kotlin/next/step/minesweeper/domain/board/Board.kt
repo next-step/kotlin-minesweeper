@@ -9,6 +9,6 @@ data class Board(private val height: BoardHeight, private val width: BoardWidth)
     fun area(): Int = width() * height()
 
     companion object {
-        fun of(height: BoardHeight, width: BoardWidth): Board = Board(height, width)
+        fun of(height: Int, width: Int): Board = Board(BoardHeight(height), BoardWidth(width))
     }
 }

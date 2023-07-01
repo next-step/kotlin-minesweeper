@@ -8,7 +8,7 @@ import next.step.minesweeper.view.InputView
 
 fun main() {
     runCatching {
-        val board = Board.of(InputView.readHeight(), InputView.readWidth())
+        val board = Board(InputView.readHeight(), InputView.readWidth())
         val minePoints = RandomMineGenerator.generate(board, InputView.readMineCnt())
         val mineBoard = MineBoard.of(board, minePoints)
         OutputView.showMineBoard(mineBoard)

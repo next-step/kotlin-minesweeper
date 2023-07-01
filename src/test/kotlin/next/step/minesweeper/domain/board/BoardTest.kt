@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class BoardTest : DescribeSpec({
 
     describe("Board") {
-        val board = Board.of(BoardHeight(10), BoardWidth(10))
+        val board = Board.of(10, 10)
         context("method") {
             it("너비 제공") {
                 board.width() shouldBe 10
