@@ -1,15 +1,14 @@
 package domain
 
-class PositiveNumber(injectValue: Any) {
-    val value: Int
+@JvmInline
+value class PositiveNumber(val value: Int) {
 
     init {
-        require(validate(injectValue)) { ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg }
-        value = injectValue as Int
+        require(validate()) { ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg }
     }
 
-    private fun validate(injectValue: Any): Boolean {
-        return Integer.signum(injectValue as Int) == POSITIVE_NUMBER_RESULT
+    private fun validate(): Boolean {
+        return Integer.signum(value) == POSITIVE_NUMBER_RESULT
     }
 
     companion object {
