@@ -29,7 +29,7 @@ class BoardRowTest : DescribeSpec({
 
                 boardRow.plantMine(MinePosition(1, 0))
 
-                boardRow.points shouldBe listOf(
+                boardRow.points() shouldBe listOf(
                     BoardPoint(CoveredState),
                     BoardPoint(MineState),
                     BoardPoint(CoveredState)

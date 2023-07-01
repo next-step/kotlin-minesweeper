@@ -23,7 +23,7 @@ value class Board(private val rows: List<BoardRow>) {
     private fun notifyMine(position: MinePosition) =
         position.nearMinePositions().filter { it in this }.forEach { pointAt(it).notifyMine() }
 
-    private fun pointAt(it: Position) = rows[it.y].points[it.x]
+    private fun pointAt(it: Position) = rows[it.y].pointAt(it.x)
 
     operator fun contains(position: Position): Boolean = inHeight(position) && inWidth(position)
 
@@ -37,7 +37,7 @@ value class Board(private val rows: List<BoardRow>) {
 
     fun height(): Int = rows.size
 
-    fun points(): List<List<BoardPoint>> = rows.map { it.points }
+    fun points(): List<List<BoardPoint>> = rows.map { it.points() }
 
     companion object {
 
