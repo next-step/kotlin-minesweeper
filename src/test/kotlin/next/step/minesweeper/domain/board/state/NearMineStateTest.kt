@@ -16,5 +16,4 @@ class NearMineStateTest : DescribeSpec({
             }
         }
     }
-
 })
