@@ -5,6 +5,7 @@ import domain.mine.MineCoordinatesCreator
 
 class MineSweeperController(
     private val inputView: MineSweeperInputView,
+    private val resultView: MineSweeperResultView,
     private val mineCoordinatesCreator: MineCoordinatesCreator,
 ) {
 
@@ -14,5 +15,6 @@ class MineSweeperController(
             mineSweeperInitProperty = mineSweeperInitProperty,
             mineCoordinatesCreator = mineCoordinatesCreator,
         )
+        resultView.display(mineMap)
     }
 }
