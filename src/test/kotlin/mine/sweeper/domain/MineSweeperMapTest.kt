@@ -3,9 +3,11 @@ package mine.sweeper.domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.Width
 
 class MineSweeperMapTest : StringSpec({
-    val mapInitializer = MapInitializer(height = 10, width = 10)
+    val mapInitializer = MapInitializer(MapSize(Height(5), Width(5)))
     "높이와 너비에 따라 빈 땅을 생성한다" {
         val map = mapInitializer.createMap()
 
@@ -19,7 +21,7 @@ class MineSweeperMapTest : StringSpec({
         val entire = map.entireMap()
         entire.forEach {
             it.forEach { field ->
-                field shouldBe Field.SAFE_FIELD
+                field.value shouldBe "0"
             }
         }
     }

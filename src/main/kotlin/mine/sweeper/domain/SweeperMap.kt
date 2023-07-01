@@ -1,19 +1,18 @@
 package mine.sweeper.domain
 
+import mine.sweeper.PositionManager
+import mine.sweeper.domain.value.Field
+
 class SweeperMap(
     private val fields: Fields,
-    private val randomPositions: MutableList<Pair<Int, Int>>,
+    private val positionManager: PositionManager
 ) {
-    fun entireMap(): List<Array<Field>> {
-        return fields.entire().toList()
+    fun entireMap(): List<List<Field>> {
+        return fields.entire()
     }
 
-    fun randomField(): Pair<Int, Int> {
-        check(randomPositions.isNotEmpty())
-        return randomPositions.removeFirst()
-    }
-
-    fun setMine(height: Int, width: Int) {
-        fields.update(height, width, Field.MINE_FIELD)
+    fun setMineToRandomPosition() {
+        val randomPosition = positionManager.randomPosition()
+        fields.changeMineField(randomPosition)
     }
 }
