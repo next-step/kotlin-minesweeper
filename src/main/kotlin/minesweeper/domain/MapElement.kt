@@ -1,7 +1,6 @@
 package minesweeper.domain
 
-sealed class MapElement {
-    private var covered: Boolean = true
+sealed class MapElement(protected open var covered: Boolean = true) {
 
     fun open() {
         covered = false
@@ -10,42 +9,13 @@ sealed class MapElement {
     fun isCovered(): Boolean {
         return covered
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is MapElement) {
-            return false
-        }
-        return covered == other.covered
-    }
-
-    override fun hashCode(): Int {
-        return covered.hashCode()
-    }
 }
 
-class MineMapElement : MapElement() {
-    override fun equals(other: Any?): Boolean {
-        if (other !is MineMapElement) {
-            return false
-        }
-        return super.equals(other)
-    }
-}
+data class MineMapElement(override var covered: Boolean = true) : MapElement()
 
-class NumberMapElement(val value: Int) : MapElement() {
+data class NumberMapElement(val value: Int) : MapElement() {
     init {
         require(value in MIN_MINE_COUNT..MAX_MINE_COUNT) { INVALID_VALUE_ERROR_MESSAGE }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is NumberMapElement) {
-            return false
-        }
-        return super.equals(other) && this.value == other.value
-    }
-
-    override fun hashCode(): Int {
-        return super.hashCode() * 31 + value
     }
 
     companion object {
