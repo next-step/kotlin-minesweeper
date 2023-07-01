@@ -8,10 +8,19 @@ import next.step.minesweeper.view.InputView
 fun main() {
     runCatching {
         val board = Board.mineFree(InputView.readHeight(), InputView.readWidth())
-        board.plantMines(RandomMineGenerator.generate(board, InputView.readMineCnt()))
+        plantRandomMines(board)
         OutputView.showBoardPoints(board.points())
     }.onFailure { e ->
         OutputView.showError(e.message)
         main()
+    }
+}
+
+private fun plantRandomMines(board: Board) {
+    runCatching {
+        board.plantMines(RandomMineGenerator.generate(board, InputView.readMineCnt()))
+    }.onFailure { e ->
+        OutputView.showError(e.message)
+        plantRandomMines(board)
     }
 }
