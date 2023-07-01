@@ -33,7 +33,20 @@ class GameBoard(
         }
 
         pins.changeMine(index)
+        changeMineNumber(height, width)
         return true
+    }
+
+    private fun changeMineNumber(height: Int, width: Int) {
+        for (dim in 0 until DIMENSION_SIZE) {
+            val targetHeight = height + HEIGHT_MOVE[dim]
+            val targetWidth = width + WIDTH_MOVE[dim]
+            if (targetHeight !in 0 until size.height) continue
+            if (targetWidth !in 0 until size.width) continue
+
+            val index = getIndex(targetHeight, targetWidth)
+            pins.addMineNumber(index)
+        }
     }
 
     fun getPin(height: Int, width: Int): Pin {
@@ -43,5 +56,11 @@ class GameBoard(
 
     private fun getIndex(height: Int, width: Int): Int {
         return size.width * height + width
+    }
+
+    companion object {
+        private val HEIGHT_MOVE = listOf(-1, 0, 1, 0)
+        private val WIDTH_MOVE = listOf(0, 1, 0, -1)
+        private const val DIMENSION_SIZE = 4
     }
 }

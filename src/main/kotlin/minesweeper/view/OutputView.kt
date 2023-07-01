@@ -25,7 +25,7 @@ object OutputView {
     private fun drawPin(pin: Pin) {
         when (pin) {
             is MinePin -> print("* ")
-            is NormalPin -> print("C ")
+            is NormalPin -> print(pin.surroundMineNumber.toString() + " ")
         }
     }
 }

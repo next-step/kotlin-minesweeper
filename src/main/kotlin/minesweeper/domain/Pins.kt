@@ -18,9 +18,9 @@ class Pins(private val values: MutableList<Pin>) {
 
     fun addMineNumber(index: Int) {
         require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
-        require(values[index] is NormalPin) { "$index 는 지뢰입니다" }
-
-        (values[index] as NormalPin).addsurroundMineNumber()
+        if (values[index] is NormalPin) {
+            (values[index] as NormalPin).addsurroundMineNumber()
+        }
     }
 
     companion object {
