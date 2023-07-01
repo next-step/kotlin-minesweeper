@@ -9,6 +9,6 @@ object RandomMineGenerator : MineGenerator {
 
     override fun generate(board: Board, count: MineCount): MinePoints = MinePoints.of(
         (0 until board.area()).shuffled().take(count.count)
-            .map { Point.of(it % board.width(), it / board.width()) }.toSet()
+            .map { Point(it % board.width(), it / board.width()) }.toSet()
     )
 }

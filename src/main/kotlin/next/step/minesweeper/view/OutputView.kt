@@ -18,11 +18,11 @@ object OutputView {
     fun showMineBoard(mineBoard: MineBoard) {
         println()
         println(MINE_BOARD_TITLE)
-        (mineBoard.zero().y until mineBoard.height()).forEach { println(row(mineBoard, it)) }
+        (Point.base().y until mineBoard.height()).forEach { println(row(mineBoard, it)) }
     }
 
     private fun row(mineBoard: MineBoard, y: Int): String =
-        (mineBoard.zero().x until mineBoard.width()).joinToString(" ") { x ->
-            if (mineBoard.isMineAt(Point.of(x, y))) MINE_DESC else PLAIN_DESC
+        (Point.base().x until mineBoard.width()).joinToString(" ") { x ->
+            if (mineBoard.isMineAt(Point(x, y))) MINE_DESC else PLAIN_DESC
         }
 }
