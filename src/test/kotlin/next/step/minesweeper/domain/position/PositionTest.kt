@@ -5,9 +5,9 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import org.junit.jupiter.api.assertThrows
 
-class PointTest : DescribeSpec({
+class PositionTest : DescribeSpec({
 
-    describe("Point") {
+    describe("Position") {
         context("생성") {
             it("위치 y가 0보다 작으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
