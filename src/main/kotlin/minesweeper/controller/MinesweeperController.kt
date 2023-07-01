@@ -1,5 +1,6 @@
 package minesweeper.controller
 
+import minesweeper.domain.MapOpenResult
 import minesweeper.domain.MinesweeperMap
 import minesweeper.io.InputView
 import minesweeper.io.ResultView
@@ -20,11 +21,11 @@ object MinesweeperController {
         val point = InputView.getOpenPoint()
         val result = minesweeperMap.open(point)
 
-        if (result.isFailure) {
+        if (result == MapOpenResult.GAME_OVER) {
             ResultView.printGameOver()
             return false
         }
-        if (result.getOrThrow() == 0) {
+        if (result == MapOpenResult.GAME_CLEAR) {
             ResultView.printGameClear()
             return false
         }

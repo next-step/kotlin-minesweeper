@@ -1,19 +1,26 @@
 package minesweeper.domain
 
 class MinesweeperMap(private val height: Int, private val width: Int, private val map: List<MinesweeperMapRow>) : Iterable<MinesweeperMapRow> by map {
-    fun open(point: Point): Result<Int> {
+    fun open(point: Point): MapOpenResult {
         require(point.x in 0 until width && point.y in 0 until height) { INVALID_POINT_ERROR_MESSAGE }
         if (map[point.y].isMine(point.x)) {
             map[point.y].open(point.x)
-            return Result.failure(Exception())
+            return MapOpenResult.GAME_OVER
         }
         openAdjacent(point)
 
-        return Result.success(getCoveredNumberMapElementCount())
+        if (getCoveredNumberMapElementCount() == 0) {
+            return MapOpenResult.GAME_CLEAR
+        }
+
+        return MapOpenResult.CONTINUE
     }
 
     private fun openAdjacent(point: Point) {
-        if (!(point.x in 0 until width && point.y in 0 until height) || !map[point.y].isCovered(point.x) || map[point.y].isMine(point.x)) {
+        if (!(point.x in 0 until width && point.y in 0 until height) || !map[point.y].isCovered(point.x) || map[point.y].isMine(
+                point.x,
+            )
+        ) {
             return
         }
         map[point.y].open(point.x)
@@ -54,4 +61,10 @@ class MinesweeperMap(private val height: Int, private val width: Int, private va
             return MinesweeperMap(height, width, minesweeperMapRowList)
         }
     }
+}
+
+enum class MapOpenResult {
+    GAME_OVER,
+    GAME_CLEAR,
+    CONTINUE,
 }

@@ -176,7 +176,7 @@ class MinesweeperMapTest : BehaviorSpec({
         }
 
         When("지뢰가 아닌 좌표를 열어보면") {
-            Then("인접한 칸이 열리고 남은 지뢰가 아닌칸 개수가 반환된다") {
+            Then("인접한 칸이 열리고 CONTINUE가 반환된다") {
 
                 val expectedRowList = listOf(
                     MinesweeperMapRow(
@@ -226,16 +226,21 @@ class MinesweeperMapTest : BehaviorSpec({
                     ),
                 )
                 val expectedMap = MinesweeperMap(height, width, expectedRowList)
-                val a =
-                    minesweeperMap.open(Point(4, 4)).getOrThrow()
-                a shouldBe 1
+
+                minesweeperMap.open(Point(4, 4)) shouldBe MapOpenResult.CONTINUE
                 minesweeperMap shouldBe expectedMap
             }
         }
 
         When("지뢰인 좌표를 열어보면") {
-            Then("Failure가 반환된다") {
-                minesweeperMap.open(Point(0, 1)).isFailure shouldBe true
+            Then("GAME_OVER가 반환된다") {
+                minesweeperMap.open(Point(0, 1)) shouldBe MapOpenResult.GAME_OVER
+            }
+        }
+
+        When("마지막 숫자칸을 열면") {
+            Then("GAME_CLEAR가 반환된다") {
+                minesweeperMap.open(Point(0, 0)) shouldBe MapOpenResult.GAME_CLEAR
             }
         }
     }
