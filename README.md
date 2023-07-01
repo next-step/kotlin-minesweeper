@@ -21,6 +21,7 @@
 ### cell
 - [x] cell은 cell type을 가진다.
 - [x] cell은 row와 column을 가진다.
+- [x] 지뢰로 변경할 때 이미 지뢰라면 예외가 발생한다.
 
 ### mine board
 - [x] 지뢰 찾기 맵은 cell들로 구성된다.
