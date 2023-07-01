@@ -25,11 +25,10 @@ value class Board(private val rows: List<BoardRow>) {
     fun descs(): List<List<String>> = rows.map { it.descs() }
 
     companion object {
-        const val BASE_Y = 0
 
         fun covered(height: Int, width: Int): Board = covered(BoardHeight(height), BoardWidth(width))
 
         fun covered(height: BoardHeight, width: BoardWidth): Board =
-            Board((BASE_Y until height.height).map { BoardRow.covered(width.width) })
+            Board(height.range().map { BoardRow.covered(width) })
     }
 }

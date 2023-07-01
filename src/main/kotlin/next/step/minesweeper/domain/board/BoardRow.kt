@@ -15,8 +15,6 @@ value class BoardRow(private val points: List<BoardPoint>) {
     fun descs(): List<String> = points.map { it.desc() }
 
     companion object {
-        const val BASE_X: Int = 0
-        fun covered(width: Int) =
-            BoardRow((BASE_X until width).map { BoardPoint.covered() })
+        fun covered(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.covered() })
     }
 }
