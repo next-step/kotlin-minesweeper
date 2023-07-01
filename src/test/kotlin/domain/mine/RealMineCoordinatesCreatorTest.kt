@@ -11,7 +11,7 @@ class RealMineCoordinatesCreatorTest : BehaviorSpec({
     val width = 5
     val mineCount = 49
 
-    Given("높이 ${height}, 가로 ${width}, 지뢰 개수 ${mineCount}개가 초기화 속성으로 주어졌을 때") {
+    Given("높이 $height, 가로 $width, 지뢰 개수 ${mineCount}개가 초기화 속성으로 주어졌을 때") {
         val mineSweeperInitProperty = MineSweeperInitProperty(
             height = 10.toPositive(),
             width = 5.toPositive(),
