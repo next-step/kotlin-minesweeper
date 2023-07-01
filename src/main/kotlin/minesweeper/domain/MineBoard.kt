@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class MineBoard(
     val cells: List<Cell>,

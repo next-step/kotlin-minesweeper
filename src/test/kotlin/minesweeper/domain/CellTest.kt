@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
@@ -6,8 +6,8 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import minesweeper.CellType.MINE
-import minesweeper.CellType.NONE
+import minesweeper.domain.CellType.MINE
+import minesweeper.domain.CellType.NONE
 
 class CellTest : FunSpec({
 

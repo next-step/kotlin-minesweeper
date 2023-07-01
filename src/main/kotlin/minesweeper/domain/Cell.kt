@@ -1,7 +1,7 @@
-package minesweeper
+package minesweeper.domain
 
-import minesweeper.CellType.MINE
-import minesweeper.CellType.NONE
+import minesweeper.domain.CellType.MINE
+import minesweeper.domain.CellType.NONE
 
 class Cell(
     val row: Row,
