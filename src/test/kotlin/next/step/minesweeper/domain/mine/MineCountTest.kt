@@ -11,7 +11,7 @@ class MineCountTest : DescribeSpec({
             withData(
                 listOf(-1, 0)
             ) { cnt ->
-                assertThrows<IllegalArgumentException> { MineCount.of(cnt) }
+                assertThrows<IllegalArgumentException> { MineCount(cnt) }
             }
         }
     }

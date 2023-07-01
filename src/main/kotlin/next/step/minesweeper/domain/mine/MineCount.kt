@@ -9,6 +9,5 @@ value class MineCount(val count: Int) {
 
     companion object {
         private const val MIN_COUNT = 0
-        fun of(count: Int): MineCount = MineCount(count)
     }
 }
