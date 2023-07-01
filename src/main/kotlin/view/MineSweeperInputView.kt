@@ -12,9 +12,13 @@ class MineSweeperInputView {
         println("\n너비를 입력하세요.")
         val width = PositiveNumber(readln().toInt())
 
+        println("\n지뢰는 몇 개인가요?")
+        val mineCount = PositiveNumber(readln().toInt())
+
         return MineSweeperInitProperty(
             height = height,
             width = width,
+            mineCount = mineCount,
         )
     }
 }
