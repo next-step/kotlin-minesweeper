@@ -13,5 +13,7 @@ value class BoardRow(val points: List<BoardPoint>) {
 
     companion object {
         fun covered(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.covered() })
+
+        fun mineFree(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.mineFree() })
     }
 }

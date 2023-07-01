@@ -1,6 +1,5 @@
 package next.step.minesweeper.domain.board
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -16,9 +15,12 @@ class BoardRowTest : DescribeSpec({
             it("covered 상태로 원하는 board width만큼 생성") {
                 val boardRow = BoardRow.covered(BoardWidth(10))
 
-                assertSoftly {
-                    boardRow.size() shouldBe 10
-                }
+                boardRow.size() shouldBe 10
+            }
+            it("mine free 상태로 원하는 board width만큼 생성") {
+                val boardRow = BoardRow.mineFree(BoardWidth(10))
+
+                boardRow.size() shouldBe 10
             }
         }
         context("지뢰 심으면") {
