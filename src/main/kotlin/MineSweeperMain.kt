@@ -6,7 +6,7 @@ import view.ResultView
 fun main() {
     val height = InputView.readHeight()
     val width = InputView.readWidth()
-    val mineCount = InputView.readMineCount(height * width)
+    val mineCount = InputView.readMineCount()
 
     val mineCoordinateGenerator = RandomMineCoordinateGenerator(height, width)
     val mineBoard = MineBoard.create(height, width, mineCount, mineCoordinateGenerator)

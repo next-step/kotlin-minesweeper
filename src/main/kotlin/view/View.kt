@@ -13,11 +13,9 @@ object InputView {
         return readlnOrNull()?.toInt() ?: throw IllegalArgumentException("너비를 입력해주세요.")
     }
 
-    fun readMineCount(totalCellCount: Int): Int {
+    fun readMineCount(): Int {
         println("지뢰는 몇 개인가요?")
-        val mineCount = readlnOrNull()?.toInt() ?: throw IllegalArgumentException("지뢰 개수를 입력해주세요.")
-        require(mineCount <= totalCellCount) { "보드 전체 칸 수($totalCellCount)보다 지뢰가 많을 수 없습니다." }
-        return mineCount
+        return readlnOrNull()?.toInt() ?: throw IllegalArgumentException("지뢰 개수를 입력해주세요.")
     }
 }
 

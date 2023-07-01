@@ -15,4 +15,14 @@ class CellTest : FunSpec({
             Cell.of(isMine) shouldBe cell
         }
     }
+
+    context("지뢰인지 여부를 반환한다") {
+        data class CellIsMine(val cell: Cell, val expected: Boolean)
+        withData(
+            CellIsMine(Cell.MINE, true),
+            CellIsMine(Cell.CLOSED, false),
+        ) { (cell, expected) ->
+            cell.isMine() shouldBe expected
+        }
+    }
 })
