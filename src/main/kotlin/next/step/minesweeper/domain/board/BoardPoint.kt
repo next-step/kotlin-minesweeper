@@ -12,8 +12,6 @@ data class BoardPoint(private var state: BoardPointState) {
         state = MineState
     }
 
-    fun state() = state
-
     fun notifyMine() {
         when (state) {
             MineFreeState -> state = NearMineState.one()
@@ -21,6 +19,8 @@ data class BoardPoint(private var state: BoardPointState) {
             else -> {}
         }
     }
+
+    fun state() = state
 
     companion object {
 
