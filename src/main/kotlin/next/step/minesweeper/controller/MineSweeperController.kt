@@ -10,7 +10,7 @@ fun main() {
     runCatching {
         val board = Board(InputView.readHeight(), InputView.readWidth())
         val minePoints = RandomMineGenerator.generate(board, InputView.readMineCnt())
-        val mineBoard = MineBoard.of(board, minePoints)
+        val mineBoard = MineBoard(board, minePoints)
         OutputView.showMineBoard(mineBoard)
     }.onFailure { e ->
         OutputView.showError(e.message)

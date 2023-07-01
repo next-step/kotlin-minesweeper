@@ -22,7 +22,4 @@ data class MineBoard(private val board: Board, private val minePoints: MinePoint
 
     fun height() = board.height()
 
-    companion object {
-        fun of(board: Board, minePoints: MinePoints): MineBoard = MineBoard(board, minePoints)
-    }
 }
