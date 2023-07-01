@@ -1,14 +1,12 @@
 package mine.sweeper.domain
 
-class Vulture(val mines: Int) {
-    init {
-        require(mines > 0)
-    }
+class Vulture(private val map: SweeperMap) {
 
-    fun layingMines(map: SweeperMap) {
+    fun layingMines(mines: Int) {
+        require(mines > 0)
+
         repeat(mines) {
-            val (height, width) = map.randomField()
-            map.setMine(height, width)
+            map.setMineToRandomPosition()
         }
     }
 }
