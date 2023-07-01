@@ -24,7 +24,6 @@ value class Board(private val rows: List<BoardRow>) {
 
     fun descs(): List<List<String>> = rows.map { it.descs() }
 
-
     companion object {
         const val BASE_Y = 0
 

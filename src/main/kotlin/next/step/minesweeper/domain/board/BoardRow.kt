@@ -18,6 +18,5 @@ value class BoardRow(private val points: List<BoardPoint>) {
         const val BASE_X: Int = 0
         fun covered(width: Int) =
             BoardRow((BASE_X until width).map { BoardPoint.covered() })
-
     }
 }

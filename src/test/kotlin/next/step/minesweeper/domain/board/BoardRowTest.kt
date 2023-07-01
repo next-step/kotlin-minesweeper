@@ -43,6 +43,5 @@ class BoardRowTest : DescribeSpec({
                 }.shouldHaveMessage("지뢰 x 위치는 3 보다 작아야 합니다.")
             }
         }
-
     }
 })
