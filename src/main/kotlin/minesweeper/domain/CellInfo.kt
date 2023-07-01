@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.CellType
+
 data class CellInfos(
     val height: Int,
     val width: Int,

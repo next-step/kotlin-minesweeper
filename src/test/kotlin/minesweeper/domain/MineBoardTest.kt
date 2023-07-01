@@ -6,6 +6,10 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.CellType
+import minesweeper.domain.cell.Column
+import minesweeper.domain.cell.Row
 
 class MineBoardTest : FunSpec({
 

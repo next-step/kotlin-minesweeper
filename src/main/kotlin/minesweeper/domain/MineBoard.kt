@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.cell.Cell
+
 class MineBoard(
     val cells: List<Cell>,
 ) {
@@ -8,7 +10,8 @@ class MineBoard(
         repeat(mineCount) { cells.filterNot { it.isMine() }.random().changeToMine() }
     }
 
-    fun currentBoard(): CellInfos = CellInfos(height = height(), width = width(), cellInfos = cells.map { CellInfo.from(it) })
+    fun currentBoard(): CellInfos =
+        CellInfos(height = height(), width = width(), cellInfos = cells.map { CellInfo.from(it) })
 
     private fun validateMineCount(mineCount: Int) {
         require(mineCount >= MINIMUM_MINE_COUNT) { "지뢰 갯수는 ${MINIMUM_MINE_COUNT}이상이어야 합니다." }

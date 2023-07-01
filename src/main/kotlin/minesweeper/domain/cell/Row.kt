@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.cell
 
 @JvmInline
 value class Row(

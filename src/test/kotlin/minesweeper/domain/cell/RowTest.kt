@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.cell
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec

@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.CellType
+import minesweeper.domain.cell.CellType
 
 enum class CellView(
     val cellType: CellType,
