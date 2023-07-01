@@ -5,6 +5,7 @@ import domain.PositiveNumber
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 
 class MineCountNumberTest {
     @Test
@@ -24,7 +25,7 @@ class MineCountNumberTest {
         val width = PositiveNumber(10)
         val injectValue = PositiveNumber(101)
 
-        assertThrows<RuntimeException>(ErrorCode.INVALID_MINE_COUNT_NUMBER_ERROR.msg) {
+        assertThrows<IllegalArgumentException>(ErrorCode.INVALID_MINE_COUNT_NUMBER_ERROR.msg) {
             MineCountNumber(injectValue, height, width)
         }
     }

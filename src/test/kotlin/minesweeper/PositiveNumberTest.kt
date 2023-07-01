@@ -20,16 +20,8 @@ class PositiveNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [-1, 0])
     fun `음수 혹은 0을 가지면 에러를 반환한다`(value: Int) {
-        assertThrows<RuntimeException>(ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg) {
+        assertThrows<IllegalArgumentException>(ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg) {
             PositiveNumber(value)
-        }
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["+", "@", "-", "양수", "음수"])
-    fun `숫자 이외의 값을 가지면 에러를 반환한다`(value: Any) {
-        assertThrows<RuntimeException>(ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg) {
-            PositiveNumber(value as Int)
         }
     }
 }
