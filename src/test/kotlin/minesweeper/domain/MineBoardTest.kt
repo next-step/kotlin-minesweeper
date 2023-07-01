@@ -65,6 +65,24 @@ class MineBoardTest : FunSpec({
         }
     }
 
+    context("currentBoard") {
+        test("현재 맵의 정보를 반환한다.") {
+            val mineBoard = MineBoard(
+                listOf(
+                    Cell(Row(0), Column(0), CellType.NONE),
+                    Cell(Row(0), Column(1), CellType.NONE),
+                    Cell(Row(1), Column(0), CellType.NONE),
+                    Cell(Row(1), Column(1), CellType.NONE),
+                ),
+            )
+            val actual = mineBoard.currentBoard()
+
+            actual.height shouldBe 2
+            actual.width shouldBe 2
+            actual.cellInfos shouldHaveSize 4
+        }
+    }
+
     context("generateNewMineBoard") {
         test("높이가 0이하인 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { generateNewMineBoard(0, 1) }

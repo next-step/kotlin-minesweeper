@@ -11,6 +11,12 @@ class MineBoard(
         repeat(mineCount) { cells.filterNot { it.isMine() }.random().changeToMine() }
     }
 
+    fun currentBoard(): CellInfos = CellInfos(height = height(), width = width(), cellInfos = cells.map { CellInfo.from(it) })
+
+    private fun height(): Int = cells.maxOf { it.row.value } + 1
+
+    private fun width(): Int = cells.maxOf { it.column.value } + 1
+
     companion object {
         private const val MINIMUM_MINE_COUNT = 1
 
