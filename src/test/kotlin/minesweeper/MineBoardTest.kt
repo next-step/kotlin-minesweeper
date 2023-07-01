@@ -2,6 +2,7 @@ package minesweeper
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class MineBoardTest : FunSpec({
@@ -44,6 +45,21 @@ class MineBoardTest : FunSpec({
 
             val exception = shouldThrowExactly<IllegalStateException> { mineBoard.placeMine(1) }
             exception shouldHaveMessage "이미 지뢰가 배치되어 있습니다."
+        }
+
+        test("랜덤한 위치에 지뢰를 배치한다.") {
+            val mineBoard = MineBoard(
+                listOf(
+                    Cell(Row(0), Column(0), CellType.NONE),
+                    Cell(Row(0), Column(1), CellType.NONE),
+                    Cell(Row(1), Column(0), CellType.NONE),
+                    Cell(Row(1), Column(1), CellType.NONE),
+                ),
+            )
+            mineBoard.placeMine(2)
+            val actual = mineBoard.cells.count { it.isMine() }
+
+            actual shouldBe 2
         }
     }
 })
