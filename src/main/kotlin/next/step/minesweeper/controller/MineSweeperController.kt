@@ -7,7 +7,7 @@ import next.step.minesweeper.view.InputView
 
 fun main() {
     runCatching {
-        val board = Board.covered(InputView.readHeight(), InputView.readWidth())
+        val board = Board.mineFree(InputView.readHeight(), InputView.readWidth())
         board.plantMines(RandomMineGenerator.generate(board, InputView.readMineCnt()))
         OutputView.showBoardPoints(board.points())
     }.onFailure { e ->
