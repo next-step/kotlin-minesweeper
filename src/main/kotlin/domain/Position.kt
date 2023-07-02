@@ -3,10 +3,11 @@ package domain
 data class Position(val row: PositiveNumber, val column: PositiveNumber) {
     constructor (row: Int, column: Int) : this(row.toPositiveNumber(), column.toPositiveNumber())
 
-    fun getValidPositionInRectangleArea(height: PositiveNumber, width: PositiveNumber): Positions =
-        (ARRAY_OF_DISTANCE_ROW.indices).map {
-            val newRow = row.value + ARRAY_OF_DISTANCE_ROW[it]
-            val newColumn = column.value + ARRAY_OF_DISTANCE_COLUMN[it]
+    fun getValidPositionInRectangleArea(height: PositiveNumber, width: PositiveNumber): Positions {
+        val rectanglePositions = RectanglePosition.values()
+        return (rectanglePositions.indices).map {
+            val newRow = row.value + rectanglePositions[it].row
+            val newColumn = column.value + rectanglePositions[it].column
             newRow to newColumn
         }
             .filter { (row, column) ->
@@ -15,9 +16,5 @@ data class Position(val row: PositiveNumber, val column: PositiveNumber) {
             }
             .map { Position(it.first.toPositiveNumber(), it.second.toPositiveNumber()) }
             .toPositions()
-
-    companion object {
-        val ARRAY_OF_DISTANCE_ROW = arrayOf(-1, -1, -1, 0, 0, 1, 1, 1)
-        val ARRAY_OF_DISTANCE_COLUMN = arrayOf(-1, 0, 1, -1, 1, -1, 0, 1)
     }
 }
