@@ -29,5 +29,14 @@ class BoardWidthTest : DescribeSpec({
                 BoardWidth(10).inRange(x) shouldBe true
             }
         }
+        context("method") {
+            val width = BoardWidth(10)
+            it("range 제공") {
+                width.range() shouldBe (0 until 10)
+            }
+            it("height 제공") {
+                width.width() shouldBe 10
+            }
+        }
     }
 })

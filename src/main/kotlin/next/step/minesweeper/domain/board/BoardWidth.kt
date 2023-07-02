@@ -11,6 +11,8 @@ value class BoardWidth(private val width: Int) {
 
     fun range(): IntRange = MIN_WIDTH until width
 
+    fun width(): Int = width
+
     companion object {
         const val MIN_WIDTH = 0
     }
