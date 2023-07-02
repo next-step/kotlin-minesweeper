@@ -5,7 +5,7 @@ import minesweeper.view.OutputView
 
 class MinesweeperController {
     fun start() {
-        val boardSetting = InputView.inputSettingInformation()
+        val boardSetting = InputView.readBoardSetting()
         val board = boardSetting.toBoard()
 
         OutputView.printGameStartMessage()

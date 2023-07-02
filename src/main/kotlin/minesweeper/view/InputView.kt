@@ -3,7 +3,7 @@ package minesweeper.view
 import minesweeper.domain.PositiveInt
 
 object InputView {
-    fun inputSettingInformation(): BoardSetting {
+    fun readBoardSetting(): BoardSetting {
         return BoardSetting(
             height = readPositiveIntWithMessage("높이를 입력하세요."),
             width = readPositiveIntWithMessage("너비를 입력하세요."),
