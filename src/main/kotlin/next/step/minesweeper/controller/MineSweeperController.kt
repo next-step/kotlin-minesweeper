@@ -12,7 +12,13 @@ fun main() = retryOnFailure {
     val board = Board.mineFree(boardArea)
     plantRandomMines(board)
     board.cover()
-    OutputView.showBoardPoints(board.points())
+    OutputView.showTitle()
+    board.play(
+        { InputView.readPosition() },
+        { OutputView.showError(it.message) },
+        { OutputView.showBoardPoints(it) },
+        { OutputView.showSuccess() },
+        { OutputView.showFail() })
 }
 
 private fun plantRandomMines(board: Board) = retryOnFailure {
