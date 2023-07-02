@@ -28,5 +28,15 @@ class CoveredStateTest : DescribeSpec({
                 result shouldBe MineFreeState
             }
         }
+        context("hasNoMine 호출하면") {
+            it("감춘 상태가 지뢰가 아니면 true") {
+                state.hasNoMine() shouldBe true
+            }
+            it("감춘 상태가 지뢰이면 false") {
+                val mineCovered = CoveredState(MineState)
+
+                mineCovered.hasNoMine() shouldBe false
+            }
+        }
     }
 })

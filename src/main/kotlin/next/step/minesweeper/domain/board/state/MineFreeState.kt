@@ -7,4 +7,6 @@ object MineFreeState : BoardPointState() {
     override fun cover(): CoveredState = CoveredState(this)
 
     override fun uncover(): BoardPointState = this
+
+    override fun hasNoMine(): Boolean = true
 }

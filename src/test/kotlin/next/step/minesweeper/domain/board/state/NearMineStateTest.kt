@@ -7,7 +7,7 @@ class NearMineStateTest : DescribeSpec({
 
     describe("NearMineState") {
         val state = NearMineState.one()
-        
+
         context("notifyMine 호출하면") {
             it("주변 지뢰 개수 증가된 NearMineState 제공") {
 
@@ -28,6 +28,11 @@ class NearMineStateTest : DescribeSpec({
                 val result = state.uncover()
 
                 result shouldBe NearMineState.one()
+            }
+        }
+        context("hasNoMine 호출하면") {
+            it("항상 true") {
+                state.hasNoMine() shouldBe true
             }
         }
     }

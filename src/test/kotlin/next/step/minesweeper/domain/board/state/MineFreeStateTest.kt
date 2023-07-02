@@ -29,5 +29,10 @@ class MineFreeStateTest : DescribeSpec({
                 result shouldBe MineFreeState
             }
         }
+        context("hasNoMine 호출하면") {
+            it("항상 true") {
+                state.hasNoMine() shouldBe true
+            }
+        }
     }
 })
