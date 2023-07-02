@@ -17,8 +17,8 @@ class MineSweeperMap(private val property: Property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
                     val position = Position(row.toPositiveNumber(), column.toPositiveNumber())
-                    val symbol = if (minePositionSet.contains(position)) Symbol.MINE else Symbol.NORMAL
-                    Cell(position, symbol)
+                    val cellType = if (minePositionSet.contains(position)) CellType.MINE else CellType.NORMAL
+                    Cell(position, cellType)
                 }.toTypedArray()
             }.toTypedArray()
         }

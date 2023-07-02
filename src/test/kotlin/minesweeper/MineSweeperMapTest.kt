@@ -1,9 +1,9 @@
 package minesweeper
 
+import domain.CellType
 import domain.MineCountNumber
 import domain.MineSweeperMap
 import domain.PositiveNumber
-import domain.Symbol
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -21,7 +21,7 @@ class MineSweeperMapTest {
 
         // [then]
         val actualMineCount = mineSweeperMap.value.sumOf { row ->
-            row.count { it.symbol == Symbol.MINE }
+            row.count { it.cellType == CellType.MINE }
         }
 
         actualMineCount shouldBe mineCount.value
