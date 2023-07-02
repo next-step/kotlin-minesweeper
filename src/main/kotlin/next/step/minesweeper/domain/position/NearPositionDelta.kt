@@ -1,5 +1,7 @@
 package next.step.minesweeper.domain.position
 
+import next.step.minesweeper.domain.board.BoardArea
+
 enum class NearPositionDelta(val dx: Int, val dy: Int) {
     TOP_LEFT(-1, -1),
     TOP_CENTER(0, -1),
@@ -11,7 +13,10 @@ enum class NearPositionDelta(val dx: Int, val dy: Int) {
     BOTTOM_RIGHT(1, 1);
 
     companion object {
-        fun near(x: Int, y: Int): List<Position> = NearPositionDelta.values().map { Position(x + it.dx, y + it.dy) }
+
+        fun nearInArea(x: Int, y: Int, area: BoardArea): List<Position> =
+            NearPositionDelta.values().map { Position(x + it.dx, y + it.dy) }.filter { it in area }
+
     }
 
 }
