@@ -1,8 +1,10 @@
 package domain
 
+import fixture.mineBoard
 import fixture.row
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class MineBoardTest : FunSpec({
@@ -20,7 +22,7 @@ class MineBoardTest : FunSpec({
             mineCoordinateGenerator = { _ -> mineCoordinates },
         )
 
-        mineBoard.rows shouldBe listOf(
+        mineBoard shouldBe mineBoard(
             row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
             row(Cell.CLOSED, Cell.MINE, Cell.CLOSED),
             row(Cell.CLOSED, Cell.CLOSED, Cell.MINE),
@@ -38,5 +40,64 @@ class MineBoardTest : FunSpec({
         }
 
         exception.message shouldBe "보드 전체 칸 수(9)보다 지뢰가 많을 수 없습니다."
+    }
+
+    context("지뢰찾기 보드 특정 좌표에 마인이 있는지 여부를 반환한다") {
+        val mineBoard = mineBoard(
+            row(Cell.MINE, Cell.CLOSED),
+            row(Cell.CLOSED, Cell.MINE),
+        )
+
+        data class CoordinateIsMine(val coordinate: Coordinate, val expected: Boolean)
+        withData(
+            CoordinateIsMine(Coordinate(0, 0), true),
+            CoordinateIsMine(Coordinate(0, 1), false),
+            CoordinateIsMine(Coordinate(1, 0), false),
+            CoordinateIsMine(Coordinate(1, 1), true),
+        ) { (coordinate, expected) ->
+            mineBoard.hasMine(coordinate) shouldBe expected
+        }
+    }
+
+    context("지뢰찾기 보드 특정 좌표가 닫혀있는지 여부를 반환한다") {
+        val mineBoard = mineBoard(
+            row(Cell.MINE, Cell.CLOSED),
+            row(Cell.CLOSED, Cell.MINE),
+        )
+
+        data class CoordinateIsMine(val coordinate: Coordinate, val expected: Boolean)
+        withData(
+            CoordinateIsMine(Coordinate(0, 0), false),
+            CoordinateIsMine(Coordinate(0, 1), true),
+            CoordinateIsMine(Coordinate(1, 0), true),
+            CoordinateIsMine(Coordinate(1, 1), false),
+        ) { (coordinate, expected) ->
+            mineBoard.isClosed(coordinate) shouldBe expected
+        }
+    }
+
+    context("지뢰찾기 보드 셀을 주변 지뢰 개수로 변경한다(open)") {
+        val mineBoard = mineBoard(
+            row(Cell.MINE, Cell.MINE, Cell.CLOSED),
+            row(Cell.CLOSED, Cell.CLOSED, Cell.CLOSED),
+            row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
+        )
+
+        data class CoordinateIsMine(val coordinate: Coordinate, val expectedCell: Cell)
+        withData(
+            nameFn = { "When ${it.coordinate} opens, cell should be ${it.expectedCell}" },
+            CoordinateIsMine(Coordinate(0, 0), Cell.MINE),
+            CoordinateIsMine(Coordinate(0, 1), Cell.MINE),
+            CoordinateIsMine(Coordinate(0, 2), Cell.ONE),
+            CoordinateIsMine(Coordinate(1, 0), Cell.THREE),
+            CoordinateIsMine(Coordinate(1, 1), Cell.THREE),
+            CoordinateIsMine(Coordinate(1, 2), Cell.ONE),
+            CoordinateIsMine(Coordinate(2, 0), Cell.MINE),
+            CoordinateIsMine(Coordinate(2, 1), Cell.ONE),
+            CoordinateIsMine(Coordinate(2, 2), Cell.ZERO),
+        ) { (coordinate, expectedCell) ->
+            mineBoard.open(coordinate)
+            mineBoard[coordinate.row][coordinate.col] shouldBe expectedCell
+        }
     }
 })

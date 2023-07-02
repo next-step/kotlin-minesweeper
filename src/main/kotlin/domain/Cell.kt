@@ -18,6 +18,8 @@ enum class Cell(
 
     fun isMine(): Boolean = this == MINE
 
+    fun isClosed(): Boolean = this == CLOSED
+
     companion object {
         private val neighborMineCountRange: IntRange = 0..8
 

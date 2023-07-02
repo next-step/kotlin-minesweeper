@@ -27,6 +27,16 @@ class CellTest : FunSpec({
         }
     }
 
+    context("닫혀있는지 여부를 반환한다") {
+        data class CellIsClosed(val cell: Cell, val expected: Boolean)
+        withData(
+            CellIsClosed(Cell.MINE, false),
+            CellIsClosed(Cell.CLOSED, true),
+        ) { (cell, expected) ->
+            cell.isClosed() shouldBe expected
+        }
+    }
+
     context("주변 지뢰 개수에 따라 셀을 반환한다") {
         data class NeighborMineCountCell(val neighborMineCount: Int, val cell: Cell)
         withData(
