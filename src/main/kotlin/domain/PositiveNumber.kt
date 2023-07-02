@@ -2,7 +2,7 @@ package domain
 
 fun Int.toPositiveNumber() = PositiveNumber(this)
 
-class PositiveNumber(val value: Int) {
+data class PositiveNumber(val value: Int) {
 
     init {
         require(validate()) { ErrorCode.NOT_POSITIVE_NUMBER_ERROR.msg }

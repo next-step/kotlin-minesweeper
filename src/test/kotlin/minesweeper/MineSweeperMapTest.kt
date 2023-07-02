@@ -23,7 +23,7 @@ class MineSweeperMapTest {
 
         // [then]
         val actualMineCount = mineSweeperMap.value.sumOf { row ->
-            row.count { it.cellType == CellType.MINE }
+            row.count { it.property.type == CellType.MINE }
         }
 
         actualMineCount shouldBe mineCount.value
