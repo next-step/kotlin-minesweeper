@@ -51,5 +51,33 @@ class BoardRowTest : DescribeSpec({
                 )
             }
         }
+
+        context("can uncover") {
+            it("uncover할 수 있는 Point가 있으면 true") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(CoveredState(MineFreeState)),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState)
+                        )
+                    )
+
+                boardRow.canUncover() shouldBe true
+            }
+            it("uncover할 수 있는 Point가 없으면 false") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState)
+                        )
+                    )
+
+                boardRow.canUncover() shouldBe false
+            }
+
+        }
     }
 })
