@@ -1,6 +1,7 @@
 package next.step.minesweeper.domain.board
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
@@ -59,6 +60,48 @@ class BoardPointTest : DescribeSpec({
                 point.notifyMine()
 
                 point.state() shouldBe MineState
+            }
+        }
+        context("can uncover") {
+            it("지뢰가 안에 없고 덮여있으면 true") {
+                val point = BoardPoint.mineFree()
+
+                point.cover()
+
+                point.canUncover() shouldBe true
+            }
+            it("지뢰가 주변에 있지만 안에 없고 덮여있으면 true") {
+                val point = BoardPoint.mineFree()
+
+                point.notifyMine()
+                point.cover()
+
+                point.canUncover() shouldBe true
+            }
+            it("지뢰가 있고 덮여있으면 false") {
+                val point = BoardPoint.mineFree()
+
+                point.plantMine()
+                point.cover()
+
+                point.canUncover() shouldBe false
+            }
+        }
+        context("덮여있지 않으면 false") {
+            withData(
+                listOf(MineFreeState, MineState, NearMineState.one())
+            ) { state ->
+                BoardPoint(state).canUncover() shouldBe false
+            }
+        }
+        context("is mine") {
+            it("덮여있지 않고, 지뢰가 있으면 true") {
+                BoardPoint(MineState).isUncoveredMine() shouldBe true
+            }
+        }
+        context("is mine free") {
+            it("덮여있지 않고, 지뢰가 없고, 주위에도 없으면 true") {
+                BoardPoint.mineFree().isUncoveredMineFree() shouldBe true
             }
         }
     }
