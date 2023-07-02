@@ -8,6 +8,8 @@ object OutputView {
         map.field.forEach { printColumn(it) }
     }
 
+    fun printMessage(message: String): Unit = println(message)
+
     private fun printColumn(column: List<Tile>) {
         column.forEach { printTile(it) }
         println()
