@@ -3,7 +3,9 @@ package next.step.minesweeper.domain.board
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.position.Position
+import org.junit.jupiter.api.assertThrows
 
 class BoardAreaTest : DescribeSpec({
 
@@ -24,52 +26,33 @@ class BoardAreaTest : DescribeSpec({
                 (position in area) shouldBe true
             }
         }
-        context("y가 height를 벗어나면 false") {
+        context("y가 height를 벗어나면 예외 발생") {
             withData(
                 listOf(-1, 3)
             ) { y ->
-                area.inHeight(y) shouldBe false
+                assertThrows<IllegalArgumentException> {
+                    area.requireContains(1, y)
+                }
             }
         }
-        context("y가 height안에 있으면 true") {
-            withData(
-                listOf(0, 2)
-            ) { y ->
-                area.inHeight(y) shouldBe true
-            }
-        }
-        context("x가 width를 벗어나면 false") {
+        context("x가 width를 벗어나면 예외발생") {
             withData(
                 listOf(-1, 3)
             ) { x ->
-                area.inWidth(x) shouldBe false
+                assertThrows<IllegalArgumentException> {
+                    area.requireContains(x, 1)
+                }
             }
         }
-        context("x가 width안에 있으면 true") {
-            withData(
-                listOf(0, 2)
-            ) { x ->
-                area.inWidth(x) shouldBe true
+        context("requireArea") {
+            it("area에 특정 개수를 포함할 수 없으면 예외 발생") {
+                assertThrows<IllegalArgumentException> {
+                    area.requireArea(10)
+                }.shouldHaveMessage("9개보다 더 넣을 수 없습니다.")
             }
         }
-        context("canHave") {
-            it("area에 특정 개수를 포함할 수 있으면 true") {
-                area.canHave(9) shouldBe true
-            }
-            it("area에 특정 개수를 포함할 수 없으면 false") {
-                area.canHave(10) shouldBe false
-            }
-        }
-        context("method") {
-            it("넓이 제공") {
-                area.area() shouldBe 9
-            }
-            it("너비 제공") {
-                area.width() shouldBe 3
-            }
-            it("높이 제공") {
-                area.height() shouldBe 3
-            }
+        context("rangeMap") {
+            area.rangeMap({ it }) { x, y -> x + y } shouldBe listOf(listOf(0, 1, 2), listOf(1, 2, 3), listOf(2, 3, 4))
         }
     }
 })

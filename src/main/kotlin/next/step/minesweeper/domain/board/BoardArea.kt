@@ -4,19 +4,19 @@ import next.step.minesweeper.domain.position.Position
 
 data class BoardArea(private val height: BoardHeight, private val width: BoardWidth) {
 
-    operator fun contains(position: Position): Boolean = inHeight(position.y) && inWidth(position.x)
+    fun requireContains(x: Int, y: Int) {
+        width.requireInRange(x)
+        height.requireInRange(y)
+    }
 
-    fun inHeight(y: Int) = height.inRange(y)
+    operator fun contains(position: Position): Boolean = height.inRange(position.y) && width.inRange(position.x)
 
-    fun inWidth(x: Int) = width.inRange(x)
+    fun requireArea(count: Int) = require(count <= area()) { "${area()}개보다 더 넣을 수 없습니다." }
 
-    fun canHave(count: Int): Boolean = count <= area()
+    private fun area(): Int = width.width() * height.height()
 
-    fun area(): Int = width() * height()
-
-    fun width(): Int = width.width()
-
-    fun height(): Int = height.height()
+    fun <R, P> rangeMap(row: (List<P>) -> R, point: (Int, Int) -> P): List<R> =
+        height.rangeMap { y -> row(width.rangeMap { point(it, y) }) }
 
     companion object {
         fun of(height: Int, width: Int): BoardArea = BoardArea(BoardHeight(height), BoardWidth(width))
