@@ -21,5 +21,4 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
     companion object {
         fun of(height: Int, width: Int): BoardArea = BoardArea(BoardHeight(height), BoardWidth(width))
     }
-
 }
