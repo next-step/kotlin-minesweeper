@@ -8,15 +8,9 @@ value class BoardRow(private val points: List<BoardPoint>) {
         points[x].plantMine()
     }
 
-    fun size() = points.size
+    private fun size() = points.size
 
     fun pointAt(x: Int): BoardPoint = points[x]
 
     fun points() = points.toList()
-
-    companion object {
-        fun covered(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.covered() })
-
-        fun mineFree(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.mineFree() })
-    }
 }
