@@ -15,9 +15,10 @@ import org.junit.jupiter.api.assertThrows
 class BoardTest : DescribeSpec({
 
     describe("Board") {
-        val board = Board.mineFree(BoardArea(BoardHeight(3), BoardWidth(3)))
         context("method") {
             it("지뢰 심기") {
+                val board = Board.mineFree(BoardArea(BoardHeight(3), BoardWidth(3)))
+                
                 board.plantMines(
                     MinePositions(
                         setOf(
@@ -72,9 +73,11 @@ class BoardTest : DescribeSpec({
                 }.shouldHaveMessage("x 위치는 0보다 크고, 3 보다 작아야 합니다.")
             }
             it("덮으면 모두 CoveredState가 됨") {
-                board.cover()
+                val freeBoard = Board.mineFree(BoardArea(BoardHeight(3), BoardWidth(3)))
 
-                board.points() shouldBe listOf(
+                freeBoard.cover()
+
+                freeBoard.points() shouldBe listOf(
                     listOf(
                         BoardPoint(CoveredState(MineFreeState)),
                         BoardPoint(CoveredState(MineFreeState)),
