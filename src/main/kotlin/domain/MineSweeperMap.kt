@@ -22,7 +22,7 @@ class MineSweeperMap(private val property: Property) {
         return with(property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
-                    val position = Position(row.toPositiveNumber(), column.toPositiveNumber())
+                    val position = Position(row, column)
                     val cellType = if (minePositionSet.contains(position)) CellType.MINE else CellType.NORMAL
                     Cell(position, cellType)
                 }.toTypedArray()
@@ -39,7 +39,7 @@ class MineSweeperMap(private val property: Property) {
                 val randomNumber = Random.nextInt(gameMapRange)
                 val row = randomNumber / width.value + INDEX_VALUE_FOR_CONVENIENCE
                 val column = randomNumber % width.value + INDEX_VALUE_FOR_CONVENIENCE
-                numberSet.add(Position(row.toPositiveNumber(), column.toPositiveNumber()))
+                numberSet.add(Position(row, column))
             }
 
             numberSet.toSet()
