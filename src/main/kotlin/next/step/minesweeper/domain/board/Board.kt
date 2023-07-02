@@ -25,11 +25,11 @@ value class Board(private val rows: List<BoardRow>) {
 
     private fun pointAt(it: Position) = rows[it.y].pointAt(it.x)
 
-    operator fun contains(position: Position): Boolean = inHeight(position) && inWidth(position)
+    operator fun contains(position: Position): Boolean = inHeight(position) && inWidth(position.x)
 
     private fun inHeight(position: Position) = BoardHeight(height()).inRange(position)
 
-    private fun inWidth(position: Position) = BoardWidth(width()).inRange(position)
+    private fun inWidth(x: Int) = BoardWidth(width()).inRange(x)
 
     fun area(): Int = width() * height()
 
