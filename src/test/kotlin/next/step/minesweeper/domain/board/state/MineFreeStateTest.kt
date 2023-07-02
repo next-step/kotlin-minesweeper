@@ -3,16 +3,16 @@ package next.step.minesweeper.domain.board.state
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class MineStateTest : DescribeSpec({
+class MineFreeStateTest : DescribeSpec({
 
-    describe("MineState") {
+    describe("MineFreeState") {
         context("notifyMine 호출하면") {
-            it("자신을 제공") {
-                val state = MineState
+            it("주변 지뢰 개수 1개인 NearMineState 제공") {
+                val state = MineFreeState
 
                 val result = state.notifyMine()
 
-                result shouldBe state
+                result shouldBe NearMineState.one()
             }
         }
     }

@@ -6,9 +6,13 @@ import io.kotest.matchers.shouldBe
 class CoveredStateTest : DescribeSpec({
 
     describe("CoveredState") {
-        context("desc 호출하면") {
-            it("상태 표현 제공") {
-                CoveredState.desc() shouldBe "C"
+        context("notifyMine 호출하면") {
+            it("자신을 제공") {
+                val state = CoveredState
+
+                val result = state.notifyMine()
+
+                result shouldBe state
             }
         }
     }

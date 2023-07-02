@@ -2,6 +2,7 @@ package next.step.minesweeper.domain.board
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.assertThrows
 
 class BoardWidthTest : DescribeSpec({
@@ -12,6 +13,29 @@ class BoardWidthTest : DescribeSpec({
                 listOf(-1, 0)
             ) { width ->
                 assertThrows<IllegalArgumentException> { BoardWidth(width) }
+            }
+        }
+        context("Position의 x가 범위에 없으면, false") {
+            withData(
+                listOf(10, -1)
+            ) { x ->
+                BoardWidth(10).inRange(x) shouldBe false
+            }
+        }
+        context("Position의 x가 범위에 있으면, true") {
+            withData(
+                listOf(9, 0)
+            ) { x ->
+                BoardWidth(10).inRange(x) shouldBe true
+            }
+        }
+        context("method") {
+            val width = BoardWidth(10)
+            it("range 제공") {
+                width.range() shouldBe (0 until 10)
+            }
+            it("height 제공") {
+                width.width() shouldBe 10
             }
         }
     }

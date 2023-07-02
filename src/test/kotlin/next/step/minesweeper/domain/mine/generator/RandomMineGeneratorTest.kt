@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import next.step.minesweeper.domain.board.Board
 import next.step.minesweeper.domain.mine.MineCount
+import org.junit.jupiter.api.assertThrows
 
 class RandomMineGeneratorTest : DescribeSpec({
 
@@ -14,6 +15,16 @@ class RandomMineGeneratorTest : DescribeSpec({
                     Board.covered(10, 10),
                     MineCount(10)
                 ) shouldHaveSize 10
+            }
+        }
+        context("지뢰를 board보다 더 많이 생성하려고 하면") {
+            it("예외 발생") {
+                assertThrows<IllegalArgumentException> {
+                    RandomMineGenerator.generate(
+                        Board.covered(10, 10),
+                        MineCount(101)
+                    )
+                }
             }
         }
     }
