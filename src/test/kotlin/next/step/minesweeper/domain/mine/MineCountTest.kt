@@ -17,11 +17,11 @@ class MineCountTest : DescribeSpec({
         }
         context("++ 시키면") {
             it("개수가 증가") {
-                var count = MineCount(1)
+                val count = MineCount(1)
 
-                count++
+                val result = count.increase(1)
 
-                count shouldBe MineCount(2)
+                result shouldBe MineCount(2)
             }
         }
     }
