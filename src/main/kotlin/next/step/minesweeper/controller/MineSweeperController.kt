@@ -18,7 +18,8 @@ fun main() = retryOnFailure {
         { OutputView.showError(it.message) },
         { OutputView.showBoardPoints(it) },
         { OutputView.showSuccess() },
-        { OutputView.showFail() })
+        { OutputView.showFail() }
+    )
 }
 
 private fun plantRandomMines(board: Board) = retryOnFailure {

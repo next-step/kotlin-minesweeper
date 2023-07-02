@@ -29,7 +29,8 @@ data class Board(private val rows: List<BoardRow>, val area: BoardArea) {
     fun cover() = rows.forEach { it.cover() }
 
     fun play(
-        selector: () -> Position, selectError: (Throwable) -> Unit,
+        selector: () -> Position,
+        selectError: (Throwable) -> Unit,
         announce: (List<List<BoardPoint>>) -> Unit,
         success: (List<List<BoardPoint>>) -> Unit,
         fail: (List<List<BoardPoint>>) -> Unit

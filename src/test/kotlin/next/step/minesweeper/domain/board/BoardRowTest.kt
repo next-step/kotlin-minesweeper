@@ -77,7 +77,6 @@ class BoardRowTest : DescribeSpec({
 
                 boardRow.canUncover() shouldBe false
             }
-
         }
     }
 })

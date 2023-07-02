@@ -91,7 +91,8 @@ class BoardTest : DescribeSpec({
             it("uncover할 수 없으면 게임 success로 바로 종료") {
                 val board = mineFullPlantedBoard()
 
-                board.play({ Position(1, 1) }, {},
+                board.play(
+                    { Position(1, 1) }, {},
                     { fail("호출 안됨") },
                     {
                         it shouldBe listOf(
@@ -105,7 +106,8 @@ class BoardTest : DescribeSpec({
                             ),
                         )
                     },
-                    { fail("호출 안됨") })
+                    { fail("호출 안됨") }
+                )
             }
             it("지뢰찾기 플레이 중 지뢰만 남기고 uncover하면 success로 종료됨") {
                 val board = mineCoveredBoard()
@@ -118,7 +120,8 @@ class BoardTest : DescribeSpec({
                     Position(2, 1)
                 )
 
-                board.play({ selects.removeAt(0) },
+                board.play(
+                    { selects.removeAt(0) },
                     { }, {},
                     {
                         it shouldBe listOf(
@@ -139,7 +142,8 @@ class BoardTest : DescribeSpec({
                             ),
                         )
                     },
-                    { fail("호출 안됨") })
+                    { fail("호출 안됨") }
+                )
             }
             it("지뢰찾기 플레이 중 지뢰를 uncover하면 fail로 종료됨") {
                 val board = mineCoveredBoard()
@@ -147,7 +151,8 @@ class BoardTest : DescribeSpec({
                     Position(2, 2)
                 )
 
-                board.play({ selects.removeAt(0) }, { }, { },
+                board.play(
+                    { selects.removeAt(0) }, { }, { },
                     { fail("호출 안됨") },
                     {
                         it shouldBe listOf(
@@ -171,7 +176,6 @@ class BoardTest : DescribeSpec({
                 )
             }
         }
-
     }
 })
 

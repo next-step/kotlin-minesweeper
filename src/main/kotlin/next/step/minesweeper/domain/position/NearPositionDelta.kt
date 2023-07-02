@@ -16,7 +16,5 @@ enum class NearPositionDelta(val dx: Int, val dy: Int) {
 
         fun nearInArea(x: Int, y: Int, area: BoardArea): List<Position> =
             NearPositionDelta.values().map { Position(x + it.dx, y + it.dy) }.filter { it in area }
-
     }
-
 }
