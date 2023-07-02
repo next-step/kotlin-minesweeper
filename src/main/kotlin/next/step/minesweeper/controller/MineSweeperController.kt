@@ -11,6 +11,7 @@ fun main() = retryOnFailure {
     val boardArea = BoardArea(InputView.readHeight(), InputView.readWidth())
     val board = Board.mineFree(boardArea)
     plantRandomMines(board)
+    board.cover()
     OutputView.showBoardPoints(board.points())
 }
 
