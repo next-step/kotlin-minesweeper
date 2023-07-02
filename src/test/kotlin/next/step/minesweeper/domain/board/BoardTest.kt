@@ -1,7 +1,6 @@
 package next.step.minesweeper.domain.board
 
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.board.state.MineState
@@ -9,7 +8,6 @@ import next.step.minesweeper.domain.board.state.NearMineState
 import next.step.minesweeper.domain.mine.MineCount
 import next.step.minesweeper.domain.mine.MinePosition
 import next.step.minesweeper.domain.mine.MinePositions
-import next.step.minesweeper.domain.position.Position
 import org.junit.jupiter.api.assertThrows
 
 class BoardTest : DescribeSpec({
@@ -73,23 +71,12 @@ class BoardTest : DescribeSpec({
                     )
                 }.shouldHaveMessage("지뢰 y 위치는 3 보다 작아야 합니다.")
             }
-        }
-        context("position이 board를 벗어나면 false") {
-            withData(
-                listOf(Position(-1, -1), Position(3, 3))
-            ) { position ->
-                val board = Board.covered(3, 3)
-
-                (position in board) shouldBe false
-            }
-        }
-        context("position이 board 안에 있으면 true") {
-            withData(
-                listOf(Position(0, 0), Position(2, 2))
-            ) { position ->
-                val board = Board.covered(3, 3)
-
-                (position in board) shouldBe true
+            it("board 너비를 벗어나게 지뢰를 심으면 예외 발생") {
+                assertThrows<IllegalArgumentException> {
+                    Board.covered(3, 3).plantMines(
+                        MinePositions(setOf(MinePosition(3, 1)))
+                    )
+                }.shouldHaveMessage("지뢰 x 위치는 3 보다 작아야 합니다.")
             }
         }
     }
