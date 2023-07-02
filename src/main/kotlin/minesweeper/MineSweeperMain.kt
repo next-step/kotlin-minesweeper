@@ -1,8 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.board.BoardRange
-import minesweeper.domain.board.MineSweeperBoardGenerator
-import minesweeper.domain.mine.MinePositionGenerator
+import minesweeper.domain.board.MineSweeperBoard
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -17,9 +16,7 @@ fun main() {
 
     val mineQuantity = inputView.readMineQuantity()
 
-    val minePositions =
-        MinePositionGenerator.createMinePositions(mineQuantity = mineQuantity, boardRange = boardRange)
-    val board = MineSweeperBoardGenerator.create(boardRange = boardRange, minePositions = minePositions)
+    val board = MineSweeperBoard(boardRange = boardRange, mineQuantity = mineQuantity)
 
     resultView.printBoard(board = board)
 }

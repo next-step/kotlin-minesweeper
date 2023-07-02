@@ -21,6 +21,5 @@ class InputView {
         private const val READ_HEIGHT_MESSAGE = "높이를 입력하세요."
         private const val READ_WIDTH_MESSAGE = "너비를 입력하세요."
         private const val READ_MINE_QUANTITY_MESSAGE = "지뢰 개수를 입력하세요."
-
     }
 }

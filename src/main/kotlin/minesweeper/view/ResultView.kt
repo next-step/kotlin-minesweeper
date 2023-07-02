@@ -1,13 +1,15 @@
 package minesweeper.view
 
 import minesweeper.domain.board.MineSweeperBoard
+import minesweeper.domain.position.EmptyPosition
+import minesweeper.domain.position.MinePosition
 import minesweeper.domain.position.MineSweeperPosition
 import minesweeper.domain.position.MineSweeperPositions
 
 class ResultView {
 
     fun printBoard(board: MineSweeperBoard) {
-        board.forEach { positions ->
+        board.rows().forEach { positions ->
             printPositions(positions)
         }
     }
@@ -19,9 +21,9 @@ class ResultView {
         println(positionsShape)
     }
 
-    private fun getPositionShape(it: MineSweeperPosition) = when (it.isMine()) {
-        true -> MINE
-        false -> EMPTY
+    private fun getPositionShape(it: MineSweeperPosition) = when (it) {
+        is MinePosition -> MINE
+        is EmptyPosition -> EMPTY
     }
 
     companion object {
