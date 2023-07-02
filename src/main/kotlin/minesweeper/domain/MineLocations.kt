@@ -7,22 +7,22 @@ class MineLocations(
 ) {
     operator fun get(index: Int) = mineLocations[index]
 
-    fun getMapElement(colNumber: Int, rowNumber: Int): MapElement {
-        if (isMine(colNumber, rowNumber)) {
-            return MineMapElement
+    fun getMapElement(point: Point): MapElement {
+        if (isMine(point)) {
+            return MineMapElement()
         }
-        return NumberMapElement(getMineCount(colNumber, rowNumber))
+        return NumberMapElement(getMineCount(point))
     }
 
-    private fun getMineCount(x: Int, y: Int): Int {
-        return MOVE.count { (xMove, yMove) -> isMine(x + xMove, y + yMove) }
+    private fun getMineCount(point: Point): Int {
+        return MOVE.count { (xMove, yMove) -> isMine(Point(point.x + xMove, point.y + yMove)) }
     }
 
-    private fun isMine(x: Int, y: Int): Boolean {
-        if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight) {
+    private fun isMine(point: Point): Boolean {
+        if (point.x < 0 || point.y < 0 || point.x >= mapWidth || point.y >= mapHeight) {
             return false
         }
-        return mineLocations[y].contains(x)
+        return mineLocations[point.y].contains(point.x)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -55,3 +55,5 @@ class MineLocations(
 }
 
 data class MineLocationRow(private val row: List<Int>) : Iterable<Int> by row
+
+data class Point(val x: Int, val y: Int)

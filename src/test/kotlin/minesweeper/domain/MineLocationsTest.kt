@@ -15,26 +15,27 @@ class MineLocationsTest : BehaviorSpec({
     val systemUnderTest = MineLocations(rowList, width, height)
 
     Given("지뢰의 좌표가 주어졌다") {
+        val point = Point(0, 0)
         When("주변 지뢰의 개수를 구하면") {
             Then("해당 좌표가 지뢰임이 반환된다") {
-                systemUnderTest.getMapElement(0, 0) shouldBe MineMapElement
+                systemUnderTest.getMapElement(point) shouldBe MineMapElement()
             }
         }
     }
 
     forAll(
         table(
-            headers("X", "Y", "예상결과"),
-            row(1, 0, NumberMapElement(4)),
-            row(width - 1, 0, NumberMapElement(2)),
-            row(width - 1, 1, NumberMapElement(3)),
-            row(1, 1, NumberMapElement(6)),
+            headers("point", "예상결과"),
+            row(Point(1, 0), NumberMapElement(4)),
+            row(Point(width - 1, 0), NumberMapElement(2)),
+            row(Point(width - 1, 1), NumberMapElement(3)),
+            row(Point(1, 1), NumberMapElement(6)),
         ),
-    ) { x, y, expectedResult ->
-        Given("지뢰가 아닌 좌표($x,$y)가 주어졌다") {
+    ) { point, expectedResult ->
+        Given("지뢰가 아닌 좌표(${point.x},${point.y})가 주어졌다") {
             When("주변 지뢰의 개수를 구하면") {
                 Then("해당 좌표 근처의 지뢰 개수가 반환된다") {
-                    systemUnderTest.getMapElement(x, y) shouldBe expectedResult
+                    systemUnderTest.getMapElement(point) shouldBe expectedResult
                 }
             }
         }
