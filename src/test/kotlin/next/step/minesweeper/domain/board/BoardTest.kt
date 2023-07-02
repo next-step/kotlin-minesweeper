@@ -13,17 +13,8 @@ import org.junit.jupiter.api.assertThrows
 class BoardTest : DescribeSpec({
 
     describe("Board") {
-        val board = Board.mineFree(BoardHeight(3), BoardWidth(3))
+        val board = Board.mineFree(BoardArea(BoardHeight(3), BoardWidth(3)))
         context("method") {
-            it("너비 제공") {
-                board.width() shouldBe 3
-            }
-            it("높이 제공") {
-                board.height() shouldBe 3
-            }
-            it("넓이 제공") {
-                board.area() shouldBe 9
-            }
             it("지뢰 심기") {
                 board.plantMines(
                     MinePositions(
@@ -54,7 +45,7 @@ class BoardTest : DescribeSpec({
             }
             it("board 전체 크기보다 지뢰를 많이 심으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    Board.covered(1, 1).plantMines(
+                    Board.mineFree(BoardArea.of(1, 1)).plantMines(
                         MinePositions(
                             setOf(
                                 MinePosition(1, 0), MinePosition(0, 1),
@@ -62,21 +53,21 @@ class BoardTest : DescribeSpec({
                             )
                         )
                     )
-                }.shouldHaveMessage("지뢰 개수는 1개보다 많을 수 없습니다.")
+                }.shouldHaveMessage("1개보다 더 넣을 수 없습니다.")
             }
             it("board 높이를 벗어나게 지뢰를 심으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    Board.covered(3, 3).plantMines(
+                    Board.mineFree(BoardArea.of(3, 3)).plantMines(
                         MinePositions(setOf(MinePosition(1, 3)))
                     )
-                }.shouldHaveMessage("지뢰 y 위치는 3 보다 작아야 합니다.")
+                }.shouldHaveMessage("y 위치는 0보다 크고, 3 보다 작아야 합니다.")
             }
             it("board 너비를 벗어나게 지뢰를 심으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    Board.covered(3, 3).plantMines(
+                    Board.mineFree(BoardArea.of(3, 3)).plantMines(
                         MinePositions(setOf(MinePosition(3, 1)))
                     )
-                }.shouldHaveMessage("지뢰 x 위치는 3 보다 작아야 합니다.")
+                }.shouldHaveMessage("x 위치는 0보다 크고, 3 보다 작아야 합니다.")
             }
         }
     }
