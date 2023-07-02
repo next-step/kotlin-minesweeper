@@ -1,12 +1,8 @@
 package minesweeper.domain
 
-data class Tile(private var type: TileType) {
+abstract class Tile(private val type: TileType) {
 
-    fun isMine() : Boolean {
+    fun isMine(): Boolean {
         return type == TileType.MINE
-    }
-
-    fun setMine() {
-        type = TileType.MINE
     }
 }

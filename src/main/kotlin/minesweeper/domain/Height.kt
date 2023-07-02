@@ -1,11 +1,7 @@
 package minesweeper.domain
 
 @JvmInline
-value class Height(private val height: Int) {
-
-    fun getHeight(): Int {
-        return height
-    }
+value class Height private constructor(val height: Int) {
 
     companion object {
         private const val MINIMUM_HEIGHT = 0

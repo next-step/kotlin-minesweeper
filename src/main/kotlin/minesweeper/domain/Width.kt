@@ -1,11 +1,7 @@
 package minesweeper.domain
 
 @JvmInline
-value class Width(private val width: Int) {
-
-    fun getWidth(): Int {
-        return width
-    }
+value class Width private constructor(val width: Int) {
 
     companion object {
         private const val MINIMUM_WIDTH = 0
