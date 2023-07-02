@@ -22,10 +22,18 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
     fun nearForEach(x: Int, y: Int, consume: (Position) -> Unit) =
         NearPositionDelta.nearInArea(x, y, this).forEach(consume)
 
-    fun select(selector: () -> Position): Position {
-        val position = selector()
-        requireContains(position.x, position.y)
-        return position
+    fun select(selector: () -> Position, selectError: (Throwable) -> Unit): Position {
+        return runCatching {
+            val position = selector()
+            requireContains(position.x, position.y)
+            position
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                selectError(it)
+                select(selector, selectError)
+            }
+        )
     }
 
     companion object {
