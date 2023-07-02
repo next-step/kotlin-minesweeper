@@ -15,7 +15,7 @@ class MineSweeperMapTest {
         // [give]
         val height = PositiveNumber(3)
         val width = PositiveNumber(7)
-        val mineCount = MineCountNumber(PositiveNumber(10), height, width)
+        val mineCount = MineCountNumber(10, height, width)
         val mineMapProperty = MineSweeperMap.Property(height, width, mineCount)
 
         // [when]
@@ -33,7 +33,7 @@ class MineSweeperMapTest {
     fun `특정 Cell의 위치에서 주변 8개 사각형에 포함된 유효한 좌표를 구할 수 있다`() {
         val height = PositiveNumber(4)
         val width = PositiveNumber(6)
-        val mineCount = MineCountNumber(PositiveNumber(10), height, width)
+        val mineCount = MineCountNumber(10, height, width)
         val mineMapProperty = MineSweeperMap.Property(height, width, mineCount)
 
         val position = Position(2, 2)
