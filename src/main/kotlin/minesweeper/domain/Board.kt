@@ -5,12 +5,7 @@ class Board(
     width: PositiveInt,
     mineCount: PositiveInt,
 ) {
-    private val emptyCells: Cells = Cells(
-        List((height * width - mineCount).value) { Cell() },
-    )
-    private val mineCells: Cells = Cells(
-        List(mineCount.value) { Cell(isMine = true) },
-    )
-
+    private val emptyCells: Cells = Cells.empty((height * width - mineCount).value)
+    private val mineCells: Cells = Cells.mine(mineCount.value)
     val cells: List<Cells> = (emptyCells + mineCells).shuffled().chunked(width.value)
 }

@@ -52,5 +52,23 @@ class CellsSpec : DescribeSpec(
                 }
             }
         }
+
+        describe("빈 Cells 생성 검증") {
+            it("빈 Cells 를 생성한다.") {
+                val cells = Cells.empty(9)
+
+                cells.values.size shouldBe 9
+                cells.values.all { !it.isMine } shouldBe true
+            }
+        }
+
+        describe("지뢰 Cells 생성 검증") {
+            it("지뢰 Cells 를 생성한다.") {
+                val cells = Cells.mine(9)
+
+                cells.values.size shouldBe 9
+                cells.values.all { it.isMine } shouldBe true
+            }
+        }
     },
 )
