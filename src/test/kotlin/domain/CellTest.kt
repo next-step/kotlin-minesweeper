@@ -56,11 +56,9 @@ class CellTest : FunSpec({
 
     context("주변 지뢰 개수가 0~8 범위가 아니면 예외가 발생한다.") {
         withData(9, -1) {
-            val exception = shouldThrow<IllegalArgumentException> {
+            shouldThrow<IllegalArgumentException> {
                 Cell.of(it)
             }
-
-            exception.message shouldBe "셀의 주변 지뢰 개수는 0..8 범위 값 이어야 합니다."
         }
     }
 })

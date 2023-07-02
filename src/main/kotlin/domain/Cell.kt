@@ -21,7 +21,7 @@ enum class Cell(
     fun isClosed(): Boolean = this == CLOSED
 
     companion object {
-        private val neighborMineCountRange: IntRange = 0..8
+        private val neighborMineCountRange: IntRange = ZERO.symbol.toInt()..EIGHT.symbol.toInt()
 
         fun of(isMine: Boolean): Cell {
             return if (isMine) MINE else CLOSED

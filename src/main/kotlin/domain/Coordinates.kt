@@ -5,14 +5,14 @@ class Coordinates(
 ) : List<Coordinate> by coordinates {
     companion object {
         private val neighborCoordinates = listOf(
-            Coordinate.origin().up().left(),
-            Coordinate.origin().up(),
-            Coordinate.origin().up().right(),
-            Coordinate.origin().left(),
-            Coordinate.origin().right(),
-            Coordinate.origin().down().left(),
-            Coordinate.origin().down(),
-            Coordinate.origin().down().right(),
+            Coordinate().up().left(),
+            Coordinate().up(),
+            Coordinate().up().right(),
+            Coordinate().left(),
+            Coordinate().right(),
+            Coordinate().down().left(),
+            Coordinate().down(),
+            Coordinate().down().right(),
         )
 
         fun neighbors(coordinate: Coordinate): List<Coordinate> {

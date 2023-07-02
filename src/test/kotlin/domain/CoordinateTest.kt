@@ -11,19 +11,19 @@ class CoordinateTest : FunSpec({
     }
 
     test("한 칸 위쪽 좌표를 반환한다") {
-        Coordinate.origin().up() shouldBe Coordinate(-1, 0)
+        Coordinate().up() shouldBe Coordinate(-1, 0)
     }
 
     test("한 칸 아래쪽 좌표를 반환한다") {
-        Coordinate.origin().down() shouldBe Coordinate(1, 0)
+        Coordinate().down() shouldBe Coordinate(1, 0)
     }
 
     test("한 칸 왼쪽 좌표를 반환한다") {
-        Coordinate.origin().left() shouldBe Coordinate(0, -1)
+        Coordinate().left() shouldBe Coordinate(0, -1)
     }
 
     test("한 칸 오른쪽 좌표를 반환한다") {
-        Coordinate.origin().right() shouldBe Coordinate(0, 1)
+        Coordinate().right() shouldBe Coordinate(0, 1)
     }
 
     context("지뢰찾기 보드 위에 좌표가 있는지 반환한다") {
@@ -38,9 +38,5 @@ class CoordinateTest : FunSpec({
         ) { (coordinate, expected) ->
             coordinate.isOnBoard(height = 3, width = 3) shouldBe expected
         }
-    }
-
-    test("원점을 반환한다") {
-        Coordinate.origin() shouldBe Coordinate(0, 0)
     }
 })

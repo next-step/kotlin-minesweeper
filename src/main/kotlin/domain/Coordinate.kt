@@ -1,8 +1,8 @@
 package domain
 
 data class Coordinate(
-    val row: Int,
-    val col: Int,
+    val row: Int = ROW_START_POSITION,
+    val col: Int = COL_START_POSITION,
 ) {
     operator fun plus(other: Coordinate) = Coordinate(row + other.row, col + other.col)
 
@@ -21,8 +21,6 @@ data class Coordinate(
     companion object {
         const val ROW_START_POSITION = 0
         const val COL_START_POSITION = 0
-        const val MOVE_UNIT = 1
-
-        fun origin() = Coordinate(ROW_START_POSITION, COL_START_POSITION)
+        private const val MOVE_UNIT = 1
     }
 }
