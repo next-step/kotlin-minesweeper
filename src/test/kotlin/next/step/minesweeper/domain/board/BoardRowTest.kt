@@ -3,6 +3,7 @@ package next.step.minesweeper.domain.board
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
 import org.junit.jupiter.api.assertThrows
@@ -30,6 +31,18 @@ class BoardRowTest : DescribeSpec({
                 assertThrows<IllegalArgumentException> {
                     boardRow.plantMine(3)
                 }.shouldHaveMessage("지뢰 x 위치는 3 보다 작아야 합니다.")
+            }
+        }
+
+        context("cover") {
+            it("Point가 모두 CoveredState가 됨") {
+                boardRow.cover()
+
+                boardRow.points() shouldBe listOf(
+                    BoardPoint(CoveredState(MineFreeState)),
+                    BoardPoint(CoveredState(MineFreeState)),
+                    BoardPoint(CoveredState(MineFreeState))
+                )
             }
         }
     }

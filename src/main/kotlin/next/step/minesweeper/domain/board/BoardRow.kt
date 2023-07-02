@@ -13,4 +13,6 @@ value class BoardRow(private val points: List<BoardPoint>) {
     fun pointAt(x: Int): BoardPoint = points[x]
 
     fun points() = points.toList()
+    fun cover() = points.forEach { it.cover() }
+
 }
