@@ -11,5 +11,5 @@ data class MinePosition(val x: Int, val y: Int) {
         require(y >= BoardHeight.MIN_HEIGHT) { "위치 y는 ${BoardHeight.MIN_HEIGHT} 보다 작을 수 없습니다." }
     }
 
-    fun nearMinePositions(): List<Position> = NearMineDeltas.deltas.map { Position(x + it.dx, y + it.dy) }
+    fun nearMinePositions(): List<Position> = NearMineDelta.values().map { Position(x + it.dx, y + it.dy) }
 }
