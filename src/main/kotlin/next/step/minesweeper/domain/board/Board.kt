@@ -26,6 +26,8 @@ data class Board(private val rows: List<BoardRow>, val area: BoardArea) {
 
     fun points(): List<List<BoardPoint>> = rows.map { it.points() }
 
+    fun cover() = rows.forEach { it.cover() }
+    
     companion object {
 
         fun mineFree(area: BoardArea): Board =

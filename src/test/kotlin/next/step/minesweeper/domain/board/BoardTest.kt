@@ -3,6 +3,8 @@ package next.step.minesweeper.domain.board
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import next.step.minesweeper.domain.board.state.CoveredState
+import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
 import next.step.minesweeper.domain.board.state.NearMineState
 import next.step.minesweeper.domain.mine.MineCount
@@ -68,6 +70,27 @@ class BoardTest : DescribeSpec({
                         MinePositions(setOf(MinePosition(3, 1)))
                     )
                 }.shouldHaveMessage("x 위치는 0보다 크고, 3 보다 작아야 합니다.")
+            }
+            it("덮으면 모두 CoveredState가 됨") {
+                board.cover()
+
+                board.points() shouldBe listOf(
+                    listOf(
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState))
+                    ),
+                    listOf(
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState))
+                    ),
+                    listOf(
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState)),
+                        BoardPoint(CoveredState(MineFreeState))
+                    ),
+                )
             }
         }
     }
