@@ -10,4 +10,8 @@ enum class Direction(private val xDirection: Int, private val yDirection: Int) {
     NORTH(xDirection = 0, yDirection = -1),
     NORTHEAST(xDirection = 1, yDirection = -1),
     NORTHWEST(xDirection = -1, yDirection = -1),
+    ;
+    fun moveXPosition(x: Int): Int = x + this.xDirection
+
+    fun moveYPosition(y: Int): Int = y + this.yDirection
 }

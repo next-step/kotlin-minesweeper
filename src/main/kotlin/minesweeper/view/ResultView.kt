@@ -27,7 +27,7 @@ class ResultView {
 
     private fun getPositionShape(it: MineSweeperPosition) = when (it) {
         is MinePosition -> MINE
-        is EmptyPosition -> EMPTY
+        is EmptyPosition -> it.calculateAroundMineQuantity().toString()
     }
 
     companion object {
