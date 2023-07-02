@@ -10,10 +10,15 @@ object OutputView {
 
     private const val UNKNOWN_ERR_MSG = "알 수 없는 에러가 발생했습니다."
     private const val BOARD_TITLE = "지뢰찾기 게임 시작"
+    private const val SUCCESS_MSG = "Win Game."
+    private const val FAIL_MSG = "Lose Game."
 
-    fun showBoardPoints(boardPoints: List<List<BoardPoint>>) {
+    fun showTitle() {
         println()
         println(BOARD_TITLE)
+    }
+
+    fun showBoardPoints(boardPoints: List<List<BoardPoint>>) {
         boardPoints.forEach { printBoardRow(it) }
     }
 
@@ -31,6 +36,16 @@ object OutputView {
 
     fun showError(msg: String?) {
         println(msg ?: UNKNOWN_ERR_MSG)
+        println()
+    }
+
+    fun showSuccess() {
+        println(SUCCESS_MSG)
+        println()
+    }
+
+    fun showFail() {
+        println(FAIL_MSG)
         println()
     }
 }
