@@ -1,7 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.PositiveInt
-import minesweeper.domain.request.SettingRequest
+import minesweeper.view.request.SettingRequest
 
 object InputView {
     fun inputSettingInformation(): SettingRequest {

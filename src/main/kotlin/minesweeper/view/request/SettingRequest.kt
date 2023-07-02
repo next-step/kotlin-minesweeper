@@ -1,4 +1,4 @@
-package minesweeper.domain.request
+package minesweeper.view.request
 
 import minesweeper.domain.PositiveInt
 
