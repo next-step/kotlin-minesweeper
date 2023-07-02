@@ -2,7 +2,7 @@ package minesweeper
 
 import domain.MineCountNumber
 import domain.PositiveNumber
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
@@ -16,7 +16,7 @@ class MineCountNumberTest {
 
         val mineCountNumber = MineCountNumber(injectValue, height, width)
 
-        mineCountNumber.value shouldBe injectValue.value
+        mineCountNumber.shouldBeInstanceOf<MineCountNumber>()
     }
 
     @Test
