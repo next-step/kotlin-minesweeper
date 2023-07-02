@@ -23,7 +23,7 @@ data class Board(private val rows: List<BoardRow>, private val area: BoardArea) 
     private fun notifyMine(position: MinePosition) =
         position.nearMinePositions().filter { it in area }.forEach { pointAt(it).notifyMine() }
 
-    private fun pointAt(it: Position) = rows[it.y].pointAt(it.x)
+    private fun pointAt(position: Position) = rows[position.y].pointAt(position.x)
 
     fun area(): Int = area.area()
 
