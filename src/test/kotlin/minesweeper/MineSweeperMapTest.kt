@@ -20,9 +20,9 @@ class MineSweeperMapTest {
         val mineSweeperMap = MineSweeperMap(mineMapProperty)
 
         // [then]
-        val actualMineCount = mineSweeperMap.value.map { row ->
-            row.count { pos -> pos.symbol == Symbol.MINE }
-        }.reduce { acc, i -> acc + i }
+        val actualMineCount = mineSweeperMap.value.sumOf { row ->
+            row.count { it.symbol == Symbol.MINE }
+        }
 
         actualMineCount shouldBe mineCount.value
     }
