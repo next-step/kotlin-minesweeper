@@ -1,13 +1,11 @@
 package next.step.minesweeper.domain.board
 
-import next.step.minesweeper.domain.mine.MinePosition
-
 @JvmInline
 value class BoardRow(private val points: List<BoardPoint>) {
 
-    fun plantMine(position: MinePosition) {
-        require(position.x < size()) { "지뢰 x 위치는 ${size()} 보다 작아야 합니다." }
-        points[position.x].plantMine()
+    fun plantMine(x: Int) {
+        require(x < size()) { "지뢰 x 위치는 ${size()} 보다 작아야 합니다." }
+        points[x].plantMine()
     }
 
     fun size() = points.size

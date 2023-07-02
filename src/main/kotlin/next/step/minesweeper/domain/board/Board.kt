@@ -17,7 +17,7 @@ value class Board(private val rows: List<BoardRow>) {
 
     private fun plantMine(position: MinePosition) {
         require(position.y < height()) { "지뢰 y 위치는 ${height()} 보다 작아야 합니다." }
-        rows[position.y].plantMine(position)
+        rows[position.y].plantMine(position.x)
     }
 
     private fun notifyMine(position: MinePosition) =

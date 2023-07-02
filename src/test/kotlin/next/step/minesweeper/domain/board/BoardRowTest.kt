@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineState
-import next.step.minesweeper.domain.mine.MinePosition
 import org.junit.jupiter.api.assertThrows
 
 class BoardRowTest : DescribeSpec({
@@ -27,7 +26,7 @@ class BoardRowTest : DescribeSpec({
             it("특정 위치만 MineState로 바뀜") {
                 val boardRow = BoardRow.covered(BoardWidth(3))
 
-                boardRow.plantMine(MinePosition(1, 0))
+                boardRow.plantMine(1)
 
                 boardRow.points() shouldBe listOf(
                     BoardPoint(CoveredState),
@@ -40,7 +39,7 @@ class BoardRowTest : DescribeSpec({
         context("지뢰 최대 너비 넘어가게 심으면") {
             it("예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    BoardRow.covered(BoardWidth(3)).plantMine(MinePosition(3, 0))
+                    BoardRow.covered(BoardWidth(3)).plantMine(3)
                 }.shouldHaveMessage("지뢰 x 위치는 3 보다 작아야 합니다.")
             }
         }
