@@ -1,11 +1,10 @@
 package minesweeper.view
 
 import minesweeper.domain.PositiveInt
-import minesweeper.view.request.SettingRequest
 
 object InputView {
-    fun inputSettingInformation(): SettingRequest {
-        return SettingRequest(
+    fun inputSettingInformation(): BoardSetting {
+        return BoardSetting(
             height = readPositiveIntWithMessage("높이를 입력하세요."),
             width = readPositiveIntWithMessage("너비를 입력하세요."),
             mineCount = readPositiveIntWithMessage("지뢰는 몇 개인가요?"),
