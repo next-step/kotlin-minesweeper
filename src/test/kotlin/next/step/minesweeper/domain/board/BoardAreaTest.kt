@@ -1,5 +1,6 @@
 package next.step.minesweeper.domain.board
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -52,7 +53,23 @@ class BoardAreaTest : DescribeSpec({
             }
         }
         context("rangeMap") {
-            area.rangeMap({ it }) { x, y -> x + y } shouldBe listOf(listOf(0, 1, 2), listOf(1, 2, 3), listOf(2, 3, 4))
+            it("area에 포함되는 height range, width range에 대한 mapping 수행") {
+                area.rangeMap({ it }) { x, y -> x + y } shouldBe listOf(
+                    listOf(0, 1, 2),
+                    listOf(1, 2, 3),
+                    listOf(2, 3, 4)
+                )
+            }
+        }
+        context("select") {
+            it("선택된 위치가 area를 벗어나면 예외발생") {
+                shouldThrow<IllegalArgumentException> {
+                    area.select { Position(-1, 0) }
+                }
+            }
+            it("선택된 위치가 area를 벗어나지 않으면 그대로 리턴") {
+                area.select { Position(0, 0) } shouldBe Position(0, 0)
+            }
         }
     }
 })
