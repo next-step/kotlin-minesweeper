@@ -8,9 +8,9 @@ class RandomPosition {
 
     companion object {
         fun of(height: Int, width: Int): MinePosition {
-            val randomHeight = Random.nextInt(0, height).toPosition()
-            val randomWidth = Random.nextInt(0, width).toPosition()
-            return MinePosition(randomHeight, randomWidth)
+            val randomPositionX = Random.nextInt(0, height).toPosition()
+            val randomPositionY = Random.nextInt(0, width).toPosition()
+            return MinePosition(randomPositionX, randomPositionY)
         }
     }
 }

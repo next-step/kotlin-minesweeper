@@ -4,7 +4,7 @@ class PlainTile : Tile(TileType.PLAIN) {
     var nearMineCount = DEFAULT_COUNT
         private set
 
-    fun fineNearMine() {
+    fun increaseNearMineCount() {
         nearMineCount = nearMineCount.inc()
     }
 

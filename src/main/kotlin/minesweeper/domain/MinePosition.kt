@@ -1,3 +1,3 @@
 package minesweeper.domain
 
-data class MinePosition(val randomHeight: Position, val randomWidth: Position)
+data class MinePosition(val positionX: Position, val positionY: Position)

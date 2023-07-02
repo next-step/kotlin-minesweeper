@@ -1,13 +1,25 @@
 package minesweeper.domain
 
-class MineMap(private val width: Width, private val height: Height) {
+private operator fun List<TileRow>.get(position: MinePosition): Tile {
+    return this[position.positionX][position.positionY]
+}
 
-    val mineMap = List(height.height) {
-        TileRow(MutableList(width.width) { PlainTile() })
+private operator fun List<TileRow>.get(position: Position): TileRow {
+    return this[position.position]
+}
+
+private operator fun List<TileRow>.set(position: MinePosition, tile: Tile) {
+    this[position.positionX][position.positionY] = tile
+}
+
+class MineMap(private val width: Length, private val height: Length) {
+
+    val mineMap = List(height.value) {
+        TileRow(MutableList(width.value) { PlainTile() })
     }
 
     fun makeMine(mineCount: MineCount) {
-        require(width.width * height.height > mineCount.count) {
+        require(width.value * height.value > mineCount.count) {
             "지뢰는 넓이*너비의 수보다 작아야한다"
         }
         var makeCount = 0
@@ -17,46 +29,45 @@ class MineMap(private val width: Width, private val height: Height) {
     }
 
     private fun setMineToTile(makeCount: Int): Int {
-        val position = RandomPosition.of(height.height, width.width)
-        val randomHeight = position.randomHeight
-        val randomWidth = position.randomWidth
-        val positionX = randomHeight.position
-        val positionY = randomWidth.position
-        val tile = mineMap[positionX][positionY]
+        val position = RandomPosition.of(height.value, width.value)
+        val tile = mineMap[position]
         if (!tile.isMine()) {
-            mineMap[positionX][positionY] = MineTile()
-            checkMine(positionX, positionY)
+            mineMap[position] = MineTile()
+            setNearMineMap(position)
             return makeCount.inc()
         }
         return makeCount
     }
 
-    private fun checkMine(x: Int, y: Int) {
-        for (column in x.dec()..x.inc()) {
-            checkMineRow(column, y)
+    private fun setNearMineMap(minePosition: MinePosition) {
+        val minePositionX = minePosition.positionX
+        for (position in minePositionX.dec()..minePositionX.inc()) {
+            setNearMineColumn(position, minePosition)
         }
     }
 
-    private fun checkMineRow(column: Int, y: Int) {
-        if (column < 0 || column >= mineMap.size) {
+    private fun setNearMineColumn(positionX: Int, minePosition: MinePosition) {
+        if (isOutofMap(positionX, height)) {
             return
         }
-        for (row in y.dec()..y.inc()) {
-            setMineCount(column, row)
+        val minePositionY = minePosition.positionY
+        for (positionY in minePositionY.dec()..minePositionY.inc()) {
+            setNearMineRow(Position(positionX), positionY)
         }
     }
 
-    private fun setMineCount(column: Int, row: Int) {
-        if (row < 0 || row >= mineMap[column].size) {
+    private fun isOutofMap(position: Int, length: Length) = position < 0 || position >= length.value
+
+    private fun setNearMineRow(positionX: Position, positionY: Int) {
+        if (isOutofMap(positionY, width)) {
             return
         }
-        checkNearMineCount(mineMap[column][row])
+        setNearMineCount(mineMap[MinePosition(positionX, Position(positionY))])
     }
 
-    private fun checkNearMineCount(tile: Tile) {
-        when (tile) {
-            is MineTile -> return
-            is PlainTile -> tile.fineNearMine()
+    private fun setNearMineCount(tile: Tile) {
+        if (tile is PlainTile) {
+            tile.increaseNearMineCount()
         }
     }
 }
