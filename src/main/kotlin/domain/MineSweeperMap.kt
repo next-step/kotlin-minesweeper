@@ -7,7 +7,7 @@ class MineSweeperMap(private val property: Property) {
     val value: Array<Array<Cell>>
 
     init {
-        value = initGameMap()
+        value = initMap()
     }
 
     fun getCellByPosition(position: Position): Cell {
@@ -16,15 +16,18 @@ class MineSweeperMap(private val property: Property) {
         return value[rowIndex][columnIndex]
     }
 
-    private fun initGameMap(): Array<Array<Cell>> {
+    private fun initMap(): Array<Array<Cell>> {
         val minePositionSet = getMinePositionSet()
 
         return with(property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
                     val position = Position(row, column)
-                    val cellType = if (minePositionSet.contains(position)) CellType.MINE else CellType.NORMAL
-                    Cell(position, cellType)
+                    val validPositions = position.getValidPositionInRectangleArea(height, width)
+                    val mineCountInPosition =
+                        validPositions.getMineCountCompareSet(minePositionSet) { MineCountNumber(it, height, width) }
+                    val cellProperty = CellProperty.of(minePositionSet.contains(position), mineCountInPosition)
+                    Cell(position, cellProperty)
                 }.toTypedArray()
             }.toTypedArray()
         }

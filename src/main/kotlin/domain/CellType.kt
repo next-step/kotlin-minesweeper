@@ -1,5 +1,9 @@
 package domain
 
-enum class CellType(val symbol: Char) {
-    MINE('*'), NORMAL('C')
+enum class CellType {
+    MINE, NORMAL,
+    ;
+    companion object {
+        const val MINE_SYMBOL = "*"
+    }
 }
