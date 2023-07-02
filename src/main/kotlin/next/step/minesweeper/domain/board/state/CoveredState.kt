@@ -1,6 +1,11 @@
 package next.step.minesweeper.domain.board.state
 
-object CoveredState : BoardPointState() {
+data class CoveredState(private val uncoveredState: BoardPointState) : BoardPointState() {
 
     override fun notifyMine(): CoveredState = this
+
+    override fun cover(): BoardPointState = this
+
+    override fun uncover(): BoardPointState = uncoveredState
+
 }

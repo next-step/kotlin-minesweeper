@@ -3,4 +3,8 @@ package next.step.minesweeper.domain.board.state
 object MineState : BoardPointState() {
 
     override fun notifyMine(): MineState = this
+
+    override fun cover(): CoveredState = CoveredState(this)
+
+    override fun uncover(): BoardPointState = this
 }

@@ -23,7 +23,7 @@ object OutputView {
 
     private fun desc(boardPoint: BoardPoint): String =
         when (val state = boardPoint.state()) {
-            CoveredState -> "C"
+            is CoveredState -> "C"
             MineState -> "*"
             MineFreeState -> "0"
             is NearMineState -> state.count().toString()
