@@ -7,13 +7,15 @@ import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import model.minemark.Mine
+import model.minemark.Safety
 
 @DisplayName("지뢰 보드")
 class MineBoardTest : StringSpec({
 
     "포지션의 마크들로 생성" {
         shouldNotThrowAny {
-            MineBoard(mapOf(Position(0, 0) to MineMark.SAFETY))
+            MineBoard(mapOf(Position(0, 0) to Safety))
         }
     }
 
@@ -21,8 +23,8 @@ class MineBoardTest : StringSpec({
         shouldThrowExactly<IllegalArgumentException> {
             MineBoard(
                 mapOf(
-                    Position(0, 0) to MineMark.SAFETY,
-                    Position(10, 10) to MineMark.SAFETY,
+                    Position(0, 0) to Safety,
+                    Position(10, 10) to Safety,
                 )
             )
         }
@@ -30,8 +32,8 @@ class MineBoardTest : StringSpec({
 
     "주어진 마크 정보로 조회 가능" {
         listOf(
-            mapOf(Position(0, 0) to MineMark.SAFETY),
-            mapOf(Position(0, 0) to MineMark.MINE),
+            mapOf(Position(0, 0) to Safety),
+            mapOf(Position(0, 0) to Mine),
         ).forAll {
             MineBoard(it).elements shouldBe it
         }
@@ -50,8 +52,8 @@ class MineBoardTest : StringSpec({
 
     "포지션 마크 일치 여부 조회 가능" {
         listOf(
-            MineMark.SAFETY to true,
-            MineMark.MINE to false,
+            Safety to true,
+            Mine to false,
         ).forAll {
             FOUR_ELEMENTS_CLEAN_MINE_BOARD.isEqualMarkInPosition(Position(0, 0), it.first) shouldBe it.second
         }
@@ -59,19 +61,60 @@ class MineBoardTest : StringSpec({
 
     "원하는 위치 마크 교체 가능" {
         // given
-        val mineBoard = MineBoard(mapOf(Position(0, 0) to MineMark.SAFETY))
+        val mineBoard = MineBoard(mapOf(Position(0, 0) to Safety))
         // when
-        val replacedMark = mineBoard.replacedMark(Position(0, 0), MineMark.MINE)
+        val replacedMark = mineBoard.replacedMark(Position(0, 0), Mine)
         // then
-        replacedMark shouldBe MineBoard(mapOf(Position(0, 0) to MineMark.MINE))
+        replacedMark shouldBe MineBoard(mapOf(Position(0, 0) to Mine))
+    }
+
+    "주어진 포지션들의 지뢰 개수 조회 가능" {
+        // given
+        val positions = listOf(Position(0, 0), Position(1, 1))
+        // when
+        val mineCount = FOUR_ELEMENTS_TWO_MINE_BOARD.mineCount(positions)
+        // then
+        mineCount shouldBe 1
+    }
+
+    "안전 지대의 모든 마크들을 포지션으로 변경할 수 있음" {
+        // given & when
+        val replaced = FOUR_ELEMENTS_TWO_MINE_BOARD.replacedOnlySafetyMarks { _ -> Mine }
+        // then
+        replaced shouldBe MineBoard(
+            mapOf(
+                Position(0, 0) to Mine,
+                Position(1, 1) to Mine,
+                Position(0, 1) to Mine,
+                Position(1, 0) to Mine,
+            )
+        )
+    }
+
+    "마크 포함 여부 확인 가능" {
+        listOf(
+            Mine to true,
+            Safety to false,
+        ).forAll {
+            FOUR_ELEMENTS_CLEAN_MINE_BOARD.doesNotContainsMark(it.first) shouldBe it.second
+        }
     }
 })
 
 val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
     mapOf(
-        Position(0, 0) to MineMark.SAFETY,
-        Position(1, 1) to MineMark.SAFETY,
-        Position(0, 1) to MineMark.SAFETY,
-        Position(1, 0) to MineMark.SAFETY,
+        Position(0, 0) to Safety,
+        Position(1, 1) to Safety,
+        Position(0, 1) to Safety,
+        Position(1, 0) to Safety,
+    )
+)
+
+val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
+    mapOf(
+        Position(0, 0) to Safety,
+        Position(1, 1) to Mine,
+        Position(0, 1) to Safety,
+        Position(1, 0) to Mine,
     )
 )
