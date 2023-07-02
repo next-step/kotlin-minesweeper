@@ -18,5 +18,6 @@ fun main() {
 
     val board = MineSweeperBoard(boardRange = boardRange, mineQuantity = mineQuantity)
 
+    resultView.printGameStartMessage()
     resultView.printBoard(board = board)
 }

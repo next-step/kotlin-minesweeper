@@ -8,6 +8,10 @@ import minesweeper.domain.position.MineSweeperPositions
 
 class ResultView {
 
+    fun printGameStartMessage() {
+        println(GAME_START_MESSAGE)
+    }
+
     fun printBoard(board: MineSweeperBoard) {
         board.rows().forEach { positions ->
             printPositions(positions)
@@ -29,5 +33,6 @@ class ResultView {
     companion object {
         private const val MINE = "*"
         private const val EMPTY = "C"
+        private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
     }
 }
