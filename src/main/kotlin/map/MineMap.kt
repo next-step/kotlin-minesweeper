@@ -2,6 +2,9 @@ package map
 
 import map.position.Position
 import map.position.selector.MinePositionSelector
+import map.tile.MineTile
+import map.tile.PlaneTile
+import map.tile.Tile
 import model.Height
 import model.MineCount
 import model.Width
@@ -11,51 +14,53 @@ class MineMap(
     private val minePositionSelector: MinePositionSelector
 ) {
 
-    private val mapList: List<List<Tile>> = draw()
+    private val mineMap: MutableMap<Position, Tile?> = mutableMapOf()
 
-    // 이렇게 값을 제공해주는것이 조금 부자연스러운것같다 (List<List<Tile>> 가 더나을까?)
-    // 사실 마음같아서는 List<List<T>> 이런 값을 MineMap 외부가 모르게하고싶다.
-    fun getMapAsSymbol(): List<List<String>> {
-        return mapList.map { row -> row.map { it.getSymbol() } }
+    init {
+        initMineMap()
+        fillMineTiles()
+        fillPlainTilesForEmptyPosition()
     }
 
-    private fun draw(): List<List<Tile>> {
-        val defaultType = if (isFullOfMine()) TileType.MINE else TileType.EMPTY
-        val map = (0 until height()).map { y ->
+    fun getMapAsSymbol(): List<List<String>> {
+        return (0 until height()).map { y ->
             (0 until width()).map { x ->
-                Tile(Position(y, x), defaultType)
+                mineMap[Position(y, x)]!!.getSymbol()
             }
         }
-        if (isFullOfMine()) {
-            return map
-        }
-        fillMineTiles(map)
-        return map
     }
 
-    private fun fillMineTiles(map: List<List<Tile>>) {
+    private fun initMineMap() {
+        (0 until height()).map { y ->
+            (0 until width()).map { x ->
+                mineMap[Position(y, x)] = null
+            }
+        }
+    }
+
+    private fun fillMineTiles() {
         (0 until mineCount()).map {
             // 중복 여부에 따라서 반복이랑 분기를 해야하는걸 보니
             // MinePositionSelector 로 책임을 분리하면 안되는것같기도하다
             while (true) {
                 val minePosition = minePositionSelector.select()
-                val tile = map[minePosition.y][minePosition.x]
-                if (isEmptyTile(tile)) {
-                    changeTypeToMine(tile)
-                    break
+                if (mineMap[minePosition] != null) {
+                    continue
                 }
+                mineMap[minePosition] = MineTile()
+                break
             }
         }
     }
 
-    // 특정 위치의 요소를 MineMap 클래스에서 바꾸는 책임을 갖는게 적절한지 조금 애매하다
-    private fun changeTypeToMine(mapElement: Tile) {
-        mapElement.changeType(TileType.MINE)
+    private fun fillPlainTilesForEmptyPosition() {
+        val emptyPositions = mineMap.filter { it.value == null }
+        emptyPositions.forEach { (pos, _) ->
+            mineMap[pos] = PlaneTile()
+        }
     }
-    private fun isEmptyTile(mapElement: Tile) = !mapElement.isMine()
 
-    private fun isFullOfMine() = (height() * width() == mineCount())
-
+    // 특정 위치의 요소를 MineMap 클래스에서 바꾸는 책임을 갖는게 적절한지 조금 애매하다
     private fun height() = property.height.value
     private fun width() = property.width.value
     private fun mineCount() = property.mineCount.value

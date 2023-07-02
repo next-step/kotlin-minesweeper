@@ -1,6 +1,6 @@
 package map
 
 enum class TileType(val symbol: String) {
-    EMPTY("C"),
+    PLANE("C"),
     MINE("*"),
 }
