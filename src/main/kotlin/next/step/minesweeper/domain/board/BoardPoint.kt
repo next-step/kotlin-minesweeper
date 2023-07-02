@@ -4,7 +4,6 @@ import next.step.minesweeper.domain.board.state.BoardPointState
 import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
-import next.step.minesweeper.domain.board.state.NearMineState
 
 data class BoardPoint(private var state: BoardPointState) {
 
@@ -13,14 +12,10 @@ data class BoardPoint(private var state: BoardPointState) {
     }
 
     fun notifyMine() {
-        when (state) {
-            MineFreeState -> state = NearMineState.one()
-            is NearMineState -> (state as NearMineState).increase()
-            else -> {}
-        }
+        state = state.notifyMine()
     }
 
-    fun state() = state
+    fun state(): BoardPointState = state
 
     companion object {
 
