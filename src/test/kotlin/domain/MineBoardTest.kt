@@ -1,5 +1,6 @@
 package domain
 
+import fixture.row
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -20,9 +21,9 @@ class MineBoardTest : FunSpec({
         )
 
         mineBoard.rows shouldBe listOf(
-            Row(listOf(Cell.MINE, Cell.CLOSED, Cell.CLOSED)),
-            Row(listOf(Cell.CLOSED, Cell.MINE, Cell.CLOSED)),
-            Row(listOf(Cell.CLOSED, Cell.CLOSED, Cell.MINE)),
+            row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
+            row(Cell.CLOSED, Cell.MINE, Cell.CLOSED),
+            row(Cell.CLOSED, Cell.CLOSED, Cell.MINE),
         )
     }
 

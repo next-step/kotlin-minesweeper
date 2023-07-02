@@ -1,5 +1,6 @@
 package domain
 
+import fixture.row
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,6 +17,6 @@ class RowTest : FunSpec({
             mineCoordinates = mineCoordinates,
         )
 
-        row shouldBe Row(listOf(Cell.MINE, Cell.MINE, Cell.CLOSED))
+        row shouldBe row(Cell.MINE, Cell.MINE, Cell.CLOSED)
     }
 })
