@@ -14,9 +14,14 @@ object OutputView {
     }
 
     private fun printTile(tile: Tile) {
+        if (!tile.isOpened) {
+            print("$UNOPENED ")
+            return
+        }
+
         val output = when (tile) {
             is Mine -> MINE
-            is Unopened -> UNOPENED
+            is NumberTile -> tile.value
         }
         print("$output ")
     }

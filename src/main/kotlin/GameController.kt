@@ -8,7 +8,7 @@ class GameController {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val mineCount = InputView.inputMineCount()
-        return MapGenerator.generate(width, height, mineCount)
+        return GameMap.create(width, height, mineCount, true)
     }
 
     private fun output(map: GameMap) {

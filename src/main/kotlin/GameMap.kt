@@ -13,9 +13,52 @@ class GameMap(field: List<List<Tile>>) {
         return field[point.y.value][point.x.value] is Mine
     }
 
+    fun mineCountInSquare(point: Point): Int {
+        val height = field.size
+        val y = point.y.value
+        var count = 0
+
+        for (i in y - 1..y + 1) {
+            if (i < 0 || i >= height) continue
+            val x = point.x.value
+            count += mineCountInColumn(x, i)
+        }
+        return count
+    }
+
+    fun updateField() {
+        field.forEachIndexed { index, _ ->
+            updateColumns(index)
+        }
+    }
+
+    private fun mineCountInColumn(x: Int, y: Int): Int {
+        val width = field[0].size
+        var count = 0
+
+        for (i in x - 1..x + 1) {
+            if (i < 0 || i >= width) continue
+            if (field[y][i] is Mine) count++
+        }
+        return count
+    }
+
+    private fun updateColumns(y: Int) {
+        field[y].forEach {
+            updateNumber(it)
+        }
+    }
+
+    private fun updateNumber(tile: Tile) {
+        if (tile !is NumberTile) return
+        tile.updateValue(this)
+    }
+
     companion object {
-        fun createMap(width: Int, height: Int, mineCount: Int): GameMap {
-            return MapGenerator.generate(width, height, mineCount)
+        fun create(width: Int, height: Int, mineCount: Int, isOpened: Boolean = false): GameMap {
+            return MapGenerator.generate(width, height, mineCount, isOpened).apply {
+                updateField()
+            }
         }
     }
 }
