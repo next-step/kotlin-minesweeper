@@ -10,6 +10,12 @@ class MineSweeperMap(private val property: Property) {
         value = initGameMap()
     }
 
+    fun getCellByPosition(position: Position): Cell {
+        val rowIndex = position.row.value - INDEX_VALUE_FOR_CONVENIENCE
+        val columnIndex = position.column.value - INDEX_VALUE_FOR_CONVENIENCE
+        return value[rowIndex][columnIndex]
+    }
+
     private fun initGameMap(): Array<Array<Cell>> {
         val minePositionSet = getMinePositionSet()
 
