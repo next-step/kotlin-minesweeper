@@ -2,6 +2,9 @@ package minesweeper.domain
 
 @JvmInline
 value class Cells(val values: List<Cell>) {
+    val size: Int
+        get() = values.size
+
     operator fun plus(other: Cells): Cells {
         return Cells(values + other.values)
     }

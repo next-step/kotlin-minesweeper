@@ -9,7 +9,7 @@ class BoardSetting(
     val mineCount: PositiveInt,
 ) {
     fun toBoard(): Board {
-        return Board(
+        return Board.of(
             height = height,
             width = width,
             mineCount = mineCount,

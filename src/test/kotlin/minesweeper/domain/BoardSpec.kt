@@ -1,16 +1,67 @@
 package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class BoardSpec : DescribeSpec(
     {
-        describe("게임 보드 생성 검증") {
-            context("높이, 너비, 지뢰 개수가 주어지면") {
+        describe("게임 보드 생성 검증 (생성자)") {
+            context("cells 가 주어지면") {
                 it("보드를 생성할 수 있다.") {
                     shouldNotThrowAny {
                         Board(
+                            cells = listOf(
+                                Cells.empty(3),
+                                Cells.empty(3),
+                            ),
+                        )
+                    }
+                }
+            }
+
+            context("높이가 0인 cells 가 주어지면") {
+                it("보드를 생성할 수 없다.") {
+                    shouldThrowExactly<IllegalArgumentException> {
+                        Board(
+                            cells = emptyList(),
+                        )
+                    }
+                }
+            }
+
+            context("너비가 0인 cells 가 주어지면") {
+                it("보드를 생성할 수 없다.") {
+                    shouldThrowExactly<IllegalArgumentException> {
+                        Board(
+                            cells = listOf(
+                                Cells.empty(0),
+                            ),
+                        )
+                    }
+                }
+            }
+
+            context("각 행의 너비(셀 개수)가 다르면") {
+                it("보드를 생성할 수 없다.") {
+                    shouldThrowExactly<IllegalArgumentException> {
+                        Board(
+                            cells = listOf(
+                                Cells.empty(3),
+                                Cells.empty(4),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+
+        describe("게임 보드 생성 검증 (of)") {
+            context("높이, 너비, 지뢰 개수가 주어지면") {
+                it("보드를 생성할 수 있다.") {
+                    shouldNotThrowAny {
+                        Board.of(
                             height = PositiveInt(5),
                             width = PositiveInt(5),
                             mineCount = PositiveInt(5),
@@ -26,7 +77,7 @@ class BoardSpec : DescribeSpec(
 
             context("지뢰 개수 5개로 생성하면") {
                 val mineCount = PositiveInt(5)
-                val board = Board(
+                val board = Board.of(
                     height = height,
                     width = width,
                     mineCount = mineCount,
