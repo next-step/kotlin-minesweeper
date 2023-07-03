@@ -1,9 +1,7 @@
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
-import minesweeper.domain.Point
 import kotlin.random.Random
 
-class Playground: StringSpec({
+class Playground : StringSpec({
     "Random.nextInt" {
         println(Random.nextInt(0, 3))
         println(Random.nextInt(0, 3))
@@ -19,8 +17,17 @@ class Playground: StringSpec({
         println(list.subList(6, 9))
         println(list)
     }
-    "Set" {
-        val set = setOf(Point(1, 1), Point(1, 2), Point(1, 1))
-        set.size shouldBe  2
+
+    "testOfRequire" {
+        try {
+            testOfRequire(5)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 })
+
+fun testOfRequire(value: Int) {
+    require(value > 10) { "값은 10보다 커야 합니다." }
+    println("Success.")
+}
