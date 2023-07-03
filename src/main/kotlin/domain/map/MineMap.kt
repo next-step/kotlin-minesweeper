@@ -1,6 +1,7 @@
 package domain.map
 
 import domain.MineSweeperInitProperty
+import domain.cell.AroundMineCount
 import domain.cell.Cell
 import domain.collections.nestedList
 import domain.mine.MineCoordinatesCreator
@@ -41,8 +42,17 @@ class MineMap private constructor(
             return if (mineCoordinates.contains(coordinate)) {
                 Cell.Mine
             } else {
-                Cell.Ground
+                Cell.Ground(
+                    aroundMineCount = coordinate.calculateAroundMineCount(mineCoordinates),
+                )
             }
+        }
+
+        private fun Coordinate.calculateAroundMineCount(
+            mineCoordinates: Set<Coordinate>,
+        ): AroundMineCount {
+            val count = aroundCoordinates().count { mineCoordinates.contains(it) }
+            return AroundMineCount(count)
         }
     }
 }
