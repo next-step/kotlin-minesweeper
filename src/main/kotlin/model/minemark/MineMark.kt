@@ -1,22 +1,35 @@
 package model.minemark
 
-sealed interface MineMark {
-    fun next(count: Int): MineMark
+sealed class MineMark(val openStatus: OpenStatus = OpenStatus.CLOSED) {
+    abstract fun next(count: Int): MineMark
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MineMark
+
+        return openStatus == other.openStatus
+    }
+
+    override fun hashCode(): Int {
+        return openStatus.hashCode()
+    }
 }
 
-object Safety : MineMark {
+class Safety : MineMark() {
     override fun next(count: Int): MineMark {
         return MineCount(count)
     }
 }
 
-object Mine : MineMark {
+class Mine : MineMark() {
     override fun next(count: Int): MineMark {
         throw IllegalStateException("mine can not be next mark")
     }
 }
 
-data class MineCount(val count: Int) : MineMark {
+data class MineCount(val count: Int) : MineMark() {
     init {
         require(count >= 0) { "count must be greater than or equal to 0. but provided `$count`" }
     }

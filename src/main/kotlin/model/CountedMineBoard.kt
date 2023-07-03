@@ -11,6 +11,6 @@ data class CountedMineBoard(val mineBoard: MineBoard) {
     }
 
     companion object {
-        private val NOT_ALLOWED_MARK = Safety
+        private val NOT_ALLOWED_MARK = Safety()
     }
 }

@@ -6,7 +6,7 @@ import model.minemark.Safety
 data class MineBoardProvider(
     private val length: Int,
     private val width: Int,
-    private val defaultMark: MineMark = Safety,
+    private val defaultMark: MineMark = Safety(),
 ) {
 
     init {

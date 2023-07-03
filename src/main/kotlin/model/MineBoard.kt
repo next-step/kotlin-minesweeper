@@ -46,7 +46,7 @@ class MineBoard(elements: Map<Position, MineMark>) {
     fun mineCount(positions: Collection<Position>): Int {
         return positions.count {
             validateContainsPosition(it)
-            elements[it] == Mine
+            elements[it]?.javaClass == Mine::class.java
         }
     }
 
@@ -55,7 +55,7 @@ class MineBoard(elements: Map<Position, MineMark>) {
         element: Map.Entry<Position, MineMark>,
         countByPosition: (Position) -> Int,
     ): MineBoard {
-        if (element.value == Safety) {
+        if (element.value.javaClass == Safety::class.java) {
             return mineBoard.replacedMark(element.key, element.value.next(countByPosition(element.key)))
         }
         return mineBoard

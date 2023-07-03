@@ -16,9 +16,9 @@ class CountedMineBoardTest : StringSpec({
                 MineBoard(
                     mapOf(
                         Position(0, 0) to MineCount(2),
-                        Position(1, 1) to Mine,
+                        Position(1, 1) to Mine(),
                         Position(0, 1) to MineCount(2),
-                        Position(1, 0) to Mine,
+                        Position(1, 0) to Mine(),
                     )
                 )
             )
