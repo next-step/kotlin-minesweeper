@@ -2,12 +2,12 @@ package domain.map
 
 import domain.MineSweeperInitProperty
 import domain.cell.Cell
-import utils.nestedList
 import domain.math.toPositive
 import domain.mine.MockMineCoordinatesCreator
 import domain.mine.RealMineCoordinatesCreator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import utils.nestedList
 
 class MineMapTest : BehaviorSpec({
 
@@ -19,9 +19,9 @@ class MineMapTest : BehaviorSpec({
         )
 
         When("맵을 만들면") {
-            val mineMap = MineMap.create(
+            val mineMapFactory = RealMineMapFactory(RealMineCoordinatesCreator())
+            val mineMap = mineMapFactory.create(
                 mineSweeperInitProperty = mineSweeperInitProperty,
-                mineCoordinatesCreator = RealMineCoordinatesCreator(),
             )
 
             Then("높이 100 맵이 만들어진다") {
@@ -48,9 +48,9 @@ class MineMapTest : BehaviorSpec({
                 Coordinate(30, 30),
                 Coordinate(40, 45),
             )
-            val mineMap = MineMap.create(
+            val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
+            val mineMap = mineMapFactory.create(
                 mineSweeperInitProperty = mineSweeperInitProperty,
-                mineCoordinatesCreator = MockMineCoordinatesCreator { mockMineCoordinates },
             )
 
             Then("초기화 속성에 기재된 지뢰 개수만큼 지뢰가 맵에 생성된다") {
@@ -82,9 +82,9 @@ class MineMapTest : BehaviorSpec({
                 Coordinate(3, 3),
             )
 
-            val mineMap = MineMap.create(
+            val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
+            val mineMap = mineMapFactory.create(
                 mineSweeperInitProperty = mineSweeperInitProperty,
-                mineCoordinatesCreator = MockMineCoordinatesCreator { mockMineCoordinates },
             )
 
             val hasAroundMineCellCoordinates = listOf(
