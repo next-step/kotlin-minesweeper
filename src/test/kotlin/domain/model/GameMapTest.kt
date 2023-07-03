@@ -103,4 +103,58 @@ class GameMapTest {
             }
         }
     }
+
+    @Test
+    fun `모든 숫자 타일이 열려있는지 확인할 수 있다 - false`() {
+        val field = listOf(listOf(NumberTile(Point.from(0, 0))))
+        val map = GameMap(field)
+
+        map.isAllOpened() shouldBe false
+    }
+
+    @Test
+    fun `모든 숫자 타일이 열려있는지 확인할 수 있다 - true`() {
+        val field = listOf(listOf(NumberTile(Point.from(0, 0), isOpened = true)))
+        val map = GameMap(field)
+
+        map.isAllOpened() shouldBe true
+    }
+
+    @Test
+    fun `특정 위치의 타일을 열 수 있다`() {
+        val point = Point.from(0, 0)
+        val numberTile = NumberTile(point)
+        val field = listOf(listOf(numberTile))
+        val map = GameMap(field)
+
+        numberTile.isOpened shouldBe false
+        map.openTile(point)
+        numberTile.isOpened shouldBe true
+    }
+
+    @Test
+    fun `특정 위치의 타일을 열면 인접한 숫자 타일이 같이 열린다`() {
+        val point = Point.from(1, 1)
+        val field = listOf(
+            listOf(
+                NumberTile(Point.from(0, 0)),
+                NumberTile(Point.from(1, 0)),
+                NumberTile(Point.from(2, 0)),
+            ),
+            listOf(
+                NumberTile(Point.from(0, 1)),
+                NumberTile(Point.from(1, 1)),
+                NumberTile(Point.from(2, 1)),
+            ),
+            listOf(
+                NumberTile(Point.from(0, 2)),
+                NumberTile(Point.from(1, 2)),
+                NumberTile(Point.from(2, 2)),
+            ),
+        )
+        val map = GameMap(field)
+        map.isAllOpened() shouldBe false
+        map.openTile(point)
+        map.isAllOpened() shouldBe true
+    }
 }

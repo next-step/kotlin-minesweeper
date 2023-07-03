@@ -29,4 +29,13 @@ class NumberTest {
         numberTile.updateValue(mineCount)
         numberTile.value shouldBe 3
     }
+
+    @Test
+    fun `타일을 열 수 있다`() {
+        val numberTile = NumberTile(Point.from(0, 0))
+        numberTile.isOpened shouldBe false
+
+        numberTile.open()
+        numberTile.isOpened shouldBe true
+    }
 }
