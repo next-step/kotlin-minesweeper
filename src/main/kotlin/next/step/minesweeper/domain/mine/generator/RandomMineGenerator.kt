@@ -8,7 +8,7 @@ import next.step.minesweeper.domain.mine.MinePositions
 object RandomMineGenerator : MineGenerator {
 
     override fun generate(area: BoardArea, count: MineCount): MinePositions {
-        area.requireArea(count.count())
+        area.checkMinePlantable(count.count())
         return MinePositions(
             area.rangeMap({ it }) { x, y -> MinePosition(x, y) }.flatten().shuffled().take(count.count()).toSet(),
         )

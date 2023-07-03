@@ -12,7 +12,7 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
 
     operator fun contains(position: Position): Boolean = height.inRange(position.y) && width.inRange(position.x)
 
-    fun requireArea(count: Int) = require(count <= area()) { "${area()}개보다 더 넣을 수 없습니다." }
+    fun checkMinePlantable(count: Int) = require(count <= area()) { "${area()}개보다 더 넣을 수 없습니다." }
 
     private fun area(): Int = width.width() * height.height()
 
@@ -22,18 +22,10 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
     fun nearForEach(x: Int, y: Int, consume: (Position) -> Unit) =
         NearPositionDelta.nearInArea(x, y, this).forEach(consume)
 
-    fun select(selector: () -> Position, onSelectError: (Throwable) -> Unit): Position {
-        return runCatching {
-            val position = selector()
-            requireContains(position.x, position.y)
-            position
-        }.fold(
-            onSuccess = { it },
-            onFailure = {
-                onSelectError(it)
-                select(selector, onSelectError)
-            },
-        )
+    fun select(selector: () -> Position): Position {
+        val position = selector()
+        requireContains(position.x, position.y)
+        return position
     }
 
     companion object {

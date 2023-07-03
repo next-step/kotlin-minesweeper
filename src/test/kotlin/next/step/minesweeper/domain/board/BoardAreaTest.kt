@@ -1,6 +1,5 @@
 package next.step.minesweeper.domain.board
 
-import io.kotest.assertions.fail
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -49,7 +48,7 @@ class BoardAreaTest : DescribeSpec({
         context("requireArea") {
             it("area에 특정 개수를 포함할 수 없으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    area.requireArea(10)
+                    area.checkMinePlantable(10)
                 }.shouldHaveMessage("9개보다 더 넣을 수 없습니다.")
             }
         }
@@ -65,11 +64,11 @@ class BoardAreaTest : DescribeSpec({
         context("select") {
             it("선택된 위치가 area를 벗어나면 예외발생") {
                 shouldThrow<IllegalArgumentException> {
-                    area.select({ Position(-1, 0) }, { throw it })
+                    area.select { Position(-1, 0) }
                 }
             }
             it("선택된 위치가 area를 벗어나지 않으면 그대로 리턴") {
-                area.select({ Position(0, 0) }, { fail("호출 안됨") }) shouldBe Position(0, 0)
+                area.select { Position(0, 0) } shouldBe Position(0, 0)
             }
         }
     }
