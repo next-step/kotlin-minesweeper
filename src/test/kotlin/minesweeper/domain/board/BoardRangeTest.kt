@@ -1,6 +1,8 @@
 package minesweeper.domain.board
 
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -9,7 +11,7 @@ class BoardRangeTest {
     @ParameterizedTest
     @CsvSource(
         "0, 1",
-        "-1, 1"
+        "-1, 1",
     )
     fun `보드 범위의 높이가 0 이하면 IllegalArgumentException 이 발생`(height: Int, width: Int) {
         shouldThrow<IllegalArgumentException> {
@@ -20,11 +22,21 @@ class BoardRangeTest {
     @ParameterizedTest
     @CsvSource(
         "1, 0",
-        "1, -1"
+        "1, -1",
     )
     fun `보드 범위의 너비가 0 이하면 IllegalArgumentException 이 발생`(height: Int, width: Int) {
         shouldThrow<IllegalArgumentException> {
             BoardRange(height = height, width = width)
         }
+    }
+
+    @Test
+    fun `지뢰 개수만큼 지뢰 위치를 중복없이 랜덤하게 생성`() {
+        val mineQuantity = 3
+        val boardRange = BoardRange(height = 3, width = 3)
+
+        val minePositions = boardRange.createRandomPositions(minRandomPositionSize = mineQuantity)
+
+        minePositions.size shouldBe mineQuantity
     }
 }

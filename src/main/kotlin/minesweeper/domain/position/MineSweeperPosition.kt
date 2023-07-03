@@ -1,6 +1,16 @@
 package minesweeper.domain.position
 
-class MineSweeperPosition(private val position: Position, private val type: PositionType) {
+sealed class MineSweeperPosition
 
-    fun isMine(): Boolean = PositionType.MINE == type
+class MinePosition(private val position: Position) : MineSweeperPosition()
+
+class EmptyPosition(private val position: Position, minePositions: Positions) : MineSweeperPosition() {
+
+    private val aroundMineQuantity: Int
+
+    init {
+        aroundMineQuantity = position.aroundPositions().count { minePositions.contains(it) }
+    }
+
+    fun calculateAroundMineQuantity(): Int = aroundMineQuantity
 }
