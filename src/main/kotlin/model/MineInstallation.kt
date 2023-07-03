@@ -33,7 +33,7 @@ class MineInstallation(
         do {
             position = nextPosition(mineBoard.maxXPosition, mineBoard.maxYPosition)
             validateContainsPosition(mineBoard, position)
-        } while (mineBoard.contains(position, mark))
+        } while (mineBoard.isEqualMarkInPosition(position, mark))
         return position
     }
 

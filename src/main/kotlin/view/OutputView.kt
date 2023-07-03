@@ -22,7 +22,7 @@ object OutputView {
     }
 
     private fun positionsSortedYAndX(board: MineBoard): List<Pair<Position, MineMark>> {
-        return board.elements.elements.map { it.position to it.mineMark }.sortedWith(
+        return board.elements.toList().sortedWith(
             Comparator.comparing<Pair<Position, MineMark>, Int> { it.first.y }.thenBy { it.first.x }
         )
     }

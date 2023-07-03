@@ -4,11 +4,7 @@ import model.minemark.Mine
 import model.minemark.MineMark
 import model.minemark.Safety
 
-data class MineBoard(val elements: BoardElements) {
-
-    val size: Int by lazy { elements.size }
-    val maxXPosition: Int by lazy { elements.maxXPosition }
-    val maxYPosition: Int by lazy { elements.maxYPosition }
+class MineBoard(elements: Map<Position, MineMark>) {
 
     init {
         require(isAllFilled(elements)) {
@@ -16,44 +12,59 @@ data class MineBoard(val elements: BoardElements) {
         }
     }
 
+    val elements: Map<Position, MineMark> = elements.toMap()
+    val size = elements.size
+    val maxXPosition: Int by lazy { elements.keys.maxOf { it.x } }
+    val maxYPosition: Int by lazy { elements.keys.maxOf { it.y } }
+
     fun contains(position: Position): Boolean {
-        return elements.contains(position)
+        return elements.containsKey(position)
     }
 
-    fun contains(position: Position, mark: MineMark): Boolean {
+    fun isEqualMarkInPosition(position: Position, mark: MineMark): Boolean {
         validateContainsPosition(position)
-        return elements.contains(position, mark)
+        return elements[position] == mark
     }
 
     fun replacedMark(position: Position, mark: MineMark): MineBoard {
         validateContainsPosition(position)
-        return MineBoard(elements.replacedPositionMark(position, mark))
+        return MineBoard(elements.toMutableMap().apply { this[position] = mark })
     }
 
     fun doesNotContainsMark(mark: MineMark): Boolean {
-        return elements.doesNotContainsMark(mark)
+        return elements.values.contains(mark).not()
     }
 
     fun replacedOnlySafetyMarks(countByPosition: (Position) -> (Int)): MineBoard {
-        return MineBoard(
-            elements.marksMap { position, mark ->
-                if (mark == Safety) {
-                    mark.next(countByPosition(position))
-                } else {
-                    mark
-                }
-            }
-        )
+        var current = this
+        elements.forEach {
+            current = replacedOnlySafetyMark(current, it, countByPosition)
+        }
+        return current
     }
 
     fun mineCount(positions: Collection<Position>): Int {
-        return positions.count { contains(it, Mine) }
+        return positions.count {
+            validateContainsPosition(it)
+            elements[it] == Mine
+        }
     }
 
-    private fun isAllFilled(elements: BoardElements): Boolean {
-        return zeroToRange(maxXPosition)
-            .flatMap { x -> positions(x, maxYPosition) }
-            .all { it in elements }
+    private fun replacedOnlySafetyMark(
+        mineBoard: MineBoard,
+        element: Map.Entry<Position, MineMark>,
+        countByPosition: (Position) -> Int,
+    ): MineBoard {
+        if (element.value == Safety) {
+            return mineBoard.replacedMark(element.key, element.value.next(countByPosition(element.key)))
+        }
+        return mineBoard
+    }
+
+    private fun isAllFilled(elements: Map<Position, MineMark>): Boolean {
+        return zeroToRange(elements.keys.maxOf { it.x })
+            .flatMap { x -> positions(x, elements.keys.maxOf { it.y }) }
+            .all { elements.containsKey(it) }
     }
 
     private fun positions(
@@ -70,5 +81,22 @@ data class MineBoard(val elements: BoardElements) {
         if (contains(position).not()) {
             throw IllegalArgumentException("position must be in elements. elements($this), position(`$position`)")
         }
+    }
+
+    override fun toString(): String {
+        return "MineBoard(elements=$elements, size=$size)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MineBoard
+
+        return elements == other.elements
+    }
+
+    override fun hashCode(): Int {
+        return elements.hashCode()
     }
 }
