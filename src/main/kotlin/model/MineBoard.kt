@@ -35,10 +35,10 @@ class MineBoard(elements: Map<Position, MineMark>) {
         return elements.values.contains(mark).not()
     }
 
-    fun replacedOnlySafetyMarks(replaceMarkMapper: (Position) -> (MineMark)): MineBoard {
+    fun replacedOnlySafetyMarks(countByPosition: (Position) -> (Int)): MineBoard {
         var current = this
         elements.forEach {
-            current = replacedOnlySafetyMark(current, it, replaceMarkMapper)
+            current = replacedOnlySafetyMark(current, it, countByPosition)
         }
         return current
     }
@@ -53,10 +53,10 @@ class MineBoard(elements: Map<Position, MineMark>) {
     private fun replacedOnlySafetyMark(
         mineBoard: MineBoard,
         element: Map.Entry<Position, MineMark>,
-        replaceMarkMapper: (Position) -> MineMark,
+        countByPosition: (Position) -> Int,
     ): MineBoard {
         if (element.value == Safety) {
-            return mineBoard.replacedMark(element.key, replaceMarkMapper(element.key))
+            return mineBoard.replacedMark(element.key, element.value.next(countByPosition(element.key)))
         }
         return mineBoard
     }

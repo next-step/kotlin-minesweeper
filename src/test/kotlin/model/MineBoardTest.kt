@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import model.minemark.Mine
+import model.minemark.MineCount
 import model.minemark.Safety
 
 @DisplayName("지뢰 보드")
@@ -77,15 +78,15 @@ class MineBoardTest : StringSpec({
         mineCount shouldBe 1
     }
 
-    "안전 지대의 모든 마크들을 포지션으로 변경할 수 있음" {
+    "안전 지대의 모든 마크들을 포지션으로 지뢰 개수로 변경할 수 있음" {
         // given & when
-        val replaced = FOUR_ELEMENTS_TWO_MINE_BOARD.replacedOnlySafetyMarks { _ -> Mine }
+        val replaced = FOUR_ELEMENTS_TWO_MINE_BOARD.replacedOnlySafetyMarks { _ -> 2 }
         // then
         replaced shouldBe MineBoard(
             mapOf(
-                Position(0, 0) to Mine,
+                Position(0, 0) to MineCount(2),
                 Position(1, 1) to Mine,
-                Position(0, 1) to Mine,
+                Position(0, 1) to MineCount(2),
                 Position(1, 0) to Mine,
             )
         )
