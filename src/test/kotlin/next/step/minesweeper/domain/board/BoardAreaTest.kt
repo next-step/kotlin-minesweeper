@@ -17,14 +17,14 @@ class BoardAreaTest : DescribeSpec({
             withData(
                 listOf(Position(-1, -1), Position(3, 3)),
             ) { position ->
-                (position in area) shouldBe false
+                area.contains(position.x, position.y) shouldBe false
             }
         }
         context("position이 area안에 있으면 true") {
             withData(
                 listOf(Position(0, 0), Position(2, 2)),
             ) { position ->
-                (position in area) shouldBe true
+                area.contains(position.x, position.y) shouldBe true
             }
         }
         context("y가 height를 벗어나면 예외 발생") {
@@ -48,8 +48,8 @@ class BoardAreaTest : DescribeSpec({
         context("requireArea") {
             it("area에 특정 개수를 포함할 수 없으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
-                    area.checkMinePlantable(10)
-                }.shouldHaveMessage("9개보다 더 넣을 수 없습니다.")
+                    area.checkMaxCount(10)
+                }.shouldHaveMessage("9개보다 더 많을 수 없습니다.")
             }
         }
         context("rangeMap") {
@@ -67,8 +67,8 @@ class BoardAreaTest : DescribeSpec({
                     area.select { Position(-1, 0) }
                 }
             }
-            it("선택된 위치가 area를 벗어나지 않으면 그대로 리턴") {
-                area.select { Position(0, 0) } shouldBe Position(0, 0)
+            it("선택된 위치가 area를 벗어나지 않으면 BoardPosition으로 리턴") {
+                area.select { Position(0, 0) } shouldBe BoardPosition(Position(0, 0), area)
             }
         }
     }
