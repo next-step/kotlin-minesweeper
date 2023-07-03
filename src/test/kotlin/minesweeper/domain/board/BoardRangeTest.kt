@@ -29,14 +29,4 @@ class BoardRangeTest {
             BoardRange(height = height, width = width)
         }
     }
-
-    @Test
-    fun `지뢰 개수만큼 지뢰 위치를 중복없이 랜덤하게 생성`() {
-        val mineQuantity = 3
-        val boardRange = BoardRange(height = 3, width = 3)
-
-        val minePositions = boardRange.createRandomPositions(minRandomPositionSize = mineQuantity)
-
-        minePositions.size shouldBe mineQuantity
-    }
 }

@@ -1,8 +1,5 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.position.Position
-import minesweeper.domain.position.Positions
-
 class BoardRange(height: Int, width: Int) {
 
     private val heightRange: IntRange
@@ -17,20 +14,15 @@ class BoardRange(height: Int, width: Int) {
 
     fun calculateArea(): Int = heightRange.max() * widthRange.max()
 
-    fun maxHeight(): Int = heightRange.max()
+    fun randomHeight(): Int = heightRange.random()
 
-    fun maxWidth(): Int = widthRange.max()
+    fun randomWidth(): Int = widthRange.random()
 
-    fun createRandomPositions(minRandomPositionSize: Int = MIN_RANDOM_POSITION_SIZE): Positions {
-        val positions = mutableSetOf<Position>()
-        while (positions.size < minRandomPositionSize) {
-            positions.add(Position(x = widthRange.random(), y = heightRange.random()))
-        }
-        return Positions(positions.toList())
-    }
+    fun heightRange(): IntRange = IntRange(start = heightRange.first, endInclusive = heightRange.last)
+
+    fun widthRange(): IntRange = IntRange(start = widthRange.first, endInclusive = widthRange.last)
 
     companion object {
         private const val RANGE_MIN = 1
-        private const val MIN_RANDOM_POSITION_SIZE = 1
     }
 }
