@@ -15,7 +15,6 @@ fun main() {
 
     ResultView.printStartGame()
     val isClear = playGame(board)
-    ResultView.printBoard(BoardVO(board))
     if (isClear) ResultView.printWinGame()
 }
 

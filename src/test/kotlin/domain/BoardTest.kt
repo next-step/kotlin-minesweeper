@@ -62,7 +62,7 @@ class BoardTest : FunSpec({
 
     context("지뢰찾기 보드 특정 좌표가 닫혀있는지 여부를 반환한다") {
         val board = board(
-            row(cell(true), cell(false, Open(2))),
+            row(cell(true), cell(false, Opened(AroundMineCount.TWO))),
             row(cell(), cell(true)),
         )
 
@@ -87,15 +87,15 @@ class BoardTest : FunSpec({
         data class CoordinateIsMine(val coordinate: Coordinate, val expectedCell: Cell)
         withData(
             nameFn = { "When ${it.coordinate} opens, cell should be ${it.expectedCell}" },
-            CoordinateIsMine(Coordinate(0, 0), cell(true, Open(1))),
-            CoordinateIsMine(Coordinate(0, 1), cell(true, Open(1))),
-            CoordinateIsMine(Coordinate(0, 2), cell(false, Open(1))),
-            CoordinateIsMine(Coordinate(1, 0), cell(false, Open(3))),
-            CoordinateIsMine(Coordinate(1, 1), cell(false, Open(3))),
-            CoordinateIsMine(Coordinate(1, 2), cell(false, Open(1))),
-            CoordinateIsMine(Coordinate(2, 0), cell(true, Open(0))),
-            CoordinateIsMine(Coordinate(2, 1), cell(false, Open(1))),
-            CoordinateIsMine(Coordinate(2, 2), cell(false, Open(0))),
+            CoordinateIsMine(Coordinate(0, 0), cell(true, Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(0, 1), cell(true, Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(0, 2), cell(false, Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(1, 0), cell(false, Opened(AroundMineCount.THREE))),
+            CoordinateIsMine(Coordinate(1, 1), cell(false, Opened(AroundMineCount.THREE))),
+            CoordinateIsMine(Coordinate(1, 2), cell(false, Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(2, 0), cell(true, Opened(AroundMineCount.ZERO))),
+            CoordinateIsMine(Coordinate(2, 1), cell(false, Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(2, 2), cell(false, Opened(AroundMineCount.ZERO))),
         ) { (coordinate, expectedCell) ->
             board.open(coordinate)
             board[coordinate.row][coordinate.col] shouldBe expectedCell
@@ -104,9 +104,9 @@ class BoardTest : FunSpec({
 
     test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 많으면 게임은 진행중이다") {
         val board = board(
-            row(cell(true), cell(true), cell(false, Open(1))),
-            row(cell(false, Open(3)), cell(false, Open(3)), cell(false, Open(1))),
-            row(cell(true), cell(), cell(false, Open(0))),
+            row(cell(true), cell(true), cell(false, Opened(AroundMineCount.ONE))),
+            row(cell(false, Opened(AroundMineCount.THREE)), cell(false, Opened(AroundMineCount.THREE)), cell(false, Opened(AroundMineCount.ONE))),
+            row(cell(true), cell(), cell(false, Opened(AroundMineCount.ZERO))),
         )
 
         board.isRunning() shouldBe true
@@ -114,9 +114,9 @@ class BoardTest : FunSpec({
 
     test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 적거나 같으면 게임은 진행중이 아니다") {
         val board = board(
-            row(cell(true), cell(true), cell(false, Open(1))),
-            row(cell(false, Open(3)), cell(false, Open(3)), cell(false, Open(1))),
-            row(cell(true), cell(false, Open(1)), cell(false, Open(0))),
+            row(cell(true), cell(true), cell(false, Opened(AroundMineCount.ONE))),
+            row(cell(false, Opened(AroundMineCount.THREE)), cell(false, Opened(AroundMineCount.THREE)), cell(false, Opened(AroundMineCount.ONE))),
+            row(cell(true), cell(false, Opened(AroundMineCount.ONE)), cell(false, Opened(AroundMineCount.ZERO))),
         )
 
         board.isRunning() shouldBe false

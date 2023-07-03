@@ -9,7 +9,7 @@ class RowVO(
         operator fun invoke(row: Row): RowVO {
             return RowVO(
                 row.map {
-                    if (it.isClosed()) "C" else it.aroundMineCount().toString()
+                    if (it.isClosed()) "C" else it.aroundMineCount().count.toString()
                 }
             )
         }

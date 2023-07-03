@@ -4,7 +4,7 @@ data class Cell(
     val hasMine: Boolean,
     private var state: CellState = Closed,
 ) {
-    fun open(aroundMineCount: Int) {
+    fun open(aroundMineCount: AroundMineCount) {
         state = state.open(aroundMineCount)
     }
 
@@ -12,5 +12,5 @@ data class Cell(
         return state is Closed
     }
 
-    fun aroundMineCount(): Int = state.aroundMineCount()
+    fun aroundMineCount(): AroundMineCount = state.aroundMineCount()
 }

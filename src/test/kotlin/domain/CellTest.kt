@@ -10,22 +10,22 @@ class CellTest : FunSpec({
 
     test("셀을 연다") {
         val cell = cell(state = Closed)
-        cell.open(3)
-        cell shouldBe cell(state = Open(3))
+        cell.open(AroundMineCount.THREE)
+        cell shouldBe cell(state = Opened(AroundMineCount.THREE))
     }
 
     context("셀이 닫혀 있는지 여부를 반환한다") {
         data class CellStateIsClosed(val cellState: CellState, val expected: Boolean)
         withData(
             CellStateIsClosed(Closed, true),
-            CellStateIsClosed(Open(1), false),
+            CellStateIsClosed(Opened(AroundMineCount.ONE), false),
         ) { (cellState, expected) ->
             cell(state = cellState).isClosed() shouldBe expected
         }
     }
 
     test("열린 셀의 주변 지뢰 개수를 반환한다") {
-        cell(state = Open(2)).aroundMineCount() shouldBe 2
+        cell(state = Opened(AroundMineCount.TWO)).aroundMineCount() shouldBe AroundMineCount.TWO
     }
 
     test("닫힌 셀의 주변 지뢰 개수를 반환하면 예외가 발생한다") {

@@ -20,7 +20,7 @@ class Board(
             .filter { it.isOnBoard(height, width) }
             .count { hasMine(it) }
 
-        cellOf(coordinate).open(aroundMineCount)
+        cellOf(coordinate).open(AroundMineCount.of(aroundMineCount))
     }
 
     fun isRunning(): Boolean {

@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class ClosedTest : FunSpec({
 
     test("Closed 를 연다") {
-        Closed.open(3) shouldBe Open(3)
+        Closed.open(AroundMineCount.THREE) shouldBe Opened(AroundMineCount.THREE)
     }
 
     test("Closed 는 주변 지뢰 개수를 반환할 때 예외가 발생한다") {
