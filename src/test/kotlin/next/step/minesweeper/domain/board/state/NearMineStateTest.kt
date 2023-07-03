@@ -16,13 +16,6 @@ class NearMineStateTest : DescribeSpec({
                 result.count() shouldBe 2
             }
         }
-        context("cover 호출하면") {
-            it("CoveredState 제공") {
-                val result = state.cover()
-
-                result shouldBe CoveredState(state)
-            }
-        }
         context("uncover 호출하면") {
             it("자신을 제공") {
                 val result = state.uncover()

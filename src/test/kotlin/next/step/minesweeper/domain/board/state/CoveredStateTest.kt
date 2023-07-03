@@ -2,23 +2,22 @@ package next.step.minesweeper.domain.board.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import next.step.minesweeper.domain.mine.MineCount
 
 class CoveredStateTest : DescribeSpec({
 
     describe("CoveredState") {
         val state = CoveredState(MineFreeState)
-        context("notifyMine 호출하면") {
-            it("자신을 제공") {
+        context("notifyMine") {
+            it("1번 호출하면 주변 지뢰개수 1개인 NearMineState 제공") {
                 val result = state.notifyMine()
 
-                result shouldBe state
+                result shouldBe CoveredState(NearMineState.one())
             }
-        }
-        context("cover 호출하면") {
-            it("자신을 제공") {
-                val result = state.cover()
+            it("2번 호출하면 주변 지뢰개수 2개인 NearMineState 제공") {
+                val result = state.notifyMine().notifyMine()
 
-                result shouldBe state
+                result shouldBe CoveredState(NearMineState(MineCount(2)))
             }
         }
         context("uncover 호출하면") {
