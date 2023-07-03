@@ -26,17 +26,27 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
         showWinGameMessage: () -> Unit,
     ) {
         do {
-            val position = positionGetter()
-            val exploreResult = boardExplorer.explore(board = board, startPosition = position)
-            showExploreResult(
-                exploreResult = exploreResult,
-                showExploredBoard = showExploredBoard,
-                showLoseGameMessage = showLoseGameMessage,
-            )
+            val exploreResult = proceedGame(positionGetter, showExploredBoard, showLoseGameMessage)
         } while (isProceedGame(exploreResult))
+
         if (isAllVisitExcludeMinePositions()) {
             showWinGameMessage()
         }
+    }
+
+    private fun proceedGame(
+        positionGetter: () -> Position,
+        showExploredBoard: (MineSweeperBoard, MineSweeperBoardExplorer) -> Unit,
+        showLoseGameMessage: () -> Unit,
+    ): ExploreResult {
+        val position = positionGetter()
+        val exploreResult = boardExplorer.explore(board = board, startPosition = position)
+        showExploreResult(
+            exploreResult = exploreResult,
+            showExploredBoard = showExploredBoard,
+            showLoseGameMessage = showLoseGameMessage,
+        )
+        return exploreResult
     }
 
     private fun isProceedGame(exploreResult: ExploreResult) = exploreResult == ExploreResult.SuccessExplore &&
