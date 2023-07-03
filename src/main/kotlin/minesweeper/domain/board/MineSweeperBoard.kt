@@ -1,6 +1,8 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.position.MineSweeperPosition
 import minesweeper.domain.position.MineSweeperPositions
+import minesweeper.domain.position.Position
 import minesweeper.domain.position.Positions
 
 class MineSweeperBoard(
@@ -26,6 +28,23 @@ class MineSweeperBoard(
     }
 
     fun rows(): Iterator<MineSweeperPositions> = board.iterator()
+    fun containsPosition(position: Position): Boolean {
+        val y = position.convertBoardYPositionIndex()
+        val x = position.convertBoardXPositionIndex()
+        return try {
+            board[y][x]
+            true
+        } catch (exception: Exception) {
+            false
+        }
+    }
+
+    fun find(position: Position): MineSweeperPosition {
+        require(this.containsPosition(position)) { "범위를 벗어난 위치입니다." }
+        val y = position.convertBoardYPositionIndex()
+        val x = position.convertBoardXPositionIndex()
+        return board[y][x]
+    }
 
     companion object {
         private const val MIN_MINE_QUANTITY = 1
