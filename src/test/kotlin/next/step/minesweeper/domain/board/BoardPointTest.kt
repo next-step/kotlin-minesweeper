@@ -14,7 +14,7 @@ class BoardPointTest : DescribeSpec({
     describe("BoardPoint") {
         context("생성") {
             it("지뢰 없는 상태로 생성") {
-                BoardPoint.mineFree().state() shouldBe MineFreeState
+                BoardPoint.mineFree().state() shouldBe CoveredState(MineFreeState)
             }
         }
 
@@ -24,7 +24,7 @@ class BoardPointTest : DescribeSpec({
 
                 point.plantMine()
 
-                point.state() shouldBe MineState
+                point.state() shouldBe CoveredState(MineState)
             }
         }
 
@@ -34,7 +34,7 @@ class BoardPointTest : DescribeSpec({
 
                 point.notifyMine()
 
-                point.state() shouldBe NearMineState(MineCount(1))
+                point.state() shouldBe CoveredState(NearMineState(MineCount(1)))
             }
             it("이전에도 알림을 받았으면 NearMineState의 지뢰 개수를 증가") {
                 val point = BoardPoint.mineFree()
@@ -43,15 +43,7 @@ class BoardPointTest : DescribeSpec({
                     point.notifyMine()
                 }
 
-                point.state() shouldBe NearMineState(MineCount(3))
-            }
-            it("covered 상태에 대해서는 알림이 와도 반응하지 않음") {
-                val point = BoardPoint.mineFree()
-
-                point.cover()
-                point.notifyMine()
-
-                point.state() shouldBe CoveredState(MineFreeState)
+                point.state() shouldBe CoveredState(NearMineState(MineCount(3)))
             }
             it("지뢰가 심어진 상태에 대해서는 알림이 와도 반응하지 않음") {
                 val point = BoardPoint.mineFree()
@@ -59,14 +51,12 @@ class BoardPointTest : DescribeSpec({
                 point.plantMine()
                 point.notifyMine()
 
-                point.state() shouldBe MineState
+                point.state() shouldBe CoveredState(MineState)
             }
         }
         context("can uncover") {
             it("지뢰가 안에 없고 덮여있으면 true") {
                 val point = BoardPoint.mineFree()
-
-                point.cover()
 
                 point.canUncover() shouldBe true
             }
@@ -74,7 +64,6 @@ class BoardPointTest : DescribeSpec({
                 val point = BoardPoint.mineFree()
 
                 point.notifyMine()
-                point.cover()
 
                 point.canUncover() shouldBe true
             }
@@ -82,7 +71,6 @@ class BoardPointTest : DescribeSpec({
                 val point = BoardPoint.mineFree()
 
                 point.plantMine()
-                point.cover()
 
                 point.canUncover() shouldBe false
             }
@@ -101,7 +89,11 @@ class BoardPointTest : DescribeSpec({
         }
         context("is mine free") {
             it("덮여있지 않고, 지뢰가 없고, 주위에도 없으면 true") {
-                BoardPoint.mineFree().isUncoveredMineFree() shouldBe true
+                val boardPoint = BoardPoint.mineFree()
+
+                boardPoint.uncover()
+
+                boardPoint.isUncoveredMineFree() shouldBe true
             }
         }
     }
