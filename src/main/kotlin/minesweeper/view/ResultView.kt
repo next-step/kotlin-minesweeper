@@ -8,10 +8,10 @@ fun printResult(minesweeperArray: Array<IntArray>) {
     minesweeperArray.forEach {
         println(
             it.contentToString()
-                .replace("0", "C")
-                .replace("1", "*")
+                .replace("-1", "*")
                 .replace("[", "")
                 .replace("]", "")
+                .replace(",", "")
         )
     }
 }

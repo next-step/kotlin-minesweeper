@@ -22,4 +22,9 @@ class MinesweeperTest : StringSpec({
             exception.message shouldBe message
         }
     }
+
+    "지뢰의 수가 높이, 너비의 곱과 같거나 클 경우 예외를 발생 시킨다." {
+        val exception = shouldThrow<IllegalArgumentException> { Minesweeper(10, 10, 100) }
+        exception.message shouldBe "지뢰의 수는 높이와 너비의 곱보다 작아야 합니다."
+    }
 })
