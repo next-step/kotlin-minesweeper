@@ -22,8 +22,9 @@ class NumberTest {
             )
         )
         val map = GameMap(field)
+        val mineCount = map.mineCountInSquare(numberTile.point)
 
-        numberTile.updateValue(map)
+        numberTile.updateValue(mineCount)
         numberTile.value shouldBe 3
     }
 }

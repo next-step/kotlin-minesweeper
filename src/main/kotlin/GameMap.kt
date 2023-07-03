@@ -27,8 +27,8 @@ class GameMap(field: List<List<Tile>>) {
     }
 
     fun updateField() {
-        field.forEachIndexed { index, _ ->
-            updateColumns(index)
+        field.flatten().forEach {
+            updateNumber(it)
         }
     }
 
@@ -43,22 +43,15 @@ class GameMap(field: List<List<Tile>>) {
         return count
     }
 
-    private fun updateColumns(y: Int) {
-        field[y].forEach {
-            updateNumber(it)
-        }
-    }
-
     private fun updateNumber(tile: Tile) {
         if (tile !is NumberTile) return
-        tile.updateValue(this)
+        val value = mineCountInSquare(tile.point)
+        tile.updateValue(value)
     }
 
     companion object {
         fun create(width: Int, height: Int, mineCount: Int, isOpened: Boolean = false): GameMap {
-            return MapGenerator.generate(width, height, mineCount, isOpened).apply {
-                updateField()
-            }
+            return MapGenerator.generate(width, height, mineCount, isOpened)
         }
     }
 }
