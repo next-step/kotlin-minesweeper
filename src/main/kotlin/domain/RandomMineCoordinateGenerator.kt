@@ -5,8 +5,8 @@ class RandomMineCoordinateGenerator(
     private val width: Int,
 ) : MineCoordinateGenerator {
     override fun generate(mineCount: Int): Set<Coordinate> {
-        return (Coordinate.ROW_START_POSITION..height).flatMap { row ->
-            (Coordinate.COL_START_POSITION..width).map { col ->
+        return (Coordinate.ROW_START_POSITION until height).flatMap { row ->
+            (Coordinate.COL_START_POSITION until width).map { col ->
                 Coordinate(row, col)
             }
         }
