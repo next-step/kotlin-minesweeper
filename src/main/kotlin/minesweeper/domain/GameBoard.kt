@@ -10,12 +10,18 @@ class GameBoard(
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
     }
 
-    fun setMineInRandom() {
-        do {
-            val heightGenerator: () -> Int = { Random.nextInt(size.height) }
-            val widthGenerator: () -> Int = { Random.nextInt(size.width) }
+    fun repeatPlateMineWithoutDuplication(num: Int) {
+        repeat(num) {
+            placeMineWithoutDuplicate()
+        }
+    }
 
-            val result = setMine(heightGenerator, widthGenerator)
+    private fun placeMineWithoutDuplicate() {
+        do {
+            val heightPositionStrategy: () -> Int = { Random.nextInt(size.height) }
+            val widthPositionStrategy: () -> Int = { Random.nextInt(size.width) }
+
+            val result = setMine(heightPositionStrategy, widthPositionStrategy)
         } while (!result)
     }
 

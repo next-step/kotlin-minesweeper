@@ -4,8 +4,14 @@ import minesweeper.domain.GameBoard
 import minesweeper.domain.MinePin
 import minesweeper.domain.NormalPin
 import minesweeper.domain.Pin
+import kotlin.reflect.KClass
 
 object OutputView {
+    val drawMap = mapOf<KClass<out Pin>, (Pin) -> Unit>(
+        MinePin::class to { _ -> print("* ") },
+        NormalPin::class to { pin -> print((pin as NormalPin).surroundMineNumber.toString() + " ") }
+    )
+
     fun showMineSweeper(gameBoard: GameBoard) {
         val height = gameBoard.size.height - 1
 
@@ -23,9 +29,6 @@ object OutputView {
     }
 
     private fun drawPin(pin: Pin) {
-        when (pin) {
-            is MinePin -> print("* ")
-            is NormalPin -> print(pin.surroundMineNumber.toString() + " ")
-        }
+        drawMap[pin::class]!!.invoke(pin)
     }
 }
