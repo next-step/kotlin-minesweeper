@@ -1,8 +1,8 @@
 package fixture
 
-import domain.MineBoard
+import domain.Board
 import domain.Row
 
 fun mineBoard(
     vararg rows: Row,
-) = MineBoard(rows.toList())
+) = Board(rows.toList())

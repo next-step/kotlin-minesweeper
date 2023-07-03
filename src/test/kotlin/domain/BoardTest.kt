@@ -7,7 +7,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
-class MineBoardTest : FunSpec({
+class BoardTest : FunSpec({
     test("지뢰찾기 보드를 만든다.") {
         val mineCoordinates: Set<Coordinate> = setOf(
             Coordinate(0, 0),
@@ -15,14 +15,14 @@ class MineBoardTest : FunSpec({
             Coordinate(2, 2),
         )
 
-        val mineBoard = MineBoard.create(
+        val board = Board.create(
             height = 3,
             width = 3,
             mineCount = mineCoordinates.size,
             mineCoordinateGenerator = { _ -> mineCoordinates },
         )
 
-        mineBoard shouldBe mineBoard(
+        board shouldBe mineBoard(
             row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
             row(Cell.CLOSED, Cell.MINE, Cell.CLOSED),
             row(Cell.CLOSED, Cell.CLOSED, Cell.MINE),
@@ -31,7 +31,7 @@ class MineBoardTest : FunSpec({
 
     test("지뢰찾기 보드를 만들 때, 전체 칸 수보다 지뢰 개수가 많으면 예외가 발생한다.") {
         val exception = shouldThrow<IllegalArgumentException> {
-            MineBoard.create(
+            Board.create(
                 height = 3,
                 width = 3,
                 mineCount = 10,

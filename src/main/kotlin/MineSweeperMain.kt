@@ -1,5 +1,5 @@
+import domain.Board
 import domain.Coordinates
-import domain.MineBoard
 import domain.RandomMineCoordinateGenerator
 import view.InputView
 import view.ResultView
@@ -10,14 +10,14 @@ fun main() {
     val mineCount = InputView.readMineCount()
 
     val mineCoordinateGenerator = RandomMineCoordinateGenerator(height, width)
-    val mineBoard = MineBoard.create(height, width, mineCount, mineCoordinateGenerator)
-    openMineBoard(height, width, mineBoard)
+    val board = Board.create(height, width, mineCount, mineCoordinateGenerator)
+    openMineBoard(height, width, board)
 
-    ResultView.printMineBoards(mineBoard)
+    ResultView.printBoard(board)
 }
 
-private fun openMineBoard(height: Int, width: Int, mineBoard: MineBoard) {
+private fun openMineBoard(height: Int, width: Int, board: Board) {
     Coordinates.all(height, width)
-        .filter { mineBoard.isClosed(it) }
-        .forEach { mineBoard.open(it) }
+        .filter { board.isClosed(it) }
+        .forEach { board.open(it) }
 }

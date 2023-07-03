@@ -1,6 +1,6 @@
 package view
 
-import domain.MineBoard
+import domain.Board
 
 object InputView {
     fun readHeight(): Int {
@@ -23,11 +23,11 @@ object ResultView {
     private const val NEW_LINE = "\n"
     private const val SPACE = " "
 
-    fun printMineBoards(mineBoard: MineBoard) {
+    fun printBoard(board: Board) {
         println("지뢰찾기 게임 시작")
-        val board = mineBoard.joinToString(NEW_LINE) { row ->
+        val boardDisplay = board.joinToString(NEW_LINE) { row ->
             row.joinToString(SPACE) { it.symbol }
         }
-        println(board)
+        println(boardDisplay)
     }
 }
