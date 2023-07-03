@@ -2,9 +2,10 @@ package domain
 
 class Board(
     private val rows: List<Row>,
-    private val height: Int = rows.size,
-    private val width: Int = rows.first().size,
 ) : List<Row> by rows {
+    private val height: Int = rows.size
+    private val width: Int = rows.first().size
+
     fun hasMine(coordinate: Coordinate): Boolean {
         return rows[coordinate.row][coordinate.col].isMine()
     }
@@ -23,6 +24,10 @@ class Board(
             .count { hasMine(it) }
 
         rows[coordinate.row][coordinate.col] = Cell.of(neighborMineCount)
+    }
+
+    fun isRunning(): Boolean {
+        return Coordinates.all(height, width).any { isClosed(it) }
     }
 
     companion object {

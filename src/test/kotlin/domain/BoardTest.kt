@@ -100,4 +100,24 @@ class BoardTest : FunSpec({
             mineBoard[coordinate.row][coordinate.col] shouldBe expectedCell
         }
     }
+
+    test("지뢰찾기 보드에서 닫힌 셀이 하나라도 있으면 게임은 진행중이다") {
+        val mineBoard = mineBoard(
+            row(Cell.MINE, Cell.MINE, Cell.ONE),
+            row(Cell.THREE, Cell.THREE, Cell.ONE),
+            row(Cell.MINE, Cell.CLOSED, Cell.ZERO),
+        )
+
+        mineBoard.isRunning() shouldBe true
+    }
+
+    test("지뢰찾기 보드에서 닫힌 셀이 없으면 게임은 진행중이 아니다") {
+        val mineBoard = mineBoard(
+            row(Cell.MINE, Cell.MINE, Cell.ONE),
+            row(Cell.THREE, Cell.THREE, Cell.ONE),
+            row(Cell.MINE, Cell.ONE, Cell.ZERO),
+        )
+
+        mineBoard.isRunning() shouldBe false
+    }
 })
