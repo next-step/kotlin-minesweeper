@@ -12,9 +12,22 @@ object OutputView {
     private const val MINE_SYMBOL = "*"
     private const val CLEAN_SYMBOL = "C"
 
+    fun printStart() {
+        println("지뢰찾기 게임 시작")
+    }
+
+    fun printLose() {
+        println("Lose Game.")
+    }
+
+    fun printWin() {
+        println("Win Game.")
+    }
+
     fun printBoard(countedMineBoard: CountedMineBoard) {
         groupedByY(positionsSortedYAndX(countedMineBoard.mineBoard))
             .forEach { line -> printLine(line) }
+            .also { println() }
     }
 
     private fun printLine(line: List<Pair<Position, MineMark>>) {

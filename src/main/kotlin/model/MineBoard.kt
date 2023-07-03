@@ -1,6 +1,7 @@
 package model
 
 import model.minemark.Mine
+import model.minemark.MineCount
 import model.minemark.MineMark
 import model.minemark.Safety
 
@@ -16,6 +17,8 @@ class MineBoard(elements: Map<Position, MineMark>) {
     val size = elements.size
     val maxXPosition: Int by lazy { elements.keys.maxOf { it.x } }
     val maxYPosition: Int by lazy { elements.keys.maxOf { it.y } }
+    val isClosedMineCountAny: Boolean by lazy { elements.values.filterIsInstance<MineCount>().any { !it.isOpened } }
+    val isClosedMineAll: Boolean by lazy { elements.values.filterIsInstance<Mine>().all { !it.isOpened } }
 
     fun contains(position: Position): Boolean {
         return elements.containsKey(position)

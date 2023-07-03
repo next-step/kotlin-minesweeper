@@ -6,6 +6,8 @@ import model.minemark.Safety
 data class CountedMineBoard(val mineBoard: MineBoard) {
     val maxXPosition: Int by lazy { mineBoard.maxXPosition }
     val maxYPosition: Int by lazy { mineBoard.maxYPosition }
+    val isClosedMineCountAny: Boolean by lazy { mineBoard.isClosedMineCountAny }
+    val isClosedMineAll: Boolean by lazy { mineBoard.isClosedMineAll }
 
     init {
         require(mineBoard.doesNotContainsMark(NOT_ALLOWED_MARK)) {
