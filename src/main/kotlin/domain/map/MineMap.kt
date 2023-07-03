@@ -3,7 +3,7 @@ package domain.map
 import domain.MineSweeperInitProperty
 import domain.cell.AroundMineCount
 import domain.cell.Cell
-import domain.collections.nestedList
+import utils.nestedList
 import domain.mine.MineCoordinatesCreator
 
 class MineMap private constructor(

@@ -2,7 +2,7 @@ package domain.map
 
 import domain.MineSweeperInitProperty
 import domain.cell.Cell
-import domain.collections.nestedList
+import utils.nestedList
 import domain.math.toPositive
 import domain.mine.MockMineCoordinatesCreator
 import domain.mine.RealMineCoordinatesCreator
