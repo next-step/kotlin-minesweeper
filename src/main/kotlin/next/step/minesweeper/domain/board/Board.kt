@@ -16,7 +16,7 @@ data class Board(private val rows: BoardRows, val area: BoardArea) {
     ) {
         while (rows.canUncover()) {
             val position = retryOnFailure({ area.select(selector) }, onFailure)
-            if (rows.uncover(position)) return onLose(points())
+            if (rows.uncoverRecursive(position)) return onLose(points())
             onEachStep(points())
         }
         onWin(points())

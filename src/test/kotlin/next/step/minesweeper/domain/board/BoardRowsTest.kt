@@ -137,7 +137,7 @@ class BoardRowsTest : DescribeSpec({
             }
         }
 
-        context("특정 위치를 열면") {
+        context("특정 위치를 열면-recursive") {
             it("해당 위치 주변의 가능한 곳까지 열림") {
                 val rows = BoardRows(
                     listOf(
@@ -165,7 +165,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+                rows.uncoverRecursive(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -221,7 +221,235 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+                rows.uncoverRecursive(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+
+                rows shouldBe BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(NearMineState.one()),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(NearMineState.one()),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+            }
+        }
+
+        context("특정 위치를 열면-loop") {
+            it("해당 위치 주변의 가능한 곳까지 열림") {
+                val rows = BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+
+                rows.uncoverLoop(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+
+                rows shouldBe BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(NearMineState.one()),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(NearMineState.one()),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+            }
+
+            it("해당 위치 주변의 가능한 곳까지 열림") {
+                val rows = BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+
+                rows.uncoverLoop(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+
+                rows shouldBe BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(NearMineState.one()),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(NearMineState.one()),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+            }
+        }
+
+        context("특정 위치를 열면-tailRec") {
+            it("해당 위치 주변의 가능한 곳까지 열림") {
+                val rows = BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+
+                rows.uncoverTailRec(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+
+                rows shouldBe BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                                BoardPoint(MineFreeState),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(NearMineState.one()),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(NearMineState.one()),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+            }
+
+            it("해당 위치 주변의 가능한 곳까지 열림") {
+                val rows = BoardRows(
+                    listOf(
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                                BoardPoint(CoveredState(MineFreeState)),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(MineState)),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                        BoardRow(
+                            listOf(
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                                BoardPoint(CoveredState(NearMineState.one())),
+                            ),
+                        ),
+                    ),
+                )
+
+                rows.uncoverTailRec(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
 
                 rows shouldBe BoardRows(
                     listOf(
