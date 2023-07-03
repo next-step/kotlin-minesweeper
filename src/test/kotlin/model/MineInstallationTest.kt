@@ -55,7 +55,7 @@ class MineInstallationTest : StringSpec({
     "주어지는 포지션은 메인 보드에 존재해야 함" {
         // given
         val maxPositionInstallation =
-            MineInstallation(1, Mine) { _, _ -> Position(Int.MAX_VALUE, Int.MAX_VALUE) }
+            MineInstallation(1) { _, _ -> Position(Int.MAX_VALUE, Int.MAX_VALUE) }
         // when & then
         shouldThrowExactly<IllegalStateException> {
             maxPositionInstallation.installed(FOUR_ELEMENTS_CLEAN_MINE_BOARD)

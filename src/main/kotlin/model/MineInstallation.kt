@@ -1,10 +1,11 @@
 package model
 
+import model.minemark.Mine
 import model.minemark.MineMark
 
 class MineInstallation(
     private val count: Int,
-    private val mark: MineMark,
+    private val mark: MineMark = Mine,
     private val nextPosition: (maxX: Int, maxY: Int) -> Position,
 ) {
     init {
