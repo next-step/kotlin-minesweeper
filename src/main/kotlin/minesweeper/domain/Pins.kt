@@ -19,7 +19,7 @@ class Pins(private val values: MutableList<Pin>) {
     fun addMineNumber(index: Int) {
         require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
         if (values[index] is NormalPin) {
-            (values[index] as NormalPin).addsurroundMineNumber()
+            (values[index] as NormalPin).addSurroundMineNumber()
         }
     }
 

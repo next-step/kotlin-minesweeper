@@ -4,7 +4,7 @@ class NormalPin() : Pin() {
     var surroundMineNumber: Int = 0
         private set
 
-    fun addsurroundMineNumber() {
+    fun addSurroundMineNumber() {
         surroundMineNumber++
     }
 
