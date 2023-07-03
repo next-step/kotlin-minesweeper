@@ -7,21 +7,22 @@ import next.step.minesweeper.utils.retryOnFailure
 import next.step.minesweeper.view.InputView
 import next.step.minesweeper.view.OutputView
 
-fun main() = retryOnFailure {
-    val boardArea = BoardArea(InputView.readHeight(), InputView.readWidth())
-    val board = Board.mineFree(boardArea)
-    plantRandomMines(board)
-    board.cover()
-    OutputView.showTitle()
-    board.play(
-        { InputView.readPosition() },
-        { OutputView.showError(it.message) },
-        { OutputView.showBoardPoints(it) },
-        { OutputView.showSuccess() },
-        { OutputView.showFail() },
-    )
+fun main() {
+    retryOnFailure({
+        val boardArea = BoardArea(InputView.readHeight(), InputView.readWidth())
+        val board = retryOnFailure(
+            { Board.of(boardArea, RandomMineGenerator, InputView.readMineCnt()) },
+            onFailure,
+        )
+        OutputView.showTitle()
+        board.play(
+            { InputView.readPosition() },
+            { OutputView.showBoardPoints(it) },
+            { OutputView.showWin() },
+            { OutputView.showLose() },
+            onFailure,
+        )
+    }, onFailure)
 }
 
-private fun plantRandomMines(board: Board) = retryOnFailure {
-    board.plantMines(RandomMineGenerator.generate(board.area, InputView.readMineCnt()))
-}
+val onFailure: (Throwable) -> Unit = { OutputView.showError(it.message) }
