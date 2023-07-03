@@ -35,6 +35,6 @@ class MineBoardProviderTest : StringSpec({
         // given & when
         val mineBoard = MineBoardProvider(1, 1, Safety).mineBoard
         // then
-        mineBoard shouldBe MineBoard(mapOf(Position(0, 0) to Safety))
+        mineBoard shouldBe MineBoard(BoardElements(listOf(BoardElement(Position(0, 0), Safety))))
     }
 })

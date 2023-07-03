@@ -24,11 +24,13 @@ class CountedMineBoardProviderTest : StringSpec({
         // then
         countedMineBoard shouldBe CountedMineBoard(
             MineBoard(
-                mapOf(
-                    Position(0, 0) to MineCount(2),
-                    Position(1, 1) to Mine,
-                    Position(0, 1) to MineCount(2),
-                    Position(1, 0) to Mine,
+                BoardElements(
+                    listOf(
+                        BoardElement(Position(0, 0), MineCount(2)),
+                        BoardElement(Position(1, 1), Mine),
+                        BoardElement(Position(0, 1), MineCount(2)),
+                        BoardElement(Position(1, 0), Mine),
+                    )
                 )
             )
         )

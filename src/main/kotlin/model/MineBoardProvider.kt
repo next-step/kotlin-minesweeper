@@ -18,7 +18,8 @@ data class MineBoardProvider(
         get() = MineBoard(
             (0 until width)
                 .flatMap(::positions)
-                .associateWith { defaultMark }
+                .map { BoardElement(it, defaultMark) }
+                .let(::BoardElements)
         )
 
     private fun positions(x: Int): List<Position> {
