@@ -1,6 +1,6 @@
 package view
 
-import domain.Board
+import vo.BoardVO
 
 object InputView {
     private const val COMMA_SEPARATOR = ","
@@ -36,9 +36,9 @@ object ResultView {
         println("지뢰찾기 게임 시작")
     }
 
-    fun printBoard(board: Board) {
-        val boardDisplay = board.joinToString(NEW_LINE) { row ->
-            row.joinToString(SPACE) { it.symbol }
+    fun printBoard(boardVO: BoardVO) {
+        val boardDisplay = boardVO.rows.joinToString(NEW_LINE) { row ->
+            row.cells.joinToString(SPACE) { it }
         }
         println(boardDisplay)
     }

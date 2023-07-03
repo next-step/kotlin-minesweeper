@@ -1,6 +1,7 @@
 package domain
 
-import fixture.mineBoard
+import fixture.board
+import fixture.cell
 import fixture.row
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -22,10 +23,10 @@ class BoardTest : FunSpec({
             mineCoordinateGenerator = { _ -> mineCoordinates },
         )
 
-        board shouldBe mineBoard(
-            row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
-            row(Cell.CLOSED, Cell.MINE, Cell.CLOSED),
-            row(Cell.CLOSED, Cell.CLOSED, Cell.MINE),
+        board shouldBe board(
+            row(cell(true), cell(), cell()),
+            row(cell(), cell(true), cell()),
+            row(cell(), cell(), cell(true)),
         )
     }
 
@@ -43,9 +44,9 @@ class BoardTest : FunSpec({
     }
 
     context("지뢰찾기 보드 특정 좌표에 마인이 있는지 여부를 반환한다") {
-        val mineBoard = mineBoard(
-            row(Cell.MINE, Cell.CLOSED),
-            row(Cell.CLOSED, Cell.MINE),
+        val board = board(
+            row(cell(true), cell()),
+            row(cell(), cell(true)),
         )
 
         data class CoordinateIsMine(val coordinate: Coordinate, val expected: Boolean)
@@ -55,69 +56,69 @@ class BoardTest : FunSpec({
             CoordinateIsMine(Coordinate(1, 0), false),
             CoordinateIsMine(Coordinate(1, 1), true),
         ) { (coordinate, expected) ->
-            mineBoard.hasMine(coordinate) shouldBe expected
+            board.hasMine(coordinate) shouldBe expected
         }
     }
 
     context("지뢰찾기 보드 특정 좌표가 닫혀있는지 여부를 반환한다") {
-        val mineBoard = mineBoard(
-            row(Cell.MINE, Cell.CLOSED),
-            row(Cell.CLOSED, Cell.MINE),
+        val board = board(
+            row(cell(true), cell(false, Open(2))),
+            row(cell(), cell(true)),
         )
 
         data class CoordinateIsMine(val coordinate: Coordinate, val expected: Boolean)
         withData(
-            CoordinateIsMine(Coordinate(0, 0), false),
-            CoordinateIsMine(Coordinate(0, 1), true),
+            CoordinateIsMine(Coordinate(0, 0), true),
+            CoordinateIsMine(Coordinate(0, 1), false),
             CoordinateIsMine(Coordinate(1, 0), true),
-            CoordinateIsMine(Coordinate(1, 1), false),
+            CoordinateIsMine(Coordinate(1, 1), true),
         ) { (coordinate, expected) ->
-            mineBoard.isClosed(coordinate) shouldBe expected
+            board.isClosed(coordinate) shouldBe expected
         }
     }
 
-    context("지뢰찾기 보드 셀을 주변 지뢰 개수로 변경한다(open)") {
-        val mineBoard = mineBoard(
-            row(Cell.MINE, Cell.MINE, Cell.CLOSED),
-            row(Cell.CLOSED, Cell.CLOSED, Cell.CLOSED),
-            row(Cell.MINE, Cell.CLOSED, Cell.CLOSED),
+    context("지뢰찾기 보드 셀을 열면 주변 지뢰 개수로 변경한다") {
+        val board = board(
+            row(cell(true), cell(true), cell()),
+            row(cell(), cell(), cell()),
+            row(cell(true), cell(), cell()),
         )
 
         data class CoordinateIsMine(val coordinate: Coordinate, val expectedCell: Cell)
         withData(
             nameFn = { "When ${it.coordinate} opens, cell should be ${it.expectedCell}" },
-            CoordinateIsMine(Coordinate(0, 0), Cell.MINE),
-            CoordinateIsMine(Coordinate(0, 1), Cell.MINE),
-            CoordinateIsMine(Coordinate(0, 2), Cell.ONE),
-            CoordinateIsMine(Coordinate(1, 0), Cell.THREE),
-            CoordinateIsMine(Coordinate(1, 1), Cell.THREE),
-            CoordinateIsMine(Coordinate(1, 2), Cell.ONE),
-            CoordinateIsMine(Coordinate(2, 0), Cell.MINE),
-            CoordinateIsMine(Coordinate(2, 1), Cell.ONE),
-            CoordinateIsMine(Coordinate(2, 2), Cell.ZERO),
+            CoordinateIsMine(Coordinate(0, 0), cell(true, Open(1))),
+            CoordinateIsMine(Coordinate(0, 1), cell(true, Open(1))),
+            CoordinateIsMine(Coordinate(0, 2), cell(false, Open(1))),
+            CoordinateIsMine(Coordinate(1, 0), cell(false, Open(3))),
+            CoordinateIsMine(Coordinate(1, 1), cell(false, Open(3))),
+            CoordinateIsMine(Coordinate(1, 2), cell(false, Open(1))),
+            CoordinateIsMine(Coordinate(2, 0), cell(true, Open(0))),
+            CoordinateIsMine(Coordinate(2, 1), cell(false, Open(1))),
+            CoordinateIsMine(Coordinate(2, 2), cell(false, Open(0))),
         ) { (coordinate, expectedCell) ->
-            mineBoard.open(coordinate)
-            mineBoard[coordinate.row][coordinate.col] shouldBe expectedCell
+            board.open(coordinate)
+            board[coordinate.row][coordinate.col] shouldBe expectedCell
         }
     }
 
-    test("지뢰찾기 보드에서 닫힌 셀이 하나라도 있으면 게임은 진행중이다") {
-        val mineBoard = mineBoard(
-            row(Cell.MINE, Cell.MINE, Cell.ONE),
-            row(Cell.THREE, Cell.THREE, Cell.ONE),
-            row(Cell.MINE, Cell.CLOSED, Cell.ZERO),
+    test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 많으면 게임은 진행중이다") {
+        val board = board(
+            row(cell(true), cell(true), cell(false, Open(1))),
+            row(cell(false, Open(3)), cell(false, Open(3)), cell(false, Open(1))),
+            row(cell(true), cell(), cell(false, Open(0))),
         )
 
-        mineBoard.isRunning() shouldBe true
+        board.isRunning() shouldBe true
     }
 
-    test("지뢰찾기 보드에서 닫힌 셀이 없으면 게임은 진행중이 아니다") {
-        val mineBoard = mineBoard(
-            row(Cell.MINE, Cell.MINE, Cell.ONE),
-            row(Cell.THREE, Cell.THREE, Cell.ONE),
-            row(Cell.MINE, Cell.ONE, Cell.ZERO),
+    test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 적거나 같으면 게임은 진행중이 아니다") {
+        val board = board(
+            row(cell(true), cell(true), cell(false, Open(1))),
+            row(cell(false, Open(3)), cell(false, Open(3)), cell(false, Open(1))),
+            row(cell(true), cell(false, Open(1)), cell(false, Open(0))),
         )
 
-        mineBoard.isRunning() shouldBe false
+        board.isRunning() shouldBe false
     }
 })

@@ -5,30 +5,31 @@ class Board(
 ) : List<Row> by rows {
     private val height: Int = rows.size
     private val width: Int = rows.first().size
+    private val mineCount: Int = Coordinates.all(height, width).count { hasMine(it) }
 
     fun hasMine(coordinate: Coordinate): Boolean {
-        return rows[coordinate.row][coordinate.col].isMine()
+        return cellOf(coordinate).hasMine
     }
 
     fun isClosed(coordinate: Coordinate): Boolean {
-        return rows[coordinate.row][coordinate.col].isClosed()
+        return cellOf(coordinate).isClosed()
     }
 
     fun open(coordinate: Coordinate) {
-        if (!isClosed(coordinate)) {
-            return
-        }
-
         val aroundMineCount = Coordinates.around(coordinate)
             .filter { it.isOnBoard(height, width) }
             .count { hasMine(it) }
 
-        rows[coordinate.row][coordinate.col] = Cell.of(aroundMineCount)
+        cellOf(coordinate).open(aroundMineCount)
     }
 
     fun isRunning(): Boolean {
-        return Coordinates.all(height, width).any { isClosed(it) }
+        val coordinates = Coordinates.all(height, width)
+        val closedCount = coordinates.count { isClosed(it) }
+        return closedCount > mineCount
     }
+
+    private fun cellOf(coordinate: Coordinate): Cell = rows[coordinate.row][coordinate.col]
 
     companion object {
         fun create(height: Int, width: Int, mineCount: Int, mineCoordinateGenerator: MineCoordinateGenerator): Board {

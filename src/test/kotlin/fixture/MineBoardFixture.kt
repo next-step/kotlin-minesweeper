@@ -3,6 +3,6 @@ package fixture
 import domain.Board
 import domain.Row
 
-fun mineBoard(
+fun board(
     vararg rows: Row,
 ) = Board(rows.toList())

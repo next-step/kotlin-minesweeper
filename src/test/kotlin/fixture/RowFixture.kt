@@ -5,4 +5,4 @@ import domain.Row
 
 fun row(
     vararg cells: Cell,
-) = Row(cells.toMutableList())
+) = Row(cells.toList())

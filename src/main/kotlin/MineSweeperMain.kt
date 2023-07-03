@@ -3,6 +3,7 @@ import domain.Coordinate
 import domain.RandomMineCoordinateGenerator
 import view.InputView
 import view.ResultView
+import vo.BoardVO
 
 fun main() {
     val height = InputView.readHeight()
@@ -14,12 +15,13 @@ fun main() {
 
     ResultView.printStartGame()
     val isClear = playGame(board)
+    ResultView.printBoard(BoardVO(board))
     if (isClear) ResultView.printWinGame()
 }
 
 private fun playGame(board: Board): Boolean {
     while (board.isRunning()) {
-        ResultView.printBoard(board)
+        ResultView.printBoard(BoardVO(board))
 
         val (row, col) = InputView.readCoordinateToOpen()
         val coordinate = Coordinate(row, col)
