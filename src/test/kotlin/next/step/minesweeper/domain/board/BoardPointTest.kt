@@ -84,7 +84,7 @@ class BoardPointTest : DescribeSpec({
         }
         context("is mine") {
             it("덮여있지 않고, 지뢰가 있으면 true") {
-                BoardPoint(MineState).isUncoveredMine() shouldBe true
+                BoardPoint(MineState).isMine() shouldBe true
             }
         }
         context("is mine free") {
@@ -93,7 +93,7 @@ class BoardPointTest : DescribeSpec({
 
                 boardPoint.uncover()
 
-                boardPoint.isUncoveredMineFree() shouldBe true
+                boardPoint.isMineFree() shouldBe true
             }
         }
     }
