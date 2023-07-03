@@ -21,15 +21,15 @@ enum class Cell(
     fun isClosed(): Boolean = this == CLOSED
 
     companion object {
-        private val neighborMineCountRange: IntRange = ZERO.symbol.toInt()..EIGHT.symbol.toInt()
+        private val aroundMineCountRange: IntRange = ZERO.symbol.toInt()..EIGHT.symbol.toInt()
 
         fun of(isMine: Boolean): Cell {
             return if (isMine) MINE else CLOSED
         }
 
-        fun of(neighborMineCount: Int): Cell {
-            return values().find { it.symbol == neighborMineCount.toString() }
-                ?: throw IllegalArgumentException("셀의 주변 지뢰 개수는 $neighborMineCountRange 범위 값 이어야 합니다.")
+        fun of(aroundMineCount: Int): Cell {
+            return values().find { it.symbol == aroundMineCount.toString() }
+                ?: throw IllegalArgumentException("셀의 주변 지뢰 개수는 $aroundMineCountRange 범위 값 이어야 합니다.")
         }
     }
 }

@@ -38,19 +38,19 @@ class CellTest : FunSpec({
     }
 
     context("주변 지뢰 개수에 따라 셀을 반환한다") {
-        data class NeighborMineCountCell(val neighborMineCount: Int, val cell: Cell)
+        data class AroundMineCountCell(val aroundMineCount: Int, val cell: Cell)
         withData(
-            NeighborMineCountCell(0, Cell.ZERO),
-            NeighborMineCountCell(1, Cell.ONE),
-            NeighborMineCountCell(2, Cell.TWO),
-            NeighborMineCountCell(3, Cell.THREE),
-            NeighborMineCountCell(4, Cell.FOUR),
-            NeighborMineCountCell(5, Cell.FIVE),
-            NeighborMineCountCell(6, Cell.SIX),
-            NeighborMineCountCell(7, Cell.SEVEN),
-            NeighborMineCountCell(8, Cell.EIGHT),
-        ) { (neighborMineCount, cell) ->
-            Cell.of(neighborMineCount) shouldBe cell
+            AroundMineCountCell(0, Cell.ZERO),
+            AroundMineCountCell(1, Cell.ONE),
+            AroundMineCountCell(2, Cell.TWO),
+            AroundMineCountCell(3, Cell.THREE),
+            AroundMineCountCell(4, Cell.FOUR),
+            AroundMineCountCell(5, Cell.FIVE),
+            AroundMineCountCell(6, Cell.SIX),
+            AroundMineCountCell(7, Cell.SEVEN),
+            AroundMineCountCell(8, Cell.EIGHT),
+        ) { (aroundMineCount, cell) ->
+            Cell.of(aroundMineCount) shouldBe cell
         }
     }
 

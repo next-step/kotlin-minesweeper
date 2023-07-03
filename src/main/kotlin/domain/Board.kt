@@ -19,11 +19,11 @@ class Board(
             return
         }
 
-        val neighborMineCount = Coordinates.neighbors(coordinate)
+        val aroundMineCount = Coordinates.around(coordinate)
             .filter { it.isOnBoard(height, width) }
             .count { hasMine(it) }
 
-        rows[coordinate.row][coordinate.col] = Cell.of(neighborMineCount)
+        rows[coordinate.row][coordinate.col] = Cell.of(aroundMineCount)
     }
 
     fun isRunning(): Boolean {

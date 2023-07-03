@@ -4,7 +4,7 @@ class Coordinates(
     private val coordinates: List<Coordinate>,
 ) : List<Coordinate> by coordinates {
     companion object {
-        private val neighborCoordinates = listOf(
+        private val aroundCoordinates = listOf(
             Coordinate().up().left(),
             Coordinate().up(),
             Coordinate().up().right(),
@@ -15,15 +15,15 @@ class Coordinates(
             Coordinate().down().right(),
         )
 
-        fun neighbors(coordinate: Coordinate): List<Coordinate> {
-            return neighborCoordinates.map { coordinate + it }
+        fun around(coordinate: Coordinate): List<Coordinate> {
+            return aroundCoordinates.map { coordinate + it }
         }
 
         fun all(height: Int, width: Int): Coordinates {
             return Coordinates(
                 (Coordinate.ROW_START_POSITION until height).flatMap { row ->
                     (Coordinate.COL_START_POSITION until width).map { col -> Coordinate(row, col) }
-                }
+                },
             )
         }
     }
