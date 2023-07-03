@@ -1,9 +1,11 @@
 package next.step.minesweeper.view
 
+import next.step.minesweeper.controller.onFailure
 import next.step.minesweeper.domain.board.BoardHeight
 import next.step.minesweeper.domain.board.BoardWidth
 import next.step.minesweeper.domain.mine.MineCount
 import next.step.minesweeper.domain.position.Position
+import next.step.minesweeper.utils.retryOnFailure
 
 object InputView {
 
@@ -14,18 +16,12 @@ object InputView {
 
     fun readHeight(): BoardHeight = read(ENTER_HEIGHT) { BoardHeight(it.toInt()) }
 
-    private fun <T> read(enterMsg: String, constructor: (String) -> T): T {
-        return runCatching {
+    private fun <T> read(enterMsg: String, constructor: (String) -> T): T =
+        retryOnFailure({
             println()
             println(enterMsg)
             constructor(readln())
-        }.onSuccess {
-            return it
-        }.onFailure { e ->
-            OutputView.showError(e.message)
-            return read(enterMsg, constructor)
-        }.getOrThrow()
-    }
+        }) { onFailure(it) }
 
     fun readWidth(): BoardWidth = read(ENTER_WIDTH) { BoardWidth(it.toInt()) }
 

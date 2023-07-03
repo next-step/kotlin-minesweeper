@@ -12,17 +12,16 @@ fun main() {
         val boardArea = BoardArea(InputView.readHeight(), InputView.readWidth())
         val board = retryOnFailure(
             { Board.of(boardArea, RandomMineGenerator, InputView.readMineCnt()) },
-            onFailure,
-        )
+        ) { onFailure(it) }
+
         OutputView.showTitle()
         board.play(
             { InputView.readPosition() },
             { OutputView.showBoardPoints(it) },
             { OutputView.showWin() },
             { OutputView.showLose() },
-            onFailure,
-        )
-    }, onFailure)
+        ) { onFailure(it) }
+    }) { onFailure(it) }
 }
 
 val onFailure: (Throwable) -> Unit = { OutputView.showError(it.message) }
