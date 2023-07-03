@@ -1,4 +1,4 @@
-package next.step.blackjack.view
+package next.step.minesweeper.view
 
 import next.step.minesweeper.domain.board.BoardPoint
 import next.step.minesweeper.domain.board.state.CoveredState

@@ -1,6 +1,6 @@
 package next.step.minesweeper.utils
 
-import next.step.blackjack.view.OutputView
+import next.step.minesweeper.view.OutputView
 
 fun retryOnFailure(command: () -> Unit) {
     runCatching {

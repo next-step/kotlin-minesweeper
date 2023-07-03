@@ -1,6 +1,5 @@
 package next.step.minesweeper.view
 
-import next.step.blackjack.view.OutputView
 import next.step.minesweeper.domain.board.BoardHeight
 import next.step.minesweeper.domain.board.BoardWidth
 import next.step.minesweeper.domain.mine.MineCount
