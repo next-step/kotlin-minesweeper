@@ -16,18 +16,16 @@ class MineBoardTest : StringSpec({
 
     "포지션의 마크들로 생성" {
         shouldNotThrowAny {
-            MineBoard(BoardElements(listOf(BoardElement(Position(0, 0), Safety))))
+            MineBoard(mapOf(Position(0, 0) to Safety))
         }
     }
 
     "모든 포지션은 연속적이고 존재해야 함" {
         shouldThrowExactly<IllegalArgumentException> {
             MineBoard(
-                BoardElements(
-                    listOf(
-                        BoardElement(Position(0, 0), Safety),
-                        BoardElement(Position(10, 10), Safety),
-                    )
+                mapOf(
+                    Position(0, 0) to Safety,
+                    Position(10, 10) to Safety,
                 )
             )
         }
@@ -35,8 +33,8 @@ class MineBoardTest : StringSpec({
 
     "주어진 마크 정보로 조회 가능" {
         listOf(
-            BoardElements(listOf(BoardElement(Position(0, 0), Safety))),
-            BoardElements(listOf(BoardElement(Position(0, 0), Mine))),
+            mapOf(Position(0, 0) to Safety),
+            mapOf(Position(0, 0) to Mine),
         ).forAll {
             MineBoard(it).elements shouldBe it
         }
@@ -58,17 +56,17 @@ class MineBoardTest : StringSpec({
             Safety to true,
             Mine to false,
         ).forAll {
-            FOUR_ELEMENTS_CLEAN_MINE_BOARD.contains(Position(0, 0), it.first) shouldBe it.second
+            FOUR_ELEMENTS_CLEAN_MINE_BOARD.isEqualMarkInPosition(Position(0, 0), it.first) shouldBe it.second
         }
     }
 
     "원하는 위치 마크 교체 가능" {
         // given
-        val mineBoard = MineBoard(BoardElements(listOf(BoardElement(Position(0, 0), Safety))))
+        val mineBoard = MineBoard(mapOf(Position(0, 0) to Safety))
         // when
         val replacedMark = mineBoard.replacedMark(Position(0, 0), Mine)
         // then
-        replacedMark shouldBe MineBoard(BoardElements(listOf(BoardElement(Position(0, 0), Mine))))
+        replacedMark shouldBe MineBoard(mapOf(Position(0, 0) to Mine))
     }
 
     "주어진 포지션들의 지뢰 개수 조회 가능" {
@@ -85,13 +83,11 @@ class MineBoardTest : StringSpec({
         val replaced = FOUR_ELEMENTS_TWO_MINE_BOARD.replacedOnlySafetyMarks { _ -> 2 }
         // then
         replaced shouldBe MineBoard(
-            BoardElements(
-                listOf(
-                    BoardElement(Position(0, 0), MineCount(2)),
-                    BoardElement(Position(1, 1), Mine),
-                    BoardElement(Position(0, 1), MineCount(2)),
-                    BoardElement(Position(1, 0), Mine),
-                )
+            mapOf(
+                Position(0, 0) to MineCount(2),
+                Position(1, 1) to Mine,
+                Position(0, 1) to MineCount(2),
+                Position(1, 0) to Mine,
             )
         )
     }
@@ -107,23 +103,19 @@ class MineBoardTest : StringSpec({
 })
 
 val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
-    BoardElements(
-        listOf(
-            BoardElement(Position(0, 0), Safety),
-            BoardElement(Position(1, 1), Safety),
-            BoardElement(Position(0, 1), Safety),
-            BoardElement(Position(1, 0), Safety),
-        )
+    mapOf(
+        Position(0, 0) to Safety,
+        Position(1, 1) to Safety,
+        Position(0, 1) to Safety,
+        Position(1, 0) to Safety,
     )
 )
 
 val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
-    BoardElements(
-        listOf(
-            BoardElement(Position(0, 0), Safety),
-            BoardElement(Position(1, 1), Mine),
-            BoardElement(Position(0, 1), Safety),
-            BoardElement(Position(1, 0), Mine),
-        )
+    mapOf(
+        Position(0, 0) to Safety,
+        Position(1, 1) to Mine,
+        Position(0, 1) to Safety,
+        Position(1, 0) to Mine,
     )
 )

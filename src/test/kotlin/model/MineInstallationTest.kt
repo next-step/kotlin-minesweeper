@@ -33,13 +33,11 @@ class MineInstallationTest : StringSpec({
         // then
         installedMineBoard shouldBe InstalledMineBoard(
             MineBoard(
-                BoardElements(
-                    listOf(
-                        BoardElement(Position(0, 0), Mine),
-                        BoardElement(Position(0, 1), Safety),
-                        BoardElement(Position(1, 0), Safety),
-                        BoardElement(Position(1, 1), Safety),
-                    )
+                mapOf(
+                    Position(0, 0) to Mine,
+                    Position(0, 1) to Safety,
+                    Position(1, 0) to Safety,
+                    Position(1, 1) to Safety,
                 )
             )
         )
