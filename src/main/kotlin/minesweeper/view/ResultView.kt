@@ -32,7 +32,6 @@ class ResultView {
 
     companion object {
         private const val MINE = "*"
-        private const val EMPTY = "C"
         private const val GAME_START_MESSAGE = "지뢰찾기 게임 시작"
     }
 }
