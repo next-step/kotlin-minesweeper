@@ -5,8 +5,8 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-private fun Int.toHeight() = Height.of(this.toString())
-private fun Int.toWidth() = Width.of(this.toString())
+private fun Int.toHeight() = Length.of(this.toString())
+private fun Int.toWidth() = Length.of(this.toString())
 private fun Int.toCount() = MineCount.of(this.toString())
 class MineMapTest : StringSpec({
 
@@ -15,7 +15,7 @@ class MineMapTest : StringSpec({
         mineMap.makeMine(10.toCount())
         var mineCount = 0
         mineMap.mineMap.forEach {
-            mineCount += it.filter { it.isMine() }.size
+            mineCount += it.filter().size
         }
         mineCount shouldBe 10
     }

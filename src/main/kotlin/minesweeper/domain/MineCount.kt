@@ -1,11 +1,7 @@
 package minesweeper.domain
 
 @JvmInline
-value class MineCount(private val count: Int) {
-
-    fun getMineCount(): Int {
-        return count
-    }
+value class MineCount private constructor(val count: Int) {
 
     companion object {
         private const val MINIMUM_COUNT = 0
