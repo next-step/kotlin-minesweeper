@@ -25,7 +25,7 @@ class MineSweeperResultView {
     private fun Cell.makeDisplayText(): String {
         return when (this) {
             is Cell.Mine -> "*"
-            is Cell.Ground -> "C"
+            is Cell.Ground -> aroundMineCount.value.toString()
         }
     }
 }

@@ -1,4 +1,4 @@
-package domain.collections
+package utils
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

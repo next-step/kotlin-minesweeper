@@ -1,4 +1,4 @@
-package domain.collections
+package utils
 
 fun <T> nestedList(
     columnSize: Int,
