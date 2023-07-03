@@ -1,10 +1,13 @@
 package minesweeper.domain.position
 
-sealed class MineSweeperPosition
+sealed class MineSweeperPosition(private val position: Position) {
 
-class MinePosition(private val position: Position) : MineSweeperPosition()
+    fun isSamePosition(position: Position): Boolean = position == this.position
+}
 
-class EmptyPosition(private val position: Position, minePositions: Positions) : MineSweeperPosition() {
+class MinePosition(position: Position) : MineSweeperPosition(position)
+
+class EmptyPosition(position: Position, minePositions: Positions) : MineSweeperPosition(position) {
 
     private val aroundMineQuantity: Int
 

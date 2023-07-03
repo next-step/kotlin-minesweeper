@@ -28,6 +28,7 @@ class MineSweeperBoard(
     }
 
     fun rows(): Iterator<MineSweeperPositions> = board.iterator()
+
     fun containsPosition(position: Position): Boolean {
         val y = position.convertBoardYPositionIndex()
         val x = position.convertBoardXPositionIndex()
@@ -45,6 +46,8 @@ class MineSweeperBoard(
         val x = position.convertBoardXPositionIndex()
         return board[y][x]
     }
+
+    fun allPositions(): MineSweeperPositions = MineSweeperPositions(board.map { it }.flatten())
 
     companion object {
         private const val MIN_MINE_QUANTITY = 1
