@@ -15,18 +15,6 @@ class MineSweeperController {
 
         printStart()
         val minesweeper = Minesweeper(rows, cols, mineCount)
-        printMineSweeperResult(minesweeper.minesweeperArray)
-    }
-
-    private fun printMineSweeperResult(minesweeperArray: Array<IntArray>) {
-        minesweeperArray.forEach {
-            printResult(
-                it.contentToString()
-                    .replace("0", "C")
-                    .replace("1", "*")
-                    .replace("[", "")
-                    .replace("]", "")
-            )
-        }
+        printResult(minesweeper.minesweeperArray)
     }
 }
