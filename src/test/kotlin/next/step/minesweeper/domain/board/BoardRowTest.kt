@@ -6,6 +6,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
+import next.step.minesweeper.domain.board.state.NearMineState
 import org.junit.jupiter.api.assertThrows
 
 class BoardRowTest : DescribeSpec({
@@ -61,6 +62,56 @@ class BoardRowTest : DescribeSpec({
                     )
 
                 boardRow.canUncover() shouldBe false
+            }
+        }
+
+        context("uncover") {
+            it("특정 위치를 열고 열린 Point를 제공") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState),
+                        ),
+                    )
+
+                val result = boardRow.uncover(1)
+
+                result shouldBe BoardPoint(MineState)
+            }
+        }
+
+        context("uncoverUntilPossible") {
+            it("특정 위치를 열고 열린 Point를 제공") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(CoveredState(MineFreeState)),
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineFreeState)),
+                            BoardPoint(CoveredState(NearMineState.one())),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState),
+                        ),
+                    )
+
+                boardRow.uncoverUntilPossible(3)
+
+                boardRow shouldBe BoardRow(
+                    listOf(
+                        BoardPoint(MineFreeState),
+                        BoardPoint(CoveredState(MineState)),
+                        BoardPoint(MineFreeState),
+                        BoardPoint(MineFreeState),
+                        BoardPoint(MineFreeState),
+                        BoardPoint(NearMineState.one()),
+                        BoardPoint(CoveredState(MineState)),
+                        BoardPoint(MineFreeState),
+                    ),
+                )
             }
         }
     }
