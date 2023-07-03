@@ -1,35 +1,36 @@
 package model.minemark
 
-sealed class MineMark(val openStatus: OpenStatus = OpenStatus.CLOSED) {
-    abstract fun next(count: Int): MineMark
+sealed interface MineMark {
+    val openStatus: OpenStatus
+    val isOpened: Boolean
+        get() = openStatus == OpenStatus.OPENED
+    val opened: MineMark
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as MineMark
-
-        return openStatus == other.openStatus
-    }
-
-    override fun hashCode(): Int {
-        return openStatus.hashCode()
-    }
+    fun next(count: Int): MineMark
 }
 
-class Safety : MineMark() {
+data class Safety(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
+    override val opened: MineMark
+        get() = Safety(OpenStatus.OPENED)
+
     override fun next(count: Int): MineMark {
         return MineCount(count)
     }
 }
 
-class Mine : MineMark() {
+data class Mine(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
+    override val opened: MineMark
+        get() = Mine(OpenStatus.OPENED)
+
     override fun next(count: Int): MineMark {
         throw IllegalStateException("mine can not be next mark")
     }
 }
 
-data class MineCount(val count: Int) : MineMark() {
+data class MineCount(val count: Int, override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
+    override val opened: MineMark
+        get() = MineCount(count, OpenStatus.OPENED)
+
     init {
         require(count >= 0) { "count must be greater than or equal to 0. but provided `$count`" }
     }

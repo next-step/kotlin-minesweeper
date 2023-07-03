@@ -10,7 +10,7 @@ import model.minemark.Safety
 
 object OutputView {
     private const val MINE_SYMBOL = "*"
-    private const val SAFETY_SYMBOL = "C"
+    private const val CLEAN_SYMBOL = "C"
 
     fun printBoard(countedMineBoard: CountedMineBoard) {
         groupedByY(positionsSortedYAndX(countedMineBoard.mineBoard))
@@ -33,10 +33,15 @@ object OutputView {
 
     private fun lineMarkSymbols(marks: List<MineMark>) =
         marks.joinToString(" ") {
-            when (it) {
-                is Mine -> MINE_SYMBOL
-                is Safety -> SAFETY_SYMBOL
-                is MineCount -> it.count.toString()
+            when (it.isOpened) {
+                true -> markSymbol(it)
+                false -> CLEAN_SYMBOL
             }
         }
+
+    private fun markSymbol(it: MineMark) = when (it) {
+        is Mine -> MINE_SYMBOL
+        is Safety -> CLEAN_SYMBOL
+        is MineCount -> it.count.toString()
+    }
 }

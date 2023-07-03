@@ -35,6 +35,15 @@ class MineBoard(elements: Map<Position, MineMark>) {
         return elements.values.contains(mark).not()
     }
 
+    fun opened(positions: Collection<Position>): MineBoard {
+        var current = this
+        positions.forEach {
+            validateContainsPosition(it)
+            current = current.replacedMark(it, mark(it).opened)
+        }
+        return current
+    }
+
     fun replacedOnlySafetyMarks(countByPosition: (Position) -> (Int)): MineBoard {
         var current = this
         elements.forEach {
@@ -55,7 +64,7 @@ class MineBoard(elements: Map<Position, MineMark>) {
         element: Map.Entry<Position, MineMark>,
         countByPosition: (Position) -> Int,
     ): MineBoard {
-        if (element.value.javaClass == Safety::class.java) {
+        if (element.value is Safety) {
             return mineBoard.replacedMark(element.key, element.value.next(countByPosition(element.key)))
         }
         return mineBoard
@@ -73,6 +82,11 @@ class MineBoard(elements: Map<Position, MineMark>) {
     ): Collection<Position> {
         return zeroToRange(maxY)
             .map { y -> Position(x, y) }
+    }
+
+    fun mark(position: Position): MineMark {
+        validateContainsPosition(position)
+        return elements[position]!!
     }
 
     private fun zeroToRange(count: Int): IntRange = (0..count)
