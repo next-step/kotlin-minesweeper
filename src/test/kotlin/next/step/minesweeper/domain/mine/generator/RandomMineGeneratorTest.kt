@@ -14,7 +14,7 @@ class RandomMineGeneratorTest : DescribeSpec({
             it("입력한 개수만큼 지뢰 제공") {
                 RandomMineGenerator.generate(
                     BoardArea.of(10, 10),
-                    MineCount(10)
+                    MineCount(10),
                 ) shouldHaveSize 10
             }
         }
@@ -23,7 +23,7 @@ class RandomMineGeneratorTest : DescribeSpec({
                 assertThrows<IllegalArgumentException> {
                     RandomMineGenerator.generate(
                         BoardArea.of(10, 10),
-                        MineCount(101)
+                        MineCount(101),
                     )
                 }.shouldHaveMessage("100개보다 더 넣을 수 없습니다.")
             }

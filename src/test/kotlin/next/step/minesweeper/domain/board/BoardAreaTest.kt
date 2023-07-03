@@ -16,21 +16,21 @@ class BoardAreaTest : DescribeSpec({
 
         context("position이 area를 벗어나면 false") {
             withData(
-                listOf(Position(-1, -1), Position(3, 3))
+                listOf(Position(-1, -1), Position(3, 3)),
             ) { position ->
                 (position in area) shouldBe false
             }
         }
         context("position이 area안에 있으면 true") {
             withData(
-                listOf(Position(0, 0), Position(2, 2))
+                listOf(Position(0, 0), Position(2, 2)),
             ) { position ->
                 (position in area) shouldBe true
             }
         }
         context("y가 height를 벗어나면 예외 발생") {
             withData(
-                listOf(-1, 3)
+                listOf(-1, 3),
             ) { y ->
                 assertThrows<IllegalArgumentException> {
                     area.requireContains(1, y)
@@ -39,7 +39,7 @@ class BoardAreaTest : DescribeSpec({
         }
         context("x가 width를 벗어나면 예외발생") {
             withData(
-                listOf(-1, 3)
+                listOf(-1, 3),
             ) { x ->
                 assertThrows<IllegalArgumentException> {
                     area.requireContains(x, 1)
@@ -58,7 +58,7 @@ class BoardAreaTest : DescribeSpec({
                 area.rangeMap({ it }) { x, y -> x + y } shouldBe listOf(
                     listOf(0, 1, 2),
                     listOf(1, 2, 3),
-                    listOf(2, 3, 4)
+                    listOf(2, 3, 4),
                 )
             }
         }

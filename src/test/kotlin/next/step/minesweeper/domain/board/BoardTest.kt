@@ -25,17 +25,17 @@ class BoardTest : DescribeSpec({
                     listOf(
                         BoardPoint(NearMineState(MineCount(2))),
                         BoardPoint(MineState),
-                        BoardPoint(NearMineState(MineCount(1)))
+                        BoardPoint(NearMineState(MineCount(1))),
                     ),
                     listOf(
                         BoardPoint(MineState),
                         BoardPoint(NearMineState(MineCount(3))),
-                        BoardPoint(NearMineState(MineCount(2)))
+                        BoardPoint(NearMineState(MineCount(2))),
                     ),
                     listOf(
                         BoardPoint(NearMineState(MineCount(1))),
                         BoardPoint(NearMineState(MineCount(2))),
-                        BoardPoint(MineState)
+                        BoardPoint(MineState),
                     ),
                 )
             }
@@ -44,24 +44,25 @@ class BoardTest : DescribeSpec({
                     Board.mineFree(BoardArea.of(1, 1)).plantMines(
                         MinePositions(
                             setOf(
-                                MinePosition(1, 0), MinePosition(0, 1),
-                                MinePosition(2, 2)
-                            )
-                        )
+                                MinePosition(1, 0),
+                                MinePosition(0, 1),
+                                MinePosition(2, 2),
+                            ),
+                        ),
                     )
                 }.shouldHaveMessage("1개보다 더 넣을 수 없습니다.")
             }
             it("board 높이를 벗어나게 지뢰를 심으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
                     Board.mineFree(BoardArea.of(3, 3)).plantMines(
-                        MinePositions(setOf(MinePosition(1, 3)))
+                        MinePositions(setOf(MinePosition(1, 3))),
                     )
                 }.shouldHaveMessage("y 위치는 0보다 크고, 3 보다 작아야 합니다.")
             }
             it("board 너비를 벗어나게 지뢰를 심으면 예외 발생") {
                 assertThrows<IllegalArgumentException> {
                     Board.mineFree(BoardArea.of(3, 3)).plantMines(
-                        MinePositions(setOf(MinePosition(3, 1)))
+                        MinePositions(setOf(MinePosition(3, 1))),
                     )
                 }.shouldHaveMessage("x 위치는 0보다 크고, 3 보다 작아야 합니다.")
             }
@@ -74,17 +75,17 @@ class BoardTest : DescribeSpec({
                     listOf(
                         BoardPoint(CoveredState(MineFreeState)),
                         BoardPoint(CoveredState(MineFreeState)),
-                        BoardPoint(CoveredState(MineFreeState))
+                        BoardPoint(CoveredState(MineFreeState)),
                     ),
                     listOf(
                         BoardPoint(CoveredState(MineFreeState)),
                         BoardPoint(CoveredState(MineFreeState)),
-                        BoardPoint(CoveredState(MineFreeState))
+                        BoardPoint(CoveredState(MineFreeState)),
                     ),
                     listOf(
                         BoardPoint(CoveredState(MineFreeState)),
                         BoardPoint(CoveredState(MineFreeState)),
-                        BoardPoint(CoveredState(MineFreeState))
+                        BoardPoint(CoveredState(MineFreeState)),
                     ),
                 )
             }
@@ -92,7 +93,8 @@ class BoardTest : DescribeSpec({
                 val board = mineFullPlantedBoard()
 
                 board.play(
-                    { Position(1, 1) }, {},
+                    { Position(1, 1) },
+                    {},
                     { fail("호출 안됨") },
                     {
                         it shouldBe listOf(
@@ -106,7 +108,7 @@ class BoardTest : DescribeSpec({
                             ),
                         )
                     },
-                    { fail("호출 안됨") }
+                    { fail("호출 안됨") },
                 )
             }
             it("지뢰찾기 플레이 중 지뢰만 남기고 uncover하면 success로 종료됨") {
@@ -117,23 +119,24 @@ class BoardTest : DescribeSpec({
                     Position(1, 1),
                     Position(1, 2),
                     Position(2, 0),
-                    Position(2, 1)
+                    Position(2, 1),
                 )
 
                 board.play(
                     { selects.removeAt(0) },
-                    { }, {},
+                    { },
+                    {},
                     {
                         it shouldBe listOf(
                             listOf(
                                 BoardPoint(NearMineState(MineCount(2))),
                                 BoardPoint(CoveredState(MineState)),
-                                BoardPoint(NearMineState(MineCount(1)))
+                                BoardPoint(NearMineState(MineCount(1))),
                             ),
                             listOf(
                                 BoardPoint(CoveredState(MineState)),
                                 BoardPoint(NearMineState(MineCount(3))),
-                                BoardPoint(NearMineState(MineCount(2)))
+                                BoardPoint(NearMineState(MineCount(2))),
                             ),
                             listOf(
                                 BoardPoint(NearMineState(MineCount(1))),
@@ -142,29 +145,31 @@ class BoardTest : DescribeSpec({
                             ),
                         )
                     },
-                    { fail("호출 안됨") }
+                    { fail("호출 안됨") },
                 )
             }
             it("지뢰찾기 플레이 중 지뢰를 uncover하면 fail로 종료됨") {
                 val board = mineCoveredBoard()
                 val selects = mutableListOf(
-                    Position(2, 2)
+                    Position(2, 2),
                 )
 
                 board.play(
-                    { selects.removeAt(0) }, { }, { },
+                    { selects.removeAt(0) },
+                    { },
+                    { },
                     { fail("호출 안됨") },
                     {
                         it shouldBe listOf(
                             listOf(
                                 BoardPoint(CoveredState(NearMineState(MineCount(2)))),
                                 BoardPoint(CoveredState(MineState)),
-                                BoardPoint(CoveredState(NearMineState(MineCount(1))))
+                                BoardPoint(CoveredState(NearMineState(MineCount(1)))),
                             ),
                             listOf(
                                 BoardPoint(CoveredState(MineState)),
                                 BoardPoint(CoveredState(NearMineState(MineCount(3)))),
-                                BoardPoint(CoveredState(NearMineState(MineCount(2))))
+                                BoardPoint(CoveredState(NearMineState(MineCount(2)))),
                             ),
                             listOf(
                                 BoardPoint(CoveredState(NearMineState(MineCount(1)))),
@@ -172,7 +177,7 @@ class BoardTest : DescribeSpec({
                                 BoardPoint(MineState),
                             ),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -185,10 +190,11 @@ private fun minePlantedBoard(): Board {
     board.plantMines(
         MinePositions(
             setOf(
-                MinePosition(1, 0), MinePosition(0, 1),
-                MinePosition(2, 2)
-            )
-        )
+                MinePosition(1, 0),
+                MinePosition(0, 1),
+                MinePosition(2, 2),
+            ),
+        ),
     )
     return board
 }
@@ -205,10 +211,12 @@ private fun mineFullPlantedBoard(): Board {
     board.plantMines(
         MinePositions(
             setOf(
-                MinePosition(1, 0), MinePosition(0, 1),
-                MinePosition(0, 0), MinePosition(1, 1),
-            )
-        )
+                MinePosition(1, 0),
+                MinePosition(0, 1),
+                MinePosition(0, 0),
+                MinePosition(1, 1),
+            ),
+        ),
     )
     board.cover()
     return board

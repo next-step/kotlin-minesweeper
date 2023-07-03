@@ -32,7 +32,7 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
             onFailure = {
                 onSelectError(it)
                 select(selector, onSelectError)
-            }
+            },
         )
     }
 

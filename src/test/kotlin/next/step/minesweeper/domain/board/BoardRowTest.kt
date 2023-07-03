@@ -21,7 +21,7 @@ class BoardRowTest : DescribeSpec({
                 boardRow.points() shouldBe listOf(
                     BoardPoint(MineFreeState),
                     BoardPoint(MineState),
-                    BoardPoint(MineFreeState)
+                    BoardPoint(MineFreeState),
                 )
             }
         }
@@ -47,7 +47,7 @@ class BoardRowTest : DescribeSpec({
                 boardRow.points() shouldBe listOf(
                     BoardPoint(CoveredState(MineFreeState)),
                     BoardPoint(CoveredState(MineFreeState)),
-                    BoardPoint(CoveredState(MineFreeState))
+                    BoardPoint(CoveredState(MineFreeState)),
                 )
             }
         }
@@ -59,8 +59,8 @@ class BoardRowTest : DescribeSpec({
                         listOf(
                             BoardPoint(CoveredState(MineFreeState)),
                             BoardPoint(CoveredState(MineState)),
-                            BoardPoint(MineFreeState)
-                        )
+                            BoardPoint(MineFreeState),
+                        ),
                     )
 
                 boardRow.canUncover() shouldBe true
@@ -71,8 +71,8 @@ class BoardRowTest : DescribeSpec({
                         listOf(
                             BoardPoint(MineFreeState),
                             BoardPoint(CoveredState(MineState)),
-                            BoardPoint(MineFreeState)
-                        )
+                            BoardPoint(MineFreeState),
+                        ),
                     )
 
                 boardRow.canUncover() shouldBe false

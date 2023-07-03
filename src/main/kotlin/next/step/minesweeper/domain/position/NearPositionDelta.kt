@@ -10,7 +10,8 @@ enum class NearPositionDelta(val dx: Int, val dy: Int) {
     RIGHT(1, 0),
     BOTTOM_LEFT(-1, 1),
     BOTTOM_CENTER(0, 1),
-    BOTTOM_RIGHT(1, 1);
+    BOTTOM_RIGHT(1, 1),
+    ;
 
     companion object {
 

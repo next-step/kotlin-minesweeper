@@ -10,7 +10,7 @@ class MineCountTest : DescribeSpec({
     describe("MineCount") {
         context("0이하의 값으로 생성하면 예외 발생") {
             withData(
-                listOf(-1, 0)
+                listOf(-1, 0),
             ) { cnt ->
                 assertThrows<IllegalArgumentException> { MineCount(cnt) }
             }

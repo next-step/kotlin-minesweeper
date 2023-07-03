@@ -89,7 +89,7 @@ class BoardPointTest : DescribeSpec({
         }
         context("덮여있지 않으면 false") {
             withData(
-                listOf(MineFreeState, MineState, NearMineState.one())
+                listOf(MineFreeState, MineState, NearMineState.one()),
             ) { state ->
                 BoardPoint(state).canUncover() shouldBe false
             }

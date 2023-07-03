@@ -33,7 +33,7 @@ data class Board(private val rows: List<BoardRow>, val area: BoardArea) {
         selectError: (Throwable) -> Unit,
         announce: (List<List<BoardPoint>>) -> Unit,
         success: (List<List<BoardPoint>>) -> Unit,
-        fail: (List<List<BoardPoint>>) -> Unit
+        fail: (List<List<BoardPoint>>) -> Unit,
     ) {
         while (canUncover()) {
             val position = area.select(selector, selectError)
@@ -53,8 +53,9 @@ data class Board(private val rows: List<BoardRow>, val area: BoardArea) {
     }
 
     private fun uncoverNear(point: BoardPoint, position: Position) {
-        if (point.isUncoveredMineFree())
+        if (point.isUncoveredMineFree()) {
             area.nearForEach(position.x, position.y) { uncoverNotMine(it) }
+        }
     }
 
     private fun uncoverNotMine(position: Position) {

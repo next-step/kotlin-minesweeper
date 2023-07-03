@@ -17,14 +17,14 @@ class NearPositionDeltaTest : DescribeSpec({
                     Position(2, 1),
                     Position(0, 2),
                     Position(1, 2),
-                    Position(2, 2)
+                    Position(2, 2),
                 )
             }
             it("BoardArea를 벗어난 위치는 빼고 주변 위치를 제공") {
                 NearPositionDelta.nearInArea(0, 0, BoardArea.of(3, 3)) shouldBe listOf(
                     Position(1, 0),
                     Position(0, 1),
-                    Position(1, 1)
+                    Position(1, 1),
                 )
             }
         }
