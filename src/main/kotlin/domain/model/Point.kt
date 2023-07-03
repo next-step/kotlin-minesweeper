@@ -1,3 +1,5 @@
+package domain.model
+
 data class Point(val x: X, val y: Y) {
     companion object {
         fun from(x: Int, y: Int): Point {

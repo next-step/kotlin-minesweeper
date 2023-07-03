@@ -1,3 +1,6 @@
+package domain
+
+import domain.model.Mine
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest

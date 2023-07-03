@@ -1,3 +1,7 @@
+package domain.model
+
+import domain.MapGenerator
+
 class GameMap(field: List<List<Tile>>) {
     private val _field: List<List<Tile>> = field.map { it.toList() }.toList()
     val field: List<List<Tile>> get() = _field.map { it.toList() }.toList()

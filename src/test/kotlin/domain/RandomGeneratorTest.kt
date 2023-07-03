@@ -1,3 +1,5 @@
+package domain
+
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest

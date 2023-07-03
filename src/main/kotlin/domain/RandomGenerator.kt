@@ -1,3 +1,7 @@
+package domain
+
+import domain.model.Point
+
 object RandomGenerator {
     fun points(width: Int, height: Int, count: Int): List<Point> {
         require(width > 0) { "너비는 0보다 커야합니다. 입력값: $width" }

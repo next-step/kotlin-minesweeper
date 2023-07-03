@@ -1,3 +1,10 @@
+package view
+
+import domain.model.GameMap
+import domain.model.Mine
+import domain.model.NumberTile
+import domain.model.Tile
+
 object OutputView {
     private const val MINE = "*"
     private const val UNOPENED = "C"

@@ -1,3 +1,11 @@
+package domain
+
+import domain.model.GameMap
+import domain.model.Mine
+import domain.model.NumberTile
+import domain.model.Point
+import domain.model.Tile
+
 internal object MapGenerator {
     fun generate(width: Int, height: Int, mineCount: Int, isOpened: Boolean = false): GameMap {
         val field = List(height) { y -> MutableList<Tile>(width) { x -> NumberTile(Point.from(x, y), isOpened) } }

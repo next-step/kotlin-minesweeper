@@ -1,3 +1,5 @@
+package view
+
 object InputView {
     private const val NOT_INT_ERROR_MESSAGE = "정수 값을 입력해주세요"
 

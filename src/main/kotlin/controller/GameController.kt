@@ -1,3 +1,9 @@
+package controller
+
+import domain.model.GameMap
+import view.InputView
+import view.OutputView
+
 class GameController {
     fun execute() {
         try {
