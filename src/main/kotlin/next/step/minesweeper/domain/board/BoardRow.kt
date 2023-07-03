@@ -18,28 +18,6 @@ value class BoardRow(private val points: List<BoardPoint>) {
         return point
     }
 
-    fun uncoverUntilPossible(x: Int) {
-        uncoverUntilLeft(x)
-        uncoverUntilRight(x)
-    }
-
-    private fun uncoverUntilLeft(x: Int) {
-        uncoverUntilPossible((x - 1) downTo 0)
-    }
-
-    private fun uncoverUntilRight(x: Int) {
-        uncoverUntilPossible(x + 1 until size())
-    }
-
-    private fun uncoverUntilPossible(xProgression: IntProgression) {
-        xProgression.forEach {
-            if (!pointAt(it).canUncover()) return
-            pointAt(it).uncover()
-        }
-    }
-
-    fun canUncover(x: Int): Boolean = pointAt(x).canUncover()
-
     fun canUncover(): Boolean = points.any { it.canUncover() }
 
     fun points() = points.toList()

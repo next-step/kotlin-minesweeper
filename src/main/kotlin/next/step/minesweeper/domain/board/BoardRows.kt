@@ -14,26 +14,19 @@ value class BoardRows(private val rows: List<BoardRow>) {
     fun uncover(position: BoardPosition): Boolean {
         val row = row(position.y())
         val point = row.uncover(position.x())
-        if (point.isMineFree()) {
-            row.uncoverUntilPossible(position.x())
-            uncoverUntilTop(position)
-            uncoverUntilBottom(position)
-        }
+        uncoverNear(point, position, mutableSetOf(position))
         return point.isMine()
     }
 
-    private fun uncoverUntilTop(position: BoardPosition) {
-        uncoverUntilPossible((position.y() - 1) downTo 0, position.x())
-    }
-
-    private fun uncoverUntilBottom(position: BoardPosition) {
-        uncoverUntilPossible(position.y() + 1 until rows.size, position.x())
-    }
-
-    private fun uncoverUntilPossible(yProgression: IntProgression, x: Int) {
-        yProgression.forEach {
-            if (!row(it).canUncover(x)) return
-            row(it).uncover(x)
+    private fun uncoverNear(point: BoardPoint, position: BoardPosition, visited: MutableSet<BoardPosition>) {
+        if (!point.isMineFree()) return
+        position.near().filterNot { visited.contains(it) }.forEach {
+            val near = row(it.y()).pointAt(it.x())
+            if (near.canUncover()) {
+                near.uncover()
+                visited.add(it)
+                uncoverNear(near, it, visited)
+            }
         }
     }
 
