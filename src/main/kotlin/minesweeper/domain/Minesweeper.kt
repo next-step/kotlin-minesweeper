@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Minesweeper(private val dimension: Dimension, private val mineCount: PositiveNumber) {
+class Minesweeper(dimension: Dimension, mineCount: PositiveNumber) {
 
     private val board: Board
 
@@ -10,5 +10,9 @@ class Minesweeper(private val dimension: Dimension, private val mineCount: Posit
         }
 
         board = Board(dimension, RandomMineFactory(dimension, mineCount))
+    }
+
+    fun allBlocks(): List<List<Block>> {
+        return board.allBlocks()
     }
 }

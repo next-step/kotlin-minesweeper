@@ -39,5 +39,6 @@ C C C C C C C C C C
 - 보드를 생성한다.
   - [x] 사이즈 만큼 블럭을 생성한다.
     - [x] 일반 블럭 or 지뢰 - Block
-  - [ ] 지뢰는 랜덤으로 블럭에 배치 된다 - Mines
-- [ ] Minesweeper 를 그린다? - Display?
+  - [x] 지뢰는 랜덤으로 블럭에 배치 된다 - Mines
+- [x] Minesweeper 를 그린다? - Display?
+  - 전체 블럭을 내려준다.
