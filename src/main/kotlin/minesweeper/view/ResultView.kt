@@ -3,7 +3,6 @@ package minesweeper.view
 import minesweeper.domain.board.MineSweeperBoard
 import minesweeper.domain.explorer.MineSweeperBoardExplorer
 import minesweeper.domain.position.EmptyPosition
-import minesweeper.domain.position.MinePosition
 import minesweeper.domain.position.MineSweeperPosition
 import minesweeper.domain.position.MineSweeperPositions
 

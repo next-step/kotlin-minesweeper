@@ -34,7 +34,7 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
                 showLoseGameMessage = showLoseGameMessage,
             )
         } while (isProceedGame(exploreResult))
-        if(isAllVisitExcludeMinePositions()) {
+        if (isAllVisitExcludeMinePositions()) {
             showWinGameMessage()
         }
     }
