@@ -39,12 +39,12 @@ object OutputView {
         println()
     }
 
-    fun showSuccess() {
+    fun showWin() {
         println(SUCCESS_MSG)
         println()
     }
 
-    fun showFail() {
+    fun showLose() {
         println(FAIL_MSG)
         println()
     }
