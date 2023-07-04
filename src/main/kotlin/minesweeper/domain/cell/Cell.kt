@@ -1,11 +1,11 @@
 package minesweeper.domain.cell
 
 import minesweeper.domain.cell.CellType.MINE
-import minesweeper.domain.cell.CellType.NONE
+import minesweeper.domain.cell.CellType.ZERO
 
 class Cell(
     val coordinate: Coordinate,
-    cellType: CellType = NONE,
+    cellType: CellType = ZERO,
 ) {
     var cellType: CellType = cellType
         private set
@@ -18,6 +18,10 @@ class Cell(
     fun changeToMine() {
         check(cellType != MINE) { "지뢰는 지뢰로 변경할 수 없습니다." }
         cellType = MINE
+    }
+
+    fun changeToCellType(cellType: CellType) {
+        this.cellType = cellType
     }
 
     override fun equals(other: Any?): Boolean {
