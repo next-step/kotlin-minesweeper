@@ -6,33 +6,34 @@ import model.minemark.MineMark
 @JvmInline
 value class MineBoardOpener(private val countedMineBoard: CountedMineBoard) {
 
-    fun opened(position: Position): CountedMineBoard {
+    fun openedCountedMineBoard(position: Position): CountedMineBoard {
         val mark: MineMark = countedMineBoard.mark(position)
         if (mark.isOpened) {
             return countedMineBoard
         }
-        if (mark == BONUS_OPEN_MARK) {
-            return countedMineBoard.opened(positionsWhileNearByMineCount(position))
+        return countedMineBoard.openedMineBoard(positionsToOpen(position))
+    }
+
+    private fun positionsToOpen(
+        position: Position,
+        positionsToOpen: Collection<Position> = setOf(position),
+    ): Collection<Position> {
+        if (countedMineBoard.mark(position) == BONUS_OPEN_MARK) {
+            return nearByPositionsToOpen(position, positionsToOpen)
         }
-        return countedMineBoard.opened(listOf(position))
+        return setOf(position)
     }
 
-    private fun positionsWhileNearByMineCount(position: Position): Collection<Position> {
-        val positions: MutableSet<Position> = mutableSetOf(position)
-        addNearByPositions(position, positions)
-        return positions
-    }
+    private fun nearByPositionsToOpen(position: Position, positionsToOpen: Collection<Position>): Collection<Position> {
+        val nearByPositions = position.nearByPositions(countedMineBoard.maxXPosition, countedMineBoard.maxYPosition)
+            .filter { positionsToOpen.contains(it).not() }
+            .filter { countedMineBoard.isMineCount(it) }
 
-    private fun addNearByPositions(position: Position, positions: MutableSet<Position>) {
-        position.nearByPositions(countedMineBoard.maxXPosition, countedMineBoard.maxYPosition)
-            .filter { positions.contains(it).not() }
-            .filter { countedMineBoard.mark(it) is MineCount }
-            .onEach { positions.add(it) }
-            .forEach {
-                if (countedMineBoard.mark(it) == BONUS_OPEN_MARK) {
-                    addNearByPositions(it, positions)
-                }
-            }
+        val nextPositionsToOpen: MutableSet<Position> = (positionsToOpen + nearByPositions).toMutableSet()
+        nearByPositions.forEach {
+            nextPositionsToOpen.addAll(positionsToOpen(it, nextPositionsToOpen))
+        }
+        return nextPositionsToOpen
     }
 
     companion object {
