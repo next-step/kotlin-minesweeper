@@ -1,6 +1,7 @@
 package mine.sweeper.view
 
 import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.domain.value.Width
 
 object InputView {
@@ -18,10 +19,10 @@ object InputView {
         return Width(input.toInt())
     }
 
-    fun getMines(): Int {
+    fun getMines(): MineCount {
         println("지뢰는 몇 개인가요?")
         val input = readln()
         require(input.toIntOrNull() != null) { "지뢰의 개수를 숫자를 입력해주세요!" }
-        return input.toInt()
+        return MineCount(input.toInt())
     }
 }
