@@ -1,13 +1,15 @@
 package minesweeper.domain
 
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
-class NormalPinTest {
-    @Test
-    fun `일반 핀은 C 라는 문자를 리턴해준다`() {
-        val mark = NormalPin()
+class NormalPinTest : FunSpec({
+    test("pin 의 프로퍼티의 값을 증가시킬 수 있다") {
+        val pin = NormalPin()
 
-        mark.getMark() shouldBe "C"
+        pin.addSurroundMineNumber()
+        pin.addSurroundMineNumber()
+
+        pin.surroundMineNumber shouldBe 2
     }
-}
+})

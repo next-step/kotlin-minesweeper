@@ -4,7 +4,6 @@ import minesweeper.domain.GameBoard
 import minesweeper.domain.GameBoardSize
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
-import kotlin.random.Random
 
 fun main() {
     run()
@@ -29,21 +28,7 @@ fun readyGameBoard(size: GameBoardSize): GameBoard {
 
 fun readyMine(board: GameBoard) {
     val mineNumber = Inputview.askMineNumber()
-    repeat(mineNumber) {
-        randomGenerator(board)
-    }
-}
-
-private fun randomGenerator(board: GameBoard) {
-    do {
-        val heightBoundary = board.size.height
-        val widthBoundary = board.size.width
-
-        val heightGenerator: () -> Int = { Random.nextInt(heightBoundary) }
-        val widthGenerator: () -> Int = { Random.nextInt(widthBoundary) }
-
-        val result = board.setMine(heightGenerator, widthGenerator)
-    } while (!result)
+    board.repeatPlateMineWithoutDuplication(mineNumber)
 }
 
 fun showResult(board: GameBoard) {

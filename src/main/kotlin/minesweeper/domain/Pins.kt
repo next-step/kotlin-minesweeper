@@ -16,6 +16,13 @@ class Pins(private val values: MutableList<Pin>) {
         values[index] = MinePin()
     }
 
+    fun addMineNumber(index: Int) {
+        require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
+        if (values[index] is NormalPin) {
+            (values[index] as NormalPin).addSurroundMineNumber()
+        }
+    }
+
     companion object {
         fun of(size: GameBoardSize): Pins {
             val totalSize = size.height * size.width
