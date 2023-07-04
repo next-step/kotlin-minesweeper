@@ -38,12 +38,4 @@ class CellTest : FunSpec({
             actual shouldBe MINE
         }
     }
-
-    context("equals") {
-        test("동일한 행과 열에 있으면 같은 cell로 취급한다.") {
-            val cell1 = Cell(0, 1, NONE)
-            val cell2 = Cell(0, 1, MINE)
-            cell1 shouldBe cell2
-        }
-    }
 })

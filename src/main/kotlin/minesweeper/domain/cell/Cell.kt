@@ -6,8 +6,12 @@ import minesweeper.domain.cell.CellType.ZERO
 class Cell(
     val coordinate: Coordinate,
     cellType: CellType = ZERO,
+    isDisplay: Boolean = true,
 ) {
     var cellType: CellType = cellType
+        private set
+
+    var isDisplay: Boolean = isDisplay
         private set
 
     constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(row, column), cellType)
@@ -22,18 +26,5 @@ class Cell(
 
     fun changeToCellType(cellType: CellType) {
         this.cellType = cellType
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Cell
-
-        return coordinate == other.coordinate
-    }
-
-    override fun hashCode(): Int {
-        return coordinate.hashCode()
     }
 }
