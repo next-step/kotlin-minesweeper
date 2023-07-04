@@ -11,10 +11,12 @@ class Board(row: PositiveInt, col: PositiveInt, mineCount: PositiveInt) {
     }
 
     val cells = List((row * col).number) {
-        if (it < mineCount.number) {
-            Cell(CellType.MINE)
-        } else {
-            Cell(CellType.NONE)
-        }
+        Cell(
+            if (it < mineCount.number) {
+                CellType.MINE
+            } else {
+                CellType.NONE
+            }
+        )
     }.shuffled().chunked(row.number)
 }
