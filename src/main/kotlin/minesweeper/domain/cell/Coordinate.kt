@@ -4,15 +4,17 @@ data class Coordinate(
     val row: Int,
     val column: Int,
 ) {
-    fun up(): Coordinate = Coordinate(row - 1, column)
+    fun up(): Coordinate = Coordinate(row - MOVE_AMOUNT, column)
 
-    fun down(): Coordinate = Coordinate(row + 1, column)
+    fun down(): Coordinate = Coordinate(row + MOVE_AMOUNT, column)
 
-    fun right(): Coordinate = Coordinate(row, column + 1)
+    fun right(): Coordinate = Coordinate(row, column + MOVE_AMOUNT)
 
-    fun left(): Coordinate = Coordinate(row, column - 1)
+    fun left(): Coordinate = Coordinate(row, column - MOVE_AMOUNT)
 
     companion object {
+        private const val MOVE_AMOUNT = 1
+
         fun List<Coordinate>.isContains(cell: Cell): Boolean = this.contains(cell.coordinate)
     }
 }
