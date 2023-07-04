@@ -1,18 +1,16 @@
 package mine.sweeper
 
 import mine.sweeper.domain.MapSize
-import mine.sweeper.domain.value.Position
+import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.Position
 
 class PositionManager(mapSize: MapSize) {
-
-    private val width = mapSize.width()
-
     private val randomPositions = MutableList(mapSize.area()) {
-        Position(it / width, it % width)
+        Position(it / mapSize.width.value, it % mapSize.width.value)
     }.shuffled().toMutableList()
 
-    fun randomPosition(): Position {
-        check(randomPositions.isNotEmpty())
-        return randomPositions.removeFirst()
+    fun takePositionBy(mineCount: MineCount): Set<Position> {
+        check(randomPositions.size > mineCount.value)
+        return randomPositions.take(mineCount.value).toSet()
     }
 }
