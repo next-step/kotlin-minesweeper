@@ -12,7 +12,6 @@ data class BoardPosition(private val position: Position, private val area: Board
     fun near(): BoardPositions =
         BoardPositions(
             NearPositionDelta.values()
-                .filter { area.contains(position.x + it.dx, position.y + it.dy) }
                 .map { BoardPosition(Position(position.x + it.dx, position.y + it.dy), area) }
                 .toSet(),
         )

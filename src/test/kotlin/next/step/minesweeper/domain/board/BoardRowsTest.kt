@@ -45,7 +45,13 @@ class BoardRowsTest : DescribeSpec({
             it("해당 위치의 주변이 NearMineState가 됨") {
                 val rows = BoardRows(
                     listOf(
-                        BoardRow(listOf(BoardPoint.mineFree(), BoardPoint.mineFree(), BoardPoint.mineFree())),
+                        BoardRow(
+                            listOf(
+                                BoardPoint.mineFree(),
+                                BoardPoint.mineFree(),
+                                BoardPoint.mineFree(),
+                            ),
+                        ),
                         BoardRow(
                             listOf(
                                 BoardPoint.mineFree(),
@@ -57,7 +63,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.notifyMine(BoardPosition.of(1, 1, BoardArea.of(3, 3)))
+                rows.notifyMine(BoardArea.of(3, 3).near(BoardPosition.of(1, 1, BoardArea.of(3, 3))))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -165,7 +171,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
+                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)), BoardArea.of(3, 3))
 
                 rows shouldBe BoardRows(
                     listOf(

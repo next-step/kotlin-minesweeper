@@ -9,7 +9,8 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
         height.requireInRange(y)
     }
 
-    fun contains(x: Int, y: Int): Boolean = height.inRange(y) && width.inRange(x)
+    operator fun contains(position: BoardPosition): Boolean =
+        height.inRange(position.y()) && width.inRange(position.x())
 
     fun checkMaxCount(count: Int) = require(count <= area()) { "${area()}개보다 더 많을 수 없습니다." }
 
@@ -23,6 +24,8 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
         requireContains(position.x, position.y)
         return BoardPosition(position, this)
     }
+
+    fun near(position: BoardPosition): BoardPositions = BoardPositions(position.near().filter { it in this }.toSet())
 
     companion object {
         fun of(height: Int, width: Int): BoardArea = BoardArea(BoardHeight(height), BoardWidth(width))

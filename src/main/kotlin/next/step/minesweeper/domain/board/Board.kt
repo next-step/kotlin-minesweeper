@@ -16,7 +16,7 @@ data class Board(private val rows: BoardRows, val area: BoardArea) {
     ) {
         while (rows.canUncover()) {
             val position = retryOnFailure({ area.select(selector) }, onFailure)
-            if (rows.uncover(position)) return onLose(points())
+            if (rows.uncover(position, area)) return onLose(points())
             onEachStep(points())
         }
         onWin(points())
@@ -31,7 +31,7 @@ data class Board(private val rows: BoardRows, val area: BoardArea) {
             val rows = BoardRows(area.rangeMap({ BoardRow(it) }) { _, _ -> BoardPoint.mineFree() })
             mineGenerator.generate(area, mineCount).forEach { mine ->
                 rows.plantMine(mine)
-                rows.notifyMine(mine)
+                rows.notifyMine(area.near(mine))
             }
             return Board(rows, area)
         }
