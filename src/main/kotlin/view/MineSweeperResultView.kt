@@ -6,16 +6,11 @@ import domain.map.MapCapture
 class MineSweeperResultView {
 
     fun displayStartMineSweeperGameMessage() {
-        println("지뢰 찾기 게임 시작")
+        println("\n지뢰 찾기 게임 시작")
     }
 
     fun display(mapCapture: MapCapture) {
-        val text = buildString {
-            appendLine()
-            appendLine("지뢰찾기 게임 시작")
-            appendLine(mapCapture.cells.makeMapText())
-        }
-        println(text)
+        println("${mapCapture.cells.makeMapText()}\n")
     }
 
     fun displayLoseGameMessage() {

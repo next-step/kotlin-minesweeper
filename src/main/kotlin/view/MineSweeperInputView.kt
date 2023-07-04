@@ -24,7 +24,7 @@ class MineSweeperInputView {
     }
 
     fun readOpenCoordinate(): Coordinate {
-        print("\nopen: ")
+        print("open: ")
         val (x, y) = readln()
             .split(",")
             .map { it.trim().toInt() - 1 }
