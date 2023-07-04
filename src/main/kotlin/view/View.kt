@@ -1,6 +1,7 @@
 package view
 
 import vo.BoardVO
+import vo.CoordinateVO
 
 object InputView {
     private const val COMMA_SEPARATOR = ","
@@ -20,11 +21,11 @@ object InputView {
         return readlnOrNull()?.toInt() ?: throw IllegalArgumentException("지뢰 개수를 입력해주세요.")
     }
 
-    fun readCoordinateToOpen(): Pair<Int, Int> {
+    fun readCoordinateToOpen(): CoordinateVO {
         print("open: ")
         val coordinateString = readlnOrNull() ?: throw IllegalArgumentException("열고자 하는 칸의 좌표를 입력해주세요. 예. 1, 1")
         val coordinate = coordinateString.split(COMMA_SEPARATOR).map { it.toInt() }
-        return coordinate[0] to coordinate[1]
+        return CoordinateVO(row = coordinate[0], col = coordinate[1])
     }
 }
 

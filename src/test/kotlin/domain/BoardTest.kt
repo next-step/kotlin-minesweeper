@@ -67,12 +67,12 @@ class BoardTest : FunSpec({
             row(cell(), mine()),
         )
 
-        data class CoordinateIsMine(val coordinate: Coordinate, val expected: Boolean)
+        data class CoordinateIsClosed(val coordinate: Coordinate, val expected: Boolean)
         withData(
-            CoordinateIsMine(Coordinate(0, 0), true),
-            CoordinateIsMine(Coordinate(0, 1), false),
-            CoordinateIsMine(Coordinate(1, 0), true),
-            CoordinateIsMine(Coordinate(1, 1), true),
+            CoordinateIsClosed(Coordinate(0, 0), true),
+            CoordinateIsClosed(Coordinate(0, 1), false),
+            CoordinateIsClosed(Coordinate(1, 0), true),
+            CoordinateIsClosed(Coordinate(1, 1), true),
         ) { (coordinate, expected) ->
             board.isClosed(coordinate) shouldBe expected
         }
@@ -85,18 +85,18 @@ class BoardTest : FunSpec({
             row(mine(), cell(), cell()),
         )
 
-        data class CoordinateIsMine(val coordinate: Coordinate, val expectedCell: Cell)
+        data class CoordinateCell(val coordinate: Coordinate, val expectedCell: Cell)
         withData(
             nameFn = { "When ${it.coordinate} opens, cell should be ${it.expectedCell}" },
-            CoordinateIsMine(Coordinate(0, 0), mine()),
-            CoordinateIsMine(Coordinate(0, 1), mine()),
-            CoordinateIsMine(Coordinate(0, 2), cell(1)),
-            CoordinateIsMine(Coordinate(1, 0), cell(3)),
-            CoordinateIsMine(Coordinate(1, 1), cell(3)),
-            CoordinateIsMine(Coordinate(1, 2), cell(1)),
-            CoordinateIsMine(Coordinate(2, 0), mine()),
-            CoordinateIsMine(Coordinate(2, 1), cell(1)),
-            CoordinateIsMine(Coordinate(2, 2), cell(0)),
+            CoordinateCell(Coordinate(0, 0), mine()),
+            CoordinateCell(Coordinate(0, 1), mine()),
+            CoordinateCell(Coordinate(0, 2), cell(1)),
+            CoordinateCell(Coordinate(1, 0), cell(3)),
+            CoordinateCell(Coordinate(1, 1), cell(3)),
+            CoordinateCell(Coordinate(1, 2), cell(1)),
+            CoordinateCell(Coordinate(2, 0), mine()),
+            CoordinateCell(Coordinate(2, 1), cell(1)),
+            CoordinateCell(Coordinate(2, 2), cell(0)),
         ) { (coordinate, expectedCell) ->
             board.open(coordinate)
             board[coordinate.row][coordinate.col] shouldBe expectedCell
