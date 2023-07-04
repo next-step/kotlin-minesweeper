@@ -6,6 +6,7 @@ import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
 import next.step.minesweeper.domain.board.state.NearMineState
+import next.step.minesweeper.domain.position.Position
 
 class BoardRowsTest : DescribeSpec({
 
@@ -19,7 +20,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.plantMine(BoardPosition(1, 1))
+                rows.plantMine(Position(1, 1))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -63,7 +64,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.notifyMine(BoardArea.of(3, 3).near(BoardPosition(1, 1)))
+                rows.notifyMine(BoardArea.of(3, 3).near(Position(1, 1)))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -171,7 +172,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.uncover(BoardPosition(1, 0), BoardArea.of(3, 3))
+                rows.uncover(Position(1, 0), BoardArea.of(3, 3))
 
                 rows shouldBe BoardRows(
                     listOf(

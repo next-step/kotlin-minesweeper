@@ -10,6 +10,7 @@ import next.step.minesweeper.domain.board.state.NearMineState
 import next.step.minesweeper.domain.mine.MineCount
 import next.step.minesweeper.domain.mine.generator.MineGenerator
 import next.step.minesweeper.domain.position.Position
+import next.step.minesweeper.domain.position.Positions
 import org.junit.jupiter.api.assertThrows
 
 class BoardTest : DescribeSpec({
@@ -17,9 +18,9 @@ class BoardTest : DescribeSpec({
     describe("Board") {
         val area = BoardArea(BoardHeight(3), BoardWidth(3))
         val mineGenerator = TestMineGenerator(
-            BoardPosition(1, 0),
-            BoardPosition(0, 1),
-            BoardPosition(2, 2),
+            Position(1, 0),
+            Position(0, 1),
+            Position(2, 2),
         )
         context("생성") {
             it("지뢰 생성기를 통해 주어진 개수만큼 지뢰를 심음") {
@@ -67,10 +68,10 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     smallArea,
                     TestMineGenerator(
-                        BoardPosition(1, 0),
-                        BoardPosition(0, 1),
-                        BoardPosition(0, 0),
-                        BoardPosition(1, 1),
+                        Position(1, 0),
+                        Position(0, 1),
+                        Position(0, 0),
+                        Position(1, 1),
                     ),
                     MineCount(4),
                 )
@@ -98,9 +99,9 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     area,
                     TestMineGenerator(
-                        BoardPosition(1, 0),
-                        BoardPosition(0, 1),
-                        BoardPosition(2, 2),
+                        Position(1, 0),
+                        Position(0, 1),
+                        Position(2, 2),
                     ),
                     MineCount(3),
                 )
@@ -143,9 +144,9 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     area,
                     TestMineGenerator(
-                        BoardPosition(1, 0),
-                        BoardPosition(0, 1),
-                        BoardPosition(2, 2),
+                        Position(1, 0),
+                        Position(0, 1),
+                        Position(2, 2),
                     ),
                     MineCount(3),
                 )
@@ -183,7 +184,7 @@ class BoardTest : DescribeSpec({
     }
 })
 
-class TestMineGenerator(private vararg val positions: BoardPosition) : MineGenerator {
-    override fun generate(area: BoardArea, count: MineCount): BoardPositions =
-        BoardPositions(positions.toSet())
+class TestMineGenerator(private vararg val positions: Position) : MineGenerator {
+    override fun generate(area: BoardArea, count: MineCount): Positions =
+        Positions(positions.toSet())
 }

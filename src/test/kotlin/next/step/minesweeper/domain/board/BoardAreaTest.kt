@@ -6,6 +6,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.position.Position
+import next.step.minesweeper.domain.position.Positions
 import org.junit.jupiter.api.assertThrows
 
 class BoardAreaTest : DescribeSpec({
@@ -15,14 +16,14 @@ class BoardAreaTest : DescribeSpec({
 
         context("position이 area를 벗어나면 false") {
             withData(
-                listOf(BoardPosition(-1, -1), BoardPosition(3, 3)),
+                listOf(Position(-1, -1), Position(3, 3)),
             ) { position ->
                 (position in area) shouldBe false
             }
         }
         context("position이 area안에 있으면 true") {
             withData(
-                listOf(BoardPosition(0, 0), BoardPosition(2, 2)),
+                listOf(Position(0, 0), Position(2, 2)),
             ) { position ->
                 (position in area) shouldBe true
             }
@@ -68,17 +69,17 @@ class BoardAreaTest : DescribeSpec({
                 }
             }
             it("선택된 위치가 area를 벗어나지 않으면 BoardPosition으로 리턴") {
-                area.select { Position(0, 0) } shouldBe BoardPosition(0, 0)
+                area.select { Position(0, 0) } shouldBe Position(0, 0)
             }
         }
 
         context("near") {
             it("보드 위에 있는 위치의 주변 위치를 제공") {
-                area.near(BoardPosition(0, 0)) shouldBe BoardPositions(
+                area.near(Position(0, 0)) shouldBe Positions(
                     setOf(
-                        BoardPosition(1, 1),
-                        BoardPosition(0, 1),
-                        BoardPosition(1, 0),
+                        Position(1, 1),
+                        Position(0, 1),
+                        Position(1, 0),
                     ),
                 )
             }
