@@ -6,7 +6,7 @@ enum class CellView(
     val cellType: CellType,
     val printView: String,
 ) {
-    NONE_CLICK_CELL(CellType.NONE, "C"),
+    NONE_CLICK_CELL(CellType.UNKNOWN, "C"),
     MINE_CELL(CellType.MINE, "*"),
     ;
 

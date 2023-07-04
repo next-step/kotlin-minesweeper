@@ -3,7 +3,7 @@ package minesweeper.domain.cell
 import java.lang.IllegalArgumentException
 
 enum class CellType {
-    NONE,
+    UNKNOWN,
     ZERO,
     ONE,
     TWO,

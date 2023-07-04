@@ -7,13 +7,13 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.cell.CellType.MINE
-import minesweeper.domain.cell.CellType.NONE
+import minesweeper.domain.cell.CellType.UNKNOWN
 
 class CellTest : FunSpec({
 
     context("isMine") {
         forAll(
-            row(NONE, false),
+            row(UNKNOWN, false),
             row(MINE, true),
         ) { input, expected ->
             test("${input}타입인 cell은 mine이 ${expected}이다.") {
@@ -31,7 +31,7 @@ class CellTest : FunSpec({
         }
 
         test("지뢰로 변경한다.") {
-            val cell = Cell(0, 0, NONE)
+            val cell = Cell(0, 0, UNKNOWN)
             cell.changeToMine()
             val actual = cell.cellType
 
