@@ -3,13 +3,11 @@ package domain.map
 import domain.MineSweeperInitProperty
 import domain.cell.Cell
 import domain.math.toPositive
-import domain.mine.MockMineCoordinatesCreator
 import domain.mine.RealMineCoordinatesCreator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import utils.nestedList
 
 class MineMapTest : BehaviorSpec({
 
@@ -50,7 +48,7 @@ class MineMapTest : BehaviorSpec({
                 Coordinate(30, 30),
                 Coordinate(40, 45),
             )
-            val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
+            val mineMapFactory = RealMineMapFactory { mockMineCoordinates }
             val mineMap = mineMapFactory.create(
                 mineSweeperInitProperty = mineSweeperInitProperty,
             )
@@ -82,7 +80,7 @@ class MineMapTest : BehaviorSpec({
             Coordinate(2, 3),
             Coordinate(3, 3),
         )
-        val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
+        val mineMapFactory = RealMineMapFactory { mockMineCoordinates }
         val cells = mineMapFactory.create(
             mineSweeperInitProperty = mineSweeperInitProperty,
         ).cells
