@@ -1,14 +1,13 @@
 package mine.sweeper.domain
 
-class Vulture(val mines: Int) {
-    init {
-        require(mines > 0)
-    }
+import mine.sweeper.PositionManager
+import mine.sweeper.domain.value.MineCount
 
-    fun layingMines(map: SweeperMap) {
-        repeat(mines) {
-            val (height, width) = map.randomField()
-            map.setMine(height, width)
-        }
+class Vulture(mapSize: MapSize) {
+
+    private val positionManager = PositionManager(mapSize)
+
+    fun findMinesPosition(mineCount: MineCount): Set<Position> {
+        return positionManager.takePositionBy(mineCount)
     }
 }
