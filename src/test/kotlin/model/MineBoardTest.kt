@@ -100,22 +100,24 @@ class MineBoardTest : StringSpec({
             FOUR_ELEMENTS_CLEAN_MINE_BOARD.doesNotContainsMark(it.first) shouldBe it.second
         }
     }
-})
+}) {
+    companion object {
+        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
+            mapOf(
+                Position(0, 0) to Safety(),
+                Position(1, 1) to Safety(),
+                Position(0, 1) to Safety(),
+                Position(1, 0) to Safety(),
+            )
+        )
 
-val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
-    mapOf(
-        Position(0, 0) to Safety(),
-        Position(1, 1) to Safety(),
-        Position(0, 1) to Safety(),
-        Position(1, 0) to Safety(),
-    )
-)
-
-val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
-    mapOf(
-        Position(0, 0) to Safety(),
-        Position(1, 1) to Mine(),
-        Position(0, 1) to Safety(),
-        Position(1, 0) to Mine(),
-    )
-)
+        private val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
+            mapOf(
+                Position(0, 0) to Safety(),
+                Position(1, 1) to Mine(),
+                Position(0, 1) to Safety(),
+                Position(1, 0) to Mine(),
+            )
+        )
+    }
+}
