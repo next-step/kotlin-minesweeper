@@ -42,9 +42,9 @@ class RealMineMapFactory(
             y = column,
         )
         return if (mineCoordinates.contains(coordinate)) {
-            Cell.Mine
+            Cell.hideMine()
         } else {
-            Cell.Ground(
+            Cell.hideGround(
                 aroundMineCount = coordinate.calculateAroundMineCount(mineCoordinates),
             )
         }
