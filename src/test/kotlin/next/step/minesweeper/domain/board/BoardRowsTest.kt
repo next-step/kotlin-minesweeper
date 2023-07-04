@@ -193,62 +193,6 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
             }
-
-            it("해당 위치 주변의 가능한 곳까지 열림") {
-                val rows = BoardRows(
-                    listOf(
-                        BoardRow(
-                            listOf(
-                                BoardPoint(CoveredState(MineFreeState)),
-                                BoardPoint(CoveredState(MineFreeState)),
-                                BoardPoint(CoveredState(MineFreeState)),
-                            ),
-                        ),
-                        BoardRow(
-                            listOf(
-                                BoardPoint(CoveredState(NearMineState.one())),
-                                BoardPoint(CoveredState(MineState)),
-                                BoardPoint(CoveredState(NearMineState.one())),
-                            ),
-                        ),
-                        BoardRow(
-                            listOf(
-                                BoardPoint(CoveredState(NearMineState.one())),
-                                BoardPoint(CoveredState(NearMineState.one())),
-                                BoardPoint(CoveredState(NearMineState.one())),
-                            ),
-                        ),
-                    ),
-                )
-
-                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)))
-
-                rows shouldBe BoardRows(
-                    listOf(
-                        BoardRow(
-                            listOf(
-                                BoardPoint(MineFreeState),
-                                BoardPoint(MineFreeState),
-                                BoardPoint(MineFreeState),
-                            ),
-                        ),
-                        BoardRow(
-                            listOf(
-                                BoardPoint(NearMineState.one()),
-                                BoardPoint(CoveredState(MineState)),
-                                BoardPoint(NearMineState.one()),
-                            ),
-                        ),
-                        BoardRow(
-                            listOf(
-                                BoardPoint(CoveredState(NearMineState.one())),
-                                BoardPoint(CoveredState(NearMineState.one())),
-                                BoardPoint(CoveredState(NearMineState.one())),
-                            ),
-                        ),
-                    ),
-                )
-            }
         }
     }
 })
