@@ -157,7 +157,7 @@ class MineBoardTest : FunSpec({
 
             actual.height shouldBe 2
             actual.width shouldBe 2
-            actual.cellInfos shouldHaveSize 4
+            actual.values shouldHaveSize 4
         }
     }
 

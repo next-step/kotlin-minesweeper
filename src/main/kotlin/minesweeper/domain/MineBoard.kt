@@ -27,7 +27,7 @@ class MineBoard(
     }
 
     fun currentBoard(): CellInfos =
-        CellInfos(height = height, width = width, cellInfos = cells.map { CellInfo.from(it) })
+        CellInfos(height = height, width = width, values = cells.map { CellInfo.from(it) })
 
     private fun validateMineCount(mineCount: Int) {
         require(mineCount >= MINIMUM_MINE_COUNT) { "지뢰 갯수는 ${MINIMUM_MINE_COUNT}이상이어야 합니다." }

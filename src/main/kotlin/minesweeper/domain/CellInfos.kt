@@ -6,7 +6,7 @@ import minesweeper.domain.cell.CellType
 data class CellInfos(
     val height: Int,
     val width: Int,
-    val cellInfos: List<CellInfo>,
+    val values: List<CellInfo>,
 )
 
 data class CellInfo(

@@ -8,7 +8,7 @@ private const val MINE_BOARD_COLUMN_DELIMITER = " "
 
 fun printMineBoardView(cellInfos: CellInfos) {
     println("지뢰찾기 게임 시작")
-    println(parseMineBoardView(cellInfos.cellInfos, cellInfos.height, cellInfos.width))
+    println(parseMineBoardView(cellInfos.values, cellInfos.height, cellInfos.width))
 }
 
 private fun parseMineBoardView(cellInfos: List<CellInfo>, height: Int, width: Int): String =
