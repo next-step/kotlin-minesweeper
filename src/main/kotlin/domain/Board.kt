@@ -3,9 +3,7 @@ package domain
 class Board(
     private val rows: List<Row>,
 ) : List<Row> by rows {
-    private val height: Int = rows.size
-    private val width: Int = rows.first().size
-    private val mineCount: Int = Coordinates.all(height, width).count { hasMine(it) }
+    private val mineCount: Int = Coordinates.all(height(), width()).count { hasMine(it) }
 
     fun hasMine(coordinate: Coordinate): Boolean {
         return cellOf(coordinate).hasMine
@@ -20,7 +18,7 @@ class Board(
             return
         }
 
-        val aroundCoordinates = Coordinates.around(coordinate).filter { it.isOnBoard(height, width) }
+        val aroundCoordinates = Coordinates.around(coordinate).filter { it.isOnBoard(height(), width()) }
         val aroundMineCount = AroundMineCount.of(aroundCoordinates.count { hasMine(it) })
 
         cellOf(coordinate).open(aroundMineCount)
@@ -31,12 +29,16 @@ class Board(
     }
 
     fun isRunning(): Boolean {
-        val coordinates = Coordinates.all(height, width)
+        val coordinates = Coordinates.all(height(), width())
         val closedCount = coordinates.count { isClosed(it) }
         return closedCount > mineCount
     }
 
     private fun cellOf(coordinate: Coordinate): Cell = rows[coordinate.row][coordinate.col]
+    
+    private fun height(): Int = rows.size
+
+    private fun width(): Int = rows.first().size
 
     companion object {
         fun create(height: Int, width: Int, mineCount: Int, mineCoordinateGenerator: MineCoordinateGenerator): Board {

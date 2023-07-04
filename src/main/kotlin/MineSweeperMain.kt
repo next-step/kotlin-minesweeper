@@ -14,11 +14,10 @@ fun main() {
     val board = Board.create(height, width, mineCount, mineCoordinateGenerator)
 
     ResultView.printStartGame()
-    val isClear = playGame(board)
-    if (isClear) ResultView.printWinGame()
+    playGame(board)
 }
 
-private fun playGame(board: Board): Boolean {
+private fun playGame(board: Board) {
     while (board.isRunning()) {
         ResultView.printBoard(BoardVO(board))
 
@@ -26,9 +25,9 @@ private fun playGame(board: Board): Boolean {
         val coordinate = Coordinate(row, col)
         if (board.hasMine(coordinate)) {
             ResultView.printLoseGame()
-            return false
+            return
         }
         board.open(coordinate)
     }
-    return true
+    ResultView.printWinGame()
 }
