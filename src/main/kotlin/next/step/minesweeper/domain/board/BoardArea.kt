@@ -18,7 +18,11 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
     fun <R, P> rangeMap(row: (List<P>) -> R, point: (Int, Int) -> P): List<R> =
         height.rangeMap { y -> row(width.rangeMap { point(it, y) }) }
 
-    fun select(selector: () -> Position): BoardPosition = BoardPosition(selector(), this)
+    fun select(selector: () -> Position): BoardPosition {
+        val position = selector()
+        requireContains(position.x, position.y)
+        return BoardPosition(position, this)
+    }
 
     companion object {
         fun of(height: Int, width: Int): BoardArea = BoardArea(BoardHeight(height), BoardWidth(width))

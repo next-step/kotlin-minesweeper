@@ -5,10 +5,6 @@ import next.step.minesweeper.domain.position.Position
 
 data class BoardPosition(private val position: Position, private val area: BoardArea) {
 
-    init {
-        area.requireContains(position.x, position.y)
-    }
-
     fun x(): Int = position.x
 
     fun y(): Int = position.y
