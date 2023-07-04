@@ -9,12 +9,7 @@ class Cell(
     private val isDisplay: Boolean = true,
 ) {
     var cellType: CellType = cellType
-        get(): CellType {
-            if (isDisplay) {
-                return field
-            }
-            return CellType.UNKNOWN
-        }
+        get() = cellType(field)
         private set
 
     constructor(row: Int, column: Int, cellType: CellType, isDisplay: Boolean) :
@@ -33,5 +28,12 @@ class Cell(
 
     fun changeToCellType(cellType: CellType) {
         this.cellType = cellType
+    }
+
+    private fun cellType(cellType: CellType): CellType {
+        if (isDisplay) {
+            return cellType
+        }
+        return CellType.UNKNOWN
     }
 }
