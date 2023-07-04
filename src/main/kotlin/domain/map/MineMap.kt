@@ -9,4 +9,8 @@ class MineMap(
     fun capture(): MapCapture {
         return MapCapture(cells.map { it.toList() })
     }
+
+    operator fun get(coordinate: Coordinate): Cell {
+        return cells[coordinate.y][coordinate.x]
+    }
 }

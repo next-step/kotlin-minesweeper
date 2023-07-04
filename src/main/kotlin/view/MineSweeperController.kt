@@ -1,6 +1,7 @@
 package view
 
 import domain.game.MineSweeperGameFactory
+import domain.game.OpenResult
 
 class MineSweeperController(
     private val inputView: MineSweeperInputView,
@@ -10,8 +11,18 @@ class MineSweeperController(
 
     fun start() {
         val mineSweeperInitProperty = inputView.readInitProperty()
-        val mineSweeperGame = mineSweeperGameFactory.create(mineSweeperInitProperty)
         resultView.displayStartMineSweeperGameMessage()
-        inputView.readOpenCoordinate()
+
+        val mineSweeperGame = mineSweeperGameFactory.create(mineSweeperInitProperty)
+
+        while (true) {
+            val coordinate = inputView.readOpenCoordinate()
+            when (mineSweeperGame.open(coordinate)) {
+                is OpenResult.MineOpened -> {
+                    resultView.displayLoseGameMessage()
+                    return
+                }
+            }
+        }
     }
 }

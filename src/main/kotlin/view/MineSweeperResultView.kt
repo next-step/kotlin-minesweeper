@@ -18,6 +18,10 @@ class MineSweeperResultView {
         println(text)
     }
 
+    fun displayLoseGameMessage() {
+        println("Lose Game.")
+    }
+
     private fun List<List<Cell>>.makeMapText(): String {
         return joinToString("\n") { row -> row.makeRowText() }
     }

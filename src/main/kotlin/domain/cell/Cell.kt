@@ -5,6 +5,12 @@ sealed class Cell {
     abstract val openState: OpenState
 
     abstract fun open(): Cell
+    fun isMine(): Boolean {
+        return when (this) {
+            is Mine -> true
+            is Ground -> false
+        }
+    }
 
     data class Mine(
         override val openState: OpenState,
