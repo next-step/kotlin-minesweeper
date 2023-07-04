@@ -1,12 +1,9 @@
 package minesweeper.domain
 
-import java.util.SortedSet
-
 class Board(
-    val cells: SortedSet<Cell>,
+    val cells: Cells,
     val height: Int,
     val width: Int,
-    val countOfMine: Int,
 ) {
     companion object {
         fun of(height: Int, width: Int, countOfMine: Int): Board {
@@ -16,10 +13,21 @@ class Board(
 
             val points = Point.square(height, width)
             val minePoints = points.shuffled().take(countOfMine)
-            val cells = points
+            val cells = Cells()
+
+            points
                 .map { if (minePoints.contains(it)) MineCell(it) else ClearCell(it) }
-                .toSortedSet()
-            return Board(cells = cells, height = height, width = width, countOfMine = countOfMine)
+                .forEach { cells.add(it) }
+
+            minePoints.flatMap { it.adjacent() }
+                .filterNot { it.x == width || it.y == height }
+                .forEach { adjacentPoint ->
+                    val cell = cells.at(adjacentPoint)
+                    cells.replace(adjacentPoint, cell.increase())
+                }
+
+            return Board(cells = cells, height = height, width = width)
         }
+
     }
 }

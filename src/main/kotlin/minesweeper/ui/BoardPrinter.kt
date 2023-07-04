@@ -2,6 +2,7 @@ package minesweeper.ui
 
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.Point
 
 object BoardPrinter {
     const val MINE_CELL = "*"
@@ -10,8 +11,11 @@ object BoardPrinter {
     fun print(board: Board) {
         println("지뢰찾기 게임 시작")
 
-        board.cells.forEach { cell ->
-            if (cell.mine) print(MINE_CELL) else print(CLEAR_CELL)
+        val points = Point.square(board.height, board.width)
+        val cells = board.cells
+        points.forEach { point ->
+            val cell = cells.at(point)
+            if (cell.mine) print(MINE_CELL) else print("${cell.count}")
             if (isLastCell(board.width, cell)) println() else print(BETWEEN_CELL)
         }
     }
