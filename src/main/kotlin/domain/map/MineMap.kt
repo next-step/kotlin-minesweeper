@@ -15,6 +15,12 @@ class MineMap(
         set(coordinate, newCell)
     }
 
+    fun isIn(coordinate: Coordinate): Boolean {
+        val yDeadLine = cells.lastIndex
+        val xDeadLine = cells.first().lastIndex
+        return coordinate.y <= yDeadLine && coordinate.x <= xDeadLine
+    }
+
     operator fun get(coordinate: Coordinate): Cell {
         return cells[coordinate.y][coordinate.x]
     }
