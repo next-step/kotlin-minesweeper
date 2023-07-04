@@ -25,13 +25,13 @@ class MineSweeperBoardExplorer {
 
     private fun visitAround(position: Position, board: MineSweeperBoard) {
         val mineSweeperPosition = board.find(position)
-        if (isMustVisitPosition(mineSweeperPosition)) {
+        if (isVisitAroundPosition(mineSweeperPosition)) {
             val visitedPositions = board.visitAround(position)
             visitedPositions.forEach(visitQueue::push)
         }
     }
 
-    private fun isMustVisitPosition(mineSweeperPosition: MineSweeperPosition): Boolean =
+    private fun isVisitAroundPosition(mineSweeperPosition: MineSweeperPosition): Boolean =
         mineSweeperPosition is EmptyPosition &&
             mineSweeperPosition.calculateAroundMineQuantity() == AROUND_MINE_QUANTITY_OF_AROUND_VISIT_TARGET
 
