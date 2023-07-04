@@ -11,4 +11,8 @@ data class Coordinate(
     fun right(): Coordinate = Coordinate(row, column + 1)
 
     fun left(): Coordinate = Coordinate(row, column - 1)
+
+    companion object {
+        fun List<Coordinate>.isContains(cell: Cell): Boolean = this.contains(cell.coordinate)
+    }
 }
