@@ -23,6 +23,20 @@ class CellTest : FunSpec({
         }
     }
 
+    context("cellType") {
+        forAll(
+            row(false, UNKNOWN),
+            row(true, MINE),
+        ) { input, expected ->
+            test("isDisplayable이 ${input}일 때 ${expected}를 반환한다.") {
+                val cell = Cell(0, 0, MINE, input)
+                val actual = cell.cellType
+
+                actual shouldBe expected
+            }
+        }
+    }
+
     context("changeToMine") {
         test("이미 지뢰라면 예외가 발생한다.") {
             val cell = Cell(0, 0, MINE)

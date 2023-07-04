@@ -86,6 +86,11 @@ C C C C C C C C C C
 - [x] 0~8은 적정 cell type을 반환한다.
 - [x] 조건에 없는 경우 예외가 발생한다.
 
+### cell
+- 현재는 모든 display가 open되어있다.
+- [x] display가 가능할 때 실제 cell type을 반환한다.
+- [x] display가 불가능일 때 UNKNOWN을 반환한다.
+
 ### mine board
 - [x] 지뢰를 둘 때 자리에 주변 지뢰 갯수를 계산해 type을 지정해두어야 한다.
 - [x] 본인의 사각형 범위에 존재하는 지뢰의 수가 본인의 숫자다.
