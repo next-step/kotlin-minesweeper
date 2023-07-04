@@ -5,4 +5,6 @@ data class Coordinate(
     val column: Int,
 ) {
     fun up(): Coordinate = Coordinate(row - 1, column)
+
+    fun down(): Coordinate = Coordinate(row + 1, column)
 }

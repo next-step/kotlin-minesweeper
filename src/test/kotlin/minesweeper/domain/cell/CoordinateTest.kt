@@ -11,4 +11,11 @@ class CoordinateTest : FunSpec({
             actual shouldBe Coordinate(0, 1)
         }
     }
+
+    context("down") {
+        test("row위치가 아래로 내려간다.") {
+            val actual = Coordinate(1, 1).down()
+            actual shouldBe Coordinate(2, 1)
+        }
+    }
 })
