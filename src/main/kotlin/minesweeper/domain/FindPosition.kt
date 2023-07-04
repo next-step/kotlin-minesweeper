@@ -1,4 +1,4 @@
-package minesweeper.enums
+package minesweeper.domain
 
 enum class FindPosition(val row: Int, val col: Int) {
     LEFT_UP(-1, -1),
