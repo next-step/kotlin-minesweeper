@@ -1,6 +1,9 @@
 package minesweeper.controller
 
+import minesweeper.domain.Cols
+import minesweeper.domain.MineValue
 import minesweeper.domain.Minesweeper
+import minesweeper.domain.Rows
 import minesweeper.view.enterCols
 import minesweeper.view.enterMineCount
 import minesweeper.view.enterRows
@@ -14,19 +17,7 @@ class MineSweeperController {
         val mineCount = enterMineCount()
 
         printStart()
-        val minesweeper = Minesweeper(rows, cols, mineCount)
-        printMineSweeperResult(minesweeper.minesweeperArray)
-    }
-
-    private fun printMineSweeperResult(minesweeperArray: Array<IntArray>) {
-        minesweeperArray.forEach {
-            printResult(
-                it.contentToString()
-                    .replace("0", "C")
-                    .replace("1", "*")
-                    .replace("[", "")
-                    .replace("]", "")
-            )
-        }
+        val minesweeper = Minesweeper(Rows(rows), Cols(cols), MineValue(mineCount, rows, cols))
+        printResult(minesweeper.minesweeperArray)
     }
 }
