@@ -23,6 +23,10 @@ data class BoardPoint(private var state: BoardPointState) {
 
     fun canUncover(): Boolean = state is CoveredState && state.hasNoMine()
 
+    fun uncoverIfPossible() {
+        if (canUncover()) uncover()
+    }
+
     fun isMine(): Boolean = state == MineState
 
     fun isMineFree(): Boolean = state == MineFreeState

@@ -96,5 +96,21 @@ class BoardPointTest : DescribeSpec({
                 boardPoint.isMineFree() shouldBe true
             }
         }
+        context("uncover if possible") {
+            it("열 수 있으면 연다.") {
+                val boardPoint = BoardPoint.mineFree()
+
+                boardPoint.uncoverIfPossible()
+
+                boardPoint shouldBe BoardPoint(MineFreeState)
+            }
+            it("열 수 없으면 열지 않는다.") {
+                val boardPoint = BoardPoint(CoveredState(MineState))
+
+                boardPoint.uncoverIfPossible()
+
+                boardPoint shouldBe BoardPoint(CoveredState(MineState))
+            }
+        }
     }
 })
