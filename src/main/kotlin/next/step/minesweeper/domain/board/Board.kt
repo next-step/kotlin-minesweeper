@@ -5,7 +5,7 @@ import next.step.minesweeper.domain.mine.generator.MineGenerator
 import next.step.minesweeper.domain.position.Position
 import next.step.minesweeper.utils.retryOnFailure
 
-data class Board(private val rows: BoardRows, val area: BoardArea) {
+data class Board(private val rows: BoardRows, private val area: BoardArea) {
 
     fun play(
         selector: () -> Position,
