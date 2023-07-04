@@ -16,6 +16,8 @@ class MineBoardTest : FunSpec({
     context("placeMine") {
         test("지뢰 갯수가 0보다 작은 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
+                0,
+                0,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                 ),
@@ -27,6 +29,8 @@ class MineBoardTest : FunSpec({
 
         test("지뢰 갯수가 cell 갯수보다 큰 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
+                0,
+                0,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -41,6 +45,8 @@ class MineBoardTest : FunSpec({
 
         test("이미 지뢰가 배치되어 있는 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
+                0,
+                0,
                 listOf(
                     Cell(Row(0), Column(0), CellType.MINE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -61,6 +67,8 @@ class MineBoardTest : FunSpec({
                 Cell(Row(1), Column(1), CellType.NONE),
             )
             val mineBoard = MineBoard(
+                0,
+                0,
                 cells = cells,
             ) { cells[1] }
             mineBoard.placeMine(1)
@@ -72,6 +80,8 @@ class MineBoardTest : FunSpec({
 
         test("랜덤한 위치에 지뢰를 배치한다.") {
             val mineBoard = MineBoard(
+                0,
+                0,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -89,6 +99,8 @@ class MineBoardTest : FunSpec({
     context("currentBoard") {
         test("현재 맵의 정보를 반환한다.") {
             val mineBoard = MineBoard(
+                0,
+                0,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
