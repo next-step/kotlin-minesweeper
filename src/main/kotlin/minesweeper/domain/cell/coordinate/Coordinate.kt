@@ -1,4 +1,4 @@
-package minesweeper.domain.cell
+package minesweeper.domain.cell.coordinate
 
 data class Coordinate(
     val row: Row,

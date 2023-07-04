@@ -2,6 +2,9 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.cell.CellType.MINE
 import minesweeper.domain.cell.CellType.NONE
+import minesweeper.domain.cell.coordinate.Column
+import minesweeper.domain.cell.coordinate.Coordinate
+import minesweeper.domain.cell.coordinate.Row
 
 class Cell(
     val coordinate: Coordinate,

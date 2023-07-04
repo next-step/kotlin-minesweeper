@@ -3,6 +3,7 @@ package minesweeper.domain.cell
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.throwable.shouldHaveMessage
+import minesweeper.domain.cell.coordinate.Column
 
 class ColumnTest : FunSpec({
 
