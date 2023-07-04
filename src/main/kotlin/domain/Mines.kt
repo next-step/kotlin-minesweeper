@@ -1,4 +1,3 @@
 package domain
 
-data class Mines(private val values: List<Location>)
-
+data class Mines(val values: List<Location>)

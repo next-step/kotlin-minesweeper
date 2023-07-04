@@ -1,7 +1,6 @@
 package controller
 
-import domain.MineGenerator
-import domain.Mines
+import domain.MinesWeeper
 import view.InputView
 
 fun main() {
@@ -9,5 +8,5 @@ fun main() {
     val width = InputView.getWidth()
     val mineCounts = InputView.getMineCounts()
 
-    val game = MineGenerator.create(height, width, mineCounts)
+    val game = MinesWeeper.of(height, width, mineCounts)
 }

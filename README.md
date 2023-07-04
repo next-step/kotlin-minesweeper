@@ -37,5 +37,5 @@ C C C C C C C C C C
 - [x] 너비를 입력 받는다 - InputView
 - [x] 지뢰 개수를 입력 받는다 - InputView
 - [x] 지뢰위치를 생성한다 - Mines, MineGenerator
-- [ ] 지뢰 게임을 생성한다 - Minesweeper
+- [x] 지뢰 게임을 생성한다 - Minesweeper
 - [ ] 지뢰 게임을 출력한다 - ResultView
