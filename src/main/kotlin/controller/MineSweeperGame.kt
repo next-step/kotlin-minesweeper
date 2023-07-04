@@ -16,8 +16,11 @@ object MineSweeperGame {
     fun start() {
         val mineBoard: MineBoard = MineBoardProvider(InputView.length, InputView.width).mineBoard
         val mineSeeker = CountedMineBoardProvider(
-            MineInstallation(InputView.mineCount, Mine(), ::nextRandomPosition)
-                .installed(mineBoard)
+            MineInstallation(
+                count = InputView.mineCount,
+                mark = Mine(),
+                nextPosition = ::nextRandomPosition
+            ).installedMineBoard(mineBoard)
         )
 
         val result: CountedMineBoard = startMineSweeper(mineSeeker.countedMineBoard)
@@ -32,7 +35,7 @@ object MineSweeperGame {
         var currentCountedMineBoard = countedMineBoard
         OutputView.printStart()
         do {
-            currentCountedMineBoard = MineBoardOpener(currentCountedMineBoard).opened(InputView.openPosition)
+            currentCountedMineBoard = MineBoardOpener(currentCountedMineBoard).openedCountedMineBoard(InputView.openPosition)
             OutputView.printBoard(currentCountedMineBoard)
         } while (currentCountedMineBoard.isClosedMineCountAny && currentCountedMineBoard.isClosedMineAll)
         return currentCountedMineBoard

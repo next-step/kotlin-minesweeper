@@ -1,16 +1,21 @@
 package model.minemark
 
 sealed interface MineMark {
+    val isMineCount: Boolean get() = false
+    val isSafety: Boolean get() = false
+    val isMine: Boolean get() = false
     val openStatus: OpenStatus
     val isOpened: Boolean
         get() = openStatus == OpenStatus.OPENED
-    val opened: MineMark
+    val openedMark: MineMark
 
     fun next(count: Int): MineMark
 }
 
 data class Safety(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
+    override val isSafety: Boolean = true
+
+    override val openedMark: MineMark
         get() = Safety(OpenStatus.OPENED)
 
     override fun next(count: Int): MineMark {
@@ -19,7 +24,9 @@ data class Safety(override val openStatus: OpenStatus = OpenStatus.CLOSED) : Min
 }
 
 data class Mine(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
+    override val isMine: Boolean = true
+
+    override val openedMark: MineMark
         get() = Mine(OpenStatus.OPENED)
 
     override fun next(count: Int): MineMark {
@@ -28,7 +35,9 @@ data class Mine(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineM
 }
 
 data class MineCount(val count: Int, override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
+    override val isMineCount: Boolean = true
+
+    override val openedMark: MineMark
         get() = MineCount(count, OpenStatus.OPENED)
 
     init {

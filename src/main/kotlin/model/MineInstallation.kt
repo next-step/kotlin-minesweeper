@@ -12,7 +12,7 @@ class MineInstallation(
         require(count > 0) { "install count must be positive. but provided `$count`" }
     }
 
-    fun installed(mineBoard: MineBoard): InstalledMineBoard {
+    fun installedMineBoard(mineBoard: MineBoard): InstalledMineBoard {
         validateMineBoardSize(mineBoard)
         var currentMineBoard: MineBoard = mineBoard
         repeat(count) {

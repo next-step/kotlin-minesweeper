@@ -19,8 +19,12 @@ data class CountedMineBoard(val mineBoard: MineBoard) {
         return mineBoard.mark(position)
     }
 
-    fun opened(positions: Collection<Position>): CountedMineBoard {
-        return CountedMineBoard(mineBoard.opened(positions))
+    fun isMineCount(position: Position): Boolean {
+        return mineBoard.mark(position).isMineCount
+    }
+
+    fun openedMineBoard(positions: Collection<Position>): CountedMineBoard {
+        return CountedMineBoard(mineBoard.openedPositionsMineBoard(positions))
     }
 
     companion object {

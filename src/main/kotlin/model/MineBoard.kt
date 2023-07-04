@@ -1,9 +1,6 @@
 package model
 
-import model.minemark.Mine
-import model.minemark.MineCount
 import model.minemark.MineMark
-import model.minemark.Safety
 
 class MineBoard(elements: Map<Position, MineMark>) {
 
@@ -17,8 +14,14 @@ class MineBoard(elements: Map<Position, MineMark>) {
     val size = elements.size
     val maxXPosition: Int by lazy { elements.keys.maxOf { it.x } }
     val maxYPosition: Int by lazy { elements.keys.maxOf { it.y } }
-    val isClosedMineCountAny: Boolean by lazy { elements.values.filterIsInstance<MineCount>().any { !it.isOpened } }
-    val isClosedMineAll: Boolean by lazy { elements.values.filterIsInstance<Mine>().all { !it.isOpened } }
+    val isClosedMineCountAny: Boolean by lazy { filteredMineCountElements(elements).any { !it.isOpened } }
+    val isClosedMineAll: Boolean by lazy { filteredMineElements(elements).all { !it.isOpened } }
+
+    private fun filteredMineCountElements(elements: Map<Position, MineMark>) =
+        elements.values.filter { it.isMineCount }
+
+    private fun filteredMineElements(elements: Map<Position, MineMark>) =
+        elements.values.filter { it.isMine }
 
     fun contains(position: Position): Boolean {
         return elements.containsKey(position)
@@ -38,11 +41,11 @@ class MineBoard(elements: Map<Position, MineMark>) {
         return elements.values.contains(mark).not()
     }
 
-    fun opened(positions: Collection<Position>): MineBoard {
+    fun openedPositionsMineBoard(positions: Collection<Position>): MineBoard {
         var current = this
         positions.forEach {
             validateContainsPosition(it)
-            current = current.replacedMark(it, mark(it).opened)
+            current = current.replacedMark(it, mark(it).openedMark)
         }
         return current
     }
@@ -58,7 +61,7 @@ class MineBoard(elements: Map<Position, MineMark>) {
     fun mineCount(positions: Collection<Position>): Int {
         return positions.count {
             validateContainsPosition(it)
-            elements[it]?.javaClass == Mine::class.java
+            elements[it]!!.isMine
         }
     }
 
@@ -67,7 +70,7 @@ class MineBoard(elements: Map<Position, MineMark>) {
         element: Map.Entry<Position, MineMark>,
         countByPosition: (Position) -> Int,
     ): MineBoard {
-        if (element.value is Safety) {
+        if (element.value.isSafety) {
             return mineBoard.replacedMark(element.key, element.value.next(countByPosition(element.key)))
         }
         return mineBoard
