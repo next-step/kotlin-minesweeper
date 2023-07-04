@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineCount(
+data class MineCount(
     private val minesweeperArray: Array<IntArray>,
     private val rows: Rows,
     private val cols: Cols
@@ -46,5 +46,23 @@ class MineCount(
         }
 
         return minesweeperArray[row][col] == -1
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MineCount
+
+        if (!minesweeperArray.contentDeepEquals(other.minesweeperArray)) return false
+        if (rows != other.rows) return false
+        return cols == other.cols
+    }
+
+    override fun hashCode(): Int {
+        var result = minesweeperArray.contentDeepHashCode()
+        result = 31 * result + rows.hashCode()
+        result = 31 * result + cols.hashCode()
+        return result
     }
 }

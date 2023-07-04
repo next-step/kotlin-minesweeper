@@ -9,7 +9,7 @@ class Minesweeper(rows: Rows, cols: Cols, mine: MineValue) {
         val colsValue = cols.value
 
         minesweeperArray = Array(rowsValue) { IntArray(colsValue) }
-        minePositions = MinePositions(rowsValue, colsValue, mine.value)
+        minePositions = MinePositions(rows, cols, mine.value)
 
         for (minePosition in minePositions.minePositions) {
             minesweeperArray[minePosition.rowPosition][minePosition.colPosition] = -1
