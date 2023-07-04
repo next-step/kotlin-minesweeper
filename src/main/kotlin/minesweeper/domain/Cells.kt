@@ -18,12 +18,12 @@ value class Cells(val values: List<Cell>) {
     }
 
     companion object {
-        fun empty(size: Int): Cells {
-            return Cells(List(size) { Cell() })
+        fun normal(size: Int): Cells {
+            return Cells(List(size) { Normal() })
         }
 
         fun mine(size: Int): Cells {
-            return Cells(List(size) { Cell(isMine = true) })
+            return Cells(List(size) { Mine() })
         }
     }
 }

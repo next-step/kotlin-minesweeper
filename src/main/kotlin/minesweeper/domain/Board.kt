@@ -28,11 +28,11 @@ class Board(
             width: PositiveInt,
             mineCount: PositiveInt,
         ): Board {
-            val emptyCells: Cells = Cells.empty((height * width - mineCount).value)
-            val mineCells: Cells = Cells.mine(mineCount.value)
+            val normals: Cells = Cells.normal((height * width - mineCount).value)
+            val mines: Cells = Cells.mine(mineCount.value)
 
             return Board(
-                cells = (emptyCells + mineCells).shuffled().chunked(width.value),
+                cells = (normals + mines).shuffled().chunked(width.value),
             )
         }
     }

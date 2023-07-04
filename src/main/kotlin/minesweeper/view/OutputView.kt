@@ -3,6 +3,8 @@ package minesweeper.view
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
 import minesweeper.domain.Cells
+import minesweeper.domain.Mine
+import minesweeper.domain.Normal
 
 object OutputView {
     fun printGameStartMessage() {
@@ -23,9 +25,9 @@ object OutputView {
     }
 
     private fun Cell.shape(): Char {
-        return when {
-            isMine -> '*'
-            else -> 'C'
+        return when (this) {
+            is Mine -> '*'
+            is Normal -> 'C'
         }
     }
 }

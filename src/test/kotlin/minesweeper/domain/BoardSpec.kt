@@ -13,8 +13,8 @@ class BoardSpec : DescribeSpec(
                     shouldNotThrowAny {
                         Board(
                             cells = listOf(
-                                Cells.empty(3),
-                                Cells.empty(3),
+                                Cells.normal(3),
+                                Cells.normal(3),
                             ),
                         )
                     }
@@ -36,7 +36,7 @@ class BoardSpec : DescribeSpec(
                     shouldThrowExactly<IllegalArgumentException> {
                         Board(
                             cells = listOf(
-                                Cells.empty(0),
+                                Cells.normal(0),
                             ),
                         )
                     }
@@ -48,8 +48,8 @@ class BoardSpec : DescribeSpec(
                     shouldThrowExactly<IllegalArgumentException> {
                         Board(
                             cells = listOf(
-                                Cells.empty(3),
-                                Cells.empty(4),
+                                Cells.normal(3),
+                                Cells.normal(4),
                             ),
                         )
                     }
@@ -86,7 +86,7 @@ class BoardSpec : DescribeSpec(
                 it("보드 내 지뢰의 수는 5개이다.") {
                     var mineCellCount = 0
                     board.cells.forEach { row ->
-                        mineCellCount += row.values.filter { it.isMine }.size
+                        mineCellCount += row.values.filterIsInstance<Mine>().size
                     }
 
                     mineCellCount shouldBe 5
@@ -95,7 +95,7 @@ class BoardSpec : DescribeSpec(
                 it("보드 내 지뢰가 아닌 셀의 수는 20개이다.") {
                     var emptyCellCount = 0
                     board.cells.forEach { row ->
-                        emptyCellCount += row.values.filter { !it.isMine }.size
+                        emptyCellCount += row.values.filterIsInstance<Normal>().size
                     }
 
                     emptyCellCount shouldBe 20

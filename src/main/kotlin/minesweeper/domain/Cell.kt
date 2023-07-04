@@ -1,5 +1,7 @@
 package minesweeper.domain
 
-class Cell(
-    val isMine: Boolean = false,
-)
+sealed class Cell
+
+class Mine : Cell()
+
+class Normal : Cell()
