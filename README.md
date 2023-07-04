@@ -34,7 +34,7 @@ C C C C C C C C C C
 
 *** 기능 목록
 - [x] 높이를 입력 받는다 - InputView
-- [ ] 너비를 입력 받는다 - InputView
+- [x] 너비를 입력 받는다 - InputView
 - [ ] 지뢰 개수를 입력 받는다 - InputView
 - [ ] 지뢰위치를 생성한다 - MineGenerator
 - [ ] 지뢰 게임을 출력한다 - ResultView
