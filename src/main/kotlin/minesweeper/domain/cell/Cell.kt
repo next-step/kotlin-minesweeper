@@ -2,9 +2,6 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.cell.CellType.MINE
 import minesweeper.domain.cell.CellType.NONE
-import minesweeper.domain.cell.coordinate.Column
-import minesweeper.domain.cell.coordinate.Coordinate
-import minesweeper.domain.cell.coordinate.Row
 
 class Cell(
     val coordinate: Coordinate,
@@ -13,8 +10,8 @@ class Cell(
     var cellType: CellType = cellType
         private set
 
-    constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(Row(row), Column(column)), cellType)
-    constructor(row: Int, column: Int) : this(Coordinate(Row(row), Column(column)))
+    constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(row, column), cellType)
+    constructor(row: Int, column: Int) : this(Coordinate(row, column))
 
     fun isMine(): Boolean = cellType == MINE
 
