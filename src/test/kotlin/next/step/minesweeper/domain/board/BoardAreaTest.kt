@@ -15,14 +15,14 @@ class BoardAreaTest : DescribeSpec({
 
         context("position이 area를 벗어나면 false") {
             withData(
-                listOf(BoardPosition.of(-1, -1, area), BoardPosition.of(3, 3, area)),
+                listOf(BoardPosition(-1, -1), BoardPosition(3, 3)),
             ) { position ->
                 (position in area) shouldBe false
             }
         }
         context("position이 area안에 있으면 true") {
             withData(
-                listOf(BoardPosition.of(0, 0, area), BoardPosition.of(2, 2, area)),
+                listOf(BoardPosition(0, 0), BoardPosition(2, 2)),
             ) { position ->
                 (position in area) shouldBe true
             }
@@ -68,17 +68,17 @@ class BoardAreaTest : DescribeSpec({
                 }
             }
             it("선택된 위치가 area를 벗어나지 않으면 BoardPosition으로 리턴") {
-                area.select { Position(0, 0) } shouldBe BoardPosition(Position(0, 0), area)
+                area.select { Position(0, 0) } shouldBe BoardPosition(0, 0)
             }
         }
 
         context("near") {
             it("보드 위에 있는 위치의 주변 위치를 제공") {
-                area.near(BoardPosition.of(0, 0, area)) shouldBe BoardPositions(
+                area.near(BoardPosition(0, 0)) shouldBe BoardPositions(
                     setOf(
-                        BoardPosition.of(1, 1, area),
-                        BoardPosition.of(0, 1, area),
-                        BoardPosition.of(1, 0, area),
+                        BoardPosition(1, 1),
+                        BoardPosition(0, 1),
+                        BoardPosition(1, 0),
                     ),
                 )
             }

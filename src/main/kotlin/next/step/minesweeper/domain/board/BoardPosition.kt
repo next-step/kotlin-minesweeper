@@ -1,22 +1,13 @@
 package next.step.minesweeper.domain.board
 
 import next.step.minesweeper.domain.position.NearPositionDelta
-import next.step.minesweeper.domain.position.Position
 
-data class BoardPosition(private val position: Position, private val area: BoardArea) {
-
-    fun x(): Int = position.x
-
-    fun y(): Int = position.y
+data class BoardPosition(val x: Int, val y: Int) {
 
     fun near(): BoardPositions =
         BoardPositions(
             NearPositionDelta.values()
-                .map { BoardPosition(Position(position.x + it.dx, position.y + it.dy), area) }
+                .map { BoardPosition(x + it.dx, y + it.dy) }
                 .toSet(),
         )
-
-    companion object {
-        fun of(x: Int, y: Int, area: BoardArea): BoardPosition = BoardPosition(Position(x, y), area)
-    }
 }

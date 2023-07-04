@@ -19,7 +19,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.plantMine(BoardPosition.of(1, 1, BoardArea.of(2, 3)))
+                rows.plantMine(BoardPosition(1, 1))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -63,7 +63,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.notifyMine(BoardArea.of(3, 3).near(BoardPosition.of(1, 1, BoardArea.of(3, 3))))
+                rows.notifyMine(BoardArea.of(3, 3).near(BoardPosition(1, 1)))
 
                 rows shouldBe BoardRows(
                     listOf(
@@ -171,7 +171,7 @@ class BoardRowsTest : DescribeSpec({
                     ),
                 )
 
-                rows.uncover(BoardPosition.of(1, 0, BoardArea.of(3, 3)), BoardArea.of(3, 3))
+                rows.uncover(BoardPosition(1, 0), BoardArea.of(3, 3))
 
                 rows shouldBe BoardRows(
                     listOf(

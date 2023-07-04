@@ -17,9 +17,9 @@ class BoardTest : DescribeSpec({
     describe("Board") {
         val area = BoardArea(BoardHeight(3), BoardWidth(3))
         val mineGenerator = TestMineGenerator(
-            BoardPosition.of(1, 0, area),
-            BoardPosition.of(0, 1, area),
-            BoardPosition.of(2, 2, area),
+            BoardPosition(1, 0),
+            BoardPosition(0, 1),
+            BoardPosition(2, 2),
         )
         context("생성") {
             it("지뢰 생성기를 통해 주어진 개수만큼 지뢰를 심음") {
@@ -67,10 +67,10 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     smallArea,
                     TestMineGenerator(
-                        BoardPosition.of(1, 0, smallArea),
-                        BoardPosition.of(0, 1, smallArea),
-                        BoardPosition.of(0, 0, smallArea),
-                        BoardPosition.of(1, 1, smallArea),
+                        BoardPosition(1, 0),
+                        BoardPosition(0, 1),
+                        BoardPosition(0, 0),
+                        BoardPosition(1, 1),
                     ),
                     MineCount(4),
                 )
@@ -98,9 +98,9 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     area,
                     TestMineGenerator(
-                        BoardPosition.of(1, 0, area),
-                        BoardPosition.of(0, 1, area),
-                        BoardPosition.of(2, 2, area),
+                        BoardPosition(1, 0),
+                        BoardPosition(0, 1),
+                        BoardPosition(2, 2),
                     ),
                     MineCount(3),
                 )
@@ -143,9 +143,9 @@ class BoardTest : DescribeSpec({
                 val board = Board.of(
                     area,
                     TestMineGenerator(
-                        BoardPosition.of(1, 0, area),
-                        BoardPosition.of(0, 1, area),
-                        BoardPosition.of(2, 2, area),
+                        BoardPosition(1, 0),
+                        BoardPosition(0, 1),
+                        BoardPosition(2, 2),
                     ),
                     MineCount(3),
                 )
