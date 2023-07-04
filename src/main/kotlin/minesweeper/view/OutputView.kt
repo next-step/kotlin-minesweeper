@@ -24,10 +24,10 @@ object OutputView {
         }
     }
 
-    private fun Cell.shape(): Char {
+    private fun Cell.shape(): String {
         return when (this) {
-            is Mine -> '*'
-            is Normal -> 'C'
+            is Mine -> "*"
+            is Normal -> adjacentMineCount.toString()
         }
     }
 }

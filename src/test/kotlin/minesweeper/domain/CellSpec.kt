@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 
 class CellSpec : DescribeSpec(
     {
@@ -10,6 +11,15 @@ class CellSpec : DescribeSpec(
                 shouldNotThrowAny {
                     Normal()
                 }
+            }
+        }
+
+        describe("기본 셀 인접 지뢰 개수 증가 검증") {
+            it("인접 지뢰 개수 증가하면 개수가 1 증가한다.") {
+                val cell = Normal(0)
+                cell.increaseAdjacentMineCount()
+
+                cell.adjacentMineCount shouldBe 1
             }
         }
 
