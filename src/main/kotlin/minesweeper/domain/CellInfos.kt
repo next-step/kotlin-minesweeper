@@ -16,8 +16,8 @@ data class CellInfo(
 ) {
     companion object {
         fun from(cell: Cell): CellInfo = CellInfo(
-            row = cell.row.value,
-            column = cell.column.value,
+            row = cell.coordinate.row.value,
+            column = cell.coordinate.column.value,
             cellType = cell.cellType,
         )
     }

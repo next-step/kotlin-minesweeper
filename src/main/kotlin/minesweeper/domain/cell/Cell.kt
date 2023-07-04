@@ -4,12 +4,14 @@ import minesweeper.domain.cell.CellType.MINE
 import minesweeper.domain.cell.CellType.NONE
 
 class Cell(
-    val row: Row,
-    val column: Column,
+    val coordinate: Coordinate,
     cellType: CellType = NONE,
 ) {
     var cellType: CellType = cellType
         private set
+
+    constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(Row(row), Column(column)), cellType)
+    constructor(row: Int, column: Int) : this(Coordinate(Row(row), Column(column)))
 
     fun isMine(): Boolean = cellType == MINE
 
@@ -24,19 +26,10 @@ class Cell(
 
         other as Cell
 
-        if (row != other.row) return false
-        if (column != other.column) return false
-
-        return true
+        return coordinate == other.coordinate
     }
 
     override fun hashCode(): Int {
-        var result = row.hashCode()
-        result = 31 * result + column.hashCode()
-        return result
-    }
-
-    companion object {
-        fun of(row: Int, column: Int): Cell = Cell(Row(row), Column(column))
+        return coordinate.hashCode()
     }
 }

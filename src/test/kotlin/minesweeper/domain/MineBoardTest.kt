@@ -20,10 +20,10 @@ class MineBoardTest : FunSpec({
                     0,
                     2,
                     listOf(
-                        Cell(Row(0), Column(0), CellType.NONE),
-                        Cell(Row(0), Column(1), CellType.NONE),
-                        Cell(Row(1), Column(0), CellType.NONE),
-                        Cell(Row(1), Column(1), CellType.NONE),
+                        Cell(0, 0, CellType.NONE),
+                        Cell(0, 1, CellType.NONE),
+                        Cell(1, 0, CellType.NONE),
+                        Cell(1, 1, CellType.NONE),
                     ),
                 )
             }
@@ -36,10 +36,10 @@ class MineBoardTest : FunSpec({
                     2,
                     0,
                     listOf(
-                        Cell(Row(0), Column(0), CellType.NONE),
-                        Cell(Row(0), Column(1), CellType.NONE),
-                        Cell(Row(1), Column(0), CellType.NONE),
-                        Cell(Row(1), Column(1), CellType.NONE),
+                        Cell(0, 0, CellType.NONE),
+                        Cell(0, 1, CellType.NONE),
+                        Cell(1, 0, CellType.NONE),
+                        Cell(1, 1, CellType.NONE),
                     ),
                 )
             }
@@ -53,7 +53,7 @@ class MineBoardTest : FunSpec({
                 1,
                 1,
                 listOf(
-                    Cell(Row(0), Column(0), CellType.NONE),
+                    Cell(0, 0, CellType.NONE),
                 ),
             )
 
@@ -66,10 +66,10 @@ class MineBoardTest : FunSpec({
                 2,
                 2,
                 listOf(
-                    Cell(Row(0), Column(0), CellType.NONE),
-                    Cell(Row(0), Column(1), CellType.NONE),
-                    Cell(Row(1), Column(0), CellType.NONE),
-                    Cell(Row(1), Column(1), CellType.NONE),
+                    Cell(0, 0, CellType.NONE),
+                    Cell(0, 1, CellType.NONE),
+                    Cell(1, 0, CellType.NONE),
+                    Cell(1, 1, CellType.NONE),
                 ),
             )
 
@@ -82,10 +82,10 @@ class MineBoardTest : FunSpec({
                 2,
                 2,
                 listOf(
-                    Cell(Row(0), Column(0), CellType.MINE),
-                    Cell(Row(0), Column(1), CellType.NONE),
-                    Cell(Row(1), Column(0), CellType.NONE),
-                    Cell(Row(1), Column(1), CellType.NONE),
+                    Cell(0, 0, CellType.MINE),
+                    Cell(0, 1, CellType.NONE),
+                    Cell(1, 0, CellType.NONE),
+                    Cell(1, 1, CellType.NONE),
                 ),
             )
 
@@ -95,10 +95,10 @@ class MineBoardTest : FunSpec({
 
         test("지뢰를 배치한다.") {
             val cells = listOf(
-                Cell(Row(0), Column(0), CellType.NONE),
-                Cell(Row(0), Column(1), CellType.NONE),
-                Cell(Row(1), Column(0), CellType.NONE),
-                Cell(Row(1), Column(1), CellType.NONE),
+                Cell(0, 0, CellType.NONE),
+                Cell(0, 1, CellType.NONE),
+                Cell(1, 0, CellType.NONE),
+                Cell(1, 1, CellType.NONE),
             )
             val mineBoard = MineBoard(
                 2,
@@ -117,10 +117,10 @@ class MineBoardTest : FunSpec({
                 2,
                 2,
                 listOf(
-                    Cell(Row(0), Column(0), CellType.NONE),
-                    Cell(Row(0), Column(1), CellType.NONE),
-                    Cell(Row(1), Column(0), CellType.NONE),
-                    Cell(Row(1), Column(1), CellType.NONE),
+                    Cell(0, 0, CellType.NONE),
+                    Cell(0, 1, CellType.NONE),
+                    Cell(1, 0, CellType.NONE),
+                    Cell(1, 1, CellType.NONE),
                 ),
             )
             mineBoard.placeMine(2)
@@ -136,10 +136,10 @@ class MineBoardTest : FunSpec({
                 2,
                 2,
                 listOf(
-                    Cell(Row(0), Column(0), CellType.NONE),
-                    Cell(Row(0), Column(1), CellType.NONE),
-                    Cell(Row(1), Column(0), CellType.NONE),
-                    Cell(Row(1), Column(1), CellType.NONE),
+                    Cell(0, 0, CellType.NONE),
+                    Cell(0, 1, CellType.NONE),
+                    Cell(1, 0, CellType.NONE),
+                    Cell(1, 1, CellType.NONE),
                 ),
             )
             val actual = mineBoard.currentBoard()

@@ -42,7 +42,7 @@ class MineBoard(
         private fun parseToCell(index: Int, width: Int): Cell {
             val row = index / width
             val column = index % width
-            return Cell.of(row, column)
+            return Cell(row, column)
         }
     }
 }
