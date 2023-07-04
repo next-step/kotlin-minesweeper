@@ -5,6 +5,7 @@ sealed class Cell {
     abstract val openState: OpenState
 
     abstract fun open(): Cell
+
     fun isMine(): Boolean {
         return when (this) {
             is Mine -> true
