@@ -7,7 +7,7 @@ import domain.Closed
 import domain.Opened
 
 fun cell(
-    state: CellState = Closed,
+    state: CellState = Closed
 ) = Cell(
     hasMine = false,
     state = state,

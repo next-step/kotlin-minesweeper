@@ -63,7 +63,7 @@ class BoardTest : FunSpec({
 
     context("지뢰찾기 보드 특정 좌표가 닫혀있는지 여부를 반환한다") {
         val board = board(
-            row(mine(), cell(Opened(AroundMineCount.TWO))),
+            row(mine(), cell(2)),
             row(cell(), mine()),
         )
 
@@ -90,13 +90,13 @@ class BoardTest : FunSpec({
             nameFn = { "When ${it.coordinate} opens, cell should be ${it.expectedCell}" },
             CoordinateIsMine(Coordinate(0, 0), mine()),
             CoordinateIsMine(Coordinate(0, 1), mine()),
-            CoordinateIsMine(Coordinate(0, 2), cell(Opened(AroundMineCount.ONE))),
-            CoordinateIsMine(Coordinate(1, 0), cell(Opened(AroundMineCount.THREE))),
-            CoordinateIsMine(Coordinate(1, 1), cell(Opened(AroundMineCount.THREE))),
-            CoordinateIsMine(Coordinate(1, 2), cell(Opened(AroundMineCount.ONE))),
+            CoordinateIsMine(Coordinate(0, 2), cell(1)),
+            CoordinateIsMine(Coordinate(1, 0), cell(3)),
+            CoordinateIsMine(Coordinate(1, 1), cell(3)),
+            CoordinateIsMine(Coordinate(1, 2), cell(1)),
             CoordinateIsMine(Coordinate(2, 0), mine()),
-            CoordinateIsMine(Coordinate(2, 1), cell(Opened(AroundMineCount.ONE))),
-            CoordinateIsMine(Coordinate(2, 2), cell(Opened(AroundMineCount.ZERO))),
+            CoordinateIsMine(Coordinate(2, 1), cell(1)),
+            CoordinateIsMine(Coordinate(2, 2), cell(0)),
         ) { (coordinate, expectedCell) ->
             board.open(coordinate)
             board[coordinate.row][coordinate.col] shouldBe expectedCell
@@ -122,9 +122,9 @@ class BoardTest : FunSpec({
 
     test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 많으면 게임은 진행중이다") {
         val board = board(
-            row(mine(), mine(), cell(Opened(AroundMineCount.ONE))),
-            row(cell(Opened(AroundMineCount.THREE)), cell(Opened(AroundMineCount.THREE)), cell(Opened(AroundMineCount.ONE))),
-            row(mine(), cell(), cell(Opened(AroundMineCount.ZERO))),
+            row(mine(), mine(), cell(1)),
+            row(cell(3), cell(3), cell(1)),
+            row(mine(), cell(), cell(0)),
         )
 
         board.isRunning() shouldBe true
@@ -132,9 +132,9 @@ class BoardTest : FunSpec({
 
     test("지뢰찾기 보드에서 닫힌 셀 개수가 지뢰 개수보다 적거나 같으면 게임은 진행중이 아니다") {
         val board = board(
-            row(mine(), mine(), cell(Opened(AroundMineCount.ONE))),
-            row(cell(Opened(AroundMineCount.THREE)), cell(Opened(AroundMineCount.THREE)), cell(Opened(AroundMineCount.ONE))),
-            row(mine(), cell(Opened(AroundMineCount.ONE)), cell(Opened(AroundMineCount.ZERO))),
+            row(mine(), mine(), cell(1)),
+            row(cell(3), cell(3), cell(1)),
+            row(mine(), cell(1), cell(0)),
         )
 
         board.isRunning() shouldBe false
