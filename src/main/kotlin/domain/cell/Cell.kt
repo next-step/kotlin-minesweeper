@@ -4,14 +4,26 @@ sealed class Cell {
 
     abstract val openState: OpenState
 
+    abstract fun open(): Cell
+
     data class Mine(
         override val openState: OpenState,
-    ) : Cell()
+    ) : Cell() {
+
+        override fun open(): Cell {
+            return copy(openState = OpenState.OPEN)
+        }
+    }
 
     data class Ground(
         override val openState: OpenState,
         val aroundMineCount: AroundMineCount,
-    ) : Cell()
+    ) : Cell() {
+
+        override fun open(): Cell {
+            return copy(openState = OpenState.OPEN)
+        }
+    }
 
     companion object {
 
