@@ -2,7 +2,13 @@ package minesweeper.domain.position
 
 sealed class MineSweeperPosition(private val position: Position) {
 
-    fun isSamePosition(position: Position): Boolean = position == this.position
+    private var visit = false
+
+    fun isVisit(): Boolean = visit
+
+    fun visit() {
+        visit = true
+    }
 }
 
 class MinePosition(position: Position) : MineSweeperPosition(position)

@@ -1,5 +1,7 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.position.EmptyPosition
+import minesweeper.domain.position.MinePosition
 import minesweeper.domain.position.MineSweeperPosition
 import minesweeper.domain.position.MineSweeperPositions
 import minesweeper.domain.position.Position
@@ -41,15 +43,58 @@ class MineSweeperBoard(
     }
 
     fun find(position: Position): MineSweeperPosition {
-        require(this.containsPosition(position)) { "범위를 벗어난 위치입니다." }
+        validatePosition(position)
         val y = position.convertBoardYPositionIndex()
         val x = position.convertBoardXPositionIndex()
         return board[y][x]
     }
 
-    fun allPositions(): MineSweeperPositions = MineSweeperPositions(board.map { it }.flatten())
+    fun visit(position: Position) {
+        validatePosition(position)
+        val y = position.convertBoardYPositionIndex()
+        val x = position.convertBoardXPositionIndex()
+        board[y][x].visit()
+    }
+
+    fun isMinePosition(position: Position): Boolean {
+        if (!this.containsPosition(position)) {
+            return false
+        }
+        val mineSweeperPosition = find(position)
+        return mineSweeperPosition is MinePosition
+    }
+
+    fun isAllVisitPositionsWithoutMinePositions(): Boolean {
+        val allPositions = MineSweeperPositions(board.map { it }.flatten())
+        val nonVisitPositions = allPositions.count { !it.isVisit() && it is EmptyPosition }
+        return nonVisitPositions == VISITED_POSITION_COUNT_WITHOUT_MINE_POSITIONS
+    }
+
+    fun visitAround(position: Position): Positions {
+        val aroundPositions = position.aroundPositions()
+        val visitedPositions = aroundPositions
+            .filter { isVisitTarget(position = it) }
+            .map {
+                this.visit(it)
+                it
+            }
+        return Positions(visitedPositions)
+    }
+
+    private fun isVisitTarget(position: Position): Boolean {
+        if (!this.containsPosition(position)) {
+            return false
+        }
+        val mineSweeperPosition = this.find(position)
+        return mineSweeperPosition is EmptyPosition && !mineSweeperPosition.isVisit()
+    }
+
+    private fun validatePosition(position: Position) {
+        require(this.containsPosition(position)) { "범위를 벗어난 위치입니다." }
+    }
 
     companion object {
         private const val MIN_MINE_QUANTITY = 1
+        private const val VISITED_POSITION_COUNT_WITHOUT_MINE_POSITIONS = 0
     }
 }

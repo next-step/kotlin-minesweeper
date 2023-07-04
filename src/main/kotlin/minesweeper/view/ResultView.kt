@@ -1,7 +1,6 @@
 package minesweeper.view
 
 import minesweeper.domain.board.MineSweeperBoard
-import minesweeper.domain.explorer.MineSweeperBoardExplorer
 import minesweeper.domain.position.EmptyPosition
 import minesweeper.domain.position.MineSweeperPosition
 import minesweeper.domain.position.MineSweeperPositions
@@ -11,9 +10,9 @@ class ResultView {
     fun printGameStartMessage() {
         println(GAME_START_MESSAGE)
     }
-    fun printBoard(board: MineSweeperBoard, boardExplorer: MineSweeperBoardExplorer) {
+    fun printBoard(board: MineSweeperBoard) {
         board.rows().forEach { mineSweeperPositions ->
-            printPositions(positions = mineSweeperPositions, boardExplorer = boardExplorer)
+            printPositions(positions = mineSweeperPositions)
         }
         println()
     }
@@ -22,15 +21,15 @@ class ResultView {
         println(LOSE_MESSAGE)
     }
 
-    private fun printPositions(positions: MineSweeperPositions, boardExplorer: MineSweeperBoardExplorer) {
+    private fun printPositions(positions: MineSweeperPositions) {
         val positionsShape = positions.joinToString(separator = " ") {
-            getPositionShape(position = it, boardExplorer = boardExplorer)
+            getPositionShape(position = it)
         }
         println(positionsShape)
     }
 
-    private fun getPositionShape(position: MineSweeperPosition, boardExplorer: MineSweeperBoardExplorer): String {
-        if (boardExplorer.isVisit(position) && position is EmptyPosition) {
+    private fun getPositionShape(position: MineSweeperPosition): String {
+        if (position.isVisit() && position is EmptyPosition) {
             return position.calculateAroundMineQuantity().toString()
         }
         return NON_VISIT
