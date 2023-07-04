@@ -25,4 +25,11 @@ class CoordinateTest : FunSpec({
             actual shouldBe Coordinate(1, 2)
         }
     }
+
+    context("left") {
+        test("column위치가 왼쪽으로 이동한다.") {
+            val actual = Coordinate(1, 1).left()
+            actual shouldBe Coordinate(1, 0)
+        }
+    }
 })

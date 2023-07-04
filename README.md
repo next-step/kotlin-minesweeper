@@ -76,6 +76,7 @@ C C C C C C C C C C
 
 ### coordinate
 - row와 column을 가진다.
+- [x] 상하좌우로 이동할 수 있다.
 
 ### finder
 - [ ] 본인의 대각선 방향 모두를 검색할 수 있다.
