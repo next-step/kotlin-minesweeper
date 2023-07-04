@@ -5,5 +5,5 @@ sealed class BoardPointState {
 
     abstract fun uncover(): BoardPointState
 
-    abstract fun hasNoMine(): Boolean
+    abstract fun isMine(): Boolean
 }

@@ -23,9 +23,9 @@ class NearMineStateTest : DescribeSpec({
                 result shouldBe NearMineState.one()
             }
         }
-        context("hasNoMine 호출하면") {
-            it("항상 true") {
-                state.hasNoMine() shouldBe true
+        context("isMine 호출하면") {
+            it("항상 false") {
+                state.isMine() shouldBe false
             }
         }
     }

@@ -6,5 +6,5 @@ data class CoveredState(private val uncoveredState: BoardPointState) : BoardPoin
 
     override fun uncover(): BoardPointState = uncoveredState
 
-    override fun hasNoMine(): Boolean = uncoveredState != MineState
+    override fun isMine(): Boolean = uncoveredState == MineState
 }

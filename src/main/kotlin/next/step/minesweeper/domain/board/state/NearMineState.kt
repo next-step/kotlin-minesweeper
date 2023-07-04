@@ -8,7 +8,7 @@ data class NearMineState(private val nearMineCount: MineCount) : BoardPointState
 
     override fun uncover(): NearMineState = this
 
-    override fun hasNoMine(): Boolean = true
+    override fun isMine(): Boolean = false
 
     fun count(): Int = nearMineCount.count()
 

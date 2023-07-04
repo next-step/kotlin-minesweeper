@@ -6,5 +6,5 @@ object MineState : BoardPointState() {
 
     override fun uncover(): BoardPointState = this
 
-    override fun hasNoMine(): Boolean = false
+    override fun isMine(): Boolean = true
 }
