@@ -10,6 +10,11 @@ class MineBoard(
     val cells: List<Cell>,
     private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
 ) {
+    init {
+        require(height >= MINIMUM_HEIGHT) { "지뢰찾기맵 높이는 ${MINIMUM_HEIGHT}이상이어야 합니다." }
+        require(width >= MINIMUM_WIDTH) { "지뢰찾기맵 너비는 ${MINIMUM_WIDTH}이상이어야 합니다." }
+    }
+
     fun placeMine(mineCount: Int) {
         validateMineCount(mineCount)
         repeat(mineCount) { minePlacementStrategy.findPlantTargetCell(cells).changeToMine() }
@@ -31,9 +36,6 @@ class MineBoard(
         private const val MINIMUM_WIDTH = 1
 
         fun generateNewMineBoard(height: Int, width: Int): MineBoard {
-            require(height >= MINIMUM_HEIGHT) { "지뢰찾기맵 높이는 ${MINIMUM_HEIGHT}이상이어야 합니다." }
-            require(width >= MINIMUM_WIDTH) { "지뢰찾기맵 너비는 ${MINIMUM_WIDTH}이상이어야 합니다." }
-
             return MineBoard(height, width, List(height * width) { index -> parseToCell(index, width) })
         }
 

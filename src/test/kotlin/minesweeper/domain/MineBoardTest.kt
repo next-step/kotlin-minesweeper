@@ -13,11 +13,45 @@ import minesweeper.domain.cell.Row
 
 class MineBoardTest : FunSpec({
 
+    context("init") {
+        test("높이가 0이하인 경우 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> {
+                MineBoard(
+                    0,
+                    2,
+                    listOf(
+                        Cell(Row(0), Column(0), CellType.NONE),
+                        Cell(Row(0), Column(1), CellType.NONE),
+                        Cell(Row(1), Column(0), CellType.NONE),
+                        Cell(Row(1), Column(1), CellType.NONE),
+                    ),
+                )
+            }
+            exception shouldHaveMessage "지뢰찾기맵 높이는 1이상이어야 합니다."
+        }
+
+        test("너비가 0이하인 경우 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> {
+                MineBoard(
+                    2,
+                    0,
+                    listOf(
+                        Cell(Row(0), Column(0), CellType.NONE),
+                        Cell(Row(0), Column(1), CellType.NONE),
+                        Cell(Row(1), Column(0), CellType.NONE),
+                        Cell(Row(1), Column(1), CellType.NONE),
+                    ),
+                )
+            }
+            exception shouldHaveMessage "지뢰찾기맵 너비는 1이상이어야 합니다."
+        }
+    }
+
     context("placeMine") {
         test("지뢰 갯수가 0보다 작은 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
-                0,
-                0,
+                1,
+                1,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                 ),
@@ -29,8 +63,8 @@ class MineBoardTest : FunSpec({
 
         test("지뢰 갯수가 cell 갯수보다 큰 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
-                0,
-                0,
+                2,
+                2,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -45,8 +79,8 @@ class MineBoardTest : FunSpec({
 
         test("이미 지뢰가 배치되어 있는 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
-                0,
-                0,
+                2,
+                2,
                 listOf(
                     Cell(Row(0), Column(0), CellType.MINE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -67,8 +101,8 @@ class MineBoardTest : FunSpec({
                 Cell(Row(1), Column(1), CellType.NONE),
             )
             val mineBoard = MineBoard(
-                0,
-                0,
+                2,
+                2,
                 cells = cells,
             ) { cells[1] }
             mineBoard.placeMine(1)
@@ -80,8 +114,8 @@ class MineBoardTest : FunSpec({
 
         test("랜덤한 위치에 지뢰를 배치한다.") {
             val mineBoard = MineBoard(
-                0,
-                0,
+                2,
+                2,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -99,8 +133,8 @@ class MineBoardTest : FunSpec({
     context("currentBoard") {
         test("현재 맵의 정보를 반환한다.") {
             val mineBoard = MineBoard(
-                0,
-                0,
+                2,
+                2,
                 listOf(
                     Cell(Row(0), Column(0), CellType.NONE),
                     Cell(Row(0), Column(1), CellType.NONE),
@@ -117,16 +151,6 @@ class MineBoardTest : FunSpec({
     }
 
     context("generateNewMineBoard") {
-        test("높이가 0이하인 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> { generateNewMineBoard(0, 1) }
-            exception shouldHaveMessage "지뢰찾기맵 높이는 1이상이어야 합니다."
-        }
-
-        test("너비가 0이하인 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> { generateNewMineBoard(1, 0) }
-            exception shouldHaveMessage "지뢰찾기맵 너비는 1이상이어야 합니다."
-        }
-
         test("새로운 지뢰찾기맵을 생성한다.") {
             val actual = generateNewMineBoard(2, 4)
             actual.cells shouldHaveSize 8
