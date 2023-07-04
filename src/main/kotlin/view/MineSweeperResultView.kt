@@ -5,6 +5,10 @@ import domain.map.MineMap
 
 class MineSweeperResultView {
 
+    fun displayStartMineSweeperGameMessage() {
+        println("지뢰 찾기 게임 시작")
+    }
+
     fun display(mineMap: MineMap) {
         val text = buildString {
             appendLine()

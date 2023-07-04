@@ -1,3 +1,4 @@
+import domain.game.RealMineSweeperGameFactory
 import domain.map.RealMineMapFactory
 import domain.mine.RealMineCoordinatesCreator
 import view.MineSweeperController
@@ -8,6 +9,10 @@ fun main() {
     MineSweeperController(
         inputView = MineSweeperInputView(),
         resultView = MineSweeperResultView(),
-        mineMapFactory = RealMineMapFactory(RealMineCoordinatesCreator()),
+        mineSweeperGameFactory = RealMineSweeperGameFactory(
+            mineMapFactory = RealMineMapFactory(
+                mineCoordinatesCreator = RealMineCoordinatesCreator(),
+            ),
+        ),
     ).start()
 }

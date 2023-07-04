@@ -1,18 +1,17 @@
 package view
 
-import domain.map.MineMapFactory
+import domain.game.MineSweeperGameFactory
 
 class MineSweeperController(
     private val inputView: MineSweeperInputView,
     private val resultView: MineSweeperResultView,
-    private val mineMapFactory: MineMapFactory,
+    private val mineSweeperGameFactory: MineSweeperGameFactory,
 ) {
 
     fun start() {
         val mineSweeperInitProperty = inputView.readInitProperty()
-        val mineMap = mineMapFactory.create(mineSweeperInitProperty)
-        resultView.display(mineMap)
-
+        val mineSweeperGame = mineSweeperGameFactory.create(mineSweeperInitProperty)
+        resultView.displayStartMineSweeperGameMessage()
         inputView.readOpenCoordinate()
     }
 }
