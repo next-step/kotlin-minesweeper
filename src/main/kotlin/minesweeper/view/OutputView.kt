@@ -17,7 +17,7 @@ object OutputView {
     }
 
     private fun printCells(cells: Cells) {
-        cells.forEach { cell ->
+        cells.values.forEach { cell ->
             print("${cell.shape()} ")
         }
     }

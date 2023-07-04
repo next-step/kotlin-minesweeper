@@ -17,10 +17,6 @@ value class Cells(val values: List<Cell>) {
         return values.chunked(width).map { Cells(it) }
     }
 
-    fun forEach(action: (Cell) -> Unit) {
-        values.forEach(action)
-    }
-
     companion object {
         fun empty(size: Int): Cells {
             return Cells(List(size) { Cell() })
