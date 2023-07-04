@@ -16,4 +16,9 @@ class AroundMineCountTest : FunSpec({
             shouldThrow<IllegalStateException> { AroundMineCount.of(it) }
         }
     }
+
+    context("주변 지뢰 개수가 0개 인지 반환한다") {
+        AroundMineCount.ZERO.isZero() shouldBe true
+        AroundMineCount.EIGHT.isZero() shouldBe false
+    }
 })

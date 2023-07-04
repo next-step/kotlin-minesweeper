@@ -16,11 +16,18 @@ class Board(
     }
 
     fun open(coordinate: Coordinate) {
-        val aroundMineCount = Coordinates.around(coordinate)
-            .filter { it.isOnBoard(height, width) }
-            .count { hasMine(it) }
+        if (!isClosed(coordinate) || hasMine(coordinate)) {
+            return
+        }
 
-        cellOf(coordinate).open(AroundMineCount.of(aroundMineCount))
+        val aroundCoordinates = Coordinates.around(coordinate).filter { it.isOnBoard(height, width) }
+        val aroundMineCount = AroundMineCount.of(aroundCoordinates.count { hasMine(it) })
+
+        cellOf(coordinate).open(aroundMineCount)
+
+        if (aroundMineCount.isZero()) {
+            aroundCoordinates.forEach { open(it) }
+        }
     }
 
     fun isRunning(): Boolean {

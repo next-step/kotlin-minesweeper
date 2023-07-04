@@ -1,6 +1,6 @@
 package domain
 
-data class Row(
+class Row(
     private val cells: List<Cell>
 ) : List<Cell> by cells {
     companion object {

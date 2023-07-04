@@ -14,6 +14,8 @@ enum class AroundMineCount(
     EIGHT(8),
     ;
 
+    fun isZero(): Boolean = this == ZERO
+
     companion object {
         private val MIN_AROUND_MINE_COUNT = ZERO.count
         private val MAX_AROUND_MINE_COUNT = EIGHT.count
