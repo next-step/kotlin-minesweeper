@@ -1,3 +1,5 @@
+package domain.model
+
 @JvmInline
 value class Y(val value: Int) {
     init {
