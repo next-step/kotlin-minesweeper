@@ -6,6 +6,10 @@ enum class OpenState {
     HIDE,
     ;
 
+    fun isOpen(): Boolean {
+        return this == OPEN
+    }
+
     fun isHide(): Boolean {
         return this == HIDE
     }
