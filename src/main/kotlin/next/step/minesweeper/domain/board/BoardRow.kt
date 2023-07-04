@@ -21,4 +21,8 @@ value class BoardRow(private val points: List<BoardPoint>) {
     fun canUncover(): Boolean = points.any { it.canUncover() }
 
     fun points() = points.toList()
+
+    fun notifyMine(x: Int) = pointAt(x).notifyMine()
+
+    fun isMineFree(x: Int) = pointAt(x).isMineFree()
 }

@@ -6,6 +6,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import next.step.minesweeper.domain.board.state.CoveredState
 import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
+import next.step.minesweeper.domain.board.state.NearMineState
 import org.junit.jupiter.api.assertThrows
 
 class BoardRowTest : DescribeSpec({
@@ -78,6 +79,66 @@ class BoardRowTest : DescribeSpec({
                 val result = boardRow.uncover(1)
 
                 result shouldBe BoardPoint(MineState)
+            }
+        }
+
+        context("notifyMine") {
+            it("특정 위치의 상태가 NearMineState가 됨") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(CoveredState(MineFreeState)),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(CoveredState(MineFreeState)),
+                        ),
+                    )
+
+                boardRow.notifyMine(0)
+
+                boardRow.points() shouldBe listOf(
+                    BoardPoint(CoveredState(NearMineState.one())),
+                    BoardPoint(CoveredState(MineState)),
+                    BoardPoint(CoveredState(MineFreeState)),
+                )
+            }
+        }
+
+        context("is mine free") {
+            it("지뢰 없으면 true") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(CoveredState(MineFreeState)),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState),
+                        ),
+                    )
+
+                boardRow.isMineFree(2) shouldBe true
+            }
+            it("지뢰면 false") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(MineFreeState),
+                        ),
+                    )
+
+                boardRow.isMineFree(1) shouldBe false
+            }
+            it("주변에 지뢰가 있어도 false") {
+                val boardRow =
+                    BoardRow(
+                        listOf(
+                            BoardPoint(MineFreeState),
+                            BoardPoint(CoveredState(MineState)),
+                            BoardPoint(NearMineState.one()),
+                        ),
+                    )
+
+                boardRow.isMineFree(1) shouldBe false
             }
         }
     }
