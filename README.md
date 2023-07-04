@@ -80,6 +80,7 @@ C C C C C C C C C C
 
 ### finder
 - [x] 본인의 대각선 방향 모두를 검색할 수 있다.
+- [x] 모든 방향에 있는 좌표를 반환할 수 있다.
 
 ### cell type
 - [x] 0~8은 적정 cell type을 반환한다.
