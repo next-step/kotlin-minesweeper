@@ -13,6 +13,8 @@ class RealMineMapFactory(
     override fun create(mineSweeperInitProperty: MineSweeperInitProperty): MineMap {
         val mineCoordinates = mineCoordinatesCreator.create(mineSweeperInitProperty)
         val cells = createCells(mineCoordinates, mineSweeperInitProperty)
+            .map { it.toMutableList() }
+            .toMutableList()
         return MineMap(cells)
     }
 
