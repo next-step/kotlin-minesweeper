@@ -12,5 +12,7 @@ class MineSweeperController(
         val mineSweeperInitProperty = inputView.readInitProperty()
         val mineMap = mineMapFactory.create(mineSweeperInitProperty)
         resultView.display(mineMap)
+
+        inputView.readOpenCoordinate()
     }
 }

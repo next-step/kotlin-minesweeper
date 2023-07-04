@@ -1,6 +1,7 @@
 package view
 
 import domain.MineSweeperInitProperty
+import domain.map.Coordinate
 import domain.math.PositiveNumber
 
 class MineSweeperInputView {
@@ -20,5 +21,14 @@ class MineSweeperInputView {
             width = width,
             mineCount = mineCount,
         )
+    }
+
+    fun readOpenCoordinate(): Coordinate {
+        print("\nopen: ")
+        val (x, y) = readln()
+            .split(",")
+            .map { it.trim().toInt() }
+            .take(2)
+        return Coordinate(x, y)
     }
 }
