@@ -27,7 +27,7 @@ class MineSweeperInputView {
         print("\nopen: ")
         val (x, y) = readln()
             .split(",")
-            .map { it.trim().toInt() }
+            .map { it.trim().toInt() - 1 }
             .take(2)
         return Coordinate(x, y)
     }
