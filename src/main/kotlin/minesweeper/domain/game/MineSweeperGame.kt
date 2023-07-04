@@ -34,7 +34,7 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
         showExploredBoard: (MineSweeperBoard) -> Unit,
         showLoseGameMessage: () -> Unit,
     ): ExploreResult {
-        val position = positionGetter()
+        val position = getBoardRangePosition(positionGetter)
         val exploreResult = boardExplorer.explore(board = board, startPosition = position)
         showExploreResult(
             exploreResult = exploreResult,
@@ -46,6 +46,14 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
 
     private fun isProceedGame(exploreResult: ExploreResult) = exploreResult == ExploreResult.SuccessExplore &&
         !board.isAllVisitPositionsWithoutMinePositions()
+
+    private fun getBoardRangePosition(positionGetter: () -> Position): Position {
+        var position: Position?
+        do {
+            position = positionGetter()
+        } while (!board.containsPosition(position!!))
+        return position
+    }
 
     private fun showExploreResult(
         exploreResult: ExploreResult,
