@@ -30,10 +30,10 @@ class CellsSpec : DescribeSpec(
                 val shuffledCells = cells.shuffled()
 
                 it("셔플된 셀 컬렉션을 반환한다.") {
-                    shuffledCells.values.size shouldBe 3
-                    shuffledCells.values.any { it == cellA } shouldBe true
-                    shuffledCells.values.any { it == cellB } shouldBe true
-                    shuffledCells.values.any { it == cellC } shouldBe true
+                    shuffledCells.size shouldBe 3
+                    shuffledCells.any { it == cellA } shouldBe true
+                    shuffledCells.any { it == cellB } shouldBe true
+                    shuffledCells.any { it == cellC } shouldBe true
                 }
             }
         }
@@ -46,9 +46,9 @@ class CellsSpec : DescribeSpec(
 
                 it("청크된 셀 컬렉션을 반환한다.") {
                     chunkedCells.size shouldBe 3
-                    chunkedCells[0].values.size shouldBe 3
-                    chunkedCells[1].values.size shouldBe 3
-                    chunkedCells[2].values.size shouldBe 3
+                    chunkedCells[0].size shouldBe 3
+                    chunkedCells[1].size shouldBe 3
+                    chunkedCells[2].size shouldBe 3
                 }
             }
         }

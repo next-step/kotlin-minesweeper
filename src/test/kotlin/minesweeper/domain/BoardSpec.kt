@@ -5,6 +5,8 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
+fun cells(vararg cells: Cell): Cells = Cells(cells.toList())
+
 class BoardSpec : DescribeSpec(
     {
         describe("게임 보드 생성 검증 (생성자)") {
@@ -100,6 +102,25 @@ class BoardSpec : DescribeSpec(
 
                     emptyCellCount shouldBe 20
                 }
+            }
+        }
+
+        describe("주변 마인 개수 계산 검증 (3x3 보드)") {
+            val board = Board(
+                cells = listOf(
+                    cells(Mine(), Normal(), Normal()),
+                    cells(Mine(), Normal(), Normal()),
+                    cells(Mine(), Normal(), Normal()),
+                ),
+            )
+
+            it("주변의 지뢰 수 만큼 주변 마인 개수가 설정된다.") {
+                (board.cells[0][1] as Normal).adjacentMineCount shouldBe 2
+                (board.cells[0][2] as Normal).adjacentMineCount shouldBe 0
+                (board.cells[1][1] as Normal).adjacentMineCount shouldBe 3
+                (board.cells[1][2] as Normal).adjacentMineCount shouldBe 0
+                (board.cells[2][1] as Normal).adjacentMineCount shouldBe 2
+                (board.cells[2][2] as Normal).adjacentMineCount shouldBe 0
             }
         }
     },
