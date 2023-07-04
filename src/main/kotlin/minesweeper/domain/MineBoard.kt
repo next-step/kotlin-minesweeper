@@ -20,7 +20,7 @@ class MineBoard(
         cells.placeMine(mineCount, minePlacementStrategy)
     }
 
-    fun currentBoard(): CellInfos = CellInfos(height = height, width = width, values = cells.cellInfos())
+    fun currentBoard(): CellInfos = CellInfos(height = height, values = cells.cellInfos())
 
     companion object {
         private const val MINIMUM_HEIGHT = 1

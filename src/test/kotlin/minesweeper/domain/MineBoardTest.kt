@@ -7,7 +7,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.CellType
 import minesweeper.domain.cell.Cells
 
 private fun List<Cell>.toCells() = Cells(this)
@@ -63,7 +62,6 @@ class MineBoardTest : FunSpec({
             val actual = mineBoard.currentBoard()
 
             actual.height shouldBe 2
-            actual.width shouldBe 2
             actual.values shouldHaveSize 4
         }
     }
