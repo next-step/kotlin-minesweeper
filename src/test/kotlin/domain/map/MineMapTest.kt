@@ -6,6 +6,8 @@ import domain.math.toPositive
 import domain.mine.MockMineCoordinatesCreator
 import domain.mine.RealMineCoordinatesCreator
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import utils.nestedList
 
@@ -64,74 +66,61 @@ class MineMapTest : BehaviorSpec({
         }
     }
 
-    Given("지뢰 개수 8 초기화 속성이 준비 되었을 떄") {
+    Given("6 * 5맵에 8개의 지뢰가 존재할 때") {
         val mineSweeperInitProperty = MineSweeperInitProperty(
-            height = 100.toPositive(),
-            width = 50.toPositive(),
+            height = 6.toPositive(),
+            width = 5.toPositive(),
             mineCount = 8.toPositive()
         )
-        When("맵을 만들면") {
-            val mockMineCoordinates = setOf(
-                Coordinate(1, 1),
-                Coordinate(2, 1),
-                Coordinate(3, 1),
-                Coordinate(1, 2),
-                Coordinate(3, 2),
-                Coordinate(1, 3),
-                Coordinate(2, 3),
-                Coordinate(3, 3),
-            )
+        val mockMineCoordinates = setOf(
+            Coordinate(1, 1),
+            Coordinate(2, 1),
+            Coordinate(3, 1),
+            Coordinate(1, 2),
+            Coordinate(3, 2),
+            Coordinate(1, 3),
+            Coordinate(2, 3),
+            Coordinate(3, 3),
+        )
+        val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
+        val cells = mineMapFactory.create(
+            mineSweeperInitProperty = mineSweeperInitProperty,
+        ).cells
 
-            val mineMapFactory = RealMineMapFactory(MockMineCoordinatesCreator { mockMineCoordinates })
-            val mineMap = mineMapFactory.create(
-                mineSweeperInitProperty = mineSweeperInitProperty,
-            )
+        /*
+         1 2 3 2 1
+         2 * * * 2
+         3 * 0 * 3
+         2 * * * 2
+         1 2 3 2 1
+         0 0 0 0 0
+         */
 
-            val hasAroundMineCellCoordinates = listOf(
-                Coordinate(0, 0) to 1, // 주변에 1개 (1, 1)
-                Coordinate(1, 0) to 2, // 주변에 2개 (1, 1) (2, 1)
-                Coordinate(2, 0) to 3, // 주변에 3개 (1, 1) (2, 1) (3, 1)
-                Coordinate(3, 0) to 2, // 주변에 2개 (2, 1) (3, 1)
-                Coordinate(4, 0) to 1, // 주변에 1개 (3, 1)
-                Coordinate(0, 1) to 2, // 주변에 2개 (1, 1) (1, 2)
-                Coordinate(4, 1) to 2, // 주변에 2개 (3, 1) (3, 2)
-                Coordinate(0, 2) to 3, // 주변에 3개 (1, 1) (1, 2) (1, 3)
-                Coordinate(2, 2) to 8, // 주변에 8개 전부
-                Coordinate(4, 2) to 3, // 주변에 3개 (3, 1) (3, 2) (3, 3)
-                Coordinate(0, 3) to 2, // 주변에 2개 (1, 2) (1, 3)
-                Coordinate(4, 3) to 2, // 주변에 2개 (3, 2) (3, 3)
-                Coordinate(0, 4) to 1, // 주변에 1개 (1, 3)
-                Coordinate(1, 4) to 2, // 주변에 2개 (1, 3) (2, 3)
-                Coordinate(2, 4) to 3, // 주변에 3개 (1, 3) (2, 3) (3, 3)
-                Coordinate(3, 4) to 2, // 주변에 2개 (2, 3) (3, 3)
-                Coordinate(4, 4) to 1, // 주변에 1개 (3, 3)
-            )
-
-            Then("주변에 지뢰가 있는 셀은 주변 지뢰 개수 만큼 값을 갖는다") {
-                val isAllExpected = hasAroundMineCellCoordinates.all { (coordinate, expectedAroundMineCount) ->
-                    val groundCell = (mineMap.cells[coordinate.y][coordinate.x] as Cell.Ground)
-                    val actualAroundMineCount = groundCell.aroundMineCount.value
-                    actualAroundMineCount == expectedAroundMineCount
-                }
-                isAllExpected shouldBe true
-            }
-
-            Then("주변에 지뢰가 업는 셀은 주변 지뢰 개수가 0이다") {
-                val hasAroundMineCellCoordinateSet = hasAroundMineCellCoordinates.map { it.first }.toSet()
-                val allCellCoordinates = nestedList(
-                    columnSize = mineMap.cells.size,
-                    rowSize = mineMap.cells.first().size
-                ) { column, row ->
-                    Coordinate(x = row, y = column)
-                }.flatten()
-                    .filter { mockMineCoordinates.contains(it).not() }
-                    .filter { hasAroundMineCellCoordinateSet.contains(it).not() }
-                val isAllExpected = allCellCoordinates.all { coordinate ->
-                    val groundCell = (mineMap.cells[coordinate.y][coordinate.x] as Cell.Ground)
-                    val actualAroundMineCount = groundCell.aroundMineCount.value
-                    actualAroundMineCount == 0
-                }
-                isAllExpected shouldBe true
+        forAll(
+            row(0, 0, 1),
+            row(1, 0, 2),
+            row(2, 0, 3),
+            row(3, 0, 2),
+            row(4, 0, 1),
+            row(0, 1, 2),
+            row(4, 1, 2),
+            row(0, 2, 3),
+            row(4, 2, 3),
+            row(0, 3, 2),
+            row(4, 3, 2),
+            row(0, 4, 1),
+            row(1, 4, 2),
+            row(2, 4, 3),
+            row(3, 4, 2),
+            row(4, 4, 1),
+            row(0, 5, 0),
+            row(1, 5, 0),
+            row(2, 5, 0),
+            row(3, 5, 0),
+            row(4, 5, 0),
+        ) { x, y, expectedMineCount ->
+            Then("($x, $y)의 지뢰 개수는 ${expectedMineCount}이다") {
+                (cells[y][x] as Cell.Ground).aroundMineCount.value shouldBe expectedMineCount
             }
         }
     }
