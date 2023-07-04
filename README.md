@@ -102,4 +102,40 @@ C C C C C C C C C C
 
 ### MineMark
 
-- 세어진 갯수를 관리하는 마크 추가 
+- 세어진 갯수를 관리하는 마크 추가
+
+## 3단계 - 지뢰 찾기(게임 실행)
+
+- 지뢰가 없는 인접한 칸 열리기
+- 지뢰 입력 추가
+
+```text
+높이를 입력하세요.
+10
+
+너비를 입력하세요.
+10
+
+지뢰는 몇 개인가요?
+10
+
+지뢰찾기 게임 시작
+open: 1, 1
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+1 1 C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+
+open: 4, 1
+Lose Game.
+```
+
+### OpenStatus
+
+- 열려진 상태 관리 추가

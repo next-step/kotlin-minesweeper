@@ -1,5 +1,7 @@
 package view
 
+import model.Position
+
 object InputView {
 
     val length: Int
@@ -16,6 +18,15 @@ object InputView {
         get() = println("지뢰는 몇 개인가요?").run {
             inputInt { "지뢰 개수는 필수입니다." }
         }
+
+    val openPosition: Position
+        get() = print("open: ")
+            .run {
+                readln()
+                    .split(",")
+                    .map { it.toInt() }
+                    .let { (x, y) -> Position(x, y) }
+            }
 
     private fun inputInt(lazyMessage: () -> String): Int {
         return readlnOrNull()

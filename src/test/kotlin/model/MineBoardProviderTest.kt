@@ -14,7 +14,7 @@ class MineBoardProviderTest : StringSpec({
 
     "가로와 세로, 생성 마크로 생성 가능" {
         shouldNotThrowAny {
-            MineBoardProvider(1, 1, Mine)
+            MineBoardProvider(1, 1, Mine())
         }
     }
 
@@ -33,8 +33,8 @@ class MineBoardProviderTest : StringSpec({
 
     "지뢰 보드 제공 가능" {
         // given & when
-        val mineBoard = MineBoardProvider(1, 1, Safety).mineBoard
+        val mineBoard = MineBoardProvider(1, 1, Safety()).mineBoard
         // then
-        mineBoard shouldBe MineBoard(mapOf(Position(0, 0) to Safety))
+        mineBoard shouldBe MineBoard(mapOf(Position(0, 0) to Safety()))
     }
 })

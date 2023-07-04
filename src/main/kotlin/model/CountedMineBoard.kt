@@ -1,8 +1,13 @@
 package model
 
+import model.minemark.MineMark
 import model.minemark.Safety
 
 data class CountedMineBoard(val mineBoard: MineBoard) {
+    val maxXPosition: Int by lazy { mineBoard.maxXPosition }
+    val maxYPosition: Int by lazy { mineBoard.maxYPosition }
+    val isClosedMineCountAny: Boolean by lazy { mineBoard.isClosedMineCountAny }
+    val isClosedMineAll: Boolean by lazy { mineBoard.isClosedMineAll }
 
     init {
         require(mineBoard.doesNotContainsMark(NOT_ALLOWED_MARK)) {
@@ -10,7 +15,15 @@ data class CountedMineBoard(val mineBoard: MineBoard) {
         }
     }
 
+    fun mark(position: Position): MineMark {
+        return mineBoard.mark(position)
+    }
+
+    fun opened(positions: Collection<Position>): CountedMineBoard {
+        return CountedMineBoard(mineBoard.opened(positions))
+    }
+
     companion object {
-        private val NOT_ALLOWED_MARK = Safety
+        private val NOT_ALLOWED_MARK = Safety()
     }
 }
