@@ -6,7 +6,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import minesweeper.domain.cell.CellType.Companion.parseToCellType
+import minesweeper.domain.cell.CellType.Companion.toCellType
 import minesweeper.domain.cell.CellType.EIGHT
 import minesweeper.domain.cell.CellType.FIVE
 import minesweeper.domain.cell.CellType.FOUR
@@ -21,7 +21,7 @@ class CellTypeTest : FunSpec({
 
     context("parseToCellType") {
         test("지원하지 않는 셀값이 입력된 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> { CellType.parseToCellType(9) }
+            val exception = shouldThrowExactly<IllegalArgumentException> { 9.toCellType() }
             exception shouldHaveMessage "지원하지 않는 셀 타입입니다."
         }
 
@@ -37,7 +37,7 @@ class CellTypeTest : FunSpec({
             row(8, EIGHT),
         ) { input, expected ->
             test("${input}은 ${expected}로 변환된다.") {
-                val actual = parseToCellType(input)
+                val actual = input.toCellType()
                 actual shouldBe expected
             }
         }

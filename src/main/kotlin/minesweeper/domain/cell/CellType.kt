@@ -17,8 +17,8 @@ enum class CellType {
     ;
 
     companion object {
-        fun parseToCellType(value: Int): CellType =
-            when (value) {
+        fun Int.toCellType(): CellType =
+            when (this) {
                 0 -> ZERO
                 1 -> ONE
                 2 -> TWO
