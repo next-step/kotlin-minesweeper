@@ -10,7 +10,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
-class MineMapTest : BehaviorSpec({
+class RealMineMapFactoryTest : BehaviorSpec({
 
     Given("높이 100, 가로 50 초기화 속성이 준비 되었을 떄") {
         val mineSweeperInitProperty = MineSweeperInitProperty(
