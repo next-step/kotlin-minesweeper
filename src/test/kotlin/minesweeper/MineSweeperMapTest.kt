@@ -36,7 +36,7 @@ class MineSweeperMapTest {
         val mineCount = MineCountNumber(10, height, width)
         val mineMapProperty = MineSweeperMap.Property(height, width, mineCount)
 
-        val position = Position(2, 2)
+        val position = Position.fromInt(2, 2)
         val mineSweeperMap = MineSweeperMap(mineMapProperty)
         val baseCell = mineSweeperMap.getCellByPosition(position)
 
@@ -44,14 +44,14 @@ class MineSweeperMapTest {
 
         validPositions.value.forEach { it.shouldBeInstanceOf<Position>() }
         validPositions.value shouldBe listOf(
-            Position(1, 1),
-            Position(1, 2),
-            Position(1, 3),
-            Position(2, 1),
-            Position(2, 3),
-            Position(3, 1),
-            Position(3, 2),
-            Position(3, 3),
+            Position.fromInt(1, 1),
+            Position.fromInt(1, 2),
+            Position.fromInt(1, 3),
+            Position.fromInt(2, 1),
+            Position.fromInt(2, 3),
+            Position.fromInt(3, 1),
+            Position.fromInt(3, 2),
+            Position.fromInt(3, 3),
         )
     }
 }
