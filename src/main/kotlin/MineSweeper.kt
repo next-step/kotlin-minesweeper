@@ -22,6 +22,6 @@ class MineSweeper(
             ),
             RandomMinePositionSelector((0 until height), (0 until width))
         )
-        outputView.drawMineMap(mineMap.getMapAsSymbol())
+        outputView.drawMineMap(mineMap.getMapSnapShot())
     }
 }

@@ -24,7 +24,7 @@ class MineMap(
         generateMinePositions().forEach(::plantMine)
     }
 
-    fun getMapAsSymbol(): List<Row> {
+    fun getMapSnapShot(): List<Row> {
         return (0 until height).map { y ->
             Row(
                 (0 until width).map { x ->
@@ -42,7 +42,7 @@ class MineMap(
     }
 
     private fun countNeighboringMine(pos: Position): Int {
-        val neighbors = pos.getAdjacentNeighbors(pos)
+        val neighbors = pos.getAdjacentNeighbors()
 
         var mineCount = 0
         neighbors.forEach {
