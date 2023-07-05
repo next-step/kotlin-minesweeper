@@ -5,11 +5,10 @@ interface CellProperty {
     fun getSymbol(): String
 
     companion object {
-        fun of(isMine: Boolean, aroundMineCount: AroundMineCount): CellProperty {
-            return when (isMine) {
-                true -> MineCellProperty()
-                false -> NormalCellProperty(aroundMineCount)
-            }
+        fun of(isMine: Boolean, getAroundMineCount: () -> AroundMineCount): CellProperty {
+            if (isMine) return MineCellProperty()
+            val aroundMineCount = getAroundMineCount()
+            return NormalCellProperty(aroundMineCount)
         }
     }
 }
