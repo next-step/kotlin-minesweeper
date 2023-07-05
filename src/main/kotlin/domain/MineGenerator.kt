@@ -26,5 +26,4 @@ object MineGenerator {
     private fun getRandomHeight(height: Int): Int {
         return Random.nextInt(height)
     }
-
 }
