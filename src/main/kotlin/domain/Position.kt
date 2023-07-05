@@ -3,9 +3,9 @@ package domain
 data class Position(val row: PositiveNumber, val column: PositiveNumber) {
     constructor (row: Int, column: Int) : this(row.toPositiveNumber(), column.toPositiveNumber())
 
-    fun getValidPositionInRectangleArea(height: PositiveNumber, width: PositiveNumber): Positions {
-        val rectanglePositions = RectanglePosition.values()
-        return rectanglePositions.map { position ->
+    fun getValidAdjacentPositions(height: PositiveNumber, width: PositiveNumber): Positions {
+        val adjacentPositions = AdjacentPosition.values()
+        return adjacentPositions.map { position ->
             val newRow = row.value + position.row
             val newColumn = column.value + position.column
             newRow to newColumn

@@ -23,7 +23,7 @@ class MineSweeperMap(private val property: Property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
                     val position = Position(row, column)
-                    val validPositions = position.getValidPositionInRectangleArea(height, width)
+                    val validPositions = position.getValidAdjacentPositions(height, width)
                     val aroundMineCount = validPositions.getMineCountCompareSet(minePositionSet)
                     val cellProperty = CellProperty.of(minePositionSet.contains(position), aroundMineCount)
                     Cell(position, cellProperty)

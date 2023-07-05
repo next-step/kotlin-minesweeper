@@ -40,7 +40,7 @@ class MineSweeperMapTest {
         val mineSweeperMap = MineSweeperMap(mineMapProperty)
         val baseCell = mineSweeperMap.getCellByPosition(position)
 
-        val validPositions = baseCell.position.getValidPositionInRectangleArea(height, width)
+        val validPositions = baseCell.position.getValidAdjacentPositions(height, width)
 
         validPositions.value.forEach { it.shouldBeInstanceOf<Position>() }
         validPositions.value shouldBe listOf(
