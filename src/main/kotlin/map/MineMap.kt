@@ -24,22 +24,37 @@ class MineMap(
         generateMinePositions().forEach(::plantMine)
     }
 
-    private fun plantMine(pos: Position) {
-        validatePlantingMineAvailable()
-        mineMap[pos] = MineTile()
-        currMineCount++
-    }
-
-    fun getMapAsSymbol(): List<List<String>> {
+    fun getMapAsSymbol(): List<Row> {
         return (0 until height).map { y ->
-            (0 until width).map { x ->
-                mineMap[Position(y, x)]!!.getSymbol()
-            }
+            Row(
+                (0 until width).map { x ->
+                    val pos = Position(y, x)
+                    Col(mineMap[pos]!!, countNeighboringMine(pos))
+                }
+            )
         }
     }
 
+    private fun plantMine(pos: Position) {
+        validatePlantingMineAvailable()
+        mineMap[pos] = MineTile
+        currMineCount++
+    }
+
+    private fun countNeighboringMine(pos: Position): Int {
+        val neighbors = pos.getAdjacentNeighbors(pos)
+
+        var mineCount = 0
+        neighbors.forEach {
+            val tile = mineMap[it]
+            if (tile != null && tile is MineTile) {
+                mineCount++
+            }
+        }
+        return mineCount
+    }
     private fun validatePlantingMineAvailable() {
-        if (mineCount == (height * width)) {
+        if (currMineCount == (height * width)) {
             throw IllegalStateException("더 이상 지뢰를 매설할 공간이 없습니다")
         }
     }
@@ -47,7 +62,7 @@ class MineMap(
     private fun initMap() {
         (0 until height).map { y ->
             (0 until width).map { x ->
-                mineMap[Position(y, x)] = PlainTile()
+                mineMap[Position(y, x)] = PlainTile
             }
         }
     }
@@ -56,15 +71,19 @@ class MineMap(
         val minePositions = mutableSetOf<Position>()
 
         (0 until mineCount).forEach { _ ->
-            while (true) {
-                val minePos = minePositionSelector.select()
-                if (!minePositions.contains(minePos)) {
-                    minePositions.add(minePos)
-                    break
-                }
-            }
+            addMinePosition(minePositions)
         }
         return minePositions.toList()
+    }
+
+    private fun addMinePosition(minePositions: MutableSet<Position>) {
+        while (true) {
+            val minePos = minePositionSelector.select()
+            if (!minePositions.contains(minePos)) {
+                minePositions.add(minePos)
+                break
+            }
+        }
     }
 
     data class Property(
