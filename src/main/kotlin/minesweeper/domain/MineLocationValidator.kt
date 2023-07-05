@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class MineLocationValidator {
 
@@ -6,4 +6,6 @@ class MineLocationValidator {
         val (x, y) = mineLocation.location
         return board[x][y] == '*'
     }
+
+
 }
