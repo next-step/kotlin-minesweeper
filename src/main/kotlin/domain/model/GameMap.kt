@@ -41,6 +41,14 @@ class GameMap(field: List<List<Tile>>) {
         algorithm.openTiles(this, point)
     }
 
+    fun isUnopenedNumberTile(x: Int, y: Int): Boolean {
+        return field[y][x] is NumberTile && !field[y][x].isOpened
+    }
+
+    fun inRange(x: Int, y: Int): Boolean {
+        return x in 0 until info.width && y in 0 until info.height
+    }
+
     private fun mineCountInColumn(x: Int, y: Int): Int {
         var count = 0
 

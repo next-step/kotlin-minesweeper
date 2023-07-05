@@ -237,4 +237,49 @@ class GameMapTest {
         map.field[3][0].isOpened shouldBe false
         map.field[2][3].isOpened shouldBe false
     }
+
+    @Test
+    fun `특정 지점이 열리지 않은 숫자 타일인지 알 수 있다`() {
+        /*
+        0, 1, 1
+        0, 1, *
+        0, 1, 1
+         */
+        val field = listOf(
+            listOf(
+                NumberTile(Point.from(0, 0)),
+                NumberTile(Point.from(1, 0)),
+                NumberTile(Point.from(2, 0)),
+            ),
+            listOf(
+                NumberTile(Point.from(0, 1)),
+                NumberTile(Point.from(1, 1)),
+                Mine(Point.from(2, 1)),
+            ),
+            listOf(
+                NumberTile(Point.from(0, 2)),
+                NumberTile(Point.from(1, 2)),
+                NumberTile(Point.from(2, 2)),
+            ),
+        )
+        val map = GameMap(field).apply {
+            updateField()
+        }
+        map.isUnopenedNumberTile(0, 0) shouldBe true
+        map.isUnopenedNumberTile(1, 1) shouldBe true
+
+        map.openTile(Point.from(0, 0))
+
+        map.isUnopenedNumberTile(0, 0) shouldBe false
+        map.isUnopenedNumberTile(1, 1) shouldBe false
+    }
+
+    @Test
+    fun `특정 지점이 맵 범위에 있는지 확인할 수 있다`() {
+
+        val map = GameMap.create(2, 2, 0)
+
+        map.inRange(0, 0) shouldBe true
+        map.inRange(3, 3) shouldBe false
+    }
 }
