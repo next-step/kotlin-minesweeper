@@ -11,7 +11,8 @@ class MineSweeperController {
         val width = MineSweeperInputView.inputWidth()
         val numberOfMines = MineSweeperInputView.inputNumberOfMines()
 
-        val mineCoordinates = RandomCoordinatesGenerator(height, width).create(numberOfMines)
+        val coordinatesGenerator = RandomCoordinatesGenerator(height, width)
+        val mineCoordinates = coordinatesGenerator.create(numberOfMines)
         val board = Board.create(height, width, mineCoordinates)
 
         MineSweeperResultView.start()

@@ -10,10 +10,7 @@ class Cell private constructor(
     }
 
     fun hasMine(): Boolean {
-        return when (state) {
-            MineState -> true
-            else -> false
-        }
+        return state == MineState
     }
 
     override fun toString(): String {
