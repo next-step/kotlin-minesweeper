@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class CoordinatesTest : FunSpec({
 
     test("좌표의 주변 좌표를 모두 반환한다") {
-        Coordinates.neighbors(Coordinate(1, 1)) shouldBe listOf(
+        Coordinates.around(Coordinate(1, 1)) shouldBe listOf(
             Coordinate(0, 0), Coordinate(0, 1), Coordinate(0, 2),
             Coordinate(1, 0), Coordinate(1, 2),
             Coordinate(2, 0), Coordinate(2, 1), Coordinate(2, 2),

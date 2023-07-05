@@ -1,35 +1,16 @@
 package domain
 
-enum class Cell(
-    val symbol: String,
+data class Cell(
+    val hasMine: Boolean,
+    private var state: CellState = Closed,
 ) {
-    CLOSED("C"),
-    MINE("*"),
-    ZERO("0"),
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    ;
-
-    fun isMine(): Boolean = this == MINE
-
-    fun isClosed(): Boolean = this == CLOSED
-
-    companion object {
-        private val neighborMineCountRange: IntRange = ZERO.symbol.toInt()..EIGHT.symbol.toInt()
-
-        fun of(isMine: Boolean): Cell {
-            return if (isMine) MINE else CLOSED
-        }
-
-        fun of(neighborMineCount: Int): Cell {
-            return values().find { it.symbol == neighborMineCount.toString() }
-                ?: throw IllegalArgumentException("셀의 주변 지뢰 개수는 $neighborMineCountRange 범위 값 이어야 합니다.")
-        }
+    fun open(aroundMineCount: AroundMineCount) {
+        state = state.open(aroundMineCount)
     }
+
+    fun isClosed(): Boolean {
+        return state is Closed
+    }
+
+    fun aroundMineCount(): AroundMineCount = state.aroundMineCount()
 }
