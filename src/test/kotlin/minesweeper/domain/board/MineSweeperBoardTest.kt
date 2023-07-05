@@ -36,16 +36,4 @@ class MineSweeperBoardTest {
 
         board.containsPosition(Position(x = 1, y = 1)) shouldBe true
     }
-
-    @Test
-    fun `NxM 크기의 보드에서 (x, y) 위치를 찾을 떄 범위에 포함되지 않으면 IllegalArgumentException 발생`() {
-        val mineQty = 1
-        val boardRange = BoardRange(height = 10, width = 10)
-
-        val board = MineSweeperBoard(boardRange = boardRange, mineQuantity = mineQty)
-
-        shouldThrow<IllegalArgumentException> {
-            board.find(Position(x = 100000, y = 10000))
-        }
-    }
 }

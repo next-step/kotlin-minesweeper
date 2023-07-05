@@ -45,7 +45,7 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
     }
 
     private fun isProceedGame(exploreResult: ExploreResult) = exploreResult == ExploreResult.SuccessExplore &&
-        !board.isAllVisitPositionsWithoutMinePositions()
+        !board.isAllOpenWithoutMinePositions()
 
     private fun getBoardRangePosition(positionGetter: () -> Position): Position {
         var position: Position?
@@ -67,7 +67,7 @@ class MineSweeperGame(boardRange: BoardRange, mineQuantity: Int) {
     }
 
     private fun winGame(showWinGameMessage: () -> Unit) {
-        if (board.isAllVisitPositionsWithoutMinePositions()) {
+        if (board.isAllOpenWithoutMinePositions()) {
             showWinGameMessage()
         }
     }

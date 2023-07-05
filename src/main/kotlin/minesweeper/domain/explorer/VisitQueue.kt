@@ -1,6 +1,7 @@
 package minesweeper.domain.explorer
 
 import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 
 class VisitQueue {
 
@@ -16,4 +17,7 @@ class VisitQueue {
     }
 
     fun isEmpty(): Boolean = queue.isEmpty()
+    fun pushAll(positions: Positions) {
+        positions.forEach(this::push)
+    }
 }

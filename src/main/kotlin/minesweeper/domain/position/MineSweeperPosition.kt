@@ -9,9 +9,17 @@ sealed class MineSweeperPosition(private val position: Position) {
     fun visit() {
         visit = true
     }
+
+    abstract fun isExistsMinesAround(): Boolean
+
+    abstract fun isVisitablePosition(): Boolean
 }
 
-class MinePosition(position: Position) : MineSweeperPosition(position)
+class MinePosition(position: Position) : MineSweeperPosition(position) {
+    override fun isExistsMinesAround(): Boolean = true
+
+    override fun isVisitablePosition(): Boolean = false
+}
 
 class EmptyPosition(position: Position, minePositions: Positions) : MineSweeperPosition(position) {
 
@@ -22,4 +30,13 @@ class EmptyPosition(position: Position, minePositions: Positions) : MineSweeperP
     }
 
     fun calculateAroundMineQuantity(): Int = aroundMineQuantity
+
+    override fun isExistsMinesAround(): Boolean =
+        calculateAroundMineQuantity() > NOT_EXISTS_MINE_QUANTITY
+
+    override fun isVisitablePosition(): Boolean = !isVisit()
+
+    companion object {
+        private const val NOT_EXISTS_MINE_QUANTITY = 0
+    }
 }
