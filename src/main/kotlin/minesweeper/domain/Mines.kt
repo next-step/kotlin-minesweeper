@@ -5,6 +5,7 @@ data class Mines(
 ) {
     companion object {
         fun generateMine(num: Int, rows: Int, cols: Int): Mines {
+            MapValidator.validate(rows, cols)
             return RandomLocationGenerator.location(num, rows, cols)
                 .map { Mine(it.row, it.col) }
                 .toMines()
