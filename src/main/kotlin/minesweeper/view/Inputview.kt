@@ -15,4 +15,9 @@ object Inputview {
         println("지뢰는 몇개인가요?")
         return readln().toInt()
     }
+
+    fun askOpenPosition(): List<Int> {
+        print("open: ")
+        return readln().split(", ").map { it.toInt() }.toList()
+    }
 }

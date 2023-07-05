@@ -18,6 +18,17 @@ class TwoDimPins private constructor (
         checkSurroundMineNumber(height, width)
     }
 
+    fun closeAllPin() {
+        values.forEach { pins ->
+            pins.closeAllInRow()
+        }
+    }
+
+    fun openPinAt(height: Int, width: Int): Pin {
+        require(height < values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
+        return values[height].openPinAt(width)
+    }
+
     private fun checkSurroundMineNumber(height: Int, width: Int) {
         val targetPin = values[height].getPinAt(width)
         val surroundPins = getSurroundMine(height, width)

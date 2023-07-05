@@ -8,11 +8,11 @@ class ClosePin(
         require(pin !is ClosePin) { "ClosePin 을 2 중으로 감쌀 수는 없습니다" }
     }
 
-    fun isMinePin(): Boolean {
-        return pin is MinePin
-    }
-
     fun open(): Pin {
         return pin
+    }
+
+    override fun isMinePin(): Boolean {
+        return this.pin is MinePin
     }
 }

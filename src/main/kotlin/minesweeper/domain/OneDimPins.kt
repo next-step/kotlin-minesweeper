@@ -19,6 +19,18 @@ class OneDimPins(private val values: MutableList<Pin>) {
         return values.slice(startPoint..endPoint)
     }
 
+    fun closeAllInRow() {
+        for ((index, value) in values.withIndex()) {
+            values[index] = value.changeToClosePin()
+        }
+    }
+
+    fun openPinAt(index: Int): Pin {
+        require(index <= getPinsSize()) { "너비에 $index 는 올바른 위치가 아닙니다" }
+        values[index] = (values[index] as ClosePin).open()
+        return getPinAt(index)
+    }
+
     fun changeMine(index: Int) {
         require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
         if (values[index] is NormalPin) {

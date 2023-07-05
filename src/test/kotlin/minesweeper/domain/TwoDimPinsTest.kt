@@ -3,6 +3,7 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import kotlin.random.Random
 
 class TwoDimPinsTest : FunSpec({
     test("핀의 사이즈는 높이와 너비를 곱한 값과 같다") {
@@ -49,5 +50,29 @@ class TwoDimPinsTest : FunSpec({
         (checkPin2 is NormalPin) shouldBe true
         (checkPin1 as NormalPin).surroundMineNumber shouldBe 1
         (checkPin2 as NormalPin).surroundMineNumber shouldBe 1
+    }
+
+    test("모든 핀들을 ClosePin 으로 전환시킨다") {
+        val size = GameBoardSize(10, 10)
+        val board = TwoDimPins.of(size)
+
+        board.closeAllPin()
+        val randomHeight = Random.nextInt(10)
+        val randomWidth = Random.nextInt(10)
+
+        val pin = board.getPinsAt(randomHeight, randomWidth)
+        (pin is ClosePin) shouldBe true
+    }
+
+    test("특정 핀을 ClosePin 에서 Open 시킬 수 있다") {
+        val size = GameBoardSize(10, 10)
+        val board = TwoDimPins.of(size)
+
+        board.closeAllPin()
+        val pin = board.openPinAt(1, 1)
+        val closePin = board.getPinsAt(1, 0)
+
+        (pin is NormalPin) shouldBe true
+        (closePin is ClosePin) shouldBe true
     }
 })
