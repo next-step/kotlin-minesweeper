@@ -48,4 +48,88 @@ internal class PositionTest {
         // then
         assertThat(position1 == position2).isEqualTo(false)
     }
+
+    @Test
+    fun `현재 위치를 기준으로 위로 이동한 위치를 반환할 수 있다`() {
+        // given
+        val tX = 0
+        val tY = 1
+        val position = Position(tX, tY)
+
+        // when
+        val nextPosition = position.move {
+            up()
+        }
+
+        // then
+        assertThat(nextPosition.y).isEqualTo(2)
+    }
+
+    @Test
+    fun `현재 위치를 기준으로 아래로 이동한 위치를 반환할 수 있다`() {
+        // given
+        val tX = 0
+        val tY = 1
+        val position = Position(tX, tY)
+
+        // when
+        val nextPosition = position.move {
+            down()
+        }
+
+        // then
+        assertThat(nextPosition.y).isEqualTo(0)
+    }
+
+    @Test
+    fun `현재 위치를 기준으로 좌측으로 이동한 위치를 반환할 수 있다`() {
+        // given
+        val tX = 0
+        val tY = 1
+        val position = Position(tX, tY)
+
+        // when
+        val nextPosition = position.move {
+            left()
+        }
+
+        // then
+        assertThat(nextPosition.x).isEqualTo(-1)
+    }
+
+    @Test
+    fun `현재 위치를 기준으로 우측으로 이동한 위치를 반환할 수 있다`() {
+        // given
+        val tX = 0
+        val tY = 1
+        val position = Position(tX, tY)
+
+        // when
+        val nextPosition = position.move {
+            right()
+        }
+
+        // then
+        assertThat(nextPosition.x).isEqualTo(1)
+    }
+
+    @Test
+    fun `현재 위치를 기준으로 여러번 이동한 위치를 반환할 수 있다`() {
+        // given
+        val tX = 0
+        val tY = 1
+        val position = Position(tX, tY)
+
+        // when
+        val nextPosition = position.move {
+            up()
+            right()
+            up()
+            right()
+        }
+
+        // then
+        assertThat(nextPosition.x).isEqualTo(2)
+        assertThat(nextPosition.y).isEqualTo(3)
+    }
 }
