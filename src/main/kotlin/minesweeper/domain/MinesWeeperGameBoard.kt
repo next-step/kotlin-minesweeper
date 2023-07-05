@@ -5,10 +5,11 @@ import minesweeper.dto.GameBoardRequest
 class MinesWeeperGameBoard(
     private val height: Int,
     private val width: Int,
-    private val minesNumber: Int
+    minesNumber: Int
 ) {
-    private var board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
+    private val board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
     private val mineLocationGenerator = MineLocationGenerator(height, width, RandomCoordinateGenerator())
+    private val gameBoardValidator = GameBoardValidator()
 
     constructor(gameBoardRequest: GameBoardRequest) : this(
         gameBoardRequest.height,
@@ -17,7 +18,7 @@ class MinesWeeperGameBoard(
     )
 
     init {
-        require(height * width >= minesNumber) { "지뢰의 갯수는 전체 게임판 보다 크면 안됩니다." }
+        gameBoardValidator.validateGameRequest(height, width, minesNumber)
         generateMines(minesNumber)
     }
 
