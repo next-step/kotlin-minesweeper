@@ -1,15 +1,15 @@
 package minesweeper.domain
 
 class Minesweeper(
-    val minesweeperArray: Array<IntArray>,
-    val minePositions: MinePositions
+    val positions: Positions,
+    minePositions: MinePositions
 ) {
     init {
         for (minePosition in minePositions.minePositions) {
-            minesweeperArray[minePosition.rowPosition][minePosition.colPosition] = -1
+            positions.updatePositionValue(minePosition.rowPosition, minePosition.colPosition, -1)
         }
 
-        val mineCount = MineCount(minesweeperArray)
+        val mineCount = MineCount(positions)
         mineCount.initMineCount()
     }
 
@@ -17,7 +17,12 @@ class Minesweeper(
         fun from(rows: Rows, cols: Cols, mine: MineValue): Minesweeper {
             val rowsValue = rows.value
             val colsValue = cols.value
-            return Minesweeper(Array(rowsValue) { IntArray(colsValue) }, MinePositions.from(rows, cols, mine))
+            val positions = Array(rowsValue) {
+                arrayOfNulls<Position>(
+                    colsValue
+                )
+            }
+            return Minesweeper(Positions(positions), MinePositions.from(rows, cols, mine))
         }
     }
 }

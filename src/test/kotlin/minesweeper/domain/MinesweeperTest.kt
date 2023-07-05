@@ -10,7 +10,8 @@ class MinesweeperTest : StringSpec({
 
     "높이, 너비, 지뢰의 수를 가진 지뢰찾기 게임을 만든다." {
         val minesweeper = Minesweeper.from(rows, cols, MineValue(10, 10, 10))
-        minesweeper.minesweeperArray.size shouldBe 10
+        minesweeper.positions.rows shouldBe 10
+        minesweeper.positions.cols shouldBe 10
     }
 
     "지뢰의 수가 높이, 너비의 곱과 같거나 클 경우 예외를 발생 시킨다." {

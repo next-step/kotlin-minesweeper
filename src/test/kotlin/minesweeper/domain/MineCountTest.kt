@@ -5,13 +5,17 @@ import io.kotest.matchers.shouldBe
 
 class MineCountTest : StringSpec({
     "해당 포지션 주위의 지뢰의 수를 가져온다." {
-        val minesweeperArray: Array<IntArray> = Array(10) { IntArray(10) }
-        minesweeperArray[0][1] = -1
-        minesweeperArray[1][1] = -1
-        minesweeperArray[1][0] = -1
-        val mineCount = MineCount(minesweeperArray)
+        val minesweeperArray: Array<Array<Position?>> = Array(10) {
+            arrayOfNulls(
+                10
+            )
+        }
+        minesweeperArray[0][1] = Position(-1)
+        minesweeperArray[1][1] = Position(-1)
+        minesweeperArray[1][0] = Position(-1)
+        val mineCount = MineCount(Positions(minesweeperArray))
         mineCount.initMineCount()
 
-        mineCount.positionMineCount(0, 0) shouldBe 3
+        mineCount.positionMineCount(0, 0).value shouldBe 3
     }
 })

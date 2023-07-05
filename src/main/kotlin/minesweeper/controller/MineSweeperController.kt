@@ -18,6 +18,6 @@ class MineSweeperController {
 
         printStart()
         val minesweeper = Minesweeper.from(Rows(rows), Cols(cols), MineValue(mineCount, rows, cols))
-        printResult(minesweeper.minesweeperArray)
+        printResult(minesweeper.positions)
     }
 }

@@ -1,12 +1,12 @@
 package minesweeper.domain
 
 data class MineCount(
-    private val minesweeperArray: Array<IntArray>,
+    private val positions: Positions,
 ) {
 
     fun initMineCount() {
-        val rows = minesweeperArray.size
-        val cols = minesweeperArray[0].size
+        val rows = positions.rows
+        val cols = positions.cols
 
         (0 until rows).forEach {
             (0 until cols).forEach { col ->
@@ -15,13 +15,13 @@ data class MineCount(
         }
     }
 
-    fun positionMineCount(i: Int, j: Int): Int {
-        return minesweeperArray[i][j]
+    fun positionMineCount(i: Int, j: Int): Position {
+        return positions.position(i, j)
     }
 
     private fun addMineCount(i: Int, j: Int) {
-        if (minesweeperArray[i][j] != -1) {
-            minesweeperArray[i][j] = calculateMineCount(Pair(i, j))
+        if (positions.position(i, j).value != -1) {
+            positions.updatePositionValue(i, j, calculateMineCount(Pair(i, j)))
         }
     }
 
@@ -34,35 +34,18 @@ data class MineCount(
             .filter { isMineExists(it) }
             .forEach { _ -> mineCount += 1 }
 
-        return mineCount
+        return Position(mineCount).value
     }
 
     private fun isMineExists(findMinePosition: Pair<Int, Int>): Boolean {
         val (row, col) = findMinePosition
-        val rowSize = minesweeperArray.size
-        val colSize = minesweeperArray[0].size
+        val rowSize = positions.rows
+        val colSize = positions.cols
 
         if (row == -1 || col == -1 || row >= rowSize || col >= colSize) {
             return false
         }
 
-        return minesweeperArray[row][col] == -1
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as MineCount
-
-        return minesweeperArray.contentDeepEquals(other.minesweeperArray)
-    }
-
-    override fun hashCode(): Int {
-        return minesweeperArray.contentDeepHashCode()
-    }
-
-    override fun toString(): String {
-        return "MineCount(minesweeperArray=${minesweeperArray.contentToString()})"
+        return positions.position(row, col).value == -1
     }
 }
