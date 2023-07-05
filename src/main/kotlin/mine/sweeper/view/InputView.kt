@@ -1,8 +1,9 @@
 package mine.sweeper.view
 
-import mine.sweeper.domain.value.Height
-import mine.sweeper.domain.value.MineCount
-import mine.sweeper.domain.value.Width
+import mine.sweeper.application.value.Height
+import mine.sweeper.application.value.MineCount
+import mine.sweeper.application.value.Width
+import mine.sweeper.view.dto.Position
 
 object InputView {
     fun getHeight(): Height {
@@ -24,5 +25,16 @@ object InputView {
         val input = readln()
         require(input.toIntOrNull() != null) { "지뢰의 개수를 숫자를 입력해주세요!" }
         return MineCount(input.toInt())
+    }
+
+    fun getOpenPosition(): Position {
+        print("open: ")
+        val input = readln()
+        val split = input.split(", ")
+        require(split.size == 2) { "두 개의 숫자를 입력해주세요!" }
+        split.forEach {
+            require(it.toIntOrNull() != null) { "입력값은 숫자여야 합니다!" }
+        }
+        return Position(split[1].toInt(), split[0].toInt())
     }
 }
