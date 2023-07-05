@@ -6,15 +6,20 @@ object ResultView {
 
     private const val BOARD_PRINT_STRING = "\n지뢰찾기 게임 시작"
 
-    private const val NEW_LINE_STRING = "\n"
+    private const val MINE_STRING = "*"
 
-    private const val BLANK_STRING = " "
+    private const val BASIC_STRING = "C"
 
-    fun printGameBoard(minesWeeper: MinesWeeper) {
+    fun printGameBoard(width: Int, minesWeeper: MinesWeeper) {
         println(BOARD_PRINT_STRING)
-        val output = minesWeeper.boards.joinToString(NEW_LINE_STRING) { row ->
-            row.joinToString(BLANK_STRING)
+        val chucks = minesWeeper.boards.sortedBy { it.location.x }.sortedBy { it.location.y }.chunked(width)
+        for (chunk in chucks) {
+            println(chunk.joinToString(" ") { getPrintString(it.isMine) })
         }
-        println(output)
+    }
+
+    private fun getPrintString(isMine: Boolean): String {
+        if (isMine) return MINE_STRING
+        return BASIC_STRING
     }
 }

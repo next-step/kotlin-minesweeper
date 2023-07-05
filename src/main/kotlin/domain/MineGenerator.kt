@@ -6,17 +6,17 @@ class MineGenerator {
     companion object {
         private val lists: MutableList<Location> = mutableListOf()
 
-        fun create(height: Int, width: Int, count: Int): Mines {
+        fun create(height: Int, width: Int, count: Int): List<Location> {
             for (i in 1..count) {
                 lists.add(getNewLocation(height, width))
             }
-            return Mines(lists)
+            return lists
         }
 
         private fun getNewLocation(height: Int, width: Int): Location {
-            var location = Location(getRandomWidth(width), getRandomHeight(height))
+            var location = Location(getRandomHeight(height), getRandomWidth(width))
             while (lists.contains(location)) {
-                location = Location(getRandomWidth(width), getRandomHeight(height))
+                location = Location(getRandomHeight(height), getRandomWidth(width))
             }
             return location
         }

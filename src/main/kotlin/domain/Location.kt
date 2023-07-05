@@ -1,3 +1,3 @@
 package domain
 
-data class Location(val x: Int, val y: Int)
+data class Location(val y: Int, val x: Int)

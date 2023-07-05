@@ -10,5 +10,5 @@ fun main() {
     val mineCounts = InputView.getMineCounts()
 
     val game = MinesWeeper.of(height, width, mineCounts)
-    ResultView.printGameBoard(game)
+    ResultView.printGameBoard(width, game)
 }
