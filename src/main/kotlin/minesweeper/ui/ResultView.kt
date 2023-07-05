@@ -1,5 +1,7 @@
 package minesweeper.ui
 
+import minesweeper.domain.GameBoardSquare
+
 class ResultView {
 
     fun printGetHeight() {
@@ -16,7 +18,7 @@ class ResultView {
         println("지뢰는 몇 개인가요?")
     }
 
-    fun printGameBoard(gameBoard: List<List<Char>>) {
+    fun printGameBoard(gameBoard: List<List<GameBoardSquare>>) {
         println()
         println("지뢰찾기 게임 시작")
         gameBoard.forEach {
@@ -24,8 +26,8 @@ class ResultView {
         }
     }
 
-    private fun printEachBoardLine(boardLine: List<Char>) {
-        boardLine.forEach { print("$it ") }
+    private fun printEachBoardLine(boardLine: List<GameBoardSquare>) {
+        boardLine.forEach { print("${it.printValue()} ") }
         println()
     }
 }

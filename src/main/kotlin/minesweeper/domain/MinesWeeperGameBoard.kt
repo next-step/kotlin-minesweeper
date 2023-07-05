@@ -7,7 +7,8 @@ class MinesWeeperGameBoard(
     width: Int,
     minesNumber: Int
 ) {
-    private val board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
+    private val board: MutableList<MutableList<GameBoardSquare>> =
+        MutableList(height) { MutableList(width) { GameBoardSquare(SquareValueType.EMPTY) } }
     private val mineLocationGenerator = MineLocationGenerator(RandomCoordinateGenerator())
     private val gameBoardValidator = GameBoardValidator()
 
@@ -31,10 +32,10 @@ class MinesWeeperGameBoard(
 
     private fun insertMine(mineLocation: MineLocation) {
         val (x, y) = mineLocation
-        board[y][x] = '*'
+        board[y][x].insertMine()
     }
 
-    fun getBoard(): List<List<Char>> {
+    fun getBoard(): List<List<GameBoardSquare>> {
         return board.map { it.toList() }
     }
 }

@@ -1,5 +1,6 @@
 package minesweeper.controller
 
+import minesweeper.domain.GameBoardSquare
 import minesweeper.domain.MinesWeeperGameBoard
 import minesweeper.dto.GameBoardRequest
 import minesweeper.ui.InputView
@@ -36,7 +37,7 @@ class MinesWeeperController {
         return inputView.getOneNumber()
     }
 
-    private fun printMinesWeeperGame(gameBoard: List<List<Char>>) {
+    private fun printMinesWeeperGame(gameBoard: List<List<GameBoardSquare>>) {
         resultView.printGameBoard(gameBoard)
     }
 }
