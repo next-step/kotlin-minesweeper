@@ -16,7 +16,7 @@
 
 * MineLocationGenerator
 
-- [ ] 지뢰의 위치를 생성한다.
+- [x] 지뢰의 위치를 생성한다.
 
 * MineLocationValidator
 
