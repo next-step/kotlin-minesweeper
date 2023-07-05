@@ -5,7 +5,6 @@ import domain.PositiveNumber
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 
 class MineCountNumberTest {
     @Test

@@ -9,7 +9,7 @@ class GameMapOutputView(mineSweeperMap: MineSweeperMap) {
         mineSweeperMap.value.forEach { row ->
             val rowMessage = row.joinToString(" ") { cell ->
                 when (cell.property is NormalCellProperty) {
-                    true -> cell.property.mineCountOfAround.value.toString()
+                    true -> cell.property.aroundMineCount.value.toString()
                     false -> CellType.MINE_SYMBOL
                 }
             }

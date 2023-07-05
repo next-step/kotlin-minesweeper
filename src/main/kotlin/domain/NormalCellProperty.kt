@@ -1,5 +1,5 @@
 package domain
 
-class NormalCellProperty(val mineCountOfAround: MineCountNumber) : CellProperty {
+class NormalCellProperty(val aroundMineCount: AroundMineCount) : CellProperty {
     override val type: CellType = CellType.NORMAL
 }
