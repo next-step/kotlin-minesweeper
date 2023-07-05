@@ -21,8 +21,8 @@ class GameBoard(
             val heightPositionStrategy: () -> Int = { Random.nextInt(size.height) }
             val widthPositionStrategy: () -> Int = { Random.nextInt(size.width) }
 
-            val result = setMine(heightPositionStrategy, widthPositionStrategy)
-        } while (!result)
+            val isFinishSettingMine = setMine(heightPositionStrategy, widthPositionStrategy)
+        } while (!isFinishSettingMine)
     }
 
     fun setMine(heightPositionStrategy: () -> Int, widthPositionStrategy: () -> Int): Boolean {
