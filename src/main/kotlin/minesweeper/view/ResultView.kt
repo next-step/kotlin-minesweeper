@@ -1,14 +1,15 @@
 package minesweeper.view
 
+import minesweeper.domain.MineSweeper
+
 object ResultView {
 
-    fun start(map: Array<Array<String>>) {
+    fun start(mineSweeper: MineSweeper) {
         println("지뢰 찾기 게임 시작")
-        map.forEach { row ->
-            row.forEach { cols ->
-                print("$cols ")
+        println(
+            mineSweeper.board.joinToString("\n") { row ->
+                row.joinToString(" ")
             }
-            println()
-        }
+        )
     }
 }

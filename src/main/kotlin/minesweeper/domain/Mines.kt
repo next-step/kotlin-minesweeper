@@ -6,7 +6,7 @@ data class Mines(
     companion object {
         fun generateMine(num: Int, rows: Int, cols: Int): Mines {
             return RandomLocationGenerator.location(num, rows, cols)
-                .map { Mine(it.first, it.second) }
+                .map { Mine(it.row, it.col) }
                 .toMines()
         }
     }
