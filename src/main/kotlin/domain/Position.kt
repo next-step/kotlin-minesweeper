@@ -5,9 +5,9 @@ data class Position(val row: PositiveNumber, val column: PositiveNumber) {
 
     fun getValidPositionInRectangleArea(height: PositiveNumber, width: PositiveNumber): Positions {
         val rectanglePositions = RectanglePosition.values()
-        return (rectanglePositions.indices).map {
-            val newRow = row.value + rectanglePositions[it].row
-            val newColumn = column.value + rectanglePositions[it].column
+        return rectanglePositions.map { position ->
+            val newRow = row.value + position.row
+            val newColumn = column.value + position.column
             newRow to newColumn
         }
             .filter { (row, column) ->
