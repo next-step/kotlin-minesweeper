@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class PlainTile : Tile(TileType.PLAIN) {
+open class PlainTile : Tile() {
     var nearMineCount = DEFAULT_COUNT
         private set
 
@@ -8,7 +8,21 @@ class PlainTile : Tile(TileType.PLAIN) {
         nearMineCount = nearMineCount.inc()
     }
 
+    fun isEmptyTile(): Boolean {
+        return nearMineCount == DEFAULT_COUNT
+    }
+
+    override fun getType(): TileType {
+        return TileType.PLAIN
+    }
+
+    fun openTile() {
+        isCheckedTile = true
+    }
+
     companion object {
         const val DEFAULT_COUNT = 0
     }
+
+
 }

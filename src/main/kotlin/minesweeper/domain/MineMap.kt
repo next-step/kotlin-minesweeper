@@ -39,6 +39,10 @@ class MineMap(private val width: Length, private val height: Length) {
         return makeCount
     }
 
+    fun isMineTile(position: MinePosition): Boolean {
+        return mineMap[position].isMine()
+    }
+
     private fun setNearMineMap(minePosition: MinePosition) {
         val minePositionX = minePosition.positionX
         for (position in minePositionX.dec()..minePositionX.inc()) {
@@ -47,27 +51,37 @@ class MineMap(private val width: Length, private val height: Length) {
     }
 
     private fun setNearMineColumn(positionX: Int, minePosition: MinePosition) {
-        if (isOutofMap(positionX, height)) {
+        if (isOutOfMap(positionX, height)) {
             return
         }
         val minePositionY = minePosition.positionY
         for (positionY in minePositionY.dec()..minePositionY.inc()) {
-            setNearMineRow(Position(positionX), positionY)
+            increaseNearMineRow(Position(positionX), positionY)
         }
     }
 
-    private fun isOutofMap(position: Int, length: Length) = position < 0 || position >= length.value
+    private fun isOutOfMap(position: Int, limit: Length) = position < 0 || position >= limit.value
 
-    private fun setNearMineRow(positionX: Position, positionY: Int) {
-        if (isOutofMap(positionY, width)) {
+    private fun increaseNearMineRow(positionX: Position, positionY: Int) {
+        if (isOutOfMap(positionY, width)) {
             return
         }
-        setNearMineCount(mineMap[MinePosition(positionX, Position(positionY))])
+        increaseNearMineCount(mineMap[MinePosition(positionX, Position(positionY))])
     }
 
-    private fun setNearMineCount(tile: Tile) {
+    private fun increaseNearMineCount(tile: Tile) {
         if (tile is PlainTile) {
             tile.increaseNearMineCount()
+        }
+    }
+
+    fun openMine(minePosition: MinePosition, operation: (Boolean, Int) -> Unit) {
+        when(val tile = mineMap[minePosition]) {
+            is MineTile -> operation(true, 0)
+            is PlainTile -> {
+                tile.openTile()
+                operation(false, tile.nearMineCount)
+            }
         }
     }
 }

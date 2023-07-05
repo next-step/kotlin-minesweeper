@@ -18,5 +18,12 @@ value class Position(val position: Int) {
 
     companion object {
         const val INVALID_POSITION = -1
+        fun of(positionString: String): Position {
+            val position = positionString.toIntOrNull()
+            require(position != null) {
+                "위치값은 숫자이어야함"
+            }
+            return Position(position-1)
+        }
     }
 }
