@@ -66,9 +66,10 @@ class MineSweeperBoard(
     }
 
     fun isAllVisitPositionsWithoutMinePositions(): Boolean {
-        val allPositions = MineSweeperPositions(board.map { it }.flatten())
-        val nonVisitPositions = allPositions.count { !it.isVisit() && it is EmptyPosition }
-        return nonVisitPositions == VISITED_POSITION_COUNT_WITHOUT_MINE_POSITIONS
+        val nonVisitEmptyPositions = board.flatten()
+            .filter { !it.isVisit() }
+            .filterIsInstance<EmptyPosition>()
+        return nonVisitEmptyPositions.isEmpty()
     }
 
     fun visitAround(position: Position): Positions {
