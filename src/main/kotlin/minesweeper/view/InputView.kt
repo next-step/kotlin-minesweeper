@@ -11,4 +11,9 @@ object InputView {
         println("너비를 입력하세요.")
         return readLine()?.toInt() ?: throw IllegalArgumentException("너비 숫자여야 합니다.")
     }
+
+    fun inputMineCount(): Int {
+        println("지뢰는 몇 개인가요?")
+        return readLine()?.toInt() ?: throw IllegalArgumentException("지뢰 개수는 숫자여야 합니다.")
+    }
 }
