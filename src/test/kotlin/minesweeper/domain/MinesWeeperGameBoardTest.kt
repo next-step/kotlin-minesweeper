@@ -1,7 +1,8 @@
 package minesweeper.domain
 
-import org.assertj.core.api.Assertions
+import minesweeper.dto.GameBoardRequest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class MinesWeeperGameBoardTest {
 
@@ -18,5 +19,22 @@ class MinesWeeperGameBoardTest {
 //        ).getBoard()
 //
 //        Assertions.assertThat(actual).isEqualTo(answer)
+    }
+
+    @Test
+    fun `지뢰의 갯수가 전체 게임판 보다 크면 IllegaArgumentException을 throw 한다`() {
+        val height = 10
+        val width = 10
+        val minesNumber = 101
+        assertThrows<IllegalArgumentException> { MinesWeeperGameBoard(height, width, minesNumber) }
+    }
+
+    @Test
+    fun `지뢰의 갯수가 전체 게임판 보다 크면 IllegaArgumentException을 throw 한다 - GameBoardRequest로 생성`() {
+        val height = 10
+        val width = 10
+        val minesNumber = 101
+        val gameBoardRequest = GameBoardRequest(height, width, minesNumber)
+        assertThrows<IllegalArgumentException> { MinesWeeperGameBoard(gameBoardRequest) }
     }
 }

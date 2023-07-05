@@ -2,7 +2,7 @@ package minesweeper.domain
 
 class MineLocationGenerator(
     private val boardHeight: Int, private val boardWidth: Int,
-    private val mineLocationCoordinateGenerator: MineLocationCoordinateGenerator,
+    private val coordinateGenerator: CoordinateGenerator,
 ) {
     private val mineLocationValidator = MineLocationValidator()
 
@@ -15,7 +15,7 @@ class MineLocationGenerator(
         val maximumOfY = boardWidth + 1
         var generateMineMineLocation: MineLocation
         do {
-            generateMineMineLocation = mineLocationCoordinateGenerator.generateMineLocation(maximumOfX, maximumOfY)
+            generateMineMineLocation = coordinateGenerator.generateMineLocation(maximumOfX, maximumOfY)
         } while (mineLocationValidator.isDuplicatedMineLocation(board, generateMineMineLocation))
         return generateMineMineLocation
     }
