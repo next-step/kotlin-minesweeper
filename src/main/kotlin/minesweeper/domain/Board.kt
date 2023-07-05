@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 class Board(
     private val rows: List<Row>,
@@ -35,7 +35,7 @@ class Board(
     }
 
     private fun cellOf(coordinate: Coordinate): Cell = rows[coordinate.row][coordinate.col]
-    
+
     private fun height(): Int = rows.size
 
     private fun width(): Int = rows.first().size

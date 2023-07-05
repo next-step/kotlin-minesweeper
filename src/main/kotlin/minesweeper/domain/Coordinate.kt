@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 data class Coordinate(
     val row: Int = ROW_START_POSITION,

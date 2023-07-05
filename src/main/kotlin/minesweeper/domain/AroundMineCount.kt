@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 enum class AroundMineCount(
     val count: Int,

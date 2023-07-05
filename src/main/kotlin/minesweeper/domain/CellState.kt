@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 sealed class CellState {
     abstract fun open(aroundMineCount: AroundMineCount): CellState

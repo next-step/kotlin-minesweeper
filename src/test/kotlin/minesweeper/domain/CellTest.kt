@@ -1,10 +1,10 @@
-package domain
+package minesweeper.domain
 
-import fixture.cell
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
+import minesweeper.fixture.cell
 
 class CellTest : FunSpec({
 

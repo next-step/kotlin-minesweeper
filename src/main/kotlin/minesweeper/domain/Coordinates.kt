@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 class Coordinates(
     private val coordinates: List<Coordinate>,

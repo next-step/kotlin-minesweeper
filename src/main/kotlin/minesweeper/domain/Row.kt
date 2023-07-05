@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 class Row(
     private val cells: List<Cell>

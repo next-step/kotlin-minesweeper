@@ -1,7 +1,7 @@
-package view
+package minesweeper.view
 
-import vo.BoardVO
-import vo.CoordinateVO
+import minesweeper.vo.BoardVO
+import minesweeper.vo.CoordinateVO
 
 object InputView {
     private const val COMMA_SEPARATOR = ","

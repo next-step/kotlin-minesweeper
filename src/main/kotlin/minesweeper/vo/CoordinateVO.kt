@@ -1,4 +1,4 @@
-package vo
+package minesweeper.vo
 
 data class CoordinateVO(
     val row: Int,

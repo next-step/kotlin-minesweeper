@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 data class Cell(
     val hasMine: Boolean,

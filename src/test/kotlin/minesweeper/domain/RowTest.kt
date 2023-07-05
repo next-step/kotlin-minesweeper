@@ -1,10 +1,10 @@
-package domain
+package minesweeper.domain
 
-import fixture.cell
-import fixture.mine
-import fixture.row
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.fixture.cell
+import minesweeper.fixture.mine
+import minesweeper.fixture.row
 
 class RowTest : FunSpec({
     test("지뢰찾기 보드 row 번째 행을 만든다.") {

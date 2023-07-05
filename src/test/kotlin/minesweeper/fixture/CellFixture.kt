@@ -1,10 +1,10 @@
-package fixture
+package minesweeper.fixture
 
-import domain.AroundMineCount
-import domain.Cell
-import domain.CellState
-import domain.Closed
-import domain.Opened
+import minesweeper.domain.AroundMineCount
+import minesweeper.domain.Cell
+import minesweeper.domain.CellState
+import minesweeper.domain.Closed
+import minesweeper.domain.Opened
 
 fun cell(
     state: CellState = Closed

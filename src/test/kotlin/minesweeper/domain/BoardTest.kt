@@ -1,13 +1,13 @@
-package domain
+package minesweeper.domain
 
-import fixture.board
-import fixture.cell
-import fixture.mine
-import fixture.row
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
+import minesweeper.fixture.board
+import minesweeper.fixture.cell
+import minesweeper.fixture.mine
+import minesweeper.fixture.row
 
 class BoardTest : FunSpec({
     test("지뢰찾기 보드를 만든다.") {
@@ -110,7 +110,7 @@ class BoardTest : FunSpec({
             row(mine(), cell(), cell(), cell()),
             row(mine(), cell(), cell(), cell()),
         )
-        
+
         board.open(Coordinate(2, 2))
         board shouldBe board(
             row(mine(), mine(), cell(1), cell(0)),

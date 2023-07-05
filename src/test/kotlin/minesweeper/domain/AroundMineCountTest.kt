@@ -1,4 +1,4 @@
-package domain
+package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec

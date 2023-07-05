@@ -1,6 +1,6 @@
-package vo
+package minesweeper.vo
 
-import domain.Board
+import minesweeper.domain.Board
 
 class BoardVO(
     val rows: List<RowVO>

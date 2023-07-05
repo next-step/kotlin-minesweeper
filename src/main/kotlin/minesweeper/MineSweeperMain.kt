@@ -1,9 +1,11 @@
-import domain.Board
-import domain.Coordinate
-import domain.RandomMineCoordinateGenerator
-import view.InputView
-import view.ResultView
-import vo.BoardVO
+package minesweeper
+
+import minesweeper.domain.Board
+import minesweeper.domain.Coordinate
+import minesweeper.domain.RandomMineCoordinateGenerator
+import minesweeper.view.InputView
+import minesweeper.view.ResultView
+import minesweeper.vo.BoardVO
 
 fun main() {
     val height = InputView.readHeight()

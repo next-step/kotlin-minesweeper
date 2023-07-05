@@ -1,6 +1,6 @@
-package vo
+package minesweeper.vo
 
-import domain.Row
+import minesweeper.domain.Row
 
 class RowVO(
     val cells: List<String>,
