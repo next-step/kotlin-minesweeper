@@ -8,6 +8,14 @@ class NormalPin() : Pin() {
         surroundMineNumber++
     }
 
+    fun comparePinType(other: Pin) {
+        if (other is MinePin) addSurroundMineNumber()
+    }
+
+    fun changeToMine(): MinePin {
+        return MinePin()
+    }
+
     override fun equals(other: Any?): Boolean {
         return this === other
     }

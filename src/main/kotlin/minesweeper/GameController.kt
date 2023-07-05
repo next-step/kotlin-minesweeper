@@ -1,7 +1,6 @@
 package minesweeper
 
 import minesweeper.domain.GameBoard
-import minesweeper.domain.GameBoardSize
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
 
@@ -10,20 +9,15 @@ fun main() {
 }
 
 fun run() {
-    val size = readySize()
-    val board = readyGameBoard(size)
+    val board = readySize()
     readyMine(board)
     showResult(board)
 }
 
-fun readySize(): GameBoardSize {
+fun readySize(): GameBoard {
     val height = Inputview.askHeight()
     val width = Inputview.askWidth()
-    return GameBoardSize(height, width)
-}
-
-fun readyGameBoard(size: GameBoardSize): GameBoard {
-    return GameBoard(size)
+    return GameBoard.ready(height, width)
 }
 
 fun readyMine(board: GameBoard) {

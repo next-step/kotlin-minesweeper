@@ -1,3 +1,7 @@
 package minesweeper.domain
 
-sealed class Pin
+sealed class Pin {
+    fun changeToClosePin(): ClosePin {
+        return ClosePin(this)
+    }
+}

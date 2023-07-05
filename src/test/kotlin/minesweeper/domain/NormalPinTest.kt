@@ -12,4 +12,13 @@ class NormalPinTest : FunSpec({
 
         pin.surroundMineNumber shouldBe 2
     }
+
+    test("비교대상인 핀이 지뢰인 경우, 지뢰 숫자 프로퍼티가 증가한다") {
+        val pin = NormalPin()
+        val mine = MinePin()
+
+        pin.comparePinType(mine)
+
+        pin.surroundMineNumber shouldBe 1
+    }
 })

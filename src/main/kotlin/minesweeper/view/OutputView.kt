@@ -7,23 +7,20 @@ import minesweeper.domain.Pin
 import kotlin.reflect.KClass
 
 object OutputView {
-    val drawMap = mapOf<KClass<out Pin>, (Pin) -> Unit>(
+    private val drawMap = mapOf<KClass<out Pin>, (Pin) -> Unit>(
         MinePin::class to { _ -> print("* ") },
         NormalPin::class to { pin -> print((pin as NormalPin).surroundMineNumber.toString() + " ") }
     )
 
     fun showMineSweeper(gameBoard: GameBoard) {
-        val height = gameBoard.size.height - 1
-
-        for (i in 0..height) {
+        for (i in 0 until gameBoard.size.height) {
             showMindSweeperInSameHeight(i, gameBoard)
         }
     }
 
     private fun showMindSweeperInSameHeight(height: Int, gameBoard: GameBoard) {
-        val width = gameBoard.size.width - 1
-        for (j in 0..width) {
-            drawPin(gameBoard.getPin(height, j))
+        for (j in 0 until gameBoard.size.width) {
+            drawPin(gameBoard.getPinAt(height, j))
         }
         println()
     }
