@@ -14,6 +14,7 @@ class MinesWeeperController {
     private fun getGameBoardRequest(): GameBoardRequest {
         val height = inputView.getHeight()
         val width = inputView.getWidth()
-        return GameBoardRequest(height = height, width = width)
+        val minesNumber = inputView.getMinesNumber()
+        return GameBoardRequest(height = height, width = width, minesNumber = minesNumber)
     }
 }

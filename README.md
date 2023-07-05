@@ -1,10 +1,14 @@
 # kotlin-minesweeper
 
-# step1
+# step1 요구 사항 구현 체크리스트
 
 * MinesWeeperGameBoard
 
 - [x] 게임판은 높이와 너비를 입력받아서 2차원 배열의 게임판을 만든다. 
+
+* GameBoardRequest
+
+- [x] 지뢰의 갯수가 전체 게임판 보다 크면 IllegaArgumentException을 throw 한다.
 
 
 * MineLocationGenerator
