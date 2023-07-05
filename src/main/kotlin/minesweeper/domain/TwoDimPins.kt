@@ -24,6 +24,14 @@ class TwoDimPins private constructor (
         }
     }
 
+    fun countOpenedPin(): Int {
+        return values.sumOf { it.countOpenedPin() }
+    }
+
+    fun countMinePin(): Int {
+        return values.sumOf { it.countMinePin() }
+    }
+
     fun openPinAt(height: Int, width: Int): Pin {
         require(height < values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
         return values[height].openPinAt(width)

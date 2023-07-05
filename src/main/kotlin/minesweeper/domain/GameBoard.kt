@@ -20,6 +20,25 @@ class GameBoard private constructor(
         }
     }
 
+    fun closePinAll() {
+        pins.closeAllPin()
+    }
+
+    fun openPin(height: Int, width: Int): Boolean {
+        val pin = pins.openPinAt(height, width)
+        if (pin is MinePin) return true
+        if (isWin()) return true
+        return false
+    }
+
+    fun isWin(): Boolean {
+        val totalPin = size.height * size.width
+        val openPinCount = pins.countOpenedPin()
+        val minePinCount = pins.countMinePin()
+
+        return totalPin == (openPinCount + minePinCount)
+    }
+
     private fun placeMineWithoutDuplicate() {
         do {
             val heightPositionStrategy: () -> Int = { Random.nextInt(size.height) }

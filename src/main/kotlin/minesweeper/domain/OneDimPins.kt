@@ -19,6 +19,14 @@ class OneDimPins(private val values: MutableList<Pin>) {
         return values.slice(startPoint..endPoint)
     }
 
+    fun countOpenedPin(): Int {
+        return values.count { it !is ClosePin && it !is MinePin }
+    }
+
+    fun countMinePin(): Int {
+        return values.count { it.isMinePin() }
+    }
+
     fun closeAllInRow() {
         for ((index, value) in values.withIndex()) {
             values[index] = value.changeToClosePin()
