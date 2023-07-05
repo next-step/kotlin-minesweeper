@@ -1,4 +1,4 @@
-package mine.sweeper.domain.value
+package mine.sweeper.application.value
 
 @JvmInline
 value class Height(val value: Int) {

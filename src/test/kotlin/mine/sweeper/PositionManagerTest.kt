@@ -2,10 +2,11 @@ package mine.sweeper
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import mine.sweeper.domain.MapSize
-import mine.sweeper.domain.value.Height
-import mine.sweeper.domain.value.MineCount
-import mine.sweeper.domain.value.Width
+import mine.sweeper.application.PositionManager
+import mine.sweeper.application.value.Height
+import mine.sweeper.application.value.MineCount
+import mine.sweeper.application.value.Width
+import mine.sweeper.view.dto.MapSize
 
 class PositionManagerTest : StringSpec({
     "포지션 매니져는 지뢰가 설치될 랜덤 위치를 요청에 따라 전달한다" {
