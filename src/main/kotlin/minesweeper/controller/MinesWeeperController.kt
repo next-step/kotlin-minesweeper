@@ -21,7 +21,7 @@ class MinesWeeperController {
         return GameBoardRequest(height = height, width = width, minesNumber = minesNumber)
     }
 
-    private fun printMinesWeeperGame(gameBoard: Array<Array<Char>>) {
+    private fun printMinesWeeperGame(gameBoard: List<List<Char>>) {
         resultView.printGameBoard(gameBoard)
     }
 }

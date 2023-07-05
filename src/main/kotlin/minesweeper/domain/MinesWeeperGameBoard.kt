@@ -3,8 +3,8 @@ package minesweeper.domain
 import minesweeper.dto.GameBoardRequest
 
 class MinesWeeperGameBoard(
-    private val height: Int,
-    private val width: Int,
+    height: Int,
+    width: Int,
     minesNumber: Int
 ) {
     private val board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
@@ -34,7 +34,7 @@ class MinesWeeperGameBoard(
         board[y][x] = '*'
     }
 
-    fun getBoard(): Array<Array<Char>> {
-        return Array(height) { i -> Array(width) { j -> board[i][j] } }
+    fun getBoard(): List<List<Char>> {
+        return board.map { it.toList() }
     }
 }

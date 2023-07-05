@@ -1,6 +1,5 @@
 package minesweeper.domain
 
 interface CoordinateGenerator {
-
-    fun generateMineLocation(maximumOfX: Int, maximumOfY: Int): MineLocation
+    fun generateCoordinate(maximumOfValue: Int): Int
 }

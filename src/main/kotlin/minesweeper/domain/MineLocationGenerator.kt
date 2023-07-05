@@ -5,7 +5,7 @@ class MineLocationGenerator(
 ) {
     private val mineLocationValidator = MineLocationValidator()
 
-    fun generateMineLocation(board: Array<Array<Char>>): MineLocation {
+    fun generateMineLocation(board: List<List<Char>>): MineLocation {
         val maximumOfX = board.first().size
         val maximumOfY = board.size
         var generatedMineLocation: MineLocation
