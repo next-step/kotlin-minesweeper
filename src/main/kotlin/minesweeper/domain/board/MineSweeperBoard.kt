@@ -50,6 +50,8 @@ class MineSweeperBoard(
     fun open(startPosition: Position) {
         val visitQueue = VisitQueue()
         visitQueue.push(position = startPosition)
+        visit(position = startPosition)
+
         while (!visitQueue.isEmpty()) {
             val position = visitQueue.pop()
             val openedPositions = openAround(position = position)
