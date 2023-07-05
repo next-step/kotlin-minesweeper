@@ -1,22 +1,32 @@
 package next.step.minesweeper.domain.board
 
 import next.step.minesweeper.domain.position.Position
+import next.step.minesweeper.domain.position.Positions
 
 data class BoardArea(private val height: BoardHeight, private val width: BoardWidth) {
 
-    operator fun contains(position: Position): Boolean = inHeight(position.y) && inWidth(position.x)
+    fun requireContains(x: Int, y: Int) {
+        width.requireInRange(x)
+        height.requireInRange(y)
+    }
 
-    fun inHeight(y: Int) = height.inRange(y)
+    operator fun contains(position: Position): Boolean =
+        height.inRange(position.y) && width.inRange(position.x)
 
-    fun inWidth(x: Int) = width.inRange(x)
+    fun checkMaxCount(count: Int) = require(count <= area()) { "${area()}개보다 더 많을 수 없습니다." }
 
-    fun canHave(count: Int): Boolean = count <= area()
+    private fun area(): Int = width.width() * height.height()
 
-    fun area(): Int = width() * height()
+    fun <R, P> rangeMap(row: (List<P>) -> R, point: (Int, Int) -> P): List<R> =
+        height.rangeMap { y -> row(width.rangeMap { point(it, y) }) }
 
-    fun width(): Int = width.width()
+    fun select(selector: () -> Position): Position {
+        val position = selector()
+        requireContains(position.x, position.y)
+        return position
+    }
 
-    fun height(): Int = height.height()
+    fun near(position: Position): Positions = Positions(position.near().filter { it in this }.toSet())
 
     companion object {
         fun of(height: Int, width: Int): BoardArea = BoardArea(BoardHeight(height), BoardWidth(width))

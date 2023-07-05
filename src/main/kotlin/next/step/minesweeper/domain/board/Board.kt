@@ -1,47 +1,39 @@
 package next.step.minesweeper.domain.board
 
-import next.step.minesweeper.domain.mine.MinePosition
-import next.step.minesweeper.domain.mine.MinePositions
+import next.step.minesweeper.domain.mine.MineCount
+import next.step.minesweeper.domain.mine.generator.MineGenerator
 import next.step.minesweeper.domain.position.Position
+import next.step.minesweeper.utils.retryOnFailure
 
-data class Board(private val rows: List<BoardRow>, private val area: BoardArea) {
+data class Board(private val rows: BoardRows, private val area: BoardArea) {
 
-    fun plantMines(positions: MinePositions) {
-        require(area.canHave(positions.size)) { "지뢰 개수는 ${area()}개보다 많을 수 없습니다." }
-        positions.forEach {
-            plantMine(it)
-            notifyMine(it)
+    fun play(
+        selector: () -> Position,
+        onEachStep: (List<List<BoardPoint>>) -> Unit,
+        onWin: (List<List<BoardPoint>>) -> Unit,
+        onLose: (List<List<BoardPoint>>) -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        while (rows.canUncover()) {
+            val position = retryOnFailure({ area.select(selector) }, onFailure)
+            if (rows.uncover(position, area)) return onLose(points())
+            onEachStep(points())
         }
+        onWin(points())
     }
 
-    private fun plantMine(position: MinePosition) {
-        require(area.inHeight(position.y)) { "지뢰 y 위치는 ${height()} 보다 작아야 합니다." }
-        require(area.inWidth(position.x)) { "지뢰 x 위치는 ${width()} 보다 작아야 합니다." }
-        rows[position.y].plantMine(position.x)
-    }
-
-    private fun notifyMine(position: MinePosition) =
-        position.nearMinePositions().filter { it in area }.forEach { pointAt(it).notifyMine() }
-
-    private fun pointAt(position: Position) = rows[position.y].pointAt(position.x)
-
-    fun area(): Int = area.area()
-
-    fun width(): Int = area.width()
-
-    fun height(): Int = area.height()
-
-    fun points(): List<List<BoardPoint>> = rows.map { it.points() }
+    fun points(): List<List<BoardPoint>> = rows.points()
 
     companion object {
 
-        fun covered(height: Int, width: Int): Board {
-            val boardHeight = BoardHeight(height)
-            val boardWidth = BoardWidth(width)
-            return Board(boardHeight.range().map { BoardRow.covered(boardWidth) }, BoardArea(boardHeight, boardWidth))
+        fun of(area: BoardArea, mineGenerator: MineGenerator, mineCount: MineCount): Board {
+            area.checkMaxCount(mineCount.count())
+            val rows = BoardRows(area.rangeMap({ BoardRow(it) }) { _, _ -> BoardPoint.mineFree() })
+            mineGenerator.generate(area, mineCount).forEach { mine ->
+                rows.plantMine(mine)
+                rows.notifyMine(area.near(mine))
+            }
+            return Board(rows, area)
         }
-
-        fun mineFree(height: BoardHeight, width: BoardWidth): Board =
-            Board(height.range().map { BoardRow.mineFree(width) }, BoardArea(height, width))
     }
 }

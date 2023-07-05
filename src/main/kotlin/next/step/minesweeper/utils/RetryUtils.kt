@@ -1,12 +1,13 @@
 package next.step.minesweeper.utils
 
-import next.step.blackjack.view.OutputView
-
-fun retryOnFailure(command: () -> Unit) {
-    runCatching {
+fun <T> retryOnFailure(command: () -> T, onFailure: (Throwable) -> Unit): T {
+    return runCatching {
         command()
-    }.onFailure { e ->
-        OutputView.showError(e.message)
-        retryOnFailure(command)
-    }
+    }.fold(
+        onSuccess = { it },
+        onFailure = {
+            onFailure(it)
+            retryOnFailure(command, onFailure)
+        },
+    )
 }

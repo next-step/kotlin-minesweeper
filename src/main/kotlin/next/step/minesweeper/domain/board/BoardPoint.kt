@@ -8,7 +8,7 @@ import next.step.minesweeper.domain.board.state.MineState
 data class BoardPoint(private var state: BoardPointState) {
 
     fun plantMine() {
-        state = MineState
+        state = CoveredState(MineState)
     }
 
     fun notifyMine() {
@@ -17,10 +17,22 @@ data class BoardPoint(private var state: BoardPointState) {
 
     fun state(): BoardPointState = state
 
+    fun uncover() {
+        state = state.uncover()
+    }
+
+    fun canUncover(): Boolean = state is CoveredState && !isMine()
+
+    fun uncoverIfPossible() {
+        if (canUncover()) uncover()
+    }
+
+    fun isMine(): Boolean = state.isMine()
+
+    fun isMineFree(): Boolean = state == MineFreeState
+
     companion object {
 
-        fun covered(): BoardPoint = BoardPoint(CoveredState)
-
-        fun mineFree(): BoardPoint = BoardPoint(MineFreeState)
+        fun mineFree(): BoardPoint = BoardPoint(CoveredState(MineFreeState))
     }
 }

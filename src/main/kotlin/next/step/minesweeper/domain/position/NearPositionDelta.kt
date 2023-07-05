@@ -1,6 +1,6 @@
-package next.step.minesweeper.domain.mine
+package next.step.minesweeper.domain.position
 
-enum class NearMineDelta(val dx: Int, val dy: Int) {
+enum class NearPositionDelta(val dx: Int, val dy: Int) {
     TOP_LEFT(-1, -1),
     TOP_CENTER(0, -1),
     TOP_RIGHT(1, -1),
@@ -8,5 +8,5 @@ enum class NearMineDelta(val dx: Int, val dy: Int) {
     RIGHT(1, 0),
     BOTTOM_LEFT(-1, 1),
     BOTTOM_CENTER(0, 1),
-    BOTTOM_RIGHT(1, 1);
+    BOTTOM_RIGHT(1, 1),
 }

@@ -1,8 +1,10 @@
 package next.step.minesweeper.domain.board
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import next.step.minesweeper.domain.board.state.CoveredState
+import next.step.minesweeper.domain.board.state.MineFreeState
 import next.step.minesweeper.domain.board.state.MineState
 import next.step.minesweeper.domain.board.state.NearMineState
 import next.step.minesweeper.domain.mine.MineCount
@@ -11,18 +13,18 @@ class BoardPointTest : DescribeSpec({
 
     describe("BoardPoint") {
         context("생성") {
-            it("covered 상태로 생성") {
-                BoardPoint.covered().state() shouldBe CoveredState
+            it("지뢰 없는 상태로 생성") {
+                BoardPoint.mineFree().state() shouldBe CoveredState(MineFreeState)
             }
         }
 
         context("지뢰를 심으면") {
             it("mine 상태로 바뀜") {
-                val point = BoardPoint.covered()
+                val point = BoardPoint.mineFree()
 
                 point.plantMine()
 
-                point.state() shouldBe MineState
+                point.state() shouldBe CoveredState(MineState)
             }
         }
 
@@ -32,7 +34,7 @@ class BoardPointTest : DescribeSpec({
 
                 point.notifyMine()
 
-                point.state() shouldBe NearMineState(MineCount(1))
+                point.state() shouldBe CoveredState(NearMineState(MineCount(1)))
             }
             it("이전에도 알림을 받았으면 NearMineState의 지뢰 개수를 증가") {
                 val point = BoardPoint.mineFree()
@@ -41,22 +43,73 @@ class BoardPointTest : DescribeSpec({
                     point.notifyMine()
                 }
 
-                point.state() shouldBe NearMineState(MineCount(3))
-            }
-            it("covered 상태에 대해서는 알림이 와도 반응하지 않음") {
-                val point = BoardPoint.covered()
-
-                point.notifyMine()
-
-                point.state() shouldBe CoveredState
+                point.state() shouldBe CoveredState(NearMineState(MineCount(3)))
             }
             it("지뢰가 심어진 상태에 대해서는 알림이 와도 반응하지 않음") {
-                val point = BoardPoint.covered()
+                val point = BoardPoint.mineFree()
 
                 point.plantMine()
                 point.notifyMine()
 
-                point.state() shouldBe MineState
+                point.state() shouldBe CoveredState(MineState)
+            }
+        }
+        context("can uncover") {
+            it("지뢰가 안에 없고 덮여있으면 true") {
+                val point = BoardPoint.mineFree()
+
+                point.canUncover() shouldBe true
+            }
+            it("지뢰가 주변에 있지만 안에 없고 덮여있으면 true") {
+                val point = BoardPoint.mineFree()
+
+                point.notifyMine()
+
+                point.canUncover() shouldBe true
+            }
+            it("지뢰가 있고 덮여있으면 false") {
+                val point = BoardPoint.mineFree()
+
+                point.plantMine()
+
+                point.canUncover() shouldBe false
+            }
+        }
+        context("덮여있지 않으면 false") {
+            withData(
+                listOf(MineFreeState, MineState, NearMineState.one()),
+            ) { state ->
+                BoardPoint(state).canUncover() shouldBe false
+            }
+        }
+        context("is mine") {
+            it("덮여있지 않고, 지뢰가 있으면 true") {
+                BoardPoint(MineState).isMine() shouldBe true
+            }
+        }
+        context("is mine free") {
+            it("덮여있지 않고, 지뢰가 없고, 주위에도 없으면 true") {
+                val boardPoint = BoardPoint.mineFree()
+
+                boardPoint.uncover()
+
+                boardPoint.isMineFree() shouldBe true
+            }
+        }
+        context("uncover if possible") {
+            it("열 수 있으면 연다.") {
+                val boardPoint = BoardPoint.mineFree()
+
+                boardPoint.uncoverIfPossible()
+
+                boardPoint shouldBe BoardPoint(MineFreeState)
+            }
+            it("열 수 없으면 열지 않는다.") {
+                val boardPoint = BoardPoint(CoveredState(MineState))
+
+                boardPoint.uncoverIfPossible()
+
+                boardPoint shouldBe BoardPoint(CoveredState(MineState))
             }
         }
     }

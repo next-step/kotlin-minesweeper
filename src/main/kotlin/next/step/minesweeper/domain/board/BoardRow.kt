@@ -3,20 +3,26 @@ package next.step.minesweeper.domain.board
 @JvmInline
 value class BoardRow(private val points: List<BoardPoint>) {
 
-    fun plantMine(x: Int) {
+    fun plantMine(x: Int) = pointAt(x).plantMine()
+
+    fun pointAt(x: Int): BoardPoint {
         require(x < size()) { "지뢰 x 위치는 ${size()} 보다 작아야 합니다." }
-        points[x].plantMine()
+        return points[x]
     }
 
-    fun size() = points.size
+    private fun size(): Int = points.size
 
-    fun pointAt(x: Int): BoardPoint = points[x]
+    fun uncover(x: Int): BoardPoint {
+        val point = pointAt(x)
+        point.uncover()
+        return point
+    }
+
+    fun canUncover(): Boolean = points.any { it.canUncover() }
 
     fun points() = points.toList()
 
-    companion object {
-        fun covered(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.covered() })
+    fun notifyMine(x: Int) = pointAt(x).notifyMine()
 
-        fun mineFree(width: BoardWidth) = BoardRow(width.range().map { BoardPoint.mineFree() })
-    }
+    fun isMineFree(x: Int) = pointAt(x).isMineFree()
 }
