@@ -9,7 +9,7 @@ class MineCountTest : StringSpec({
         minesweeperArray[0][1] = -1
         minesweeperArray[1][1] = -1
         minesweeperArray[1][0] = -1
-        val mineCount = MineCount(minesweeperArray, Rows(10), Cols(10))
+        val mineCount = MineCount(minesweeperArray)
         mineCount.initMineCount()
 
         mineCount.positionMineCount(0, 0) shouldBe 3

@@ -2,21 +2,22 @@ package minesweeper.domain
 
 import kotlin.random.Random
 
-class MinePositions(rows: Rows, cols: Cols, mineCount: Int) {
-    val minePositions: List<MinePosition>
+class MinePositions(val minePositions: List<MinePosition>) {
 
-    init {
-        val rowsValue = rows.value
-        val colsValue = cols.value
+    companion object {
+        fun from(rows: Rows, cols: Cols, mine: MineValue): MinePositions {
+            val rowsValue = rows.value
+            val colsValue = cols.value
 
-        val positions = mutableListOf<MinePosition>()
-        repeat(mineCount) {
-            var minePosition = MinePosition(Random.nextInt(rowsValue), Random.nextInt(colsValue))
-            while (positions.contains(minePosition)) {
-                minePosition = MinePosition(Random.nextInt(rowsValue), Random.nextInt(colsValue))
+            val positions = mutableListOf<MinePosition>()
+            repeat(mine.value) {
+                var minePosition = MinePosition(Random.nextInt(rowsValue), Random.nextInt(colsValue))
+                while (positions.contains(minePosition)) {
+                    minePosition = MinePosition(Random.nextInt(rowsValue), Random.nextInt(colsValue))
+                }
+                positions.add(minePosition)
             }
-            positions.add(minePosition)
+            return MinePositions(positions)
         }
-        minePositions = positions
     }
 }

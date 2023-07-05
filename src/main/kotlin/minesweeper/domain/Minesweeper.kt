@@ -1,20 +1,23 @@
 package minesweeper.domain
 
-class Minesweeper(rows: Rows, cols: Cols, mine: MineValue) {
-    val minesweeperArray: Array<IntArray>
-    private val minePositions: MinePositions
-
+class Minesweeper(
+    val minesweeperArray: Array<IntArray>,
+    val minePositions: MinePositions
+) {
     init {
-        val rowsValue = rows.value
-        val colsValue = cols.value
-
-        minesweeperArray = Array(rowsValue) { IntArray(colsValue) }
-        minePositions = MinePositions(rows, cols, mine.value)
-
         for (minePosition in minePositions.minePositions) {
             minesweeperArray[minePosition.rowPosition][minePosition.colPosition] = -1
         }
-        val mineCount = MineCount(minesweeperArray, rows, cols)
+
+        val mineCount = MineCount(minesweeperArray)
         mineCount.initMineCount()
+    }
+
+    companion object {
+        fun from(rows: Rows, cols: Cols, mine: MineValue): Minesweeper {
+            val rowsValue = rows.value
+            val colsValue = cols.value
+            return Minesweeper(Array(rowsValue) { IntArray(colsValue) }, MinePositions.from(rows, cols, mine))
+        }
     }
 }

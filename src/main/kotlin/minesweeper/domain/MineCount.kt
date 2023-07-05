@@ -2,13 +2,14 @@ package minesweeper.domain
 
 data class MineCount(
     private val minesweeperArray: Array<IntArray>,
-    private val rows: Rows,
-    private val cols: Cols
 ) {
 
     fun initMineCount() {
-        (0 until rows.value).forEach {
-            (0 until cols.value).forEach { col ->
+        val rows = minesweeperArray.size
+        val cols = minesweeperArray[0].size
+
+        (0 until rows).forEach {
+            (0 until cols).forEach { col ->
                 addMineCount(it, col)
             }
         }
@@ -54,15 +55,14 @@ data class MineCount(
 
         other as MineCount
 
-        if (!minesweeperArray.contentDeepEquals(other.minesweeperArray)) return false
-        if (rows != other.rows) return false
-        return cols == other.cols
+        return minesweeperArray.contentDeepEquals(other.minesweeperArray)
     }
 
     override fun hashCode(): Int {
-        var result = minesweeperArray.contentDeepHashCode()
-        result = 31 * result + rows.hashCode()
-        result = 31 * result + cols.hashCode()
-        return result
+        return minesweeperArray.contentDeepHashCode()
+    }
+
+    override fun toString(): String {
+        return "MineCount(minesweeperArray=${minesweeperArray.contentToString()})"
     }
 }
