@@ -49,11 +49,12 @@ class MineSweeperBoard(
         return board[y][x]
     }
 
-    fun visit(position: Position) {
+    fun visit(position: Position): MineSweeperPosition {
         validatePosition(position)
         val y = position.convertBoardYPositionIndex()
         val x = position.convertBoardXPositionIndex()
         board[y][x].visit()
+        return board[y][x]
     }
 
     fun isMinePosition(position: Position): Boolean {
