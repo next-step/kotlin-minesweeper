@@ -15,10 +15,25 @@ class MinesWeeperController {
     }
 
     private fun getGameBoardRequest(): GameBoardRequest {
-        val height = inputView.getHeight()
-        val width = inputView.getWidth()
-        val minesNumber = inputView.getMinesNumber()
+        val height = getHeight()
+        val width = getWidth()
+        val minesNumber = getMinesNumber()
         return GameBoardRequest(height = height, width = width, minesNumber = minesNumber)
+    }
+
+    private fun getHeight(): Int {
+        resultView.printGetHeight()
+        return inputView.getOneNumber()
+    }
+
+    private fun getWidth(): Int {
+        resultView.printGetWidth()
+        return inputView.getOneNumber()
+    }
+
+    private fun getMinesNumber(): Int {
+        resultView.printGetMinesNumber()
+        return inputView.getOneNumber()
     }
 
     private fun printMinesWeeperGame(gameBoard: List<List<Char>>) {
