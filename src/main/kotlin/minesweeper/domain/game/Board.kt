@@ -1,22 +1,22 @@
 package minesweeper.domain.game
 
-import minesweeper.domain.data.PositiveInt
+import minesweeper.domain.data.PositiveNumber
 
-class Board(row: PositiveInt, col: PositiveInt, mineCount: PositiveInt) {
+class Board(width: PositiveNumber, height: PositiveNumber, mine: List<Coordinate>) {
 
     init {
-        require((row * col) > mineCount) {
+        require((width * height) > mine.size) {
             "지뢰 갯수가 많습니다."
         }
     }
 
-    val cells = List((row * col).number) {
-        Cell(
-            if (it < mineCount.number) {
-                CellType.MINE
-            } else {
-                CellType.NONE
-            }
-        )
-    }.shuffled().chunked(row.number)
+    val board: List<Row> = (PositiveNumber.BASE_NUMBER until height.number).map { col ->
+        val row = (PositiveNumber.BASE_NUMBER until width.number).map { row ->
+            val isMine = mine.contains(Coordinate(row, col))
+            createCell(isMine)
+        }
+        Row(row)
+    }
+
+    private fun createCell(isMine: Boolean): Cell = if (isMine) Cell(CellType.MINE) else Cell(CellType.NONE)
 }

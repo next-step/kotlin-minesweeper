@@ -7,7 +7,7 @@ object InputView {
         return readln().toInt()
     }
 
-    fun inputWeight(): Int {
+    fun inputWidth(): Int {
         println("너비를 입력하세요.")
         return readln().toInt()
     }
