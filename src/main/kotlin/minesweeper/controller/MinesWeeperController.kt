@@ -11,7 +11,7 @@ class MinesWeeperController {
     fun start() {
         val gameBoardRequest = getGameBoardRequest()
         val minesWeeperGameBoard = MinesWeeperGameBoard(gameBoardRequest)
-
+        printMinesWeeperGame(minesWeeperGameBoard.getBoard())
     }
 
     private fun getGameBoardRequest(): GameBoardRequest {
@@ -21,7 +21,7 @@ class MinesWeeperController {
         return GameBoardRequest(height = height, width = width, minesNumber = minesNumber)
     }
 
-    private fun generateGameBoard(gameBoardRequest: GameBoardRequest) {
-
+    private fun printMinesWeeperGame(gameBoard: Array<Array<Char>>) {
+        resultView.printGameBoard(gameBoard)
     }
 }

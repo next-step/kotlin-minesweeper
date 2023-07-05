@@ -8,7 +8,7 @@ class MinesWeeperGameBoard(
     minesNumber: Int
 ) {
     private val board: Array<Array<Char>> = Array(height) { Array(width) { 'C' } }
-    private val mineLocationGenerator = MineLocationGenerator(height, width, RandomCoordinateGenerator())
+    private val mineLocationGenerator = MineLocationGenerator(RandomCoordinateGenerator())
     private val gameBoardValidator = GameBoardValidator()
 
     constructor(gameBoardRequest: GameBoardRequest) : this(
@@ -31,7 +31,7 @@ class MinesWeeperGameBoard(
 
     private fun insertMine(mineLocation: MineLocation) {
         val (x, y) = mineLocation
-        board[x][y] = '*'
+        board[y][x] = '*'
     }
 
     fun getBoard(): Array<Array<Char>> {
