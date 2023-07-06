@@ -1,46 +1,24 @@
 package mine.sweeper
 
-import mine.sweeper.application.FieldsManager
 import mine.sweeper.application.MineSweeperGame
-import mine.sweeper.application.value.GameStatus
-import mine.sweeper.domain.Vulture
+import mine.sweeper.application.MineSweeperMap
 import mine.sweeper.view.InputView
 import mine.sweeper.view.OutputView
-import mine.sweeper.view.dto.MapSize
 
-class GameController {
+class GameController(mineSweeperMap: MineSweeperMap) {
+    private val game = MineSweeperGame(mineSweeperMap)
 
-    lateinit var game: MineSweeperGame
-    fun create() {
-        val mapSize = MapSize(InputView.getHeight(), InputView.getWidth())
-        val fieldsManager = FieldsManager(mapSize)
-        val vulture = Vulture(mapSize)
-        game = MineSweeperGame(fieldsManager, vulture)
-    }
-
-    fun setMines() {
-        game.setMine(InputView.getMines())
+    fun playGame() {
         OutputView.noticeGameStart()
-    }
-
-    fun start() {
-        var status: GameStatus
-        do {
-            val position = InputView.getOpenPosition()
-            status = game.open(position)
-            status = noticeRetry(status)
-            OutputView.printMap(game.getResult())
-        } while (status == GameStatus.ON_PROGRESS)
-
-        OutputView.noticeGameResult(status)
-    }
-
-    private fun noticeRetry(status: GameStatus): GameStatus {
-        var status1 = status
-        if (status1 == GameStatus.RE_TRY) {
-            OutputView.noticeWrongPosition()
-            status1 = GameStatus.ON_PROGRESS
+        while (game.onProgress()) {
+            selectPhase()
         }
-        return status1
+        OutputView.noticeGameResult(game.status)
+    }
+
+    private fun selectPhase() {
+        val position = InputView.getPosition()
+        game.open(position)
+        OutputView.printMap(game.getResult())
     }
 }
