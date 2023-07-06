@@ -4,6 +4,7 @@ object BoardGenerator {
     fun create(height: Int, width: Int, mineCount: Int): MineBoard {
         val board = createBoard(height, width)
 
+        require(height * width > mineCount) { "지뢰의 개수가 보드판의 총 격자보다 큽니다." }
         repeat(mineCount) {
             placeMines(board)
         }

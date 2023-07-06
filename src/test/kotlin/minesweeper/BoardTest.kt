@@ -1,9 +1,11 @@
 package minesweeper
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.BoardGenerator
+import minesweeper.domain.CellType
 
 class BoardTest : BehaviorSpec({
 
@@ -19,6 +21,22 @@ class BoardTest : BehaviorSpec({
             And("요청한 사이즈대로 만들어진다.") {
                 board.boardInfo.size shouldBe 5
                 board.boardInfo[0].rowInfo.size shouldBe 5
+            }
+            And("생성된 보드의 지뢰 총 개수는 입력과 동일하다.") {
+                board.boardInfo.sumOf { row -> row.rowInfo.count { cell -> cell.type == CellType.MINE } } shouldBe 5
+            }
+        }
+    }
+
+    Given("지뢰의 개수가 보드판의 총 격자보다 큰 입력을 받아서") {
+        val height = 5
+        val width = 5
+        val mineCount = 26
+        When("보드판을 생성할 때") {
+            Then("IllegalArgumentException이 발생한다.") {
+                shouldThrow<IllegalArgumentException> {
+                    BoardGenerator.create(height, width, mineCount)
+                }
             }
         }
     }
