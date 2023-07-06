@@ -31,6 +31,24 @@ class MineSweeperPositionTest {
         emptyPosition.calculateAroundMineQuantity() shouldBe expected
     }
 
+    @Test
+    fun `방문하면 방문 여부가 true 로 업데이트 된다`() {
+        val position = Position(x = 1, y = 1)
+        val emptyPosition = EmptyPosition(position = position, minePositions = Positions(emptyList()))
+
+        emptyPosition.visit()
+
+        emptyPosition.isVisit() shouldBe true
+    }
+
+    @Test
+    fun `방문하지 않으면 방문 여부는 false 이다`() {
+        val position = Position(x = 1, y = 1)
+        val emptyPosition = EmptyPosition(position = position, minePositions = Positions(emptyList()))
+
+        emptyPosition.isVisit() shouldBe false
+    }
+
     companion object {
 
         @JvmStatic

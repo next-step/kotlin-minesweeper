@@ -17,6 +17,10 @@ data class Position(private val x: Int, private val y: Int) {
         },
     )
 
+    fun convertBoardXPositionIndex(): Int = x - 1
+
+    fun convertBoardYPositionIndex(): Int = y - 1
+
     private fun move(direction: Direction): Position {
         val movedXPosition = direction.moveXPosition(x)
         val movedYPosition = direction.moveYPosition(y)
