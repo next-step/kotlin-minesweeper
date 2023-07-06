@@ -9,14 +9,14 @@ class CellSpec : DescribeSpec(
         describe("기본 셀 생성 검증") {
             it("기본 셀을 생성할 수 있다.") {
                 shouldNotThrowAny {
-                    Normal()
+                    Normal(Position(0, 0))
                 }
             }
         }
 
         describe("기본 셀 인접 지뢰 개수 증가 검증") {
             it("인접 지뢰 개수 증가하면 개수가 1 증가한다.") {
-                val cell = Normal(0)
+                val cell = Normal(Position(0, 0), 0)
                 cell.increaseAdjacentMineCount()
 
                 cell.adjacentMineCount shouldBe 1
@@ -26,7 +26,7 @@ class CellSpec : DescribeSpec(
         describe("지뢰 셀 생성 검증") {
             it("지뢰 셀을 생성할 수 있다.") {
                 shouldNotThrowAny {
-                    Mine()
+                    Mine(Position(0, 0))
                 }
             }
         }
