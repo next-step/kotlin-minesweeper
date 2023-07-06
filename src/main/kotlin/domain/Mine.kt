@@ -1,3 +1,3 @@
 package domain
 
-class Mine : Cell()
+object Mine : Cell()

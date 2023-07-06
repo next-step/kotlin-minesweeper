@@ -1,3 +1,3 @@
 package domain
 
-sealed class Cell()
+sealed class Cell

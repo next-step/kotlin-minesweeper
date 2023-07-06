@@ -40,7 +40,7 @@ class MinesWeeper(val boards: Map<Location, Cell>) {
         }
 
         private fun getCell(mines: List<Location>, location: Location): Cell {
-            if (mines.contains(location)) return Mine()
+            if (mines.contains(location)) return Mine
             return Basic()
         }
 

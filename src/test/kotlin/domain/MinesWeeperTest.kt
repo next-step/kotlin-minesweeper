@@ -41,10 +41,10 @@ internal class MinesWeeperTest {
     @Test
     internal fun `주변의 지뢰수만큼 카운트가 올라간다`() {
         val map = mapOf(
-            Location(0, 0) to Mine(),
+            Location(0, 0) to Mine,
             Location(0, 1) to Basic(),
-            Location(1, 0) to Mine(),
-            Location(1, 1) to Mine()
+            Location(1, 0) to Mine,
+            Location(1, 1) to Mine
         )
         val game = MinesWeeper(map)
         game.calculateCount()
