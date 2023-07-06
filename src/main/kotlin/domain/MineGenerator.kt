@@ -11,7 +11,7 @@ object MineGenerator {
         return lists
     }
 
-    private fun getNewLocation(lists: MutableList<Location>, height: Int, width: Int): Location {
+    private fun getNewLocation(lists: List<Location>, height: Int, width: Int): Location {
         var location = Location(getRandomHeight(height), getRandomWidth(width))
         while (lists.contains(location)) {
             location = Location(getRandomHeight(height), getRandomWidth(width))
