@@ -23,7 +23,7 @@ class Board(
                 .filterNot { it.x == width || it.y == height }
                 .forEach { adjacentPoint ->
                     val cell = cells.at(adjacentPoint)
-                    cells.replace(adjacentPoint, cell.increase())
+                    cells.add(cell.increase())
                 }
 
             return Board(cells = cells, height = height, width = width)

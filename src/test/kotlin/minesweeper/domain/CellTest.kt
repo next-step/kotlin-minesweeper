@@ -35,9 +35,12 @@ class CellsTest : ShouldSpec({
         cells = Cells()
     }
 
-    should("이미 존재하는 좌표의 Cell을 추가하려고 하면 에러가 발생 한다.") {
-        cells.add(clearCell(0, 0))
-        shouldThrow<IllegalArgumentException> { cells.add(clearCell(0, 0)) }
+    should("이미 존재하는 좌표의 Cell을 추가하면 해당 Cell이 새로운 Cell로 교체 된다.") {
+        val clearCell = clearCell(0, 0)
+        val mineCell = mineCell(0, 0)
+        cells.add(clearCell)
+        cells.add(mineCell)
+        cells.at(Point(0, 0)) shouldBe mineCell
     }
 
     should("Point에 해당 하는 Cell을 가져 온다.") {
@@ -45,6 +48,7 @@ class CellsTest : ShouldSpec({
         cells.add(cell)
         cells.at(Point(0, 0)) shouldBe cell
     }
+
     should("Point에 해당 하는 Cell이 없으면 에러가 발생 한다.") {
         val cell = clearCell(0, 0)
         cells.add(cell)
@@ -58,7 +62,7 @@ class CellsTest : ShouldSpec({
         cells.add(clearCell(1, 1))
 
         val mineCell = mineCell(1, 1)
-        cells.replace(mineCell.point, mineCell)
+        cells.add(mineCell)
 
         cells.at(Point(1, 1)) shouldBe mineCell
     }

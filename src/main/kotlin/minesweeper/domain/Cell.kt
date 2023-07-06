@@ -22,12 +22,16 @@ class ClearCell(point: Point, override val count: Int = 0) : Cell(point) {
     override fun increase(): ClearCell = ClearCell(point, count + 1)
 }
 
-class Cells(private val cells: MutableList<Cell> = mutableListOf()) {
+class Cells(private val cells: MutableList<Cell> = mutableListOf()): Iterable<Cell> {
+    private val points: MutableSet<Point> = mutableSetOf()
 
     fun add(cell: Cell) {
-        require(!cells.any { it.point == cell.point })
+        if (points.contains(cell.point)) {
+            replace(cell.point, cell)
+            return
+        }
         cells.add(cell)
-        cells.sort()
+        points.add(cell.point)
     }
 
     fun at(point: Point): Cell = cells.find { it.point == point } ?: throw RuntimeException()
@@ -37,4 +41,6 @@ class Cells(private val cells: MutableList<Cell> = mutableListOf()) {
         cells.add(index, cell)
         cells.removeAt(index + 1)
     }
+
+    override fun iterator(): Iterator<Cell> = cells.iterator()
 }
