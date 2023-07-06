@@ -4,9 +4,20 @@ import domain.map.MapCapture
 
 sealed class OpenResult {
 
-    object MineOpened : OpenResult()
+    abstract val isGameFinished: Boolean
 
-    data class GroundOpened(val mapCapture: MapCapture) : OpenResult()
+    object MineOpened : OpenResult() {
 
-    object AllMineFound : OpenResult()
+        override val isGameFinished = true
+    }
+
+    data class GroundOpened(val mapCapture: MapCapture) : OpenResult() {
+
+        override val isGameFinished = false
+    }
+
+    object AllMineFound : OpenResult() {
+
+        override val isGameFinished = true
+    }
 }

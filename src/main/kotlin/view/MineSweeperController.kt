@@ -15,22 +15,14 @@ class MineSweeperController(
 
         val mineSweeperGame = mineSweeperGameFactory.create(mineSweeperInitProperty)
 
-        while (true) {
+        do {
             val coordinate = inputView.readOpenCoordinate()
-            when (val openResult = mineSweeperGame.open(coordinate)) {
-                is OpenResult.MineOpened -> {
-                    resultView.displayLoseGameMessage()
-                    return
-                }
-                is OpenResult.GroundOpened -> {
-                    resultView.display(openResult.mapCapture)
-                    continue
-                }
-                is OpenResult.AllMineFound -> {
-                    resultView.displayWinGameMessage()
-                    return
-                }
+            val openResult = mineSweeperGame.open(coordinate)
+            when (openResult) {
+                is OpenResult.MineOpened -> resultView.displayLoseGameMessage()
+                is OpenResult.GroundOpened -> resultView.display(openResult.mapCapture)
+                is OpenResult.AllMineFound -> resultView.displayWinGameMessage()
             }
-        }
+        } while (openResult.isGameFinished.not())
     }
 }
