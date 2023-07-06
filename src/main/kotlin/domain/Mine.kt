@@ -1,3 +1,3 @@
 package domain
 
-class Mine(location: Location) : Cell(location)
+class Mine : Cell()

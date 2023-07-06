@@ -1,3 +1,10 @@
 package domain
 
-class Basic(location: Location) : Cell(location)
+class Basic : Cell() {
+    var count = 0
+        private set
+
+    fun addCount() {
+        count += 1
+    }
+}
