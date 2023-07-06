@@ -24,7 +24,7 @@ class CountedMineBoardProviderTest : StringSpec({
         val countedMineBoard: CountedMineBoard = countedMineBoardProvider.countedMineBoard
         // then
         countedMineBoard shouldBe CountedMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to MineCount(2),
                     Position(1, 1) to Mine(),
@@ -36,7 +36,7 @@ class CountedMineBoardProviderTest : StringSpec({
     }
 }) {
     companion object {
-        private val FOUR_ELEMENTS_TWO_MINE_BOARD = MineBoard(
+        private val FOUR_ELEMENTS_TWO_MINE_BOARD = FilledElements(
             mapOf(
                 Position(0, 0) to Safety(),
                 Position(1, 1) to Mine(),

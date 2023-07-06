@@ -24,7 +24,7 @@ class MineBoardOpenerTest : StringSpec({
         val opened: CountedMineBoard = mineBoardOpener.openedCountedMineBoard(Position(0, 0))
         // then
         opened shouldBe CountedMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to MineCount(1, OpenStatus.OPENED),
                     Position(1, 0) to Mine(),
@@ -47,7 +47,7 @@ class MineBoardOpenerTest : StringSpec({
         val openedCountedMinBoard: CountedMineBoard = mineBoardOpener.openedCountedMineBoard(Position(1, 2))
         // then
         openedCountedMinBoard shouldBe CountedMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to MineCount(1),
                     Position(1, 0) to Mine(),
@@ -67,7 +67,7 @@ class MineBoardOpenerTest : StringSpec({
         private val NINE_ELEMENTS_TWO_MINE_COUNTED_BOARD: CountedMineBoard
             get() {
                 return CountedMineBoard(
-                    MineBoard(
+                    FilledElements(
                         mapOf(
                             Position(0, 0) to MineCount(1),
                             Position(1, 0) to Mine(),

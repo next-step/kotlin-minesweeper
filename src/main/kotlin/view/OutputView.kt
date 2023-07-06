@@ -1,7 +1,7 @@
 package view
 
 import model.CountedMineBoard
-import model.MineBoard
+import model.FilledElements
 import model.Position
 import model.minemark.Mine
 import model.minemark.MineCount
@@ -25,7 +25,7 @@ object OutputView {
     }
 
     fun printBoard(countedMineBoard: CountedMineBoard) {
-        groupedByY(positionsSortedYAndX(countedMineBoard.mineBoard))
+        groupedByY(positionsSortedYAndX(countedMineBoard.filledElements))
             .forEach { line -> printLine(line) }
             .also { println() }
     }
@@ -34,7 +34,7 @@ object OutputView {
         println(lineMarkSymbols(line.map { it.second }))
     }
 
-    private fun positionsSortedYAndX(board: MineBoard): List<Pair<Position, MineMark>> {
+    private fun positionsSortedYAndX(board: FilledElements): List<Pair<Position, MineMark>> {
         return board.elements.toList().sortedWith(
             Comparator.comparing<Pair<Position, MineMark>, Int> { it.first.y }.thenBy { it.first.x }
         )

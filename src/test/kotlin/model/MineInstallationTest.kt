@@ -32,7 +32,7 @@ class MineInstallationTest : StringSpec({
             zeroPositionOneCountMineInstallation.installedMineBoard(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         // then
         installedMineBoard shouldBe InstalledMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to Mine(),
                     Position(0, 1) to Safety(),
@@ -63,7 +63,7 @@ class MineInstallationTest : StringSpec({
     }
 }) {
     companion object {
-        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
+        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = FilledElements(
             mapOf(
                 Position(0, 0) to Safety(),
                 Position(1, 1) to Safety(),

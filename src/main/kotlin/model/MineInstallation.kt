@@ -3,7 +3,7 @@ package model
 import model.minemark.Mine
 import model.minemark.MineMark
 
-class MineInstallation(
+data class MineInstallation(
     private val count: Int,
     private val mark: MineMark = Mine(),
     private val nextPosition: (maxX: Int, maxY: Int) -> Position,
@@ -12,34 +12,42 @@ class MineInstallation(
         require(count > 0) { "install count must be positive. but provided `$count`" }
     }
 
-    fun installedMineBoard(mineBoard: MineBoard): InstalledMineBoard {
-        validateMineBoardSize(mineBoard)
-        var currentMineBoard: MineBoard = mineBoard
-        repeat(count) {
-            val position: Position = differentMarkPosition(currentMineBoard)
-            currentMineBoard = currentMineBoard.replacedMark(position, mark)
-        }
-        return InstalledMineBoard(currentMineBoard)
+    fun installedMineBoard(filledElements: FilledElements): InstalledMineBoard {
+        validateMineBoardSize(filledElements)
+        val positions: Collection<Position> = distinctPositions(filledElements)
+        validatePositionContains(filledElements, positions)
+        return InstalledMineBoard(
+            filledElements.replacedMarkElements(changedMarkIfContains(positions))
+        )
     }
 
-    private fun validateMineBoardSize(mineBoard: MineBoard) {
-        require(count <= mineBoard.size) {
-            "install count must be less than or equal to board size. mine board size(`${mineBoard.size}`), mineCount(`$count`)"
+    private fun validatePositionContains(filledElements: FilledElements, positions: Collection<Position>) {
+        check(positions.all { filledElements.contains(it) }) {
+            "positions must contain position. but provided positions(`$positions`) and elements(`$filledElements`)"
         }
     }
 
-    private fun differentMarkPosition(mineBoard: MineBoard): Position {
-        var position: Position
-        do {
-            position = nextPosition(mineBoard.maxXPosition, mineBoard.maxYPosition)
-            validateContainsPosition(mineBoard, position)
-        } while (mineBoard.isEqualMarkInPosition(position, mark))
-        return position
+    private fun changedMarkIfContains(positions: Collection<Position>): (Position, MineMark) -> MineMark {
+        return { position, mineMark ->
+            if (positions.contains(position)) {
+                mark
+            } else {
+                mineMark
+            }
+        }
     }
 
-    private fun validateContainsPosition(mineBoard: MineBoard, position: Position) {
-        check(mineBoard.contains(position)) {
-            "position must be in mine board to replaced. but provided position(`$position`), mine board(`$mineBoard`)"
+    private fun validateMineBoardSize(filledElements: FilledElements) {
+        require(count <= filledElements.size) {
+            "install count must be less than or equal to board size. mine board size(`${filledElements.size}`), mineCount(`$count`)"
         }
+    }
+
+    private fun distinctPositions(filledElements: FilledElements): Collection<Position> {
+        val positions: MutableSet<Position> = mutableSetOf()
+        while (positions.size < count) {
+            positions.add(nextPosition(filledElements.maxXPosition, filledElements.maxYPosition))
+        }
+        return positions
     }
 }

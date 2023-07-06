@@ -14,7 +14,7 @@ class CountedMineBoardTest : StringSpec({
     "지뢰 보드로 생성" {
         shouldNotThrowAny {
             CountedMineBoard(
-                MineBoard(
+                FilledElements(
                     mapOf(
                         Position(0, 0) to MineCount(2),
                         Position(1, 1) to Mine(),
@@ -33,7 +33,7 @@ class CountedMineBoardTest : StringSpec({
     }
 }) {
     companion object {
-        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = MineBoard(
+        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = FilledElements(
             mapOf(
                 Position(0, 0) to Safety(),
                 Position(1, 1) to Safety(),

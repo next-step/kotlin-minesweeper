@@ -2,9 +2,9 @@ package controller
 
 import model.CountedMineBoard
 import model.CountedMineBoardProvider
-import model.MineBoard
+import model.FilledElements
+import model.FilledElementsProvider
 import model.MineBoardOpener
-import model.MineBoardProvider
 import model.MineInstallation
 import model.minemark.Mine
 import model.nextRandomPosition
@@ -14,13 +14,13 @@ import view.OutputView
 object MineSweeperGame {
 
     fun start() {
-        val mineBoard: MineBoard = MineBoardProvider(InputView.length, InputView.width).mineBoard
+        val filledElements: FilledElements = FilledElementsProvider(InputView.length, InputView.width).filledElements
         val mineSeeker = CountedMineBoardProvider(
             MineInstallation(
                 count = InputView.mineCount,
                 mark = Mine(),
                 nextPosition = ::nextRandomPosition
-            ).installedMineBoard(mineBoard)
+            ).installedMineBoard(filledElements)
         )
 
         val result: CountedMineBoard = startMineSweeper(mineSeeker.countedMineBoard)
