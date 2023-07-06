@@ -4,7 +4,7 @@ import org.junit.jupiter.params.provider.Arguments
 
 object PositionHelper {
 
-    fun makePositions(vararg positions: Position): Positions = Positions(positions.toList())
+    private fun makePositions(vararg positions: Position): Positions = Positions(positions.toList())
 
     fun getAroundMineQuantityTestData(): List<Arguments> = listOf(
         Arguments.of(
