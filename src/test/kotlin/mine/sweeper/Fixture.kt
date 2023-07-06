@@ -1,27 +1,31 @@
 package mine.sweeper
 
-import mine.sweeper.application.FieldsManager
+import mine.sweeper.application.MapInitializer
 import mine.sweeper.application.MineSweeperGame
 import mine.sweeper.application.value.Height
+import mine.sweeper.application.value.MineCount
 import mine.sweeper.application.value.Width
-import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.Fields
 import mine.sweeper.domain.Vulture
 import mine.sweeper.view.dto.MapSize
-import mine.sweeper.view.dto.Position
 
-class Fixture {
-    companion object {
-        fun MINE_SWEEPER_GAME(height: Height = Height(5), width: Width = Width(5)): MineSweeperGame {
-            val mapSize = MapSize(height, width)
-            val fieldsManager = FieldsManager(mapSize)
-            val vulture = Vulture(mapSize)
-            return MineSweeperGame(fieldsManager, vulture)
-        }
-        val TWO_TWO_FIELDS = listOf(
-            SafeField(Position(0, 0)),
-            SafeField(Position(1, 0)),
-            SafeField(Position(0, 1)),
-            SafeField(Position(1, 1)),
-        )
+object Fixture {
+    fun createMineGame(
+        height: Height = Height(5),
+        width: Width = Width(5),
+        mineCount: MineCount = MineCount(1)
+    ): MineSweeperGame {
+        val mapSize = MapSize(height, width)
+        val vulture = Vulture(mapSize, mineCount)
+        val mineSweeperMap = MapInitializer(mapSize).create(vulture.findMinesPosition())
+        return MineSweeperGame(mineSweeperMap)
+    }
+
+    fun baseFields(
+        height: Height = Height(5),
+        width: Width = Width(5),
+    ): Fields {
+        val mapSize = MapSize(height, width)
+        return Fields(mapSize)
     }
 }
