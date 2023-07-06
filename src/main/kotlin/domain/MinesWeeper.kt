@@ -12,10 +12,15 @@ class MinesWeeper(val boards: List<Cell>) {
                     (LOCATION_START_NUM until width)
                         .map { x ->
                             val location = Location(y, x)
-                            Cell(location, mines.contains(location))
+                            getCell(mines, location)
                         }
                 }
             return MinesWeeper(boards)
+        }
+
+        private fun getCell(mines: List<Location>, location: Location): Cell {
+            if (mines.contains(location)) return Mine(location)
+            return Basic(location)
         }
 
         private const val COUNT_EXCEPTION = "지뢰수가 지뢰찾기게임의 칸수보다 적어야합니다."

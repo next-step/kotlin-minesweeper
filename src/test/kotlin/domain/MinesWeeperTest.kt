@@ -36,6 +36,6 @@ internal class MinesWeeperTest {
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        game.boards.count { it.isMine } shouldBe count
+        game.boards.count { it is Mine } shouldBe count
     }
 }

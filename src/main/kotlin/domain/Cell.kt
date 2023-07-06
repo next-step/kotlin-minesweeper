@@ -1,3 +1,3 @@
 package domain
 
-data class Cell(val location: Location, val isMine: Boolean)
+sealed class Cell(val location: Location)

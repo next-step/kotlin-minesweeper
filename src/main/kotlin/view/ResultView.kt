@@ -1,5 +1,6 @@
 package view
 
+import domain.Mine
 import domain.MinesWeeper
 
 object ResultView {
@@ -14,7 +15,7 @@ object ResultView {
         println(BOARD_PRINT_STRING)
         val chucks = minesWeeper.boards.sortedBy { it.location.x }.sortedBy { it.location.y }.chunked(width)
         for (chunk in chucks) {
-            println(chunk.joinToString(" ") { getPrintString(it.isMine) })
+            println(chunk.joinToString(" ") { getPrintString(it is Mine) })
         }
     }
 
