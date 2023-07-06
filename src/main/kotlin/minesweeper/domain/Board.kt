@@ -19,6 +19,6 @@ class Board(
         require(width > 0) { "너비는 0보다 커야 합니다." }
     }
     private fun validateSameWidth() {
-        require(cells.all { it.values.size == width }) { "너비가 일정하지 않습니다." }
+        require(cells.all { it.hasSize(width) }) { "너비가 일정하지 않습니다."}
     }
 }
