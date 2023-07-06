@@ -54,7 +54,7 @@ class MineSweeperGameTest : BehaviorSpec({
                 val cells = result.mapCapture.run {
                     listOf(cells[0][0], cells[0][1], cells[1][0], cells[1][1],)
                 }
-                cells.all { it.openState.isOpen() } shouldBe true
+                cells.all { it.isOpen() } shouldBe true
             }
         }
 
@@ -64,8 +64,8 @@ class MineSweeperGameTest : BehaviorSpec({
             val result = game.open(Coordinate(2, 2)) as OpenResult.GroundOpened
 
             Then("(2, 2) 셀만 열린다") {
-                result.mapCapture.cells[2][2].openState.isOpen() shouldBe true
-                result.mapCapture.cells.flatten().count { it.openState.isOpen() } shouldBe 1
+                result.mapCapture.cells[2][2].isOpen() shouldBe true
+                result.mapCapture.cells.flatten().count { it.isOpen() } shouldBe 1
             }
         }
 

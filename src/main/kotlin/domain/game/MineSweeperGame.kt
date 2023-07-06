@@ -41,7 +41,7 @@ class MineSweeperGame(
     private fun getHideGroundCellOrNull(coordinate: Coordinate): Cell.Ground? {
         return when (val cell = mineMap[coordinate]) {
             is Cell.Mine -> null
-            is Cell.Ground -> cell.takeIf { it.openState.isHide() }
+            is Cell.Ground -> cell.takeIf { it.isHide() }
         }
     }
 
@@ -54,6 +54,6 @@ class MineSweeperGame(
     private fun MapCapture.isAllGroundCellsOpened(): Boolean {
         return cells.flatten()
             .filterIsInstance<Cell.Ground>()
-            .all { it.openState.isOpen() }
+            .all { it.isOpen() }
     }
 }

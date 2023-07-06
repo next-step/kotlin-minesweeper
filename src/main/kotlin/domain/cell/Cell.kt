@@ -2,7 +2,7 @@ package domain.cell
 
 sealed class Cell {
 
-    abstract val openState: OpenState
+    protected abstract val openState: OpenState
 
     abstract fun open(): Cell
 
@@ -11,6 +11,14 @@ sealed class Cell {
             is Mine -> true
             is Ground -> false
         }
+    }
+
+    fun isOpen(): Boolean {
+        return openState.isOpen()
+    }
+
+    fun isHide(): Boolean {
+        return openState.isHide()
     }
 
     data class Mine(

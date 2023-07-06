@@ -20,7 +20,7 @@ class MineMapTest : BehaviorSpec({
             mineMap.open(Coordinate(0, 0))
 
             Then("0, 0 셀이 열린다") {
-                mineMap.capture().cells[0][0].openState.isOpen() shouldBe true
+                mineMap.capture().cells[0][0].isOpen() shouldBe true
             }
         }
     }

@@ -2,7 +2,6 @@ package domain.map
 
 import domain.MineSweeperInitProperty
 import domain.cell.Cell
-import domain.cell.OpenState
 import domain.math.toPositive
 import domain.mine.RealMineCoordinatesCreator
 import io.kotest.core.spec.style.BehaviorSpec
@@ -34,7 +33,7 @@ class RealMineMapFactoryTest : BehaviorSpec({
             }
 
             Then("모든 셀은 닫힘 상태이다") {
-                mineMap.capture().cells.flatten().all { it.openState == OpenState.HIDE } shouldBe true
+                mineMap.capture().cells.flatten().all { it.isHide() } shouldBe true
             }
         }
     }

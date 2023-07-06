@@ -30,7 +30,7 @@ class MineSweeperResultView {
     }
 
     private fun Cell.makeDisplayText(): String {
-        if (openState.isHide()) {
+        if (isHide()) {
             return "C"
         }
         return when (this) {

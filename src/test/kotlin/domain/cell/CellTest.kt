@@ -7,11 +7,11 @@ class CellTest : StringSpec({
 
     "mine은 오픈할 수 있다" {
         val mine = Cell.hideMine().open()
-        (mine.openState == OpenState.OPEN) shouldBe true
+        (mine.isOpen()) shouldBe true
     }
 
     "ground는 오픈할 수 있다" {
         val ground = Cell.hideGround(AroundMineCount(1)).open()
-        (ground.openState == OpenState.OPEN) shouldBe true
+        (ground.isOpen()) shouldBe true
     }
 })
