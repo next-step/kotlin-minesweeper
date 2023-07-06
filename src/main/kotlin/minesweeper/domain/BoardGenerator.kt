@@ -25,7 +25,7 @@ object BoardGenerator {
             val cell = board.boardInfo[randomHeight].rowInfo[randomWidth]
 
             if (cell.type == CellType.EMPTY) {
-                cell.type = CellType.MINE
+                cell.updateCellType(CellType.MINE)
                 placed = true
             }
         }
