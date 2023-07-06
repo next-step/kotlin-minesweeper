@@ -3,7 +3,6 @@ package minesweeper.domain.cell
 import minesweeper.domain.CellInfo
 import minesweeper.domain.CoordinateFinder
 import minesweeper.domain.cell.CellType.Companion.toCellType
-import minesweeper.domain.cell.Coordinate.Companion.isContains
 import minesweeper.domain.strategy.MinePlacementStrategy
 
 @JvmInline
@@ -13,9 +12,11 @@ value class Cells(
     fun placeMine(mineCount: Int, minePlacementStrategy: MinePlacementStrategy) {
         validateMineCount(mineCount)
         repeat(mineCount) { minePlacementStrategy.findPlantTargetCell(values).changeToMine() }
-        val mines = values.filter { it.isMine() }
+        val mineCoordinates = values.filter { it.isMine() }
+            .map { it.coordinate }
+            .toSet()
         values.filterNot { it.isMine() }
-            .forEach { calculate(it, mines) }
+            .forEach { calculate(it, mineCoordinates) }
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it) }
@@ -26,9 +27,10 @@ value class Cells(
         check(values.none { it.isMine() }) { "이미 지뢰가 배치되어 있습니다." }
     }
 
-    private fun calculate(cell: Cell, mines: List<Cell>) {
+    private fun calculate(cell: Cell, mineCoordinates: Set<Coordinate>) {
         val nearCoordinates = CoordinateFinder.nearCoordinates(cell)
-        val cellType = mines.count { nearCoordinates.isContains(it) }.toCellType()
+        val cellType = nearCoordinates.count { mineCoordinates.contains(it) }
+            .toCellType()
         cell.changeToCellType(cellType)
     }
 

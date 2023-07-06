@@ -14,7 +14,5 @@ data class Coordinate(
 
     companion object {
         private const val MOVE_AMOUNT = 1
-
-        fun List<Coordinate>.isContains(cell: Cell): Boolean = this.contains(cell.coordinate)
     }
 }
