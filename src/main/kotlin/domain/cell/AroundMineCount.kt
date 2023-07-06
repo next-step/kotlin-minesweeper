@@ -9,7 +9,7 @@ value class AroundMineCount(val value: Int) {
         }
     }
 
-    fun isZero(): Boolean {
+    fun isSafeZone(): Boolean {
         return value == 0
     }
 }

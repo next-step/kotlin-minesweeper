@@ -32,7 +32,7 @@ class MineSweeperGame(
             val currentCoordinate = coordinates.poll()
             val cell = getHideGroundCellOrNull(currentCoordinate) ?: continue
             mineMap.open(currentCoordinate)
-            if (cell.aroundMineCount.isZero()) {
+            if (cell.aroundMineCount.isSafeZone()) {
                 coordinates.addAll(currentCoordinate.aroundCoordinatesInMap())
             }
         }
