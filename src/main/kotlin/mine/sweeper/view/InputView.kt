@@ -27,7 +27,7 @@ object InputView {
         return MineCount(input.toInt())
     }
 
-    fun getOpenPosition(): Position {
+    fun getPosition(): Position {
         print("open: ")
         val input = readln()
         val split = input.split(", ")

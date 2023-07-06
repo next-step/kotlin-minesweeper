@@ -3,7 +3,7 @@ package mine.sweeper.domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import mine.sweeper.Fixture.Companion.MINE_SWEEPER_GAME
+import mine.sweeper.Fixture.createMineGame
 import mine.sweeper.application.value.MineCount
 
 class VultureTest : StringSpec({
@@ -15,11 +15,9 @@ class VultureTest : StringSpec({
             MineCount(1),
             MineCount(10),
         ).forAll { input ->
-            val game = MINE_SWEEPER_GAME()
-            game.setMine(input)
+            val game = createMineGame(mineCount = input)
             val result = game.getResult()
-
-            val count = result.fields.count { it is MineField }
+            val count = result.toSortedList().count { it is MineField }
 
             count shouldBe input.value
         }

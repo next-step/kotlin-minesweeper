@@ -6,14 +6,14 @@ import mine.sweeper.view.dto.Position
 class SafeField(position: Position) : Field(position) {
     var value: Int = 0
 
-    fun increase() {
-        value++
+    override fun open(): GameStatus {
+        if (!checked) checked = true
+        return GameStatus.ON_PROGRESS
     }
 
-    override fun open(): GameStatus {
-        if (!checked) {
-            checked = true
-        }
-        return GameStatus.ON_PROGRESS
+    fun increase() = value++
+
+    fun isEmpty(): Boolean {
+        return value == 0
     }
 }
