@@ -1,8 +1,8 @@
 package domain.mine
 
 import domain.MineSweeperInitProperty
-import utils.nestedList
 import domain.map.Coordinate
+import utils.nestedList
 
 class RealMineCoordinatesCreator : MineCoordinatesCreator {
 

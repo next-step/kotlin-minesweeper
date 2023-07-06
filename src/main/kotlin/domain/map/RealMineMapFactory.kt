@@ -13,6 +13,8 @@ class RealMineMapFactory(
     override fun create(mineSweeperInitProperty: MineSweeperInitProperty): MineMap {
         val mineCoordinates = mineCoordinatesCreator.create(mineSweeperInitProperty)
         val cells = createCells(mineCoordinates, mineSweeperInitProperty)
+            .map { it.toMutableList() }
+            .toMutableList()
         return MineMap(cells)
     }
 
@@ -42,9 +44,9 @@ class RealMineMapFactory(
             y = column,
         )
         return if (mineCoordinates.contains(coordinate)) {
-            Cell.Mine
+            Cell.hideMine()
         } else {
-            Cell.Ground(
+            Cell.hideGround(
                 aroundMineCount = coordinate.calculateAroundMineCount(mineCoordinates),
             )
         }

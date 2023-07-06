@@ -8,4 +8,8 @@ value class AroundMineCount(val value: Int) {
             "around mine count must be greater than or equal to zero"
         }
     }
+
+    fun isSafeZone(): Boolean {
+        return value == 0
+    }
 }

@@ -1,17 +1,24 @@
 package view
 
 import domain.cell.Cell
-import domain.map.MineMap
+import domain.map.MapCapture
 
 class MineSweeperResultView {
 
-    fun display(mineMap: MineMap) {
-        val text = buildString {
-            appendLine()
-            appendLine("지뢰찾기 게임 시작")
-            appendLine(mineMap.cells.makeMapText())
-        }
-        println(text)
+    fun displayStartMineSweeperGameMessage() {
+        println("\n지뢰 찾기 게임 시작")
+    }
+
+    fun display(mapCapture: MapCapture) {
+        println("${mapCapture.cells.makeMapText()}\n")
+    }
+
+    fun displayLoseGameMessage() {
+        println("Lose Game.")
+    }
+
+    fun displayWinGameMessage() {
+        println("Win Game.")
     }
 
     private fun List<List<Cell>>.makeMapText(): String {
@@ -23,6 +30,9 @@ class MineSweeperResultView {
     }
 
     private fun Cell.makeDisplayText(): String {
+        if (isHide()) {
+            return "C"
+        }
         return when (this) {
             is Cell.Mine -> "*"
             is Cell.Ground -> aroundMineCount.value.toString()
