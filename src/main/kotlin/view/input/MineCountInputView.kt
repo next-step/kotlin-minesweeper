@@ -10,8 +10,8 @@ class MineCountInputView(height: PositiveNumber, width: PositiveNumber) : InputV
 
     init {
         renderMessage()
-        val injectValue = PositiveNumber(readValue())
-        value = MineCountNumber(injectValue, height, width)
+        val readValue = readValue()
+        value = MineCountNumber(readValue, height, width)
         NewLineOutputView()
     }
 
