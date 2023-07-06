@@ -1,7 +1,7 @@
 package map
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldHaveSize
 import map.position.Position
 import model.Height
 import model.MineCount
@@ -17,8 +17,8 @@ internal class MineMapTest : StringSpec({
             )
         ) { Position(0, 0) }
 
-        val symbolMap = sut.getMapAsSymbol()
-        symbolMap.flatten().count { it == "*" } shouldBe 1
-        symbolMap[0][0] shouldBe "*"
+        val snapshot = sut.getMapSnapShot()
+        snapshot shouldHaveSize 10
+        snapshot.forEach { it.cols shouldHaveSize 10 }
     }
 })

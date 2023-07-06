@@ -1,7 +1,7 @@
 package view
 
-import map.MapElement
+import map.Row
 
 interface OutputView {
-    fun drawMineMap(mineMap: List<List<String>>)
+    fun drawMineMap(rows: List<Row>)
 }
