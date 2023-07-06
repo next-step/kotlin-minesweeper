@@ -21,6 +21,12 @@ class MineMap(
         return coordinate.y <= yDeadLine && coordinate.x <= xDeadLine
     }
 
+    fun isAllGroundCellsOpened(): Boolean {
+        return cells.flatten()
+            .filter { it.isGround() }
+            .all { it.isOpen() }
+    }
+
     operator fun get(coordinate: Coordinate): Cell {
         return cells[coordinate.y][coordinate.x]
     }

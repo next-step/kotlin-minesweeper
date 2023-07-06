@@ -7,10 +7,11 @@ sealed class Cell {
     abstract fun open(): Cell
 
     fun isMine(): Boolean {
-        return when (this) {
-            is Mine -> true
-            is Ground -> false
-        }
+        return this is Mine
+    }
+
+    fun isGround(): Boolean {
+        return this is Ground
     }
 
     fun isOpen(): Boolean {
