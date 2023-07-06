@@ -15,7 +15,7 @@ class MineMapTest : StringSpec({
         mineMap.makeMine(10.toCount())
         var mineCount = 0
         mineMap.mineMap.forEach {
-            mineCount += it.filter().size
+            mineCount += it.filterMine().size
         }
         mineCount shouldBe 10
     }

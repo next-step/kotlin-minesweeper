@@ -7,7 +7,6 @@ import minesweeper.domain.MinePosition
 import minesweeper.view.InputType
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
-import kotlin.math.min
 
 fun main() {
     val height = Length.of(InputView.inputDataFromConsole(InputType.HEIGHT))
@@ -17,19 +16,30 @@ fun main() {
     val mineMap = MineMap(width, height)
     mineMap.makeMine(mineCount)
     OutputView.showGameStartMessage()
-    val minePosition = InputView.inputMinePosition()
-    inputMinePosition(minePosition, mineMap)
+
+    inputOpenPosition(mineMap)
 }
 
-private fun inputMinePosition(minePosition: MinePosition, mineMap : MineMap) {
-    mineMap.openMine(minePosition) {
-        isDone, nearMineCount ->
-        if(isDone) {
-            return@openMine
+fun inputOpenPosition(mineMap : MineMap) {
+    val minePosition = InputView.inputOpenPosition()
+    openTile(minePosition, mineMap)
+}
+
+private fun openTile(position: MinePosition, mineMap : MineMap) {
+    mineMap.openTile(position) {
+        isLoose ->
+        if(isLoose) {
+            OutputView.showLoseGame()
+            return@openTile
         }
         OutputView.showGameResult(mineMap)
-        if(nearMineCount == 0) {
-            return@openMine
+        val sizeOfUncheckedTiles = mineMap.mineMap.sumOf {
+            it.sizeOfUnChecked()
         }
+        if(mineMap.mineTitleCount?.count == sizeOfUncheckedTiles) {
+            OutputView.showWinGame()
+            return@openTile
+        }
+        inputOpenPosition(mineMap)
     }
 }

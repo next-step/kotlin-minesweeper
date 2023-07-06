@@ -13,7 +13,6 @@ object OutputView {
     }
 
     fun showGameResult(mineMap: MineMap) {
-        println("지뢰찾기 게임 시작")
         mineMap.mineMap.forEach {
             println(getTilesRow(it))
         }
@@ -38,5 +37,13 @@ object OutputView {
             is PlainTile -> tile.nearMineCount.toString()
             else -> ""
         }
+    }
+
+    fun showLoseGame() {
+        println("Lose Game.")
+    }
+
+    fun showWinGame() {
+        println("Win Game.")
     }
 }

@@ -17,10 +17,12 @@ object InputView {
 
     private fun inputData(typeMessage: String): String {
         println(typeMessage)
-        return readln()
+        val inputData = readln()
+        println()
+        return inputData
     }
 
-    fun inputMinePosition(): MinePosition {
+    fun inputOpenPosition(): MinePosition {
         print("open :")
         val positionStrings = readln().split(SEPERATOR)
         if (positionStrings.size != 2) {

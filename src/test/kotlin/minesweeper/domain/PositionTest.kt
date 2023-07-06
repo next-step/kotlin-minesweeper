@@ -2,7 +2,6 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 
 class PositionTest : StringSpec({
     "위치 값은 0보다 커야함" {
@@ -16,5 +15,4 @@ class PositionTest : StringSpec({
             Position.of("a")
         }
     }
-
 })
