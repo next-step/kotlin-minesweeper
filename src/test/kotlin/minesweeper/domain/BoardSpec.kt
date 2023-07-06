@@ -38,7 +38,7 @@ class BoardSpec : DescribeSpec(
                     shouldThrowExactly<IllegalArgumentException> {
                         Board(
                             cells = listOf(
-                                cells()
+                                cells(),
                             ),
                         )
                     }

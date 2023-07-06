@@ -9,4 +9,11 @@ object PositionGenerator {
                 Position(index % width.value, index / width.value)
             }
     }
+
+    fun generatePositionsExcept(width: PositiveInt, height: PositiveInt, excepts: List<Position>): List<Position> {
+        val allPositions = (0 until width.value * height.value)
+            .map { index -> Position(index % width.value, index / width.value) }
+
+        return allPositions - excepts.toSet()
+    }
 }

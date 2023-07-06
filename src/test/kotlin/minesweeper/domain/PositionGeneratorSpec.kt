@@ -23,4 +23,26 @@ class PositionGeneratorSpec : DescribeSpec({
             }
         }
     }
+
+    describe("제외 위치 생성 검증") {
+        context("너비, 높이, 제외 위치가 주어지면") {
+            it("제외 위치를 제외한 위치 목록을 생성할 수 있다.") {
+                val width = PositiveInt(3)
+                val height = PositiveInt(3)
+                val excepts = listOf(
+                    Position(0, 0),
+                    Position(1, 0),
+                    Position(2, 0),
+                )
+
+                val positions = PositionGenerator.generatePositionsExcept(width, height, excepts)
+
+                positions.size shouldBe 6
+                positions.forAll {
+                    it.x shouldBeInRange 0..2
+                    it.y shouldBeInRange 1..2
+                }
+            }
+        }
+    }
 })

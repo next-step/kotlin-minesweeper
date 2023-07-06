@@ -19,10 +19,15 @@ class BoardGenerator(
 
     private fun generateCells(minePositions: List<Position>): List<Cells> {
         val defaultCells = generateAllNormalCells()
+        val normalPositions = PositionGenerator.generatePositionsExcept(width, height, minePositions)
 
         minePositions.forEach { position ->
             defaultCells[position.y][position.x] = Mine(position)
-            position.increaseAdjacentMineCount(defaultCells)
+        }
+
+        normalPositions.forEach { position ->
+            val adjacentMineCount = position.getAdjacentMineCount(defaultCells)
+            defaultCells[position.y][position.x] = Normal(position, adjacentMineCount)
         }
 
         return defaultCells.map { Cells(it) }
@@ -37,11 +42,11 @@ class BoardGenerator(
             .map { it.toMutableList() }
     }
 
-    private fun Position.increaseAdjacentMineCount(cells: List<List<Cell>>) {
-        getAdjacentPositions(thresholdWidth = width.value, thresholdHeight = height.value)
+    private fun Position.getAdjacentMineCount(cells: List<List<Cell>>): Int {
+        return getAdjacentPositions(thresholdWidth = width.value, thresholdHeight = height.value)
             .map { position -> cells[position] }
-            .filterIsInstance<Normal>()
-            .forEach { it.increaseAdjacentMineCount() }
+            .filterIsInstance<Mine>()
+            .count()
     }
 
     private operator fun List<List<Cell>>.get(position: Position): Cell {
