@@ -28,6 +28,7 @@ fun readyMine(board: GameBoard) {
 }
 
 fun playGame(board: GameBoard) {
+    OutputView.showStart()
     var stop = false
     do {
         val positions = Inputview.askOpenPosition()

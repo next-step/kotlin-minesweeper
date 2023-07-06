@@ -25,9 +25,10 @@ class GameBoard private constructor(
     }
 
     fun openPin(height: Int, width: Int): Boolean {
-        val pin = pins.openPinAt(height, width)
-        if (pin is MinePin) return true
+        val pin = pins.getPinsAt(height, width)
+        if (pin.isMinePin()) return true
         if (isWin()) return true
+        openSurroundPin(height, width)
         return false
     }
 
@@ -37,6 +38,30 @@ class GameBoard private constructor(
         val minePinCount = pins.countMinePin()
 
         return totalPin == (openPinCount + minePinCount)
+    }
+
+    private fun openSurroundPin(height: Int, width: Int) {
+        val targetPin = pins.getPinsAt(height, width)
+        if (!targetPin.isOpenable()) return
+        pins.openPinAt(height, width)
+        (0 until DIM).forEach { num ->
+            val nextHeight = height + HEIGHT_MOVE[num]
+            val nextWidth = width + WIDTH_MOVE[num]
+            if (openPinWithoutException(nextHeight, nextWidth)) {
+                openSurroundPin(nextHeight, nextWidth)
+            }
+        }
+    }
+
+    private fun openPinWithoutException(height: Int, width: Int): Boolean {
+        try {
+            val pin = pins.getPinsAt(height, width)
+            if (!pin.isOpenable()) return false
+            pins.openPinAt(height, width)
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     private fun placeMineWithoutDuplicate() {
@@ -66,6 +91,10 @@ class GameBoard private constructor(
     }
 
     companion object {
+        const val DIM = 8
+        val HEIGHT_MOVE = listOf(-1, -1, -1, 0, 0, 1, 1, 1)
+        val WIDTH_MOVE = listOf(-1, 0, 1, -1, 1, -1, 0, 1)
+
         fun ready(height: Int, width: Int): GameBoard {
             val size = GameBoardSize(height, width)
             val pins = TwoDimPins.of(size)

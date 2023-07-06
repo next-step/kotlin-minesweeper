@@ -8,6 +8,9 @@ import minesweeper.domain.Pin
 import kotlin.reflect.KClass
 
 object OutputView {
+    fun showStart() {
+        println("지뢰찾기 게임 시작")
+    }
 
     fun showWin() {
         println("Win Game")
