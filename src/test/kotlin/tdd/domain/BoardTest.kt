@@ -24,4 +24,24 @@ class BoardTest {
 
         board.cells shouldBe cells
     }
+
+    @Test
+    fun `When board opens cell, cell opened`() {
+        val cells = mapOf(
+            Coordinate(0, 0) to Cell(),
+            Coordinate(0, 1) to Cell(),
+            Coordinate(0, 2) to Cell(Mine),
+            Coordinate(1, 0) to Cell(),
+            Coordinate(1, 1) to Cell(Mine),
+            Coordinate(1, 2) to Cell(),
+            Coordinate(2, 0) to Cell(),
+            Coordinate(2, 1) to Cell(),
+            Coordinate(2, 2) to Cell(Mine),
+        )
+        val board = Board(cells)
+        val coordinate = Coordinate(1, 2)
+
+        board.open(coordinate)
+        board.cells[coordinate] shouldBe Cell(Opened(3))
+    }
 }

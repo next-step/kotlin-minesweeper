@@ -20,4 +20,20 @@ class CellTest {
     fun `When cell created, state is Closed`() {
         Cell().state shouldBe instanceOf<Closed>()
     }
+
+    @Test
+    fun `When cell opened, cell has the sum of around mine counts`() {
+        val aroundMineCount = 3
+        val cell = Cell()
+        cell.open(aroundMineCount)
+
+        cell shouldBe Cell(Opened(aroundMineCount))
+    }
+
+    @Test
+    fun isMine() {
+        Cell(Empty).isMine() shouldBe false
+        Cell(Mine).isMine() shouldBe true
+        Cell(Opened(3)).isMine() shouldBe false
+    }
 }

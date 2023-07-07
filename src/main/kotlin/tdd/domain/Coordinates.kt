@@ -14,5 +14,20 @@ class Coordinates(
                 }
             )
         }
+
+        fun around(coordinate: Coordinate): Coordinates {
+            return Coordinates(
+                listOf(
+                    coordinate.upLeft(),
+                    coordinate.up(),
+                    coordinate.upRight(),
+                    coordinate.left(),
+                    coordinate.right(),
+                    coordinate.downLeft(),
+                    coordinate.down(),
+                    coordinate.downRight(),
+                )
+            )
+        }
     }
 }
