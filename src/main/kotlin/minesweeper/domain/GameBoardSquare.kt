@@ -9,10 +9,6 @@ class GameBoardSquare(private var squareValueType: SquareValueType) {
         squareValueType = SquareValueType.MINE
     }
 
-    fun printValue(): Char {
-        return squareValueType.value
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

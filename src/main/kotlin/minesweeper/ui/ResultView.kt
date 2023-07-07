@@ -3,8 +3,6 @@ package minesweeper.ui
 import minesweeper.domain.GameBoardSquare
 
 class ResultView {
-
-
     fun printGameBoard(gameBoard: List<List<GameBoardSquare>>) {
         println()
         println("지뢰찾기 게임 시작")
@@ -14,7 +12,17 @@ class ResultView {
     }
 
     private fun printEachBoardLine(boardLine: List<GameBoardSquare>) {
-        boardLine.forEach { print("${it.printValue()} ") }
+        boardLine.forEach {
+            val proceedSquareType = proceedSquareType(it.isMine())
+            print(proceedSquareType)
+        }
         println()
+    }
+
+    private fun proceedSquareType(isMine: Boolean): Char {
+        if (isMine) {
+            return '*'
+        }
+        return 'C'
     }
 }

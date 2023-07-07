@@ -12,12 +12,13 @@ class GameBoardSquareTest {
     fun `게임판 사각형 1개는 지뢰 혹은 빈값을 가진다`(squareValueType: SquareValueType) {
         // given
         val gameBoardSquare = GameBoardSquare(squareValueType)
+        val isValueMine = squareValueType == SquareValueType.MINE
 
         // when
-        val actual = gameBoardSquare.printValue()
+        val actual = gameBoardSquare.isMine()
 
         // then
-        Assertions.assertThat(actual).isEqualTo(squareValueType.value)
+        Assertions.assertThat(actual).isEqualTo(isValueMine)
     }
 
     @Test
@@ -27,9 +28,9 @@ class GameBoardSquareTest {
 
         // when
         boardSquare.insertMine()
-        val actual = boardSquare.printValue()
+        val actual = boardSquare.isMine()
 
         // then
-        Assertions.assertThat(actual).isEqualTo(SquareValueType.MINE.value)
+        Assertions.assertThat(actual).isTrue()
     }
 }
