@@ -2,7 +2,7 @@ package minesweeper.domain.game
 
 import minesweeper.domain.data.PositiveNumber
 
-class Board(width: PositiveNumber, height: PositiveNumber, mine: List<Coordinate>) {
+class Board(private val width: PositiveNumber, private val height: PositiveNumber, private val mine: Mines) {
 
     init {
         require((width * height) > mine.size) {
@@ -10,13 +10,16 @@ class Board(width: PositiveNumber, height: PositiveNumber, mine: List<Coordinate
         }
     }
 
-    val board: List<Row> = (PositiveNumber.BASE_NUMBER until height.number).map { col ->
-        val row = (PositiveNumber.BASE_NUMBER until width.number).map { row ->
-            val isMine = mine.contains(Coordinate(row, col))
-            createCell(isMine)
-        }
-        Row(row)
-    }
-
-    private fun createCell(isMine: Boolean): Cell = if (isMine) Cell(CellType.MINE) else Cell(CellType.NONE)
+    val board: List<Row>
+        get() =
+            List(height.number) { col ->
+                Row(
+                    List(width.number) { row ->
+                        val coordinate = row position col
+                        val isMine = mine.contains(coordinate)
+                        val nearMineCount = mine.nearMineCount(coordinate)
+                        Cell.of(isMine, nearMineCount)
+                    }
+                )
+            }
 }

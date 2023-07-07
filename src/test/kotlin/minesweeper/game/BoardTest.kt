@@ -7,6 +7,7 @@ import minesweeper.domain.data.PositiveNumber
 import minesweeper.domain.game.Board
 import minesweeper.domain.game.CellType
 import minesweeper.domain.game.Coordinate
+import minesweeper.domain.game.toMines
 
 class BoardTest : StringSpec({
     " mine 갯수는 총 Cell 갯수보다 적어야 합니다." {
@@ -15,24 +16,24 @@ class BoardTest : StringSpec({
             val col = PositiveNumber(5)
             val mine = List(26) {
                 Coordinate(0, 0)
-            }
+            }.toMines()
             Board(row, col, mine)
         }
     }
 
-    " row 5 cal 5 총 Cell 25 [0,0][1,1][2,2][3,3][4,4] mine" {
+    "Mine Board 상태는 width 5, height 5 총 Cell 25개를 가지며 [0,0][1,1][2,2][3,3][4,4] 위치에 지뢰가 심어져 있다" {
         val row = PositiveNumber(5)
         val col = PositiveNumber(5)
         val mine = mutableListOf(
             Coordinate(0, 0), Coordinate(1, 1), Coordinate(2, 2), Coordinate(3, 3), Coordinate(4, 4)
-        )
+        ).toMines()
 
         val board = Board(row, col, mine)
         board.board.size shouldBe 5
         board.board[0].size shouldBe 5
         board.board.flatten().size shouldBe 25
         board.board[0][0].type shouldBe CellType.MINE
-        board.board[0][1].type shouldBe CellType.NONE
+        board.board[0][1].type shouldBe CellType.NORMAL
         board.board[1][1].type shouldBe CellType.MINE
         board.board[2][2].type shouldBe CellType.MINE
         board.board[3][3].type shouldBe CellType.MINE
