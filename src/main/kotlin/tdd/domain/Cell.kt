@@ -10,4 +10,6 @@ data class Cell(
     fun isMine(): Boolean = state is Mine
 
     fun isOpened(): Boolean = state is Opened
+
+    fun isZero(): Boolean = state == Opened.of(0)
 }

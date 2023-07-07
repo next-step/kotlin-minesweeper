@@ -7,11 +7,14 @@ class Board(
         val cell = cellOf(coordinate)
         if (cell.isOpened() || cell.isMine()) return
 
-        val aroundMineCount = Coordinates.around(coordinate)
-            .filter { it in cells }
-            .count { cellOf(it).isMine() }
+        val aroundCoordinates = Coordinates.around(coordinate).filter { it in cells }
+        val aroundMineCount = aroundCoordinates.count { cellOf(it).isMine() }
 
         cell.open(aroundMineCount)
+
+        if (cell.isZero()) {
+            aroundCoordinates.forEach { open(it) }
+        }
     }
 
     private fun cellOf(key: Coordinate): Cell {

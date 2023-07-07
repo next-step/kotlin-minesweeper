@@ -28,7 +28,7 @@ class CellTest {
         val cell = Cell()
         cell.open(aroundMineCount)
 
-        cell shouldBe Cell(Opened(aroundMineCount))
+        cell shouldBe Cell(Opened.of(aroundMineCount))
     }
 
     @Test
@@ -36,7 +36,7 @@ class CellTest {
         assertSoftly {
             Cell(Empty).isMine() shouldBe false
             Cell(Mine).isMine() shouldBe true
-            Cell(Opened(3)).isMine() shouldBe false
+            Cell(Opened.of(3)).isMine() shouldBe false
         }
     }
 
@@ -45,7 +45,17 @@ class CellTest {
         assertSoftly {
             Cell(Empty).isOpened() shouldBe false
             Cell(Mine).isOpened() shouldBe false
-            Cell(Opened(3)).isOpened() shouldBe true
+            Cell(Opened.of(3)).isOpened() shouldBe true
+        }
+    }
+
+    @Test
+    fun isZero() {
+        assertSoftly {
+            Cell(Empty).isZero() shouldBe false
+            Cell(Mine).isZero() shouldBe false
+            Cell(Opened.of(3)).isZero() shouldBe false
+            Cell(Opened.of(0)).isZero() shouldBe true
         }
     }
 }
