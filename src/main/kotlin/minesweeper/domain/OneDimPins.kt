@@ -6,7 +6,7 @@ class OneDimPins(private val values: MutableList<Pin>) {
     }
 
     fun getPinAt(index: Int): Pin {
-        require(index <= getPinsSize()) { "너비에 $index 는 올바른 위치가 아닙니다" }
+        require(index in 0 until getPinsSize()) { "너비에 $index 는 올바른 위치가 아닙니다" }
         return values[index]
     }
 

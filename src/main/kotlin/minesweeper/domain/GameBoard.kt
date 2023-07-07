@@ -24,43 +24,34 @@ class GameBoard private constructor(
         pins.closeAllPin()
     }
 
-    fun openPin(height: Int, width: Int): Boolean {
+    fun openPin(height: Int, width: Int) {
         val pin = pins.getPinsAt(height, width)
-        if (pin.isMinePin()) return true
-        if (isWin()) return true
-        openSurroundPin(height, width)
-        return false
+        if (pin.isMinePin()) return
+        if (askContinuable()) {
+            openSurroundPin(height, width)
+        }
     }
 
-    fun isWin(): Boolean {
+    fun askContinuable(): Boolean {
         val totalPin = size.height * size.width
         val openPinCount = pins.countOpenedPin()
         val minePinCount = pins.countMinePin()
 
-        return totalPin == (openPinCount + minePinCount)
+        return totalPin != (openPinCount + minePinCount)
     }
 
     private fun openSurroundPin(height: Int, width: Int) {
-        val targetPin = pins.getPinsAt(height, width)
-        if (!targetPin.isOpenable()) return
-        pins.openPinAt(height, width)
-        (0 until DIM).forEach { num ->
-            val nextHeight = height + HEIGHT_MOVE[num]
-            val nextWidth = width + WIDTH_MOVE[num]
-            if (openPinWithoutException(nextHeight, nextWidth)) {
+        try {
+            val targetPin = pins.getPinsAt(height, width)
+            if (!targetPin.isOpenable()) return
+            pins.openPinAt(height, width)
+            (0 until DIM).forEach { num ->
+                val nextHeight = height + HEIGHT_MOVE[num]
+                val nextWidth = width + WIDTH_MOVE[num]
                 openSurroundPin(nextHeight, nextWidth)
             }
-        }
-    }
-
-    private fun openPinWithoutException(height: Int, width: Int): Boolean {
-        try {
-            val pin = pins.getPinsAt(height, width)
-            if (!pin.isOpenable()) return false
-            pins.openPinAt(height, width)
-            return true
         } catch (e: Exception) {
-            return false
+            return
         }
     }
 

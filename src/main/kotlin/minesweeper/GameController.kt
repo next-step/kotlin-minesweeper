@@ -9,13 +9,14 @@ fun main() {
 }
 
 fun run() {
-    val board = readySize()
+    val board = readyBoard()
+
     readyMine(board)
     playGame(board)
     showResult(board)
 }
 
-fun readySize(): GameBoard {
+fun readyBoard(): GameBoard {
     val height = Inputview.askHeight()
     val width = Inputview.askWidth()
     return GameBoard.ready(height, width)
@@ -29,18 +30,20 @@ fun readyMine(board: GameBoard) {
 
 fun playGame(board: GameBoard) {
     OutputView.showStart()
-    var stop = false
+    var continuable = true
     do {
         val positions = Inputview.askOpenPosition()
         val height = positions[0]
         val width = positions[1]
-        stop = board.openPin(height, width)
+        board.openPin(height, width)
         OutputView.showMineSweeper(board)
-    } while (!stop)
+
+        continuable = board.askContinuable()
+    } while (continuable)
 }
 
 fun showResult(board: GameBoard) {
-    if (board.isWin()) {
+    if (!board.askContinuable()) {
         OutputView.showWin()
         return
     }

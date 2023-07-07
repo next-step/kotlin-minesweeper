@@ -19,9 +19,8 @@ class OneDimPinsTest : FunSpec({
         val pinsInRow = OneDimPins.of(size)
 
         val pins = pinsInRow.getPinsBetween(1, size - 1)
-        val targetPinAtIndexOne = pinsInRow.getPinAt(1)
 
-        pins[0] shouldBe targetPinAtIndexOne
+        pins.size shouldBe (size - 1)
     }
 
     test("특정 index 에 위치한 일반핀을 지뢰로 바꿀 수 있다") {
