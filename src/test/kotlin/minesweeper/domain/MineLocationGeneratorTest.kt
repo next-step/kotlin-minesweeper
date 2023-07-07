@@ -1,19 +1,13 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class MineLocationGeneratorTest {
-
-    private lateinit var mineLocationGenerator: MineLocationGenerator
-
-    @BeforeEach
-    fun setUp() {
-        mineLocationGenerator = MineLocationGenerator(ContrivedCoordinateGenerator())
-    }
-
     @Test
     fun `지뢰의 위치를 생성한다`() {
+        // given
+        val mineLocationGenerator = MineLocationGenerator(ContrivedCoordinateGenerator())
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
@@ -24,7 +18,7 @@ class MineLocationGeneratorTest {
         val generateMineLocation = mineLocationGenerator.generateMineLocation(listBoard)
 
         // then
-        org.assertj.core.api.Assertions.assertThat(generateMineLocation).isEqualTo(
+        Assertions.assertThat(generateMineLocation).isEqualTo(
             MineLocation(board.first().size - 1, board.size - 1)
         )
     }
