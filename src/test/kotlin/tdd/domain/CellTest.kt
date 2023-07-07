@@ -63,4 +63,12 @@ class CellTest {
     fun `Should return aroundMineCount`() {
         Cell(Opened.of(3)).aroundMineCount() shouldBe 3
     }
+
+    @Test
+    fun `Given isMine, Create a cell`() {
+        assertSoftly {
+            Cell.of(isMine = true) shouldBe Cell(Mine)
+            Cell.of(isMine = false) shouldBe Cell()
+        }
+    }
 }

@@ -16,4 +16,10 @@ data class Cell(
     fun isZero(): Boolean = state == Opened.of(0)
 
     fun aroundMineCount(): Int = state.aroundMineCount()
+
+    companion object {
+        fun of(isMine: Boolean): Cell {
+            return if (isMine) Cell(Mine) else Cell()
+        }
+    }
 }
