@@ -3,12 +3,11 @@ package domain.map
 import domain.cell.Cell
 
 class MineMap(
-    private val cells: MutableList<MutableList<Cell>>,
+    private val _cells: MutableList<MutableList<Cell>>,
 ) {
 
-    fun capture(): MapCapture {
-        return MapCapture(cells.map { it.toList() })
-    }
+    val cells: List<List<Cell>>
+        get() = _cells.map { it.toList() }
 
     fun open(coordinate: Coordinate) {
         val newCell = get(coordinate).open()
@@ -16,13 +15,13 @@ class MineMap(
     }
 
     fun isIn(coordinate: Coordinate): Boolean {
-        val yDeadLine = cells.lastIndex
-        val xDeadLine = cells.first().lastIndex
+        val yDeadLine = _cells.lastIndex
+        val xDeadLine = _cells.first().lastIndex
         return coordinate.y <= yDeadLine && coordinate.x <= xDeadLine
     }
 
     fun isAllGroundCellsOpened(): Boolean {
-        return cells.flatten()
+        return _cells.flatten()
             .filter { it.isGround() }
             .all { it.isOpen() }
     }
@@ -35,13 +34,13 @@ class MineMap(
     }
 
     operator fun get(coordinate: Coordinate): Cell {
-        return cells[coordinate.y][coordinate.x]
+        return _cells[coordinate.y][coordinate.x]
     }
 
     private operator fun set(
         coordinate: Coordinate,
         cell: Cell,
     ) {
-        cells[coordinate.y][coordinate.x] = cell
+        _cells[coordinate.y][coordinate.x] = cell
     }
 }

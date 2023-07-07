@@ -1,7 +1,6 @@
 package view
 
 import domain.cell.Cell
-import domain.map.MapCapture
 
 class MineSweeperResultView {
 
@@ -9,8 +8,8 @@ class MineSweeperResultView {
         println("\n지뢰 찾기 게임 시작")
     }
 
-    fun display(mapCapture: MapCapture) {
-        println("${mapCapture.cells.makeMapText()}\n")
+    fun display(cells: List<List<Cell>>) {
+        println("${cells.makeMapText()}\n")
     }
 
     fun displayLoseGameMessage() {

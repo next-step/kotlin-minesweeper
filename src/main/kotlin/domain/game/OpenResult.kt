@@ -1,6 +1,6 @@
 package domain.game
 
-import domain.map.MapCapture
+import domain.cell.Cell
 
 sealed class OpenResult {
 
@@ -11,7 +11,7 @@ sealed class OpenResult {
         override val isGameFinished = true
     }
 
-    data class GroundOpened(val mapCapture: MapCapture) : OpenResult() {
+    data class GroundOpened(val cells: List<List<Cell>>) : OpenResult() {
 
         override val isGameFinished = false
     }

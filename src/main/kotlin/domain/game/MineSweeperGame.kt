@@ -19,7 +19,7 @@ class MineSweeperGame(
         return if (mineMap.isAllGroundCellsOpened()) {
             OpenResult.AllMineFound
         } else {
-            OpenResult.GroundOpened(mineMap.capture())
+            OpenResult.GroundOpened(mineMap.cells)
         }
     }
 
