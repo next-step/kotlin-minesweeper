@@ -2,6 +2,8 @@ package tdd.domain
 
 sealed class State
 
-object Empty : State()
+sealed class Closed : State()
 
-object Mine : State()
+object Empty : Closed()
+
+object Mine : Closed()
