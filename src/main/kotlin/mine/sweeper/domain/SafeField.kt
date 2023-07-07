@@ -7,7 +7,7 @@ class SafeField(position: Position) : Field(position) {
     var value: Int = 0
 
     override fun open(): GameStatus {
-        if (!checked) checked = true
+        if (!checked) updateCheck()
         return GameStatus.ON_PROGRESS
     }
 
