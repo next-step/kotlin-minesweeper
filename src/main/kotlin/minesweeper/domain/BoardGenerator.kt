@@ -11,7 +11,7 @@ object BoardGenerator {
         return board
     }
     private fun createBoard(height: Int, width: Int): MineBoard {
-        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(CellType.EMPTY) }) }
+        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(CellType.Empty) }) }
         return MineBoard(boardInfo)
     }
     private fun placeMines(board: MineBoard) {
@@ -22,10 +22,10 @@ object BoardGenerator {
         while (!placed) {
             val randomHeight = (0 until height).random()
             val randomWidth = (0 until width).random()
-            val cell = board.boardInfo[randomHeight].rowInfo[randomWidth]
+            val cell = board.getCell(randomHeight, randomWidth)
 
-            if (cell.type == CellType.EMPTY) {
-                cell.updateCellType(CellType.MINE)
+            if (cell.type == CellType.Empty) {
+                cell.updateCellType(CellType.Mine)
                 placed = true
             }
         }
