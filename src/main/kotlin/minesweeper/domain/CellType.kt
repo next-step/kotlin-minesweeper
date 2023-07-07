@@ -1,6 +1,6 @@
 package minesweeper.domain
 
 sealed class CellType {
-    class Mine : CellType()
-    class Empty : CellType()
+    object Mine : CellType()
+    object Empty : CellType()
 }
