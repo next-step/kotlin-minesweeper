@@ -2,9 +2,15 @@ package tdd.domain
 
 sealed class State {
     abstract fun open(aroundMineCount: Int): State
+
+    abstract fun aroundMineCount(): Int
 }
 
-sealed class Closed : State()
+sealed class Closed : State() {
+    override fun aroundMineCount(): Int {
+        throw IllegalStateException("Closed 상태에서는 주변 지뢰 개수를 구할 수 없습니다.")
+    }
+}
 
 object Empty : Closed() {
     override fun open(aroundMineCount: Int): State = Opened(aroundMineCount)
@@ -20,6 +26,8 @@ data class Opened(
     val aroundMineCount: Int,
 ) : State() {
     override fun open(aroundMineCount: Int): State = this
+
+    override fun aroundMineCount(): Int = aroundMineCount
 
     companion object {
         private const val MIN_AROUND_MINE_COUNT = 0

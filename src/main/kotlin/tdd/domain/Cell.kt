@@ -12,4 +12,6 @@ data class Cell(
     fun isOpened(): Boolean = state is Opened
 
     fun isZero(): Boolean = state == Opened.of(0)
+
+    fun aroundMineCount(): Int = state.aroundMineCount()
 }

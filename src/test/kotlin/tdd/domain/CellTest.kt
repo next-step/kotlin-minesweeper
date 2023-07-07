@@ -58,4 +58,9 @@ class CellTest {
             Cell(Opened.of(0)).isZero() shouldBe true
         }
     }
+
+    @Test
+    fun `Should return aroundMineCount`() {
+        Cell(Opened.of(3)).aroundMineCount() shouldBe 3
+    }
 }

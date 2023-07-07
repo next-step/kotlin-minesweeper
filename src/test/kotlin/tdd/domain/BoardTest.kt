@@ -1,5 +1,6 @@
 package tdd.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -20,7 +21,7 @@ class BoardTest {
             Coordinate(2, 2) to Cell(Mine),
         )
 
-        val board = Board.of(height = 3, width = 3, mineCount = 3) { _: Int -> randomCoordinates }
+        val board = Board.create(height = 3, width = 3, mineCount = 3) { _: Int -> randomCoordinates }
 
         board.cells shouldBe cells
     }
@@ -73,5 +74,49 @@ class BoardTest {
             Coordinate(2, 1) to Cell(Opened.of(1)),
             Coordinate(2, 2) to Cell(Mine),
         )
+    }
+
+    @Test
+    fun `Given a coordinate, return the cell has mine`() {
+        val cells = mapOf(
+            Coordinate(0, 0) to Cell(),
+            Coordinate(0, 1) to Cell(),
+            Coordinate(1, 0) to Cell(),
+            Coordinate(1, 1) to Cell(Mine),
+        )
+        val board = Board(cells)
+
+        assertSoftly {
+            board.hasMine(Coordinate(0, 0)) shouldBe false
+            board.hasMine(Coordinate(0, 1)) shouldBe false
+            board.hasMine(Coordinate(1, 0)) shouldBe false
+            board.hasMine(Coordinate(1, 1)) shouldBe true
+        }
+    }
+
+    @Test
+    fun `When closed count is greater than mine count, isRunning should return true`() {
+        val cells = mapOf(
+            Coordinate(0, 0) to Cell(),
+            Coordinate(0, 1) to Cell(),
+            Coordinate(1, 0) to Cell(),
+            Coordinate(1, 1) to Cell(Mine),
+        )
+        val board = Board(cells)
+
+        board.isRunning() shouldBe true
+    }
+
+    @Test
+    fun `When closed count is lesser than or equals to mine count, isRunning should return false`() {
+        val cells = mapOf(
+            Coordinate(0, 0) to Cell(),
+            Coordinate(0, 1) to Cell(),
+            Coordinate(1, 0) to Cell(Mine),
+            Coordinate(1, 1) to Cell(Mine),
+        )
+        val board = Board(cells)
+
+        board.isRunning() shouldBe false
     }
 }

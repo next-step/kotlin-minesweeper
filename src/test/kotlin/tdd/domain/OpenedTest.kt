@@ -21,4 +21,9 @@ class OpenedTest {
             Opened.of(aroundMineCount)
         }
     }
+
+    @Test
+    fun `Should return aroundMinceCount`() {
+        Opened.of(3).aroundMineCount() shouldBe 3
+    }
 }
