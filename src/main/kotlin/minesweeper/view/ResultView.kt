@@ -6,7 +6,7 @@ import minesweeper.domain.MineBoard
 
 object ResultView {
     fun printBoard(board: MineBoard) {
-        for (row in board.boardInfo) {
+        for (row in board.getBoardInfo) {
             printRow(row)
             println()
         }
@@ -16,8 +16,8 @@ object ResultView {
         for (cell in row.rowInfo) {
             print(
                 when (cell.type) {
-                    CellType.MINE -> "* "
-                    CellType.EMPTY -> "C "
+                    CellType.Mine -> "* "
+                    CellType.Empty -> "C "
                 }
             )
         }
