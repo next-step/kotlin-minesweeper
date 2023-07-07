@@ -1,5 +1,5 @@
 import controller.MineSweeperController
-import domain.Board
+import domain.MineSweeperBoard
 
 fun main() {
     val mineSweeperController = MineSweeperController()
@@ -10,5 +10,5 @@ fun main() {
     val mines = mineSweeperController.inputMines()
     println()
 
-    val board = Board(height, width, mines)
+    val board = MineSweeperBoard(height, width, mines)
 }
