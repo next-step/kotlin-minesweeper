@@ -1,14 +1,12 @@
-package minesweeper
+package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.BoardGenerator
-import minesweeper.domain.CellType
 import minesweeper.view.BoardStatus
 
-class BoardTest : BehaviorSpec({
+class MineBoardTest : BehaviorSpec({
 
     Given("높이와 너비, 지뢰 개수를 입력받아서") {
         val height = 5
