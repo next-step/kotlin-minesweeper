@@ -2,7 +2,7 @@ package minesweeper.ui
 
 import minesweeper.domain.GameBoardSquare
 
-class ResultView {
+object ResultView {
     fun printGameBoard(gameBoard: List<List<GameBoardSquare>>) {
         println()
         println("지뢰찾기 게임 시작")

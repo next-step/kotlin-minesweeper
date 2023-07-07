@@ -7,8 +7,6 @@ import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 
 class MinesWeeperController {
-    private val inputView = InputView()
-    private val resultView = ResultView()
     fun start() {
         val gameBoardRequest = getGameBoardRequest()
         val minesWeeperGameBoard = MinesWeeperGameBoard(gameBoardRequest)
@@ -23,18 +21,18 @@ class MinesWeeperController {
     }
 
     private fun getHeight(): Int {
-        return inputView.getHeight()
+        return InputView.getHeight()
     }
 
     private fun getWidth(): Int {
-        return inputView.getWidth()
+        return InputView.getWidth()
     }
 
     private fun getMinesNumber(): Int {
-        return inputView.getMinesNumber()
+        return InputView.getMinesNumber()
     }
 
     private fun printMinesWeeperGame(gameBoard: List<List<GameBoardSquare>>) {
-        resultView.printGameBoard(gameBoard)
+        ResultView.printGameBoard(gameBoard)
     }
 }
