@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.GameBoard
+import minesweeper.domain.Pin
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
 
@@ -10,10 +11,8 @@ fun main() {
 
 fun run() {
     val board = readyBoard()
-
     readyMine(board)
     playGame(board)
-    showResult(board)
 }
 
 fun readyBoard(): GameBoard {
@@ -35,17 +34,24 @@ fun playGame(board: GameBoard) {
         val positions = Inputview.askOpenPosition()
         val height = positions[0]
         val width = positions[1]
-        board.openPin(height, width)
+        val pin = board.openPin(height, width)
+        checkOpenMinePin(pin)
         OutputView.showMineSweeper(board)
-
-        continuable = board.askContinuable()
+        continuable = checkOpenAllNormalPin(board)
     } while (continuable)
 }
 
-fun showResult(board: GameBoard) {
+fun checkOpenAllNormalPin(board: GameBoard): Boolean {
     if (!board.askContinuable()) {
         OutputView.showWin()
+        return false
+    }
+    return true
+}
+
+fun checkOpenMinePin(pin: Pin) {
+    if (pin.isMinePin()) {
+        OutputView.showLose()
         return
     }
-    OutputView.showLose()
 }

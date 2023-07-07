@@ -24,12 +24,10 @@ class GameBoard private constructor(
         pins.closeAllPin()
     }
 
-    fun openPin(height: Int, width: Int) {
+    fun openPin(height: Int, width: Int): Pin {
         val pin = pins.getPinsAt(height, width)
-        if (pin.isMinePin()) return
-        if (askContinuable()) {
-            openSurroundPin(height, width)
-        }
+        openSurroundPin(height, width)
+        return pin
     }
 
     fun askContinuable(): Boolean {
