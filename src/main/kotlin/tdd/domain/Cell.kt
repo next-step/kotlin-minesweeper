@@ -8,4 +8,6 @@ data class Cell(
     }
 
     fun isMine(): Boolean = state is Mine
+
+    fun isOpened(): Boolean = state is Opened
 }

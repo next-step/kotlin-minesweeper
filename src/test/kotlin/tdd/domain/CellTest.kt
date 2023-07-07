@@ -1,5 +1,6 @@
 package tdd.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
@@ -32,8 +33,19 @@ class CellTest {
 
     @Test
     fun isMine() {
-        Cell(Empty).isMine() shouldBe false
-        Cell(Mine).isMine() shouldBe true
-        Cell(Opened(3)).isMine() shouldBe false
+        assertSoftly {
+            Cell(Empty).isMine() shouldBe false
+            Cell(Mine).isMine() shouldBe true
+            Cell(Opened(3)).isMine() shouldBe false
+        }
+    }
+
+    @Test
+    fun isOpened() {
+        assertSoftly {
+            Cell(Empty).isOpened() shouldBe false
+            Cell(Mine).isOpened() shouldBe false
+            Cell(Opened(3)).isOpened() shouldBe true
+        }
     }
 }

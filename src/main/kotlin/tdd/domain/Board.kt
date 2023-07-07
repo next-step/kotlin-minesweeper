@@ -4,11 +4,14 @@ class Board(
     val cells: Map<Coordinate, Cell>
 ) {
     fun open(coordinate: Coordinate) {
+        val cell = cellOf(coordinate)
+        if (cell.isOpened() || cell.isMine()) return
+
         val aroundMineCount = Coordinates.around(coordinate)
             .filter { it in cells }
             .count { cellOf(it).isMine() }
 
-        cellOf(coordinate).open(aroundMineCount)
+        cell.open(aroundMineCount)
     }
 
     private fun cellOf(key: Coordinate): Cell {
