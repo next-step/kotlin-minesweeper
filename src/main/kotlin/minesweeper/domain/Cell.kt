@@ -22,25 +22,23 @@ class ClearCell(point: Point, override val count: Int = 0) : Cell(point) {
     override fun increase(): ClearCell = ClearCell(point, count + 1)
 }
 
-class Cells(private val cells: MutableList<Cell> = mutableListOf()): Iterable<Cell> {
-    private val points: MutableSet<Point> = mutableSetOf()
+class Cells : Iterable<Cell> {
+    private val map: MutableMap<Point, Cell> = mutableMapOf()
 
     fun add(cell: Cell) {
-        if (points.contains(cell.point)) {
-            replace(cell.point, cell)
-            return
-        }
-        cells.add(cell)
-        points.add(cell.point)
+        map.put(cell.point, cell)
     }
 
-    fun at(point: Point): Cell = cells.find { it.point == point } ?: throw RuntimeException()
+    fun at(point: Point): Cell = map.getOrDefault(point, null) ?: throw RuntimeException()
 
-    fun replace(point: Point, cell: Cell) {
-        val index = cells.indexOfFirst { it.point == point }
-        cells.add(index, cell)
-        cells.removeAt(index + 1)
+    fun createMine(point: Point) {
+        val cell = MineCell(point)
+        add(cell)
+        point.adjacent()
+            .mapNotNull { map.getOrDefault(it, null) }
+            .filterIsInstance<ClearCell>()
+            .forEach { add(it.increase()) }
     }
 
-    override fun iterator(): Iterator<Cell> = cells.iterator()
+    override fun iterator(): Iterator<Cell> = map.values.sorted().iterator()
 }

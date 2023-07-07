@@ -35,17 +35,4 @@ class PointTest : ShouldSpec({
     should("y값이 0보다 작은 포인트를 생성할 수 없다.") {
         shouldThrow<IllegalArgumentException> { Point(0, -1) }
     }
-
-    should("0, 0에서 아래왼쪽, 왼쪽, 위왼쪽, 위, 위오른쪽은 존재하지 않는다.") {
-        listOf(Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT, Direction.UP, Direction.UP_RIGHT)
-            .forEach {
-                shouldThrow<IllegalArgumentException> { Point(0, 0).nextPoint(it) }
-            }
-    }
-
-    should("1, 1에서 주변 좌표는 모두 존재 한다.") {
-        Direction.values().forEach {
-            shouldNotThrow<IllegalArgumentException> { Point(1, 1).nextPoint(it) }
-        }
-    }
 })

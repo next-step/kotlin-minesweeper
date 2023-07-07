@@ -16,18 +16,12 @@ class Board(
             val cells = Cells()
 
             points
-                .map { if (minePoints.contains(it)) MineCell(it) else ClearCell(it) }
+                .map { ClearCell(it) }
                 .forEach { cells.add(it) }
 
-            minePoints.flatMap { it.adjacent() }
-                .filterNot { it.x == width || it.y == height }
-                .forEach { adjacentPoint ->
-                    val cell = cells.at(adjacentPoint)
-                    cells.add(cell.increase())
-                }
+            minePoints.forEach { cells.createMine(it) }
 
             return Board(cells = cells, height = height, width = width)
         }
-
     }
 }
