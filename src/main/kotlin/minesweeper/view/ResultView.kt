@@ -11,13 +11,12 @@ object ResultView {
             println()
         }
     }
-
     private fun printRow(row: BoardRow) {
         for (cell in row.rowInfo) {
             print(
                 when (cell.type) {
                     CellType.Mine -> "* "
-                    CellType.Empty -> "C "
+                    CellType.Empty -> "${cell.mineCount} "
                 }
             )
         }
