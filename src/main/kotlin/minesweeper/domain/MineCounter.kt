@@ -11,12 +11,6 @@ object MineCounter {
         val height = board.getHeight
         val width = board.getWidth
 
-        val neighborOffsets = listOf(
-            Point(-1, -1), Point(-1, 0), Point(-1, 1),
-            Point(0, -1), Point(0, 1),
-            Point(1, -1), Point(1, 0), Point(1, 1)
-        )
-
         (0 until height).forEach { i ->
             (0 until width).forEach { j ->
                 val currentPoint = Point(i, j)
