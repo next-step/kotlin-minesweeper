@@ -22,4 +22,7 @@ object ResultView {
             )
         }
     }
+    fun printGameStart() {
+        println("지뢰찾기 게임 시작")
+    }
 }

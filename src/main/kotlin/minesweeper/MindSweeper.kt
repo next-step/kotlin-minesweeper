@@ -9,6 +9,7 @@ class MindSweeper {
         val board = InputView.inputBoardInfo().let {
             BoardGenerator.create(it)
         }
+        ResultView.printGameStart()
         ResultView.printBoard(board)
     }
 }
