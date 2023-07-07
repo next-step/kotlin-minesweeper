@@ -21,9 +21,9 @@ class FieldsManagerTest : StringSpec({
     "필드매니져는 필드들을 맵 전체 사이즈와 같게 생성한다." {
         val mineCount = MineCount(1)
         val vulture = Vulture(mapSize, mineCount)
-        val map = MapInitializer(mapSize).create(vulture.findMinesPosition())
+        val map = MapInitializer(mapSize).create(vulture.newMinePositions)
 
-        map.fields.size() shouldBe mapSize.area()
+        map.fields.size shouldBe mapSize.area()
     }
 
     "지뢰가 설치되면 주변 8방에 값을 1 올린다." {

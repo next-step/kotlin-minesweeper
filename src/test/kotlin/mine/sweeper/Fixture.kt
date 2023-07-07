@@ -17,7 +17,7 @@ object Fixture {
     ): MineSweeperGame {
         val mapSize = MapSize(height, width)
         val vulture = Vulture(mapSize, mineCount)
-        val mineSweeperMap = MapInitializer(mapSize).create(vulture.findMinesPosition())
+        val mineSweeperMap = MapInitializer(mapSize).create(vulture.newMinePositions)
         return MineSweeperGame(mineSweeperMap)
     }
 

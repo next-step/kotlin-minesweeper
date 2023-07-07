@@ -8,6 +8,6 @@ class MineSweeperMapTest : StringSpec({
     val game = Fixture.createMineGame()
     val fields = game.getResult()
     "높이와 너비에 따라 빈 땅을 생성한다" {
-        fields.toSortedList().size shouldBe 25
+        fields.sortedList.size shouldBe 25
     }
 })

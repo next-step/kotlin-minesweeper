@@ -10,7 +10,6 @@ class Vulture(
     private val mineCount: MineCount,
     private val positionManager: RandomPositionManager = RandomPositionManager(mapSize)
 ) {
-    fun findMinesPosition(): Set<Position> {
-        return positionManager.takePositionBy(mineCount)
-    }
+    val newMinePositions: Set<Position>
+        get() = positionManager.takePositionBy(mineCount)
 }

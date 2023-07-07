@@ -26,7 +26,7 @@ class MineSweeperMap(
     }
 
     private fun isGameComplete(): Boolean {
-        return mineCount.value == fields.remainingFieldCount()
+        return mineCount.value == fields.remainingFieldCount
     }
 
     private fun isEmptyFields(

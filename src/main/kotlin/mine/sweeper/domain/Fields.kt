@@ -4,6 +4,16 @@ import mine.sweeper.view.dto.MapSize
 import mine.sweeper.view.dto.Position
 
 class Fields(mapSize: MapSize) {
+
+    val remainingFieldCount: Int
+        get() = fields.size - fields.count { it.checked }
+
+    val size: Int
+        get() =  fields.size
+
+    val sortedList: List<Field>
+        get() = fields.toList().sortedWith(compareBy({ it.position.x }, { it.position.y }))
+
     private var fields: List<Field> = List(mapSize.area()) { index ->
         val x = index / mapSize.width.value
         val y = index % mapSize.width.value
@@ -18,19 +28,7 @@ class Fields(mapSize: MapSize) {
         return fields.firstOrNull { it.isSame(position) }
     }
 
-    fun remainingFieldCount(): Int {
-        return fields.size - fields.count { it.checked }
-    }
-
-    fun size(): Int {
-        return fields.size
-    }
-
     fun setMine(position: Position) {
         fields = fields.map { if (it.isSame(position)) MineField(position) else it }
-    }
-
-    fun toSortedList(): List<Field> {
-        return fields.toList().sortedWith(compareBy({ it.position.x }, { it.position.y }))
     }
 }

@@ -12,7 +12,7 @@ object OutputView {
     }
 
     fun printMap(fields: Fields) {
-        val sortedFields = fields.toSortedList()
+        val sortedFields = fields.sortedList
 
         var currentRow = sortedFields.first().position.x
         for (field in sortedFields) {

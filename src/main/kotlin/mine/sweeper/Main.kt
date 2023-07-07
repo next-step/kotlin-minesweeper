@@ -8,7 +8,7 @@ import mine.sweeper.view.dto.MapSize
 fun main() {
     val mapSize = MapSize(InputView.getHeight(), InputView.getWidth())
     val mineCount = InputView.getMines()
-    val minePositions = Vulture(mapSize, mineCount).findMinesPosition()
+    val minePositions = Vulture(mapSize, mineCount).newMinePositions
     val gameController = GameController(MapInitializer(mapSize).create(minePositions))
     gameController.playGame()
 }
