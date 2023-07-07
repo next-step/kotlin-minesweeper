@@ -6,6 +6,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.BoardGenerator
 import minesweeper.domain.CellType
+import minesweeper.view.BoardStatus
 
 class BoardTest : BehaviorSpec({
 
@@ -13,8 +14,9 @@ class BoardTest : BehaviorSpec({
         val height = 5
         val width = 5
         val mineCount = 5
+        val boardStatus = BoardStatus(height, width, mineCount)
         When("지뢰찾기 보드를 만들면") {
-            val board = BoardGenerator.create(height, width, mineCount)
+            val board = BoardGenerator.create(boardStatus)
             Then("보드가 만들어진다.") {
                 board.shouldNotBeNull()
             }
@@ -33,9 +35,10 @@ class BoardTest : BehaviorSpec({
         val width = 5
         val mineCount = 26
         When("보드판을 생성할 때") {
+            val boardStatus = BoardStatus(height, width, mineCount)
             Then("IllegalArgumentException이 발생한다.") {
                 shouldThrow<IllegalArgumentException> {
-                    BoardGenerator.create(height, width, mineCount)
+                    BoardGenerator.create(boardStatus)
                 }
             }
         }
