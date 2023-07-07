@@ -1,9 +1,12 @@
 package controller
 
+import domain.Board
 import presentation.InputView
 
 fun main() {
-    val height = InputView.getHeight()
-    val width = InputView.getWidth()
-    val mineCount = InputView.getMineCount()
+    val board = Board(
+        height = InputView.getHeight(),
+        width = InputView.getWidth(),
+        mineCount = InputView.getMineCount(),
+    )
 }
