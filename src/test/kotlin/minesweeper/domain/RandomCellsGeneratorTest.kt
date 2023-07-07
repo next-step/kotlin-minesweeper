@@ -1,9 +1,7 @@
 package minesweeper.domain
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.*
 
 class RandomCellsGeneratorTest : BehaviorSpec({
     given("전체 셀의 개수가 10개이고") {

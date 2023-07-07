@@ -6,8 +6,8 @@ value class PositiveNumber(val value: Int) {
         require(value > 0) { "양수여야 합니다." }
     }
 
-    operator fun times(input: PositiveNumber): PositiveNumber{
-        val result= value.times(input.value)
+    operator fun times(input: PositiveNumber): PositiveNumber {
+        val result = value.times(input.value)
         return PositiveNumber(result)
     }
 

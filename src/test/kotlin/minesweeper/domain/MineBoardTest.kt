@@ -3,7 +3,6 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.*
 
 class MineBoardTest : BehaviorSpec({
     given("너비가 5이고") {
