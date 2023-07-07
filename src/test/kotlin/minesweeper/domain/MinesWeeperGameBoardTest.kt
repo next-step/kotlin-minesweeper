@@ -3,7 +3,6 @@ package minesweeper.domain
 import minesweeper.dto.GameBoardRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class MinesWeeperGameBoardTest {
 
@@ -15,32 +14,12 @@ class MinesWeeperGameBoardTest {
         val board: Array<Array<GameBoardSquare>> =
             Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
         val listBoard = board.map { it.toList() }
+        val gameBoardRequest = GameBoardRequest(height, width, 0)
 
         // when
-        val actual = MinesWeeperGameBoard(
-            height,
-            width,
-            0
-        ).getBoard()
+        val actual = MinesWeeperGameBoard(gameBoardRequest).getBoard()
 
         // then
         Assertions.assertThat(actual).isEqualTo(listBoard)
-    }
-
-    @Test
-    fun `지뢰의 갯수가 전체 게임판 보다 크면 IllegaArgumentException을 throw 한다`() {
-        val height = 10
-        val width = 10
-        val minesNumber = 101
-        assertThrows<IllegalArgumentException> { MinesWeeperGameBoard(height, width, minesNumber) }
-    }
-
-    @Test
-    fun `지뢰의 갯수가 전체 게임판 보다 크면 IllegaArgumentException을 throw 한다 - GameBoardRequest로 생성`() {
-        val height = 10
-        val width = 10
-        val minesNumber = 101
-        val gameBoardRequest = GameBoardRequest(height, width, minesNumber)
-        assertThrows<IllegalArgumentException> { MinesWeeperGameBoard(gameBoardRequest) }
     }
 }

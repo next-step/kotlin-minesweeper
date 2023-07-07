@@ -2,23 +2,12 @@ package minesweeper.domain
 
 import minesweeper.dto.GameBoardRequest
 
-class MinesWeeperGameBoard(
-    height: Int,
-    width: Int,
-    minesNumber: Int
-) {
-    private val board: MutableList<MutableList<GameBoardSquare>> =
-        MutableList(height) { MutableList(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+class MinesWeeperGameBoard(gameBoardRequest: GameBoardRequest) {
+    private val board: MutableList<MutableList<GameBoardSquare>> = gameBoardRequest.createGameBoard()
     private val mineLocationGenerator = MineLocationGenerator(RandomCoordinateGenerator())
-
-    constructor(gameBoardRequest: GameBoardRequest) : this(
-        gameBoardRequest.height,
-        gameBoardRequest.width,
-        gameBoardRequest.minesNumber
-    )
+    private val minesNumber = gameBoardRequest.minesNumber
 
     init {
-        GameBoardValidator.validateGameRequest(height, width, minesNumber)
         generateMines(minesNumber)
     }
 
