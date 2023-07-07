@@ -7,7 +7,6 @@ data class MapSize(
     val height: Height,
     val width: Width,
 ) {
-    fun area(): Int {
-        return height.value * width.value
-    }
+    val area: Int
+        get() = height.value * width.value
 }

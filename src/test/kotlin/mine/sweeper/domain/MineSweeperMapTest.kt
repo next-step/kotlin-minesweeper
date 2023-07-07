@@ -6,7 +6,7 @@ import mine.sweeper.Fixture
 
 class MineSweeperMapTest : StringSpec({
     val game = Fixture.createMineGame()
-    val fields = game.getResult()
+    val fields = game.fields
     "높이와 너비에 따라 빈 땅을 생성한다" {
         fields.sortedList.size shouldBe 25
     }

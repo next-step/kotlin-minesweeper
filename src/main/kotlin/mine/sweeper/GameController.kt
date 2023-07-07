@@ -10,7 +10,7 @@ class GameController(mineSweeperMap: MineSweeperMap) {
 
     fun playGame() {
         OutputView.noticeGameStart()
-        while (game.onProgress()) {
+        while (game.isProgress) {
             selectPhase()
         }
         OutputView.noticeGameResult(game.status)
@@ -18,7 +18,7 @@ class GameController(mineSweeperMap: MineSweeperMap) {
 
     private fun selectPhase() {
         val position = InputView.getPosition()
-        game.open(position)
-        OutputView.printMap(game.getResult())
+        game.select(position)
+        OutputView.printMap(game.fields)
     }
 }

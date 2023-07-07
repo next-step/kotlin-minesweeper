@@ -7,6 +7,8 @@ sealed class Field(val position: Position) {
     var checked = false
         private set
 
+    abstract fun open(): GameStatus
+
     fun isSame(paramPosition: Position): Boolean {
         return this.position == paramPosition
     }
@@ -14,6 +16,4 @@ sealed class Field(val position: Position) {
     fun updateCheck() {
         checked = true
     }
-
-    abstract fun open(): GameStatus
 }

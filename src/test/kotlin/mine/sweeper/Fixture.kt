@@ -2,6 +2,7 @@ package mine.sweeper
 
 import mine.sweeper.application.MapInitializer
 import mine.sweeper.application.MineSweeperGame
+import mine.sweeper.application.RandomPositionManager
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.Vulture
 import mine.sweeper.domain.value.Height
@@ -16,8 +17,8 @@ object Fixture {
         mineCount: MineCount = MineCount(1)
     ): MineSweeperGame {
         val mapSize = MapSize(height, width)
-        val vulture = Vulture(mapSize, mineCount)
-        val mineSweeperMap = MapInitializer(mapSize).create(vulture.newMinePositions)
+        val vulture = Vulture(RandomPositionManager(mapSize), mineCount)
+        val mineSweeperMap = MapInitializer(Fields(mapSize)).create(vulture.newMinePositions)
         return MineSweeperGame(mineSweeperMap)
     }
 

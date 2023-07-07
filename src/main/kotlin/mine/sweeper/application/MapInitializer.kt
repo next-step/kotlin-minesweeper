@@ -1,13 +1,10 @@
 package mine.sweeper.application
 
-import mine.sweeper.domain.value.MineCount
 import mine.sweeper.domain.Fields
-import mine.sweeper.view.dto.MapSize
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.view.dto.Position
 
-class MapInitializer(mapSize: MapSize) {
-    private val fields = Fields(mapSize)
-
+class MapInitializer(private val fields: Fields) {
     fun create(minePositions: Set<Position>): MineSweeperMap {
         minePositions.forEach {
             fields.setMine(it)

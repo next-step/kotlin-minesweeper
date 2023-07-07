@@ -16,7 +16,7 @@ class VultureTest : StringSpec({
             MineCount(10),
         ).forAll { input ->
             val game = createMineGame(mineCount = input)
-            val result = game.getResult()
+            val result = game.fields
             val count = result.sortedList.count { it is MineField }
 
             count shouldBe input.value

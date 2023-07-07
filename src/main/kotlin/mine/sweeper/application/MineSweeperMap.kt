@@ -18,11 +18,11 @@ class MineSweeperMap(
     }
 
     fun open(position: Position, field: Field): GameStatus {
-        val status = field.open()
-        if (status === GameStatus.GAME_OVER) return GameStatus.GAME_OVER
+        val openResult = field.open()
+        if (openResult === GameStatus.GAME_OVER) return GameStatus.GAME_OVER
         if (isEmptyFields(field)) SurroundFieldManager.openEmptyFields(position, fields, HashSet())
         if (isGameComplete()) return GameStatus.COMPLETE
-        return status
+        return openResult
     }
 
     private fun isGameComplete(): Boolean {
