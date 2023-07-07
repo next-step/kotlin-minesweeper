@@ -27,6 +27,13 @@ class MineMap(
             .all { it.isOpen() }
     }
 
+    fun getHideGroundCellOrNull(coordinate: Coordinate): Cell.Ground? {
+        return when (val cell = get(coordinate)) {
+            is Cell.Mine -> null
+            is Cell.Ground -> cell.takeIf { it.isHide() }
+        }
+    }
+
     operator fun get(coordinate: Coordinate): Cell {
         return cells[coordinate.y][coordinate.x]
     }
