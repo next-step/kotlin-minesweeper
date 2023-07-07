@@ -23,18 +23,15 @@ class MinesWeeperController {
     }
 
     private fun getHeight(): Int {
-        resultView.printGetHeight()
-        return inputView.getOneNumber()
+        return inputView.getHeight()
     }
 
     private fun getWidth(): Int {
-        resultView.printGetWidth()
-        return inputView.getOneNumber()
+        return inputView.getWidth()
     }
 
     private fun getMinesNumber(): Int {
-        resultView.printGetMinesNumber()
-        return inputView.getOneNumber()
+        return inputView.getMinesNumber()
     }
 
     private fun printMinesWeeperGame(gameBoard: List<List<GameBoardSquare>>) {
