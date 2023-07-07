@@ -13,10 +13,11 @@ object BoardGenerator {
         require(height * width > mineCount) { "지뢰의 개수가 보드판의 총 격자보다 큽니다." }
 
         placeMines(board, mineCount)
+        MineCounter.calculateNeighborMines(board)
         return board
     }
     private fun createBoard(height: Int, width: Int): MineBoard {
-        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(CellType.Empty) }) }
+        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(0,CellType.Empty) }) }
         return MineBoard(boardInfo)
     }
 
