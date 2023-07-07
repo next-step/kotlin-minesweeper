@@ -1,6 +1,7 @@
 package controller
 
 import view.InputView
+import view.ResultView
 
 class MineSweeperController {
     fun inputHeight(): Int {
@@ -13,5 +14,9 @@ class MineSweeperController {
 
     fun inputMines(): Int {
         return InputView.mines()
+    }
+
+    fun printStartMessage() {
+        return ResultView.startMessage()
     }
 }
