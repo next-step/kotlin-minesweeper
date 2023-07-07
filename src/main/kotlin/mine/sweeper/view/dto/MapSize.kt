@@ -1,7 +1,7 @@
 package mine.sweeper.view.dto
 
-import mine.sweeper.application.value.Height
-import mine.sweeper.application.value.Width
+import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.Width
 
 data class MapSize(
     val height: Height,

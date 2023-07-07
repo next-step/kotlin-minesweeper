@@ -1,4 +1,4 @@
-package mine.sweeper.application.value
+package mine.sweeper.domain.value
 
 enum class SurroundPosition(val x: Int, val y: Int) {
     TOP_LEFT(-1, -1),

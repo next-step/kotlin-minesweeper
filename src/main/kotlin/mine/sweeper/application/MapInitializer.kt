@@ -1,6 +1,6 @@
 package mine.sweeper.application
 
-import mine.sweeper.application.value.MineCount
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.domain.Fields
 import mine.sweeper.view.dto.MapSize
 import mine.sweeper.view.dto.Position

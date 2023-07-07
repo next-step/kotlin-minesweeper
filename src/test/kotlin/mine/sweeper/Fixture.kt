@@ -2,11 +2,11 @@ package mine.sweeper
 
 import mine.sweeper.application.MapInitializer
 import mine.sweeper.application.MineSweeperGame
-import mine.sweeper.application.value.Height
-import mine.sweeper.application.value.MineCount
-import mine.sweeper.application.value.Width
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.Vulture
+import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Width
 import mine.sweeper.view.dto.MapSize
 
 object Fixture {

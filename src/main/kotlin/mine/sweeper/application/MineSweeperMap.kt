@@ -1,10 +1,10 @@
 package mine.sweeper.application
 
-import mine.sweeper.application.value.GameStatus
-import mine.sweeper.application.value.MineCount
 import mine.sweeper.domain.Field
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.view.dto.Position
 
 class MineSweeperMap(

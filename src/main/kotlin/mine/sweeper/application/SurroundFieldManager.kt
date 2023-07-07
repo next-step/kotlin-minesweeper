@@ -1,6 +1,6 @@
 package mine.sweeper.application
 
-import mine.sweeper.application.value.SurroundPosition
+import mine.sweeper.domain.value.SurroundPosition
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.SafeField
 import mine.sweeper.view.dto.Position

@@ -2,9 +2,9 @@ package mine.sweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import mine.sweeper.application.value.Height
-import mine.sweeper.application.value.MineCount
-import mine.sweeper.application.value.Width
+import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Width
 
 class ValueTest : StringSpec({
 

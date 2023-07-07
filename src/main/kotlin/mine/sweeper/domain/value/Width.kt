@@ -1,4 +1,4 @@
-package mine.sweeper.application.value
+package mine.sweeper.domain.value
 
 @JvmInline
 value class Width(val value: Int) {

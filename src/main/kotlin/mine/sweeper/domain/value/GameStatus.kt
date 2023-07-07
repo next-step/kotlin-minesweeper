@@ -1,4 +1,4 @@
-package mine.sweeper.application.value
+package mine.sweeper.domain.value
 
 enum class GameStatus {
     ON_PROGRESS,

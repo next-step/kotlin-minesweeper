@@ -1,6 +1,6 @@
 package mine.sweeper.application
 
-import mine.sweeper.application.value.GameStatus.ON_PROGRESS
+import mine.sweeper.domain.value.GameStatus.ON_PROGRESS
 import mine.sweeper.domain.Fields
 import mine.sweeper.view.dto.Position
 

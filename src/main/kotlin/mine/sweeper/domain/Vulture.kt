@@ -1,7 +1,7 @@
 package mine.sweeper.domain
 
 import mine.sweeper.application.RandomPositionManager
-import mine.sweeper.application.value.MineCount
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.view.dto.MapSize
 import mine.sweeper.view.dto.Position
 

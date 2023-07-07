@@ -4,13 +4,13 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import mine.sweeper.application.MapInitializer
 import mine.sweeper.application.MineSweeperGame
-import mine.sweeper.application.value.GameStatus
-import mine.sweeper.application.value.Height
-import mine.sweeper.application.value.MineCount
-import mine.sweeper.application.value.Width
 import mine.sweeper.domain.MineField
 import mine.sweeper.domain.SafeField
 import mine.sweeper.domain.Vulture
+import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.Height
+import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Width
 import mine.sweeper.view.dto.MapSize
 import mine.sweeper.view.dto.Position
 

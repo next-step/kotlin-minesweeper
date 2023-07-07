@@ -1,6 +1,6 @@
 package mine.sweeper.view
 
-import mine.sweeper.application.value.GameStatus
+import mine.sweeper.domain.value.GameStatus
 import mine.sweeper.domain.Field
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.MineField
