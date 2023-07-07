@@ -2,8 +2,8 @@ package minesweeper.view
 
 object InputView {
 
-    fun inputBoardInfo(): Triple<Int, Int, Int> {
-        return Triple(
+    fun inputBoardInfo(): BoardStatus {
+        return BoardStatus(
             inputHeight(), inputWidth(), inputMineCount()
         )
     }

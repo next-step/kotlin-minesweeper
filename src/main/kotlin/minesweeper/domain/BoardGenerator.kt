@@ -1,7 +1,13 @@
 package minesweeper.domain
 
+import minesweeper.view.BoardStatus
+
 object BoardGenerator {
-    fun create(height: Int, width: Int, mineCount: Int): MineBoard {
+    fun create(boardStatus: BoardStatus): MineBoard {
+        val height = boardStatus.height
+        val width = boardStatus.width
+        val mineCount = boardStatus.mineCount
+
         val board = createBoard(height, width)
 
         require(height * width > mineCount) { "지뢰의 개수가 보드판의 총 격자보다 큽니다." }

@@ -6,8 +6,8 @@ import minesweeper.view.ResultView
 
 class MindSweeper {
     fun start() {
-        val board = InputView.inputBoardInfo().let { (height, width, mineCount) ->
-            BoardGenerator.create(height, width, mineCount)
+        val board = InputView.inputBoardInfo().let {
+            BoardGenerator.create(it)
         }
         ResultView.printBoard(board)
     }
