@@ -4,6 +4,8 @@ data class Cell(
     var state: State = Empty
 ) {
     fun open(aroundMineCount: Int) {
+        if (isOpened() || isMine()) return
+
         state = state.open(aroundMineCount)
     }
 

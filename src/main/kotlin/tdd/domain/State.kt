@@ -13,7 +13,7 @@ sealed class Closed : State() {
 }
 
 object Empty : Closed() {
-    override fun open(aroundMineCount: Int): State = Opened(aroundMineCount)
+    override fun open(aroundMineCount: Int): State = Opened.of(aroundMineCount)
 }
 
 object Mine : Closed() {

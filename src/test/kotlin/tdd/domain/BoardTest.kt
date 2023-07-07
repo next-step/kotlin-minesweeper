@@ -43,7 +43,7 @@ class BoardTest {
         val coordinate = Coordinate(1, 2)
 
         board.open(coordinate)
-        board.cells[coordinate] shouldBe Cell(Opened(3))
+        board.cells[coordinate] shouldBe Cell(Opened.of(3))
     }
 
     @Test

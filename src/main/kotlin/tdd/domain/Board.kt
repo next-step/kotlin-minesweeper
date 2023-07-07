@@ -4,17 +4,21 @@ class Board(
     val cells: Map<Coordinate, Cell>
 ) {
     fun open(coordinate: Coordinate) {
-        val cell = cellOf(coordinate)
-        if (cell.isOpened() || cell.isMine()) return
+        open(ArrayDeque(listOf(coordinate)))
+    }
 
+    private tailrec fun open(coordinates: ArrayDeque<Coordinate>, visited: MutableSet<Coordinate> = mutableSetOf()) {
+        val coordinate = coordinates.removeFirstOrNull() ?: return
+        visited.add(coordinate)
+        val cell = cellOf(coordinate)
         val aroundCoordinates = Coordinates.around(coordinate).filter { it in cells }
         val aroundMineCount = aroundCoordinates.count { cellOf(it).isMine() }
-
         cell.open(aroundMineCount)
-
         if (cell.isZero()) {
-            aroundCoordinates.forEach { open(it) }
+            coordinates.addAll(aroundCoordinates.filterNot { it in visited })
         }
+
+        open(coordinates, visited)
     }
 
     fun hasMine(coordinate: Coordinate): Boolean = cellOf(coordinate).isMine()
