@@ -28,7 +28,7 @@ data class MineCount(
     private fun calculateMineCount(currentPosition: Pair<Int, Int>): Int {
         var mineCount = 0
         val (row, col) = currentPosition
-        val findPositions = FindPosition.positions(row, col)
+        val findPositions = FindPosition.positions(row, col, positions.rows, positions.cols)
 
         findPositions
             .filter { isMineExists(it) }

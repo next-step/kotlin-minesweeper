@@ -11,12 +11,15 @@ enum class FindPosition(val row: Int, val col: Int) {
     RIGHT_DOWN(1, 1);
 
     companion object {
-        fun positions(currentRow: Int, currentCol: Int): List<Pair<Int, Int>> {
+        fun positions(currentRow: Int, currentCol: Int, rows: Int, cols: Int): List<Pair<Int, Int>> {
             val pairs = mutableListOf<Pair<Int, Int>>()
             values().forEach {
                 pairs += Pair(it.row.plus(currentRow), it.col.plus(currentCol))
             }
-            return pairs
+
+            return pairs.filter { (first, second) ->
+                first >= 0 && second >= 0 && first < rows && second < cols
+            }
         }
     }
 }

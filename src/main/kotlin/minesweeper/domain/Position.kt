@@ -1,7 +1,7 @@
 package minesweeper.domain
 
-class Position(
+data class Position(
     val value: Int = 0,
-    val isOpened: Boolean = false
-) {
-}
+    var isOpened: Boolean = false,
+    var isVisited: Boolean = false
+)
