@@ -2,23 +2,27 @@ package minesweeper.domain
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
+import org.junit.jupiter.api.assertThrows
 
 class GameBoardSquareTest {
 
-    @ParameterizedTest
-    @EnumSource(SquareValueType::class)
-    fun `게임판 사각형 1개는 지뢰 혹은 빈값을 가진다`(squareValueType: SquareValueType) {
+    @Test
+    fun `게임판 사각형 1개는 처음 생성시에 빈값을 가진다`() {
         // given
-        val gameBoardSquare = GameBoardSquare(squareValueType)
-        val isValueMine = squareValueType == SquareValueType.MINE
+        val gameBoardSquare = GameBoardSquare(SquareValueType.EMPTY)
 
         // when
         val actual = gameBoardSquare.isMine()
 
         // then
-        Assertions.assertThat(actual).isEqualTo(isValueMine)
+        Assertions.assertThat(actual).isEqualTo(false)
+    }
+
+    @Test
+    fun `게임판 사각형 1개는 처음 생성할때 지뢰가 되면 안된다`() {
+        assertThrows<IllegalArgumentException> {
+            GameBoardSquare(SquareValueType.MINE)
+        }
     }
 
     @Test

@@ -1,6 +1,10 @@
 package minesweeper.domain
 
 class GameBoardSquare(private var squareValueType: SquareValueType) {
+    init {
+        require(squareValueType == SquareValueType.EMPTY) { "게임판을 초기화 할 때는 지뢰가 되면 안됩니다." }
+    }
+
     fun isMine(): Boolean {
         return squareValueType == SquareValueType.MINE
     }
