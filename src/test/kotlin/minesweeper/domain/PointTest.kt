@@ -1,9 +1,11 @@
 package minesweeper.domain
 
+import io.kotest.assertions.throwables.shouldNotThrow
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 
-class PointTest: ShouldSpec({
+class PointTest : ShouldSpec({
     should("x, y가 같은 포인트는 동일 하다.") {
         Point(1, 1) shouldBe Point(1, 1)
     }
@@ -24,9 +26,13 @@ class PointTest: ShouldSpec({
 
     should("높이와 너비를 입력받아 사각형에 해당하는 포인트를 반환 한다.") {
         val points = Point.square(2, 2)
-        points[0] shouldBe  Point(0, 0)
-        points[1] shouldBe  Point(1, 0)
-        points[2] shouldBe  Point(0, 1)
-        points[3] shouldBe  Point(1, 1)
+        points[0] shouldBe Point(0, 0)
+        points[1] shouldBe Point(1, 0)
+        points[2] shouldBe Point(0, 1)
+        points[3] shouldBe Point(1, 1)
+    }
+
+    should("y값이 0보다 작은 포인트를 생성할 수 없다.") {
+        shouldThrow<IllegalArgumentException> { Point(0, -1) }
     }
 })

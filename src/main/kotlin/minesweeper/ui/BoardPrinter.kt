@@ -5,13 +5,12 @@ import minesweeper.domain.Cell
 
 object BoardPrinter {
     const val MINE_CELL = "*"
-    const val CLEAR_CELL = "C"
     const val BETWEEN_CELL = " "
     fun print(board: Board) {
         println("지뢰찾기 게임 시작")
 
         board.cells.forEach { cell ->
-            if (cell.mine) print(MINE_CELL) else print(CLEAR_CELL)
+            if (cell.mine) print(MINE_CELL) else print("${cell.count}")
             if (isLastCell(board.width, cell)) println() else print(BETWEEN_CELL)
         }
     }
