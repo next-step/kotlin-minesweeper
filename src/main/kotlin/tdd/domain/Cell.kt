@@ -1,5 +1,6 @@
 package tdd.domain
 
-class Cell(
+@JvmInline
+value class Cell(
     val state: State = Empty
 )
