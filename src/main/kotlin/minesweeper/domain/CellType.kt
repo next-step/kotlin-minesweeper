@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-enum class CellType {
-    MINE,
-    EMPTY
+sealed class CellType {
+    class Mine : CellType()
+    class Empty : CellType()
 }
