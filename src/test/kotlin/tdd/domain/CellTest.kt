@@ -8,18 +8,23 @@ import org.junit.jupiter.api.Test
 class CellTest {
 
     @Test
+    fun `Should return state`() {
+        Cell(Opened.of(3)).state() shouldBe Opened.of(3)
+    }
+
+    @Test
     fun `Create an empty cell`() {
-        Cell().state shouldBe Empty
+        Cell().state() shouldBe Empty
     }
 
     @Test
     fun `Create a cell that has a mine`() {
-        Cell(Mine).state shouldBe Mine
+        Cell(Mine).state() shouldBe Mine
     }
 
     @Test
     fun `When cell created, state is Closed`() {
-        Cell().state shouldBe instanceOf<Closed>()
+        Cell().state() shouldBe instanceOf<Closed>()
     }
 
     @Test

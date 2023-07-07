@@ -1,8 +1,10 @@
 package tdd.domain
 
 data class Cell(
-    var state: State = Empty
+    private var state: State = Empty
 ) {
+    fun state(): State = state
+
     fun open(aroundMineCount: Int) {
         if (isOpened() || isMine()) return
 
