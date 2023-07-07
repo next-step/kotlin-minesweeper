@@ -1,9 +1,7 @@
 package minesweeper.domain
 
-import kotlin.random.Random
-
 class RandomCoordinateGenerator : CoordinateGenerator {
     override fun generateCoordinate(maximumOfValue: Int): Int {
-        return Random.nextInt(0, maximumOfValue)
+        return (0 until maximumOfValue).random()
     }
 }
