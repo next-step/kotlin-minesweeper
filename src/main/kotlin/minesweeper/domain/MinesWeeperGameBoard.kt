@@ -10,7 +10,6 @@ class MinesWeeperGameBoard(
     private val board: MutableList<MutableList<GameBoardSquare>> =
         MutableList(height) { MutableList(width) { GameBoardSquare(SquareValueType.EMPTY) } }
     private val mineLocationGenerator = MineLocationGenerator(RandomCoordinateGenerator())
-    private val gameBoardValidator = GameBoardValidator()
 
     constructor(gameBoardRequest: GameBoardRequest) : this(
         gameBoardRequest.height,
@@ -19,7 +18,7 @@ class MinesWeeperGameBoard(
     )
 
     init {
-        gameBoardValidator.validateGameRequest(height, width, minesNumber)
+        GameBoardValidator.validateGameRequest(height, width, minesNumber)
         generateMines(minesNumber)
     }
 

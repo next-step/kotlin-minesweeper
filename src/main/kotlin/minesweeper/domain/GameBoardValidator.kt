@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class GameBoardValidator {
+object GameBoardValidator {
     fun validateGameRequest(
         height: Int,
         width: Int,
