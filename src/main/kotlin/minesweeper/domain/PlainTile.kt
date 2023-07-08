@@ -16,10 +16,6 @@ open class PlainTile : Tile() {
         return TileType.PLAIN
     }
 
-    fun openTile() {
-        isCheckedTile = true
-    }
-
     companion object {
         const val DEFAULT_COUNT = 0
     }
