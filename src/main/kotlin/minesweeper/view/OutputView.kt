@@ -2,12 +2,17 @@ package minesweeper.view
 
 import minesweeper.domain.CellInfo
 import minesweeper.domain.CellInfos
+import minesweeper.domain.MineBoardStatus
 
 private const val MINE_BOARD_ROW_DELIMITER = "\n"
 private const val MINE_BOARD_COLUMN_DELIMITER = " "
 
 fun printMineBoardView(cellInfos: CellInfos) {
     println(parseMineBoardView(cellInfos.values, cellInfos.height))
+}
+
+fun printMineGameResult(mineBoardStatus: MineBoardStatus) {
+    println(GameResultView.from(mineBoardStatus))
 }
 
 private fun parseMineBoardView(cellInfos: List<CellInfo>, height: Int): String =
