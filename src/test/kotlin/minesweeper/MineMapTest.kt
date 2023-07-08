@@ -46,6 +46,7 @@ internal class MineMapTest {
         sut.toString().count { it == MineMap.EMPTY_SYMBOL.first() } shouldBe beforePlantEmptyCount
 
         sut.plantMine()
+
         sut.toString().count { it == MineMap.MINE_SYMBOL.first() } shouldBe afterPlantMineCount
         sut.toString().count { it == MineMap.EMPTY_SYMBOL.first() } shouldBe afterPlantEmptyCount
     }

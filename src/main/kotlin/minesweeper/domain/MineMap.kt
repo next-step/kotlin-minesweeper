@@ -9,13 +9,13 @@ data class MineMap(
     private val mineCount: Int,
     private val minePositionStrategy: MinePositionStrategy = RandomMinePositionStrategy(height, width)
 ) {
-    private val map: MutableList<MutableList<String>> = MutableList(height) { MutableList(width) { EMPTY_SYMBOL } }
-
     init {
         require(height > 0) { "height must be greater than zero, actual : $height" }
         require(width > 0) { "width must be greater than zero, actual : $width" }
         require(mineCount > 0) { "mineCount must be greater than zero, actual : $mineCount" }
     }
+
+    private val map: MutableList<MutableList<String>> = MutableList(height) { MutableList(width) { EMPTY_SYMBOL } }
 
     fun plantMine() {
         minePositionStrategy.getMinePositions(mineCount)
