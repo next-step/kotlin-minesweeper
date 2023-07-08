@@ -11,16 +11,12 @@ class MinesWeeper(val boards: List<Board>) {
     }
 
     private fun checkAround(location: Location, basic: Basic) {
-        aroundList.flatMap { height ->
-            val y = location.y + height
-            aroundList.map { width ->
-                val x = location.x + width
-                val first = boards.firstOrNull { it.location.isSame(x, y) }
-                if (first != null && !location.isSame(x, y) && first.cell is Mine) {
-                    basic.addCount()
-                }
-            }
-        }
+        val count = Around.values().map {
+            val y = location.y + it.y
+            val x = location.x + it.x
+            boards.firstOrNull { board -> board.location.isSame(y, x) }
+        }.count { board -> board != null && board.cell is Mine }
+        basic.addCount(count)
     }
 
     companion object {
@@ -45,7 +41,6 @@ class MinesWeeper(val boards: List<Board>) {
             return Basic()
         }
 
-        private val aroundList = listOf(-1, 0, 1)
         private const val COUNT_EXCEPTION = "지뢰수가 지뢰찾기게임의 칸수보다 적어야합니다."
         private const val LOCATION_START_NUM = 0
     }

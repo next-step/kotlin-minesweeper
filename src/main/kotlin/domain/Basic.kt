@@ -4,7 +4,7 @@ class Basic : Cell() {
     var count = 0
         private set
 
-    fun addCount() {
-        count += 1
+    fun addCount(count: Int) {
+        this.count += count
     }
 }
