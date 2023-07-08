@@ -135,7 +135,7 @@ class CellsTest : FunSpec({
             )
             val actual = cells.open(Coordinate(0, 0))
 
-            actual shouldBe false
+            actual shouldBe 8
             cells.values[Coordinate(0, 0)]!!.isDisplay shouldBe true
             cells.values[Coordinate(0, 1)]!!.isDisplay shouldBe true
             cells.values[Coordinate(0, 2)]!!.isDisplay shouldBe true
@@ -155,7 +155,7 @@ class CellsTest : FunSpec({
                 Cell(1, 1, MINE),
             )
             val actual = cells.open(Coordinate(1, 1))
-            actual shouldBe true
+            actual shouldBe 0
         }
     }
 })

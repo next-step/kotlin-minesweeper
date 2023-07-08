@@ -24,15 +24,17 @@ value class Cells(
             .forEach { calculate(it.value, mineCoordinates) }
     }
 
-    fun open(coordinate: Coordinate): Boolean {
+    fun open(coordinate: Coordinate): Int {
         val cell = values[coordinate]
         require(cell != null) { "존재하지 않는 좌표는 입력될 수 없습니다." }
         cell.changeToDisplay()
-        if (cell.cellType != ZERO) {
-            return cell.isMine()
+        if (cell.isMine()) {
+            return 0
         }
-        openAroundCell(cell)
-        return false
+        if (cell.cellType != ZERO) {
+            return 1
+        }
+        return openAroundCell(cell) + 1
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
@@ -50,10 +52,10 @@ value class Cells(
         cell.changeToCellType(cellType)
     }
 
-    private fun openAroundCell(cell: Cell) {
-        val nearCells = findNearNoDisplayCells(cell)
-        nearCells.forEach { it.changeToDisplay() }
-        openAroundNearZeroCell(nearCells)
+    private fun openAroundCell(cell: Cell): Int {
+        val nearNoDisplayCells = findNearNoDisplayCells(cell)
+        nearNoDisplayCells.forEach { it.changeToDisplay() }
+        return nearNoDisplayCells.count() + openAroundNearZeroCell(nearNoDisplayCells)
     }
 
     private fun findNearNoDisplayCells(cell: Cell): List<Cell> =
@@ -61,9 +63,9 @@ value class Cells(
             .mapNotNull { values[it] }
             .filterNot { it.isDisplay }
 
-    private fun openAroundNearZeroCell(nearCells: List<Cell>) {
-        nearCells.filter { it.cellType == ZERO }
-            .forEach { openAroundCell(it) }
+    private fun openAroundNearZeroCell(nearCells: List<Cell>): Int {
+        val nearZeroCell = nearCells.filter { it.cellType == ZERO }
+        return nearZeroCell.count() + nearZeroCell.map { openAroundCell(it) }.count()
     }
 
     companion object {
