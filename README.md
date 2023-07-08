@@ -123,7 +123,8 @@ C C C C C C C C C C
 ```
 
 ### cell
-- [ ] 초기 생성 시 isDisplay는 false다.
+- [x] 초기 생성 시 isDisplay는 false다.
+- [x] 이미 isDisplay를 true로 했는데 다시 true로 변경하려하면 예외가 발생한다.
 
 ### mine board
 - open

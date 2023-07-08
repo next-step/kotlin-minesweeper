@@ -30,6 +30,10 @@ class Cell(
         this.cellType = cellType
     }
 
+    fun changeToDisplay() {
+        check(isDisplay.not()) { "이미 Display 상태입니다." }
+    }
+
     private fun cellType(cellType: CellType): CellType {
         if (isDisplay) {
             return cellType
