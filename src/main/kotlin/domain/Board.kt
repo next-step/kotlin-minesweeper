@@ -1,25 +1,21 @@
 package domain
 
-class Board(
-    val height: Int,
-    val width: Int,
-    val mineCount: Int,
+data class Board(
+    val rows: List<Row>,
 ) {
-    private val board: MutableList<Space> = MutableList(height * width) { Space.Empty }
 
-    init {
-        plantMines()
-    }
+    companion object {
+        fun create(boardSize: BoardSize, mineCount: MineCount): Board {
+            return Board(
+                MinePlanter.plantMines(
+                    emptySpaces(boardSize),
+                    mineCount
+                ).chunked(boardSize.width.value)
+            )
+        }
 
-    fun board(): List<Space> {
-        return board
-    }
-
-    private fun plantMines() {
-        minePositions().forEach {
-            board[it] = Space.Mine
+        private fun emptySpaces(boardSize: BoardSize): Row {
+            return Row.emptyRow(boardSize.height.value * boardSize.width.value)
         }
     }
-
-    private fun minePositions(): List<Int> = (0..board.lastIndex).shuffled().take(mineCount)
 }
