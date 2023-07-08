@@ -12,7 +12,7 @@ class Fields(private val fields: List<Field>) {
     val sortedList: List<Field>
         get() = fields.toList().sortedWith(compareBy({ it.position.x }, { it.position.y }))
 
-    infix fun get(position: Position): Field? {
+    infix operator fun get(position: Position): Field? {
         return fields.find { it.isSame(position) }
     }
 }
