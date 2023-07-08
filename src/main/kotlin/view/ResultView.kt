@@ -1,5 +1,7 @@
 package view
 
+import domain.Cell
+import domain.MineStatus
 import domain.MineSweeperBoard
 
 object ResultView {
@@ -10,9 +12,16 @@ object ResultView {
     fun board(board: MineSweeperBoard) {
         repeat(board.boardSize.height) { y ->
             board.board.slice(y * board.boardSize.width until (y + 1) * board.boardSize.width)
-                .joinToString(" ") { it.toString() }.also {
+                .joinToString(" ") { cell(it) }.also {
                     println(it)
                 }
+        }
+    }
+
+    private fun cell(cell: Cell): String {
+        return when (cell.getMineStatus()) {
+            MineStatus.Exists -> "*"
+            MineStatus.Empty -> "C"
         }
     }
 }
