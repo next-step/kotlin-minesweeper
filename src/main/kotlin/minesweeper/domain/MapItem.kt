@@ -13,4 +13,5 @@ data class Mine(
 
 data class Empty(
     override val item: String = "EMPTY",
+    val surroundingMineCount: Int = 0,
 ) : MapItem()

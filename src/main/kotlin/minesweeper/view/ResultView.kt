@@ -19,7 +19,7 @@ class ResultView {
                 repeat(mineMap.width) { x ->
                     val mapItem = map[Position(x, y)] ?: Empty()
                     val symbol = when (mapItem) {
-                        is Empty -> EMPTY_SYMBOL
+                        is Empty -> mapItem.surroundingMineCount
                         is Mine -> MINE_SYMBOL
                     }
                     append("$symbol ")
