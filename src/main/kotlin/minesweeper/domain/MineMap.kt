@@ -64,7 +64,7 @@ class MineMap(lengths: Pair<Length, Length>, val mineCount: MineCount) {
     private fun openTile(gameStateNotify: GameStateNotify) {
         val position = gameStateNotify.getOpenPosition()
         val tile = mineMap[position]
-        if(tile.isMine()) {
+        if (tile.isMine()) {
             gameStateNotify.showGameState(false)
             return
         }

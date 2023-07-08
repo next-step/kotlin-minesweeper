@@ -1,6 +1,11 @@
 package minesweeper
 
-import minesweeper.domain.*
+import minesweeper.domain.GameStateNotify
+import minesweeper.domain.Length
+import minesweeper.domain.MineCount
+import minesweeper.domain.MineMap
+import minesweeper.domain.MinePosition
+import minesweeper.domain.TileRow
 import minesweeper.view.InputType
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -13,7 +18,7 @@ fun main() {
     val mineMap = MineMap(width to height, mineCount)
     OutputView.showGameStartMessage()
 
-    mineMap.startGame(object: GameStateNotify {
+    mineMap.startGame(object : GameStateNotify {
         override fun getOpenPosition(): MinePosition {
             return InputView.inputOpenPosition()
         }
