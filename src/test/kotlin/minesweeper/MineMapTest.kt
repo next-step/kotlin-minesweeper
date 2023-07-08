@@ -2,32 +2,11 @@ package minesweeper
 
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.MineMap
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import minesweeper.domain.MineMapConfig
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import java.lang.IllegalArgumentException
 
 internal class MineMapTest {
-
-    @ParameterizedTest
-    @CsvSource(
-        "0, 1, 1",
-        "1, 0, 1",
-        "1, 1, 0",
-    )
-    internal fun `높이와 너비 그리고 지뢰 개수가 0보다 작으면 예외가 발생한다`(
-        height: Int,
-        width: Int,
-        mineCount: Int,
-    ) {
-        assertThrows<IllegalArgumentException> { MineMap(height, width, mineCount) }
-    }
-
-    @Test
-    internal fun `지뢰 개수가 높이와 너비의 곱보다 크면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> { MineMap(10, 10, 101) }
-    }
 
     @ParameterizedTest
     @CsvSource(
@@ -44,9 +23,11 @@ internal class MineMapTest {
         afterPlantEmptyCount: Int,
     ) {
         val sut = MineMap(
-            height = height,
-            width = width,
-            mineCount = mineCount
+            MineMapConfig(
+                height = height,
+                width = width,
+                mineCount = mineCount,
+            )
         )
         sut.toString().count { it == MineMap.MINE_SYMBOL.first() } shouldBe beforePlantMineCount
         sut.toString().count { it == MineMap.EMPTY_SYMBOL.first() } shouldBe beforePlantEmptyCount
