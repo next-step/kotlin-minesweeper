@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.MineBoardStatus.IN_PROGRESS
+import minesweeper.domain.MineBoardStatus.LOSE
+import minesweeper.domain.MineBoardStatus.WIN
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Coordinate
@@ -11,13 +14,13 @@ class MineBoard(
     private val width: Int,
     val cells: Cells,
     private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
-    isEnd: Boolean = false,
+    mineBoardStatus: MineBoardStatus = IN_PROGRESS,
     toFindCellCount: Int = height * width,
 ) {
     var toFindCellCount: Int = toFindCellCount
         private set
 
-    var isEnd: Boolean = isEnd
+    var mineBoardStatus: MineBoardStatus = mineBoardStatus
         private set
 
     init {
@@ -30,11 +33,14 @@ class MineBoard(
     }
 
     fun open(coordinate: Coordinate) {
-        check(isEnd.not()) { "이미 종료된 게임은 진행이 불가능합니다." }
+        check(mineBoardStatus.isEnd.not()) { "이미 종료된 게임은 진행이 불가능합니다." }
         val cellOpenResult = cells.open(coordinate)
         toFindCellCount -= cellOpenResult
-        if (cellOpenResult == 0 || toFindCellCount == 0) {
-            isEnd = true
+        if (cellOpenResult == 0) {
+            mineBoardStatus = LOSE
+        }
+        if (toFindCellCount == 0) {
+            mineBoardStatus = WIN
         }
     }
 
