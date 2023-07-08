@@ -1,4 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.pin
+
+import minesweeper.domain.pin.state.PinState
 
 sealed class Pin {
     private var state = PinState.CLOSE

@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.pin.state.PinState
 import org.junit.jupiter.api.Test
 
 class PinStateTest {

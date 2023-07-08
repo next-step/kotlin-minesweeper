@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.pin.NormalPin
+import minesweeper.domain.pin.Pin
+
 class Pins private constructor (
     private val values: MutableList<PinsInRow>
 ) {

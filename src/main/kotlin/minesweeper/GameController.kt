@@ -1,7 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.GameBoard
-import minesweeper.domain.Pin
+import minesweeper.domain.pin.Pin
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
 
@@ -37,6 +37,7 @@ fun playGame(board: GameBoard) {
         OutputView.showMineSweeper(board)
     } while (isOpenAllNormalPin(board))
 }
+
 fun isOpenAllNormalPin(board: GameBoard): Boolean {
     if (board.isNotContinuable()) {
         OutputView.showWin()

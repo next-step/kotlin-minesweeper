@@ -2,6 +2,8 @@ package minesweeper.domain
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.pin.MinePin
+import minesweeper.domain.pin.NormalPin
 
 class NormalPinTest : FunSpec({
     test("pin 주변에 지뢰의 개수를 대표하는 프로퍼티를 증가시킬 수 있다") {

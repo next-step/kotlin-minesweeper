@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.pin.NormalPin
+import minesweeper.domain.pin.Pin
+
 class PinsInRow(private val values: MutableList<Pin>) {
     fun getPinsSize(): Int {
         return values.size

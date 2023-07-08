@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.pin.MinePin
+import minesweeper.domain.pin.Pin
 import kotlin.random.Random
 
 class GameBoard private constructor(

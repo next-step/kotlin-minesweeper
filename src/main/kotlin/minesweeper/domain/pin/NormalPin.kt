@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.pin
 
 class NormalPin() : Pin() {
     var surroundMineNumber: Int = 0

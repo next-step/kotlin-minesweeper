@@ -1,8 +1,8 @@
 package minesweeper.view
 
 import minesweeper.domain.GameBoard
-import minesweeper.domain.NormalPin
-import minesweeper.domain.Pin
+import minesweeper.domain.pin.NormalPin
+import minesweeper.domain.pin.Pin
 
 object OutputView {
     fun showStart() {

@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.pin.MinePin
 import org.junit.jupiter.api.Test
 
 class GameBoardTest {

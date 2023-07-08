@@ -3,6 +3,8 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.pin.MinePin
+import minesweeper.domain.pin.NormalPin
 
 class PinsTest : FunSpec({
     test("핀의 사이즈는 높이와 너비를 곱한 값과 같다") {

@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.pin.state
 
 enum class PinState {
     OPEN,
