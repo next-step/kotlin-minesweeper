@@ -36,6 +36,12 @@ class MineBoard(
         check(mineBoardStatus.isEnd.not()) { "이미 종료된 게임은 진행이 불가능합니다." }
         val cellOpenResult = cells.open(coordinate)
         toFindCellCount -= cellOpenResult
+        checkBoardStatus(cellOpenResult)
+    }
+
+    fun currentBoard(): CellInfos = CellInfos(height = height, values = cells.cellInfos())
+
+    private fun checkBoardStatus(cellOpenResult: Int) {
         if (cellOpenResult == 0) {
             mineBoardStatus = LOSE
         }
@@ -43,8 +49,6 @@ class MineBoard(
             mineBoardStatus = WIN
         }
     }
-
-    fun currentBoard(): CellInfos = CellInfos(height = height, values = cells.cellInfos())
 
     companion object {
         private const val MINIMUM_HEIGHT = 1
