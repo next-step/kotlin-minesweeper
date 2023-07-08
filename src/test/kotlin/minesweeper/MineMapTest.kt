@@ -1,6 +1,8 @@
 package minesweeper
 
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Empty
+import minesweeper.domain.Mine
 import minesweeper.domain.MineMap
 import minesweeper.domain.MineMapConfig
 import org.junit.jupiter.params.ParameterizedTest
@@ -29,12 +31,14 @@ internal class MineMapTest {
                 mineCount = mineCount,
             )
         )
-        sut.toString().count { it == MineMap.MINE_SYMBOL.first() } shouldBe beforePlantMineCount
-        sut.toString().count { it == MineMap.EMPTY_SYMBOL.first() } shouldBe beforePlantEmptyCount
+        val mapBeforePlantMine = sut.getCurrentMap()
+        mapBeforePlantMine.values.filterIsInstance<Mine>().size shouldBe beforePlantMineCount
+        mapBeforePlantMine.values.filterIsInstance<Empty>().size shouldBe beforePlantEmptyCount
 
         sut.plantMine()
 
-        sut.toString().count { it == MineMap.MINE_SYMBOL.first() } shouldBe afterPlantMineCount
-        sut.toString().count { it == MineMap.EMPTY_SYMBOL.first() } shouldBe afterPlantEmptyCount
+        val mapAfterPlantMine = sut.getCurrentMap()
+        mapAfterPlantMine.values.filterIsInstance<Mine>().size shouldBe afterPlantMineCount
+        mapAfterPlantMine.values.filterIsInstance<Empty>().size shouldBe afterPlantEmptyCount
     }
 }
