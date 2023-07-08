@@ -105,5 +105,20 @@ class CellsTest : FunSpec({
             val exception = shouldThrowExactly<IllegalArgumentException> { cells.open(Coordinate(2, 2)) }
             exception shouldHaveMessage "존재하지 않는 좌표는 입력될 수 없습니다."
         }
+
+        test("현재 좌표가 0이 아니라면 현재 좌표만 오픈한다.") {
+            val cells = Cells(
+                Cell(0, 0, ONE),
+                Cell(0, 1, ONE),
+                Cell(1, 0, ONE),
+                Cell(1, 1, MINE),
+            )
+            cells.open(Coordinate(1, 1))
+
+            cells.values[Coordinate(0, 0)]!!.isDisplay shouldBe false
+            cells.values[Coordinate(0, 1)]!!.isDisplay shouldBe false
+            cells.values[Coordinate(1, 0)]!!.isDisplay shouldBe false
+            cells.values[Coordinate(1, 1)]!!.isDisplay shouldBe true
+        }
     }
 })

@@ -3,6 +3,7 @@ package minesweeper.domain.cell
 import minesweeper.domain.CellInfo
 import minesweeper.domain.CoordinateFinder
 import minesweeper.domain.cell.CellType.Companion.toCellType
+import minesweeper.domain.cell.CellType.ZERO
 import minesweeper.domain.strategy.MinePlacementStrategy
 
 @JvmInline
@@ -24,7 +25,12 @@ value class Cells(
     }
 
     fun open(coordinate: Coordinate) {
-        require(values.contains(coordinate)) { "존재하지 않는 좌표는 입력될 수 없습니다." }
+        val cell = values[coordinate]
+        require(cell != null) { "존재하지 않는 좌표는 입력될 수 없습니다." }
+        if (cell.cellType != ZERO) {
+            cell.changeToDisplay()
+            return
+        }
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
