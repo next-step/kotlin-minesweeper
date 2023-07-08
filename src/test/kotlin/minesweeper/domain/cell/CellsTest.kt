@@ -61,8 +61,6 @@ class CellsTest : FunSpec({
                     Cell(2, 2),
                 ),
             )
-//            val cells = Cells(cells = cells,
-//            ) { cells[0] }
             cells.placeMine(1) { cells.values[0] }
 
             val actual = cells.values.count { it.isMine() }
