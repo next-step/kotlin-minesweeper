@@ -42,7 +42,7 @@ C C C C C C C C C C
   * 현재 상태가 오픈 가능한지 알 수 있다
   * 지뢰인지 확인할 수 있다
   * 구현체 모두 생성되었을때, `Close` 상태로 생성된다
-* `OneDimPins`
+* `PinsInRow`
   * `PinsInRow` 라는 이름으로 클래스 명을 변경한다
   * Pin 의 메서드를 이용해서 카운트 할 수 있게 변경한다
 * `TwoDimPins`

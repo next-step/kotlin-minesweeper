@@ -9,7 +9,7 @@ class NormalPin() : Pin() {
     }
 
     fun comparePinType(other: Pin) {
-        if (other is MinePin) addSurroundMineNumber()
+        if (other.isMinePin()) addSurroundMineNumber()
     }
 
     fun changeToMine(): MinePin {

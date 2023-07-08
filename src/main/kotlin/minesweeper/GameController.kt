@@ -24,7 +24,6 @@ fun readyBoard(): GameBoard {
 fun readyMine(board: GameBoard) {
     val mineNumber = Inputview.askMineNumber()
     board.repeatPlateMineWithoutDuplication(mineNumber)
-    board.closePinAll()
 }
 
 fun playGame(board: GameBoard) {

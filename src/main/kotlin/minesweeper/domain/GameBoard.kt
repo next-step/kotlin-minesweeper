@@ -4,7 +4,7 @@ import kotlin.random.Random
 
 class GameBoard private constructor(
     val size: GameBoardSize,
-    private val pins: TwoDimPins,
+    private val pins: Pins,
 ) {
     init {
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
@@ -18,10 +18,6 @@ class GameBoard private constructor(
         repeat(num) {
             placeMineWithoutDuplicate()
         }
-    }
-
-    fun closePinAll() {
-        pins.closeAllPin()
     }
 
     fun openPin(height: Int, width: Int): Pin {
@@ -42,6 +38,7 @@ class GameBoard private constructor(
         try {
             val targetPin = pins.getPinsAt(height, width)
             if (!targetPin.isOpenable()) return
+            if (targetPin.isMinePin()) return
             pins.openPinAt(height, width)
             (0 until DIM).forEach { num ->
                 val nextHeight = height + HEIGHT_MOVE[num]
@@ -86,7 +83,7 @@ class GameBoard private constructor(
 
         fun ready(height: Int, width: Int): GameBoard {
             val size = GameBoardSize(height, width)
-            val pins = TwoDimPins.of(size)
+            val pins = Pins.of(size)
             return GameBoard(size, pins)
         }
     }

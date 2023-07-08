@@ -3,14 +3,13 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import kotlin.random.Random
 
-class TwoDimPinsTest : FunSpec({
+class PinsTest : FunSpec({
     test("핀의 사이즈는 높이와 너비를 곱한 값과 같다") {
         val height = 10
         val width = 10
         val size = GameBoardSize(height, width)
-        val board = TwoDimPins.of(size)
+        val board = Pins.of(size)
 
         val pinSize = board.getPinsSize()
 
@@ -19,7 +18,7 @@ class TwoDimPinsTest : FunSpec({
 
     test("특정 높이와 너비에 위치한 핀을 가져올 수 있다") {
         val size = GameBoardSize(10, 10)
-        val board = TwoDimPins.of(size)
+        val board = Pins.of(size)
 
         val pin = board.getPinsAt(0, 1)
 
@@ -28,7 +27,7 @@ class TwoDimPinsTest : FunSpec({
 
     test("특정 높이와 너비에 위치한 핀의 경우 사이즈를 벗어난 경우 에러가 발생한다") {
         val size = GameBoardSize(10, 10)
-        val board = TwoDimPins.of(size)
+        val board = Pins.of(size)
 
         shouldThrow<IllegalArgumentException> {
             board.getPinsAt(1000, 1)
@@ -37,7 +36,7 @@ class TwoDimPinsTest : FunSpec({
 
     test("특정 행과 열에 위치한 값의 핀을 지뢰로 변경할 수 있다") {
         val size = GameBoardSize(10, 10)
-        val board = TwoDimPins.of(size)
+        val board = Pins.of(size)
 
         board.changeMine(1, 1)
 
@@ -52,27 +51,15 @@ class TwoDimPinsTest : FunSpec({
         (checkPin2 as NormalPin).surroundMineNumber shouldBe 1
     }
 
-    test("모든 핀들을 ClosePin 으로 전환시킨다") {
+    test("모든 핀들을 초기에 닫혀있다") {
         val size = GameBoardSize(10, 10)
-        val board = TwoDimPins.of(size)
+        val pins = Pins.of(size)
 
-        board.closeAllPin()
-        val randomHeight = Random.nextInt(10)
-        val randomWidth = Random.nextInt(10)
-
-        val pin = board.getPinsAt(randomHeight, randomWidth)
-        (pin is ClosePin) shouldBe true
-    }
-
-    test("특정 핀을 ClosePin 에서 Open 시킬 수 있다") {
-        val size = GameBoardSize(10, 10)
-        val board = TwoDimPins.of(size)
-
-        board.closeAllPin()
-        val pin = board.openPinAt(1, 1)
-        val closePin = board.getPinsAt(1, 0)
-
-        (pin is NormalPin) shouldBe true
-        (closePin is ClosePin) shouldBe true
+        for (i in 0 until 10) {
+            for (j in 0 until 10) {
+                val targetPin = pins.getPinsAt(i, j)
+                targetPin.isOpenable() shouldBe true
+            }
+        }
     }
 })

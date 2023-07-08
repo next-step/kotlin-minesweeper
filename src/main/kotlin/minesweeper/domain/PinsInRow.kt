@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class OneDimPins(private val values: MutableList<Pin>) {
+class PinsInRow(private val values: MutableList<Pin>) {
     fun getPinsSize(): Int {
         return values.size
     }
@@ -20,37 +20,30 @@ class OneDimPins(private val values: MutableList<Pin>) {
     }
 
     fun countOpenedPin(): Int {
-        return values.count { it !is ClosePin && it !is MinePin }
+        return values.count { !it.isOpenable() }
     }
 
     fun countMinePin(): Int {
         return values.count { it.isMinePin() }
     }
 
-    fun closeAllInRow() {
-        for ((index, value) in values.withIndex()) {
-            values[index] = value.changeToClosePin()
-        }
-    }
-
     fun openPinAt(index: Int): Pin {
         require(index <= getPinsSize()) { "너비에 $index 는 올바른 위치가 아닙니다" }
-        values[index] = (values[index] as ClosePin).open()
+        values[index].open()
         return getPinAt(index)
     }
 
     fun changeMine(index: Int) {
-        require(index <= getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
-        if (values[index] is NormalPin) {
-            val pin = (values[index] as NormalPin).changeToMine()
-            values[index] = pin
+        require(index in 0 until getPinsSize()) { "$index 는 올바른 위치가 아닙니다" }
+        if (!values[index].isMinePin()) {
+            values[index] = (values[index] as NormalPin).changeToMine()
         }
     }
 
     companion object {
-        fun of(size: Int): OneDimPins {
+        fun of(size: Int): PinsInRow {
             val pins = MutableList(size) { NormalPin() as Pin }
-            return OneDimPins(pins)
+            return PinsInRow(pins)
         }
     }
 }

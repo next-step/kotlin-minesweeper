@@ -1,19 +1,17 @@
 package minesweeper.domain
 
 sealed class Pin {
-    fun changeToClosePin(): ClosePin {
-        return ClosePin(this)
+    private var state = PinState.CLOSE
+
+    fun open() {
+        state = state.toOpen()
     }
 
     fun isOpenable(): Boolean {
-        return isClosePin() && !isMinePin()
+        return state == PinState.CLOSE
     }
 
-    fun isClosePin(): Boolean {
-        return this is ClosePin
-    }
-
-    open fun isMinePin(): Boolean {
+    fun isMinePin(): Boolean {
         return this is MinePin
     }
 }

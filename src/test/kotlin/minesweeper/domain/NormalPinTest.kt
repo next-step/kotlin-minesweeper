@@ -21,4 +21,18 @@ class NormalPinTest : FunSpec({
 
         pin.surroundMineNumber shouldBe 1
     }
+
+    test("초기 정상 핀의 상태는 CLOSE 상태이다") {
+        val pin = NormalPin()
+
+        pin.isOpenable() shouldBe true
+    }
+
+    test("정상 핀은 지뢰 핀으로 상태가 변경될 수 있다") {
+        val normalPin = NormalPin()
+
+        val minePin = normalPin.changeToMine()
+
+        minePin.isMinePin() shouldBe true
+    }
 })
