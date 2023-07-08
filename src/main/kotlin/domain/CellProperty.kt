@@ -17,12 +17,4 @@ abstract class CellProperty {
     fun isOpen(): Boolean {
         return state == CellState.OPEN
     }
-
-    companion object {
-        fun of(isMine: Boolean, getAroundMineCount: () -> AroundMineCount): CellProperty {
-            if (isMine) return MineCellProperty()
-            val aroundMineCount = getAroundMineCount()
-            return NormalCellProperty(aroundMineCount)
-        }
-    }
 }

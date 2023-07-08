@@ -2,7 +2,7 @@ package minesweeper.domain
 
 import domain.AroundMineCount
 import domain.Cell
-import domain.CellProperty
+import domain.CellPropertyFactory
 import domain.Position
 import domain.toPositiveNumber
 
@@ -32,7 +32,7 @@ class TestMineSweeperMapBuilder(
     }
 
     private fun makeCell(row: Int, column: Int, isMine: Boolean, aroundMineCount: AroundMineCount) =
-        Cell(Position.fromInt(row, column), CellProperty.of(isMine) { aroundMineCount })
+        Cell(Position.fromInt(row, column), CellPropertyFactory.create(isMine) { aroundMineCount })
 
     fun build(): Array<Array<Cell>> {
         return TestMineSweeperMap(rows).value
