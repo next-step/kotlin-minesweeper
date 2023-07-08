@@ -41,9 +41,9 @@ class FieldsManagerTest : StringSpec({
             Position(2, 2)
         )
 
-        (map.fields.get(position) is MineField) shouldBe true
+        (map.fields[position] is MineField) shouldBe true
         testPositions.forEach {
-            (map.fields.get(it) as SafeField).value shouldBe 1
+            (map.fields[it] as SafeField).value shouldBe 1
         }
     }
 
