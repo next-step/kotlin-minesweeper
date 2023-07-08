@@ -30,4 +30,12 @@ object OutputView {
             is Normal -> adjacentMineCount.toString()
         }
     }
+
+    fun printWinMessage() {
+        println("Win Game.")
+    }
+
+    fun printLoseMessage() {
+        println("Lose Game.")
+    }
 }

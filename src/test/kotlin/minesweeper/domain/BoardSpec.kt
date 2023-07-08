@@ -3,6 +3,7 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 
 fun cells(vararg cells: Cell): Cells = Cells(cells.toList())
 
@@ -55,6 +56,21 @@ class BoardSpec : DescribeSpec(
                             ),
                         )
                     }
+                }
+            }
+        }
+
+        describe("게임 승리 여부 검증") {
+            context("게임에서 승리하면") {
+                val board = Board(
+                    cells = listOf(
+                        cells(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
+                        cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                        cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                    ),
+                ).also { it.win() }
+                it("게임 승리 여부는 '참'이다.") {
+                    board.isWin() shouldBe true
                 }
             }
         }

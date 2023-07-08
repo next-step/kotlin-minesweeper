@@ -9,6 +9,14 @@ class MinesweeperController {
         val board = boardSetting.toBoard()
 
         OutputView.printGameStartMessage()
+        InputView.readPositionToOpen()
         OutputView.printBoard(board)
+
+        if (board.isWin()) {
+            OutputView.printWinMessage()
+            return
+        }
+
+        OutputView.printLoseMessage()
     }
 }
