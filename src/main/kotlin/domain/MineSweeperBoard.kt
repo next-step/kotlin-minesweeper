@@ -9,7 +9,7 @@ class MineSweeperBoard(val width: Int, val height: Int, private val mines: Int) 
 
     private fun setMines() {
         (0 until width * height).shuffled().take(mines).forEach {
-            board[it].isMine = true
+            board[it].setMine()
         }
     }
 
