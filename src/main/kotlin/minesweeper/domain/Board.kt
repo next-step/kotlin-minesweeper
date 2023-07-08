@@ -38,7 +38,30 @@ class Board(
             return
         }
 
-        cells[position.y][position.x].open()
+        val cell = cells[position].also { it.open() }
+        cell.open()
+
+        val adjacentNormalCells = getAdjacentNormalCells(cell)
+        open(adjacentNormalCells)
+        openAdjacentNormalCells(adjacentNormalCells)
+    }
+
+    private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
+        return cell.position.getAdjacentPositions(thresholdWidth = width, thresholdHeight = height)
+            .filter { !isMine(it) }
+            .map { cells[it] as Normal }
+            .filter { !it.isOpened }
+    }
+
+    private fun open(adjacentNormalCells: List<Normal>) {
+        adjacentNormalCells
+            .forEach { it.open() }
+    }
+
+    private fun openAdjacentNormalCells(adjacentNormalCells: List<Normal>) {
+        adjacentNormalCells
+            .filter { it.adjacentMineCount == 0 }
+            .forEach { open(it.position) }
     }
 
     fun win() {
@@ -63,6 +86,10 @@ class Board(
 
     private fun isMine(position: Position): Boolean {
         return minePositions.contains(position)
+    }
+
+    private operator fun List<List<Cell>>.get(position: Position): Cell {
+        return this[position.y][position.x]
     }
 
     enum class Status {

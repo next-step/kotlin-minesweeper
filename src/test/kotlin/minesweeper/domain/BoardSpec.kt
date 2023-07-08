@@ -5,6 +5,10 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
+private operator fun List<Cells>.get(position: Position): Cell {
+    return this[position.y][position.x]
+}
+
 fun cells(vararg cells: Cell): Cells = Cells(cells.toList())
 fun board(
     cells: List<Cells> = listOf(
@@ -83,10 +87,30 @@ class BoardSpec : DescribeSpec(
             }
 
             context("일반 칸을 오픈하면") {
-                val board = board().also { it.open(Position(0, 0)) }
+                val board = board(
+                    cells = listOf(
+                        cells(Mine(0, 0), Mine(1, 0), Normal(2, 0)),
+                        cells(Normal(0, 1), Mine(1, 1), Normal(2, 1)),
+                        cells(Mine(0, 2), Mine(1, 2), Normal(2, 2)),
+                    ),
+                    minePositions = listOf(
+                        Position(0, 0),
+                        Position(1, 0),
+                        Position(1, 1),
+                        Position(0, 2),
+                        Position(1, 2),
+                    ),
+                ).also { it.open(Position(2, 0)) }
 
                 it("게임에 패배하지 않는다.") {
                     board.isLose() shouldBe false
+                }
+
+                it("지뢰가 없는 인접한 칸이 모두 열린다.") {
+                    (board.cells[Position(2, 0)] as Normal).isOpened shouldBe true
+                    (board.cells[Position(2, 1)] as Normal).isOpened shouldBe true
+                    (board.cells[Position(2, 2)] as Normal).isOpened shouldBe true
+                    (board.cells[Position(0, 1)] as Normal).isOpened shouldBe false
                 }
             }
 

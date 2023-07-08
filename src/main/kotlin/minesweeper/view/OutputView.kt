@@ -7,6 +7,8 @@ import minesweeper.domain.Mine
 import minesweeper.domain.Normal
 
 object OutputView {
+    private val NOT_OPENED = "."
+
     fun printGameStartMessage() {
         println("지뢰찾기 게임 시작")
     }
@@ -26,9 +28,16 @@ object OutputView {
 
     private fun Cell.shape(): String {
         return when (this) {
-            is Mine -> "*"
-            is Normal -> adjacentMineCount.toString()
+            is Mine -> NOT_OPENED
+            is Normal -> shape()
         }
+    }
+
+    private fun Normal.shape(): String {
+        if (isOpened) {
+            return adjacentMineCount.toString()
+        }
+        return NOT_OPENED
     }
 
     fun printWinMessage() {
