@@ -27,6 +27,8 @@ class MineBoard(
 
     fun currentBoard(): CellInfos = CellInfos(height = mineBoardInfo.height, values = cells.cellInfos())
 
+    fun isEndGame(): Boolean = mineBoardInfo.isEnd()
+
     private fun checkBoardStatus(cellOpenResult: Int) {
         if (cellOpenResult == 0) {
             mineBoardInfo.toLose()
