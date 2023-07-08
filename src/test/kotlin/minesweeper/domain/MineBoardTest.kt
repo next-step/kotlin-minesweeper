@@ -57,15 +57,13 @@ class MineBoardTest : FunSpec({
     context("open") {
         test("종료된 게임에서 open 요청을 할 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
-                2,
-                2,
+                MineBoardInfo(2, 2, 4, WIN),
                 listOf(
                     Cell(0, 0),
                     Cell(0, 1),
                     Cell(1, 0),
                     Cell(1, 1),
                 ).toCells(),
-                mineBoardStatus = WIN,
             )
             val exception = shouldThrowExactly<IllegalStateException> { mineBoard.open(Coordinate(0, 1)) }
             exception shouldHaveMessage "이미 종료된 게임은 진행이 불가능합니다."
@@ -84,7 +82,7 @@ class MineBoardTest : FunSpec({
             )
             mineBoard.open(Coordinate(0, 0))
 
-            val actual = mineBoard.mineBoardStatus
+            val actual = mineBoard.mineBoardInfo.mineBoardStatus
             actual shouldBe WIN
         }
 
@@ -101,7 +99,7 @@ class MineBoardTest : FunSpec({
             )
             mineBoard.open(Coordinate(1, 1))
 
-            val actual = mineBoard.mineBoardStatus
+            val actual = mineBoard.mineBoardInfo.mineBoardStatus
             actual shouldBe LOSE
         }
     }
