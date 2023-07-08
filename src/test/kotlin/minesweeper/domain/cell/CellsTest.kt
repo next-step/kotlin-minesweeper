@@ -68,15 +68,15 @@ class CellsTest : FunSpec({
 
             val actual = cells.values.count { it.value.isMine() }
             actual shouldBe 1
-            cells.values[Coordinate(0, 0)]!!.cellType shouldBe MINE
-            cells.values[Coordinate(0, 1)]!!.cellType shouldBe ONE
-            cells.values[Coordinate(0, 2)]!!.cellType shouldBe ZERO
-            cells.values[Coordinate(1, 0)]!!.cellType shouldBe ONE
-            cells.values[Coordinate(1, 1)]!!.cellType shouldBe ONE
-            cells.values[Coordinate(1, 2)]!!.cellType shouldBe ZERO
-            cells.values[Coordinate(2, 0)]!!.cellType shouldBe ZERO
-            cells.values[Coordinate(2, 1)]!!.cellType shouldBe ZERO
-            cells.values[Coordinate(2, 2)]!!.cellType shouldBe ZERO
+            cells.values[Coordinate(0, 0)]!!.openCellType() shouldBe MINE
+            cells.values[Coordinate(0, 1)]!!.openCellType() shouldBe ONE
+            cells.values[Coordinate(0, 2)]!!.openCellType() shouldBe ZERO
+            cells.values[Coordinate(1, 0)]!!.openCellType() shouldBe ONE
+            cells.values[Coordinate(1, 1)]!!.openCellType() shouldBe ONE
+            cells.values[Coordinate(1, 2)]!!.openCellType() shouldBe ZERO
+            cells.values[Coordinate(2, 0)]!!.openCellType() shouldBe ZERO
+            cells.values[Coordinate(2, 1)]!!.openCellType() shouldBe ZERO
+            cells.values[Coordinate(2, 2)]!!.openCellType() shouldBe ZERO
         }
 
         test("랜덤한 위치에 지뢰를 배치한다.") {

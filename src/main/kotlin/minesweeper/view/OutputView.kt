@@ -7,7 +7,6 @@ private const val MINE_BOARD_ROW_DELIMITER = "\n"
 private const val MINE_BOARD_COLUMN_DELIMITER = " "
 
 fun printMineBoardView(cellInfos: CellInfos) {
-    println("지뢰찾기 게임 시작")
     println(parseMineBoardView(cellInfos.values, cellInfos.height))
 }
 

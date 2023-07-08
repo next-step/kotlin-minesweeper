@@ -31,14 +31,14 @@ class CellTest : FunSpec({
         }
     }
 
-    context("cellType") {
+    context("openCellType") {
         forAll(
             row(false, UNKNOWN),
             row(true, MINE),
         ) { input, expected ->
             test("isDisplayable이 ${input}일 때 ${expected}를 반환한다.") {
                 val cell = Cell(0, 0, MINE, input)
-                val actual = cell.cellType
+                val actual = cell.openCellType()
 
                 actual shouldBe expected
             }
@@ -49,7 +49,7 @@ class CellTest : FunSpec({
         test("지뢰로 변경한다.") {
             val cell = Cell(0, 0, UNKNOWN, true)
             cell.changeToMine()
-            val actual = cell.cellType
+            val actual = cell.openCellType()
 
             actual shouldBe MINE
         }

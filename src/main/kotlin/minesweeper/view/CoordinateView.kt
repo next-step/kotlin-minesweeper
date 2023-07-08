@@ -1,11 +1,13 @@
 package minesweeper.view
 
-import java.lang.IllegalArgumentException
+import minesweeper.domain.cell.Coordinate
 
 data class CoordinateView(
     val row: Int,
     val column: Int,
 ) {
+    fun toCoordinate(): Coordinate = Coordinate(row = row, column = column)
+
     companion object {
         private const val COORDINATE_DELIMITER = ","
         private const val COORDINATE_VIEW_SIZE = 2

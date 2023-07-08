@@ -18,7 +18,7 @@ fun inputMineCount(): Int {
 fun inputCoordinate(): CoordinateView {
     print("open: ")
     return runCatching { CoordinateView.from(readln()) }
-        .getOrNull()?: retryInputCoordinate()
+        .getOrNull() ?: retryInputCoordinate()
 }
 
 private fun retryInputHeight(): Int {

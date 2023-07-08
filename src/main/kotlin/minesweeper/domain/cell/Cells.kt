@@ -31,7 +31,7 @@ value class Cells(
         if (cell.isMine()) {
             return 0
         }
-        if (cell.cellType != ZERO) {
+        if (cell.isZero().not()) {
             return 1
         }
         return openAroundCell(cell) + 1
@@ -65,7 +65,7 @@ value class Cells(
 
     private fun openAroundNearZeroCell(nearCells: List<Cell>): Int {
         val nearZeroCell = nearCells
-            .filter { it.cellType == ZERO }
+            .filter { it.isZero() }
         return nearZeroCell.sumOf { openAroundCell(it) }
     }
 

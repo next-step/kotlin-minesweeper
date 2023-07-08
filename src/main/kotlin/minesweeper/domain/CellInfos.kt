@@ -17,7 +17,7 @@ data class CellInfo(
         fun from(cell: Cell): CellInfo = CellInfo(
             row = cell.coordinate.row,
             column = cell.coordinate.column,
-            cellType = cell.cellType,
+            cellType = cell.openCellType(),
         )
     }
 }
