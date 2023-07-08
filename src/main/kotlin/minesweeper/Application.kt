@@ -8,7 +8,6 @@ import minesweeper.view.inputMineCount
 import minesweeper.view.inputWidth
 import minesweeper.view.printMineBoardView
 import minesweeper.view.printMineGameResult
-import kotlin.math.min
 
 fun main() {
     val mineBoard = generateNewMineBoard(height = inputHeight(), width = inputWidth())
