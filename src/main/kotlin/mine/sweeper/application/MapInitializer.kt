@@ -17,11 +17,8 @@ class MapInitializer(
         val fieldList: MutableList<Field> = MutableList(mapSize.area) { index ->
             val x = index / mapSize.width.value
             val y = index % mapSize.width.value
-            if (minePositions.contains(Position(x, y))) {
-                MineField(Position(x, y))
-            } else {
-                SafeField(Position(x, y))
-            }
+            val position = Position(x, y)
+            minePositions.find { it == position }?.let { MineField(it) } ?: SafeField(position)
         }
         val surroundIncrementor = SurroundIncrementor(fieldList)
         minePositions.forEach(surroundIncrementor::increase)
