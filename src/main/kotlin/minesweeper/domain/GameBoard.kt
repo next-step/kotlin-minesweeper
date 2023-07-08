@@ -2,12 +2,16 @@ package minesweeper.domain
 
 import kotlin.random.Random
 
-class GameBoard(
+class GameBoard private constructor(
     val size: GameBoardSize,
-    private val pins: Pins = Pins.of(size)
+    private val pins: TwoDimPins,
 ) {
     init {
         require(pins.getPinsSize() == size.getLinearSize()) { "사이즈가 맞지 않습니다" }
+    }
+
+    fun getPinAt(height: Int, width: Int): Pin {
+        return pins.getPinsAt(height, width)
     }
 
     fun repeatPlateMineWithoutDuplication(num: Int) {
@@ -16,13 +20,46 @@ class GameBoard(
         }
     }
 
+    fun closePinAll() {
+        pins.closeAllPin()
+    }
+
+    fun openPin(height: Int, width: Int): Pin {
+        val pin = pins.getPinsAt(height, width)
+        openSurroundPin(height, width)
+        return pin
+    }
+
+    fun askContinuable(): Boolean {
+        val totalPin = size.height * size.width
+        val openPinCount = pins.countOpenedPin()
+        val minePinCount = pins.countMinePin()
+
+        return totalPin != (openPinCount + minePinCount)
+    }
+
+    private fun openSurroundPin(height: Int, width: Int) {
+        try {
+            val targetPin = pins.getPinsAt(height, width)
+            if (!targetPin.isOpenable()) return
+            pins.openPinAt(height, width)
+            (0 until DIM).forEach { num ->
+                val nextHeight = height + HEIGHT_MOVE[num]
+                val nextWidth = width + WIDTH_MOVE[num]
+                openSurroundPin(nextHeight, nextWidth)
+            }
+        } catch (e: Exception) {
+            return
+        }
+    }
+
     private fun placeMineWithoutDuplicate() {
         do {
             val heightPositionStrategy: () -> Int = { Random.nextInt(size.height) }
             val widthPositionStrategy: () -> Int = { Random.nextInt(size.width) }
 
-            val result = setMine(heightPositionStrategy, widthPositionStrategy)
-        } while (!result)
+            val isFinishSettingMine = setMine(heightPositionStrategy, widthPositionStrategy)
+        } while (!isFinishSettingMine)
     }
 
     fun setMine(heightPositionStrategy: () -> Int, widthPositionStrategy: () -> Int): Boolean {
@@ -32,41 +69,25 @@ class GameBoard(
         require(height < size.height) { "보드에서 높이가 맞지 않습니다" }
         require(width < size.width) { "보드에서 너비가 맞지 않습니다" }
 
-        val index = getIndex(height, width)
+        val pin = pins.getPinsAt(height, width)
 
-        if (pins.getPinAt(index) is MinePin) {
+        if (pin is MinePin) {
             return false
         }
 
-        pins.changeMine(index)
-        changeMineNumber(height, width)
+        pins.changeMine(height, width)
         return true
     }
 
-    private fun changeMineNumber(height: Int, width: Int) {
-        for (dim in 0 until DIMENSION_SIZE) {
-            val targetHeight = height + HEIGHT_MOVE[dim]
-            val targetWidth = width + WIDTH_MOVE[dim]
-            if (targetHeight !in 0 until size.height) continue
-            if (targetWidth !in 0 until size.width) continue
-
-            val index = getIndex(targetHeight, targetWidth)
-            pins.addMineNumber(index)
-        }
-    }
-
-    fun getPin(height: Int, width: Int): Pin {
-        val index = getIndex(height, width)
-        return pins.getPinAt(index)
-    }
-
-    private fun getIndex(height: Int, width: Int): Int {
-        return size.width * height + width
-    }
-
     companion object {
-        private val HEIGHT_MOVE = listOf(-1, 0, 1, 0)
-        private val WIDTH_MOVE = listOf(0, 1, 0, -1)
-        private const val DIMENSION_SIZE = 4
+        const val DIM = 8
+        val HEIGHT_MOVE = listOf(-1, -1, -1, 0, 0, 1, 1, 1)
+        val WIDTH_MOVE = listOf(-1, 0, 1, -1, 1, -1, 0, 1)
+
+        fun ready(height: Int, width: Int): GameBoard {
+            val size = GameBoardSize(height, width)
+            val pins = TwoDimPins.of(size)
+            return GameBoard(size, pins)
+        }
     }
 }
