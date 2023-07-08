@@ -35,15 +35,6 @@ value class Cells(
         return false
     }
 
-    private fun openAroundCell(cell: Cell) {
-        val nearCells = CoordinateFinder.nearCoordinates(cell)
-            .mapNotNull { values[it] }
-            .filterNot { it.isDisplay }
-        nearCells.forEach { it.changeToDisplay() }
-        nearCells.filter { it.cellType == ZERO }
-            .forEach { openAroundCell(it) }
-    }
-
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
 
     private fun validateMineCount(mineCount: Int) {
@@ -57,6 +48,22 @@ value class Cells(
         val cellType = nearCoordinates.count { mineCoordinates.contains(it) }
             .toCellType()
         cell.changeToCellType(cellType)
+    }
+
+    private fun openAroundCell(cell: Cell) {
+        val nearCells = findNearNoDisplayCells(cell)
+        nearCells.forEach { it.changeToDisplay() }
+        openAroundNearZeroCell(nearCells)
+    }
+
+    private fun findNearNoDisplayCells(cell: Cell): List<Cell> =
+        CoordinateFinder.nearCoordinates(cell)
+            .mapNotNull { values[it] }
+            .filterNot { it.isDisplay }
+
+    private fun openAroundNearZeroCell(nearCells: List<Cell>) {
+        nearCells.filter { it.cellType == ZERO }
+            .forEach { openAroundCell(it) }
     }
 
     companion object {
