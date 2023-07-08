@@ -5,15 +5,16 @@ import mine.sweeper.application.MineSweeperMap
 import mine.sweeper.view.InputView
 import mine.sweeper.view.OutputView
 
-class GameController(mineSweeperMap: MineSweeperMap) {
-    private val game = MineSweeperGame(mineSweeperMap)
-
+class GameController(
+    mineSweeperMap: MineSweeperMap,
+    private val game: MineSweeperGame = MineSweeperGame(mineSweeperMap)
+) {
     fun playGame() {
         OutputView.noticeGameStart()
         while (game.isProgress) {
             selectPhase()
         }
-        OutputView.noticeGameResult(game.status)
+        OutputView.noticeGameResult(game.gameResult)
     }
 
     private fun selectPhase() {

@@ -13,6 +13,9 @@ class MineSweeperGame(private val map: MineSweeperMap) {
     val fields: Fields
         get() = map.fields
 
+    val gameResult: GameStatus
+        get() = status
+
     fun select(position: Position) {
         val field = map.findUncheckOrNull(position) ?: return
         status = map.open(position, field)
