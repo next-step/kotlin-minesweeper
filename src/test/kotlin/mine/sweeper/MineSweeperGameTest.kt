@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import mine.sweeper.Fixture.createMineGame
 import mine.sweeper.application.MapInitializer
 import mine.sweeper.application.MineSweeperGame
-import mine.sweeper.domain.Fields
 import mine.sweeper.domain.value.GameStatus
 import mine.sweeper.domain.value.Height
 import mine.sweeper.domain.value.MineCount
@@ -32,17 +31,17 @@ class MineSweeperGameTest : StringSpec({
 
     "필드들에 지뢰들만 남았다면 승리한다." {
         val mapSize = MapSize(Height(2), Width(1))
-        val map = MapInitializer(Fields(mapSize)).create(setOf(Position(0, 0)))
+        val map = MapInitializer(mapSize, setOf(Position(0, 0))).create()
         val mineSweeperGame = MineSweeperGame(map)
         mineSweeperGame.select(Position(1, 0))
-        mineSweeperGame.status shouldBe GameStatus.COMPLETE
+        mineSweeperGame.gameResult shouldBe GameStatus.COMPLETE
     }
 
     "지뢰를 열면 게임이 오버된다." {
         val mapSize = MapSize(Height(1), Width(1))
-        val map = MapInitializer(Fields(mapSize)).create(setOf(Position(0, 0)))
+        val map = MapInitializer(mapSize, setOf(Position(0, 0))).create()
         val mineSweeperGame = MineSweeperGame(map)
         mineSweeperGame.select(Position(0, 0))
-        mineSweeperGame.status shouldBe GameStatus.GAME_OVER
+        mineSweeperGame.gameResult shouldBe GameStatus.GAME_OVER
     }
 })

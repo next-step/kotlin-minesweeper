@@ -1,10 +1,10 @@
 package mine.sweeper.view
 
-import mine.sweeper.domain.value.GameStatus
 import mine.sweeper.domain.Field
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.MineField
 import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.GameStatus
 
 object OutputView {
     fun noticeGameStart() {

@@ -1,6 +1,6 @@
 package mine.sweeper.domain.value
 
-enum class SurroundPosition(val x: Int, val y: Int) {
+enum class SurroundDirection(val x: Int, val y: Int) {
     TOP_LEFT(-1, -1),
     TOP_CENTER(-1, 0),
     TOP_RIGHT(-1, 1),

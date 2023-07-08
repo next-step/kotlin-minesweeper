@@ -1,11 +1,13 @@
 package mine.sweeper.application
 
 import mine.sweeper.domain.Fields
+import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.GameStatus.GAME_OVER
 import mine.sweeper.domain.value.GameStatus.ON_PROGRESS
 import mine.sweeper.view.dto.Position
 
 class MineSweeperGame(private val map: MineSweeperMap) {
-    var status = ON_PROGRESS
+    private var status = ON_PROGRESS
 
     val isProgress: Boolean
         get() = status === ON_PROGRESS
@@ -17,7 +19,11 @@ class MineSweeperGame(private val map: MineSweeperMap) {
         get() = status
 
     fun select(position: Position) {
-        val field = map.findUncheckOrNull(position) ?: return
-        status = map.open(position, field)
+        status = map.open(position)
+        if (isGameComplete()) status = GameStatus.COMPLETE
+    }
+
+    private fun isGameComplete(): Boolean {
+        return status != GAME_OVER && map.mineCount.value == fields.remainingFieldCount
     }
 }
