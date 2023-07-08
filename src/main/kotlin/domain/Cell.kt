@@ -1,8 +1,8 @@
 package domain
 
 class Cell {
-    var status: CellStatus = CellStatus.CLOSED
-    var mineStatus: MineStatus = MineStatus.Empty
+    private var status: CellStatus = CellStatus.CLOSED
+    private var mineStatus: MineStatus = MineStatus.Empty
 
     override fun toString(): String {
         return when (mineStatus) {
