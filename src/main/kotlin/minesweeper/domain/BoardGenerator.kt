@@ -18,8 +18,8 @@ class BoardGenerator(
     }
 
     private fun generateCells(minePositions: List<Position>): List<Cells> {
-        val defaultCells = generateAllNormalCells()
-        val normalPositions = PositionGenerator.generatePositionsExcept(width, height, minePositions)
+        val defaultCells: List<MutableList<Cell>> = generateAllNormalCells()
+        val normalPositions: List<Position> = PositionGenerator.generatePositionsExcept(width, height, minePositions)
 
         minePositions.forEach { position ->
             defaultCells[position.y][position.x] = Mine(position)
