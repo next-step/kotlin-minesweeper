@@ -5,7 +5,10 @@ import next.step.minesweeper.domain.mine.generator.MineGenerator
 import next.step.minesweeper.domain.position.Position
 import next.step.minesweeper.utils.retryOnFailure
 
-data class Board(private val rows: BoardRows, private val area: BoardArea) {
+data class Board(
+    private val area: BoardArea,
+    private val points: BoardPoints,
+) {
 
     fun play(
         selector: () -> Position,
@@ -14,26 +17,21 @@ data class Board(private val rows: BoardRows, private val area: BoardArea) {
         onLose: (List<List<BoardPoint>>) -> Unit,
         onFailure: (Throwable) -> Unit,
     ) {
-        while (rows.canUncover()) {
+        while (points.canUncover()) {
             val position = retryOnFailure({ area.select(selector) }, onFailure)
-            if (rows.uncover(position, area)) return onLose(points())
+            if (points.uncover(position, area)) return onLose(points())
             onEachStep(points())
         }
         onWin(points())
     }
 
-    fun points(): List<List<BoardPoint>> = rows.points()
+    fun points(): List<List<BoardPoint>> = points.groupByRow()
 
     companion object {
 
         fun of(area: BoardArea, mineGenerator: MineGenerator, mineCount: MineCount): Board {
             area.checkMaxCount(mineCount.count())
-            val rows = BoardRows(area.rangeMap({ BoardRow(it) }) { _, _ -> BoardPoint.mineFree() })
-            mineGenerator.generate(area, mineCount).forEach { mine ->
-                rows.plantMine(mine)
-                rows.notifyMine(area.near(mine))
-            }
-            return Board(rows, area)
+            return Board(area, BoardPoints.of(area, mineGenerator.generate(area, mineCount)))
         }
     }
 }

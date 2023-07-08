@@ -34,5 +34,6 @@ data class BoardPoint(private var state: BoardPointState) {
     companion object {
 
         fun mineFree(): BoardPoint = BoardPoint(CoveredState(MineFreeState))
+        fun mine(): BoardPoint = BoardPoint(CoveredState(MineState))
     }
 }
