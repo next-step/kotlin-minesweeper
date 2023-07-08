@@ -13,6 +13,7 @@ data class MineMap(
         require(height > 0) { "height must be greater than zero, actual : $height" }
         require(width > 0) { "width must be greater than zero, actual : $width" }
         require(mineCount > 0) { "mineCount must be greater than zero, actual : $mineCount" }
+        require(height * width >= mineCount) { "mineCount must be less than or equal to height x width, actual : $mineCount" }
     }
 
     private val map: MutableList<MutableList<String>> = MutableList(height) { MutableList(width) { EMPTY_SYMBOL } }
