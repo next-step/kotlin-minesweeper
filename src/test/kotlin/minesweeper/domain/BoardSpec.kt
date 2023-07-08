@@ -158,21 +158,21 @@ class BoardSpec : DescribeSpec(
             context("게임에서 승리하면") {
                 val board = board().also { it.win() }
                 it("게임 종료 여부는 '참'이다.") {
-                    board.isNotGameOver() shouldBe false
+                    board.isGameOver() shouldBe true
                 }
             }
 
             context("게임에서 패배하면") {
                 val board = board().also { it.lose() }
                 it("게임 종료 여부는 '참'이다.") {
-                    board.isNotGameOver() shouldBe false
+                    board.isGameOver() shouldBe true
                 }
             }
 
             context("게임이 진행 중이면") {
                 val board = board()
                 it("게임 종료 여부는 '거짓'이다.") {
-                    board.isNotGameOver() shouldBe true
+                    board.isGameOver() shouldBe false
                 }
             }
         }
@@ -190,7 +190,7 @@ class BoardSpec : DescribeSpec(
 
                 it("게임 패배로 종료된다.") {
                     board.isLose() shouldBe true
-                    board.isNotGameOver() shouldBe false
+                    board.isGameOver() shouldBe true
                 }
             }
 
@@ -210,7 +210,7 @@ class BoardSpec : DescribeSpec(
 
                 it("게임 승리로 종료된다.") {
                     board.isWin() shouldBe true
-                    board.isNotGameOver() shouldBe false
+                    board.isGameOver() shouldBe true
                 }
             }
         }

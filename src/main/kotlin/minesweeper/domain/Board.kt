@@ -35,19 +35,25 @@ class Board(
     }
 
     fun open(position: Position) {
+        if (isGameOver()) {
+            return
+        }
+
         if (isMine(position)) {
             lose()
             return
         }
 
-        val cell = cells[position].also { it.openAndIncreaseOpenedCount() }
+        val cell = (cells[position] as Normal).also { it.openAndIncreaseOpenedCount() }
+        if (!cell.isAdjacentMineCountZero()) {
+            winIfAllOpened()
+            return
+        }
+
         val adjacentNormalCells = getAdjacentNormalCells(cell)
         adjacentNormalCells.openIfAdjacentMineCountNotZero()
         adjacentNormalCells.openIfAdjacentMineCountZero()
-
-        if (allOpened()) {
-            win()
-        }
+        winIfAllOpened()
     }
 
     private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
@@ -79,6 +85,12 @@ class Board(
         status = Status.WIN
     }
 
+    private fun winIfAllOpened() {
+        if (allOpened()) {
+            win()
+        }
+    }
+
     fun lose() {
         status = Status.LOSE
     }
@@ -91,8 +103,12 @@ class Board(
         return status == Status.LOSE
     }
 
+    fun isGameOver(): Boolean {
+        return isWin() || isLose()
+    }
+
     fun isNotGameOver(): Boolean {
-        return status == Status.PLAYING
+        return !isGameOver()
     }
 
     private fun isMine(position: Position): Boolean {
