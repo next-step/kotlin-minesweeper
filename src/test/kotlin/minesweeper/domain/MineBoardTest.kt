@@ -7,6 +7,7 @@ import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
+import minesweeper.domain.MineBoardStatus.IN_PROGRESS
 import minesweeper.domain.MineBoardStatus.LOSE
 import minesweeper.domain.MineBoardStatus.WIN
 import minesweeper.domain.cell.Cell
@@ -14,7 +15,6 @@ import minesweeper.domain.cell.CellType.MINE
 import minesweeper.domain.cell.CellType.ONE
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Coordinate
-import java.lang.IllegalStateException
 
 private fun List<Cell>.toCells() = Cells(this)
 
@@ -67,6 +67,37 @@ class MineBoardTest : FunSpec({
 
             val actual = mineBoard.mineBoardInfo.mineBoardStatus
             actual shouldBe LOSE
+        }
+    }
+
+    context("gameResult") {
+        test("아직 진행중인 게임의 결과를 확인하는 경우 예외가 발생한다.") {
+            val mineBoard = MineBoard(
+                MineBoardInfo(2, 2, 4, IN_PROGRESS),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ).toCells(),
+            )
+            val exception = shouldThrowExactly<IllegalStateException> { mineBoard.gameResult() }
+            exception shouldHaveMessage "아직 진행중인 게임은 결과를 확인할 수 없습니다."
+        }
+
+        test("게임의 결과를 확인한다.") {
+            val mineBoard = MineBoard(
+                MineBoardInfo(2, 2, 4, WIN),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ).toCells(),
+            )
+
+            val actual = mineBoard.gameResult()
+            actual shouldBe WIN
         }
     }
 

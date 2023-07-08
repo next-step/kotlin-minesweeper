@@ -29,6 +29,11 @@ class MineBoard(
 
     fun isEndGame(): Boolean = mineBoardInfo.isEnd()
 
+    fun gameResult(): MineBoardStatus {
+        check(mineBoardInfo.isEnd()) { "아직 진행중인 게임은 결과를 확인할 수 없습니다." }
+        return mineBoardInfo.mineBoardStatus
+    }
+
     private fun checkBoardStatus(cellOpenResult: Int) {
         if (cellOpenResult == 0) {
             mineBoardInfo.toLose()
