@@ -10,8 +10,9 @@ class MineBoard(
     val getBoardInfo: List<BoardRow>
         get() = boardInfo
 
-    val getHeight: Int
+    val height: Int
         get() = boardInfo.size
-    val getWidth: Int
+
+    val width: Int
         get() = boardInfo[0].rowInfo.size
 }
