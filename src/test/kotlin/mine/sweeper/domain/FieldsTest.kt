@@ -5,8 +5,10 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import mine.sweeper.Fixture.createMineMap
+import mine.sweeper.application.MapInitializer
 import mine.sweeper.domain.value.Height
 import mine.sweeper.domain.value.Width
+import mine.sweeper.view.dto.MapSize
 import mine.sweeper.view.dto.Position
 
 class FieldsTest : StringSpec({
