@@ -23,6 +23,4 @@ open class PlainTile : Tile() {
     companion object {
         const val DEFAULT_COUNT = 0
     }
-
-
 }

@@ -12,19 +12,19 @@ private operator fun List<TileRow>.set(position: MinePosition, tile: Tile) {
     this[position.positionX][position.positionY] = tile
 }
 
-class MineMap(private val width: Length, private val height: Length) {
+class MineMap(lengths: Pair<Length, Length>, val mineCount: MineCount) {
+
+    private val width: Length = lengths.first
+    private val height: Length = lengths.second
 
     val mineMap = List(height.value) {
         TileRow(MutableList(width.value) { PlainTile() })
     }
 
-    var mineTitleCount: MineCount? = null
-
-    fun makeMine(mineCount: MineCount) {
+    init {
         require(width.value * height.value > mineCount.count) {
             "지뢰는 넓이*너비의 수보다 작아야한다"
         }
-        mineTitleCount = mineCount
         var makeCount = 0
         do {
             makeCount = setMineToTile(makeCount)
@@ -48,18 +48,28 @@ class MineMap(private val width: Length, private val height: Length) {
 
         for (columnIndex in columnRange) {
             val tileRow = mineMap[columnIndex]
-            tileRow.inCreaseMineCountNearTile(rowRange)
+            tileRow.increaseMineCountNearTile(rowRange)
         }
     }
 
-    fun openTile(position: MinePosition, loose: (Boolean) -> Unit) {
+    private fun getRange(position: Position, limit: Length): List<Int> {
+        return (position.dec()..position.inc())
+            .filter { it in MINIMUM_POSITION until limit.value }
+    }
+
+    fun startGame(gameStateNotify: GameStateNotify) {
+        openTile(gameStateNotify)
+    }
+
+    private fun openTile(gameStateNotify: GameStateNotify) {
+        val position = gameStateNotify.getOpenPosition()
         val tile = mineMap[position]
-        if (tile is MineTile) {
-            loose(true)
+        if(tile.isMine()) {
+            gameStateNotify.showGameState(false)
             return
         }
         openTile(position)
-        loose(false)
+        proceedGame(gameStateNotify)
     }
 
     private fun openTile(position: MinePosition) {
@@ -89,9 +99,16 @@ class MineMap(private val width: Length, private val height: Length) {
         }
     }
 
-    private fun getRange(position: Position, limit: Length): List<Int> {
-        return (position.dec()..position.inc())
-            .filter { it in MINIMUM_POSITION until limit.value }
+    private fun proceedGame(gameStateNotify: GameStateNotify) {
+        gameStateNotify.showMineMapInProgress(mineMap)
+        val sizeOfUncheckedTiles = mineMap.sumOf {
+            it.sizeOfUnChecked()
+        }
+        if (mineCount.count == sizeOfUncheckedTiles) {
+            gameStateNotify.showGameState(true)
+            return
+        }
+        openTile(gameStateNotify)
     }
 
     companion object {

@@ -28,18 +28,18 @@ class TileRow(private val row: MutableList<Tile>) {
         return row.filter { !it.isCheckedTile }.size
     }
 
-    fun inCreaseMineCountNearTile(rowRange: List<Int>) {
-        for(rowIndex in rowRange) {
-            val tile = row[rowIndex]
-            if(tile !is PlainTile) {
-                return
+    fun increaseMineCountNearTile(rowRange: List<Int>) {
+        rowRange.forEach {
+            val tile = row[it]
+            if (tile !is PlainTile) {
+                return@forEach
             }
             tile.increaseNearMineCount()
         }
     }
 
-    fun getTiles(rowRange: List<Int>, operation:(Int) -> Unit) {
-        for(rowIndex in rowRange) {
+    fun getTiles(rowRange: List<Int>, operation: (Int) -> Unit) {
+        for (rowIndex in rowRange) {
             operation(rowIndex)
         }
     }

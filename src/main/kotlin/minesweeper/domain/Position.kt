@@ -23,7 +23,7 @@ value class Position(val position: Int) {
             require(position != null) {
                 "위치값은 숫자이어야함"
             }
-            return Position(position-1)
+            return Position(position - 1)
         }
     }
 }
