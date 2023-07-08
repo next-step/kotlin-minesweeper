@@ -25,15 +25,15 @@ class RealMineMapFactoryTest : BehaviorSpec({
             )
 
             Then("높이 100 맵이 만들어진다") {
-                mineMap.capture().cells.size shouldBe mineSweeperInitProperty.height.value
+                mineMap.cells.size shouldBe mineSweeperInitProperty.height.value
             }
 
             Then("가로 50 맵이 만들어진다") {
-                mineMap.capture().cells.first().size shouldBe mineSweeperInitProperty.width.value
+                mineMap.cells.first().size shouldBe mineSweeperInitProperty.width.value
             }
 
             Then("모든 셀은 닫힘 상태이다") {
-                mineMap.capture().cells.flatten().all { it.isHide() } shouldBe true
+                mineMap.cells.flatten().all { it.isHide() } shouldBe true
             }
         }
     }
@@ -58,12 +58,12 @@ class RealMineMapFactoryTest : BehaviorSpec({
             )
 
             Then("초기화 속성에 기재된 지뢰 개수만큼 지뢰가 맵에 생성된다") {
-                val mines = mineMap.capture().cells.flatten().filterIsInstance<Cell.Mine>()
+                val mines = mineMap.cells.flatten().filterIsInstance<Cell.Mine>()
                 mines.size shouldBe mockMineCoordinates.size
             }
 
             Then("만들어진 지뢰 좌표에 지뢰가 존재한다.") {
-                mockMineCoordinates.all { (x, y) -> mineMap.capture().cells[y][x] is Cell.Mine } shouldBe true
+                mockMineCoordinates.all { (x, y) -> mineMap.cells[y][x] is Cell.Mine } shouldBe true
             }
         }
     }
@@ -87,7 +87,7 @@ class RealMineMapFactoryTest : BehaviorSpec({
         val mineMapFactory = RealMineMapFactory { mockMineCoordinates }
         val cells = mineMapFactory.create(
             mineSweeperInitProperty = mineSweeperInitProperty,
-        ).capture().cells
+        ).cells
 
         /*
          1 2 3 2 1

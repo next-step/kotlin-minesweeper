@@ -1,6 +1,5 @@
 package domain.game
 
-import domain.cell.Cell
 import domain.map.Coordinate
 import domain.map.MineMap
 import java.util.LinkedList
@@ -20,7 +19,7 @@ class MineSweeperGame(
         return if (mineMap.isAllGroundCellsOpened()) {
             OpenResult.AllMineFound
         } else {
-            OpenResult.GroundOpened(mineMap.capture())
+            OpenResult.GroundOpened(mineMap.cells)
         }
     }
 
@@ -28,18 +27,11 @@ class MineSweeperGame(
         val coordinates: Queue<Coordinate> = LinkedList(listOf(coordinate))
         while (coordinates.isNotEmpty()) {
             val currentCoordinate = coordinates.poll()
-            val cell = getHideGroundCellOrNull(currentCoordinate) ?: continue
+            val cell = mineMap.getHideGroundCellOrNull(currentCoordinate) ?: continue
             mineMap.open(currentCoordinate)
             if (cell.aroundMineCount.isSafeZone()) {
                 coordinates.addAll(currentCoordinate.aroundCoordinatesInMap())
             }
-        }
-    }
-
-    private fun getHideGroundCellOrNull(coordinate: Coordinate): Cell.Ground? {
-        return when (val cell = mineMap[coordinate]) {
-            is Cell.Mine -> null
-            is Cell.Ground -> cell.takeIf { it.isHide() }
         }
     }
 

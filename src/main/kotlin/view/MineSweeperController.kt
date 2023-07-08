@@ -20,7 +20,7 @@ class MineSweeperController(
             val openResult = mineSweeperGame.open(coordinate)
             when (openResult) {
                 is OpenResult.MineOpened -> resultView.displayLoseGameMessage()
-                is OpenResult.GroundOpened -> resultView.display(openResult.mapCapture)
+                is OpenResult.GroundOpened -> resultView.display(openResult.cells)
                 is OpenResult.AllMineFound -> resultView.displayWinGameMessage()
             }
         } while (openResult.isGameFinished.not())

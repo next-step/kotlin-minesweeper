@@ -1,6 +1,7 @@
 package domain.map
 
 import domain.MineSweeperInitProperty
+import domain.cell.Cell
 import domain.math.toPositive
 import domain.mine.RealMineCoordinatesCreator
 import io.kotest.core.spec.style.BehaviorSpec
@@ -20,7 +21,7 @@ class MineMapTest : BehaviorSpec({
             mineMap.open(Coordinate(0, 0))
 
             Then("0, 0 셀이 열린다") {
-                mineMap.capture().cells[0][0].isOpen() shouldBe true
+                mineMap.cells[0][0].isOpen() shouldBe true
             }
         }
     }
@@ -96,6 +97,42 @@ class MineMapTest : BehaviorSpec({
 
             Then("모든 땅이 열려있다") {
                 mineMap.isAllGroundCellsOpened() shouldBe true
+            }
+        }
+    }
+
+    Given("지뢰가 1개 담긴 1 * 2 맵이 존재할 때") {
+        val initProperty = MineSweeperInitProperty(
+            height = 2.toPositive(),
+            width = 1.toPositive(),
+            mineCount = 1.toPositive()
+        )
+
+        When("지롸가 존재하는 0, 0을 확인하면") {
+            val mineMap = RealMineMapFactory { setOf(Coordinate(0, 0)) }.create(initProperty)
+            val hideGroundCell = mineMap.getHideGroundCellOrNull(Coordinate(0, 0))
+
+            Then("null을 반환한다") {
+                hideGroundCell shouldBe null
+            }
+        }
+
+        When("지뢰가 없는 0, 1을 확인하면") {
+            val mineMap = RealMineMapFactory { setOf(Coordinate(0, 0)) }.create(initProperty)
+            val hideGroundCell = mineMap.getHideGroundCellOrNull(Coordinate(0, 1))
+
+            Then("닫혀있는 땅을 반환한다") {
+                (hideGroundCell as? Cell.Ground)?.isHide() shouldBe true
+            }
+        }
+
+        When("지롸가 없는 0, 1을 열은 뒤에 확인하면") {
+            val mineMap = RealMineMapFactory { setOf(Coordinate(0, 0)) }.create(initProperty)
+            mineMap.open(Coordinate(0, 1))
+            val hideGroundCell = mineMap.getHideGroundCellOrNull(Coordinate(0, 1))
+
+            Then("null을 반환한다") {
+                hideGroundCell shouldBe null
             }
         }
     }
