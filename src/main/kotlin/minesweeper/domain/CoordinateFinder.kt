@@ -18,7 +18,5 @@ enum class CoordinateFinder(
 
     companion object {
         fun nearCoordinates(cell: Cell): List<Coordinate> = values().map { it.find(cell.coordinate) }
-
-        fun nearCoordinates(coordinate: Coordinate): Set<Coordinate> = values().map { it.find(coordinate) }.toSet()
     }
 }
