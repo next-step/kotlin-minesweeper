@@ -14,7 +14,7 @@ class MineBoardProviderTest : StringSpec({
 
     "가로와 세로, 생성 마크로 생성 가능" {
         shouldNotThrowAny {
-            MineBoardProvider(1, 1, Mine())
+            FilledElementsProvider(1, 1, Mine())
         }
     }
 
@@ -26,15 +26,15 @@ class MineBoardProviderTest : StringSpec({
             1 to -1,
         ).forAll {
             shouldThrowExactly<IllegalArgumentException> {
-                MineBoardProvider(it.first, it.second)
+                FilledElementsProvider(it.first, it.second)
             }
         }
     }
 
     "지뢰 보드 제공 가능" {
         // given & when
-        val mineBoard = MineBoardProvider(1, 1, Safety()).mineBoard
+        val mineBoard = FilledElementsProvider(1, 1, Safety()).filledElements
         // then
-        mineBoard shouldBe MineBoard(mapOf(Position(0, 0) to Safety()))
+        mineBoard shouldBe FilledElements(mapOf(Position(0, 0) to Safety()))
     }
 })

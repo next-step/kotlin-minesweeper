@@ -1,35 +1,53 @@
 package model.minemark
 
-sealed interface MineMark {
-    val openStatus: OpenStatus
-    val isOpened: Boolean
-        get() = openStatus == OpenStatus.OPENED
-    val opened: MineMark
+sealed class MineMark(openStatus: OpenStatus) {
+    val isOpened: Boolean = openStatus == OpenStatus.OPENED
+    abstract val isMineCount: Boolean
+    abstract val isSafety: Boolean
+    abstract val isMine: Boolean
+    abstract val openedMark: MineMark
+    abstract fun next(count: Int): MineMark
 
-    fun next(count: Int): MineMark
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MineMark
+
+        return isOpened == other.isOpened
+    }
+
+    override fun hashCode(): Int {
+        return isOpened.hashCode()
+    }
 }
 
-data class Safety(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
-        get() = Safety(OpenStatus.OPENED)
-
+class Safety(openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark(openStatus) {
+    override val isMineCount: Boolean = false
+    override val isSafety: Boolean = true
+    override val isMine: Boolean = false
+    override val openedMark: MineMark by lazy { Safety(OpenStatus.OPENED) }
     override fun next(count: Int): MineMark {
         return MineCount(count)
     }
 }
 
-data class Mine(override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
-        get() = Mine(OpenStatus.OPENED)
+class Mine(openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark(openStatus) {
+    override val isMineCount: Boolean = false
+    override val isSafety: Boolean = false
+    override val isMine: Boolean = true
+    override val openedMark: MineMark by lazy { Mine(OpenStatus.OPENED) }
 
     override fun next(count: Int): MineMark {
         throw IllegalStateException("mine can not be next mark")
     }
 }
 
-data class MineCount(val count: Int, override val openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark {
-    override val opened: MineMark
-        get() = MineCount(count, OpenStatus.OPENED)
+class MineCount(val count: Int, openStatus: OpenStatus = OpenStatus.CLOSED) : MineMark(openStatus) {
+    override val isMineCount: Boolean = true
+    override val isSafety: Boolean = false
+    override val isMine: Boolean = false
+    override val openedMark: MineMark by lazy { MineCount(count, OpenStatus.OPENED) }
 
     init {
         require(count >= 0) { "count must be greater than or equal to 0. but provided `$count`" }
@@ -37,5 +55,18 @@ data class MineCount(val count: Int, override val openStatus: OpenStatus = OpenS
 
     override fun next(count: Int): MineMark {
         throw IllegalStateException("mine count can not be next mark")
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MineCount
+
+        return count == other.count
+    }
+
+    override fun hashCode(): Int {
+        return count
     }
 }

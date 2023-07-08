@@ -29,10 +29,10 @@ class MineInstallationTest : StringSpec({
         val zeroPositionOneCountMineInstallation = MineInstallation(1, Mine(), ZERO_POSITION_SELECTOR)
         // when
         val installedMineBoard: InstalledMineBoard =
-            zeroPositionOneCountMineInstallation.installed(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
+            zeroPositionOneCountMineInstallation.installedMineBoard(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         // then
         installedMineBoard shouldBe InstalledMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to Mine(),
                     Position(0, 1) to Safety(),
@@ -48,7 +48,7 @@ class MineInstallationTest : StringSpec({
         val maxCountMineInstallation = MineInstallation(Int.MAX_VALUE, Mine(), ZERO_POSITION_SELECTOR)
         // when & then
         shouldThrowExactly<IllegalArgumentException> {
-            maxCountMineInstallation.installed(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
+            maxCountMineInstallation.installedMineBoard(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         }
     }
 
@@ -58,9 +58,20 @@ class MineInstallationTest : StringSpec({
             MineInstallation(1) { _, _ -> Position(Int.MAX_VALUE, Int.MAX_VALUE) }
         // when & then
         shouldThrowExactly<IllegalStateException> {
-            maxPositionInstallation.installed(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
+            maxPositionInstallation.installedMineBoard(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         }
     }
-})
+}) {
+    companion object {
+        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = FilledElements(
+            mapOf(
+                Position(0, 0) to Safety(),
+                Position(1, 1) to Safety(),
+                Position(0, 1) to Safety(),
+                Position(1, 0) to Safety(),
+            )
+        )
 
-val ZERO_POSITION_SELECTOR: (maxX: Int, maxY: Int) -> Position = { _, _ -> Position(0, 0) }
+        private val ZERO_POSITION_SELECTOR: (maxX: Int, maxY: Int) -> Position = { _, _ -> Position(0, 0) }
+    }
+}

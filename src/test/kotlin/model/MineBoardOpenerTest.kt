@@ -7,7 +7,6 @@ import io.kotest.matchers.shouldBe
 import model.minemark.Mine
 import model.minemark.MineCount
 import model.minemark.OpenStatus
-import view.OutputView
 
 @DisplayName("지뢰 보드 오프너")
 class MineBoardOpenerTest : StringSpec({
@@ -22,10 +21,10 @@ class MineBoardOpenerTest : StringSpec({
         // given
         val mineBoardOpener = MineBoardOpener(NINE_ELEMENTS_TWO_MINE_COUNTED_BOARD)
         // when
-        val opened: CountedMineBoard = mineBoardOpener.opened(Position(0, 0))
+        val opened: CountedMineBoard = mineBoardOpener.openedCountedMineBoard(Position(0, 0))
         // then
         opened shouldBe CountedMineBoard(
-            MineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to MineCount(1, OpenStatus.OPENED),
                     Position(1, 0) to Mine(),
@@ -45,11 +44,10 @@ class MineBoardOpenerTest : StringSpec({
         // given
         val mineBoardOpener = MineBoardOpener(NINE_ELEMENTS_TWO_MINE_COUNTED_BOARD)
         // when
-        val opened: CountedMineBoard = mineBoardOpener.opened(Position(1, 2))
-        OutputView.printBoard(opened)
+        val openedCountedMinBoard: CountedMineBoard = mineBoardOpener.openedCountedMineBoard(Position(1, 2))
         // then
-        opened shouldBe CountedMineBoard(
-            MineBoard(
+        openedCountedMinBoard shouldBe CountedMineBoard(
+            FilledElements(
                 mapOf(
                     Position(0, 0) to MineCount(1),
                     Position(1, 0) to Mine(),
@@ -64,4 +62,25 @@ class MineBoardOpenerTest : StringSpec({
             )
         )
     }
-})
+}) {
+    companion object {
+        private val NINE_ELEMENTS_TWO_MINE_COUNTED_BOARD: CountedMineBoard
+            get() {
+                return CountedMineBoard(
+                    FilledElements(
+                        mapOf(
+                            Position(0, 0) to MineCount(1),
+                            Position(1, 0) to Mine(),
+                            Position(2, 0) to Mine(),
+                            Position(0, 1) to MineCount(1),
+                            Position(1, 1) to MineCount(2),
+                            Position(2, 1) to MineCount(2),
+                            Position(0, 2) to MineCount(0),
+                            Position(1, 2) to MineCount(0),
+                            Position(2, 2) to MineCount(0),
+                        )
+                    )
+                )
+            }
+    }
+}

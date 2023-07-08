@@ -6,6 +6,7 @@ import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import model.minemark.Mine
 import model.minemark.MineCount
+import model.minemark.Safety
 
 @DisplayName("세어진 지뢰 보드")
 class CountedMineBoardTest : StringSpec({
@@ -13,7 +14,7 @@ class CountedMineBoardTest : StringSpec({
     "지뢰 보드로 생성" {
         shouldNotThrowAny {
             CountedMineBoard(
-                MineBoard(
+                FilledElements(
                     mapOf(
                         Position(0, 0) to MineCount(2),
                         Position(1, 1) to Mine(),
@@ -30,20 +31,15 @@ class CountedMineBoardTest : StringSpec({
             CountedMineBoard(FOUR_ELEMENTS_CLEAN_MINE_BOARD)
         }
     }
-})
-
-val NINE_ELEMENTS_TWO_MINE_COUNTED_BOARD = CountedMineBoard(
-    MineBoard(
-        mapOf(
-            Position(0, 0) to MineCount(1),
-            Position(1, 0) to Mine(),
-            Position(2, 0) to Mine(),
-            Position(0, 1) to MineCount(1),
-            Position(1, 1) to MineCount(2),
-            Position(2, 1) to MineCount(2),
-            Position(0, 2) to MineCount(0),
-            Position(1, 2) to MineCount(0),
-            Position(2, 2) to MineCount(0),
+}) {
+    companion object {
+        private val FOUR_ELEMENTS_CLEAN_MINE_BOARD = FilledElements(
+            mapOf(
+                Position(0, 0) to Safety(),
+                Position(1, 1) to Safety(),
+                Position(0, 1) to Safety(),
+                Position(1, 0) to Safety(),
+            )
         )
-    )
-)
+    }
+}

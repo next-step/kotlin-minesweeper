@@ -14,14 +14,14 @@ data class Position(val x: Int, val y: Int) {
             .flatMap { y -> positions(xSoughtValues, y) }
     }
 
-    private fun positions(xSoughtValues: Collection<Int>, y: Int): List<Position> {
-        return xSoughtValues.map { x -> Position(x, y) }
-            .filter { it != this }
-    }
-
     private fun nearValues(value: Int, maxValue: Int): Collection<Int> {
         return listOf(value - POSITION_DISTANCE, value, value + POSITION_DISTANCE)
             .filter { (0 <= it) and (it <= maxValue) }
+    }
+
+    private fun positions(xSoughtValues: Collection<Int>, y: Int): List<Position> {
+        return xSoughtValues.map { x -> Position(x, y) }
+            .filter { it != this }
     }
 
     companion object {
