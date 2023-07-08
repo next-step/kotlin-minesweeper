@@ -5,8 +5,7 @@ import minesweeper.domain.cell.CellType
 
 data class CellInfos(
     val height: Int,
-    val width: Int,
-    val cellInfos: List<CellInfo>,
+    val values: List<CellInfo>,
 )
 
 data class CellInfo(
@@ -16,8 +15,8 @@ data class CellInfo(
 ) {
     companion object {
         fun from(cell: Cell): CellInfo = CellInfo(
-            row = cell.row.value,
-            column = cell.column.value,
+            row = cell.coordinate.row,
+            column = cell.coordinate.column,
             cellType = cell.cellType,
         )
     }

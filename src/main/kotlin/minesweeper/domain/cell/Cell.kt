@@ -1,15 +1,23 @@
 package minesweeper.domain.cell
 
 import minesweeper.domain.cell.CellType.MINE
-import minesweeper.domain.cell.CellType.NONE
+import minesweeper.domain.cell.CellType.ZERO
 
 class Cell(
-    val row: Row,
-    val column: Column,
-    cellType: CellType = NONE,
+    val coordinate: Coordinate,
+    cellType: CellType = ZERO,
+    private val isDisplay: Boolean = true,
 ) {
     var cellType: CellType = cellType
+        get() = cellType(field)
         private set
+
+    constructor(row: Int, column: Int, cellType: CellType, isDisplay: Boolean) :
+        this(Coordinate(row, column), cellType, isDisplay)
+
+    constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(row, column), cellType)
+
+    constructor(row: Int, column: Int) : this(Coordinate(row, column))
 
     fun isMine(): Boolean = cellType == MINE
 
@@ -18,25 +26,14 @@ class Cell(
         cellType = MINE
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Cell
-
-        if (row != other.row) return false
-        if (column != other.column) return false
-
-        return true
+    fun changeToCellType(cellType: CellType) {
+        this.cellType = cellType
     }
 
-    override fun hashCode(): Int {
-        var result = row.hashCode()
-        result = 31 * result + column.hashCode()
-        return result
-    }
-
-    companion object {
-        fun of(row: Int, column: Int): Cell = Cell(Row(row), Column(column))
+    private fun cellType(cellType: CellType): CellType {
+        if (isDisplay) {
+            return cellType
+        }
+        return CellType.UNKNOWN
     }
 }
