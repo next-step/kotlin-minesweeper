@@ -2,7 +2,7 @@ package domain
 
 import ErrorCode
 
-class AroundMineCount(val value: Int) {
+data class AroundMineCount(val value: Int) {
     fun isClean(): Boolean {
         return value == CLEAN_VALUE
     }

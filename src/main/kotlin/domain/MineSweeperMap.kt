@@ -1,14 +1,7 @@
 package domain
 
-import kotlin.random.Random
-import kotlin.random.nextInt
-
-class MineSweeperMap(private val property: Property) {
-    val value: Array<Array<Cell>>
-
-    init {
-        value = initMap()
-    }
+class MineSweeperMap(val property: Property, minePositionGenerator: MinePositionGenerator) {
+    val value: Array<Array<Cell>> = init(minePositionGenerator)
 
     fun getCellByPosition(position: Position): Cell {
         val rowIndex = position.row.value - INDEX_VALUE_FOR_CONVENIENCE
@@ -16,16 +9,27 @@ class MineSweeperMap(private val property: Property) {
         return value[rowIndex][columnIndex]
     }
 
-    private fun initMap(): Array<Array<Cell>> {
-        val minePositionSet = getMinePositionSet()
+    fun getCellsByPositions(positions: Positions): Cells {
+        return positions.value.map { getCellByPosition(it) }.toCells()
+    }
 
+    fun existsOpenMine(): Boolean {
+        return value.any { row -> row.any { it.property.isOpen() && it.property.isMine() } }
+    }
+
+    fun getCloseCellCount(): Int {
+        return value.sumOf { row -> row.count { !it.property.isOpen() } }
+    }
+
+    private fun init(minePositionGenerator: MinePositionGenerator): Array<Array<Cell>> {
+        val minePositions = minePositionGenerator.generate()
         return with(property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
                     val position = Position.fromInt(row, column)
                     val validPositions = position.getValidAdjacentPositions(height, width)
-                    val cellProperty = CellProperty.of(minePositionSet.contains(position)) {
-                        validPositions.getMineCountCompareSet(minePositionSet)
+                    val cellProperty = CellProperty.of(minePositions.contains(position)) {
+                        validPositions.getAroundMineCount(minePositions)
                     }
                     Cell(position, cellProperty)
                 }.toTypedArray()
@@ -33,26 +37,9 @@ class MineSweeperMap(private val property: Property) {
         }
     }
 
-    private fun getMinePositionSet(): Set<Position> {
-        return with(property) {
-            val gameMapRange = 0 until height.value * width.value
-            val numberSet = mutableSetOf<Position>()
-
-            while (numberSet.size < mineCount.value) {
-                val randomNumber = Random.nextInt(gameMapRange)
-                val row = randomNumber / width.value + INDEX_VALUE_FOR_CONVENIENCE
-                val column = randomNumber % width.value + INDEX_VALUE_FOR_CONVENIENCE
-                numberSet.add(Position.fromInt(row, column))
-            }
-
-            numberSet.toSet()
-        }
-    }
-
     data class Property(
         val height: PositiveNumber,
         val width: PositiveNumber,
-        val mineCount: MineCountNumber,
     )
 
     companion object {

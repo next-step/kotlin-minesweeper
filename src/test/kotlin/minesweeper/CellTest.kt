@@ -15,7 +15,7 @@ class CellTest {
         val property = NormalCellProperty(AroundMineCount(0))
         val cell = Cell(position, property)
 
-        cell.property.isOpen.shouldBeInstanceOf<Boolean>()
+        cell.property.isOpen().shouldBeInstanceOf<Boolean>()
     }
 
     @Test
