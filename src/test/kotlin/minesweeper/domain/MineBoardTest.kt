@@ -8,6 +8,8 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.CellType.MINE
+import minesweeper.domain.cell.CellType.ONE
 import minesweeper.domain.cell.Cells
 import minesweeper.domain.cell.Coordinate
 import java.lang.IllegalStateException
@@ -79,6 +81,23 @@ class MineBoardTest : FunSpec({
                 ).toCells(),
             )
             mineBoard.open(Coordinate(0, 0))
+
+            val actual = mineBoard.isEnd
+            actual shouldBe true
+        }
+
+        test("지뢰를 open한 경우 isEnd가 true가 된다.") {
+            val mineBoard = MineBoard(
+                2,
+                2,
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ).toCells(),
+            )
+            mineBoard.open(Coordinate(1, 1))
 
             val actual = mineBoard.isEnd
             actual shouldBe true
