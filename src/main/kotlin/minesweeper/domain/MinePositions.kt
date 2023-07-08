@@ -3,6 +3,7 @@ package minesweeper.domain
 import kotlin.random.Random
 
 class MinePositions(val minePositions: List<MinePosition>) {
+    val mineCount: Int = minePositions.size
 
     companion object {
         fun from(rows: Rows, cols: Cols, mine: MineValue): MinePositions {

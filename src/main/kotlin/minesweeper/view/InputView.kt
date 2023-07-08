@@ -1,5 +1,7 @@
 package minesweeper.view
 
+const val POSITION_SPLIT_SYMBOL = ","
+
 fun enterCols(): Int {
     println("높이를 입력하세요.")
     return readln().toInt()
