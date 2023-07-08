@@ -1,12 +1,11 @@
 package domain
 
-class MinesWeeper(val boards: Map<Location, Cell>) {
+class MinesWeeper(val boards: List<Board>) {
 
     fun calculateCount() {
-        boards.keys.forEach {
-            val cell = boards[it]
-            if (cell is Basic) {
-                checkAround(it, cell)
+        boards.forEach {
+            if (it.cell is Basic) {
+                checkAround(it.location, it.cell)
             }
         }
     }
@@ -16,7 +15,8 @@ class MinesWeeper(val boards: Map<Location, Cell>) {
             val y = location.y + height
             aroundList.map { width ->
                 val x = location.x + width
-                if (!location.isSame(x, y) && boards[Location(y, x)] is Mine) {
+                val first = boards.firstOrNull { it.location.isSame(x, y) }
+                if (first != null && !location.isSame(x, y) && first.cell is Mine) {
                     basic.addCount()
                 }
             }
@@ -33,9 +33,10 @@ class MinesWeeper(val boards: Map<Location, Cell>) {
                 .flatMap { y ->
                     (LOCATION_START_NUM until width)
                         .map { x ->
-                            Location(y, x)
+                            val location = Location(y, x)
+                            Board(location, getCell(mines, location))
                         }
-                }.associateWith { getCell(mines, it) }
+                }
             return MinesWeeper(boards)
         }
 

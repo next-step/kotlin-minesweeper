@@ -25,7 +25,7 @@ internal class MinesWeeperTest {
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        game.boards.keys.size shouldBe 50
+        game.boards.size shouldBe 50
     }
 
     @Test
@@ -35,21 +35,22 @@ internal class MinesWeeperTest {
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        game.boards.values.count { it is Mine } shouldBe count
+        game.boards.count { it.cell is Mine } shouldBe count
     }
 
     @Test
     internal fun `주변의 지뢰수만큼 카운트가 올라간다`() {
-        val map = mapOf(
-            Location(0, 0) to Mine,
-            Location(0, 1) to Basic(),
-            Location(1, 0) to Mine,
-            Location(1, 1) to Mine
+        val list = listOf(
+            Board(Location(0, 0), Mine),
+            Board(Location(0, 1), Basic()),
+            Board(Location(1, 0), Mine),
+            Board(Location(1, 1), Mine)
         )
-        val game = MinesWeeper(map)
+        val game = MinesWeeper(list)
+
         game.calculateCount()
 
-        val basic: Basic = game.boards.getOrDefault(Location(0, 1)) { Basic() } as Basic
+        val basic: Basic = game.boards.first { it.location == Location(0, 1) }.cell as Basic
         basic.count shouldBe 3
     }
 }

@@ -18,7 +18,7 @@ object ResultView {
             .forEach { y ->
                 (LOCATION_START_NUM until width)
                     .forEach { x ->
-                        val cell = minesWeeper.boards[Location(y, x)]
+                        val cell = minesWeeper.boards.first { it.location == Location(y, x) }.cell
                         if (cell is Cell) {
                             print("${getPrintString(cell)} ")
                         }
