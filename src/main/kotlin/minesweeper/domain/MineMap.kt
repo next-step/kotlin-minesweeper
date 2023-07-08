@@ -8,18 +8,31 @@ data class MineMap(
     private val minePositionStrategy: MinePositionStrategy = RandomMinePositionStrategy(mineMapConfig)
 ) {
 
-    private val map: MutableList<MutableList<String>> = MutableList(mineMapConfig.height) {
-        MutableList(mineMapConfig.width) { EMPTY_SYMBOL }
+    private val map: MutableMap<Position, MapItem> = mutableMapOf()
+
+    init {
+        repeat(mineMapConfig.height) { y ->
+            repeat(mineMapConfig.width) { x ->
+                map[Position(x, y)] = Empty()
+            }
+        }
     }
 
     fun plantMine() {
         minePositionStrategy.getMinePositions().forEach {
-            map[it.y][it.x] = MINE_SYMBOL
+            map[it] = Mine()
         }
     }
 
     override fun toString(): String {
-        return map.joinToString("\n") { it.joinToString(" ") }
+        return buildString {
+            repeat(mineMapConfig.height) { y ->
+                repeat(mineMapConfig.width) { x ->
+                    append("${map[Position(x, y)]?.item} ")
+                }
+                appendLine()
+            }
+        }
     }
 
     companion object {
