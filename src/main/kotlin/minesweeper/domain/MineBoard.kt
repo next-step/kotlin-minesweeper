@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.Coordinate
 import minesweeper.domain.strategy.MinePlacementStrategy
 import minesweeper.domain.strategy.RandomMinePlacementStrategy
 
@@ -10,7 +11,11 @@ class MineBoard(
     private val width: Int,
     val cells: Cells,
     private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
+    isEnd: Boolean = false,
 ) {
+    var isEnd: Boolean = isEnd
+        private set
+
     init {
         require(height >= MINIMUM_HEIGHT) { "지뢰찾기맵 높이는 ${MINIMUM_HEIGHT}이상이어야 합니다." }
         require(width >= MINIMUM_WIDTH) { "지뢰찾기맵 너비는 ${MINIMUM_WIDTH}이상이어야 합니다." }
@@ -18,6 +23,10 @@ class MineBoard(
 
     fun placeMine(mineCount: Int) {
         cells.placeMine(mineCount, minePlacementStrategy)
+    }
+
+    fun open(coordinate: Coordinate) {
+        check(isEnd.not()) { "이미 종료된 게임은 진행이 불가능합니다." }
     }
 
     fun currentBoard(): CellInfos = CellInfos(height = height, values = cells.cellInfos())

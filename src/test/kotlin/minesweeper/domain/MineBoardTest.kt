@@ -9,6 +9,8 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.MineBoard.Companion.generateNewMineBoard
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
+import minesweeper.domain.cell.Coordinate
+import java.lang.IllegalStateException
 
 private fun List<Cell>.toCells() = Cells(this)
 
@@ -45,6 +47,24 @@ class MineBoardTest : FunSpec({
                 )
             }
             exception shouldHaveMessage "지뢰찾기맵 너비는 1이상이어야 합니다."
+        }
+    }
+
+    context("open") {
+        test("종료된 게임에서 open 요청을 할 경우 예외가 발생한다.") {
+            val mineBoard = MineBoard(
+                2,
+                2,
+                listOf(
+                    Cell(0, 0),
+                    Cell(0, 1),
+                    Cell(1, 0),
+                    Cell(1, 1),
+                ).toCells(),
+                isEnd = true,
+            )
+            val exception = shouldThrowExactly<IllegalStateException> { mineBoard.open(Coordinate(0, 1)) }
+            exception shouldHaveMessage "이미 종료된 게임은 진행이 불가능합니다."
         }
     }
 
