@@ -28,6 +28,8 @@ class FilledElements(elements: Map<Position, MineMark>) {
             .map { y -> Position(x, y) }
     }
 
+    private fun zeroToRange(count: Int): IntRange = (0..count)
+
     private fun filteredMineCountElements(elements: Map<Position, MineMark>): Collection<MineMark> {
         return marks(elements).filter { it.isMineCount }
     }
@@ -70,8 +72,6 @@ class FilledElements(elements: Map<Position, MineMark>) {
         validateContainsPosition(position)
         return elements[position]!!
     }
-
-    private fun zeroToRange(count: Int): IntRange = (0..count)
 
     private fun validateContainsPosition(position: Position) {
         if (!elements.containsKey(position)) {

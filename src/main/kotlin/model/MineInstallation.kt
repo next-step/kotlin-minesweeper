@@ -21,6 +21,20 @@ data class MineInstallation(
         )
     }
 
+    private fun validateMineBoardSize(filledElements: FilledElements) {
+        require(count <= filledElements.size) {
+            "install count must be less than or equal to board size. mine board size(`${filledElements.size}`), mineCount(`$count`)"
+        }
+    }
+
+    private fun distinctPositions(filledElements: FilledElements): Collection<Position> {
+        val positions: MutableSet<Position> = mutableSetOf()
+        while (positions.size < count) {
+            positions.add(nextPosition(filledElements.maxXPosition, filledElements.maxYPosition))
+        }
+        return positions
+    }
+
     private fun validatePositionContains(filledElements: FilledElements, positions: Collection<Position>) {
         check(filledElements.containsAll(positions)) {
             "positions must contain position. but provided positions(`$positions`) and elements(`$filledElements`)"
@@ -35,19 +49,5 @@ data class MineInstallation(
                 mineMark
             }
         }
-    }
-
-    private fun validateMineBoardSize(filledElements: FilledElements) {
-        require(count <= filledElements.size) {
-            "install count must be less than or equal to board size. mine board size(`${filledElements.size}`), mineCount(`$count`)"
-        }
-    }
-
-    private fun distinctPositions(filledElements: FilledElements): Collection<Position> {
-        val positions: MutableSet<Position> = mutableSetOf()
-        while (positions.size < count) {
-            positions.add(nextPosition(filledElements.maxXPosition, filledElements.maxYPosition))
-        }
-        return positions
     }
 }
