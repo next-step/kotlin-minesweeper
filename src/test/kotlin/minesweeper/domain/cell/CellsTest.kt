@@ -133,8 +133,9 @@ class CellsTest : FunSpec({
                 Cell(2, 1, ONE),
                 Cell(2, 2, MINE),
             )
-            cells.open(Coordinate(0, 0))
+            val actual = cells.open(Coordinate(0, 0))
 
+            actual shouldBe false
             cells.values[Coordinate(0, 0)]!!.isDisplay shouldBe true
             cells.values[Coordinate(0, 1)]!!.isDisplay shouldBe true
             cells.values[Coordinate(0, 2)]!!.isDisplay shouldBe true
@@ -144,6 +145,17 @@ class CellsTest : FunSpec({
             cells.values[Coordinate(2, 0)]!!.isDisplay shouldBe true
             cells.values[Coordinate(2, 1)]!!.isDisplay shouldBe true
             cells.values[Coordinate(2, 2)]!!.isDisplay shouldBe false
+        }
+
+        test("열린 좌표가 mine이면 true를 반환한디.") {
+            val cells = Cells(
+                Cell(0, 0, ONE),
+                Cell(0, 1, ONE),
+                Cell(1, 0, ONE),
+                Cell(1, 1, MINE),
+            )
+            val actual = cells.open(Coordinate(1, 1))
+            actual shouldBe true
         }
     }
 })

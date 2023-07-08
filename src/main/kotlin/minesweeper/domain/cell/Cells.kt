@@ -24,15 +24,15 @@ value class Cells(
             .forEach { calculate(it.value, mineCoordinates) }
     }
 
-    fun open(coordinate: Coordinate) {
+    fun open(coordinate: Coordinate): Boolean {
         val cell = values[coordinate]
         require(cell != null) { "존재하지 않는 좌표는 입력될 수 없습니다." }
         cell.changeToDisplay()
         if (cell.cellType != ZERO) {
-            cell.changeToDisplay()
-            return
+            return cell.isMine()
         }
         openAroundCell(cell)
+        return false
     }
 
     private fun openAroundCell(cell: Cell) {
