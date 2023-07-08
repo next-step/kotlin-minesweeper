@@ -18,25 +18,17 @@ data class MineMap(
         }
     }
 
+    val height: Int = mineMapConfig.height
+
+    val width: Int = mineMapConfig.width
+
     fun plantMine() {
         minePositionStrategy.getMinePositions().forEach {
             map[it] = Mine()
         }
     }
 
-    override fun toString(): String {
-        return buildString {
-            repeat(mineMapConfig.height) { y ->
-                repeat(mineMapConfig.width) { x ->
-                    append("${map[Position(x, y)]?.item} ")
-                }
-                appendLine()
-            }
-        }
-    }
-
-    companion object {
-        const val MINE_SYMBOL = "*"
-        const val EMPTY_SYMBOL = "C"
+    fun getCurrentMap(): Map<Position, MapItem> {
+        return map.toMap()
     }
 }
