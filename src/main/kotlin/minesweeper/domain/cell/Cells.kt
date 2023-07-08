@@ -64,8 +64,9 @@ value class Cells(
             .filterNot { it.isDisplay }
 
     private fun openAroundNearZeroCell(nearCells: List<Cell>): Int {
-        val nearZeroCell = nearCells.filter { it.cellType == ZERO }
-        return nearZeroCell.count() + nearZeroCell.map { openAroundCell(it) }.count()
+        val nearZeroCell = nearCells
+            .filter { it.cellType == ZERO }
+        return nearZeroCell.sumOf { openAroundCell(it) }
     }
 
     companion object {

@@ -66,6 +66,23 @@ class MineBoardTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { mineBoard.open(Coordinate(0, 1)) }
             exception shouldHaveMessage "이미 종료된 게임은 진행이 불가능합니다."
         }
+
+        test("모든 cell을 open한 경우 isEnd가 true가 된다.") {
+            val mineBoard = MineBoard(
+                2,
+                2,
+                listOf(
+                    Cell(0, 0),
+                    Cell(0, 1),
+                    Cell(1, 0),
+                    Cell(1, 1),
+                ).toCells(),
+            )
+            mineBoard.open(Coordinate(0, 0))
+
+            val actual = mineBoard.isEnd
+            actual shouldBe true
+        }
     }
 
     context("currentBoard") {

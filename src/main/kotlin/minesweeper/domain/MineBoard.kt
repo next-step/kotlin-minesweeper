@@ -12,7 +12,11 @@ class MineBoard(
     val cells: Cells,
     private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
     isEnd: Boolean = false,
+    toFindCellCount: Int = height * width,
 ) {
+    var toFindCellCount: Int = toFindCellCount
+        private set
+
     var isEnd: Boolean = isEnd
         private set
 
@@ -27,6 +31,11 @@ class MineBoard(
 
     fun open(coordinate: Coordinate) {
         check(isEnd.not()) { "이미 종료된 게임은 진행이 불가능합니다." }
+        val cellOpenResult = cells.open(coordinate)
+        toFindCellCount -= cellOpenResult
+        if (cellOpenResult == 0 || toFindCellCount == 0) {
+            isEnd = true
+        }
     }
 
     fun currentBoard(): CellInfos = CellInfos(height = height, values = cells.cellInfos())
