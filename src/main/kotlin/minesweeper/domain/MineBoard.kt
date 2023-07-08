@@ -15,12 +15,13 @@ class MineBoard(
 
     fun placeMine(mineCount: Int) {
         cells.placeMine(mineCount, minePlacementStrategy)
+        mineBoardInfo.removeCellCount(mineCount)
     }
 
     fun open(coordinate: Coordinate) {
         check(mineBoardInfo.isEnd().not()) { "이미 종료된 게임은 진행이 불가능합니다." }
         val cellOpenResult = cells.open(coordinate)
-        mineBoardInfo.toFindCellCount -= cellOpenResult
+        mineBoardInfo.removeCellCount(cellOpenResult)
         checkBoardStatus(cellOpenResult)
     }
 

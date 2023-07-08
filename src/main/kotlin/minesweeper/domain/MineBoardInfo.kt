@@ -7,12 +7,22 @@ import minesweeper.domain.MineBoardStatus.WIN
 class MineBoardInfo(
     val height: Int,
     val width: Int,
-    var toFindCellCount: Int = height * width,
-    var mineBoardStatus: MineBoardStatus = IN_PROGRESS,
+    toFindCellCount: Int = height * width,
+    mineBoardStatus: MineBoardStatus = IN_PROGRESS,
 ) {
+    var toFindCellCount: Int = toFindCellCount
+        private set
+
+    var mineBoardStatus: MineBoardStatus = mineBoardStatus
+        private set
+
     init {
         require(height >= MINIMUM_HEIGHT) { "지뢰찾기맵 높이는 ${MINIMUM_HEIGHT}이상이어야 합니다." }
         require(width >= MINIMUM_WIDTH) { "지뢰찾기맵 너비는 ${MINIMUM_WIDTH}이상이어야 합니다." }
+    }
+
+    fun removeCellCount(cellCount: Int) {
+        toFindCellCount -= cellCount
     }
 
     fun isEnd(): Boolean = mineBoardStatus.isEnd

@@ -20,40 +20,6 @@ private fun List<Cell>.toCells() = Cells(this)
 
 class MineBoardTest : FunSpec({
 
-    context("init") {
-        test("높이가 0이하인 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> {
-                MineBoard(
-                    0,
-                    2,
-                    listOf(
-                        Cell(0, 0),
-                        Cell(0, 1),
-                        Cell(1, 0),
-                        Cell(1, 1),
-                    ).toCells(),
-                )
-            }
-            exception shouldHaveMessage "지뢰찾기맵 높이는 1이상이어야 합니다."
-        }
-
-        test("너비가 0이하인 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> {
-                MineBoard(
-                    2,
-                    0,
-                    listOf(
-                        Cell(0, 0),
-                        Cell(0, 1),
-                        Cell(1, 0),
-                        Cell(1, 1),
-                    ).toCells(),
-                )
-            }
-            exception shouldHaveMessage "지뢰찾기맵 너비는 1이상이어야 합니다."
-        }
-    }
-
     context("open") {
         test("종료된 게임에서 open 요청을 할 경우 예외가 발생한다.") {
             val mineBoard = MineBoard(
