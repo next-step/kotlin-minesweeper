@@ -25,7 +25,7 @@ class CellTest : FunSpec({
             row(MINE, true),
         ) { input, expected ->
             test("${input}타입인 cell은 mine이 ${expected}이다.") {
-                val actual = Cell(0, 0, input).isMine()
+                val actual = Cell(0, 0, input, true).isMine()
                 actual shouldBe expected
             }
         }
@@ -46,14 +46,8 @@ class CellTest : FunSpec({
     }
 
     context("changeToMine") {
-        test("이미 지뢰라면 예외가 발생한다.") {
-            val cell = Cell(0, 0, MINE)
-            val exception = shouldThrowExactly<IllegalStateException> { cell.changeToMine() }
-            exception shouldHaveMessage "지뢰는 지뢰로 변경할 수 없습니다."
-        }
-
         test("지뢰로 변경한다.") {
-            val cell = Cell(0, 0, UNKNOWN)
+            val cell = Cell(0, 0, UNKNOWN, true)
             cell.changeToMine()
             val actual = cell.cellType
 

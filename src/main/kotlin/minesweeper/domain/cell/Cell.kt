@@ -27,7 +27,6 @@ class Cell(
     fun isMine(): Boolean = cellType == MINE
 
     fun changeToMine() {
-        check(cellType != MINE) { "지뢰는 지뢰로 변경할 수 없습니다." }
         cellType = MINE
     }
 
