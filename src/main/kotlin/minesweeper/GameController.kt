@@ -29,7 +29,6 @@ fun readyMine(board: GameBoard) {
 
 fun playGame(board: GameBoard) {
     OutputView.showStart()
-    var continuable = true
     do {
         val positions = Inputview.askOpenPosition()
         val height = positions[0]
@@ -37,12 +36,10 @@ fun playGame(board: GameBoard) {
         val pin = board.openPin(height, width)
         checkOpenMinePin(pin)
         OutputView.showMineSweeper(board)
-        continuable = checkOpenAllNormalPin(board)
-    } while (continuable)
+    } while (isOpenAllNormalPin(board))
 }
-
-fun checkOpenAllNormalPin(board: GameBoard): Boolean {
-    if (!board.askContinuable()) {
+fun isOpenAllNormalPin(board: GameBoard): Boolean {
+    if (board.isNotContinuable()) {
         OutputView.showWin()
         return false
     }

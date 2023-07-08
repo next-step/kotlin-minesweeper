@@ -30,12 +30,12 @@ class GameBoard private constructor(
         return pin
     }
 
-    fun askContinuable(): Boolean {
+    fun isNotContinuable(): Boolean {
         val totalPin = size.height * size.width
         val openPinCount = pins.countOpenedPin()
         val minePinCount = pins.countMinePin()
 
-        return totalPin != (openPinCount + minePinCount)
+        return totalPin == (openPinCount + minePinCount)
     }
 
     private fun openSurroundPin(height: Int, width: Int) {
