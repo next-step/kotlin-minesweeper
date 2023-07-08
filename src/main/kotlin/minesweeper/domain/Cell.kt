@@ -3,15 +3,18 @@ package minesweeper.domain
 sealed class Cell(
     val position: Position,
 ) {
-    abstract fun open()
+    var isOpened: Boolean = false
+        private set
+
+    fun open() {
+        isOpened = true
+    }
 }
 
 class Mine(
     position: Position,
 ) : Cell(position) {
     constructor(x: Int, y: Int) : this(Position(x, y))
-
-    override fun open() = Unit
 }
 
 class Normal(
@@ -20,10 +23,7 @@ class Normal(
 ) : Cell(position) {
     constructor(x: Int, y: Int) : this(Position(x, y), 0)
 
-    var isOpened = false
-        private set
-
-    override fun open() {
-        isOpened = true
+    fun isAdjacentMineCountZero(): Boolean {
+        return adjacentMineCount == 0
     }
 }

@@ -4,6 +4,8 @@ class Board(
     val cells: List<Cells>,
     private val minePositions: List<Position>,
 ) {
+    private val allNormalCount: Int
+    private var openedCount: Int = 0
     private var status: Status = Status.PLAYING
 
     private val height: Int
@@ -16,6 +18,8 @@ class Board(
         validateHeightIsPositive()
         validateWidthIsPositive()
         validateSameWidth()
+
+        allNormalCount = (height * width) - minePositions.size
     }
 
     private fun validateHeightIsPositive() {
@@ -31,19 +35,19 @@ class Board(
     }
 
     fun open(position: Position) {
-        check(isNotGameOver()) { "게임이 종료되었습니다." }
-
         if (isMine(position)) {
             lose()
             return
         }
 
-        val cell = cells[position].also { it.open() }
-        cell.open()
-
+        val cell = cells[position].also { it.openAndIncreaseOpenedCount() }
         val adjacentNormalCells = getAdjacentNormalCells(cell)
-        open(adjacentNormalCells)
-        openAdjacentNormalCells(adjacentNormalCells)
+        adjacentNormalCells.openIfAdjacentMineCountNotZero()
+        adjacentNormalCells.openIfAdjacentMineCountZero()
+
+        if (allOpened()) {
+            win()
+        }
     }
 
     private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
@@ -53,15 +57,22 @@ class Board(
             .filter { !it.isOpened }
     }
 
-    private fun open(adjacentNormalCells: List<Normal>) {
-        adjacentNormalCells
-            .forEach { it.open() }
+    private fun List<Normal>.openIfAdjacentMineCountNotZero() {
+        filter { !it.isAdjacentMineCountZero() }
+            .forEach { it.openAndIncreaseOpenedCount() }
     }
 
-    private fun openAdjacentNormalCells(adjacentNormalCells: List<Normal>) {
-        adjacentNormalCells
-            .filter { it.adjacentMineCount == 0 }
+    private fun List<Normal>.openIfAdjacentMineCountZero() {
+        filter { it.isAdjacentMineCountZero() }
             .forEach { open(it.position) }
+    }
+
+    private fun Cell.openAndIncreaseOpenedCount() {
+        if (isOpened) {
+            return
+        }
+        this.open()
+        openedCount++
     }
 
     fun win() {
@@ -88,13 +99,15 @@ class Board(
         return minePositions.contains(position)
     }
 
+    private fun allOpened(): Boolean {
+        return openedCount == allNormalCount
+    }
+
     private operator fun List<List<Cell>>.get(position: Position): Cell {
         return this[position.y][position.x]
     }
 
     enum class Status {
-        WIN,
-        LOSE,
-        PLAYING,
+        WIN, LOSE, PLAYING,
     }
 }
