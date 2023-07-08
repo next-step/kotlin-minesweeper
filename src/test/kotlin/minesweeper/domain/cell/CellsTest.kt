@@ -120,5 +120,30 @@ class CellsTest : FunSpec({
             cells.values[Coordinate(1, 0)]!!.isDisplay shouldBe false
             cells.values[Coordinate(1, 1)]!!.isDisplay shouldBe true
         }
+
+        test("현재의 좌표가 열리고, 0이면 지뢰를 제외한 모든 좌표가 열린다.") {
+            val cells = Cells(
+                Cell(0, 0, ZERO),
+                Cell(0, 1, ZERO),
+                Cell(0, 2, ZERO),
+                Cell(1, 0, ZERO),
+                Cell(1, 1, ONE),
+                Cell(1, 2, ONE),
+                Cell(2, 0, ZERO),
+                Cell(2, 1, ONE),
+                Cell(2, 2, MINE),
+            )
+            cells.open(Coordinate(0, 0))
+
+            cells.values[Coordinate(0, 0)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(0, 1)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(0, 2)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(1, 0)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(1, 1)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(1, 2)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(2, 0)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(2, 1)]!!.isDisplay shouldBe true
+            cells.values[Coordinate(2, 2)]!!.isDisplay shouldBe false
+        }
     }
 })

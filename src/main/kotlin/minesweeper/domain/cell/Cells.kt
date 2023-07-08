@@ -27,10 +27,21 @@ value class Cells(
     fun open(coordinate: Coordinate) {
         val cell = values[coordinate]
         require(cell != null) { "존재하지 않는 좌표는 입력될 수 없습니다." }
+        cell.changeToDisplay()
         if (cell.cellType != ZERO) {
             cell.changeToDisplay()
             return
         }
+        openAroundCell(cell)
+    }
+
+    private fun openAroundCell(cell: Cell) {
+        val nearCells = CoordinateFinder.nearCoordinates(cell)
+            .mapNotNull { values[it] }
+            .filterNot { it.isDisplay }
+        nearCells.forEach { it.changeToDisplay() }
+        nearCells.filter { it.cellType == ZERO }
+            .forEach { openAroundCell(it) }
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
