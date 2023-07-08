@@ -43,8 +43,4 @@ class Cell(
         check(isDisplay.not()) { "이미 Display 상태입니다." }
         this.isDisplay = true
     }
-
-    override fun toString(): String {
-        return "Cell(coordinate=$coordinate, cellType=$cellType, isDisplay=$isDisplay)"
-    }
 }
