@@ -8,8 +8,8 @@ object MineCounter {
     )
 
     fun calculateNeighborMines(board: MineBoard) {
-        val height = board.getHeight
-        val width = board.getWidth
+        val height = board.height
+        val width = board.width
 
         (0 until height).forEach { i ->
             (0 until width).forEach { j ->

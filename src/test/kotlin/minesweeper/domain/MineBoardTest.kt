@@ -19,8 +19,8 @@ class MineBoardTest : BehaviorSpec({
                 board.shouldNotBeNull()
             }
             And("요청한 사이즈대로 만들어진다.") {
-                board.getHeight shouldBe 5
-                board.getWidth shouldBe 5
+                board.height shouldBe 5
+                board.width shouldBe 5
             }
             And("생성된 보드의 지뢰 총 개수는 입력과 동일하다.") {
                 board.getBoardInfo.sumOf { row -> row.rowInfo.count { cell -> cell.type == CellType.Mine } } shouldBe 5

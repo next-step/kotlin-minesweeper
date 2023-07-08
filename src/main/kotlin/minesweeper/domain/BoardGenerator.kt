@@ -16,14 +16,15 @@ object BoardGenerator {
         MineCounter.calculateNeighborMines(board)
         return board
     }
+
     private fun createBoard(height: Int, width: Int): MineBoard {
-        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(0,CellType.Empty) }) }
+        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(0, CellType.Empty) }) }
         return MineBoard(boardInfo)
     }
 
     private fun placeMines(board: MineBoard, mineCount: Int) {
-        val height = board.getHeight
-        val width = board.getWidth
+        val height = board.height
+        val width = board.width
 
         val randomPoints = mutableListOf<Point>()
         for (i in 0 until height) {
