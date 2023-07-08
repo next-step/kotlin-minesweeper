@@ -26,7 +26,7 @@ class MineSweeperMap(val property: Property, minePositionGenerator: MinePosition
         return with(property) {
             (MAP_START_INDEX_VALUE..height.value).map { row ->
                 (MAP_START_INDEX_VALUE..width.value).map { column ->
-                    val position = Position.fromInt(row, column)
+                    val position = Position.of(row, column)
                     val validPositions = position.getValidAdjacentPositions(height, width)
                     val cellProperty = CellPropertyFactory.create(minePositions.contains(position)) {
                         validPositions.getAroundMineCount(minePositions)

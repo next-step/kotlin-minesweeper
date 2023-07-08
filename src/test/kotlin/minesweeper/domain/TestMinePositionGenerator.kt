@@ -9,7 +9,7 @@ import domain.toPositiveNumber
 
 class TestMinePositionGenerator(private vararg val positionValues: Pair<Int, Int>) : MinePositionGenerator {
     override fun generate(): Positions {
-        return positionValues.map { (row, column) -> Position.fromInt(row, column) }.toPositions()
+        return positionValues.map { (row, column) -> Position.of(row, column) }.toPositions()
     }
 
     fun getMineCount(height: Int, width:Int): MineCountNumber {

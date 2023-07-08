@@ -10,7 +10,7 @@ class OpenPositionInputView : InputView<Pair<Int, Int>, Position>() {
     init {
         print(message)
         value = readValue().run {
-            Position.fromInt(first, second)
+            Position.of(first, second)
         }
     }
 

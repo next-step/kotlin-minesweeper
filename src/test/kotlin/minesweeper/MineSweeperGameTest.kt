@@ -44,7 +44,7 @@ class MineSweeperGameTest {
         val height = 3
         val width = 3
         val mapProperty = MapProperty(height, width)
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val minePositionGenerator = TestMinePositionGenerator(1 to 2)
         val mineCount = minePositionGenerator.getMineCount(height, width)
 
@@ -75,7 +75,7 @@ class MineSweeperGameTest {
         val height = 3
         val width = 3
         val mapProperty = MapProperty(height, width)
-        val position = Position.fromInt(3, 2)
+        val position = Position.of(3, 2)
         val minePositionGenerator = TestMinePositionGenerator(
             1 to 1,
             1 to 3,
@@ -109,7 +109,7 @@ class MineSweeperGameTest {
         val height = 3
         val width = 3
         val mapProperty = MapProperty(height, width)
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val minePositionGenerator = TestMinePositionGenerator(1 to 1)
         val mineCount = minePositionGenerator.getMineCount(height, width)
 
@@ -133,7 +133,7 @@ class MineSweeperGameTest {
         val height = 2
         val width = 2
         val mapProperty = MapProperty(height, width)
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val minePositionGenerator = TestMinePositionGenerator(
             1 to 2,
             2 to 1,

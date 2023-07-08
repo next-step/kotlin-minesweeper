@@ -13,12 +13,12 @@ data class Position(val row: PositiveNumber, val column: PositiveNumber) {
                 row in MineSweeperMap.MAP_START_INDEX_VALUE..height.value &&
                     column in MineSweeperMap.MAP_START_INDEX_VALUE..width.value
             }
-            .map { fromInt(it.first, it.second) }
+            .map { of(it.first, it.second) }
             .toPositions()
     }
 
     companion object {
-        fun fromInt(row: Int, column: Int): Position {
+        fun of(row: Int, column: Int): Position {
             return Position(row.toPositiveNumber(), column.toPositiveNumber())
         }
     }

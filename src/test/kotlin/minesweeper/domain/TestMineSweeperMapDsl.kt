@@ -20,7 +20,7 @@ class TestMineSweeperMapBuilder(
         val cells = testCells.mapIndexed { index, value ->
             val column = index + 1
             val isMine = value is Mine
-            val validPositions = Position.fromInt(row, column)
+            val validPositions = Position.of(row, column)
                 .getValidAdjacentPositions(height.toPositiveNumber(), width.toPositiveNumber())
             val aroundMineCount = validPositions.getAroundMineCount(minePositions)
             makeCell(row, column, isMine, aroundMineCount).apply {
@@ -32,7 +32,7 @@ class TestMineSweeperMapBuilder(
     }
 
     private fun makeCell(row: Int, column: Int, isMine: Boolean, aroundMineCount: AroundMineCount) =
-        Cell(Position.fromInt(row, column), CellPropertyFactory.create(isMine) { aroundMineCount })
+        Cell(Position.of(row, column), CellPropertyFactory.create(isMine) { aroundMineCount })
 
     fun build(): Array<Array<Cell>> {
         return TestMineSweeperMap(rows).value

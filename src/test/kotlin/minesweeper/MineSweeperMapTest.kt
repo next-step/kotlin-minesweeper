@@ -17,7 +17,7 @@ class MineSweeperMapTest {
         val width = PositiveNumber(6)
         val mapProperty = MineSweeperMap.Property(height, width)
 
-        val position = Position.fromInt(2, 2)
+        val position = Position.of(2, 2)
         val mineSweeperMap = MineSweeperMap(mapProperty, TestMinePositionGenerator())
         val baseCell = mineSweeperMap.getCellByPosition(position)
 
@@ -45,7 +45,7 @@ class MineSweeperMapTest {
         val width = PositiveNumber(2)
         val mapProperty = MineSweeperMap.Property(height, width)
 
-        val position = Position.fromInt(2, 2)
+        val position = Position.of(2, 2)
         val mineSweeperMap = MineSweeperMap(mapProperty, TestMinePositionGenerator(1 to 1))
         val cell = mineSweeperMap.getCellByPosition(position)
 
@@ -64,7 +64,7 @@ class MineSweeperMapTest {
         val width = PositiveNumber(2)
         val mapProperty = MineSweeperMap.Property(height, width)
 
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val openMineSweeperMap = MineSweeperMap(mapProperty, TestMinePositionGenerator(1 to 1))
         val closeMineSweeperMap = MineSweeperMap(mapProperty, TestMinePositionGenerator(1 to 1))
 
@@ -78,5 +78,5 @@ class MineSweeperMapTest {
     }
 
     private fun validPositionsOf(vararg positionValues: Pair<Int, Int>) =
-        positionValues.map { (row, column) -> Position.fromInt(row, column) }.toPositions()
+        positionValues.map { (row, column) -> Position.of(row, column) }.toPositions()
 }

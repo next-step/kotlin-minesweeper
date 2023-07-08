@@ -13,7 +13,7 @@ class RandomMinePositionGenerator private constructor(private val property: Prop
                 val randomNumber = kotlin.random.Random.nextInt(gameMapRange)
                 val row = randomNumber / width.value + MineSweeperMap.INDEX_VALUE_FOR_CONVENIENCE
                 val column = randomNumber % width.value + MineSweeperMap.INDEX_VALUE_FOR_CONVENIENCE
-                numberSet.add(Position.fromInt(row, column))
+                numberSet.add(Position.of(row, column))
             }
 
             numberSet.toList()

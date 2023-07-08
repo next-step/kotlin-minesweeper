@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class CellTest {
     @Test
     fun `각 Cell은 open 여부를 구분할 수 있어야 한다`() {
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val property = NormalCellProperty(AroundMineCount(0))
         val cell = Cell(position, property)
 
@@ -20,7 +20,7 @@ class CellTest {
 
     @Test
     fun `각 Cell은 주변 8개 좌표에 지뢰가 없는지 여부를 반환할 수 있어야 한다`() {
-        val position = Position.fromInt(1, 1)
+        val position = Position.of(1, 1)
         val cleanProperty = NormalCellProperty(AroundMineCount(0))
         val notCleanProperty = NormalCellProperty(AroundMineCount(1))
 
