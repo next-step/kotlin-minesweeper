@@ -11,6 +11,14 @@ import minesweeper.domain.cell.CellType.UNKNOWN
 
 class CellTest : FunSpec({
 
+    context("init") {
+        test("초기 isDisplay는 false이다.") {
+            val actual = Cell(0, 0).isDisplay
+
+            actual shouldBe false
+        }
+    }
+
     context("isMine") {
         forAll(
             row(UNKNOWN, false),

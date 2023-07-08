@@ -6,7 +6,7 @@ import minesweeper.domain.cell.CellType.ZERO
 class Cell(
     val coordinate: Coordinate,
     cellType: CellType = ZERO,
-    private val isDisplay: Boolean = true,
+    val isDisplay: Boolean = false,
 ) {
     var cellType: CellType = cellType
         get() = cellType(field)
