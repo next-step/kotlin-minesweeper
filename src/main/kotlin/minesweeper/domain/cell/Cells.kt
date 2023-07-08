@@ -11,6 +11,8 @@ value class Cells(
 ) {
     constructor(cells: List<Cell>) : this(cells.associateBy { it.coordinate })
 
+    constructor(vararg cells: Cell) : this(cells.associateBy { it.coordinate })
+
     fun placeMine(mineCount: Int, minePlacementStrategy: MinePlacementStrategy) {
         validateMineCount(mineCount)
         repeat(mineCount) { minePlacementStrategy.findPlantTargetCell(values).changeToMine() }
@@ -19,6 +21,10 @@ value class Cells(
             .toSet()
         values.filterNot { it.value.isMine() }
             .forEach { calculate(it.value, mineCoordinates) }
+    }
+
+    fun open(coordinate: Coordinate) {
+        require(values.contains(coordinate)) { "존재하지 않는 좌표는 입력될 수 없습니다." }
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
