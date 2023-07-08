@@ -10,11 +10,9 @@ internal class MineMapTest {
         val height = 10
         val width = 10
         val numOfMine = height * width - 1
-        val mineMap = MineMap(height, width, numOfMine)
+        val mineMap = MineMapGenerator.createMineMap(height, width, numOfMine)
 
-        mineMap.height shouldBe height
-        mineMap.width shouldBe width
-        mineMap.numOfMine shouldBe numOfMine
+        mineMap.elements.flatten().size shouldBe height * width
 
     }
 
@@ -23,6 +21,6 @@ internal class MineMapTest {
         val height = 10
         val width = 10
         val numOfMine = height * width + 1
-        shouldThrow<IllegalArgumentException> { MineMap(height, width, numOfMine) }
+        shouldThrow<IllegalArgumentException> { MineMapGenerator.createMineMap(height, width, numOfMine) }
     }
 }

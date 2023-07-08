@@ -1,4 +1,5 @@
-import domain.MineMap
+import domain.MineMapGenerator
+import view.DisplayView
 import view.InputView
 
 class MineSweeperGame {
@@ -6,7 +7,10 @@ class MineSweeperGame {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val numOfMine = InputView.inputMine()
-        val mineMap = MineMap(height, width, numOfMine)
+
+        val mineMap = MineMapGenerator.createMineMap(height, width, numOfMine)
+
+        DisplayView.displayMap(mineMap)
     }
 }
 
