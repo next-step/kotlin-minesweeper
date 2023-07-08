@@ -3,8 +3,8 @@ package minesweeper.domain.cell
 import minesweeper.domain.CellInfo
 import minesweeper.domain.CoordinateFinder
 import minesweeper.domain.cell.CellType.Companion.toCellType
-import minesweeper.domain.cell.CellType.ZERO
 import minesweeper.domain.strategy.MinePlacementStrategy
+import java.lang.IllegalArgumentException
 
 @JvmInline
 value class Cells(
@@ -25,16 +25,8 @@ value class Cells(
     }
 
     fun open(coordinate: Coordinate): Int {
-        val cell = values[coordinate]
-        require(cell != null) { "존재하지 않는 좌표는 입력될 수 없습니다." }
-        cell.changeToDisplay()
-        if (cell.isMine()) {
-            return 0
-        }
-        if (cell.isZero().not()) {
-            return 1
-        }
-        return openAroundCell(cell) + 1
+        val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
+        return open(cell)
     }
 
     fun cellInfos(): List<CellInfo> = values.map { CellInfo.from(it.value) }
@@ -50,6 +42,17 @@ value class Cells(
         val cellType = nearCoordinates.count { mineCoordinates.contains(it) }
             .toCellType()
         cell.changeToCellType(cellType)
+    }
+
+    private fun open(cell: Cell): Int {
+        cell.changeToDisplay()
+        if (cell.isMine()) {
+            return 0
+        }
+        if (cell.isZero().not()) {
+            return 1
+        }
+        return openAroundCell(cell) + 1
     }
 
     private fun openAroundCell(cell: Cell): Int {
