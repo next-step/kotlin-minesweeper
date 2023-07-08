@@ -17,6 +17,17 @@ class FilledElements(elements: Map<Position, MineMark>) {
     val isClosedMineCountAny: Boolean by lazy { filteredMineCountElements(elements).any { !it.isOpened } }
     val isClosedMineAll: Boolean by lazy { filteredMineElements(elements).all { !it.isOpened } }
 
+    private fun isAllFilled(elements: Map<Position, MineMark>): Boolean {
+        return zeroToRange(positions(elements).maxOf { it.x })
+            .flatMap { x -> positions(x, positions(elements).maxOf { it.y }) }
+            .all { elements.containsKey(it) }
+    }
+
+    private fun positions(x: Int, maxY: Int): Collection<Position> {
+        return zeroToRange(maxY)
+            .map { y -> Position(x, y) }
+    }
+
     private fun filteredMineCountElements(elements: Map<Position, MineMark>): Collection<MineMark> {
         return marks(elements).filter { it.isMineCount }
     }
@@ -25,8 +36,20 @@ class FilledElements(elements: Map<Position, MineMark>) {
         return marks(elements).filter { it.isMine }
     }
 
+    private fun marks(elements: Map<Position, MineMark>): Collection<MineMark> {
+        return elements.values
+    }
+
+    private fun positions(elements: Map<Position, MineMark>): Collection<Position> {
+        return elements.keys
+    }
+
     fun contains(position: Position): Boolean {
         return elements.containsKey(position)
+    }
+
+    fun containsAll(positions: Collection<Position>): Boolean {
+        return elements.keys.containsAll(positions)
     }
 
     fun doesNotContainsMark(mark: MineMark): Boolean {
@@ -41,25 +64,6 @@ class FilledElements(elements: Map<Position, MineMark>) {
         return elements.entries.count {
             predicate(it.key, it.value)
         }
-    }
-
-    private fun marks(elements: Map<Position, MineMark>): Collection<MineMark> {
-        return elements.values
-    }
-
-    private fun isAllFilled(elements: Map<Position, MineMark>): Boolean {
-        return zeroToRange(positions(elements).maxOf { it.x })
-            .flatMap { x -> positions(x, positions(elements).maxOf { it.y }) }
-            .all { elements.containsKey(it) }
-    }
-
-    private fun positions(elements: Map<Position, MineMark>): Collection<Position> {
-        return elements.keys
-    }
-
-    private fun positions(x: Int, maxY: Int): Collection<Position> {
-        return zeroToRange(maxY)
-            .map { y -> Position(x, y) }
     }
 
     fun mark(position: Position): MineMark {

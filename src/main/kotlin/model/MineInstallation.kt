@@ -22,7 +22,7 @@ data class MineInstallation(
     }
 
     private fun validatePositionContains(filledElements: FilledElements, positions: Collection<Position>) {
-        check(positions.all { filledElements.contains(it) }) {
+        check(filledElements.containsAll(positions)) {
             "positions must contain position. but provided positions(`$positions`) and elements(`$filledElements`)"
         }
     }

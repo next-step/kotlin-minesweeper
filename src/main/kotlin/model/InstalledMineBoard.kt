@@ -10,19 +10,18 @@ data class InstalledMineBoard(
 
     fun replacedSafetyMark(mapper: (Position, MineMark) -> (MineMark)): FilledElements {
         return filledElements.replacedMarkElements { position, mineMark ->
-            mapIfSafety(mineMark, position, mapper)
+            mineMark.mapIfSafety(position, mapper)
         }
     }
 
-    private fun mapIfSafety(
-        mineMark: MineMark,
+    private fun MineMark.mapIfSafety(
         position: Position,
         mapper: (Position, MineMark) -> MineMark,
     ): MineMark {
-        return if (mineMark.isSafety) {
-            mapper(position, mineMark)
+        return if (isSafety) {
+            mapper(position, this)
         } else {
-            mineMark
+            this
         }
     }
 
