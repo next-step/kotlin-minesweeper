@@ -13,5 +13,5 @@ fun main() {
 
     val board = MineSweeperBoard(BoardSize(height, width), mines)
     mineSweeperController.printStartMessage()
-    println(board)
+    mineSweeperController.printBoard(board)
 }

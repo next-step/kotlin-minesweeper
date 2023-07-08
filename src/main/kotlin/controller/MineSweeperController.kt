@@ -1,5 +1,6 @@
 package controller
 
+import domain.MineSweeperBoard
 import view.InputView
 import view.ResultView
 
@@ -17,6 +18,10 @@ class MineSweeperController {
     }
 
     fun printStartMessage() {
-        return ResultView.startMessage()
+        ResultView.startMessage()
+    }
+
+    fun printBoard(board: MineSweeperBoard) {
+        ResultView.board(board)
     }
 }
