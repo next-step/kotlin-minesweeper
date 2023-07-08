@@ -13,3 +13,7 @@
 ## Step 3. 지뢰 찾기(게임 실행)
 
 - 지뢰가 없는 인접한 칸이 모두 열리게 된다.
+
+## Step 4. 지뢰 찾기(리팩터링)
+
+- 불필요한 delegation 로직을 줄일 수 있게 List<List<BoardPoint>> 구조를 Map<Position, BoardPoint> 구조로 리팩토링
