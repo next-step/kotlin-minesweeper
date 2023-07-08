@@ -20,6 +20,8 @@ class Cell(
 
     constructor(row: Int, column: Int, cellType: CellType) : this(Coordinate(row, column), cellType)
 
+    constructor(row: Int, column: Int, isDisplay: Boolean) : this(Coordinate(row, column), isDisplay = isDisplay)
+
     constructor(row: Int, column: Int) : this(Coordinate(row, column))
 
     fun isMine(): Boolean = cellType == MINE
@@ -43,5 +45,9 @@ class Cell(
             return cellType
         }
         return CellType.UNKNOWN
+    }
+
+    override fun toString(): String {
+        return "Cell(coordinate=$coordinate, cellType=$cellType, isDisplay=$isDisplay)"
     }
 }

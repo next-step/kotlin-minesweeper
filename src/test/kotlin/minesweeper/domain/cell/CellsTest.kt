@@ -20,10 +20,10 @@ class CellsTest : FunSpec({
         test("지뢰 갯수가 cell 갯수보다 큰 경우 예외가 발생한다.") {
             val cells = Cells(
                 listOf(
-                    Cell(0, 0),
-                    Cell(0, 1),
-                    Cell(1, 0),
-                    Cell(1, 1),
+                    Cell(0, 0, isDisplay = true),
+                    Cell(0, 1, isDisplay = true),
+                    Cell(1, 0, isDisplay = true),
+                    Cell(1, 1, isDisplay = true),
                 ),
             )
 
@@ -35,10 +35,10 @@ class CellsTest : FunSpec({
         test("이미 지뢰가 배치되어 있는 경우 예외가 발생한다.") {
             val cells = Cells(
                 listOf(
-                    Cell(0, 0, CellType.MINE),
-                    Cell(0, 1),
-                    Cell(1, 0),
-                    Cell(1, 1),
+                    Cell(0, 0, CellType.MINE, isDisplay = true),
+                    Cell(0, 1, isDisplay = true),
+                    Cell(1, 0, isDisplay = true),
+                    Cell(1, 1, isDisplay = true),
                 ),
             )
 
@@ -50,44 +50,43 @@ class CellsTest : FunSpec({
         test("지뢰를 배치하고 지뢰 근처의 카운트를 갯수에 맞게 올린다.") {
             val cells = Cells(
                 listOf(
-                    Cell(0, 0),
-                    Cell(0, 1),
-                    Cell(0, 2),
-                    Cell(1, 0),
-                    Cell(1, 1),
-                    Cell(1, 2),
-                    Cell(2, 0),
-                    Cell(2, 1),
-                    Cell(2, 2),
+                    Cell(0, 0, isDisplay = true),
+                    Cell(0, 1, isDisplay = true),
+                    Cell(0, 2, isDisplay = true),
+                    Cell(1, 0, isDisplay = true),
+                    Cell(1, 1, isDisplay = true),
+                    Cell(1, 2, isDisplay = true),
+                    Cell(2, 0, isDisplay = true),
+                    Cell(2, 1, isDisplay = true),
+                    Cell(2, 2, isDisplay = true),
                 ),
             )
-            cells.placeMine(1) { cells.values[0] }
+            cells.placeMine(1) { cells.values[Coordinate(0, 0)]!! }
 
-            val actual = cells.values.count { it.isMine() }
+            val actual = cells.values.count { it.value.isMine() }
             actual shouldBe 1
-            cells.values[0].cellType shouldBe CellType.MINE
-            cells.values[1].cellType shouldBe CellType.ONE
-            cells.values[2].cellType shouldBe CellType.ZERO
-            cells.values[3].cellType shouldBe CellType.ONE
-            cells.values[4].cellType shouldBe CellType.ONE
-            cells.values[5].cellType shouldBe CellType.ZERO
-            cells.values[6].cellType shouldBe CellType.ZERO
-            cells.values[7].cellType shouldBe CellType.ZERO
-            cells.values[8].cellType shouldBe CellType.ZERO
+            cells.values[Coordinate(0, 0)]!!.cellType shouldBe CellType.MINE
+            cells.values[Coordinate(0, 1)]!!.cellType shouldBe CellType.ONE
+            cells.values[Coordinate(0, 2)]!!.cellType shouldBe CellType.ZERO
+            cells.values[Coordinate(1, 0)]!!.cellType shouldBe CellType.ONE
+            cells.values[Coordinate(1, 1)]!!.cellType shouldBe CellType.ONE
+            cells.values[Coordinate(1, 2)]!!.cellType shouldBe CellType.ZERO
+            cells.values[Coordinate(2, 0)]!!.cellType shouldBe CellType.ZERO
+            cells.values[Coordinate(2, 1)]!!.cellType shouldBe CellType.ZERO
+            cells.values[Coordinate(2, 2)]!!.cellType shouldBe CellType.ZERO
         }
 
         test("랜덤한 위치에 지뢰를 배치한다.") {
             val cells = Cells(
                 listOf(
-                    Cell(0, 0),
-                    Cell(0, 1),
-                    Cell(1, 0),
-                    Cell(1, 1),
+                    Cell(0, 0, isDisplay = true),
+                    Cell(0, 1, isDisplay = true),
+                    Cell(1, 0, isDisplay = true),
+                    Cell(1, 1, isDisplay = true),
                 ),
             )
             cells.placeMine(2, RandomMinePlacementStrategy())
-            val actual = cells.values.count { it.isMine() }
-
+            val actual = cells.values.count { it.value.isMine() }
             actual shouldBe 2
         }
     }
