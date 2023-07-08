@@ -2,34 +2,34 @@ package mine.sweeper.field.domain
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import mine.sweeper.domain.MapSize
+import mine.sweeper.application.MapInitializer
+import mine.sweeper.application.MineSweeperGame
+import mine.sweeper.application.RandomPositionManager
+import mine.sweeper.domain.MineField
+import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.Vulture
+import mine.sweeper.domain.value.GameStatus
 import mine.sweeper.domain.value.Height
-import mine.sweeper.domain.Position
+import mine.sweeper.domain.value.MineCount
 import mine.sweeper.domain.value.Width
+import mine.sweeper.view.dto.MapSize
+import mine.sweeper.view.dto.Position
 
 class FieldsManagerTest : StringSpec({
     val height = Height(3)
     val width = Width(3)
     val mapSize = MapSize(height, width)
     "필드매니져는 필드들을 맵 전체 사이즈와 같게 생성한다." {
-        val fieldsManager = FieldsManager(mapSize)
+        val mineCount = MineCount(1)
+        val vulture = Vulture(RandomPositionManager(mapSize), mineCount)
+        val map = MapInitializer(mapSize, vulture.newMinePositions).create()
 
-        val fields = fieldsManager.toFields()
-        fields.fields.size shouldBe mapSize.area()
-    }
-
-    "필드매니져를 통해 필드의 상태를 변경한다 " {
-        val fieldsManager = FieldsManager(mapSize)
-        val position = Position(0, 0)
-        fieldsManager.changeMineField(position)
-
-        val fields = fieldsManager.toFields()
-        fields.get(position).value shouldBe "*"
+        map.fields.size shouldBe mapSize.area
     }
 
     "지뢰가 설치되면 주변 8방에 값을 1 올린다." {
-        val fieldsManager = FieldsManager(mapSize)
         val position = Position(1, 1)
+        val map = MapInitializer(mapSize, setOf(position)).create()
         val testPositions = listOf(
             Position(0, 0),
             Position(0, 1),
@@ -38,19 +38,20 @@ class FieldsManagerTest : StringSpec({
             Position(1, 2),
             Position(2, 0),
             Position(2, 1),
-            Position(2, 2),
+            Position(2, 2)
         )
 
-        val originalFields = fieldsManager.toFields()
+        (map.fields.get(position) is MineField) shouldBe true
         testPositions.forEach {
-            originalFields.get(it).value shouldBe "0"
+            (map.fields.get(it) as SafeField).value shouldBe 1
         }
+    }
 
-        fieldsManager.changeMineField(position)
+    "지뢰가 있는 곳을 오픈 한다면 게임 오버 상태가 된다." {
+        val map = MapInitializer(mapSize, setOf(Position(1, 1))).create()
+        val game = MineSweeperGame(map)
+        game.select(Position(1, 1))
 
-        val updateFields = fieldsManager.toFields()
-        testPositions.forEach {
-            updateFields.get(it).value shouldBe "1"
-        }
+        game.gameResult shouldBe GameStatus.GAME_OVER
     }
 })
