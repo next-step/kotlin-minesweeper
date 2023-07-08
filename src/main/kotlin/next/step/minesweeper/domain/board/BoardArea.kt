@@ -20,6 +20,9 @@ data class BoardArea(private val height: BoardHeight, private val width: BoardWi
     fun <R, P> rangeMap(row: (List<P>) -> R, point: (Int, Int) -> P): List<R> =
         height.rangeMap { y -> row(width.rangeMap { point(it, y) }) }
 
+    fun positions(): Positions =
+        Positions(height.rangeMap { y -> width.rangeMap { x -> Position(x, y) } }.flatten().toSet())
+
     fun select(selector: () -> Position): Position {
         val position = selector()
         requireContains(position.x, position.y)
