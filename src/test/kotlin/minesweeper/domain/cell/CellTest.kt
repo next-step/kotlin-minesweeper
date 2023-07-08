@@ -67,5 +67,12 @@ class CellTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { cell.changeToDisplay() }
             exception shouldHaveMessage "이미 Display 상태입니다."
         }
+
+        test("isDisplay를 true로 변경한다.") {
+            val cell = Cell(0, 0, MINE, false)
+            cell.changeToDisplay()
+
+            cell.isDisplay shouldBe true
+        }
     }
 })

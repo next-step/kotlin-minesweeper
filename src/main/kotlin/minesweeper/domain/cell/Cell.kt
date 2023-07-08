@@ -6,10 +6,13 @@ import minesweeper.domain.cell.CellType.ZERO
 class Cell(
     val coordinate: Coordinate,
     cellType: CellType = ZERO,
-    val isDisplay: Boolean = false,
+    isDisplay: Boolean = false,
 ) {
     var cellType: CellType = cellType
         get() = cellType(field)
+        private set
+
+    var isDisplay: Boolean = isDisplay
         private set
 
     constructor(row: Int, column: Int, cellType: CellType, isDisplay: Boolean) :
@@ -32,6 +35,7 @@ class Cell(
 
     fun changeToDisplay() {
         check(isDisplay.not()) { "이미 Display 상태입니다." }
+        this.isDisplay = true
     }
 
     private fun cellType(cellType: CellType): CellType {
