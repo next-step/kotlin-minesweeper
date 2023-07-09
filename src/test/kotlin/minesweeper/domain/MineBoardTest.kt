@@ -23,7 +23,7 @@ class MineBoardTest : BehaviorSpec({
                 board.width shouldBe 5
             }
             And("생성된 보드의 지뢰 총 개수는 입력과 동일하다.") {
-                board.getBoardInfo.sumOf { row -> row.rowInfo.count { cell -> cell.type == CellType.Mine } } shouldBe 5
+                board.getBoardInfo.sumOf { row -> row.rowInfo.count { cell -> cell is MineCell } } shouldBe 5
             }
         }
     }

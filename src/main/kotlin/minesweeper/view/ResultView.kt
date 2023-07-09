@@ -1,8 +1,9 @@
 package minesweeper.view
 
 import minesweeper.domain.BoardRow
-import minesweeper.domain.CellType
+import minesweeper.domain.EmptyCell
 import minesweeper.domain.MineBoard
+import minesweeper.domain.MineCell
 
 object ResultView {
     fun printBoard(board: MineBoard) {
@@ -11,16 +12,18 @@ object ResultView {
             println()
         }
     }
+
     private fun printRow(row: BoardRow) {
         for (cell in row.rowInfo) {
             print(
-                when (cell.type) {
-                    CellType.Mine -> "* "
-                    CellType.Empty -> "${cell.mineCount} "
+                when (cell) {
+                    is MineCell -> "* "
+                    is EmptyCell -> "${cell.mineCount} "
                 }
             )
         }
     }
+
     fun printGameStart() {
         println("지뢰찾기 게임 시작")
     }

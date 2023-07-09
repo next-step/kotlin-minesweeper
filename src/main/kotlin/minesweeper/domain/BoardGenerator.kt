@@ -18,7 +18,7 @@ object BoardGenerator {
     }
 
     private fun createBoard(height: Int, width: Int): MineBoard {
-        val boardInfo = (1..height).map { BoardRow((1..width).map { Cell(0, CellType.Empty) }) }
+        val boardInfo = (1..height).map { BoardRow((1..width).map { EmptyCell(Point(height, width)) }) }
         return MineBoard(boardInfo)
     }
 
@@ -29,7 +29,7 @@ object BoardGenerator {
         val randomPoints = saveAllPoints(height, width)
 
         randomPoints.shuffled().take(mineCount).forEach {
-            board.getCell(it).updateCellType(CellType.Mine)
+            board.updateToMine(it)
         }
     }
 

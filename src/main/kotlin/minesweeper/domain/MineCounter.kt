@@ -15,12 +15,12 @@ object MineCounter {
             (0 until width).forEach { j ->
                 val currentPoint = Point(i, j)
                 val currentCell = board.getCell(currentPoint)
-                if (currentCell.type != CellType.Mine) {
+                if (currentCell is EmptyCell) {
                     val mineCount = neighborOffsets.count { offset ->
                         val neighborPoint = Point(i + offset.row, j + offset.col)
                         neighborPoint.row in 0 until height &&
                             neighborPoint.col in 0 until width &&
-                            board.getCell(neighborPoint).type == CellType.Mine
+                            board.getCell(neighborPoint) is MineCell
                     }
                     currentCell.mineCount = mineCount
                 }

@@ -7,6 +7,10 @@ class MineBoard(
         return boardInfo[point.row].rowInfo[point.col]
     }
 
+    fun updateToMine(point: Point) {
+        boardInfo[point.row].updateCell(point.col)
+    }
+
     val getBoardInfo: List<BoardRow>
         get() = boardInfo
 
