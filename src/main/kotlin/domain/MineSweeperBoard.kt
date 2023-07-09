@@ -1,5 +1,8 @@
 package domain
 
+import kotlin.math.max
+import kotlin.math.min
+
 class MineSweeperBoard(boardSize: BoardSize) {
     private val _board = Array(boardSize.height) { Array(boardSize.width) { Cell.createNormalCell() } }
 
@@ -32,6 +35,18 @@ class MineSweeperBoard(boardSize: BoardSize) {
     }
 
     fun getMineCountAround(position: Position): Int {
-        return 0
+        return getAroundPositions(position).map {
+            if (isMine(it)) 1 else 0
+        }.sum()
+    }
+
+    private fun getAroundPositions(position: Position): List<Position> {
+        return (max(position.y - 1, 0)..min(position.y + 1, height - 1)).flatMap { y ->
+            (max(position.x - 1, 0)..min(position.x + 1, width - 1)).map { x ->
+                Position(x, y)
+            }.filter {
+                it != position
+            }
+        }
     }
 }
