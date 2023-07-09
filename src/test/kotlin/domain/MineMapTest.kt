@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test
 
 internal class MineMapTest {
     @Test
-    fun `MineMap을 생성할 수 있다`() {
+    fun `입력한 크기에 해당하는 MineMap을 생성할 수 있다`() {
         val height = 10
         val width = 10
         val numOfMine = height * width - 1
         val mineMap = MineMapGenerator.createMineMap(height, width, numOfMine)
 
         mineMap.elements.flatten().size shouldBe height * width
-
+        mineMap.elements.size shouldBe height
+        mineMap.elements.forEach { it.size shouldBe width }
     }
 
     @Test
