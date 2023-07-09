@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.point
 
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
     init {
@@ -28,15 +28,4 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
         fun square(height: Int, width: Int): List<Point> =
             (0 until height).flatMap { y -> (0 until width).map { x -> Point(x, y) } }
     }
-}
-
-enum class Direction {
-    UP,
-    UP_RIGHT,
-    RIGHT,
-    DOWN_RIGHT,
-    DOWN,
-    DOWN_LEFT,
-    LEFT,
-    UP_LEFT;
 }
