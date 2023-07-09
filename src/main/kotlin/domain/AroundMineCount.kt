@@ -2,7 +2,8 @@ package domain
 
 import ErrorCode
 
-data class AroundMineCount(val value: Int) {
+@JvmInline
+value class AroundMineCount(val value: Int) {
     fun isClean(): Boolean {
         return value == CLEAN_VALUE
     }
