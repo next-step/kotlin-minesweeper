@@ -11,8 +11,23 @@ object ResultView {
 
     fun board(board: MineSweeperBoard) {
         repeat(board.height) { y ->
-            println(board.getRow(y).joinToString(" ") { cell(it) })
+            repeat(board.width) { x ->
+                val currentPosition = Position(x, y)
+
+                val str = comparable(board, currentPosition)
+                print(str)
+                print(" ")
+            }
+            println()
         }
+    }
+
+    private fun comparable(board: MineSweeperBoard, currentPosition: Position): String {
+        val cell = board.getCell(currentPosition)
+        if (cell is Cell.MineCell) {
+            return cell(cell)
+        }
+        return board.getMineCountAround(currentPosition).toString()
     }
 
     private fun cell(cell: Cell): String {

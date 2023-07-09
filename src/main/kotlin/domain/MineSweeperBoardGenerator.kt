@@ -7,7 +7,18 @@ abstract class MineSweeperBoardGenerator(val boardSize: BoardSize, private val m
 
         val mineSweeperBoard = MineSweeperBoard(boardSize)
         setMines(mineSweeperBoard)
+
+        setCountAroundMines(mineSweeperBoard)
         return mineSweeperBoard
+    }
+
+    private fun setCountAroundMines(mineSweeperBoard: MineSweeperBoard) {
+        mineSweeperBoard.allPositions().map { position ->
+            if (!mineSweeperBoard.isMine(position)) {
+                val count = mineSweeperBoard.getMineCountAround(position)
+                mineSweeperBoard.getCell(position).countOfMinesAround = count
+            }
+        }
     }
 
     private fun setMines(mineSweeperBoard: MineSweeperBoard) {

@@ -49,4 +49,12 @@ class MineSweeperBoard(boardSize: BoardSize) {
             }
         }
     }
+
+    fun allPositions(): List<Position> {
+        return (0 until height).flatMap { y ->
+            (0 until width).map { x ->
+                Position(x, y)
+            }
+        }
+    }
 }
