@@ -31,13 +31,23 @@ class GameOption(
     val mineCount: MineCount
 ) {
     val area = height.value * width.value
+    val width = width.value
 }
 
 class GameInitializer(
-    val option: GameOption
+    private val option: GameOption
 ) {
     fun create(): Game {
-        return Game(Fields())
+        val mines = setOf(Position(1, 1))
+
+        val fieldList: MutableList<Field> = MutableList(option.area) { index ->
+            val x = index / option.width
+            val y = index % option.width
+            val position = Position(x, y)
+            mines.find { it == position }?.let { Field(it, "mine") } ?: Field(position, "safe")
+        }
+
+        return Game(Fields(fieldList))
     }
 }
 
@@ -45,9 +55,16 @@ class Game(val fields: Fields) {
 
 }
 
-class Fields {
+class Fields(val fieldList: List<Field>) {
 
     val size = 25
+
+}
+
+class Field(val position: Position, val value: String) {
+}
+
+data class Position(val x: Int, val y: Int) {
 
 }
 
@@ -62,5 +79,14 @@ class GameInitializerTest : StringSpec({
         val option = GameOption(Height(5), Width(5), MineCount(1))
         val game: Game = GameInitializer(option).create()
         game.fields.size shouldBe option.area
+    }
+
+    "랜덤한 위치에 지뢰를 설치한다." {
+        val option = GameOption(Height(2), Width(2), MineCount(1))
+        val game: Game = GameInitializer(option).create()
+        game.fields.fieldList.count {
+            it.value == "mine"
+        } shouldBe 1
+        game.fields.fieldList.count { it.value == "safe" } shouldBe 3
     }
 })
