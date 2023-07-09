@@ -1,7 +1,6 @@
 package domain
 
 import domain.cell.Cell
-import domain.cell.filtered
 import domain.position.Position
 import domain.position.filtered
 
@@ -37,7 +36,8 @@ class MineSweeperGame(val mineSweeperMap: MineSweeperMap, private val mineCountN
 
             val validPositions = currentCell.position.getValidAdjacentPositions(property.height, property.width)
             val notVisitedPositions = validPositions.filtered { !visitedPositions.contains(it) }
-            val cells = getCellsByPositions(notVisitedPositions).filtered { !it.property.isMine() }
+            val cells = getCellsByPositions(notVisitedPositions).filter { !it.property.isMine() }
+//                .filtered { !it.property.isMine() }
             val filteredCells = cells.getCleanAroundMineCount()
 
             visited.addAll(cells.value)

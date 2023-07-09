@@ -1,7 +1,6 @@
 package view.output
 
 import domain.GameResult
-import domain.isWin
 
 class GameEndOutputView(gameResult: GameResult) {
     init {

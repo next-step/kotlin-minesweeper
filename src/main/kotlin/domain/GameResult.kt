@@ -1,9 +1,10 @@
 package domain
 
-fun GameResult.isWin(): Boolean = this == GameResult.WIN
 enum class GameResult {
     WIN, LOSE,
     ;
+
+    fun isWin(): Boolean = this == WIN
 
     companion object {
         fun valueOf(existsOpenMine: Boolean, isSameCountOfCloseAndMine: Boolean): GameResult {
