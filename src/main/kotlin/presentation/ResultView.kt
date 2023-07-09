@@ -1,7 +1,7 @@
 package presentation
 
 import domain.Board
-import domain.Row
+import domain.Spaces
 import domain.Space
 
 object ResultView {
@@ -11,8 +11,8 @@ object ResultView {
         }
     }
 
-    private fun printRow(row: Row) {
-        row.spaces.forEach {
+    private fun printRow(spaces: Spaces) {
+        spaces.list().forEach {
             printSpace(it)
         }
         println()

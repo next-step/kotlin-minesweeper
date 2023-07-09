@@ -1,7 +1,7 @@
 import domain.Board
 import domain.BoardSize
 import domain.Height
-import domain.MineCount
+import domain.RandomNonNegativeNumberGenerator
 import domain.Width
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,11 +15,11 @@ class BoardTest {
                 Width(2),
                 Height(3)
             ),
-            MineCount(3)
+            RandomNonNegativeNumberGenerator(0, 0)
         )
 
         assertThat(
-            board.rows.all { it.spaces.size == 2 }
+            board.rows.all { it.list().size == 2 }
         ).isTrue()
 
         assertThat(
