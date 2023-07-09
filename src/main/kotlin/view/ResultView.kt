@@ -7,12 +7,15 @@ import domain.MinesWeeper
 
 object ResultView {
 
-    private const val BOARD_PRINT_STRING = "\n지뢰찾기 게임 시작"
+    private const val GAME_START_STRING = "\n지뢰찾기 게임 시작"
     private const val LOCATION_START_NUM = 0
     private const val MINE_STRING = "*"
 
+    fun printGameStart() {
+        println(GAME_START_STRING)
+    }
+
     fun printGameBoard(height: Int, width: Int, minesWeeper: MinesWeeper) {
-        println(BOARD_PRINT_STRING)
         (LOCATION_START_NUM until height)
             .forEach { y ->
                 (LOCATION_START_NUM until width)
