@@ -14,15 +14,19 @@ data class MineMap(
 
     val width: Int = mineMapConfig.width
 
-    fun plantMine() {
-        minePositionStrategy.getMinePositions().forEach {
-            map[it] = Mine()
-        }
+    init {
+        plantMine()
         plantEmpty()
     }
 
     fun getCurrentMap(): Map<Position, MapItem> {
         return map.toMap()
+    }
+
+    private fun plantMine() {
+        minePositionStrategy.getMinePositions().forEach {
+            map[it] = Mine()
+        }
     }
 
     private fun plantEmpty() {
@@ -34,26 +38,10 @@ data class MineMap(
         }
     }
 
-    private val dxys = listOf(
-        0 to -1, // 위
-        1 to -1, // 오른쪽 위
-        1 to 0, // 오른쪽
-        1 to 1, // 오른쪽 아래
-        0 to 1, // 아래
-        -1 to 1, // 왼쪽 아래
-        -1 to 0, // 왼쪽
-        -1 to -1 // 왼쪽 위
-    )
-
     private fun calculateSurroundingMineCount(x: Int, y: Int): Int {
-        var mineCount = 0
-        dxys.forEach { dxy ->
-            val nx = x + dxy.first
-            val ny = y + dxy.second
-            if (nx in 0 until width && ny in 0 until height && map[Position(nx, ny)] is Mine) {
-                mineCount++
-            }
-        }
-        return mineCount
+        return AroundPosition.values()
+            .filter { x + it.dx in 0 until width && y + it.dy in 0 until height }
+            .filter { map[Position(x + it.dx, y + it.dy)] is Mine }
+            .size
     }
 }

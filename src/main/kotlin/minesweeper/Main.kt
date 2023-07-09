@@ -15,6 +15,5 @@ fun main() {
     val mineMapConfig = MineMapConfig(height, width, mineCount)
 
     val mineMap = MineMap(mineMapConfig)
-    mineMap.plantMine()
     resultView.outputGameStart(mineMap)
 }
