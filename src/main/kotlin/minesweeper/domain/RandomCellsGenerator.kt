@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.vo.PositiveNumber
+
 object RandomCellsGenerator {
     fun generate(totalCount: PositiveNumber, mineCount: PositiveNumber): List<Cell> {
         val mines = List(mineCount.value) { Cell.mine }

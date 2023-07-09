@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.vo.PositiveNumber
+
 class MineBoard(val board: List<List<Cell>>) {
     companion object {
         fun generate(width: PositiveNumber, cells: List<Cell>): MineBoard {

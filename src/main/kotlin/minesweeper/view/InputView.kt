@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.PositiveNumber
+import minesweeper.domain.vo.PositiveNumber
 
 object InputView {
     fun getHeight(): PositiveNumber {

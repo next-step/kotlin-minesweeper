@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.vo
 
 @JvmInline
 value class PositiveNumber(val value: Int) {
