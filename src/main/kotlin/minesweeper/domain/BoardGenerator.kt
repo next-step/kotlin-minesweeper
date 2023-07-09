@@ -26,17 +26,21 @@ object BoardGenerator {
         val height = board.height
         val width = board.width
 
-        val randomPoints = mutableListOf<Point>()
-        for (i in 0 until height) {
-            for (j in 0 until width) {
-                val point = Point(i, j)
-                if (board.getCell(point).type == CellType.Empty) {
-                    randomPoints.add(point)
-                }
-            }
-        }
+        val randomPoints = saveAllPoints(height, width)
+
         randomPoints.shuffled().take(mineCount).forEach {
             board.getCell(it).updateCellType(CellType.Mine)
         }
+    }
+
+    private fun saveAllPoints(height: Int, width: Int): MutableList<Point> {
+        val allPoints = mutableListOf<Point>()
+        for (i in 0 until height) {
+            for (j in 0 until width) {
+                val point = Point(i, j)
+                allPoints.add(point)
+            }
+        }
+        return allPoints
     }
 }
