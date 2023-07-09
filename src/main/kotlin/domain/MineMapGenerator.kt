@@ -8,7 +8,7 @@ object MineMapGenerator {
         require(numOfMine <= height * width)
 
         //mine 위치 정보 받아오기
-        val mineLocations = mutableSetOf<Pair<Int, Int>>()
+        val mineLocations = mutableSetOf<Location>()
         while (mineLocations.size < numOfMine) {
             val randomLocation = RandomGenerator.generateRandomLocation(height, width)
             mineLocations.add(randomLocation)
@@ -26,14 +26,14 @@ object MineMapGenerator {
     fun createRow(
         rowNum: Int,
         rowLen: Int,
-        mineLocations: MutableSet<Pair<Int, Int>>
+        mineLocations: MutableSet<Location>
     ): List<MapElement> {
 
         val row = mutableListOf<MapElement>()
 
         // 해당 row에서 mine의 index만 가지는 set
-        val minesOfRow = mineLocations.filter { it.first == rowNum }
-            .map { it.second }
+        val minesOfRow = mineLocations.filter { it.row == rowNum }
+            .map { it.column }
 
         for (i in 0 until rowLen) {
             row += getElement(i, minesOfRow)
