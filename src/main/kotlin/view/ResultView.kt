@@ -2,7 +2,6 @@ package view
 
 import domain.Basic
 import domain.Cell
-import domain.Location
 import domain.Mine
 import domain.MinesWeeper
 
@@ -18,7 +17,7 @@ object ResultView {
             .forEach { y ->
                 (LOCATION_START_NUM until width)
                     .forEach { x ->
-                        val cell = minesWeeper.boards.first { it.location == Location(y, x) }.cell
+                        val cell = minesWeeper.findBoard(y, x)?.cell
                         if (cell is Cell) {
                             print("${getPrintString(cell)} ")
                         }

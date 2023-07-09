@@ -14,10 +14,12 @@ class MinesWeeper(val boards: List<Board>) {
         val count = Around.values().map {
             val y = location.y + it.y
             val x = location.x + it.x
-            boards.firstOrNull { board -> board.location.isSame(y, x) }
+            findBoard(y, x)
         }.count { board -> board != null && board.cell is Mine }
         basic.addCount(count)
     }
+
+    fun findBoard(y: Int, x: Int) = boards.firstOrNull { board -> board.location.isSame(y, x) }
 
     companion object {
         fun of(height: Int, width: Int, count: Int): MinesWeeper {
