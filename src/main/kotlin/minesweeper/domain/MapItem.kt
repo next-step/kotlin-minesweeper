@@ -5,6 +5,11 @@ package minesweeper.domain
  */
 sealed class MapItem {
     abstract val item: String
+    var isOpened: Boolean = false
+        private set
+    fun open() {
+        isOpened = true
+    }
 }
 
 data class Mine(
