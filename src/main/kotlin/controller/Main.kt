@@ -16,6 +16,7 @@ fun main() {
     while (!game.isSuccess()) {
         var openingLocation = InputView.getOpeningLocation(height, width)
         if (game.isMine(openingLocation)) {
+            ResultView.printLose()
             break
         }
         game.openCell(openingLocation)
