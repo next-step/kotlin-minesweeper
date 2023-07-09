@@ -18,6 +18,11 @@ object InputView {
     }
 
     private fun readNumber(): Int {
-        return readLine()?.toIntOrNull() ?: 0
+        val input = readLine()
+        return try {
+            input?.toInt() ?: throw NumberFormatException("올바른 숫자를 입력해주세요.")
+        } catch (e: NumberFormatException) {
+            throw e
+        }
     }
 }
