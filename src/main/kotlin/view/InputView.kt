@@ -26,10 +26,14 @@ object InputView {
         return readln().toInt()
     }
 
-    fun getOpeningLocation(): Location {
+    fun getOpeningLocation(height: Int, width: Int): Location {
         print(OPEN_STRING)
         val input = readln().split(OPEN_VALUE_DELIMITER).map { it.trim().toInt() }
         require(input.size == 2) { OPEN_VALUE_EXCEPTION }
-        return Location(input[0], input[1])
+        val x = input[0]
+        val y = input[1]
+        require(x < width) { "x의 값은 너비보다 작아야 합니다" }
+        require(y < height) { "y의 값은 높이보다 작아야 합니다" }
+        return Location(x, y)
     }
 }

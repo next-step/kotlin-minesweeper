@@ -6,7 +6,6 @@ object ResultView {
 
     private const val GAME_START_STRING = "\n지뢰찾기 게임 시작"
     private const val LOCATION_START_NUM = 0
-    private const val MINE_STRING = "*"
     private const val BASIC_STRING = "C"
 
     fun printGameStart() {
@@ -17,25 +16,19 @@ object ResultView {
         (LOCATION_START_NUM until height)
             .forEach { y ->
                 (LOCATION_START_NUM until width)
-                    .forEach { x ->
-                        val cell = minesWeeper.findBoard(Location(x, y))?.cell
-                        if (cell is Cell) {
-                            print("${getPrintString(cell)} ")
-                        }
+                    .mapNotNull { x ->
+                        minesWeeper.findBoard(Location(x, y))
+                    }.forEach {
+                        print("${getPrintString(it.cell)} ")
                     }
                 println()
             }
     }
 
     private fun getPrintString(cell: Cell): String {
-        return when (cell) {
-            is Mine -> MINE_STRING
-            is Basic -> getBasicString(cell)
+        if(cell is Basic && cell.isOpen){
+            return cell.count.toString()
         }
-    }
-
-    private fun getBasicString(basic: Basic): String {
-        if (basic.isOpen) return basic.count.toString()
         return BASIC_STRING
     }
 }
