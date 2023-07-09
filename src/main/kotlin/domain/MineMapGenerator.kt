@@ -24,7 +24,7 @@ object MineMapGenerator {
         return MineMap(elementLocations.toList())
     }
 
-    fun createRow(
+    private fun createRow(
         rowNum: Int,
         rowLen: Int,
         mineLocations: MutableSet<Location>
@@ -44,9 +44,7 @@ object MineMapGenerator {
 
     }
 
-    fun getElement(index: Int, minesOfRow: List<Int>): MapElement {
-        val mine = Mine
-        val noneMine = EmptyElement
-        return if (minesOfRow.contains(index)) mine else noneMine
+    private fun getElement(index: Int, minesOfRow: List<Int>): MapElement {
+        return if (minesOfRow.contains(index)) Mine() else EmptyElement()
     }
 }
