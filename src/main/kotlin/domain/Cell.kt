@@ -1,15 +1,19 @@
 package domain
 
-class Cell {
-    private var status: CellStatus = CellStatus.CLOSED
-    private var mineStatus: MineStatus = MineStatus.Empty
+sealed class Cell {
+    abstract var status: CellStatus
 
-    fun setMine() {
-        mineStatus = MineStatus.Exists
-    }
+    data class NormalCell(override var status: CellStatus = CellStatus.CLOSED) : Cell()
+    data class MineCell(override var status: CellStatus = CellStatus.CLOSED) : Cell()
 
-    fun getMineStatus(): MineStatus {
-        return mineStatus
+    companion object {
+        fun createNormalCell(): Cell {
+            return NormalCell()
+        }
+
+        fun createMineCell(): Cell {
+            return MineCell()
+        }
     }
 }
 
@@ -17,9 +21,4 @@ enum class CellStatus {
     CLOSED,
     OPENED,
     FLAGGED,
-}
-
-sealed class MineStatus {
-    object Empty : MineStatus()
-    object Exists : MineStatus()
 }

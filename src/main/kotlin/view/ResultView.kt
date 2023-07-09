@@ -1,7 +1,6 @@
 package view
 
 import domain.Cell
-import domain.MineStatus
 import domain.MineSweeperBoard
 
 object ResultView {
@@ -19,9 +18,9 @@ object ResultView {
     }
 
     private fun cell(cell: Cell): String {
-        return when (cell.getMineStatus()) {
-            MineStatus.Exists -> "*"
-            MineStatus.Empty -> "C"
+        return when (cell) {
+            is Cell.MineCell -> "*"
+            is Cell.NormalCell -> "C"
         }
     }
 }
