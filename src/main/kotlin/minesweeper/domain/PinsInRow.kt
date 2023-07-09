@@ -23,7 +23,7 @@ class PinsInRow(private val values: MutableList<Pin>) {
     }
 
     fun countOpenedPin(): Int {
-        return values.count { !it.isOpenable() }
+        return values.count { it.isNotOpenable() }
     }
 
     fun countMinePin(): Int {

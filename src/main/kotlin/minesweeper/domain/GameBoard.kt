@@ -39,7 +39,7 @@ class GameBoard private constructor(
     private fun openSurroundPin(height: Int, width: Int) {
         try {
             val targetPin = pins.getPinsAt(height, width)
-            if (!targetPin.isOpenable()) return
+            if (targetPin.isNotOpenable()) return
             if (targetPin.isMinePin()) return
             pins.openPinAt(height, width)
             (0 until DIM).forEach { num ->

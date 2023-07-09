@@ -13,6 +13,10 @@ sealed class Pin {
         return state == PinState.CLOSE
     }
 
+    fun isNotOpenable(): Boolean {
+        return !isOpenable()
+    }
+
     fun isMinePin(): Boolean {
         return this is MinePin
     }
