@@ -7,6 +7,6 @@ data class NormalCellProperty(private val aroundMineCount: AroundMineCount) : Ce
     }
 
     override fun isCleanAroundMineCount(): Boolean {
-        return aroundMineCount.isClean()
+        return aroundMineCount.isClean
     }
 }

@@ -28,6 +28,6 @@ class AroundMineCountTest : StringSpec({
     "주변 지뢰 개수가 clean(0) 한지 확인할 수 있다" {
         val aroundMineCount = AroundMineCount(0)
 
-        aroundMineCount.isClean().shouldBeInstanceOf<Boolean>()
+        aroundMineCount.isClean.shouldBeInstanceOf<Boolean>()
     }
 })
