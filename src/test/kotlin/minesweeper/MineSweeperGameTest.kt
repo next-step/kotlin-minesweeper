@@ -5,7 +5,6 @@ import domain.MineCountNumber
 import domain.MineSweeperGame
 import domain.MineSweeperMap
 import domain.PositiveNumber
-import domain.cell.CellType
 import domain.position.Position
 import domain.position.RandomMinePositionGenerator
 import domain.toPositiveNumber
@@ -33,7 +32,7 @@ class MineSweeperGameTest {
 
         // [then]
         val actualMineCount = mineSweeperGame.mineSweeperMap.value.sumOf { row ->
-            row.count { it.property.type == CellType.MINE }
+            row.count { it.property.isMine() }
         }
         actualMineCount shouldBe mineCount.value
     }

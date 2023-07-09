@@ -3,9 +3,12 @@ package domain.cell
 import domain.AroundMineCount
 
 data class NormalCellProperty(private val aroundMineCount: AroundMineCount) : CellProperty() {
-    override val type: CellType = CellType.NORMAL
     override fun getSymbol(): String {
-        return CellType.symbolFromIsOpen(isOpen(), aroundMineCount.value.toString())
+        return if (isOpen()) aroundMineCount.value.toString() else CLOSE_SYMBOL
+    }
+
+    override fun isMine(): Boolean {
+        return false
     }
 
     override fun isCleanAroundMineCount(): Boolean {

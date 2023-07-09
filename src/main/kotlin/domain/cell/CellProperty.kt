@@ -2,13 +2,10 @@ package domain.cell
 
 abstract class CellProperty {
     private var state: CellState = CellState.HIDE
-    abstract val type: CellType
 
     abstract fun getSymbol(): String
     abstract fun isCleanAroundMineCount(): Boolean
-    fun isMine(): Boolean {
-        return type == CellType.MINE
-    }
+    abstract fun isMine(): Boolean
 
     fun setOpen() {
         state = CellState.OPEN
@@ -16,5 +13,9 @@ abstract class CellProperty {
 
     fun isOpen(): Boolean {
         return state == CellState.OPEN
+    }
+
+    companion object {
+        const val CLOSE_SYMBOL = "C"
     }
 }
