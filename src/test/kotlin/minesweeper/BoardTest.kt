@@ -1,10 +1,12 @@
 package minesweeper
 
 import minesweeper.domain.Board
+import minesweeper.domain.Cell
 import minesweeper.domain.FixedCoordinatesGenerator
 import minesweeper.domain.RandomCoordinatesGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 class BoardTest {
@@ -40,7 +42,6 @@ class BoardTest {
         // given
         val height = 3
         val width = 3
-        val numberOfMines = 1
 
         // when
         val mineCoordinates = FixedCoordinatesGenerator(height, width).create(listOf(Pair(1, 2)))
@@ -55,7 +56,6 @@ class BoardTest {
         // given
         val height = 3
         val width = 3
-        val numberOfMines = 1
 
         // when
         val mineCoordinates = FixedCoordinatesGenerator(height, width).create(listOf(Pair(1, 2)))
@@ -63,5 +63,43 @@ class BoardTest {
 
         // then
         assertThat(board.isMineCell(2, 2)).isFalse()
+    }
+
+    @Test
+    fun `보드 특정 셀에서 자신을 제외한 주변 8개 셀에 포함된 지뢰의 개수를 계산할 수 있다`() {
+        // given
+        val height = 5
+        val width = 5
+        val mineCoordinates = FixedCoordinatesGenerator(height, width).create(listOf(1 to 2, 2 to 2))
+        val board = Board.create(height, width, mineCoordinates)
+
+        // when
+        val cell1 = Cell.of(1, 1)
+        val cell2 = Cell.of(3, 3)
+        val cell3 = Cell.of(4, 4)
+
+        // then
+        assertAll({
+            assertThat(board.countMinesNearby(cell1)).isEqualTo(2)
+            assertThat(board.countMinesNearby(cell2)).isEqualTo(1)
+            assertThat(board.countMinesNearby(cell3)).isEqualTo(0)
+        })
+    }
+
+    @Test
+    fun `보드 특정 셀에서 자신을 제외한 주변 8개 셀에 포함된 지뢰의 개수를 계산할 때 보드 밖의 좌표를 입력할 경우 IllegalArgumentException`() {
+        // given
+        val height = 5
+        val width = 5
+        val mineCoordinates = FixedCoordinatesGenerator(height, width).create(listOf(1 to 2, 2 to 2))
+        val board = Board.create(height, width, mineCoordinates)
+
+        // when
+        val cell = Cell.of(5, 5)
+
+        // then
+        assertThrows<IllegalArgumentException> {
+            board.countMinesNearby(cell)
+        }
     }
 }

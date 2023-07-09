@@ -9,11 +9,11 @@ class FixedCoordinatesGenerator(
 
     fun create(coordinates: List<Pair<Int, Int>>): Coordinates {
         val numberOfMines = coordinates.size
-        require(numberOfMines < maxHeight * maxWidth) { NUMBER_OF_MINES_MUST_BE_LESS_THAN_CELLS  }
+        require(numberOfMines < maxHeight * maxWidth) { NUMBER_OF_MINES_MUST_BE_LESS_THAN_CELLS }
 
         val coordinateSet = buildSet {
             coordinates.forEach {
-                add(Coordinate.of(it.first, it.second))
+                add(Coordinate.of(it.second, it.first))
             }
         }
 
