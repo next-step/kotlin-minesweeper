@@ -5,7 +5,7 @@ import util.RandomLocationGenerator
 object MineMapGenerator {
 
     fun createMineMap(height: Int, width: Int, numOfMine: Int): MineMap {
-        require(numOfMine <= height * width)
+        require(numOfMine <= height * width) { "지뢰의 수는 지도의 크기(가로*세로)보다 많을 수 없습니다."}
 
         //mine 위치 정보 받아오기
         val mineLocations = mutableSetOf<Location>()
