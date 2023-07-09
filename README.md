@@ -77,4 +77,48 @@ C C C C C C C C C C
 *** 기능 목록
 
 - [x] 각 cell의 숫자를 구한다
-- [x] 각 cell의 숫자를 출력한다 
+- [x] 각 cell의 숫자를 출력한다
+
+
+* 3단계 - 지뢰 찾기(게임 실행)
+
+*** 기능 요구사항
+
+- 지뢰가 없는 인접한 칸이 모두 열리게 된다.
+
+*** 실행 결과
+
+```
+높이를 입력하세요.
+10
+
+너비를 입력하세요.
+10
+
+지뢰는 몇 개인가요?
+10
+
+지뢰찾기 게임 시작
+open: 1, 1
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+1 1 C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+
+open: 4, 1
+Lose Game.
+```
+
+*** 기능 목록
+
+- [ ] open 할 칸의 번호를 입력받는다
+- [ ] 지뢰가 없는 인접한 칸이 모두 열리게 된다.
+- [ ] open된 칸만 번호가 출력된다
+- [ ] 지뢰를 오픈할 때까지 게임이 계속된다
+- [ ] 지뢰를 오픈하면 Lose game.이 출력된다
