@@ -5,9 +5,9 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import mine.sweeper.Fixture.middleMineFields
 import mine.sweeper.domain.Fields
-import mine.sweeper.domain.Position
 import mine.sweeper.domain.SafeField
 import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.Position
 
 class FieldsTest : StringSpec({
     "특정 위치의 필드를 확인한다" {

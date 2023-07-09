@@ -2,8 +2,8 @@ package mine.sweeper
 
 import mine.sweeper.domain.Field
 import mine.sweeper.domain.MineField
-import mine.sweeper.domain.Position
 import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.Position
 
 object Fixture {
     fun middleMineFields(): List<Field> {

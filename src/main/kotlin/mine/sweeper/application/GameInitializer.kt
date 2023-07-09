@@ -2,10 +2,9 @@ package mine.sweeper.application
 
 import mine.sweeper.domain.Field
 import mine.sweeper.domain.Fields
-import mine.sweeper.domain.Game
 import mine.sweeper.domain.MineField
-import mine.sweeper.domain.Position
 import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.Position
 import mine.sweeper.domain.value.SurroundDirection
 
 class GameInitializer(private val fieldList: List<Field>) {

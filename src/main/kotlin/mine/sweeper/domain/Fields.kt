@@ -1,6 +1,7 @@
 package mine.sweeper.domain
 
 import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.Position
 import mine.sweeper.domain.value.SurroundDirection
 
 class Fields(val fieldList: List<Field>) {

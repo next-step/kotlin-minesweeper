@@ -1,6 +1,8 @@
-package mine.sweeper.domain
+package mine.sweeper.application
 
+import mine.sweeper.domain.Fields
 import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.Position
 
 class Game(val fields: Fields) {
     private var status = GameStatus.ON_PROGRESS

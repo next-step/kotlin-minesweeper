@@ -1,6 +1,7 @@
 package mine.sweeper.domain
 
 import mine.sweeper.domain.value.GameStatus
+import mine.sweeper.domain.value.Position
 
 sealed class Field(val position: Position) {
     var checked = false

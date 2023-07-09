@@ -4,8 +4,8 @@ import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import mine.sweeper.domain.MineField
-import mine.sweeper.domain.Position
 import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.Position
 
 class FieldTest : StringSpec({
     "필드는 안전 필드, 지뢰가 설치된 필드가 있다." {

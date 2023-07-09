@@ -5,8 +5,8 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import mine.sweeper.application.FieldsInitializer
+import mine.sweeper.application.Game
 import mine.sweeper.application.GameInitializer
-import mine.sweeper.domain.Game
 import mine.sweeper.domain.GameOption
 import mine.sweeper.domain.MineField
 import mine.sweeper.domain.SafeField

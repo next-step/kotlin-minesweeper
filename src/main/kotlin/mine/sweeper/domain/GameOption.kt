@@ -2,6 +2,7 @@ package mine.sweeper.domain
 
 import mine.sweeper.domain.value.Height
 import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Position
 import mine.sweeper.domain.value.Width
 
 class GameOption(

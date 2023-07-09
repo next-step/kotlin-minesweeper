@@ -1,6 +1,5 @@
 package mine.sweeper.application
 
-import mine.sweeper.domain.Game
 import mine.sweeper.view.InputView
 import mine.sweeper.view.OutputView
 
