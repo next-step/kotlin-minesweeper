@@ -12,6 +12,7 @@ class GameOption(
     init {
         check(height.value * width.value > mineCount.value)
     }
+
     val area = height.value * width.value
 
     private val randomPositions = MutableList(area) { positionBy(it) }.shuffled().toMutableList()

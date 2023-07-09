@@ -1,21 +1,18 @@
-package mine.sweeper.domain
+package mine.sweeper.application
 
+import mine.sweeper.domain.Field
+import mine.sweeper.domain.Fields
+import mine.sweeper.domain.Game
+import mine.sweeper.domain.MineField
+import mine.sweeper.domain.Position
+import mine.sweeper.domain.SafeField
 import mine.sweeper.domain.value.SurroundDirection
 
-class GameInitializer(
-    private val option: GameOption
-) {
+class GameInitializer(private val fieldList: List<Field>) {
     fun create(): Game {
-        val minePositions = option.minePositions
-
-        val fieldList: MutableList<Field> = MutableList(option.area) { index ->
-            val position = option.positionBy(index)
-            minePositions.find { it == position }?.let { MineField(it) } ?: SafeField(position)
-        }
-
         val surroundIncrementor = SurroundIncrementor(fieldList)
+        val minePositions = fieldList.filterIsInstance<MineField>().map { it.position }.toSet()
         minePositions.forEach(surroundIncrementor::increase)
-
         return Game(Fields(fieldList))
     }
 
