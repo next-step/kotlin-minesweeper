@@ -19,14 +19,13 @@ internal class MinesWeeperTest {
     }
 
     @Test
-    internal fun `지뢰찾기는 입력한 높이와 너비의 모양으로 생성된다`() {
+    internal fun `지뢰찾기는 입력한 높이와 너비의 크기로 생성된다`() {
         val height = 10
         val width = 5
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        game.boards.maxOf { it.location.y } shouldBe height - 1
-        game.boards.maxOf { it.location.x } shouldBe width - 1
+        game.boards.size shouldBe 50
     }
 
     @Test
@@ -36,6 +35,22 @@ internal class MinesWeeperTest {
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        game.boards.count { it.isMine } shouldBe count
+        game.boards.count { it.cell is Mine } shouldBe count
+    }
+
+    @Test
+    internal fun `주변의 지뢰수만큼 카운트가 올라간다`() {
+        val list = listOf(
+            Board(Location(0, 0), Mine),
+            Board(Location(0, 1), Basic()),
+            Board(Location(1, 0), Mine),
+            Board(Location(1, 1), Mine)
+        )
+        val game = MinesWeeper(list)
+
+        game.calculateCount()
+
+        val basic: Basic = game.boards.first { it.location == Location(0, 1) }.cell as Basic
+        basic.count shouldBe 3
     }
 }
