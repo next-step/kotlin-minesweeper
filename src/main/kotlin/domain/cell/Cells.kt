@@ -1,4 +1,4 @@
-package domain
+package domain.cell
 
 fun List<Cell>.toCells() = Cells(this)
 fun Cells.filtered(condition: (cell: Cell) -> Boolean): Cells {

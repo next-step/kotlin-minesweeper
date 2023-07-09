@@ -1,9 +1,9 @@
 package minesweeper
 
 import domain.MineSweeperMap
-import domain.Position
+import domain.position.Position
 import domain.PositiveNumber
-import domain.toPositions
+import domain.position.toPositions
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import minesweeper.domain.TestMinePositionGenerator

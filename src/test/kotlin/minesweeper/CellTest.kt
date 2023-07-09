@@ -1,9 +1,9 @@
 package minesweeper
 
 import domain.AroundMineCount
-import domain.Cell
-import domain.NormalCellProperty
-import domain.Position
+import domain.cell.Cell
+import domain.cell.NormalCellProperty
+import domain.position.Position
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test

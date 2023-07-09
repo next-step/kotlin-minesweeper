@@ -1,4 +1,4 @@
-package domain
+package domain.position
 
 enum class AdjacentPosition(val row: Int, val column: Int) {
     LEFT_TOP(-1, -1),

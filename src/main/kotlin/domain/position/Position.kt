@@ -1,4 +1,8 @@
-package domain
+package domain.position
+
+import domain.MineSweeperMap
+import domain.PositiveNumber
+import domain.toPositiveNumber
 
 data class Position(val row: PositiveNumber, val column: PositiveNumber) {
 

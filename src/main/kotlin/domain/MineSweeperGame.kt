@@ -1,5 +1,10 @@
 package domain
 
+import domain.cell.Cell
+import domain.cell.filtered
+import domain.position.Position
+import domain.position.filtered
+
 class MineSweeperGame(val mineSweeperMap: MineSweeperMap, private val mineCountNumber: MineCountNumber) {
 
     fun open(position: Position): Boolean {

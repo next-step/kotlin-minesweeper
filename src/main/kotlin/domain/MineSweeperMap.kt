@@ -1,5 +1,13 @@
 package domain
 
+import domain.cell.Cell
+import domain.cell.CellPropertyFactory
+import domain.cell.Cells
+import domain.cell.toCells
+import domain.position.Position
+import domain.position.Positions
+import domain.position.contains
+
 class MineSweeperMap(val property: Property, minePositionGenerator: MinePositionGenerator) {
     val value: Array<Array<Cell>> = init(minePositionGenerator)
 

@@ -1,4 +1,4 @@
-package domain
+package domain.cell
 
 data class MineCellProperty(override val type: CellType = CellType.MINE) : CellProperty() {
 

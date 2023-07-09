@@ -1,9 +1,9 @@
 package minesweeper.domain
 
 import domain.AroundMineCount
-import domain.Cell
-import domain.CellPropertyFactory
-import domain.Position
+import domain.cell.Cell
+import domain.cell.CellPropertyFactory
+import domain.position.Position
 import domain.toPositiveNumber
 
 class TestMineSweeperMap(val value: Array<Array<Cell>>)

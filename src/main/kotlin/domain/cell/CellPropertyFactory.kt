@@ -1,4 +1,6 @@
-package domain
+package domain.cell
+
+import domain.AroundMineCount
 
 class CellPropertyFactory {
     companion object {

@@ -1,5 +1,8 @@
-package domain
+package domain.position
 
+import domain.MineCountNumber
+import domain.MinePositionGenerator
+import domain.MineSweeperMap
 import kotlin.random.nextInt
 
 class RandomMinePositionGenerator private constructor(private val property: Property) : MinePositionGenerator {

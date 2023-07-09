@@ -3,7 +3,7 @@ package controller
 import domain.GameResult
 import domain.MineSweeperGame
 import domain.MineSweeperMap
-import domain.RandomMinePositionGenerator
+import domain.position.RandomMinePositionGenerator
 import view.input.HeightInputView
 import view.input.MineCountInputView
 import view.input.OpenPositionInputView

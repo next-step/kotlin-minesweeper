@@ -1,4 +1,6 @@
-package domain
+package domain.position
+
+import domain.AroundMineCount
 
 fun List<Position>.toPositions() = Positions(this)
 fun Positions.filtered(condition: (position: Position) -> Boolean): Positions = value.filter { condition(it) }.toPositions()

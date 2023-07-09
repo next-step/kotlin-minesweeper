@@ -1,4 +1,4 @@
-package domain
+package domain.cell
 
 abstract class CellProperty {
     private var state: CellState = CellState.HIDE

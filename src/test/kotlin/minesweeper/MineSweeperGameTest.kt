@@ -1,13 +1,13 @@
 package minesweeper
 
-import domain.CellType
 import domain.GameResult
 import domain.MineCountNumber
 import domain.MineSweeperGame
 import domain.MineSweeperMap
-import domain.Position
 import domain.PositiveNumber
-import domain.RandomMinePositionGenerator
+import domain.cell.CellType
+import domain.position.Position
+import domain.position.RandomMinePositionGenerator
 import domain.toPositiveNumber
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Mine

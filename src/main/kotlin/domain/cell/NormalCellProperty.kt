@@ -1,4 +1,6 @@
-package domain
+package domain.cell
+
+import domain.AroundMineCount
 
 data class NormalCellProperty(private val aroundMineCount: AroundMineCount) : CellProperty() {
     override val type: CellType = CellType.NORMAL

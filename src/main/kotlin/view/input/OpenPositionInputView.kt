@@ -1,7 +1,7 @@
 package view.input
 
 import ErrorCode
-import domain.Position
+import domain.position.Position
 
 class OpenPositionInputView : InputView<Pair<Int, Int>, Position>() {
     override val message: String = "open: "
