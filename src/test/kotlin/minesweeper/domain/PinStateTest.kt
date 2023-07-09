@@ -10,7 +10,7 @@ class PinStateTest {
     fun `CLOSE 상태의 핀만 OPEN 할 수 있다`() {
         val pinState = PinState.OPEN
 
-        shouldThrow<IllegalArgumentException> {
+        shouldThrow<IllegalStateException> {
             pinState.toOpen()
         }
     }
