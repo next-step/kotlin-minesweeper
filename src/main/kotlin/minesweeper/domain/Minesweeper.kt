@@ -1,20 +1,59 @@
 package minesweeper.domain
 
-class Minesweeper(rows: Rows, cols: Cols, mine: MineValue) {
-    val minesweeperArray: Array<IntArray>
-    private val minePositions: MinePositions
+import minesweeper.view.POSITION_SPLIT_SYMBOL
+
+class Minesweeper(
+    val positions: Positions,
+    minePositions: MinePositions
+) {
+    private val minesweeperMineCount: Int
 
     init {
-        val rowsValue = rows.value
-        val colsValue = cols.value
-
-        minesweeperArray = Array(rowsValue) { IntArray(colsValue) }
-        minePositions = MinePositions(rowsValue, colsValue, mine.value)
-
-        for (minePosition in minePositions.minePositions) {
-            minesweeperArray[minePosition.rowPosition][minePosition.colPosition] = -1
+        minePositions.minePositions.forEach {
+            positions.updatePositionValue(it.rowPosition, it.colPosition, -1)
         }
-        val mineCount = MineCount(minesweeperArray, rows, cols)
+
+        val mineCount = MineCount(positions)
         mineCount.initMineCount()
+        minesweeperMineCount = minePositions.mineCount
+    }
+
+    fun open(position: String) {
+        val (row, col) = splitStringPosition(position)
+        positions.open(row, col)
+    }
+
+    fun position(rows: Int, cols: Int): Position {
+        return positions.position(rows, cols)
+    }
+
+    fun canPlayGame(position: String): Boolean {
+        return !(isGameWin() || isGameLose(position))
+    }
+
+    fun isGameWin(): Boolean {
+        return positions.notOpenPositionCount() == minesweeperMineCount
+    }
+
+    private fun isGameLose(position: String): Boolean {
+        val (row, col) = splitStringPosition(position)
+        return positions.isMinePosition(row, col)
+    }
+
+    private fun splitStringPosition(position: String) = position.split(POSITION_SPLIT_SYMBOL).map { it.trim().toInt() }
+
+    companion object {
+        fun from(rows: Int, cols: Int, mine: Int): Minesweeper {
+            val positionArray = Array(rows) {
+                Array(cols) {
+                    Position()
+                }
+            }
+
+            return Minesweeper(
+                Positions(positionArray),
+                MinePositions.from(Rows(rows), Cols(cols), MineValue(mine, rows, cols))
+            )
+        }
     }
 }
