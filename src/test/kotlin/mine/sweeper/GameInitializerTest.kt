@@ -27,24 +27,34 @@ value class MineCount(val value: Int) {
 
 class GameOption(
     height: Height,
-    width: Width,
-    val mineCount: MineCount
+    private val width: Width,
+    private val mineCount: MineCount
 ) {
+    init {
+        check(height.value * width.value > mineCount.value)
+    }
     val area = height.value * width.value
-    val width = width.value
+
+    private val randomPositions = MutableList(area) { positionBy(it) }.shuffled().toMutableList()
+
+    val minePositions = randomPositions.take(mineCount.value).toSet()
+
+    fun positionBy(index: Int): Position {
+        val x = index / width.value
+        val y = index % width.value
+        return Position(x, y)
+    }
 }
 
 class GameInitializer(
     private val option: GameOption
 ) {
     fun create(): Game {
-        val mines = setOf(Position(1, 1))
+        val minePositions = option.minePositions
 
         val fieldList: MutableList<Field> = MutableList(option.area) { index ->
-            val x = index / option.width
-            val y = index % option.width
-            val position = Position(x, y)
-            mines.find { it == position }?.let { Field(it, "mine") } ?: Field(position, "safe")
+            val position = option.positionBy(index)
+            minePositions.find { it == position }?.let { Field(it, "mine") } ?: Field(position, "safe")
         }
 
         return Game(Fields(fieldList))
@@ -84,9 +94,14 @@ class GameInitializerTest : StringSpec({
     "랜덤한 위치에 지뢰를 설치한다." {
         val option = GameOption(Height(2), Width(2), MineCount(1))
         val game: Game = GameInitializer(option).create()
-        game.fields.fieldList.count {
-            it.value == "mine"
-        } shouldBe 1
+        game.fields.fieldList.count { it.value == "mine" } shouldBe 1
         game.fields.fieldList.count { it.value == "safe" } shouldBe 3
+    }
+
+    "랜덤한 위치들에 지뢰를 설치한다." {
+        val option = GameOption(Height(2), Width(2), MineCount(3))
+        val game: Game = GameInitializer(option).create()
+        game.fields.fieldList.count { it.value == "mine" } shouldBe 3
+        game.fields.fieldList.count { it.value == "safe" } shouldBe 1
     }
 })
