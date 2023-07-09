@@ -1,7 +1,18 @@
 package mine.sweeper.domain
 
-open class Field(val position: Position) {
+import mine.sweeper.domain.value.GameStatus
+
+sealed class Field(val position: Position) {
+    var checked = false
+        private set
+
     fun isSame(target: Position): Boolean {
         return position == target
     }
+
+    fun updateCheck() {
+        checked = true
+    }
+
+    abstract fun open(): GameStatus
 }

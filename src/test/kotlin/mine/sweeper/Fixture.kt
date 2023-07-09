@@ -6,7 +6,7 @@ import mine.sweeper.domain.Position
 import mine.sweeper.domain.SafeField
 
 object Fixture {
-    fun basicFields(): List<Field> {
+    fun middleMineFields(): List<Field> {
         return listOf(
             SafeField(Position(0, 0)),
             SafeField(Position(1, 0)),
