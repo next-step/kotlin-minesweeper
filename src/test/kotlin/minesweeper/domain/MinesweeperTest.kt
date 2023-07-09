@@ -29,7 +29,7 @@ class MinesweeperTest : StringSpec({
             MinePositions(listOf(MinePosition(1, 2), MinePosition(2, 2), MinePosition(2, 1)))
         )
 
-        minesweeper.open("0, 0")
+        minesweeper.open(Pair(0, 0))
         minesweeper.position(0, 0).isOpened shouldBe true
         minesweeper.position(0, 1).isOpened shouldBe true
         minesweeper.position(1, 0).isOpened shouldBe true

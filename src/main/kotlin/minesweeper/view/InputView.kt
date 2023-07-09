@@ -17,7 +17,8 @@ fun enterMineCount(): Int {
     return readln().toInt()
 }
 
-fun enterOpenPosition(): String {
+fun enterOpenPosition(): Pair<Int, Int> {
     print("open: ")
-    return readln()
+    val positions = readln().split(POSITION_SPLIT_SYMBOL).map { it.trim().toInt() }
+    return Pair(positions[0], positions[1])
 }

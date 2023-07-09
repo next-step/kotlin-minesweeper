@@ -18,8 +18,8 @@ class Minesweeper(
         minesweeperMineCount = minePositions.mineCount
     }
 
-    fun open(position: String) {
-        val (row, col) = splitStringPosition(position)
+    fun open(position: Pair<Int, Int>) {
+        val (row, col) = position
         positions.open(row, col)
     }
 
@@ -27,7 +27,7 @@ class Minesweeper(
         return positions.position(rows, cols)
     }
 
-    fun canPlayGame(position: String): Boolean {
+    fun canPlayGame(position: Pair<Int, Int>): Boolean {
         return !(isGameWin() || isGameLose(position))
     }
 
@@ -35,12 +35,10 @@ class Minesweeper(
         return positions.notOpenPositionCount() == minesweeperMineCount
     }
 
-    private fun isGameLose(position: String): Boolean {
-        val (row, col) = splitStringPosition(position)
+    private fun isGameLose(position: Pair<Int, Int>): Boolean {
+        val (row, col) = position
         return positions.isMinePosition(row, col)
     }
-
-    private fun splitStringPosition(position: String) = position.split(POSITION_SPLIT_SYMBOL).map { it.trim().toInt() }
 
     companion object {
         fun from(rows: Int, cols: Int, mine: Int): Minesweeper {
