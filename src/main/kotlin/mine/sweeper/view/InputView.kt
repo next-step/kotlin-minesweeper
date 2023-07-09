@@ -2,8 +2,8 @@ package mine.sweeper.view
 
 import mine.sweeper.domain.value.Height
 import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Position
 import mine.sweeper.domain.value.Width
-import mine.sweeper.view.dto.Position
 
 object InputView {
     fun getHeight(): Height {

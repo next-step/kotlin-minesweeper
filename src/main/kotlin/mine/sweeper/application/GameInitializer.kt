@@ -4,28 +4,15 @@ import mine.sweeper.domain.Field
 import mine.sweeper.domain.Fields
 import mine.sweeper.domain.MineField
 import mine.sweeper.domain.SafeField
-import mine.sweeper.domain.value.MineCount
+import mine.sweeper.domain.value.Position
 import mine.sweeper.domain.value.SurroundDirection
-import mine.sweeper.view.dto.MapSize
-import mine.sweeper.view.dto.Position
 
-class MapInitializer(
-    private val mapSize: MapSize,
-    private val minePositions: Set<Position>
-) {
-    fun create(): MineSweeperMap {
-        val fieldList: MutableList<Field> = MutableList(mapSize.area) { index ->
-            val x = index / mapSize.width.value
-            val y = index % mapSize.width.value
-            if (minePositions.contains(Position(x, y))) {
-                MineField(Position(x, y))
-            } else {
-                SafeField(Position(x, y))
-            }
-        }
+class GameInitializer(private val fieldList: List<Field>) {
+    fun create(): Game {
         val surroundIncrementor = SurroundIncrementor(fieldList)
+        val minePositions = fieldList.filterIsInstance<MineField>().map { it.position }.toSet()
         minePositions.forEach(surroundIncrementor::increase)
-        return MineSweeperMap(Fields(fieldList), MineCount(minePositions.size))
+        return Game(Fields(fieldList))
     }
 
     private inner class SurroundIncrementor(private val fieldList: List<Field>) {

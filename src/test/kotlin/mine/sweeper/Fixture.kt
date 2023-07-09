@@ -1,34 +1,22 @@
 package mine.sweeper
 
-import mine.sweeper.application.MapInitializer
-import mine.sweeper.application.MineSweeperGame
-import mine.sweeper.application.MineSweeperMap
-import mine.sweeper.application.RandomPositionManager
-import mine.sweeper.domain.Vulture
-import mine.sweeper.domain.value.Height
-import mine.sweeper.domain.value.MineCount
-import mine.sweeper.domain.value.Width
-import mine.sweeper.view.dto.MapSize
+import mine.sweeper.domain.Field
+import mine.sweeper.domain.MineField
+import mine.sweeper.domain.SafeField
+import mine.sweeper.domain.value.Position
 
 object Fixture {
-    fun createMineGame(
-        height: Height = Height(5),
-        width: Width = Width(5),
-        mineCount: MineCount = MineCount(1)
-    ): MineSweeperGame {
-        val mapSize = MapSize(height, width)
-        val vulture = Vulture(RandomPositionManager(mapSize), mineCount)
-        val mineSweeperMap = MapInitializer(mapSize, vulture.newMinePositions).create()
-        return MineSweeperGame(mineSweeperMap)
-    }
-
-    fun createMineMap(
-        height: Height = Height(5),
-        width: Width = Width(5),
-        mineCount: MineCount = MineCount(1)
-    ): MineSweeperMap {
-        val mapSize = MapSize(height, width)
-        val vulture = Vulture(RandomPositionManager(mapSize), mineCount)
-        return MapInitializer(mapSize, vulture.newMinePositions).create()
+    fun middleMineFields(): List<Field> {
+        return listOf(
+            SafeField(Position(0, 0)),
+            SafeField(Position(1, 0)),
+            SafeField(Position(2, 0)),
+            SafeField(Position(0, 1)),
+            MineField(Position(1, 1)),
+            SafeField(Position(2, 1)),
+            SafeField(Position(0, 2)),
+            SafeField(Position(1, 2)),
+            SafeField(Position(2, 2))
+        )
     }
 }

@@ -1,15 +1,15 @@
 package mine.sweeper
 
-import mine.sweeper.application.MapInitializer
-import mine.sweeper.application.RandomPositionManager
-import mine.sweeper.domain.Vulture
+import mine.sweeper.application.FieldsInitializer
+import mine.sweeper.application.GameController
+import mine.sweeper.application.GameInitializer
+import mine.sweeper.domain.RandomGameOption
 import mine.sweeper.view.InputView
-import mine.sweeper.view.dto.MapSize
 
 fun main() {
-    val mapSize = MapSize(InputView.getHeight(), InputView.getWidth())
-    val mineCount = InputView.getMines()
-    val minePositions = Vulture(RandomPositionManager(mapSize), mineCount).newMinePositions
-    val gameController = GameController(MapInitializer(mapSize, minePositions).create())
+    val option = RandomGameOption(InputView.getHeight(), InputView.getWidth(), InputView.getMines())
+    val fieldList = FieldsInitializer(option).create()
+    val game = GameInitializer(fieldList).create()
+    val gameController = GameController(game)
     gameController.playGame()
 }
