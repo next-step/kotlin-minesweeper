@@ -45,7 +45,7 @@ object MineMapGenerator {
 
     fun getElement(index: Int, minesOfRow: List<Int>): MapElement {
         val mine = Mine
-        val noneMine = NonMine
+        val noneMine = EmptyElement
         return if (minesOfRow.contains(index)) mine else noneMine
     }
 }

@@ -1,11 +1,11 @@
 package domain
 
-import domain.MapElement.Companion.MINE_CHAR
-
 object Mine : MapElement {
-    override val character = MINE_CHAR
+    private const val MINE_DISPLAY_CHAR = "*"
+
+    override val displayCharacter = MINE_DISPLAY_CHAR
 
     override fun toString(): String {
-        return character
+        return displayCharacter
     }
 }
