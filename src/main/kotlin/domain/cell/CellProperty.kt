@@ -1,7 +1,7 @@
 package domain.cell
 
 abstract class CellProperty {
-    private var state: CellState = CellState.HIDE
+    open lateinit var state: CellState
 
     abstract fun getSymbol(): String
     abstract fun isCleanAroundMineCount(): Boolean

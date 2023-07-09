@@ -1,8 +1,8 @@
 package minesweeper
 
 import domain.MineSweeperMap
-import domain.position.Position
 import domain.PositiveNumber
+import domain.position.Position
 import domain.position.toPositions
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
