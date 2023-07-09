@@ -1,6 +1,7 @@
 import controller.MineSweeperController
 import domain.BoardSize
 import domain.MineSweeperBoard
+import domain.MineSweeperBoardGenerator
 
 fun main() {
     val mineSweeperController = MineSweeperController()
@@ -11,7 +12,7 @@ fun main() {
     val mines = mineSweeperController.inputMines()
     println()
 
-    val board = MineSweeperBoard(BoardSize(height, width), mines)
+    val board = MineSweeperBoardGenerator(BoardSize(height, width), mines).generate()
     mineSweeperController.printStartMessage()
     mineSweeperController.printBoard(board)
 }

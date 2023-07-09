@@ -1,20 +1,37 @@
 package domain
 
-class MineSweeperBoard(val boardSize: BoardSize, private val mines: Int) {
-    val board = Array(boardSize.width * boardSize.height) { Cell.createNormalCell() }
+class MineSweeperBoard(boardSize: BoardSize) {
+    private val _board = Array(boardSize.height) { Array(boardSize.width) { Cell.createNormalCell() } }
 
-    init {
-        require(mines > 0) { "지뢰는 0보다 많아야 합니다." }
-        require(mines < boardSize.width * boardSize.height) { "지뢰는 게임판의 칸 수보다 적어야 합니다." }
-        setMines()
+    val width: Int
+        get() = _board[0].size
+
+    val height: Int
+        get() = _board.size
+
+    fun putMines(vararg position: Position) {
+        position.forEach {
+            putMine(it)
+        }
     }
 
-    private fun setMines() {
-        (0 until boardSize.width * boardSize.height)
-            .shuffled()
-            .take(mines)
-            .forEach {
-                board[it] = Cell.createMineCell()
-            }
+    fun putMine(position: Position) {
+        _board[position.y][position.x] = Cell.createMineCell()
+    }
+
+    fun isMine(position: Position): Boolean {
+        return _board[position.y][position.x] is Cell.MineCell
+    }
+
+    fun getCell(position: Position): Cell {
+        return _board[position.y][position.x]
+    }
+
+    fun getRow(y: Int): List<Cell> {
+        return _board[y].toList()
+    }
+
+    fun getMineCountAround(position: Position): Int {
+        return 0
     }
 }

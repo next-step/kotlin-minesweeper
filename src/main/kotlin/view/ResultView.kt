@@ -2,6 +2,7 @@ package view
 
 import domain.Cell
 import domain.MineSweeperBoard
+import domain.Position
 
 object ResultView {
     fun startMessage() {
@@ -9,11 +10,8 @@ object ResultView {
     }
 
     fun board(board: MineSweeperBoard) {
-        repeat(board.boardSize.height) { y ->
-            board.board.slice(y * board.boardSize.width until (y + 1) * board.boardSize.width)
-                .joinToString(" ") { cell(it) }.also {
-                    println(it)
-                }
+        repeat(board.height) { y ->
+            println(board.getRow(y).joinToString(" ") { cell(it) })
         }
     }
 

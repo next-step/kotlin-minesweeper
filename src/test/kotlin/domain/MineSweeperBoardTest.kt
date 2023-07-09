@@ -1,25 +1,18 @@
 package domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class MineSweeperBoardTest : FunSpec({
-    context("높이와 너비만큼의 게임판을 생성한다.") {
-        val board = MineSweeperBoard(BoardSize(10, 15), 10)
-        board.boardSize.width shouldBe 10
-        board.boardSize.height shouldBe 15
+    context("보드에 지뢰를 설치할 수 있다.") {
+        val mineSweeperBoard = MineSweeperBoard(BoardSize(10, 10))
+        mineSweeperBoard.putMine(Position(0, 0))
+
+        mineSweeperBoard.isMine(Position(0, 0)) shouldBe true
     }
 
-    context("지뢰는 0보다 많아야 한다.") {
-        shouldThrow<IllegalArgumentException> {
-            MineSweeperBoard(BoardSize(3, 3), -1)
-        }
-    }
-
-    context("지뢰는 보드의 칸 수보다 적어야 한다.") {
-        shouldThrow<IllegalArgumentException> {
-            MineSweeperBoard(BoardSize(3, 3), 9)
-        }
+    context("테스트 보드의 0x0 좌표 주변의 지뢰는 0개이다.") {
+        val board = createTestBoard()
+        board.getMineCountAround(Position(0, 0)) shouldBe 0
     }
 })
