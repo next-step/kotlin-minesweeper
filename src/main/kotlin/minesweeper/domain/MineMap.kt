@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-class MineMap(height: Height, width: Width, mineCount: MineCount) {
+class MineMap(height: Height, val width: Width, mineCount: MineCount) {
     private val size: Int = height.value * width.value
-    private val map: List<Point>
+    val map: List<Point>
 
     init {
         require(size >= mineCount.value) { "지도 크기는 지뢰 개수이상이어야 합니다." }

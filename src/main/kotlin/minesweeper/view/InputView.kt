@@ -8,12 +8,14 @@ object InputView {
     }
 
     fun receiveWidth(): Int {
+        println()
         println("너비를 입력하세요.")
 
         return receiveInt()
     }
 
     fun receiveMineCount(): Int {
+        println()
         println("지뢰는 몇 개인가요?")
 
         return receiveInt()
