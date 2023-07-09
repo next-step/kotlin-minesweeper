@@ -57,6 +57,6 @@ class MineSweeperGame(val mineSweeperMap: MineSweeperMap, private val mineCountN
     fun getResult(): GameResult {
         val existsOpenMine = mineSweeperMap.existsOpenMine()
         val isSameCountOfCloseAndMine = mineSweeperMap.getCloseCellCount() == mineCountNumber.value
-        return GameResult.valueOf(existsOpenMine, isSameCountOfCloseAndMine)
+        return GameResult.of(existsOpenMine, isSameCountOfCloseAndMine)
     }
 }

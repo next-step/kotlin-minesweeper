@@ -7,7 +7,7 @@ enum class GameResult {
     fun isWin(): Boolean = this == WIN
 
     companion object {
-        fun valueOf(existsOpenMine: Boolean, isSameCountOfCloseAndMine: Boolean): GameResult {
+        fun of(existsOpenMine: Boolean, isSameCountOfCloseAndMine: Boolean): GameResult {
             return when {
                 existsOpenMine -> LOSE
                 isSameCountOfCloseAndMine -> WIN
