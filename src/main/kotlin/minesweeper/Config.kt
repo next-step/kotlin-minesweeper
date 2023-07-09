@@ -1,13 +1,13 @@
 package minesweeper
 
-import minesweeper.domain.MineGame
-import minesweeper.domain.RandomCellsGenerator
+import minesweeper.domain.MineSweeperGame
+import minesweeper.domain.RandomMinesGenerator
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
 object Config {
     fun inputView() = InputView
     fun outputView() = OutputView
-    fun mineGame() = MineGame(cellsGenerator())
-    fun cellsGenerator() = RandomCellsGenerator
+    fun mineGame() = MineSweeperGame(minesGenerator())
+    fun minesGenerator() = RandomMinesGenerator
 }
