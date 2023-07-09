@@ -12,13 +12,16 @@ private operator fun List<TileRow>.set(position: MinePosition, tile: Tile) {
     this[position.positionX][position.positionY] = tile
 }
 
-class MineMap(private val width: Length, private val height: Length) {
+class MineMap(lengths: Pair<Length, Length>, val mineCount: MineCount) {
+
+    private val width: Length = lengths.first
+    private val height: Length = lengths.second
 
     val mineMap = List(height.value) {
         TileRow(MutableList(width.value) { PlainTile() })
     }
 
-    fun makeMine(mineCount: MineCount) {
+    init {
         require(width.value * height.value > mineCount.count) {
             "지뢰는 넓이*너비의 수보다 작아야한다"
         }
@@ -39,35 +42,76 @@ class MineMap(private val width: Length, private val height: Length) {
         return makeCount
     }
 
-    private fun setNearMineMap(minePosition: MinePosition) {
-        val minePositionX = minePosition.positionX
-        for (position in minePositionX.dec()..minePositionX.inc()) {
-            setNearMineColumn(position, minePosition)
+    private fun setNearMineMap(position: MinePosition) {
+        val columnRange = getRange(position.positionX, height)
+        val rowRange = getRange(position.positionY, width)
+
+        for (columnIndex in columnRange) {
+            val tileRow = mineMap[columnIndex]
+            tileRow.increaseMineCountNearTile(rowRange)
         }
     }
 
-    private fun setNearMineColumn(positionX: Int, minePosition: MinePosition) {
-        if (isOutofMap(positionX, height)) {
+    private fun getRange(position: Position, limit: Length): List<Int> {
+        return (position.dec()..position.inc())
+            .filter { it in MINIMUM_POSITION until limit.value }
+    }
+
+    fun startGame(gameStateNotify: GameStateNotify) {
+        openTile(gameStateNotify)
+    }
+
+    private fun openTile(gameStateNotify: GameStateNotify) {
+        val position = gameStateNotify.getOpenPosition()
+        val tile = mineMap[position]
+        if (tile.isMine()) {
+            gameStateNotify.showGameState(false)
             return
         }
-        val minePositionY = minePosition.positionY
-        for (positionY in minePositionY.dec()..minePositionY.inc()) {
-            setNearMineRow(Position(positionX), positionY)
-        }
+        openTile(position)
+        proceedGame(gameStateNotify)
     }
 
-    private fun isOutofMap(position: Int, length: Length) = position < 0 || position >= length.value
-
-    private fun setNearMineRow(positionX: Position, positionY: Int) {
-        if (isOutofMap(positionY, width)) {
+    private fun openTile(position: MinePosition) {
+        val tile = mineMap[position]
+        if (tile !is PlainTile) {
             return
         }
-        setNearMineCount(mineMap[MinePosition(positionX, Position(positionY))])
+
+        if (tile.isCheckedTile) {
+            return
+        }
+
+        tile.isCheckedTile = true
+
+        if (!tile.isEmptyTile()) {
+            return
+        }
+
+        val columnRange = getRange(position.positionX, height)
+        val rowRange = getRange(position.positionY, width)
+
+        columnRange.forEach { columnPosition ->
+            val tileRow = mineMap[columnPosition]
+            tileRow.getTiles(rowRange) { rowIndex ->
+                openTile(MinePosition(Position(columnPosition), Position(rowIndex)))
+            }
+        }
     }
 
-    private fun setNearMineCount(tile: Tile) {
-        if (tile is PlainTile) {
-            tile.increaseNearMineCount()
+    private fun proceedGame(gameStateNotify: GameStateNotify) {
+        gameStateNotify.showMineMapInProgress(mineMap)
+        val sizeOfUncheckedTiles = mineMap.sumOf {
+            it.sizeOfUnChecked()
         }
+        if (mineCount.count == sizeOfUncheckedTiles) {
+            gameStateNotify.showGameState(true)
+            return
+        }
+        openTile(gameStateNotify)
+    }
+
+    companion object {
+        const val MINIMUM_POSITION = 0
     }
 }

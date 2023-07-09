@@ -1,6 +1,5 @@
 package minesweeper.view
 
-import minesweeper.domain.MineMap
 import minesweeper.domain.MineTile
 import minesweeper.domain.PlainTile
 import minesweeper.domain.Tile
@@ -8,9 +7,12 @@ import minesweeper.domain.TileRow
 
 object OutputView {
 
-    fun showGameResult(mineMap: MineMap) {
+    fun showGameStartMessage() {
         println("지뢰찾기 게임 시작")
-        mineMap.mineMap.forEach {
+    }
+
+    fun showMapInProgress(mineMap: List<TileRow>) {
+        mineMap.forEach {
             println(getTilesRow(it))
         }
     }
@@ -26,10 +28,19 @@ object OutputView {
     }
 
     private fun getTileMark(tile: Tile): String {
+        if (!tile.isCheckedTile) {
+            return "C"
+        }
         return when (tile) {
             is MineTile -> "*"
             is PlainTile -> tile.nearMineCount.toString()
             else -> ""
         }
+    }
+
+    fun showGameResult(isWin: Boolean) {
+        println(
+            if (isWin) "Win Game." else "Lose Game."
+        )
     }
 }

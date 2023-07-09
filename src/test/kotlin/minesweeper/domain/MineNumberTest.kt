@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 
-class MineNumberTest : FunSpec( {
+class MineNumberTest : FunSpec({
 
     test("지뢰 갯수는 숫자이어야함") {
         shouldThrow<IllegalArgumentException> {

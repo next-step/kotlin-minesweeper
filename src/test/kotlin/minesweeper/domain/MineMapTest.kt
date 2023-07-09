@@ -11,24 +11,21 @@ private fun Int.toCount() = MineCount.of(this.toString())
 class MineMapTest : StringSpec({
 
     "지뢰는 입력한 개수만큼 생성되어야 한다" {
-        val mineMap = MineMap(10.toWidth(), 10.toHeight())
-        mineMap.makeMine(10.toCount())
+        val mineMap = MineMap(10.toWidth() to 10.toHeight(), 10.toCount())
         var mineCount = 0
         mineMap.mineMap.forEach {
-            mineCount += it.filter().size
+            mineCount += it.filterMine().size
         }
         mineCount shouldBe 10
     }
 
     "지뢰는 넓이*너비의 수보다 작거나 같아야한다" {
         shouldThrow<IllegalArgumentException> {
-            val mineMap = MineMap(1.toWidth(), 1.toHeight())
-            mineMap.makeMine(10.toCount())
+            MineMap(1.toWidth() to 1.toHeight(), 10.toCount())
         }
 
         shouldNotThrow<IllegalArgumentException> {
-            val mineMap = MineMap(10.toWidth(), 1.toHeight())
-            mineMap.makeMine(9.toCount())
+            MineMap(10.toWidth() to 1.toHeight(), 9.toCount())
         }
     }
 })
