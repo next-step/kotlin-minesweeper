@@ -4,6 +4,7 @@ import minesweeper.domain.GameBoard
 import minesweeper.domain.pin.Pin
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
+import kotlin.system.exitProcess
 
 fun main() {
     run()
@@ -49,6 +50,6 @@ fun isOpenAllNormalPin(board: GameBoard): Boolean {
 fun checkOpenMinePin(pin: Pin) {
     if (pin.isMinePin()) {
         OutputView.showLose()
-        return
+        exitProcess(0)
     }
 }
