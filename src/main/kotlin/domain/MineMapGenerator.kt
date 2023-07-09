@@ -1,6 +1,6 @@
 package domain
 
-import util.RandomGenerator
+import util.RandomLocationGenerator
 
 object MineMapGenerator {
 
@@ -10,7 +10,8 @@ object MineMapGenerator {
         //mine 위치 정보 받아오기
         val mineLocations = mutableSetOf<Location>()
         while (mineLocations.size < numOfMine) {
-            val randomLocation = RandomGenerator.generateRandomLocation(height, width)
+            val locationGenerator = RandomLocationGenerator(height, width)
+            val randomLocation = locationGenerator.generate()
             mineLocations.add(randomLocation)
         }
 
