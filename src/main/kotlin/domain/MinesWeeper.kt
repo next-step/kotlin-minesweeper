@@ -11,11 +11,12 @@ class MinesWeeper(val boards: List<Board>) {
     }
 
     private fun checkAround(location: Location, basic: Basic) {
-        val count = Around.values().mapNotNull {
-            val x = location.x + it.x
-            val y = location.y + it.y
-            findBoard(Location(x, y))
-        }.count { board -> board.cell is Mine }
+        val count = Around.values()
+            .mapNotNull {
+                val x = location.x + it.x
+                val y = location.y + it.y
+                findBoard(Location(x, y))
+            }.count { board -> board.cell is Mine }
         basic.addCount(count)
     }
 
@@ -41,19 +42,20 @@ class MinesWeeper(val boards: List<Board>) {
         val openingCells = mutableListOf(location)
         while (openingCells.isNotEmpty()) {
             val now = openingCells.removeFirst()
-            Around.values().mapNotNull {
-                val x = now.x + it.x
-                val y = now.y + it.y
-                findBoard(Location(x, y))
-            }.filter {
-                it.cell is Basic && !it.cell.isOpen
-            }.forEach {
-                val cell = it.cell as Basic
-                cell.open()
-                if (cell.count == 0) {
-                    openingCells.add(it.location)
+            Around.values()
+                .mapNotNull {
+                    val x = now.x + it.x
+                    val y = now.y + it.y
+                    findBoard(Location(x, y))
+                }.filter {
+                    it.cell is Basic && !it.cell.isOpen
+                }.forEach {
+                    val cell = it.cell as Basic
+                    cell.open()
+                    if (cell.count == 0) {
+                        openingCells.add(it.location)
+                    }
                 }
-            }
         }
     }
 

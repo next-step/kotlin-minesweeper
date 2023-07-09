@@ -14,7 +14,7 @@ fun main() {
     ResultView.printGameStart()
 
     while (!game.isSuccess()) {
-        var openingLocation = InputView.getOpeningLocation(height, width)
+        val openingLocation = InputView.getOpeningLocation(height, width)
         if (game.isMine(openingLocation)) {
             ResultView.printLose()
             break
