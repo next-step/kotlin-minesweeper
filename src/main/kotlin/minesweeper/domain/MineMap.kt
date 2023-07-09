@@ -9,7 +9,7 @@ class MineMap(height: Height, width: Width, mineCount: MineCount) {
 
         val mutableList = mutableListOf<Point>()
         (1..height.value).forEach { y ->
-            (1..width.value).forEach {  x ->
+            (1..width.value).forEach { x ->
                 mutableList.add(Point(x, y))
             }
         }
