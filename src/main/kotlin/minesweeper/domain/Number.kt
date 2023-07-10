@@ -2,6 +2,15 @@ package minesweeper.domain
 
 @JvmInline
 value class Number private constructor(val value: Int) {
+
+    fun dec(): Int {
+        return value.dec()
+    }
+
+    fun inc(): Int {
+        return value.inc()
+    }
+
     companion object {
         fun of(data: String): Number {
 

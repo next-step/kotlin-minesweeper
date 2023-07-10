@@ -11,7 +11,7 @@ class MineGeneratorTest : StringSpec({
         val height = 10.toNumber()
         val position = MineGenerator.generate(width, height)
 
-        position.x shouldBeInRange 0.until(width.value)
-        position.y shouldBeInRange 0.until(height.value)
+        position.x.value shouldBeInRange 0.until(width.value)
+        position.y.value shouldBeInRange 0.until(height.value)
     }
 })
