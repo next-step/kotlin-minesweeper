@@ -1,9 +1,9 @@
 package minesweeper.domain
 
-import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.point.Point
 
 class PointTest : ShouldSpec({
     should("x, y가 같은 포인트는 동일 하다.") {
