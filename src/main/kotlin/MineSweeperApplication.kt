@@ -1,6 +1,7 @@
 import controller.MineSweeperController
 import domain.BoardSize
-import domain.RandomMineSweeperBoardGenerator
+import domain.MineSweeperBoard
+import domain.RandomMinePositionsGenerator
 
 fun main() {
     val mineSweeperController = MineSweeperController()
@@ -11,7 +12,8 @@ fun main() {
     val mines = mineSweeperController.inputMines()
     println()
 
-    val board = RandomMineSweeperBoardGenerator(BoardSize(height, width), mines).generate()
+    val boardSize = BoardSize(height, width)
+    val board = MineSweeperBoard(boardSize, RandomMinePositionsGenerator(boardSize, mines).generate())
     mineSweeperController.printStartMessage()
     mineSweeperController.printBoard(board)
 }

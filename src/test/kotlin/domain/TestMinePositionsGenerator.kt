@@ -1,9 +1,8 @@
 package domain
 
-class TestMineSweeperBoardGenerator : MineSweeperBoardGenerator(BoardSize(10, 10), 10) {
-    override fun generate(): MineSweeperBoard {
-        val mineSweeperBoard = MineSweeperBoard(boardSize)
-        mineSweeperBoard.putMines(
+class TestMinePositionsGenerator : MinePositionsGenerator {
+    override fun generate(): List<Position> {
+        return listOf(
             Position(3, 0),
             Position(7, 0),
 
@@ -20,6 +19,5 @@ class TestMineSweeperBoardGenerator : MineSweeperBoardGenerator(BoardSize(10, 10
             Position(6, 7),
             Position(9, 7),
         )
-        return mineSweeperBoard
     }
 }

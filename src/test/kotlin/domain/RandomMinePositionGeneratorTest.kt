@@ -4,12 +4,16 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
-class MineSweeperBoardTest : FunSpec({
-    context("보드에 지뢰를 설치할 수 있다.") {
-        val mineSweeperBoard = MineSweeperBoard(BoardSize(10, 10))
-        mineSweeperBoard.putMine(Position(0, 0))
+class RandomMinePositionGeneratorTest : FunSpec({
+    context("높이와 너비만큼의 게임판을 생성한다.") {
+        val mineSweeperBoard = createTestBoard()
+        mineSweeperBoard.width shouldBe 10
+        mineSweeperBoard.height shouldBe 10
+    }
 
-        mineSweeperBoard.isMine(Position(0, 0)) shouldBe true
+    context("테스트 보드에 설치된 지뢰를 확인할 수 있다.") {
+        val mineSweeperBoard = createTestBoard()
+        mineSweeperBoard.isMine(Position(0, 0)) shouldBe false
     }
 
     context("테스트 보드의 특정 좌표 주변의 지뢰 개수 확인 테스트") {

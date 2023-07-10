@@ -1,7 +1,27 @@
 package domain
 
-class MineSweeperBoard(boardSize: BoardSize) {
+class MineSweeperBoard(boardSize: BoardSize, private val minePositions: List<Position>) {
     private val _board = Array(boardSize.height) { Array(boardSize.width) { Cell.createNormalCell() } }
+
+    init {
+        setMines()
+        setCountAroundMines()
+    }
+
+    private fun setMines() {
+        minePositions.map {
+            putMines(it)
+        }
+    }
+
+    private fun setCountAroundMines() {
+        allPositions().map { position ->
+            if (!isMine(position)) {
+                val count = getMineCountAround(position)
+                getCell(position).countOfMinesAround = count
+            }
+        }
+    }
 
     val width: Int
         get() = _board[0].size
@@ -9,13 +29,13 @@ class MineSweeperBoard(boardSize: BoardSize) {
     val height: Int
         get() = _board.size
 
-    fun putMines(vararg position: Position) {
+    private fun putMines(vararg position: Position) {
         position.forEach {
             putMine(it)
         }
     }
 
-    fun putMine(position: Position) {
+    private fun putMine(position: Position) {
         _board[position.y][position.x] = Cell.createMineCell()
     }
 
@@ -48,7 +68,7 @@ class MineSweeperBoard(boardSize: BoardSize) {
         }
     }
 
-    fun allPositions(): List<Position> {
+    private fun allPositions(): List<Position> {
         return (0 until height).flatMap { y ->
             (0 until width).map { x ->
                 Position(x, y)
@@ -57,13 +77,6 @@ class MineSweeperBoard(boardSize: BoardSize) {
     }
 }
 
-enum class Direction(val dx: Int, val dy: Int) {
-    NORTH(0, -1),
-    NORTHEAST(1, -1),
-    EAST(1, 0),
-    SOUTHEAST(1, 1),
-    SOUTH(0, 1),
-    SOUTHWEST(-1, 1),
-    WEST(-1, 0),
-    NORTHWEST(-1, -1)
+interface MinePositionsGenerator {
+    fun generate(): List<Position>
 }

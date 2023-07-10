@@ -14,5 +14,5 @@ package domain
  * 0 0 0 0 0 0 0 0 0 0
  */
 fun createTestBoard(): MineSweeperBoard {
-    return TestMineSweeperBoardGenerator().generate()
+    return MineSweeperBoard(BoardSize(10, 10), TestMinePositionsGenerator().generate())
 }
