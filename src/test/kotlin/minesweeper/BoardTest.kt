@@ -1,7 +1,6 @@
 package minesweeper
 
 import minesweeper.domain.Board
-import minesweeper.domain.Cell
 import minesweeper.domain.FixedCoordinatesGenerator
 import minesweeper.domain.RandomCoordinatesGenerator
 import org.assertj.core.api.Assertions.assertThat
@@ -74,20 +73,25 @@ class BoardTest {
         val board = Board.create(height, width, mineCoordinates)
 
         // when
-        val cell1 = Cell.of(1, 1)
-        val cell2 = Cell.of(3, 3)
-        val cell3 = Cell.of(4, 4)
+        val x1 = 1
+        val y1 = 1
+
+        val x2 = 3
+        val y2 = 3
+
+        val x3 = 4
+        val y3 = 4
 
         // then
         assertAll({
-            assertThat(board.countMinesNearby(cell1)).isEqualTo(2)
-            assertThat(board.countMinesNearby(cell2)).isEqualTo(1)
-            assertThat(board.countMinesNearby(cell3)).isEqualTo(0)
+            assertThat(board.countMinesNearby(x1, y1)).isEqualTo(2)
+            assertThat(board.countMinesNearby(x2, y2)).isEqualTo(1)
+            assertThat(board.countMinesNearby(x3, y3)).isEqualTo(0)
         })
     }
 
     @Test
-    fun `보드 특정 셀에서 자신을 제외한 주변 8개 셀에 포함된 지뢰의 개수를 계산할 때 보드 밖의 좌표를 입력할 경우 IllegalArgumentException`() {
+    fun `보드 특정 셀에서 자신을 제외한 주변 8개 셀에 포함된 지뢰의 개수를 계산할 때 보드 밖의 좌표를 입력할 경우 IndexOutOfBoundsException`() {
         // given
         val height = 5
         val width = 5
@@ -95,11 +99,12 @@ class BoardTest {
         val board = Board.create(height, width, mineCoordinates)
 
         // when
-        val cell = Cell.of(5, 5)
+        val x = 5
+        val y = 5
 
         // then
-        assertThrows<IllegalArgumentException> {
-            board.countMinesNearby(cell)
+        assertThrows<IndexOutOfBoundsException> {
+            board.countMinesNearby(x, y)
         }
     }
 }

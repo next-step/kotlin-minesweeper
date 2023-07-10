@@ -6,8 +6,8 @@ class Coordinate(
 ) {
 
     fun checkWithinBounds(maxHeight: Int, maxWidth: Int): Boolean {
-        val checkX = x in 0 until maxWidth
-        val checkY = y in 0 until maxHeight
+        val checkX = x in 0 until maxHeight
+        val checkY = y in 0 until maxWidth
         return checkX && checkY
     }
 

@@ -15,8 +15,8 @@ class RandomCoordinatesGenerator(
         val random = Random
 
         while (coordinates.size < numberOfMines) {
-            val x = random.nextInt(maxWidth)
-            val y = random.nextInt(maxHeight)
+            val x = random.nextInt(maxHeight)
+            val y = random.nextInt(maxWidth)
             val coordinate = Coordinate.of(x, y)
             coordinates.add(coordinate)
         }

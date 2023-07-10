@@ -24,7 +24,7 @@ object MineSweeperResultView {
     private fun printCell(board: Board, cell: Cell): String {
         return when (cell.hasMine()) {
             true -> "*"
-            false -> "${board.countMinesNearby(cell)}"
+            false -> "${cell.countMinesNearBy}"
         }
     }
 }
