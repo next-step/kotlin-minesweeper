@@ -8,8 +8,18 @@ fun main() {
     val height = InputView.getHeight()
     val width = InputView.getWidth()
     val mineCounts = InputView.getMineCounts()
-
     val game = MinesWeeper.of(height, width, mineCounts)
     game.calculateCount()
-    ResultView.printGameBoard(height, width, game)
+
+    ResultView.printGameStart()
+
+    while (!game.isSuccess()) {
+        val openingLocation = InputView.getOpeningLocation(height, width)
+        if (game.isMine(openingLocation)) {
+            ResultView.printLose()
+            break
+        }
+        game.openCell(openingLocation)
+        ResultView.printGameBoard(height, width, game)
+    }
 }

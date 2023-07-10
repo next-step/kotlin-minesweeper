@@ -11,12 +11,52 @@ class MinesWeeper(val boards: List<Board>) {
     }
 
     private fun checkAround(location: Location, basic: Basic) {
-        val count = Around.values().map {
-            val y = location.y + it.y
-            val x = location.x + it.x
-            boards.firstOrNull { board -> board.location.isSame(y, x) }
-        }.count { board -> board != null && board.cell is Mine }
+        val count = Around.values()
+            .mapNotNull {
+                val x = location.x + it.x
+                val y = location.y + it.y
+                findBoard(Location(x, y))
+            }.count { board -> board.cell is Mine }
         basic.addCount(count)
+    }
+
+    fun findBoard(location: Location) = boards.firstOrNull { board -> board.location == location }
+
+    fun isMine(location: Location): Boolean {
+        val board = findBoard(location) ?: throw IllegalArgumentException(LOCATION_EXCEPTION)
+        return board.cell is Mine
+    }
+
+    fun isSuccess() = boards.count { it.cell is Basic && !it.cell.isOpen } == 0
+
+    fun openCell(location: Location) {
+        val board = findBoard(location) ?: throw IllegalArgumentException(LOCATION_EXCEPTION)
+        val cell = board.cell as Basic
+        cell.open()
+        if (cell.count == 0) {
+            openAround(location)
+        }
+    }
+
+    private fun openAround(location: Location) {
+        val openingCells = mutableListOf(location)
+        while (openingCells.isNotEmpty()) {
+            val now = openingCells.removeFirst()
+            Around.values()
+                .mapNotNull {
+                    val x = now.x + it.x
+                    val y = now.y + it.y
+                    findBoard(Location(x, y))
+                }.filter {
+                    it.cell is Basic && !it.cell.isOpen
+                }.forEach {
+                    val cell = it.cell as Basic
+                    cell.open()
+                    if (cell.count == 0) {
+                        openingCells.add(it.location)
+                    }
+                }
+        }
     }
 
     companion object {
@@ -29,7 +69,7 @@ class MinesWeeper(val boards: List<Board>) {
                 .flatMap { y ->
                     (LOCATION_START_NUM until width)
                         .map { x ->
-                            val location = Location(y, x)
+                            val location = Location(x, y)
                             Board(location, getCell(mines, location))
                         }
                 }
@@ -43,5 +83,6 @@ class MinesWeeper(val boards: List<Board>) {
 
         private const val COUNT_EXCEPTION = "지뢰수가 지뢰찾기게임의 칸수보다 적어야합니다."
         private const val LOCATION_START_NUM = 0
+        private const val LOCATION_EXCEPTION = "잘못된 위치입니다."
     }
 }
