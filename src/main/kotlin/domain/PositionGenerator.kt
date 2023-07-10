@@ -1,7 +1,6 @@
 package domain
 
 import kotlin.math.abs
-import kotlin.random.Random
 
 interface PositionGenerator {
     fun generate(count: Int): List<Position>
@@ -33,17 +32,4 @@ class RandomPositionGenerator(
     private fun randomX() = randomGenerator.random(xFrom, xUntil)
 
     private fun randomY() = randomGenerator.random(yFrom, yUntil)
-}
-
-interface RandomGenerator {
-    /**
-     * generate random integer [from] ~ [until](inclusive)
-     */
-    fun random(from: Int, until: Int): Int
-}
-
-class DefaultRandomGenerator : RandomGenerator {
-    override fun random(from: Int, until: Int): Int {
-        return Random.nextInt(from, until + 1)
-    }
 }

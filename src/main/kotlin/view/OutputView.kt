@@ -11,7 +11,7 @@ class OutputView {
     fun outputCells(cells: List<Cell>) {
         val heightDividedCells = cells.groupBy { it.position.y }
         heightDividedCells.keys.sorted().forEach { height ->
-            heightDividedCells.getValue(height).map { it.toView() }.joinToString(separator = SPACING).also { println(it) }
+            heightDividedCells.getValue(height).joinToString(separator = SPACING) { it.toView() }.also { println(it) }
         }
     }
 
@@ -23,7 +23,6 @@ class OutputView {
     companion object {
         private const val GROUND_VIEW = "C"
         private const val MINE_VIEW = "*"
-
         private const val SPACING = " "
     }
 }
