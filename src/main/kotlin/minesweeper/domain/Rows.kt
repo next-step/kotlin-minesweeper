@@ -3,6 +3,10 @@ package minesweeper.domain
 class Rows private constructor(
     private val rows: List<Row>
 ) : List<Row> by rows {
+    fun hasMine(x: Int, y: Int): Boolean {
+        return rows[x][y].hasMine()
+    }
+
     companion object {
         fun create(height: Int, width: Int): Rows {
             val rows = createRows(height, width)

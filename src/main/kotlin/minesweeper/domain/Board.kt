@@ -10,7 +10,7 @@ class Board private constructor(
     private val width: Int = rows.first().size
 
     fun isMineCell(x: Int, y: Int): Boolean {
-        return rows[x][y].hasMine()
+        return rows.hasMine(x, y)
     }
 
     fun countMinesNearby(cell: Cell): Int {
