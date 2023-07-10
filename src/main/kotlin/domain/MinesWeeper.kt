@@ -32,8 +32,7 @@ class MinesWeeper(val boards: List<Board>) {
     fun openCell(location: Location) {
         val board = findBoard(location) ?: throw IllegalArgumentException(LOCATION_EXCEPTION)
         val cell = board.cell as Basic
-        cell.open()
-        if (cell.count == 0) {
+        if (shouldContinueOpening(cell)) {
             openAround(location)
         }
     }
@@ -51,12 +50,19 @@ class MinesWeeper(val boards: List<Board>) {
                     it.cell is Basic && !it.cell.isOpen
                 }.forEach {
                     val cell = it.cell as Basic
-                    cell.open()
-                    if (cell.count == 0) {
+                    if (shouldContinueOpening(cell)) {
                         openingCells.add(it.location)
                     }
                 }
         }
+    }
+
+    private fun shouldContinueOpening(cell: Basic): Boolean {
+        cell.open()
+        if (cell.count == 0) {
+            return true
+        }
+        return false
     }
 
     companion object {
