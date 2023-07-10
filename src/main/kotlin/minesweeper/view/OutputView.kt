@@ -12,7 +12,7 @@ fun printMineBoardView(cellInfos: CellInfos) {
 }
 
 fun printMineGameResult(mineBoardStatus: MineBoardStatus) {
-    println(GameResultView.from(mineBoardStatus))
+    println(GameResultView.from(mineBoardStatus).view)
 }
 
 private fun parseMineBoardView(cellInfos: List<CellInfo>, height: Int): String =
