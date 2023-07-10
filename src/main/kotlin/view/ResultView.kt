@@ -16,7 +16,15 @@ object ResultView {
         println(GAME_START_STRING)
     }
 
-    fun printGameBoard(height: Int, width: Int, minesWeeper: MinesWeeper) {
+    fun printRoundResult(height: Int, width: Int, minesWeeper: MinesWeeper) {
+        if (minesWeeper.isLose()) {
+            printLose()
+            return
+        }
+        printGameBoard(height, width, minesWeeper)
+    }
+
+    private fun printGameBoard(height: Int, width: Int, minesWeeper: MinesWeeper) {
         (LOCATION_START_NUM until height)
             .forEach { y ->
                 (LOCATION_START_NUM until width)
@@ -37,7 +45,7 @@ object ResultView {
         return BASIC_STRING
     }
 
-    fun printLose() {
+    private fun printLose() {
         println(LOSE_STRING)
     }
 }

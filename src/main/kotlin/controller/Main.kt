@@ -13,13 +13,9 @@ fun main() {
 
     ResultView.printGameStart()
 
-    while (!game.isSuccess()) {
+    while (!game.isEnd()) {
         val openingLocation = InputView.getOpeningLocation(height, width)
-        if (game.isMine(openingLocation)) {
-            ResultView.printLose()
-            break
-        }
         game.openCell(openingLocation)
-        ResultView.printGameBoard(height, width, game)
+        ResultView.printRoundResult(height, width, game)
     }
 }
