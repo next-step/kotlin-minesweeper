@@ -2,43 +2,45 @@ package minesweeper.domain.cell
 
 import minesweeper.domain.point.Point
 
-class Cells : Iterable<Cell> {
-    private val map: MutableMap<Point, Cell> = mutableMapOf()
-
-    fun add(cell: Cell) {
-        map[cell.point] = cell
-    }
+class Cells private constructor(private val map: MutableMap<Point, Cell> = mutableMapOf()) : Iterable<Cell> {
+    private val points: Set<Point> = map.keys.toSet()
 
     fun at(point: Point): Cell = map.getOrDefault(point, null) ?: throw CellNotFondException(point)
 
     fun createMine(point: Point) {
         val cell = MineCell(point)
         add(cell)
-        point.adjacent()
-            .mapNotNull { map.getOrDefault(it, null) }
+        adjacentCells(point)
             .filterNot { it is MineCell }
             .forEach { add(it.increase()) }
     }
 
     fun open(point: Point): Cell {
 
-        val thisCell = at(point)
+        val cell = at(point)
 
-        if (thisCell !is NotOpenedCell) {
-            return thisCell
+        if (cell.isOpened) return cell
+
+        cell.open()
+
+        if (cell is ClearCell) {
+            adjacentCells(point).forEach { open(it.point) }
         }
 
-        val openedCell = thisCell.open()
-        add(openedCell)
-
-        return openedCell
+        return cell
     }
 
-    fun notOpenedCells(): List<Cell> = map.values.filterIsInstance<NotOpenedCell>()
+    fun notOpenedCells(): List<Cell> = map.values.filterNot { it.isOpened }
 
-    fun closeAll() {
-        val closedCells = map.values.map(Cell::close)
-        closedCells.forEach { add(it) }
-    }
     override fun iterator(): Iterator<Cell> = map.values.sorted().iterator()
+
+    private fun add(cell: Cell) = map.put(cell.point, cell)
+
+    private fun adjacentCells(point: Point) = point.adjacent()
+        .filter { points.contains(it) }
+        .map { at(it) }
+
+    companion object {
+        fun from(collection: Collection<Cell>): Cells = Cells(collection.associateBy { it.point }.toMutableMap())
+    }
 }

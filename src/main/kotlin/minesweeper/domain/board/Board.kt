@@ -1,50 +1,28 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.Cells
-import minesweeper.domain.cell.ClearCell
-import minesweeper.domain.cell.MineCell
-import minesweeper.domain.cell.NotOpenedCell
 import minesweeper.domain.point.Point
 
-class Board(boardCellsCreationStrategy: BoardCellsCreationStrategy) {
-
-    val cells: Cells
-    val height: Int
-    val width: Int
-    val countOfMine: Int
-
+class Board private constructor(
+    val cells: Cells,
+    val width: Int,
+    val height: Int,
+    val countOfMine: Int,
+) {
     init {
-        height = boardCellsCreationStrategy.height
-        width = boardCellsCreationStrategy.width
-        countOfMine = boardCellsCreationStrategy.countOfMine
-        cells = boardCellsCreationStrategy.create()
+        require(countOfMine <= height * width) { "지뢰는 지도 크기 보다 작아야 합니다." }
+        require(countOfMine >= 1) { "최소 한 개 이상의 지뢰가 필요 합니다." }
     }
 
-    fun open(point: Point) {
-        val openedCell = cells.open(point)
+    fun open(point: Point): Cell = cells.open(point)
 
-        if (openedCell is MineCell) {
-            throw RuntimeException()
-        }
-
-        if (openedCell is ClearCell) {
-            openClearCell(openedCell.point)
-        }
-    }
-
-    private fun openClearCell(point: Point) {
-        val openedCell = cells.open(point)
-
-        if (openedCell !is ClearCell) return
-
-        point.adjacent()
-            .filter { contains(it) }
-            .filter { cells.at(it) is NotOpenedCell }
-            .map { cells.open(it) }
-            .filterIsInstance<ClearCell>()
-            .forEach { openClearCell(it.point) }
-    }
-
-    private fun contains(point: Point): Boolean = point.x < width && point.y < height
     fun isClear(): Boolean = cells.notOpenedCells().size == countOfMine
+
+    companion object {
+        fun of(width: Int, height: Int, countOfMine: Int, strategy: BoardCellsCreationStrategy): Board {
+            val cells = strategy.create(width, height, countOfMine)
+            return Board(cells, width, height, countOfMine)
+        }
+    }
 }

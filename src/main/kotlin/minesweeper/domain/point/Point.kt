@@ -25,7 +25,7 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
 
     private fun Int.coerceZero(): Int = this.coerceAtLeast(0)
     companion object {
-        fun square(height: Int, width: Int): List<Point> =
+        fun square(width: Int, height: Int): List<Point> =
             (0 until height).flatMap { y -> (0 until width).map { x -> Point(x, y) } }
     }
 }

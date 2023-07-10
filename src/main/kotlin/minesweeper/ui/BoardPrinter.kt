@@ -3,7 +3,6 @@ package minesweeper.ui
 import minesweeper.domain.board.Board
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCell
-import minesweeper.domain.cell.NotOpenedCell
 
 object BoardPrinter {
     const val MINE_CELL = "*"
@@ -17,9 +16,9 @@ object BoardPrinter {
         }
     }
 
-    private fun printCell(cell: Cell) = when (cell) {
-        is NotOpenedCell -> print(NOT_OPENED_CELL)
-        is MineCell -> print(MINE_CELL)
+    private fun printCell(cell: Cell) = when {
+        !cell.isOpened -> print(NOT_OPENED_CELL)
+        cell is MineCell -> print(MINE_CELL)
         else -> print("${cell.count}")
     }
 
