@@ -1,5 +1,5 @@
 import controller.MineSweeperController
 
 fun main() {
-    MineSweeperController().start()
+    MineSweeperController().play()
 }

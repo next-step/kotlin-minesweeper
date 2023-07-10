@@ -2,8 +2,17 @@ package domain
 
 import ErrorCode
 
-class AroundMineCount(val value: Int) {
+@JvmInline
+value class AroundMineCount(val value: Int) {
+    val isClean: Boolean
+        get() = (value == CLEAN_VALUE)
+
     init {
-        require(value >= 0) { ErrorCode.INVALID_AROUND_MINE_COUNT_ERROR.msg }
+        require(value >= MINIMUM_VALUE) { ErrorCode.INVALID_AROUND_MINE_COUNT_ERROR.msg }
+    }
+
+    companion object {
+        const val MINIMUM_VALUE = 0
+        const val CLEAN_VALUE = 0
     }
 }
