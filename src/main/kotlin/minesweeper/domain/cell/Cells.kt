@@ -12,8 +12,6 @@ value class Cells(
 ) {
     constructor(cells: List<Cell>) : this(cells.associateBy { it.coordinate })
 
-    constructor(vararg cells: Cell) : this(cells.associateBy { it.coordinate })
-
     fun placeMine(mineCount: Int, minePlacementStrategy: MinePlacementStrategy) {
         validateMineCount(mineCount)
         repeat(mineCount) { minePlacementStrategy.findPlantTargetCell(values).changeToMine() }

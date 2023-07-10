@@ -97,10 +97,12 @@ class CellsTest : FunSpec({
     context("open") {
         test("존재하지 않는 좌표가 입력되면 예외가 발생한다.") {
             val cells = Cells(
-                Cell(0, 0, ONE),
-                Cell(0, 1, ONE),
-                Cell(1, 0, ONE),
-                Cell(1, 1, MINE),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ),
             )
             val exception = shouldThrowExactly<IllegalArgumentException> { cells.open(Coordinate(2, 2)) }
             exception shouldHaveMessage "존재하지 않는 좌표는 입력될 수 없습니다."
@@ -108,10 +110,12 @@ class CellsTest : FunSpec({
 
         test("현재 좌표가 0이 아니라면 현재 좌표만 오픈한다.") {
             val cells = Cells(
-                Cell(0, 0, ONE),
-                Cell(0, 1, ONE),
-                Cell(1, 0, ONE),
-                Cell(1, 1, MINE),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ),
             )
             cells.open(Coordinate(1, 1))
 
@@ -123,15 +127,17 @@ class CellsTest : FunSpec({
 
         test("현재의 좌표가 열리고, 0이면 지뢰를 제외한 모든 좌표가 열린다.") {
             val cells = Cells(
-                Cell(0, 0, ZERO),
-                Cell(0, 1, ZERO),
-                Cell(0, 2, ZERO),
-                Cell(1, 0, ZERO),
-                Cell(1, 1, ONE),
-                Cell(1, 2, ONE),
-                Cell(2, 0, ZERO),
-                Cell(2, 1, ONE),
-                Cell(2, 2, MINE),
+                listOf(
+                    Cell(0, 0, ZERO),
+                    Cell(0, 1, ZERO),
+                    Cell(0, 2, ZERO),
+                    Cell(1, 0, ZERO),
+                    Cell(1, 1, ONE),
+                    Cell(1, 2, ONE),
+                    Cell(2, 0, ZERO),
+                    Cell(2, 1, ONE),
+                    Cell(2, 2, MINE),
+                ),
             )
             val actual = cells.open(Coordinate(0, 0))
 
@@ -149,10 +155,12 @@ class CellsTest : FunSpec({
 
         test("0이 아닌 일반 좌표가 열리면 1을 반환한다.") {
             val cells = Cells(
-                Cell(0, 0, ONE),
-                Cell(0, 1, ONE),
-                Cell(1, 0, ONE),
-                Cell(1, 1, MINE),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ),
             )
             val actual = cells.open(Coordinate(1, 0))
             actual shouldBe 1
@@ -160,10 +168,12 @@ class CellsTest : FunSpec({
 
         test("열린 좌표가 mine이면 1을 반환한디.") {
             val cells = Cells(
-                Cell(0, 0, ONE),
-                Cell(0, 1, ONE),
-                Cell(1, 0, ONE),
-                Cell(1, 1, MINE),
+                listOf(
+                    Cell(0, 0, ONE),
+                    Cell(0, 1, ONE),
+                    Cell(1, 0, ONE),
+                    Cell(1, 1, MINE),
+                ),
             )
             val actual = cells.open(Coordinate(1, 1))
             actual shouldBe 0
