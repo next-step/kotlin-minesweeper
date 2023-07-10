@@ -6,6 +6,7 @@ import minesweeper.domain.MineBoard
 object OutputView {
     private const val mineSymbol = "*"
     private const val nonMineSymbol = "C"
+
     fun printMineBoard(board: MineBoard) {
         for (cells in board.board) {
             printCells(cells)
