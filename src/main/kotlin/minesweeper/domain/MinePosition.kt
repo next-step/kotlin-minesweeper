@@ -1,6 +1,5 @@
 package minesweeper.domain
 
-
 class MinePosition private constructor(val x: Int, val y: Int) {
     companion object {
         fun of(positionX: Int, positionY: Int): MinePosition {
@@ -11,5 +10,4 @@ class MinePosition private constructor(val x: Int, val y: Int) {
             return MinePosition(positionX, positionY)
         }
     }
-
 }

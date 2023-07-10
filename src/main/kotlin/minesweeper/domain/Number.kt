@@ -1,9 +1,9 @@
 package minesweeper.domain
 
 @JvmInline
-value class Dimension private constructor(val value: Int) {
+value class Number private constructor(val value: Int) {
     companion object {
-        fun of(data: String): Dimension {
+        fun of(data: String): Number {
 
             val value = data.toIntOrNull()
             require(value != null) {
@@ -12,7 +12,7 @@ value class Dimension private constructor(val value: Int) {
             require(value > 0) {
                 "데이터는 0보다 커야한다"
             }
-            return Dimension(value)
+            return Number(value)
         }
     }
 }
