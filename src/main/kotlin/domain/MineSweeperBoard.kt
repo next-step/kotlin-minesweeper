@@ -1,8 +1,5 @@
 package domain
 
-import kotlin.math.max
-import kotlin.math.min
-
 class MineSweeperBoard(boardSize: BoardSize) {
     private val _board = Array(boardSize.height) { Array(boardSize.width) { Cell.createNormalCell() } }
 
@@ -40,13 +37,16 @@ class MineSweeperBoard(boardSize: BoardSize) {
         }.sum()
     }
 
+    private fun getValidPosition(x: Int, y: Int): Position? {
+        if (x in 0 until width && y in 0 until height) {
+            return Position(x, y)
+        }
+        return null
+    }
+
     private fun getAroundPositions(position: Position): List<Position> {
-        return (max(position.y - 1, 0)..min(position.y + 1, height - 1)).flatMap { y ->
-            (max(position.x - 1, 0)..min(position.x + 1, width - 1)).map { x ->
-                Position(x, y)
-            }.filter {
-                it != position
-            }
+        return Direction.values().mapNotNull { direction ->
+            getValidPosition(position.x + direction.dx, position.y + direction.dy)
         }
     }
 
@@ -57,4 +57,15 @@ class MineSweeperBoard(boardSize: BoardSize) {
             }
         }
     }
+}
+
+enum class Direction(val dx: Int, val dy: Int) {
+    NORTH(0, -1),
+    NORTHEAST(1, -1),
+    EAST(1, 0),
+    SOUTHEAST(1, 1),
+    SOUTH(0, 1),
+    SOUTHWEST(-1, 1),
+    WEST(-1, 0),
+    NORTHWEST(-1, -1)
 }
