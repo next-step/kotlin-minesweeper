@@ -5,7 +5,7 @@ import minesweeper.domain.vo.PositionX
 import minesweeper.domain.vo.PositionY
 
 class Cell(val mine: Mine, val position: Position) {
-    fun isMineActive() = mine.isActive
+    fun isMineActive(): Boolean = mine.isActive
 
     companion object {
         fun of(mine: Mine, x: PositionX, y: PositionY): Cell {
