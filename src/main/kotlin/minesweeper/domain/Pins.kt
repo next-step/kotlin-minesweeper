@@ -15,6 +15,11 @@ class Pins private constructor (
         return values[height].getPinAt(width)
     }
 
+    fun isExistMineSurround(height: Int, width: Int): Boolean {
+        val surroundPins = getSurroundMine(height, width)
+        return surroundPins.any { pin -> pin.isMinePin() }
+    }
+
     fun changeMine(height: Int, width: Int) {
         checkHeight(height)
         values[height].changeMine(width)

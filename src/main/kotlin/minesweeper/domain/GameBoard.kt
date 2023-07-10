@@ -45,6 +45,7 @@ class GameBoard private constructor(
             (0 until DIM).forEach { num ->
                 val nextHeight = height + HEIGHT_MOVE[num]
                 val nextWidth = width + WIDTH_MOVE[num]
+                if (pins.isExistMineSurround(height, width)) return
                 openSurroundPin(nextHeight, nextWidth)
             }
         } catch (e: Exception) {
