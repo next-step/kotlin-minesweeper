@@ -1,7 +1,7 @@
 package domain
 
 class MineMatrix(
-    private val minePositionGenerator: PositionGenerator,
+    private val minePositionGenerator: PositionGenerator? = null,
     private val height: Int,
     private val width: Int,
     private val mineCount: Int
@@ -17,7 +17,11 @@ class MineMatrix(
         }.flatten().sort()
     }
 
-    private fun generateMinePositions() = minePositionGenerator.generate(mineCount).toSet()
+    private fun generateMinePositions() = minePositionGenerator().generate(mineCount).toSet()
+
+    private fun minePositionGenerator() = minePositionGenerator ?: randomPositionGenerator()
+
+    private fun randomPositionGenerator(): PositionGenerator = RandomPositionGenerator(DefaultRandomGenerator(), 0, height - 1, 0, width - 1)
 
     private fun List<Cell>.sort(): List<Cell> = sortedWith { leftCell, rightCell ->
         if (leftCell.position.y != rightCell.position.y) leftCell.position.y.compareTo(rightCell.position.y)
