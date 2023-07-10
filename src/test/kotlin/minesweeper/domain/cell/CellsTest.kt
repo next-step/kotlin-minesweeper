@@ -147,7 +147,18 @@ class CellsTest : FunSpec({
             cells.values[Coordinate(2, 2)]!!.isDisplay shouldBe false
         }
 
-        test("열린 좌표가 mine이면 true를 반환한디.") {
+        test("0이 아닌 일반 좌표가 열리면 1을 반환한다.") {
+            val cells = Cells(
+                Cell(0, 0, ONE),
+                Cell(0, 1, ONE),
+                Cell(1, 0, ONE),
+                Cell(1, 1, MINE),
+            )
+            val actual = cells.open(Coordinate(1, 0))
+            actual shouldBe 1
+        }
+
+        test("열린 좌표가 mine이면 1을 반환한디.") {
             val cells = Cells(
                 Cell(0, 0, ONE),
                 Cell(0, 1, ONE),
