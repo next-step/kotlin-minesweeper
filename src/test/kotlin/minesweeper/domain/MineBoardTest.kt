@@ -14,7 +14,7 @@ class MineBoardTest : BehaviorSpec({
         val mineCount = 5
         val boardStatus = BoardStatus(height, width, mineCount)
         When("지뢰찾기 보드를 만들면") {
-            val board = BoardGenerator.create(boardStatus)
+            val board = BoardGenerator.createBoard(boardStatus)
             Then("보드가 만들어진다.") {
                 board.shouldNotBeNull()
             }
@@ -23,7 +23,7 @@ class MineBoardTest : BehaviorSpec({
                 board.width shouldBe 5
             }
             And("생성된 보드의 지뢰 총 개수는 입력과 동일하다.") {
-                board.getBoardInfo.sumOf { row -> row.rowInfo.count { cell -> cell is MineCell } } shouldBe 5
+                board.boardInfo.sumOf { row -> row.rowInfo.count { cell -> cell is MineCell } } shouldBe 5
             }
         }
     }
@@ -36,7 +36,7 @@ class MineBoardTest : BehaviorSpec({
             val boardStatus = BoardStatus(height, width, mineCount)
             Then("IllegalArgumentException이 발생한다.") {
                 shouldThrow<IllegalArgumentException> {
-                    BoardGenerator.create(boardStatus)
+                    BoardGenerator.createBoard(boardStatus)
                 }
             }
         }
