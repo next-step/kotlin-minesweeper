@@ -11,7 +11,7 @@ class OutputView {
     fun outputCells(cells: List<Cell>) {
         val heightDividedCells = cells.groupBy { it.position.y }
         heightDividedCells.keys.sorted().forEach { height ->
-            heightDividedCells.getValue(height).map { it.toView() }.joinToString { SPACING }.also { println(it) }
+            heightDividedCells.getValue(height).map { it.toView() }.joinToString(separator = SPACING).also { println(it) }
         }
     }
 
