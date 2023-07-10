@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.vo.PositiveNumber
+
 class MineGame(private val cellGenerator: RandomCellsGenerator) {
     fun createBoard(height: PositiveNumber, width: PositiveNumber, mineCount: PositiveNumber): MineBoard {
         val randomCells = cellGenerator.generate(

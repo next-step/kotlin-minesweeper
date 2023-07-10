@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.vo.PositiveNumber
 
 class MineGameTest : StringSpec({
     "너비 5, 높이 10, 지뢰 개수 6을 전달하면 해당하는 지뢰 보드를 생성한다." {
