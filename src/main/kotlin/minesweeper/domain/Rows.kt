@@ -25,7 +25,7 @@ class Rows private constructor(
         private fun createCells(width: Int, rowIndex: Int): List<Cell> {
             return buildList {
                 repeat(width) { columnIndex ->
-                    add(Cell.of(columnIndex, rowIndex))
+                    add(Cell.of(rowIndex, columnIndex))
                 }
             }
         }

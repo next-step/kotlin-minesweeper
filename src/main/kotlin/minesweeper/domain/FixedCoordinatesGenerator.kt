@@ -13,7 +13,7 @@ class FixedCoordinatesGenerator(
 
         val coordinateSet = buildSet {
             coordinates.forEach {
-                add(Coordinate.of(it.second, it.first))
+                add(Coordinate.of(it.first, it.second))
             }
         }
 

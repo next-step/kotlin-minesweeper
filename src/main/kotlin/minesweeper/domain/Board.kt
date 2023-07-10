@@ -22,12 +22,17 @@ class Board private constructor(
         for (direction in Direction.values()) {
             val neighborX = cellCoordinate.x + direction.xMove
             val neighborY = cellCoordinate.y + direction.yMove
+            val neighborCoordinate = Coordinate.of(neighborX, neighborY)
 
             if (!cellCoordinate.checkWithinBounds(height, width)) {
                 continue
             }
 
-            if (minesCoordinates.contains(Coordinate.of(neighborX, neighborY))) {
+            if (!neighborCoordinate.checkWithinBounds(height, width)) {
+                continue
+            }
+
+            if (isMineCell(neighborX, neighborY)) {
                 count++
             }
         }
@@ -40,7 +45,7 @@ class Board private constructor(
             val rows = Rows.create(height, width)
 
             minesCoordinates.forEach { coordinate ->
-                val cell = rows[coordinate.y][coordinate.x]
+                val cell = rows[coordinate.x][coordinate.y]
                 cell.plantMine()
             }
 
