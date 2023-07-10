@@ -1,6 +1,6 @@
 package minesweeper.domain.vo
 
-class Position private constructor(val x: PositionX, val y: PositionY) {
+data class Position(val x: PositionX, val y: PositionY) {
     fun getNeighbors(xLimit: Int, yLimit: Int): List<Position> {
         val neighborsX = listOfNotNull(x.left(), x.right(), x).filter { it.value < xLimit }
         val neighborsY = listOfNotNull(y.top(), y.bottom(), y).filter { it.value < yLimit }
@@ -12,31 +12,11 @@ class Position private constructor(val x: PositionX, val y: PositionY) {
             .filterNot { it == this }
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Position
-
-        if (x != other.x) return false
-        return y == other.y
-    }
-
-    override fun hashCode(): Int {
-        var result = x.hashCode()
-        result = 31 * result + y.hashCode()
-        return result
-    }
-
     companion object {
         private val POSITION_CACHE = mutableMapOf<String, Position>()
 
         fun of(x: Int, y: Int): Position {
             return cache(x, y) ?: Position(PositionX(x), PositionY(y))
-        }
-
-        fun of(x: PositionX, y: PositionY): Position {
-            return of(x.value, y.value)
         }
 
         private fun cache(x: Int, y: Int): Position? {

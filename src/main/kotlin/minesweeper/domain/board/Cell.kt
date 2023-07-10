@@ -9,7 +9,7 @@ class Cell(val mine: Mine, val position: Position) {
 
     companion object {
         fun of(mine: Mine, x: PositionX, y: PositionY): Cell {
-            return Cell(mine, Position.of(x = x, y = y))
+            return Cell(mine, Position(x, y))
         }
     }
 }
