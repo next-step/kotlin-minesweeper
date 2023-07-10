@@ -32,9 +32,7 @@ class MineSweeperBoard(boardSize: BoardSize) {
     }
 
     fun getMineCountAround(position: Position): Int {
-        return getAroundPositions(position).map {
-            if (isMine(it)) 1 else 0
-        }.sum()
+        return getAroundPositions(position).count { isMine(it) }
     }
 
     private fun getValidPosition(x: Int, y: Int): Position? {
