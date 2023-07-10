@@ -16,7 +16,7 @@ fun main() {
     runMineGame(mineBoard)
 }
 
-private fun runMineGame(mineBoard: MineBoard) {
+private tailrec fun runMineGame(mineBoard: MineBoard) {
     if (mineBoard.isEndGame()) {
         printMineGameResult(mineBoard.gameResult())
         return
