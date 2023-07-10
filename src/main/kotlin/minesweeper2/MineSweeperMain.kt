@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper2
 
 import minesweeper.domain.GameStateNotify
 import minesweeper.domain.Length
@@ -6,9 +6,9 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.MineMap
 import minesweeper.domain.MinePosition
 import minesweeper.domain.TileRow
-import minesweeper.view.InputType
-import minesweeper.view.InputView
-import minesweeper.view.OutputView
+import minesweeper2.view.InputType
+import minesweeper2.view.InputView
+import minesweeper2.view.OutputView
 
 fun main() {
     val height = Length.of(InputView.inputDataFromConsole(InputType.HEIGHT))

@@ -1,4 +1,4 @@
-package minesweeper.view
+package minesweeper2.view
 
 import minesweeper.domain.MineTile
 import minesweeper.domain.PlainTile
