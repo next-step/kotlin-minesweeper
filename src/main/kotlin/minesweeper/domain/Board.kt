@@ -15,33 +15,13 @@ class Board private constructor(
 
     companion object {
         fun create(height: Int, width: Int, minesCoordinates: Coordinates): Board {
-            val rows = createRows(height, width, minesCoordinates)
-            return Board(rows)
-        }
+            val initialRows = initialRows(height, width)
+            plantMines(minesCoordinates, initialRows)
 
-        private fun createRows(height: Int, width: Int, minesCoordinates: Coordinates): List<Row> {
-            val initialCells = initialRows(height, width)
-
-            plantMines(minesCoordinates, initialCells)
-
-            val rows = initialCells.map { cells ->
-                val rowCells = cells.map { cell ->
-                    val countMines = countMinesNearby(cell, initialCells)
-                    val state = initialState(minesCoordinates, cell.coordinate)
-
-                    Cell.of(cell.coordinate.x, cell.coordinate.y, countMines, state)
-                }
-                Row.create(rowCells)
+            val countedMinesRows = initialRows.map { cells ->
+                countedMinesRows(cells, initialRows, minesCoordinates)
             }
-            return rows
-        }
-
-        private fun initialState(minesCoordinates: Coordinates, coordinate: Coordinate): CellState {
-            if (minesCoordinates.contains(coordinate)) {
-                return MineState
-            }
-
-            return EmptyState
+            return Board(countedMinesRows)
         }
 
         private fun initialRows(height: Int, width: Int): List<Row> {
@@ -57,9 +37,35 @@ class Board private constructor(
             }
         }
 
-        private fun countMinesNearby(cell: Cell, allCells: List<List<Cell>>): Int {
-            val height = allCells.size
-            val width = allCells.first().size
+        private fun plantMines(minesCoordinates: Coordinates, rows: List<Row>) {
+            minesCoordinates.forEach { coordinate ->
+                val cell = rows[coordinate.x][coordinate.y]
+                cell.plantMine()
+            }
+        }
+
+        private fun countedMinesRows(cells: Row, initialRows: List<Row>, minesCoordinates: Coordinates): Row {
+            val rowCells = cells.map { cell ->
+                val cellCoordinate = cell.coordinate
+                val countMines = countMinesNearby(cell, initialRows)
+                val state = initialState(minesCoordinates, cellCoordinate)
+
+                Cell.of(cellCoordinate.x, cellCoordinate.y, countMines, state)
+            }
+            return Row.create(rowCells)
+        }
+
+        private fun initialState(minesCoordinates: Coordinates, coordinate: Coordinate): CellState {
+            if (minesCoordinates.contains(coordinate)) {
+                return MineState
+            }
+
+            return EmptyState
+        }
+
+        private fun countMinesNearby(cell: Cell, initialRows: List<Row>): Int {
+            val height = initialRows.size
+            val width = initialRows.first().size
             val cellCoordinate = cell.coordinate
 
             var count = 0
@@ -73,19 +79,12 @@ class Board private constructor(
                     continue
                 }
 
-                if (allCells[neighborX][neighborY].hasMine()) {
+                if (initialRows[neighborX][neighborY].hasMine()) {
                     count++
                 }
             }
 
             return count
-        }
-
-        private fun plantMines(minesCoordinates: Coordinates, rows: List<Row>) {
-            minesCoordinates.forEach { coordinate ->
-                val cell = rows[coordinate.x][coordinate.y]
-                cell.plantMine()
-            }
         }
     }
 }
