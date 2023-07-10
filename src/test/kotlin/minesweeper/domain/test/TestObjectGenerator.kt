@@ -1,6 +1,5 @@
 package minesweeper.domain.test
 
-import minesweeper.domain.board.Board
 import minesweeper.domain.board.Cell
 import minesweeper.domain.board.CellBoard
 import minesweeper.domain.board.Mine
@@ -18,6 +17,6 @@ object TestObjectGenerator {
                 }
             }
         }
-        return CellBoard(Board(board))
+        return CellBoard(board)
     }
 }
