@@ -4,7 +4,6 @@ import minesweeper.error.MineSweeperErrorMessage.OUTSIDE_THE_BOUNDS_OF_THE_BOARD
 
 class Board private constructor(
     val rows: Rows,
-    private val minesCoordinates: Coordinates,
 ) {
     private val height: Int = rows.size
     private val width: Int = rows.first().size
@@ -45,7 +44,7 @@ class Board private constructor(
                 cell.plantMine()
             }
 
-            return Board(rows, minesCoordinates)
+            return Board(rows)
         }
     }
 }
