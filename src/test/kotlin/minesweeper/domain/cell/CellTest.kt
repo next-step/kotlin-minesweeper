@@ -9,6 +9,13 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import minesweeper.domain.cell.CellType.MINE
 import minesweeper.domain.cell.CellType.UNKNOWN
 
+fun Cell(row: Int, column: Int, cellType: CellType, isDisplay: Boolean): Cell =
+    Cell(Coordinate(row, column), cellType, isDisplay)
+
+fun Cell(row: Int, column: Int, cellType: CellType): Cell = Cell(Coordinate(row, column), cellType)
+
+fun Cell(row: Int, column: Int, isDisplay: Boolean): Cell = Cell(Coordinate(row, column), isDisplay = isDisplay)
+
 class CellTest : FunSpec({
 
     context("init") {
