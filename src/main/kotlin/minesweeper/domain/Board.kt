@@ -6,11 +6,8 @@ class Board private constructor(
     val rows: Rows,
     private val minesCoordinates: Coordinates,
 ) {
-    private val height: Int
-        get() = rows.size
-
-    private val width: Int
-        get() = rows.first().size
+    private val height: Int = rows.size
+    private val width: Int = rows.first().size
 
     fun isMineCell(x: Int, y: Int): Boolean {
         return rows[x][y].hasMine()
