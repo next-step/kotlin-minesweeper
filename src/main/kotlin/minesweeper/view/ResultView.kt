@@ -7,7 +7,7 @@ import minesweeper.domain.MineCell
 
 object ResultView {
     fun printBoard(board: MineBoard) {
-        for (row in board.getBoardInfo) {
+        for (row in board.boardInfo) {
             printRow(row)
             println()
         }
