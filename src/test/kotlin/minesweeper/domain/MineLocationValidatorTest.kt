@@ -10,7 +10,6 @@ class MineLocationValidatorTest {
     @Test
     fun `지뢰의 위치가 중복된 곳이 있는지 확인한다`() {
         // given
-        val mineLocationValidator = MineLocationValidator()
         val height = 10
         val width = 10
         val mineLocationLists = listOf(
@@ -29,7 +28,7 @@ class MineLocationValidatorTest {
         }
 
         val listBoard = board.map { it.toList() }
-        val actual = mineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
+        val actual = MineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
 
         // then
         Assertions.assertThat(actual).isEqualTo(true)
@@ -39,7 +38,6 @@ class MineLocationValidatorTest {
     @CsvSource("-1,0", "0,-1", "11,0", "0,11", delimiter = ',')
     fun `게임판의 인덱스를 벗어난 지뢰의 위치를 생성하면 IllegaArgumentException을 throw 한다`(x: Int, y: Int) {
         // given
-        val mineLocationValidator = MineLocationValidator()
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
@@ -50,7 +48,7 @@ class MineLocationValidatorTest {
 
         // then
         assertThrows<IllegalArgumentException> {
-            mineLocationValidator.validateMineLocation(
+            MineLocationValidator.validateMineLocation(
                 listBoard,
                 MineLocation(x, y)
             )

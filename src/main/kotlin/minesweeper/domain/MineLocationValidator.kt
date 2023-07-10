@@ -1,6 +1,8 @@
 package minesweeper.domain
 
-class MineLocationValidator {
+object MineLocationValidator {
+
+    private const val startIndexOfBoard = 0
 
     fun validateMineLocation(board: List<List<GameBoardSquare>>, mineLocation: MineLocation): Boolean {
         isLocationInIndexOfBoard(board, mineLocation)
@@ -16,9 +18,5 @@ class MineLocationValidator {
     private fun isDuplicatedMineLocation(board: List<List<GameBoardSquare>>, mineLocation: MineLocation): Boolean {
         val (x, y) = mineLocation.location
         return board[y][x].isMine()
-    }
-
-    companion object {
-        private const val startIndexOfBoard = 0
     }
 }
