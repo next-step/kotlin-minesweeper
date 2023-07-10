@@ -24,4 +24,10 @@ class MineRow(width: Number) {
             rows[it].increaseNearMineCount()
         }
     }
+
+    fun sizeOfRemainTiles(): Int {
+        return rows.filterNot {
+            it.isOpen
+        }.size
+    }
 }

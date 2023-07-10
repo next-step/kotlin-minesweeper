@@ -8,7 +8,7 @@ import minesweeper2.domain.MineMap
 //    this[position.x][position.y] = tile
 //}
 
-class MineColumn(private val columnSize: Number, private val rowSize: Number) {
+class MinesMap(private val columnSize: Number, private val rowSize: Number) {
 
     val columns = List(columnSize.value) { MineRow(rowSize) }
 
@@ -45,5 +45,20 @@ class MineColumn(private val columnSize: Number, private val rowSize: Number) {
 
     fun get(position: MinePosition): Tile {
         return columns[position]
+    }
+
+    fun open(position: MinePosition): Boolean {
+        val tile = columns[position]
+        if(tile.isMine) {
+            return false
+        }
+        tile.open()
+        return true
+    }
+
+    fun isFinishGame(): Boolean {
+        return columns.none {
+            it.sizeOfRemainTiles() != 0
+        }
     }
 }
