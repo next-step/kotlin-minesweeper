@@ -8,23 +8,23 @@ object MineCounter {
     )
 
     fun calculateNeighborMines(board: MineBoard) {
-        val height = board.height
-        val width = board.width
+        board.forEachCell { point ->
+            updateMineCountForCell(point, board)
+        }
+    }
 
-        (0 until height).forEach { i ->
-            (0 until width).forEach { j ->
-                val currentPoint = Point(i, j)
-                val currentCell = board.getCell(currentPoint)
-                if (currentCell is EmptyCell) {
-                    val mineCount = neighborOffsets.count { offset ->
-                        val neighborPoint = Point(i + offset.row, j + offset.col)
-                        neighborPoint.row in 0 until height &&
-                            neighborPoint.col in 0 until width &&
-                            board.getCell(neighborPoint) is MineCell
-                    }
-                    currentCell.mineCount = mineCount
-                }
-            }
+    private fun updateMineCountForCell(currentPoint: Point, board: MineBoard) {
+        val currentCell = board.getCell(currentPoint)
+        if (currentCell is EmptyCell) {
+            val mineCount = countNeighborMines(currentPoint, board)
+            currentCell.mineCount = mineCount
+        }
+    }
+
+    private fun countNeighborMines(currentPoint: Point, board: MineBoard): Int {
+        return neighborOffsets.count { offset ->
+            val neighborPoint = currentPoint + offset
+            neighborPoint.isWithin(board.height, board.width) && board.getCell(neighborPoint) is MineCell
         }
     }
 }
