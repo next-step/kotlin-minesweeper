@@ -15,6 +15,7 @@ class CellBoard(val board: Board<Cell>) {
     companion object {
         fun generate(width: PositiveNumber, mines: List<Mine>): CellBoard {
             require(mines.size % width.value == 0) { "셀의 개수는 너비의 배수여야 합니다." }
+
             val mineBoard = Board.of(mines, width)
             val cellBoard = mineToCell(mineBoard)
             return CellBoard(cellBoard)

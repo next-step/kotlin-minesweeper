@@ -1,14 +1,16 @@
 package minesweeper.domain
 
 import minesweeper.domain.board.CellBoard
+import minesweeper.domain.board.GameBoard
 import minesweeper.domain.vo.PositiveNumber
 
 class MineSweeperGame(private val minesGenerator: RandomMinesGenerator) {
-    fun createBoard(height: PositiveNumber, width: PositiveNumber, mineCount: PositiveNumber): CellBoard {
+    fun createBoard(height: PositiveNumber, width: PositiveNumber, mineCount: PositiveNumber): GameBoard {
         val randomMines = minesGenerator.generate(
             totalCount = height * width,
             mineCount = mineCount
         )
-        return CellBoard.generate(width, randomMines)
+        val cellBoard = CellBoard.generate(width, randomMines)
+        return GameBoard.from(cellBoard)
     }
 }
