@@ -22,11 +22,6 @@ class MinesWeeper(val boards: List<Board>) {
 
     fun findBoard(location: Location) = boards.firstOrNull { board -> board.location == location }
 
-    fun isMine(location: Location): Boolean {
-        val board = findBoard(location) ?: throw IllegalArgumentException(LOCATION_EXCEPTION)
-        return board.cell is Mine
-    }
-
     fun isEnd() = isSuccess() || isLose()
 
     private fun isSuccess() = boards.count { it.cell is Basic && !it.cell.isOpen } == 0
