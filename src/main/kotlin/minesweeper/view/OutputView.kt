@@ -35,7 +35,7 @@ object OutputView {
 
     fun showGameResult(gameResult: GameStatus) {
         println(
-            when(gameResult) {
+            when (gameResult) {
                 GameStatus.WIN -> "Win Game."
                 GameStatus.LOSE -> "Lose Game."
                 else -> return

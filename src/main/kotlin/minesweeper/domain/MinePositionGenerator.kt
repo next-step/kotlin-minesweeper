@@ -1,5 +1,5 @@
 package minesweeper.domain
 
-interface MinePositionGenerator {
+fun interface MinePositionGenerator {
     fun generatePosition(): MinePosition
 }

@@ -30,7 +30,7 @@ class MinesMap(private val columnSize: NumberValue, private val rowSize: NumberV
 
         val rowRange = getRange(position.y, rowSize)
         getRange(position.x, columnSize).forEach {
-            columns[it].increateMineCountNearTiles(rowRange)
+            columns[it].increaseMineCountNearTiles(rowRange)
         }
     }
 
@@ -42,13 +42,10 @@ class MinesMap(private val columnSize: NumberValue, private val rowSize: NumberV
 
     fun openNearTiles(position: MinePosition) {
         val tile = columns[position]
-        if (tile.isMine) {
+        if (tile.isMine || tile.isOpen) {
             return
         }
 
-        if (tile.isOpen) {
-            return
-        }
         tile.open()
 
         if (tile.nearMineCount != SIZE_ZERO) {

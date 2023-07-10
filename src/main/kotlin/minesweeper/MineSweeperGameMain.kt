@@ -4,7 +4,6 @@ import minesweeper.domain.GameStateNotify
 import minesweeper.domain.GameStatus
 import minesweeper.domain.MineGenerator
 import minesweeper.domain.MinePosition
-import minesweeper.domain.MinePositionGenerator
 import minesweeper.domain.MinesMap
 import minesweeper.domain.MinesWeeperGame
 import minesweeper.domain.NumberValue
@@ -19,11 +18,7 @@ fun main() {
     val mineCount = NumberValue.of(InputView.inputDataFromConsole(InputType.MINE_COUNT))
 
     val minesWeeperGame = MinesWeeperGame(width to height, mineCount)
-    minesWeeperGame.generateMine(object : MinePositionGenerator {
-        override fun generatePosition(): MinePosition {
-            return MineGenerator.generate(height, width)
-        }
-    })
+    minesWeeperGame.generateMine { MineGenerator.generate(height, width) }
     OutputView.showGameStartMessage()
 
     minesWeeperGame.openTile(object : GameStateNotify {
