@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 open class PlainTile : Tile() {
     var nearMineCount = DEFAULT_COUNT

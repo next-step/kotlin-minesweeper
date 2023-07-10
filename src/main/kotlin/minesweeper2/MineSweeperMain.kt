@@ -1,11 +1,11 @@
 package minesweeper2
 
-import minesweeper.domain.GameStateNotify
-import minesweeper.domain.Length
-import minesweeper.domain.MineCount
-import minesweeper.domain.MineMap
-import minesweeper.domain.MinePosition
-import minesweeper.domain.TileRow
+import minesweeper2.domain.GameStateNotify
+import minesweeper2.domain.Length
+import minesweeper2.domain.MineCount
+import minesweeper2.domain.MineMap
+import minesweeper2.domain.MinePosition
+import minesweeper2.domain.TileRow
 import minesweeper2.view.InputType
 import minesweeper2.view.InputView
 import minesweeper2.view.OutputView

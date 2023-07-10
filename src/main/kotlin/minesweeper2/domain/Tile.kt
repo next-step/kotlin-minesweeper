@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 abstract class Tile {
     abstract fun getType(): TileType

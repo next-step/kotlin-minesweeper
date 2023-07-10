@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 enum class TileType {
     PLAIN,

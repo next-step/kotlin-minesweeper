@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 class TileRow(private val row: MutableList<Tile>) {
     val size: Int

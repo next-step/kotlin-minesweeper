@@ -1,7 +1,7 @@
 package minesweeper2.view
 
-import minesweeper.domain.MinePosition
-import minesweeper.domain.Position
+import minesweeper2.domain.MinePosition
+import minesweeper2.domain.Position
 
 object InputView {
 

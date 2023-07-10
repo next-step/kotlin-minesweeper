@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 @JvmInline
 value class Length private constructor(val value: Int) {

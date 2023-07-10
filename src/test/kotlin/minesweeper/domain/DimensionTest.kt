@@ -3,16 +3,15 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
-class PositionTest : StringSpec({
-    "위치 값은 0보다 커야함" {
+class DimensionTest : StringSpec({
+    "높이와 넓이 갯수는 숫자이어야한다" {
         shouldThrow<IllegalArgumentException> {
-            Position(-1)
+            Dimension.of("a")
         }
     }
-
-    "위치 값은 숫자이어야 함" {
+    "높이와 넓이 갯수는 0보다 커야한다" {
         shouldThrow<IllegalArgumentException> {
-            Position.of("a")
+            Dimension.of("0")
         }
     }
 })

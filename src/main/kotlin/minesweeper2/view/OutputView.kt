@@ -1,9 +1,9 @@
 package minesweeper2.view
 
-import minesweeper.domain.MineTile
-import minesweeper.domain.PlainTile
-import minesweeper.domain.Tile
-import minesweeper.domain.TileRow
+import minesweeper2.domain.MineTile
+import minesweeper2.domain.PlainTile
+import minesweeper2.domain.Tile
+import minesweeper2.domain.TileRow
 
 object OutputView {
 

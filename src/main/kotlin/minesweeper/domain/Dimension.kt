@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 @JvmInline
 value class Dimension private constructor(val value: Int) {

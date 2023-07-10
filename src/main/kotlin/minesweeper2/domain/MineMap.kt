@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 private operator fun List<TileRow>.get(position: MinePosition): Tile {
     return this[position.positionX][position.positionY]
