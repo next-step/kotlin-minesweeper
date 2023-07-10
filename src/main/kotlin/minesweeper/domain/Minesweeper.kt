@@ -1,7 +1,5 @@
 package minesweeper.domain
 
-import minesweeper.view.POSITION_SPLIT_SYMBOL
-
 class Minesweeper(
     val positions: Positions,
     minePositions: MinePositions
