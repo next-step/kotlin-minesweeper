@@ -1,10 +1,12 @@
 package domain
 
-data class Cell private constructor(val type: CellType) {
+data class Cell private constructor(val type: CellType, val position: Position) {
     companion object {
-        fun ground(): Cell = Cell(CellType.GROUND)
+        fun ground(x: Int, y: Int): Cell = Cell(CellType.GROUND, position(x, y))
 
-        fun mine(): Cell = Cell(CellType.MINE)
+        fun mine(x: Int, y: Int): Cell = Cell(CellType.MINE, position(x, y))
+
+        private fun position(x: Int, y: Int): Position = Position(x, y)
     }
 }
 
