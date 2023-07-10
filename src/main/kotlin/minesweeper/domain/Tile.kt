@@ -7,27 +7,23 @@ class Tile {
 
     var isOpen = false
         get() {
-            if(isMine) return true
+            if (isMine) return true
             return field
         }
     fun setMine() {
         isMine = true
     }
 
-    fun open(): Boolean {
-        if(isMine) {
-            return false
+    fun open() {
+        if (!isMine) {
+            isOpen = true
         }
-        isOpen = true
-        return true
     }
 
-
     fun increaseNearMineCount() {
-        if(isMine) {
+        if (isMine) {
             return
         }
         nearMineCount = nearMineCount.inc()
     }
-
 }

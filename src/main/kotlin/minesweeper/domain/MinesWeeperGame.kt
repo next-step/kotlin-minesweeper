@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-class MinesWeeperGame(rectangle: Pair<Number, Number>, val count: Number) {
-    private val height: Number
-    private val width: Number
+class MinesWeeperGame(rectangle: Pair<NumberValue, NumberValue>, val count: NumberValue) {
+    private val height: NumberValue
+    private val width: NumberValue
 
     val minesMap : MinesMap
 
@@ -12,12 +12,12 @@ class MinesWeeperGame(rectangle: Pair<Number, Number>, val count: Number) {
         minesMap = MinesMap(height, width)
 
     }
-    fun open(position: MinePosition): GameStatus {
+    private fun openMap(position: MinePosition): GameStatus {
         require(position.x.value < height.value && position.y.value < width.value) {
             "입력받은 위치는 높이와 넓이보다 작거나 같아야한다"
         }
-        val isSuccess = minesMap.open(position)
-        if(!isSuccess) {
+        val tile = minesMap.get(position)
+        if(tile.isMine) {
             return GameStatus.LOSE
         }
 
@@ -27,6 +27,7 @@ class MinesWeeperGame(rectangle: Pair<Number, Number>, val count: Number) {
             return GameStatus.WIN
         }
 
+        minesMap.openNearTiles(position)
         return GameStatus.CONTINUE
     }
 
@@ -36,5 +37,16 @@ class MinesWeeperGame(rectangle: Pair<Number, Number>, val count: Number) {
             val isSuccess = minesMap.setMine(positionGenerator.generatePosition())
             if(isSuccess) makeCount = makeCount.inc()
         } while(makeCount != count.value)
+    }
+
+    fun openTile(gameStateNotify: GameStateNotify) {
+        val position = gameStateNotify.getOpenPosition()
+        when(val gameResult = openMap(position)) {
+            GameStatus.WIN, GameStatus.LOSE -> gameStateNotify.showGameState(gameResult)
+            GameStatus.CONTINUE -> {
+                gameStateNotify.showMineMapInProgress(minesMap)
+                if(gameStateNotify.isContinueGame()) openTile(gameStateNotify)
+            }
+        }
     }
 }

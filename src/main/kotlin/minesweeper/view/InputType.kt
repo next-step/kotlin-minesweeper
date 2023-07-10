@@ -1,4 +1,4 @@
-package minesweeper2.view
+package minesweeper.view
 
 enum class InputType {
     HEIGHT,

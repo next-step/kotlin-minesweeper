@@ -1,8 +1,10 @@
 package minesweeper.domain
 
-class MineRow(width: Number) {
+class MineRow(width: NumberValue) {
 
     val rows = List(width.value) { Tile() }
+
+    val size: Int = rows.size
     operator fun get(position: Position): Tile {
         return rows[position.value]
     }
@@ -10,14 +12,6 @@ class MineRow(width: Number) {
     operator fun get(position: Int): Tile {
         return rows[position]
     }
-
-//    operator fun set(position: Number, tile: Tile) {
-//        rows[position.value] = tile
-//    }
-//
-//    operator fun set(position: Int, tile: Tile) {
-//        rows[position] = tile
-//    }
 
     fun increateMineCountNearTiles(rangeRow: List<Int>) {
         rangeRow.forEach {
@@ -29,5 +23,11 @@ class MineRow(width: Number) {
         return rows.filterNot {
             it.isOpen
         }.size
+    }
+
+    fun getTiles(rowRange: List<Int>, operation: (Int) -> Unit) {
+        for (rowIndex in rowRange) {
+            operation(rowIndex)
+        }
     }
 }

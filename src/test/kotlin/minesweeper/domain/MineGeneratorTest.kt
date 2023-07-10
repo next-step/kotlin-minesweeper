@@ -3,7 +3,7 @@ package minesweeper.domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.ints.shouldBeInRange
 
-fun Int.toNumber() = Number.of(this.toString())
+fun Int.toNumber() = NumberValue.of(this.toString())
 
 class MineGeneratorTest : StringSpec({
     "생성되는 지뢰의 위치는 높이와 넓이보다 작아야한다" {

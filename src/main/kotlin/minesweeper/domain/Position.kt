@@ -17,7 +17,7 @@ value class Position private constructor(val value: Int) {
             require(data >= 0) {
                 "위치값은 0보다 커야한다"
             }
-            return Position(data.dec())
+            return Position(data)
         }
     }
 }

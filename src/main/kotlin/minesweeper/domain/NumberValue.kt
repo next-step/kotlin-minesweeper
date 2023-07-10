@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 @JvmInline
-value class Number private constructor(val value: Int) {
+value class NumberValue private constructor(val value: Int) {
 
     fun dec(): Int {
         return value.dec()
@@ -12,7 +12,7 @@ value class Number private constructor(val value: Int) {
     }
 
     companion object {
-        fun of(data: String): Number {
+        fun of(data: String): NumberValue {
 
             val value = data.toIntOrNull()
             require(value != null) {
@@ -21,7 +21,7 @@ value class Number private constructor(val value: Int) {
             require(value > 0) {
                 "데이터는 0보다 커야한다"
             }
-            return Number(value)
+            return NumberValue(value)
         }
     }
 }
