@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.BoardGenerator
+import minesweeper.domain.Result
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -10,6 +11,14 @@ class MindSweeper {
             BoardGenerator.createBoard(it)
         }
         ResultView.printGameStart()
-        ResultView.printBoard(board)
+        while (true) {
+            val inputPoint = InputView.inputPoint()
+            val result = board.openCell(inputPoint)
+            ResultView.printBoard(board)
+            if (result == Result.LOSE) {
+                ResultView.printLose()
+                break
+            }
+        }
     }
 }
