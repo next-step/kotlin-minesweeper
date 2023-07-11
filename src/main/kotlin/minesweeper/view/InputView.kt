@@ -26,7 +26,7 @@ object InputView {
 
     private fun inputWidth(): Int {
         println("너비를 입력하세요.")
-        return readLine()?.toIntOrNull() ?: throw IllegalArgumentException("너비 숫자여야 합니다.")
+        return readLine()?.toIntOrNull() ?: throw IllegalArgumentException("너비는 숫자여야 합니다.")
     }
 
     private fun inputMineCount(): Int {
