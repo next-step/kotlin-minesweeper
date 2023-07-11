@@ -3,7 +3,7 @@ package minesweeper.domain
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-class MineLocationGeneratorTest {
+class SquareLocationGeneratorTest {
     @Test
     fun `지뢰의 위치를 생성한다`() {
         // given
@@ -19,7 +19,7 @@ class MineLocationGeneratorTest {
 
         // then
         Assertions.assertThat(generateMineLocation).isEqualTo(
-            MineLocation(board.first().size - 1, board.size - 1)
+            SquareLocation(board.first().size - 1, board.size - 1)
         )
     }
 }

@@ -6,28 +6,28 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class MineLocationValidatorTest {
+class SquareLocationValidatorTest {
     @Test
     fun `지뢰의 위치가 중복된 곳이 있는지 확인한다`() {
         // given
         val height = 10
         val width = 10
-        val mineLocationLists = listOf(
-            MineLocation(0, 0),
-            MineLocation(1, 6),
-            MineLocation(6, 3),
-            MineLocation(9, 9)
+        val squareLocationLists = listOf(
+            SquareLocation(0, 0),
+            SquareLocation(1, 6),
+            SquareLocation(6, 3),
+            SquareLocation(9, 9)
         )
         val board: Array<Array<GameBoardSquare>> =
             Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
-        mineLocationLists.forEach {
+        squareLocationLists.forEach {
             val (x, y) = it
             board[y][x] = GameBoardSquare.MineSquare()
         }
         val listBoard = board.map { it.toList() }
-        val actual = MineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
+        val actual = MineLocationValidator.validateMineLocation(listBoard, SquareLocation(0, 0))
 
         // then
         Assertions.assertThat(actual).isEqualTo(true)
@@ -49,7 +49,7 @@ class MineLocationValidatorTest {
         assertThrows<IllegalArgumentException> {
             MineLocationValidator.validateMineLocation(
                 listBoard,
-                MineLocation(x, y)
+                SquareLocation(x, y)
             )
         }
     }
