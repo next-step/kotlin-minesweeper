@@ -1,11 +1,22 @@
 package minesweeper.view
 
+import minesweeper.domain.Point
+
 object InputView {
 
     fun inputBoardInfo(): BoardStatus {
         return BoardStatus(
             inputHeight(), inputWidth(), inputMineCount()
         )
+    }
+    fun inputPoint(): Point {
+        print("open: ")
+        val input = readLine()?.split(",") ?: throw IllegalArgumentException("입력이 없습니다.")
+
+        val row = input[0].trim().toInt()
+        val col = input[1].trim().toInt()
+
+        return Point(row, col)
     }
 
     private fun inputHeight(): Int {
