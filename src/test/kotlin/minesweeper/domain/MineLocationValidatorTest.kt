@@ -24,9 +24,8 @@ class MineLocationValidatorTest {
         // when
         mineLocationLists.forEach {
             val (x, y) = it
-            board[y][x].insertMine()
+            board[y][x] = GameBoardSquare(SquareValueType.MINE)
         }
-
         val listBoard = board.map { it.toList() }
         val actual = MineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
 
