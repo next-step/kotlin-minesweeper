@@ -11,7 +11,7 @@ class MineLocationGeneratorTest {
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
         val listBoard = board.map { it.toList() }

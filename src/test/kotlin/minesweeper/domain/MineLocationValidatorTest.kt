@@ -19,12 +19,12 @@ class MineLocationValidatorTest {
             MineLocation(9, 9)
         )
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
         mineLocationLists.forEach {
             val (x, y) = it
-            board[y][x] = GameBoardSquare(SquareValueType.MINE)
+            board[y][x] = GameBoardSquare.MineSquare()
         }
         val listBoard = board.map { it.toList() }
         val actual = MineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
@@ -40,7 +40,7 @@ class MineLocationValidatorTest {
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
         val listBoard = board.map { it.toList() }

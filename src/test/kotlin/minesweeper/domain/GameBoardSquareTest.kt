@@ -8,7 +8,7 @@ class GameBoardSquareTest {
     @Test
     fun `게임판 사각형 1개는 처음 생성시에 빈값을 가진다`() {
         // given
-        val gameBoardSquare = GameBoardSquare(SquareValueType.EMPTY)
+        val gameBoardSquare = GameBoardSquare.NumberSquare.createEmpty()
 
         // when
         val actual = gameBoardSquare.isMine()

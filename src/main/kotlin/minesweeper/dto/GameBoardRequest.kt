@@ -1,7 +1,6 @@
 package minesweeper.dto
 
 import minesweeper.domain.GameBoardSquare
-import minesweeper.domain.SquareValueType
 
 data class GameBoardRequest(val height: Int, val width: Int, val minesNumber: Int) {
     init {
@@ -11,6 +10,6 @@ data class GameBoardRequest(val height: Int, val width: Int, val minesNumber: In
     }
 
     fun createGameBoard(): MutableList<MutableList<GameBoardSquare>> {
-        return MutableList(height) { MutableList(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+        return MutableList(height) { MutableList(width) { GameBoardSquare.NumberSquare.createEmpty() } }
     }
 }
