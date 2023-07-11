@@ -11,19 +11,22 @@ object BoardGenerator {
         require(height * width > mineCount) { "지뢰의 개수가 보드판의 총 격자보다 큽니다." }
 
         val allPoints = getAllPoints(height, width)
-        val minePoints = allPoints.shuffled().take(mineCount).toSet()
+        val minePointsSet = allPoints.shuffled().take(mineCount).toSet()
+        val minePoints = MinePoints(minePointsSet)
 
         val boardInfo = (0 until height).map { row ->
             BoardRow(
                 (0 until width).map { col ->
                     val point = Point(row, col)
-                    if (point in minePoints) MineCell(point) else EmptyCell(point)
+                    if (minePoints.contains(point)) {
+                        MineCell(point)
+                    } else {
+                        EmptyCell(point, minePoints.countNeighborMines(point))
+                    }
                 }
             )
         }
-        val board = MineBoard(boardInfo)
-        MineCounter.calculateNeighborMines(board)
-        return board
+        return MineBoard(boardInfo)
     }
 
     private fun getAllPoints(height: Int, width: Int): MutableList<Point> {

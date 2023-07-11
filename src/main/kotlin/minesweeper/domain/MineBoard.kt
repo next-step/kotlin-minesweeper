@@ -13,11 +13,4 @@ class MineBoard(
     val width: Int
         get() = boardInfo[0].rowInfo.size
 
-    fun forEachCell(action: (Point) -> Unit) {
-        (0 until height).forEach { row ->
-            (0 until width).forEach { col ->
-                action(Point(row, col))
-            }
-        }
-    }
 }
