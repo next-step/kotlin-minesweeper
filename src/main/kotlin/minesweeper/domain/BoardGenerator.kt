@@ -29,9 +29,9 @@ object BoardGenerator {
         return MineBoard(boardInfo)
     }
 
-    private fun getAllPoints(height: Int, width: Int): MutableList<Point> {
+    private fun getAllPoints(height: Int, width: Int): List<Point> {
         return List(height * width) {
             Point(it / width, it % width)
-        }.toMutableList()
+        }.toList()
     }
 }
