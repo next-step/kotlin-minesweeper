@@ -12,9 +12,9 @@ object MineGenerator {
     }
 
     private fun getNewLocation(lists: List<Location>, height: Int, width: Int): Location {
-        var location = Location(getRandomHeight(height), getRandomWidth(width))
+        var location = Location(getRandomWidth(width), getRandomHeight(height))
         while (lists.contains(location)) {
-            location = Location(getRandomHeight(height), getRandomWidth(width))
+            location = Location(getRandomWidth(width), getRandomHeight(height))
         }
         return location
     }

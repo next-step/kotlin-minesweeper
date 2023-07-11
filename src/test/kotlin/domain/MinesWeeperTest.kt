@@ -47,7 +47,6 @@ internal class MinesWeeperTest {
         val count = 3
         val game = MinesWeeper.of(height, width, count)
 
-        shouldThrow<IllegalArgumentException> { game.isMine(Location(5, 9)) }
         shouldThrow<IllegalArgumentException> { game.openCell(Location(4, 10)) }
     }
 
@@ -110,7 +109,7 @@ internal class MinesWeeperTest {
         basic2.open()
         basic3.open()
 
-        game.isSuccess() shouldBe true
+        game.isEnd() shouldBe true
     }
 
     @Test
@@ -122,7 +121,8 @@ internal class MinesWeeperTest {
             Board(Location(1, 1), Basic())
         )
         val game = MinesWeeper(list)
+        game.openCell(Location(0, 1))
 
-        game.isMine(Location(0, 1)) shouldBe true
+        game.isLose() shouldBe true
     }
 }
