@@ -10,29 +10,7 @@ class MinesWeeperGameBoard(gameBoardRequest: GameBoardRequest) {
     init {
         val mutableBoard = gameBoardRequest.createGameBoard()
         generateMines(minesNumber, mutableBoard)
-        board = initMineCounts(mutableBoard)
-    }
-
-    private fun initMineCounts(mutableBoard: MutableList<MutableList<GameBoardSquare>>): List<List<GameBoardSquare>> {
-        val updatedBoard = mutableBoard.mapIndexed { rowIndex, row ->
-            row.mapIndexed { columnIndex, square ->
-                val nowLocation = Pair(rowIndex, columnIndex)
-                countNumOfMineIfNotMine(square, mutableBoard, nowLocation)
-            }.toList()
-        }.toList()
-        return updatedBoard
-    }
-
-    private fun countNumOfMineIfNotMine(
-        square: GameBoardSquare,
-        mutableBoard: MutableList<MutableList<GameBoardSquare>>,
-        nowLocation: Pair<Int, Int>
-    ): GameBoardSquare {
-        if (!square.isMine()) {
-            val numOfNearByMine = MineCounter.countNearByMines(mutableBoard, nowLocation)
-            return GameBoardSquare.NumberSquare(numOfNearByMine)
-        }
-        return square
+        board = MineCounter.initMineCounts(mutableBoard)
     }
 
     private fun generateMines(mineNumber: Int, mutableBoard: MutableList<MutableList<GameBoardSquare>>) {
