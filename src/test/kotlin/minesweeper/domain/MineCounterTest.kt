@@ -62,6 +62,6 @@ class MineCounterTest {
         )
 
         // then
-        assertEquals(actual, answer, "The two lists of lists should be equal.")
+        assertEquals(answer, actual, "The two lists of lists should be equal.")
     }
 }
