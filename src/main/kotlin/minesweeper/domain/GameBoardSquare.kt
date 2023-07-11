@@ -1,28 +1,27 @@
 package minesweeper.domain
 
-class GameBoardSquare(private var squareValueType: SquareValueType) {
-    init {
-        require(squareValueType == SquareValueType.EMPTY) { "게임판을 초기화 할 때는 지뢰가 되면 안됩니다." }
-    }
-
-    fun isMine(): Boolean {
-        return squareValueType == SquareValueType.MINE
-    }
-
-    fun insertMine() {
-        squareValueType = SquareValueType.MINE
-    }
-
+sealed class GameBoardSquare(val numOfNearByMine: Int) {
+    abstract fun isMine(): Boolean
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+        if (other !is GameBoardSquare) return false
 
-        other as GameBoardSquare
-
-        return squareValueType == other.squareValueType
+        return numOfNearByMine == other.numOfNearByMine
     }
 
     override fun hashCode(): Int {
-        return squareValueType.hashCode()
+        return numOfNearByMine
+    }
+
+    class MineSquare() : GameBoardSquare(0) {
+        override fun isMine(): Boolean = true
+    }
+
+    class NumberSquare(numOfNearByMine: Int) : GameBoardSquare(numOfNearByMine) {
+        override fun isMine(): Boolean = false
+
+        companion object {
+            fun createEmpty(): NumberSquare = NumberSquare(numOfNearByMine = 0)
+        }
     }
 }

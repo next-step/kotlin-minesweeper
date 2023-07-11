@@ -13,16 +13,20 @@ object ResultView {
 
     private fun printEachBoardLine(boardLine: List<GameBoardSquare>) {
         boardLine.forEach {
-            val proceedSquareType = proceedSquareType(it.isMine())
-            print(proceedSquareType)
+            proceedSquareType(it)
         }
         println()
     }
 
-    private fun proceedSquareType(isMine: Boolean): Char {
-        if (isMine) {
-            return '*'
+    private fun proceedSquareType(gameBoardSquare: GameBoardSquare) {
+        if (gameBoardSquare.isMine()) {
+            print('*')
+            return
         }
-        return 'C'
+        if (gameBoardSquare is GameBoardSquare.NumberSquare) {
+            print(gameBoardSquare.numOfNearByMine)
+            return
+        }
+        throw IllegalArgumentException("잘못된 타입이 입력되었습니다.")
     }
 }

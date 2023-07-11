@@ -6,30 +6,28 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class MineLocationValidatorTest {
+class SquareLocationValidatorTest {
     @Test
     fun `지뢰의 위치가 중복된 곳이 있는지 확인한다`() {
         // given
-        val mineLocationValidator = MineLocationValidator()
         val height = 10
         val width = 10
-        val mineLocationLists = listOf(
-            MineLocation(0, 0),
-            MineLocation(1, 6),
-            MineLocation(6, 3),
-            MineLocation(9, 9)
+        val squareLocationLists = listOf(
+            SquareLocation(0, 0),
+            SquareLocation(1, 6),
+            SquareLocation(6, 3),
+            SquareLocation(9, 9)
         )
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
-        mineLocationLists.forEach {
+        squareLocationLists.forEach {
             val (x, y) = it
-            board[y][x].insertMine()
+            board[y][x] = GameBoardSquare.MineSquare()
         }
-
         val listBoard = board.map { it.toList() }
-        val actual = mineLocationValidator.validateMineLocation(listBoard, MineLocation(0, 0))
+        val actual = MineLocationValidator.validateMineLocation(listBoard, SquareLocation(0, 0))
 
         // then
         Assertions.assertThat(actual).isEqualTo(true)
@@ -39,20 +37,19 @@ class MineLocationValidatorTest {
     @CsvSource("-1,0", "0,-1", "11,0", "0,11", delimiter = ',')
     fun `게임판의 인덱스를 벗어난 지뢰의 위치를 생성하면 IllegaArgumentException을 throw 한다`(x: Int, y: Int) {
         // given
-        val mineLocationValidator = MineLocationValidator()
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
 
         // when
         val listBoard = board.map { it.toList() }
 
         // then
         assertThrows<IllegalArgumentException> {
-            mineLocationValidator.validateMineLocation(
+            MineLocationValidator.validateMineLocation(
                 listBoard,
-                MineLocation(x, y)
+                SquareLocation(x, y)
             )
         }
     }

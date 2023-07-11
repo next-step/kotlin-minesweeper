@@ -12,7 +12,7 @@ class MinesWeeperGameBoardTest {
         val height = 10
         val width = 10
         val board: Array<Array<GameBoardSquare>> =
-            Array(height) { Array(width) { GameBoardSquare(SquareValueType.EMPTY) } }
+            Array(height) { Array(width) { GameBoardSquare.NumberSquare.createEmpty() } }
         val listBoard = board.map { it.toList() }
         val gameBoardRequest = GameBoardRequest(height, width, 0)
 
