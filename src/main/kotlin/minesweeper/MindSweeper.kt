@@ -15,9 +15,16 @@ class MindSweeper {
             val inputPoint = InputView.inputPoint()
             val result = board.openCell(inputPoint)
             ResultView.printBoard(board)
-            if (result == Result.LOSE) {
-                ResultView.printLose()
-                break
+            when (result) {
+                Result.LOSE -> {
+                    ResultView.printLose()
+                    break
+                }
+                Result.WIN -> {
+                    ResultView.printWin()
+                    break
+                }
+                else -> continue
             }
         }
     }

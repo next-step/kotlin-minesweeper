@@ -33,8 +33,7 @@ class MineBoard(
                 }
             }
         }
-
-        return Result.CONTINUE
+        return if (isWin()) Result.WIN else Result.CONTINUE
     }
 
     private fun addCellsToQueue(queue: Queue<Cell>, cell: Cell) {
@@ -47,5 +46,9 @@ class MineBoard(
 
     private fun getCell(point: Point): Cell {
         return boardInfo[point.row].rowInfo[point.col]
+    }
+
+    private fun isWin(): Boolean {
+        return boardInfo.flatMap { it.rowInfo }.all { it.isOpen || it is MineCell }
     }
 }

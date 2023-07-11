@@ -34,4 +34,8 @@ object ResultView {
     fun printLose() {
         println("Lose Game.")
     }
+
+    fun printWin() {
+        println("Win Game.")
+    }
 }
