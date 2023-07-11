@@ -1,21 +1,21 @@
 package minesweeper.view
 
-import minesweeper.domain.Cell
-import minesweeper.domain.MineBoard
+import minesweeper.domain.board.GameBoard
+import minesweeper.domain.board.Tile
 
 object OutputView {
     private const val mineSymbol = "*"
-    private const val nonMineSymbol = "C"
-    fun printMineBoard(board: MineBoard) {
-        for (cells in board.board) {
-            printCells(cells)
+
+    fun printMineBoard(board: GameBoard) {
+        for (tiles in board.board) {
+            printTiles(tiles)
             println()
         }
     }
 
-    private fun printCells(cells: List<Cell>) {
-        for (cell in cells) {
-            val symbol = if (cell.hasMine) mineSymbol else nonMineSymbol
+    private fun printTiles(tiles: List<Tile>) {
+        for (tile in tiles) {
+            val symbol = if (tile.isMineActive()) mineSymbol else tile.getNeighborMineCount()
             print("$symbol ")
         }
     }
