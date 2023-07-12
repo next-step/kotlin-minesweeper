@@ -11,7 +11,7 @@ class MineBoardGeneratorTest : FunSpec({
         val height = 5
         val boardSize = BoardSize(width, height)
         val mineCount = 3
-        val mineLocations = LandMineLocations(Point(1, 1), Point(1, 2))
+        val mineLocations = MineLocations(Point(1, 1), Point(1, 2))
         val boardInfoGenerator = BoardInfoGenerator(
             boardSize,
             mineCount,

@@ -1,6 +1,6 @@
 package domain
 
-data class LandMineLocations(
+data class MineLocations(
     val points: List<Point>
 ) {
     constructor(vararg point: Point) : this(points = point.toList())

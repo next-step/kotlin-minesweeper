@@ -1,8 +1,8 @@
 package domain
 
 class RandomMineLocationStrategy : MineLocationStrategy {
-    override fun generateMineLocations(boardSize: BoardSize, mineCount: Int): LandMineLocations {
-        return LandMineLocations(List(mineCount) { randomPoint(boardSize) })
+    override fun generateMineLocations(boardSize: BoardSize, mineCount: Int): MineLocations {
+        return MineLocations(List(mineCount) { randomPoint(boardSize) })
     }
 
     private fun randomPoint(boardSize: BoardSize): Point {
