@@ -1,3 +1,5 @@
+package domain
+
 const val NON_MINE = 'C'
 const val MINE = '*'
 

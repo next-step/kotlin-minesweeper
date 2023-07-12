@@ -1,3 +1,5 @@
+package domain
+
 class BoardInfoGenerator(
     private val boardSize: BoardSize,
     mineCount: Int,

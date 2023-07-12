@@ -1,3 +1,5 @@
+package domain
+
 class RandomMineLocationStrategy : MineLocationStrategy {
     override fun generateMineLocations(boardSize: BoardSize, mineCount: Int): LandMineLocations {
         require(boardSize.area >= mineCount) {

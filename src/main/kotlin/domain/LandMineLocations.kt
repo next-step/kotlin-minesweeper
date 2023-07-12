@@ -1,3 +1,5 @@
+package domain
+
 data class LandMineLocations(
     val points: List<Point>
 ) {

@@ -1,3 +1,5 @@
+import domain.BoardSize
+import domain.RandomMineLocationStrategy
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeInRange

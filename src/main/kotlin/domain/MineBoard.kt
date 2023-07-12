@@ -1,3 +1,5 @@
+package domain
+
 data class MineBoard(
     val boardSize: BoardSize,
     val mineCount: Int,
