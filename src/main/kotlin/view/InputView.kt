@@ -2,7 +2,6 @@ package view
 
 import domain.BoardSize
 
-
 object InputView {
     fun requestBoardSize(): BoardSize {
         val height = requestHeight()

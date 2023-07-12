@@ -1,9 +1,5 @@
 package domain
 
-import domain.BoardSize
-import domain.LandMineLocations
-import domain.MineLocationStrategy
-
 class FixedMineLocationStrategy(
     private val mineLocations: LandMineLocations
 ) : MineLocationStrategy {
