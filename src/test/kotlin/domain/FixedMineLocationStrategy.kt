@@ -1,3 +1,5 @@
+package domain
+
 import domain.BoardSize
 import domain.LandMineLocations
 import domain.MineLocationStrategy
