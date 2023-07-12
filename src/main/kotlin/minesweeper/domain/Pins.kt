@@ -1,27 +1,29 @@
 package minesweeper.domain
 
-class TwoDimPins private constructor (
-    private val values: MutableList<OneDimPins>
+import minesweeper.domain.pin.NormalPin
+import minesweeper.domain.pin.Pin
+
+class Pins private constructor (
+    private val values: MutableList<PinsInRow>
 ) {
     fun getPinsSize(): Int {
         return values.sumOf { it.getPinsSize() }
     }
 
     fun getPinsAt(height: Int, width: Int): Pin {
-        require(height < values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
+        checkHeight(height)
         return values[height].getPinAt(width)
     }
 
-    fun changeMine(height: Int, width: Int) {
-        require(height < values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
-        values[height].changeMine(width)
-        checkSurroundMineNumber(height, width)
+    fun isExistMineSurround(height: Int, width: Int): Boolean {
+        val surroundPins = getSurroundMine(height, width)
+        return surroundPins.any { pin -> pin.isMinePin() }
     }
 
-    fun closeAllPin() {
-        values.forEach { pins ->
-            pins.closeAllInRow()
-        }
+    fun changeMine(height: Int, width: Int) {
+        checkHeight(height)
+        values[height].changeMine(width)
+        checkSurroundMineNumber(height, width)
     }
 
     fun countOpenedPin(): Int {
@@ -33,16 +35,20 @@ class TwoDimPins private constructor (
     }
 
     fun openPinAt(height: Int, width: Int): Pin {
-        require(height < values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
+        checkHeight(height)
         return values[height].openPinAt(width)
+    }
+
+    private fun checkHeight(height: Int) {
+        require(height in 0 until values.size) { "높이에 $height 는 올바른 위치가 아닙니다" }
     }
 
     private fun checkSurroundMineNumber(height: Int, width: Int) {
         val targetPin = values[height].getPinAt(width)
         val surroundPins = getSurroundMine(height, width)
         surroundPins.forEach { pin ->
-            if (pin is NormalPin) {
-                pin.comparePinType(targetPin)
+            if (!pin.isMinePin()) {
+                (pin as NormalPin).comparePinType(targetPin)
             }
         }
     }
@@ -55,17 +61,17 @@ class TwoDimPins private constructor (
             )
     }
 
-    private fun getPinsInRow(height: Int): OneDimPins {
+    private fun getPinsInRow(height: Int): PinsInRow {
         if (height in 0 until values.size) {
             return values[height]
         }
-        return OneDimPins(emptyList<Pin>().toMutableList())
+        return PinsInRow(emptyList<Pin>().toMutableList())
     }
 
     companion object {
-        fun of(size: GameBoardSize): TwoDimPins {
-            val list = MutableList(size.height) { OneDimPins.of(size.width) }
-            return TwoDimPins(list)
+        fun of(size: GameBoardSize): Pins {
+            val list = MutableList(size.height) { PinsInRow.of(size.width) }
+            return Pins(list)
         }
     }
 }

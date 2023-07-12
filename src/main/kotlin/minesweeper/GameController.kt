@@ -1,9 +1,10 @@
 package minesweeper
 
 import minesweeper.domain.GameBoard
-import minesweeper.domain.Pin
+import minesweeper.domain.pin.Pin
 import minesweeper.view.Inputview
 import minesweeper.view.OutputView
+import kotlin.system.exitProcess
 
 fun main() {
     run()
@@ -24,12 +25,10 @@ fun readyBoard(): GameBoard {
 fun readyMine(board: GameBoard) {
     val mineNumber = Inputview.askMineNumber()
     board.repeatPlateMineWithoutDuplication(mineNumber)
-    board.closePinAll()
 }
 
 fun playGame(board: GameBoard) {
     OutputView.showStart()
-    var continuable = true
     do {
         val positions = Inputview.askOpenPosition()
         val height = positions[0]
@@ -37,12 +36,11 @@ fun playGame(board: GameBoard) {
         val pin = board.openPin(height, width)
         checkOpenMinePin(pin)
         OutputView.showMineSweeper(board)
-        continuable = checkOpenAllNormalPin(board)
-    } while (continuable)
+    } while (isOpenAllNormalPin(board))
 }
 
-fun checkOpenAllNormalPin(board: GameBoard): Boolean {
-    if (!board.askContinuable()) {
+fun isOpenAllNormalPin(board: GameBoard): Boolean {
+    if (board.isNotContinuable()) {
         OutputView.showWin()
         return false
     }
@@ -52,6 +50,6 @@ fun checkOpenAllNormalPin(board: GameBoard): Boolean {
 fun checkOpenMinePin(pin: Pin) {
     if (pin.isMinePin()) {
         OutputView.showLose()
-        return
+        exitProcess(0)
     }
 }
