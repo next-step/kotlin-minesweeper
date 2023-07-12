@@ -1,3 +1,3 @@
 interface MineLocationStrategy {
-    fun generateMineLocations(boardSize: BoardSize, mineCount: Int): LandMindLocations
+    fun generateMineLocations(boardSize: BoardSize, mineCount: Int): LandMineLocations
 }

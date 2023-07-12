@@ -1,4 +1,4 @@
 data class Point(
-    val x: Int,
-    val y: Int
+    val y: Int,
+    val x: Int
 )
