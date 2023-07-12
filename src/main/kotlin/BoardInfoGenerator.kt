@@ -11,7 +11,7 @@ class BoardInfoGenerator(
         for (i in 0 until boardSize.height) {
             for (j in 0 until boardSize.width) {
                 if (mineLocations.contains(Point(i, j))) {
-                    board[i][j] = MINE
+                    board[i][j] = Cell(MINE)
                 }
             }
         }
@@ -19,7 +19,7 @@ class BoardInfoGenerator(
         return BoardInfo(board.map { it.toList() })
     }
 
-    private fun initBoard(): Array<Array<Char>> {
-        return Array(boardSize.width) { Array(boardSize.height) { NON_MINE } }
+    private fun initBoard(): Array<Array<Cell>> {
+        return Array(boardSize.width) { Array(boardSize.height) { Cell(NON_MINE) } }
     }
 }
