@@ -6,7 +6,7 @@ import minesweeper2.model.PositionLocation
 
 class PositionsTest : StringSpec({
     "높이, 너비, 지뢰의 수를 통하여 지뢰의 Positions을 랜덤 생성한다." {
-        val positions = Positions.from(Rows(10), Cols(10), Mine(10, 10, 10))
+        val positions = Positions.from(Row(10), Col(10), Mine(10, 10, 10))
 
         positions.mineCount() shouldBe 10
         positions.position(0, 0).isOpened shouldBe false

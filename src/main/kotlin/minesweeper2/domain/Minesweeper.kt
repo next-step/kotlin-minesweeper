@@ -34,7 +34,7 @@ class Minesweeper(
 
     companion object {
         fun from(rows: Int, cols: Int, mine: Int): Minesweeper {
-            return Minesweeper(Positions.from(Rows(rows), Cols(cols), Mine(mine, rows, cols)))
+            return Minesweeper(Positions.from(Row(rows), Col(cols), Mine(mine, rows, cols)))
         }
     }
 }

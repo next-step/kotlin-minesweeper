@@ -44,7 +44,7 @@ class Positions(
         return positions
             .asSequence()
             .flatMap { it.asSequence() }
-            .filter { !it.isOpened }
+            .filterNot { it.isOpened }
             .count()
     }
 
@@ -67,9 +67,9 @@ class Positions(
     }
 
     companion object {
-        fun from(rows: Rows, cols: Cols, mine: Mine): Positions {
-            val rowsValue = rows.value
-            val colsValue = cols.value
+        fun from(row: Row, col: Col, mine: Mine): Positions {
+            val rowsValue = row.value
+            val colsValue = col.value
             val positionArray = Array(rowsValue) {
                 Array(colsValue) {
                     Position()

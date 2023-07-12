@@ -2,7 +2,7 @@ package minesweeper2.view
 
 import minesweeper2.model.PositionLocation
 
-const val POSITION_SPLIT_SYMBOL = ","
+private const val POSITION_SPLIT_SYMBOL = ","
 
 fun enterCols(): Int {
     println("높이를 입력하세요.")
