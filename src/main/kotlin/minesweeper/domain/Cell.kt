@@ -1,9 +1,11 @@
 package minesweeper.domain
 
 class Cell private constructor(
-    private val coordinate: Coordinate,
+    val coordinate: Coordinate,
+    val countMinesNearBy: Int = 0,
+    initialState: CellState = EmptyState,
 ) {
-    private var state: CellState = EmptyState
+    private var state: CellState = initialState
 
     fun plantMine() {
         state = MineState
@@ -13,19 +15,13 @@ class Cell private constructor(
         return state == MineState
     }
 
-    override fun toString(): String {
-        return when (hasMine()) {
-            true -> MINE_CELL
-            false -> EMPTY_CELL
-        }
-    }
-
     companion object {
-        private const val MINE_CELL: String = "*"
-        private const val EMPTY_CELL: String = "C"
-
         fun of(x: Int, y: Int): Cell {
             return Cell(Coordinate.of(x, y))
+        }
+
+        fun of(x: Int, y: Int, countMinesNearBy: Int, state: CellState): Cell {
+            return Cell(Coordinate.of(x, y), countMinesNearBy, state)
         }
     }
 }
