@@ -1,6 +1,8 @@
-package minesweeper.view
+package minesweeper2.view
 
-const val POSITION_SPLIT_SYMBOL = ","
+import minesweeper2.model.PositionLocation
+
+private const val POSITION_SPLIT_SYMBOL = ","
 
 fun enterCols(): Int {
     println("높이를 입력하세요.")
@@ -17,8 +19,8 @@ fun enterMineCount(): Int {
     return readln().toInt()
 }
 
-fun enterOpenPosition(): Pair<Int, Int> {
+fun enterOpenPosition(): PositionLocation {
     print("open: ")
     val positions = readln().split(POSITION_SPLIT_SYMBOL).map { it.trim().toInt() }
-    return Pair(positions[0], positions[1])
+    return PositionLocation(positions[0], positions[1])
 }

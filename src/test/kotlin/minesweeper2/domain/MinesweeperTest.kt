@@ -1,8 +1,9 @@
-package minesweeper.domain
+package minesweeper2.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper2.model.PositionLocation
 
 class MinesweeperTest : StringSpec({
     "높이, 너비, 지뢰의 수를 가진 지뢰찾기 게임을 만든다." {
@@ -23,13 +24,13 @@ class MinesweeperTest : StringSpec({
             }
         }
 
-        val minesweeperArray = Positions(array)
-        val minesweeper = Minesweeper(
-            minesweeperArray,
-            MinePositions(listOf(MinePosition(1, 2), MinePosition(2, 2), MinePosition(2, 1)))
-        )
+        array[1][2] = Position(-1)
+        array[2][1] = Position(-1)
+        array[2][2] = Position(-1)
 
-        minesweeper.open(Pair(0, 0))
+        val minesweeper = Minesweeper(Positions(array))
+
+        minesweeper.open(PositionLocation(0, 0))
         minesweeper.position(0, 0).isOpened shouldBe true
         minesweeper.position(0, 1).isOpened shouldBe true
         minesweeper.position(1, 0).isOpened shouldBe true
