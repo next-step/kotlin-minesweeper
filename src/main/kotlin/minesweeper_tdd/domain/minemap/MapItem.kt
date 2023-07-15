@@ -1,4 +1,4 @@
-package minesweeper.domain.minemap
+package minesweeper_tdd.domain.minemap
 
 /**
  * ### 지뢰찾기 지도를 구성하는 아이템입니다. 지뢰와 빈칸으로 구분됩니다.

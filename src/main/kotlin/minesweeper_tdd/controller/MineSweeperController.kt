@@ -1,11 +1,11 @@
-package minesweeper.controller
+package minesweeper_tdd.controller
 
-import minesweeper.domain.MineSweeperGame
-import minesweeper.domain.Position
-import minesweeper.domain.minemap.MineMap
-import minesweeper.domain.minemap.MineMapConfig
-import minesweeper.view.InputView
-import minesweeper.view.ResultView
+import minesweeper_tdd.domain.MineSweeperGame
+import minesweeper_tdd.domain.Position
+import minesweeper_tdd.domain.minemap.MineMap
+import minesweeper_tdd.domain.minemap.MineMapConfig
+import minesweeper_tdd.view.InputView
+import minesweeper_tdd.view.ResultView
 
 class MineSweeperController(
     private val inputView: InputView = InputView(),

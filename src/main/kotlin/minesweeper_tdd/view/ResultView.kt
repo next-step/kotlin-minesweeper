@@ -1,10 +1,10 @@
-package minesweeper.view
+package minesweeper_tdd.view
 
-import minesweeper.domain.Position
-import minesweeper.domain.minemap.Empty
-import minesweeper.domain.minemap.MapItem
-import minesweeper.domain.minemap.Mine
-import minesweeper.domain.minemap.MineMap
+import minesweeper_tdd.domain.Position
+import minesweeper_tdd.domain.minemap.Empty
+import minesweeper_tdd.domain.minemap.MapItem
+import minesweeper_tdd.domain.minemap.Mine
+import minesweeper_tdd.domain.minemap.MineMap
 
 class ResultView {
 

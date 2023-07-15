@@ -1,4 +1,4 @@
-package minesweeper.domain.minemap
+package minesweeper_tdd.domain.minemap
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

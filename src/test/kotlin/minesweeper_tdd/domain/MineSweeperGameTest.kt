@@ -1,9 +1,8 @@
-package minesweeper.domain
+package minesweeper_tdd.domain
 
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.minemap.MineMap
-import minesweeper.domain.minemap.MineMapConfig
-import minesweeper.domain.strategy.FixedMinePositionStrategy
+import minesweeper_tdd.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.strategy.FixedMinePositionStrategy
 import org.junit.jupiter.api.Test
 
 internal class MineSweeperGameTest {

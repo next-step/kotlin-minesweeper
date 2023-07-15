@@ -1,11 +1,11 @@
-package minesweeper.domain.minemap
+package minesweeper_tdd.domain.minemap
 
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
-import minesweeper.domain.Position
-import minesweeper.domain.Positions
-import minesweeper.domain.strategy.FixedMinePositionStrategy
+import minesweeper_tdd.domain.Position
+import minesweeper_tdd.domain.Positions
+import minesweeper_tdd.domain.strategy.FixedMinePositionStrategy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

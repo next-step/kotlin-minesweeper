@@ -1,9 +1,9 @@
-package minesweeper.domain
+package minesweeper_tdd.domain
 
-import minesweeper.domain.minemap.MineMap
-import minesweeper.domain.minemap.MineMapConfig
-import minesweeper.domain.strategy.MinePositioningStrategy
-import minesweeper.domain.strategy.RandomMinePositionStrategy
+import minesweeper_tdd.domain.minemap.MineMap
+import minesweeper_tdd.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.strategy.MinePositioningStrategy
+import minesweeper_tdd.domain.strategy.RandomMinePositionStrategy
 
 /**
  * ### 지뢰 찾기 게임을 제어하는 주체입니다

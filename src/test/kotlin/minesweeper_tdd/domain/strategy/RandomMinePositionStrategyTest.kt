@@ -1,8 +1,8 @@
-package minesweeper.domain.strategy
+package minesweeper_tdd.domain.strategy
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.ints.shouldBeLessThan
-import minesweeper.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.minemap.MineMapConfig
 import org.junit.jupiter.api.Test
 
 internal class RandomMinePositionStrategyTest {

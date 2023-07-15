@@ -1,8 +1,8 @@
-package minesweeper.domain.strategy
+package minesweeper_tdd.domain.strategy
 
-import minesweeper.domain.Position
-import minesweeper.domain.Positions
-import minesweeper.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.Position
+import minesweeper_tdd.domain.Positions
+import minesweeper_tdd.domain.minemap.MineMapConfig
 
 /**
  * ### 지뢰 매설 위치가 랜덤으로 결정되는 전략입니다

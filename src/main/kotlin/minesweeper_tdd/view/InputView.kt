@@ -1,4 +1,4 @@
-package minesweeper.view
+package minesweeper_tdd.view
 
 class InputView {
 

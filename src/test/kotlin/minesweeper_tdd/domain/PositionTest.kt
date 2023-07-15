@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper_tdd.domain
 
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe

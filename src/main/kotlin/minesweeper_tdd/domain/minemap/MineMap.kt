@@ -1,8 +1,8 @@
-package minesweeper.domain.minemap
+package minesweeper_tdd.domain.minemap
 
-import minesweeper.domain.Position
-import minesweeper.domain.strategy.MinePositioningStrategy
-import minesweeper.domain.strategy.RandomMinePositionStrategy
+import minesweeper_tdd.domain.Position
+import minesweeper_tdd.domain.strategy.MinePositioningStrategy
+import minesweeper_tdd.domain.strategy.RandomMinePositionStrategy
 
 class MineMap(
     val mineMapConfig: MineMapConfig,
