@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.ints.shouldBeLessThan
 import org.junit.jupiter.api.Test
 
@@ -18,5 +19,18 @@ internal class RandomMinePositionStrategyTest {
             it.y shouldBeLessThan 5
             it.x shouldBeLessThan 5
         }
+    }
+
+    @Test
+    internal fun `지뢰 매설 위치 개수는 지뢰의 개수와 같다`() {
+        val sut = RandomMinePositionStrategy(
+            MineMapConfig(
+                width = 5,
+                height = 5,
+                mineCount = 10
+            )
+        )
+        val minePositions = sut.getMinePositions()
+        minePositions shouldHaveSize 10
     }
 }
