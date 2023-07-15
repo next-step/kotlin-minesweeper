@@ -1,8 +1,17 @@
 import controller.MinesweeperController
-import service.MinesweeperService
+import enums.MineType
+import factory.MinesweeperFactory
 import view.InputView
 import view.ResultView
 
 fun main() {
-    MinesweeperController(InputView, ResultView, MinesweeperService()).start()
+
+    val minesweeperController = MinesweeperController(
+        inputView = InputView,
+        resultView = ResultView,
+        minesweeperFactory = MinesweeperFactory(),
+        mineType = MineType.BASIC
+    )
+
+    minesweeperController.start()
 }

@@ -44,12 +44,10 @@ class MinesweeperTest {
 
         minesweeper.mineMap.forEach { row ->
             row.forEach {
-                if(it == mineShape) actual++
+                if (it == mineShape) actual++
             }
         }
 
         actual shouldBe minesweeper.mines.size
     }
-
-
 }
