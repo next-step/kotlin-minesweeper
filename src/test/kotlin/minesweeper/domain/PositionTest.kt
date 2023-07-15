@@ -49,4 +49,15 @@ internal class PositionTest {
             Position(2, 1),
         )
     }
+
+    @Test
+    internal fun `최대 x값과 최대 y값 주어졌을때 해당 범위내 올 수 있는 모든 Position 추출할 수 있다`() {
+        val positions = Position.all(maxX = 2, maxY = 2)
+        positions.shouldContainAll(
+            Position(0, 0),
+            Position(0, 1),
+            Position(1, 0),
+            Position(1, 1),
+        )
+    }
 }

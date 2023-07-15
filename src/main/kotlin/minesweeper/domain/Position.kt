@@ -19,6 +19,21 @@ data class Position(val x: Int, val y: Int) {
                 .map { Position(x = this.x + it.dx, y = this.y + it.dy) }
         )
     }
+
+    companion object {
+        /**
+         * 주어진 최대 X값과 최대 Y값 범위내 올 수 있는 모든 Position 추출합니다
+         */
+        fun all(maxX: Int, maxY: Int): Positions {
+            return Positions(
+                (0 until maxY).flatMap { y ->
+                    (0 until maxX).map { x ->
+                        Position(x, y)
+                    }
+                }
+            )
+        }
+    }
 }
 
 /**
