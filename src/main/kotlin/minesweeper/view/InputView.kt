@@ -1,7 +1,6 @@
 package minesweeper.view
 
 import minesweeper.domain.MinePosition
-import minesweeper.domain.Position
 
 object InputView {
 
@@ -29,8 +28,8 @@ object InputView {
             throw IllegalArgumentException("위치는 두개의 숫자이어야함 ")
         }
         val positions = positionStrings.map {
-            Position.of(it)
+            it.toInt()
         }
-        return MinePosition(positions)
+        return MinePosition.of(positions[0].dec(), positions[1].dec())
     }
 }

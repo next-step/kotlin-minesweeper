@@ -1,9 +1,9 @@
 package minesweeper.view
 
-import minesweeper.domain.MineTile
-import minesweeper.domain.PlainTile
+import minesweeper.domain.GameStatus
+import minesweeper.domain.MineRow
+import minesweeper.domain.MinesMap
 import minesweeper.domain.Tile
-import minesweeper.domain.TileRow
 
 object OutputView {
 
@@ -11,14 +11,13 @@ object OutputView {
         println("지뢰찾기 게임 시작")
     }
 
-    fun showMapInProgress(mineMap: List<TileRow>) {
-        mineMap.forEach {
+    fun showMapInProgress(mineMap: MinesMap) {
+        mineMap.columns.forEach {
             println(getTilesRow(it))
         }
     }
 
-    private fun getTilesRow(tileRow: TileRow?): String {
-        if (tileRow == null) return ""
+    private fun getTilesRow(tileRow: MineRow): String {
         val stringBuilder = StringBuilder()
         repeat(tileRow.size) {
             val mark = getTileMark(tileRow[it])
@@ -28,19 +27,19 @@ object OutputView {
     }
 
     private fun getTileMark(tile: Tile): String {
-        if (!tile.isCheckedTile) {
+        if (tile.isMine || !tile.isOpen) {
             return "C"
         }
-        return when (tile) {
-            is MineTile -> "*"
-            is PlainTile -> tile.nearMineCount.toString()
-            else -> ""
-        }
+        return tile.nearMineCount.toString()
     }
 
-    fun showGameResult(isWin: Boolean) {
+    fun showGameResult(gameResult: GameStatus) {
         println(
-            if (isWin) "Win Game." else "Lose Game."
+            when (gameResult) {
+                GameStatus.WIN -> "Win Game."
+                GameStatus.LOSE -> "Lose Game."
+                else -> return
+            }
         )
     }
 }

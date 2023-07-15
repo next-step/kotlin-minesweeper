@@ -4,7 +4,9 @@ interface GameStateNotify {
 
     fun getOpenPosition(): MinePosition
 
-    fun showGameState(isWin: Boolean)
+    fun isContinueGame(): Boolean = false
 
-    fun showMineMapInProgress(mineMap: List<TileRow>)
+    fun showGameState(status: GameStatus)
+
+    fun showMineMapInProgress(mineMap: MinesMap)
 }

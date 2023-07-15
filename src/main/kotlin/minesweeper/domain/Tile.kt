@@ -1,11 +1,29 @@
 package minesweeper.domain
 
-abstract class Tile {
-    abstract fun getType(): TileType
+class Tile {
+    var nearMineCount = 0
+    var isMine = false
+        private set
 
-    fun isMine(): Boolean {
-        return getType() == TileType.MINE
+    var isOpen = false
+        get() {
+            if (isMine) return true
+            return field
+        }
+    fun setMine() {
+        isMine = true
     }
 
-    var isCheckedTile = false
+    fun open() {
+        if (!isMine) {
+            isOpen = true
+        }
+    }
+
+    fun increaseNearMineCount() {
+        if (isMine) {
+            return
+        }
+        nearMineCount = nearMineCount.inc()
+    }
 }
