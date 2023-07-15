@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -43,6 +44,17 @@ internal class MineMapConfigTest {
                 width = widthValue,
                 height = heightValue,
                 mineCount = mindCountValue,
+            )
+        }
+    }
+
+    @Test
+    internal fun `지뢰 개수가 너비와 높이의 곱보다 크면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            MineMapConfig(
+                width = 2,
+                height = 2,
+                mineCount = 5,
             )
         }
     }
