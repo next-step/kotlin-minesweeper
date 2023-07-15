@@ -24,7 +24,7 @@ class MineMap(
 
     fun open(position: Position) {
         when (map[position]) {
-            is Empty -> ""
+            is Empty -> openEmpty(position)
             is Mine -> mineOpened = true
             else -> throw IllegalArgumentException(
                 "Invalid Position, x should be within ${mineMapConfig.width} and y should be within ${mineMapConfig.height}, actual : $position"
@@ -58,5 +58,17 @@ class MineMap(
     private fun calculateSurroundingMineCount(position: Position): Int {
         return position.nearby(maxX = mineMapConfig.width, maxY = mineMapConfig.height)
             .count { map[it] is Mine }
+    }
+
+    /**
+     * ### 선택한 위치가 빈칸일 경우 지뢰가 없는 인접한 칸을 모두 엽니다
+     */
+    private fun openEmpty(position: Position) {
+        val mapItem = map[position]
+        if (mapItem !is Empty || mapItem.isOpened) return
+        mapItem.open()
+        if (calculateSurroundingMineCount(position) > 0) return
+        position.nearby(maxX = mineMapConfig.width, maxY = mineMapConfig.height)
+            .onEach { openEmpty(it) }
     }
 }

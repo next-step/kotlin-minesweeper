@@ -99,4 +99,36 @@ internal class MineMapTest {
         // then : 지뢰 오픈 여부 false
         sut.mineOpened shouldBe true
     }
+
+    @Test
+    internal fun `특정 위치를 열었을때 빈칸이면 지뢰가 없는 인접한 칸이 모두 열린다`() {
+        // given : 지뢰 위치가 (2, 1)로 고정된 3x3 지도 준비
+        // C C C
+        // C C *
+        // C C C
+        val mineMapConfig = MineMapConfig(width = 3, height = 3, mineCount = 1)
+        val fixedMinePositionStrategy = FixedMinePositionStrategy(
+            mineMapConfig = mineMapConfig,
+            minePositions = Positions(listOf(Position(2, 1)))
+        )
+        val sut = MineMap(mineMapConfig, fixedMinePositionStrategy)
+
+        // when : 지뢰가 아닌 위치를 오픈
+        sut.open(Position(0, 0))
+
+        // then : 지뢰가 없는 인접한 칸이 모두 열린다
+        // 0 1 C
+        // 0 1 *
+        // 0 1 C
+        val map = sut.currentMap()
+        map[Position(0, 0)]?.isOpened shouldBe true
+        map[Position(0, 1)]?.isOpened shouldBe true
+        map[Position(0, 2)]?.isOpened shouldBe true
+        map[Position(1, 0)]?.isOpened shouldBe true
+        map[Position(1, 1)]?.isOpened shouldBe true
+        map[Position(1, 2)]?.isOpened shouldBe true
+        map[Position(2, 0)]?.isOpened shouldBe false
+        map[Position(2, 1)]?.isOpened shouldBe false
+        map[Position(2, 2)]?.isOpened shouldBe false
+    }
 }
