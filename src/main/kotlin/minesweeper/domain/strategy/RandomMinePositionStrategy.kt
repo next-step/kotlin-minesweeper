@@ -1,4 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.MineMapConfig
+import minesweeper.domain.Position
+import minesweeper.domain.Positions
 
 class RandomMinePositionStrategy(
     private val mineMapConfig: MineMapConfig,
@@ -7,8 +11,8 @@ class RandomMinePositionStrategy(
     override fun getMinePositions(): Positions {
         return Positions(
             Position.all(mineMapConfig.width, mineMapConfig.height)
-            .shuffled()
-            .take(mineMapConfig.mineCount)
+                .shuffled()
+                .take(mineMapConfig.mineCount)
         )
     }
 }

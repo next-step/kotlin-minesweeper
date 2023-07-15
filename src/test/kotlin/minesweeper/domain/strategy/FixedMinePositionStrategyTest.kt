@@ -1,5 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
+import minesweeper.domain.MineMapConfig
+import minesweeper.domain.Position
+import minesweeper.domain.Positions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

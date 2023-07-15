@@ -1,6 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
 import io.kotest.matchers.collections.shouldContain
+import minesweeper.domain.Position
+import minesweeper.domain.Positions
 import org.junit.jupiter.api.Test
 
 internal class MinePositioningStrategyTest {

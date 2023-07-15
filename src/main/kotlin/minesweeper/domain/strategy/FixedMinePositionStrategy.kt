@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.MineMapConfig
+import minesweeper.domain.Positions
 
 class FixedMinePositionStrategy(
     private val mineMapConfig: MineMapConfig,
