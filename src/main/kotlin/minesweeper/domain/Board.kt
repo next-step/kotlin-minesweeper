@@ -4,8 +4,6 @@ class Board(
     val cells: List<Cells>,
     private val minePositions: List<Position>,
 ) {
-    private val allNormalCount: Int
-    private var openedCount: Int = 0
     private var status: Status = Status.PLAYING
 
     private val height: Int
@@ -18,8 +16,6 @@ class Board(
         validateHeightIsPositive()
         validateWidthIsPositive()
         validateSameWidth()
-
-        allNormalCount = (height * width) - minePositions.size
     }
 
     private fun validateHeightIsPositive() {
@@ -78,7 +74,6 @@ class Board(
             return
         }
         this.open()
-        openedCount++
     }
 
     fun win() {
@@ -95,6 +90,14 @@ class Board(
         status = Status.LOSE
     }
 
+    fun isGameOver(): Boolean {
+        return status.isFinished
+    }
+
+    fun isNotGameOver(): Boolean {
+        return !isGameOver()
+    }
+
     fun isWin(): Boolean {
         return status == Status.WIN
     }
@@ -103,27 +106,21 @@ class Board(
         return status == Status.LOSE
     }
 
-    fun isGameOver(): Boolean {
-        return isWin() || isLose()
-    }
-
-    fun isNotGameOver(): Boolean {
-        return !isGameOver()
-    }
-
     private fun isMine(position: Position): Boolean {
         return minePositions.contains(position)
     }
 
     private fun allOpened(): Boolean {
-        return openedCount == allNormalCount
+        return cells.all { it.allOpened() }
     }
 
     private operator fun List<List<Cell>>.get(position: Position): Cell {
         return this[position.y][position.x]
     }
 
-    enum class Status {
-        WIN, LOSE, PLAYING,
+    enum class Status(
+        val isFinished: Boolean = false,
+    ) {
+        WIN(true), LOSE(true), PLAYING,
     }
 }
