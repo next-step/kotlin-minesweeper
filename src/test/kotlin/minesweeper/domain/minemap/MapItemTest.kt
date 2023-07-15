@@ -11,4 +11,10 @@ internal class MapItemTest {
         sut.open()
         sut.isOpened shouldBe true
     }
+
+    @Test
+    internal fun `빈칸 아이템은 주변 8분면에 있는 지뢰의 개수를 가진다`() {
+        val sut = Empty(surroundingMineCount = 3)
+        sut.surroundingMineCount shouldBe 3
+    }
 }

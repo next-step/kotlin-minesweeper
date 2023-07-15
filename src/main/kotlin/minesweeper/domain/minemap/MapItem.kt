@@ -18,3 +18,11 @@ sealed class MapItem {
 data class Mine(
     override val item: String = "MINE",
 ) : MapItem()
+
+/**
+ * ### 지뢰가 아닌 빈칸을 표현합니다.
+ */
+data class Empty(
+    override val item: String = "EMPTY",
+    val surroundingMineCount: Int = 0,
+) : MapItem()
