@@ -39,13 +39,17 @@ class Board(
             is Mine -> lose()
             is Normal -> {
                 if (cell.isAdjacentMineCountZero()) {
-                    val adjacentNormalCells = getAdjacentNormalCells(cell)
-                    adjacentNormalCells.openIfAdjacentMineCountNotZero()
-                    adjacentNormalCells.openIfAdjacentMineCountZero()
+                    cell.openAdjacentNormalCells()
                 }
                 winIfAllOpened()
             }
         }
+    }
+
+    private fun Cell.openAdjacentNormalCells() {
+        val adjacentNormalCells = getAdjacentNormalCells(this)
+        adjacentNormalCells.openIfAdjacentMineCountNotZero()
+        adjacentNormalCells.openIfAdjacentMineCountZero()
     }
 
     private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
