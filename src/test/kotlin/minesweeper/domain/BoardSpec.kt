@@ -1,24 +1,20 @@
 package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.view.OutputView
 
-private operator fun List<Cells>.get(position: Position): Cell {
-    return this[position.y][position.x]
-}
-
-fun cells(vararg cells: Cell): Cells = Cells(cells.toList())
 fun board(
-    cells: List<Cells> = listOf(
-        cells(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
-        cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-        cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+    cells: Cells = Cells(
+        listOf(
+            listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
+            listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+            listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+        ),
     ),
     minePositions: List<Position> = emptyList(),
-): Board = Board(cells.toList(), minePositions)
+): Board = Board(cells, minePositions)
 
 class BoardSpec : DescribeSpec(
     {
@@ -27,48 +23,12 @@ class BoardSpec : DescribeSpec(
                 it("보드를 생성할 수 있다.") {
                     shouldNotThrowAny {
                         Board(
-                            cells = listOf(
-                                cells(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
-                                cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-                                cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
-                            ),
-                            minePositions = emptyList(),
-                        )
-                    }
-                }
-            }
-
-            context("높이가 0인 cells 가 주어지면") {
-                it("보드를 생성할 수 없다.") {
-                    shouldThrowExactly<IllegalArgumentException> {
-                        Board(
-                            cells = emptyList(),
-                            minePositions = emptyList(),
-                        )
-                    }
-                }
-            }
-
-            context("너비가 0인 cells 가 주어지면") {
-                it("보드를 생성할 수 없다.") {
-                    shouldThrowExactly<IllegalArgumentException> {
-                        Board(
-                            cells = listOf(
-                                cells(),
-                            ),
-                            minePositions = emptyList(),
-                        )
-                    }
-                }
-            }
-
-            context("각 행의 너비(셀 개수)가 다르면") {
-                it("보드를 생성할 수 없다.") {
-                    shouldThrowExactly<IllegalArgumentException> {
-                        Board(
-                            cells = listOf(
-                                cells(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
-                                cells(Normal(0, 1), Normal(1, 1)),
+                            cells = Cells(
+                                listOf(
+                                    listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
+                                    listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                                    listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                                ),
                             ),
                             minePositions = emptyList(),
                         )
@@ -80,10 +40,12 @@ class BoardSpec : DescribeSpec(
         describe("'칸' 오픈 검증") {
             context("일반 칸을 오픈하면") {
                 val board = board(
-                    cells = listOf(
-                        cells(Mine(0, 0), Mine(1, 0), Normal(2, 0)),
-                        cells(Normal(0, 1), Mine(1, 1), Normal(2, 1)),
-                        cells(Mine(0, 2), Mine(1, 2), Normal(2, 2)),
+                    cells = Cells(
+                        listOf(
+                            listOf(Mine(0, 0), Mine(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Mine(1, 1), Normal(2, 1)),
+                            listOf(Mine(0, 2), Mine(1, 2), Normal(2, 2)),
+                        ),
                     ),
                     minePositions = listOf(
                         Position(0, 0),
@@ -108,10 +70,12 @@ class BoardSpec : DescribeSpec(
 
             context("지뢰 칸을 오픈하면") {
                 val board = board(
-                    cells = listOf(
-                        cells(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
-                        cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-                        cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                    cells = Cells(
+                        listOf(
+                            listOf(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                            listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                        ),
                     ),
                     minePositions = listOf(Position(0, 0)),
                 ).also { it.open(Position(0, 0)) }
@@ -180,10 +144,12 @@ class BoardSpec : DescribeSpec(
         describe("게임 종료 검증") {
             context("지뢰 칸을 오픈하면") {
                 val board = board(
-                    cells = listOf(
-                        cells(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
-                        cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-                        cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                    cells = Cells(
+                        listOf(
+                            listOf(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                            listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                        ),
                     ),
                     minePositions = listOf(Position(0, 0)),
                 ).also { it.open(Position(0, 0)) }
@@ -196,10 +162,12 @@ class BoardSpec : DescribeSpec(
 
             context("일반 칸을 모두 오픈하면") {
                 val board = board(
-                    cells = listOf(
-                        cells(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
-                        cells(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-                        cells(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                    cells = Cells(
+                        listOf(
+                            listOf(Mine(0, 0), Normal(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                            listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
+                        ),
                     ),
                     minePositions = listOf(Position(0, 0)),
                 ).also {

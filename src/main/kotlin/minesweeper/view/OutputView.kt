@@ -2,7 +2,6 @@ package minesweeper.view
 
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
-import minesweeper.domain.Cells
 import minesweeper.domain.Mine
 import minesweeper.domain.Normal
 
@@ -20,7 +19,7 @@ object OutputView {
         }
     }
 
-    private fun printCells(cells: Cells) {
+    private fun printCells(cells: List<Cell>) {
         cells.forEach { cell ->
             print("${cell.shape()} ")
         }
