@@ -131,4 +131,42 @@ internal class MineMapTest {
         map[Position(2, 1)]?.isOpened shouldBe false
         map[Position(2, 2)]?.isOpened shouldBe false
     }
+
+    @Test
+    internal fun `모든 빈칸이 열렸는지 확인할 수 있다`() {
+        // given : 지뢰가 매설된 3x3 지도 준비
+        // C C *
+        // C * *
+        // * * *
+        val mineMapConfig = MineMapConfig(3, 3, 6)
+        val fixedMinePositionStrategy = FixedMinePositionStrategy(
+            mineMapConfig = mineMapConfig,
+            minePositions = Positions(
+                listOf(
+                    Position(0, 2),
+                    Position(1, 1),
+                    Position(1, 2),
+                    Position(2, 0),
+                    Position(2, 1),
+                    Position(2, 2),
+                )
+            )
+        )
+        val sut = MineMap(mineMapConfig, fixedMinePositionStrategy)
+
+        // when : 지뢰가 아닌 위치를 오픈
+        sut.open(Position(0, 0))
+        // then : 아직 빈칸이 전부 열리지 않음
+        sut.checkAllEmptyOpened() shouldBe false
+
+        // and : 지뢰가 아닌 위치를 오픈
+        sut.open(Position(0, 1))
+        // then : 아직 빈칸이 전부 열리지 않음
+        sut.checkAllEmptyOpened() shouldBe false
+
+        // and : 지뢰가 아닌 마지막 위치를 오픈
+        sut.open(Position(1, 0))
+        // then : 빈칸이 전부 열림
+        sut.checkAllEmptyOpened() shouldBe true
+    }
 }

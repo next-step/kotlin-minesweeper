@@ -32,6 +32,10 @@ class MineMap(
         }
     }
 
+    fun checkAllEmptyOpened(): Boolean {
+        return map.values.filterIsInstance<Empty>().all { it.isOpened }
+    }
+
     /**
      * ### 지뢰 매설 위치 결정 전략에서 추출한 지뢰 위치를 통해 지뢰를 매설합니다.
      */
