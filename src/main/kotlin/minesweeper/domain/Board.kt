@@ -35,21 +35,17 @@ class Board(
             return
         }
 
-        if (isMine(position)) {
-            lose()
-            return
+        when (val cell = cells[position].open()) {
+            is Mine -> lose()
+            is Normal -> {
+                if (cell.isAdjacentMineCountZero()) {
+                    val adjacentNormalCells = getAdjacentNormalCells(cell)
+                    adjacentNormalCells.openIfAdjacentMineCountNotZero()
+                    adjacentNormalCells.openIfAdjacentMineCountZero()
+                }
+                winIfAllOpened()
+            }
         }
-
-        val cell = (cells[position] as Normal).also { it.openAndIncreaseOpenedCount() }
-        if (!cell.isAdjacentMineCountZero()) {
-            winIfAllOpened()
-            return
-        }
-
-        val adjacentNormalCells = getAdjacentNormalCells(cell)
-        adjacentNormalCells.openIfAdjacentMineCountNotZero()
-        adjacentNormalCells.openIfAdjacentMineCountZero()
-        winIfAllOpened()
     }
 
     private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
@@ -61,7 +57,7 @@ class Board(
 
     private fun List<Normal>.openIfAdjacentMineCountNotZero() {
         filter { !it.isAdjacentMineCountZero() }
-            .forEach { it.openAndIncreaseOpenedCount() }
+            .forEach { it.open() }
     }
 
     private fun List<Normal>.openIfAdjacentMineCountZero() {
@@ -69,21 +65,14 @@ class Board(
             .forEach { open(it.position) }
     }
 
-    private fun Cell.openAndIncreaseOpenedCount() {
-        if (isOpened) {
-            return
-        }
-        this.open()
-    }
-
-    fun win() {
-        status = Status.WIN
-    }
-
     private fun winIfAllOpened() {
         if (allOpened()) {
             win()
         }
+    }
+
+    fun win() {
+        status = Status.WIN
     }
 
     fun lose() {
