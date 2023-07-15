@@ -1,8 +1,11 @@
 package minesweeper.domain.strategy
 
-import minesweeper.domain.minemap.MineMapConfig
 import minesweeper.domain.Positions
+import minesweeper.domain.minemap.MineMapConfig
 
+/**
+ * ### 지뢰 매설 위치가 특정 위치로 고정된 전략입니다
+ */
 class FixedMinePositionStrategy(
     private val mineMapConfig: MineMapConfig,
     private val minePositions: Positions,

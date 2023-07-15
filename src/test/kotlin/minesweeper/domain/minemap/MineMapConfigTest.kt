@@ -1,7 +1,6 @@
 package minesweeper.domain.minemap
 
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.minemap.MineMapConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
