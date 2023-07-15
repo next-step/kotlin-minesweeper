@@ -1,5 +1,6 @@
 package domain
 
+import enums.MinesweeperShape
 import kotlin.random.Random
 
 class Minesweeper(
@@ -8,14 +9,14 @@ class Minesweeper(
     val mines: List<Mine>
 ) {
 
-    val mineMap: List<MutableList<Char>> = List(height) { MutableList(width) { BASIC_SHAPE } }
+    val mineMap: List<MutableList<MinesweeperShape>> = List(height) { MutableList(width) { MinesweeperShape.BASIC } }
 
     fun distributeMine(): Minesweeper {
 
         val minePositions = minePositions()
 
         minePositions.forEach { (row, column) ->
-            mineMap[row][column] = Mine.MINE_SHAPE
+            mineMap[row][column] = MinesweeperShape.MINE
         }
         return this
     }
@@ -39,9 +40,5 @@ class Minesweeper(
         if (coordinate !in minePositions) {
             minePositions.add(coordinate)
         }
-    }
-
-    companion object {
-        private const val BASIC_SHAPE = 'C'
     }
 }

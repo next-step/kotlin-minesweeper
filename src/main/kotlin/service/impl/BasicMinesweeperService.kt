@@ -2,6 +2,7 @@ package service.impl
 
 import domain.Mine
 import domain.Minesweeper
+import enums.MinesweeperShape
 import service.MinesweeperService
 
 class BasicMinesweeperService : MinesweeperService {
@@ -10,7 +11,7 @@ class BasicMinesweeperService : MinesweeperService {
         val init = Minesweeper(
             height = height,
             width = width,
-            mines = List(mineCount) { Mine() },
+            mines = List(mineCount) { Mine(MinesweeperShape.MINE) },
         )
         return init.distributeMine()
     }
