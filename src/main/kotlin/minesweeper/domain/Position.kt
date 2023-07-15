@@ -12,12 +12,19 @@ data class Position(val x: Int, val y: Int) {
     /**
      * ### 현재 위치에서 탐색 가능한 8분면 위치를 추출합니다.
      */
-    fun nearby(maxX: Int, maxY: Int): List<Position> {
-        return OctantDelta.values()
-            .filter { this.x + it.dx in 0 until maxX && this.y + it.dy in 0 until maxY }
-            .map { Position(x = this.x + it.dx, y = this.y + it.dy) }
+    fun nearby(maxX: Int, maxY: Int): Positions {
+        return Positions(
+            OctantDelta.values()
+                .filter { this.x + it.dx in 0 until maxX && this.y + it.dy in 0 until maxY }
+                .map { Position(x = this.x + it.dx, y = this.y + it.dy) }
+        )
     }
 }
+
+/**
+ * ### Position 리스트를 delegate 시킨 일급 컬렉션 입니다
+ */
+class Positions(values: List<Position>) : List<Position> by values
 
 /**
  * ### 특정 위치에서 8분면으로 탐색할 수 있는 좌표의 변화량을 정의한 Enum 입니다

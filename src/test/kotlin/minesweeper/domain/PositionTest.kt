@@ -35,13 +35,13 @@ internal class PositionTest {
         val sut = Position(x = 1, y = 0)
 
         // when : X의 최대값이 3, Y의 최대값의 3일때 (1, 0)에서 탐색 가능한 8분면의 위치 추출
-        val postions = sut.nearby(maxX = 3, maxY = 3)
+        val positions = sut.nearby(maxX = 3, maxY = 3)
 
         // then : 추출된 위치는 다음과 같다
         // O * O
         // O O O
         // X X X
-        postions.shouldContainAll(
+        positions.shouldContainAll(
             Position(0, 0),
             Position(2, 0),
             Position(0, 1),

@@ -7,7 +7,7 @@ internal class MinePositioningStrategyTest {
     @Test
     internal fun `지뢰를 매설할 위치를 추출할 수 있다`() {
         val sut = object : MinePositioningStrategy {
-            override fun getMinePositions(): List<Position> {
+            override fun getMinePositions(): Positions {
                 return Positions(listOf(Position(0, 0)))
             }
         }
