@@ -23,7 +23,7 @@ class MineBoardGeneratorTest : FunSpec({
 
         // then
         mineLocations.points.forAll {
-            actual.values[it.y][it.x] shouldBe MINE
+            actual.values[it.y][it.x].value shouldBe MINE
         }
     }
 
