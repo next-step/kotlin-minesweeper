@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.minemap
 
 data class MineMapConfig(
     val width: Int,
