@@ -5,7 +5,7 @@ import minesweeper.domain.strategy.MinePositioningStrategy
 import minesweeper.domain.strategy.RandomMinePositionStrategy
 
 class MineMap(
-    private val mineMapConfig: MineMapConfig,
+    val mineMapConfig: MineMapConfig,
     private val minePositioningStrategy: MinePositioningStrategy = RandomMinePositionStrategy(mineMapConfig)
 ) {
     private val map: MutableMap<Position, MapItem> = mutableMapOf()
