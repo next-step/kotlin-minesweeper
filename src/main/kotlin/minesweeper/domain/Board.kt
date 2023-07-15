@@ -17,7 +17,7 @@ class Board(
     }
 
     private fun winIfAllOpened() {
-        if (allOpened()) {
+        if (cells.allOpened()) {
             win()
         }
     }
@@ -44,10 +44,6 @@ class Board(
 
     fun isLose(): Boolean {
         return status == Status.LOSE
-    }
-
-    private fun allOpened(): Boolean {
-        return cells.allOpened()
     }
 
     enum class Status(
