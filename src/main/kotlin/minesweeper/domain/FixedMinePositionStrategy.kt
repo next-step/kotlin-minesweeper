@@ -14,6 +14,9 @@ class FixedMinePositionStrategy(
                 "minePosition x must be less than mineMap height, actual : $it.y"
             }
         }
+        require(minePositions.size == mineMapConfig.mineCount) {
+            "minePosition size must be equal to mineCount, actual ${minePositions.size}"
+        }
     }
 
     override fun getMinePositions(): Positions {
