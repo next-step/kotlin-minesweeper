@@ -13,6 +13,7 @@ class BasicMinesweeperService : MinesweeperService {
             width = width,
             mines = List(mineCount) { Mine(MinesweeperShape.MINE) },
         )
-        return init.distributeMine()
+        val initMinesweeper = init.distributeMine()
+        return initMinesweeper.changeMineCountMap()
     }
 }
