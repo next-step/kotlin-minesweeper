@@ -13,8 +13,7 @@ fun board(
             listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
         ),
     ),
-    minePositions: List<Position> = emptyList(),
-): Board = Board(cells, minePositions)
+): Board = Board(cells)
 
 class BoardSpec : DescribeSpec(
     {
@@ -30,7 +29,6 @@ class BoardSpec : DescribeSpec(
                                     listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
                                 ),
                             ),
-                            minePositions = emptyList(),
                         )
                     }
                 }
@@ -46,13 +44,6 @@ class BoardSpec : DescribeSpec(
                             listOf(Normal(0, 1), Mine(1, 1), Normal(2, 1)),
                             listOf(Mine(0, 2), Mine(1, 2), Normal(2, 2)),
                         ),
-                    ),
-                    minePositions = listOf(
-                        Position(0, 0),
-                        Position(1, 0),
-                        Position(1, 1),
-                        Position(0, 2),
-                        Position(1, 2),
                     ),
                 ).also { it.open(Position(2, 0)) }
 
@@ -77,7 +68,6 @@ class BoardSpec : DescribeSpec(
                             listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
                         ),
                     ),
-                    minePositions = listOf(Position(0, 0)),
                 ).also { it.open(Position(0, 0)) }
 
                 it("게임에 패배한다.") {
@@ -151,7 +141,6 @@ class BoardSpec : DescribeSpec(
                             listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
                         ),
                     ),
-                    minePositions = listOf(Position(0, 0)),
                 ).also { it.open(Position(0, 0)) }
 
                 it("게임 패배로 종료된다.") {
@@ -169,7 +158,6 @@ class BoardSpec : DescribeSpec(
                             listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
                         ),
                     ),
-                    minePositions = listOf(Position(0, 0)),
                 ).also {
                     it.open(Position(1, 0))
                 }

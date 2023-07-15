@@ -9,15 +9,12 @@ class CellsSpec : DescribeSpec({
         context("양의 높이와 양의 일정 너비를 가진 cell 목록이 주어지면") {
             it("Cells 를 생성할 수 있다.") {
                 shouldNotThrowAny {
-                    Board(
-                        cells = Cells(
-                            listOf(
-                                listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
-                                listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
-                                listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
-                            ),
+                    Cells(
+                        listOf(
+                            listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Normal(1, 1), Normal(2, 1)),
+                            listOf(Normal(0, 2), Normal(1, 2), Normal(2, 2)),
                         ),
-                        minePositions = emptyList(),
                     )
                 }
             }
@@ -26,10 +23,7 @@ class CellsSpec : DescribeSpec({
         context("높이가 0인 cells 가 주어지면") {
             it("Cells 를 생성할 수 없다.") {
                 shouldThrowExactly<IllegalArgumentException> {
-                    Board(
-                        cells = Cells(),
-                        minePositions = emptyList(),
-                    )
+                    Cells()
                 }
             }
         }
@@ -37,13 +31,10 @@ class CellsSpec : DescribeSpec({
         context("너비가 0인 cells 가 주어지면") {
             it("Cells 를 생성할 수 없다.") {
                 shouldThrowExactly<IllegalArgumentException> {
-                    Board(
-                        cells = Cells(
-                            listOf(
-                                emptyList(),
-                            ),
+                    Cells(
+                        listOf(
+                            emptyList(),
                         ),
-                        minePositions = emptyList(),
                     )
                 }
             }
@@ -52,14 +43,11 @@ class CellsSpec : DescribeSpec({
         context("각 행의 너비(셀 개수)가 다르면") {
             it("Cells 를 생성할 수 없다.") {
                 shouldThrowExactly<IllegalArgumentException> {
-                    Board(
-                        cells = Cells(
-                            listOf(
-                                listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
-                                listOf(Normal(0, 1), Normal(1, 1)),
-                            ),
+                    Cells(
+                        listOf(
+                            listOf(Normal(0, 0), Normal(1, 0), Normal(2, 0)),
+                            listOf(Normal(0, 1), Normal(1, 1)),
                         ),
-                        minePositions = emptyList(),
                     )
                 }
             }

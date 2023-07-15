@@ -10,7 +10,7 @@ class BoardGenerator(
     ): Board {
         validateMineCount(minePositions)
 
-        return Board(generateCells(minePositions), minePositions)
+        return Board(generateCells(minePositions))
     }
 
     private fun validateMineCount(minePositions: List<Position>) {

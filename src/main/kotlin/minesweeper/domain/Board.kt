@@ -2,7 +2,6 @@ package minesweeper.domain
 
 class Board(
     val cells: Cells,
-    private val minePositions: List<Position>,
 ) {
     private var status: Status = Status.PLAYING
 
@@ -11,38 +10,10 @@ class Board(
             return
         }
 
-        when (val cell = cells.open(position)) {
+        when (cells.open(position)) {
             is Mine -> lose()
-            is Normal -> {
-                if (cell.isAdjacentMineCountZero()) {
-                    cell.openAdjacentNormalCells()
-                }
-                winIfAllOpened()
-            }
+            is Normal -> winIfAllOpened()
         }
-    }
-
-    private fun Cell.openAdjacentNormalCells() {
-        val adjacentNormalCells = getAdjacentNormalCells(this)
-        adjacentNormalCells.openIfAdjacentMineCountNotZero()
-        adjacentNormalCells.openIfAdjacentMineCountZero()
-    }
-
-    private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
-        return cell.position.getAdjacentPositions(thresholdWidth = cells.width, thresholdHeight = cells.height)
-            .filter { !isMine(it) }
-            .map { cells[it] as Normal }
-            .filter { !it.isOpened }
-    }
-
-    private fun List<Normal>.openIfAdjacentMineCountNotZero() {
-        filter { !it.isAdjacentMineCountZero() }
-            .forEach { it.open() }
-    }
-
-    private fun List<Normal>.openIfAdjacentMineCountZero() {
-        filter { it.isAdjacentMineCountZero() }
-            .forEach { open(it.position) }
     }
 
     private fun winIfAllOpened() {
@@ -73,10 +44,6 @@ class Board(
 
     fun isLose(): Boolean {
         return status == Status.LOSE
-    }
-
-    private fun isMine(position: Position): Boolean {
-        return minePositions.contains(position)
     }
 
     private fun allOpened(): Boolean {

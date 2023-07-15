@@ -35,7 +35,35 @@ value class Cells(
     }
 
     fun open(position: Position): Cell {
-        return values[position].open()
+        val cell = values[position].open()
+        if (cell is Normal && cell.isAdjacentMineCountZero()) {
+            cell.openAdjacentNormalCells()
+        }
+
+        return cell
+    }
+
+    private fun Cell.openAdjacentNormalCells() {
+        val adjacentNormalCells = getAdjacentNormalCells(this)
+        adjacentNormalCells.openIfAdjacentMineCountNotZero()
+        adjacentNormalCells.openIfAdjacentMineCountZero()
+    }
+
+    private fun getAdjacentNormalCells(cell: Cell): List<Normal> {
+        return cell.position.getAdjacentPositions(thresholdWidth = width, thresholdHeight = height)
+            .filter { get(it) is Normal }
+            .map { get(it) as Normal }
+            .filter { !it.isOpened }
+    }
+
+    private fun List<Normal>.openIfAdjacentMineCountNotZero() {
+        filter { !it.isAdjacentMineCountZero() }
+            .forEach { it.open() }
+    }
+
+    private fun List<Normal>.openIfAdjacentMineCountZero() {
+        filter { it.isAdjacentMineCountZero() }
+            .forEach { open(it.position) }
     }
 
     operator fun get(position: Position): Cell {
