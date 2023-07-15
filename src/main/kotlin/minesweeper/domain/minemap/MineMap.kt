@@ -19,6 +19,16 @@ class MineMap(
         return map.toMap()
     }
 
+    fun open(position: Position) {
+        when (map[position]) {
+            is Empty -> ""
+            is Mine -> ""
+            else -> throw IllegalArgumentException(
+                "Invalid Position, x should be within ${mineMapConfig.width} and y should be within ${mineMapConfig.height}, actual : $position"
+            )
+        }
+    }
+
     /**
      * ### 지뢰 매설 위치 결정 전략에서 추출한 지뢰 위치를 통해 지뢰를 매설합니다.
      */

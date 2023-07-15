@@ -6,6 +6,7 @@ import minesweeper.domain.Position
 import minesweeper.domain.Positions
 import minesweeper.domain.strategy.FixedMinePositionStrategy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class MineMapTest {
     @Test
@@ -31,5 +32,14 @@ internal class MineMapTest {
         currentMap[Position(0, 0)].shouldBeInstanceOf<Empty>()
         currentMap[Position(0, 1)].shouldBeInstanceOf<Empty>()
         currentMap[Position(1, 0)].shouldBeInstanceOf<Empty>()
+    }
+
+    @Test
+    internal fun `특정 위치를 열었을때 지도 내부가 아니면 예외가 발생한다`() {
+        // given : 3 x 3 지도 구성
+        val sut = MineMap(MineMapConfig(width = 3, height = 3, mineCount = 3))
+
+        // when : 3 x 3 내부가 아닌 위치를 오픈
+        assertThrows<IllegalArgumentException> { sut.open(Position(4, 0)) }
     }
 }
