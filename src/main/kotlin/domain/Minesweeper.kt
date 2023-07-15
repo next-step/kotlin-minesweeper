@@ -8,7 +8,7 @@ class Minesweeper(
     val mines: List<Mine>
 ) {
 
-    var mineMap: List<MutableList<Char>> = List(height) { MutableList(width) { BASIC_SHAPE } }
+    val mineMap: List<MutableList<Char>> = List(height) { MutableList(width) { BASIC_SHAPE } }
 
     fun distributeMine(): Minesweeper {
 
