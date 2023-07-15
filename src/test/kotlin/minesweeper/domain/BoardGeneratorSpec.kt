@@ -34,7 +34,7 @@ class BoardGeneratorSpec : DescribeSpec({
             it("보드 내 지뢰의 수는 5개이다.") {
                 var mineCellCount = 0
                 board.cells.forEach { row ->
-                    mineCellCount += row.values.filterIsInstance<Mine>().size
+                    mineCellCount += row.filterIsInstance<Mine>().size
                 }
 
                 mineCellCount shouldBe 5
@@ -43,7 +43,7 @@ class BoardGeneratorSpec : DescribeSpec({
             it("보드 내 지뢰가 아닌 셀의 수는 20개이다.") {
                 var emptyCellCount = 0
                 board.cells.forEach { row ->
-                    emptyCellCount += row.values.filterIsInstance<Normal>().size
+                    emptyCellCount += row.filterIsInstance<Normal>().size
                 }
 
                 emptyCellCount shouldBe 20

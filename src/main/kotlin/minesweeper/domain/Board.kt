@@ -1,26 +1,54 @@
 package minesweeper.domain
 
 class Board(
-    val cells: List<Cells>,
+    val cells: Cells,
 ) {
-    private val height: Int
-        get() = cells.size
-    private val width: Int
-        get() = cells.first().size
+    private var status: Status = Status.PLAYING
 
-    init {
-        validateHeightIsPositive()
-        validateWidthIsPositive()
-        validateSameWidth()
-    }
-    private fun validateHeightIsPositive() {
-        require(height > 0) { "높이는 0보다 커야 합니다." }
+    fun open(position: Position) {
+        if (isGameOver()) {
+            return
+        }
+
+        when (cells.open(position)) {
+            is Mine -> lose()
+            is Normal -> winIfAllOpened()
+        }
     }
 
-    private fun validateWidthIsPositive() {
-        require(width > 0) { "너비는 0보다 커야 합니다." }
+    private fun winIfAllOpened() {
+        if (cells.allOpened()) {
+            win()
+        }
     }
-    private fun validateSameWidth() {
-        require(cells.all { it.hasSize(width) }) { "너비가 일정하지 않습니다." }
+
+    fun win() {
+        status = Status.WIN
+    }
+
+    fun lose() {
+        status = Status.LOSE
+    }
+
+    fun isGameOver(): Boolean {
+        return status.isFinished
+    }
+
+    fun isNotGameOver(): Boolean {
+        return !isGameOver()
+    }
+
+    fun isWin(): Boolean {
+        return status == Status.WIN
+    }
+
+    fun isLose(): Boolean {
+        return status == Status.LOSE
+    }
+
+    enum class Status(
+        val isFinished: Boolean = false,
+    ) {
+        WIN(true), LOSE(true), PLAYING,
     }
 }

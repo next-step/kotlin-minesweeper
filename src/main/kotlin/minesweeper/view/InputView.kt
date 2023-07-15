@@ -1,5 +1,6 @@
 package minesweeper.view
 
+import minesweeper.domain.Position
 import minesweeper.domain.PositiveInt
 
 object InputView {
@@ -18,5 +19,15 @@ object InputView {
     private fun readIntWithMessage(message: String): Int {
         println(message)
         return readln().toInt()
+    }
+
+    fun readPositionToOpen(): Position {
+        return readPositionWithMessage("open: ")
+    }
+
+    private fun readPositionWithMessage(message: String): Position {
+        print(message)
+        val (x, y) = readln().split(",")
+        return Position(x.trim().toInt(), y.trim().toInt())
     }
 }
