@@ -27,11 +27,18 @@ class Minesweeper(
             val row = Random.nextInt(height)
             val column = Random.nextInt(width)
             val coordinate = row to column
-            if (coordinate !in minePositions) {
-                minePositions.add(coordinate)
-            }
+            isCoordinateUnique(coordinate, minePositions)
         }
         return minePositions
+    }
+
+    private fun isCoordinateUnique(
+        coordinate: Pair<Int, Int>,
+        minePositions: MutableList<Pair<Int, Int>>
+    ) {
+        if (coordinate !in minePositions) {
+            minePositions.add(coordinate)
+        }
     }
 
     companion object {
