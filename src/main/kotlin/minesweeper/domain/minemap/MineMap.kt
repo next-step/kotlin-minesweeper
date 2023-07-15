@@ -47,7 +47,16 @@ class MineMap(
     private fun plantEmpty() {
         Position.all(mineMapConfig.width, mineMapConfig.height)
             .forEach { position ->
-                map[position] = map[position] ?: Empty(surroundingMineCount = 0)
+                val surroundingMineCount = calculateSurroundingMineCount(position)
+                map[position] = map[position] ?: Empty(surroundingMineCount = surroundingMineCount)
             }
+    }
+
+    /**
+     * ### 주어진 위치를 기준으로 8분면에 있는 지뢰의 합을 구합니다
+     */
+    private fun calculateSurroundingMineCount(position: Position): Int {
+        return position.nearby(maxX = mineMapConfig.width, maxY = mineMapConfig.height)
+            .count { map[it] is Mine }
     }
 }

@@ -36,6 +36,39 @@ internal class MineMapTest {
     }
 
     @Test
+    internal fun `생성된 지도의 빈칸은 8분면 주변의 지뢰 개수를 가지고 있다`() {
+        // given : 너비 2, 높이 2, 지뢰 개수 2(0, 1)(2, 2) 설정값
+        // C C C
+        // * C C
+        // C C *
+        val mineMapConfig = MineMapConfig(
+            width = 3,
+            height = 3,
+            mineCount = 2
+        )
+        val minePositions = Positions(listOf(Position(0, 1), Position(2, 2)))
+
+        // when : 설정값으로 지도를 구성하면
+        val sut = MineMap(
+            mineMapConfig = mineMapConfig,
+            minePositioningStrategy = FixedMinePositionStrategy(mineMapConfig, minePositions)
+        )
+
+        // then : 아래와 같이 빈칸에 지뢰 개수가 기록된다
+        // 1 1 0
+        // * 2 1
+        // 1 2 *
+        val map = sut.currentMap()
+        (map[Position(0, 0)] as Empty).surroundingMineCount shouldBe 1
+        (map[Position(1, 0)] as Empty).surroundingMineCount shouldBe 1
+        (map[Position(2, 0)] as Empty).surroundingMineCount shouldBe 0
+        (map[Position(1, 1)] as Empty).surroundingMineCount shouldBe 2
+        (map[Position(2, 1)] as Empty).surroundingMineCount shouldBe 1
+        (map[Position(0, 2)] as Empty).surroundingMineCount shouldBe 1
+        (map[Position(1, 2)] as Empty).surroundingMineCount shouldBe 2
+    }
+
+    @Test
     internal fun `특정 위치를 열었을때 지도 내부가 아니면 예외가 발생한다`() {
         // given : 3 x 3 지도 구성
         val sut = MineMap(MineMapConfig(width = 3, height = 3, mineCount = 3))
