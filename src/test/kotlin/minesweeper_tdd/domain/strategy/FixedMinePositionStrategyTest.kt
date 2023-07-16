@@ -3,6 +3,7 @@ package minesweeper_tdd.domain.strategy
 import minesweeper_tdd.domain.Position
 import minesweeper_tdd.domain.Positions
 import minesweeper_tdd.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.strategy.code.FixedMinePositionStrategy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

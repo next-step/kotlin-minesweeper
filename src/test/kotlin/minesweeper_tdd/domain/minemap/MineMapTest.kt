@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import minesweeper_tdd.domain.Position
 import minesweeper_tdd.domain.Positions
-import minesweeper_tdd.domain.strategy.FixedMinePositionStrategy
+import minesweeper_tdd.domain.strategy.code.FixedMinePositionStrategy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

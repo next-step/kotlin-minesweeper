@@ -1,7 +1,8 @@
-package minesweeper_tdd.domain.strategy
+package minesweeper_tdd.domain.strategy.code
 
 import minesweeper_tdd.domain.Positions
 import minesweeper_tdd.domain.minemap.MineMapConfig
+import minesweeper_tdd.domain.strategy.MinePositioningStrategy
 
 /**
  * ### 지뢰 매설 위치가 특정 위치로 고정된 전략입니다
