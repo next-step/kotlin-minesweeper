@@ -17,7 +17,7 @@ internal class MineSweeperGameTest {
         val mineSweeperGame = MineSweeperGame(
             mineMapConfig = mineMapConfig,
             minePositioningStrategy = fixedMinePositionStrategy,
-            openPosition = { Position(0, 0) }
+            onPositionProduced = { Position(0, 0) }
         )
 
         // when : 지뢰 찾기 게임 시작

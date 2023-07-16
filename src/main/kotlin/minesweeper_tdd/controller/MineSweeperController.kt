@@ -1,8 +1,9 @@
 package minesweeper_tdd.controller
 
 import minesweeper_tdd.domain.MineSweeperGame
+import minesweeper_tdd.domain.OnGameProgressed
+import minesweeper_tdd.domain.OnPositionProduced
 import minesweeper_tdd.domain.Position
-import minesweeper_tdd.domain.minemap.MineMap
 import minesweeper_tdd.domain.minemap.MineMapConfig
 import minesweeper_tdd.view.InputView
 import minesweeper_tdd.view.ResultView
@@ -17,14 +18,14 @@ class MineSweeperController(
         val mineCount = inputView.inputMapMineCount()
         val mineMapConfig = MineMapConfig(height, width, mineCount)
 
-        val openPositionInput: () -> Position = { inputView.inputOpenPosition().let { Position(it.first, it.second) }}
-        val gameProgressOutput: (MineMap) -> Unit = { mineMap -> resultView.outputMap(mineMap)}
+        val openPositionInput: OnPositionProduced = { inputView.inputOpenPosition().let { Position(it.first, it.second) } }
+        val gameProgressOutput: OnGameProgressed = { mineMap -> resultView.outputMap(mineMap) }
 
         resultView.outputGameStart()
         val mineSweeperGame = MineSweeperGame(
-            mineMapConfig =  mineMapConfig,
-            openPosition = openPositionInput,
-            gameProgress = gameProgressOutput,
+            mineMapConfig = mineMapConfig,
+            onPositionProduced = openPositionInput,
+            onGameProgressed = gameProgressOutput,
         )
         val gameResult = mineSweeperGame.run()
         resultView.outputResult(gameResult.win)
