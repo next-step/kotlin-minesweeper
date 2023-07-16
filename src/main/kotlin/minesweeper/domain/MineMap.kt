@@ -1,7 +1,7 @@
 package minesweeper.domain
 
-class MineMap(height: Height, val width: Width, mineCount: MineCount) {
-    private val size: Int = height.value * width.value
+class MineMap(private val mineMapSize: MineMapSize, mineCount: MineCount) {
+    private val size: Int = mineMapSize.size()
     val map: List<Point>
 
     init {
@@ -10,17 +10,32 @@ class MineMap(height: Height, val width: Width, mineCount: MineCount) {
         val mineIndexes = (0..size)
             .shuffled()
             .take(mineCount.value)
+        val height = mineMapSize.height()
+        val width = mineMapSize.width()
 
-        val mutableList = mutableListOf<Point>()
-        (1..height.value).forEach { y ->
-            (1..width.value).forEach { x ->
-                val index = (y - 1) * width.value + (x - 1)
+        map = points(height, width, mineIndexes)
+    }
 
-                mutableList.add(point(mineIndexes.contains(index), x, y))
-            }
+    private fun points(
+        height: Int,
+        width: Int,
+        mineIndexes: List<Int>
+    ): List<Point> {
+        return (1..height).flatMap { y ->
+            generateRow(width, mineIndexes, y)
         }
+    }
 
-        map = mutableList.toList()
+    private fun generateRow(
+        width: Int,
+        mineIndexes: List<Int>,
+        y: Int
+    ) = (1..width).map { x ->
+        point(mineIndexes.contains(mineMapSize.getIndex(y, x)), x, y)
+    }
+
+    fun width(): Int {
+        return mineMapSize.width()
     }
 
     private fun point(isMine: Boolean, x: Int, y: Int): Point {
