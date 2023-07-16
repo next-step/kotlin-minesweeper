@@ -4,21 +4,21 @@ object InputView {
     fun receiveHeight(): Int {
         println("높이를 입력하세요.")
 
-        return receiveInt()
+        return receiveNotNullNumber()
     }
 
     fun receiveWidth(): Int {
         println()
         println("너비를 입력하세요.")
 
-        return receiveInt()
+        return receiveNotNullNumber()
     }
 
     fun receiveMineCount(): Int {
         println()
         println("지뢰는 몇 개인가요?")
 
-        return receiveInt()
+        return receiveNotNullNumber()
     }
 
     private fun receiveString(): String {
@@ -31,13 +31,13 @@ object InputView {
         return input
     }
 
-    private fun receiveInt(): Int {
-        var int: Int? = receiveString().toIntOrNull()
+    private fun receiveNotNullNumber(): Int {
+        var input: Int? = receiveString().toIntOrNull()
 
-        while (int == null) {
-            int = receiveString().toIntOrNull()
+        while (input == null) {
+            input = receiveString().toIntOrNull()
         }
 
-        return int
+        return input
     }
 }
