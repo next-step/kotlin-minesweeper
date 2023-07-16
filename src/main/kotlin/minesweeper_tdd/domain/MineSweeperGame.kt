@@ -16,11 +16,10 @@ class MineSweeperGame(
 ) {
     fun run(): GameResult {
         val mineMap = MineMap(mineMapConfig, minePositioningStrategy)
-        while (mineMap.mineOpened.not() && mineMap.checkAllEmptyOpened().not()) {
-            mineMap.open(openPosition())
+        while (mineMap.open(openPosition()) && mineMap.checkAllEmptyOpened().not()) {
             gameProgress(mineMap)
         }
-        return GameResult(mineMap.mineOpened.not())
+        return GameResult(mineMap.checkAllEmptyOpened())
     }
 }
 

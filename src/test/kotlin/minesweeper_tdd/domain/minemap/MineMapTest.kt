@@ -88,16 +88,16 @@ internal class MineMapTest {
         val sut = MineMap(mineMapConfig, fixedMinePositionStrategy)
 
         // when : 지뢰가 아닌 위치를 오픈
-        sut.open(Position(0, 1))
+        val openResult = sut.open(Position(0, 1))
 
-        // then : 지뢰 오픈 여부 false
-        sut.mineOpened shouldBe false
+        // then : 지뢰가 아닌 위치를 오픈하면 true를 리턴받음
+        openResult shouldBe true
 
-        // and : 지뢰가 위치를 오픈
-        sut.open(Position(0, 0))
+        // and : 지뢰 위치를 오픈
+        val openResult2 = sut.open(Position(0, 0))
 
-        // then : 지뢰 오픈 여부 false
-        sut.mineOpened shouldBe true
+        // then : 지뢰를 오픈하면 false를 리턴받음
+        openResult2 shouldBe false
     }
 
     @Test

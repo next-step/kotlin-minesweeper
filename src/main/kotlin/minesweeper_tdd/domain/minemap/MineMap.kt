@@ -10,9 +10,6 @@ class MineMap(
 ) {
     private val map: MutableMap<Position, MapItem> = mutableMapOf()
 
-    var mineOpened: Boolean = false
-        private set
-
     init {
         plantMine()
         plantEmpty()
@@ -22,10 +19,13 @@ class MineMap(
         return map.toMap()
     }
 
-    fun open(position: Position) {
-        when (map[position]) {
-            is Empty -> openEmpty(position)
-            is Mine -> mineOpened = true
+    fun open(position: Position): Boolean {
+        return when (map[position]) {
+            is Empty -> {
+                openEmpty(position)
+                true
+            }
+            is Mine -> false
             else -> throw IllegalArgumentException(
                 "Invalid Position, x should be within ${mineMapConfig.width} and y should be within ${mineMapConfig.height}, actual : $position"
             )
