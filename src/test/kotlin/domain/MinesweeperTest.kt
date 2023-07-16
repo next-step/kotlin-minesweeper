@@ -1,5 +1,6 @@
 package domain
 
+import enums.MinesweeperShape
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ class MinesweeperTest {
         width = 10
         val mineCount = 10
 
-        minesweeper = Minesweeper(height = height, width = width, mines = List(mineCount) { Mine() })
+        minesweeper = Minesweeper(height = height, width = width, mines = List(mineCount) { Mine(MinesweeperShape.MINE) })
     }
 
     @Test
@@ -44,12 +45,10 @@ class MinesweeperTest {
 
         minesweeper.mineMap.forEach { row ->
             row.forEach {
-                if(it == mineShape) actual++
+                if (it == MinesweeperShape.MINE) actual++
             }
         }
 
         actual shouldBe minesweeper.mines.size
     }
-
-
 }

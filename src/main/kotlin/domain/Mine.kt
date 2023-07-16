@@ -1,8 +1,7 @@
 package domain
 
-class Mine {
+import enums.MinesweeperShape
 
-    companion object {
-        const val MINE_SHAPE = '*'
-    }
-}
+class Mine(
+    val shape: MinesweeperShape
+)
