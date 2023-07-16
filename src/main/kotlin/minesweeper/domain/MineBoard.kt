@@ -19,20 +19,18 @@ class MineBoard(
         while (queue.isNotEmpty()) {
             val cell = queue.poll()
             if (cell.isOpen) continue
-            cell.isOpen = true
 
-            when (cell) {
-                is MineCell -> {
-                    return Result.LOSE
-                }
+            val result = cell.open()
 
-                is EmptyCell -> {
-                    if (cell.mineCount == 0) {
-                        addCellsToQueue(queue, cell)
-                    }
-                }
+            if (result == Result.LOSE) {
+                return Result.LOSE
+            }
+
+            if (cell is EmptyCell && cell.mineCount == 0) {
+                addCellsToQueue(queue, cell)
             }
         }
+
         return if (isWin()) Result.WIN else Result.CONTINUE
     }
 
