@@ -3,6 +3,7 @@ package minesweeper.domain
 sealed class Cell {
     abstract val point: Point
     var isOpen: Boolean = false
+        protected set
 
     abstract fun open(): Result
 }
