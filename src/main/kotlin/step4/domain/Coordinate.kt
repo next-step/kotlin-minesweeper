@@ -9,4 +9,6 @@ data class Coordinate(
     fun down(): Coordinate = Coordinate(row + 1, column)
 
     fun right(): Coordinate = Coordinate(row, column + 1)
+
+    fun left(): Coordinate = Coordinate(row, column - 1)
 }

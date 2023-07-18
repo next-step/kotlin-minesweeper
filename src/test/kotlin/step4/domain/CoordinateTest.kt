@@ -34,4 +34,14 @@ class CoordinateTest : FunSpec({
             actual shouldBe expected
         }
     }
+
+    context("left") {
+        test("column이 한칸 왼쪽으로 간다.") {
+            val givenCoordinate = Coordinate(1, 1)
+            val expected = Coordinate(1, 0)
+
+            val actual = givenCoordinate.left()
+            actual shouldBe expected
+        }
+    }
 })
