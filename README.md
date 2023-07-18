@@ -152,3 +152,64 @@ open: 1, 1
 Lose Game.
 ```
 - [x] 지뢰를 누르면 종료 문구가 출력된다.
+
+
+## 지뢰찾기(리팩터링)
+
+### cell
+- cell type과 현재 오픈가능한지 여부를 가지고 있다.
+- 오픈되지 않은 상태라면 unknown을, 오픈된 상태라면 현재 cell type을 반환한다.
+- 이미 오픈된 좌표를 오픈하려하면 예외가 발생한다.
+
+### cell type
+- 0~8, 지뢰, unknown 타입을 가지고 있다.
+
+### coordinate
+- 가로 세로 좌표를 가지고 있다.
+- 현재 위치의 상하좌우로 이동된 좌표를 반환할 수 있다.
+
+### cells
+- cell과 cell이 위차한 coordinate를 가지고 있다.
+- 랜덤한 좌표에 지뢰를 설치할 수 있다.
+- open
+  - 특정 좌표를 open할 수 있다.
+  - 없는 좌표를 open하려하면 예외가 발생한다.
+- installMine
+  - 지뢰 갯수를 받아 설치한다. 
+  - 지뢰 갯수가 0개 이하면 예외가 발생한다.
+  - 지뢰 갯수가 보유한 cell보다 많은 경우 예외가 발생한다.
+  - 이미 지뢰가 배치된 상태면 예외가 발생한다.
+
+### finder
+- 좌표의 8방향에 위치한 좌표로 가능 방법을 들고 있다.
+- coordinate의 
+
+### 
+
+```
+높이를 입력하세요.
+10
+
+너비를 입력하세요.
+10
+
+지뢰는 몇 개인가요?
+10
+
+지뢰찾기 게임 시작
+open: 1, 1
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+1 1 C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+
+open: 4, 1
+Lose Game.
+
+```
