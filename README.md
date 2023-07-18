@@ -158,7 +158,7 @@ Lose Game.
 
 ### cell
 - [x] cell type과 현재 오픈가능한지 여부를 가지고 있다.
-- [ ] 오픈되지 않은 상태라면 unknown을, 오픈된 상태라면 현재 cell type을 반환한다.
+- [x] 오픈되지 않은 상태라면 unknown을, 오픈된 상태라면 현재 cell type을 반환한다.
 - [x] 이미 오픈된 좌표를 오픈하려하면 예외가 발생한다.
 
 ### cell type
