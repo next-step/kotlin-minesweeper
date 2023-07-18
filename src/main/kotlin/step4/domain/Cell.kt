@@ -6,5 +6,6 @@ class Cell(
 ) {
     fun open() {
         check(isOpen.not()) { "이미 오픈된 좌표는 다시 오픈할 수 없습니다." }
+        isOpen = true
     }
 }

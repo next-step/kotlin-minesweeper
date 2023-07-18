@@ -2,6 +2,7 @@ package step4.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class CellTest : FunSpec({
@@ -11,6 +12,14 @@ class CellTest : FunSpec({
             val cell = Cell(cellType = CellType.ZERO, isOpen = true)
             val exception = shouldThrowExactly<IllegalStateException> { cell.open() }
             exception shouldHaveMessage "이미 오픈된 좌표는 다시 오픈할 수 없습니다."
+        }
+
+        test("cell을 오픈한다.") {
+            val cell = Cell(cellType = CellType.ZERO, isOpen = false)
+            cell.open()
+
+            val actual = cell.isOpen
+            actual shouldBe true
         }
     }
 })
