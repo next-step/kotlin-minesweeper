@@ -17,9 +17,9 @@ value class Cells(
             .forEach { parseCellType(it.key, it.value, mineCoordinates) }
     }
 
-    fun open(coordinate: Coordinate) {
+    fun open(coordinate: Coordinate): Int {
         val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
-        cell.open()
+        return open(cell)
     }
 
     private fun findMineCoordinates(): Set<Coordinate> = values.filter { it.value.isMine() }
@@ -42,6 +42,14 @@ value class Cells(
         val nearCoordinates = CoordinateFinder.nearCoordinates(coordinate)
         return nearCoordinates.count { mineCoordinates.contains(it) }
             .toCellType()
+    }
+
+    private fun open(cell: Cell): Int {
+        cell.open()
+        if (cell.isMine()) {
+            return 0
+        }
+        return 1
     }
 
     companion object {

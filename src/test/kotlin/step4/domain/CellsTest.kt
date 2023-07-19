@@ -67,5 +67,18 @@ class CellsTest : FunSpec({
             val actual = cells.values[coordinate]!!.isOpen
             actual shouldBe true
         }
+
+        test("지뢰를 열었다면 0이 반환된다.") {
+            val cells = Cells(
+                mapOf(
+                    Coordinate(0, 0) to Cell(cellType = MINE),
+                    Coordinate(0, 1) to Cell(),
+                    Coordinate(1, 0) to Cell(),
+                    Coordinate(1, 1) to Cell(),
+                ),
+            )
+            val actual = cells.open(Coordinate(0, 0))
+            actual shouldBe 0
+        }
     }
 })
