@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import step4.domain.CellType.MINE
 import step4.domain.CellType.ONE
+import step4.domain.CellType.ZERO
 import java.util.LinkedList
 
 class CellsTest : FunSpec({
@@ -92,6 +93,24 @@ class CellsTest : FunSpec({
             )
             val actual = cells.open(Coordinate(0, 0))
             actual shouldBe 1
+        }
+
+        test("0을 열었다면 0근처의 좌표도 계속 열어 연만큼 반환된다.") {
+            val cells = Cells(
+                mapOf(
+                    Coordinate(0, 0) to Cell(cellType = ZERO),
+                    Coordinate(0, 1) to Cell(cellType = ZERO),
+                    Coordinate(0, 2) to Cell(cellType = ZERO),
+                    Coordinate(1, 0) to Cell(cellType = ZERO),
+                    Coordinate(1, 1) to Cell(cellType = ONE),
+                    Coordinate(1, 2) to Cell(cellType = ONE),
+                    Coordinate(2, 0) to Cell(cellType = ZERO),
+                    Coordinate(2, 1) to Cell(cellType = ONE),
+                    Coordinate(2, 2) to Cell(cellType = MINE),
+                ),
+            )
+            val actual = cells.open(Coordinate(0, 0))
+            actual shouldBe 8
         }
     }
 })

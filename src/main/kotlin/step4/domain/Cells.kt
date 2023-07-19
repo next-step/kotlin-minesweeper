@@ -18,8 +18,14 @@ value class Cells(
     }
 
     fun open(coordinate: Coordinate): Int {
-        val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
-        return open(cell)
+        val cell = findCellAndOpen(coordinate)
+        if (cell.isMine()) {
+            return 0
+        }
+        if (cell.isZero().not()) {
+            return 1
+        }
+        return 1 + openAround(coordinate)
     }
 
     private fun findMineCoordinates(): Set<Coordinate> = values.filter { it.value.isMine() }
@@ -44,15 +50,26 @@ value class Cells(
             .toCellType()
     }
 
-    private fun open(cell: Cell): Int {
+    private fun findCellAndOpen(coordinate: Coordinate): Cell {
+        val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
         cell.open()
-        if (cell.isMine()) {
-            return 0
-        }
-        if (cell.isZero().not()) {
-            return 1
-        }
-        return 1
+        return cell
+    }
+
+    private fun openAround(coordinate: Coordinate): Int {
+        val nearNoOpenCellCoordinates = nearNoOpenCellCoordinates(coordinate)
+        nearNoOpenCellCoordinates.mapNotNull { values[it] }
+            .forEach { it.open() }
+        return nearNoOpenCellCoordinates.count() + openAroundNearZeroCell(nearNoOpenCellCoordinates)
+    }
+
+    private fun nearNoOpenCellCoordinates(coordinate: Coordinate): List<Coordinate> =
+        CoordinateFinder.nearCoordinates(coordinate)
+            .filterNot { values[it]?.isOpen ?: true }
+
+    private fun openAroundNearZeroCell(coordinates: List<Coordinate>): Int {
+        val nearZeroCellCoordinates = coordinates.filter { values[it]?.isZero() ?: false }
+        return nearZeroCellCoordinates.sumOf { openAround(it) }
     }
 
     companion object {
