@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import io.kotest.matchers.types.shouldBeInstanceOf
 import step4.domain.Cell
 import step4.domain.CellType.MINE
 import step4.domain.CellType.ONE
@@ -37,6 +38,40 @@ class RunningTest : FunSpec({
 
             val actual = running.toFindCellCount
             actual shouldBe 2
+        }
+
+        test("open했는데 다 찾았다면 WIN이 반환된다.") {
+            val running = Running(
+                1,
+                Cells(
+                    mapOf(
+                        Coordinate(0, 0) to Cell(cellType = ONE),
+                        Coordinate(0, 1) to Cell(cellType = ONE),
+                        Coordinate(1, 0) to Cell(cellType = ONE),
+                        Coordinate(1, 1) to Cell(cellType = MINE),
+                    ),
+                ),
+            )
+
+            val actual = running.open(Coordinate(0, 0))
+            actual.shouldBeInstanceOf<Win>()
+        }
+
+        test("open했는데 지뢰라면 LOSE가 반환된다.") {
+            val running = Running(
+                1,
+                Cells(
+                    mapOf(
+                        Coordinate(0, 0) to Cell(cellType = ONE),
+                        Coordinate(0, 1) to Cell(cellType = ONE),
+                        Coordinate(1, 0) to Cell(cellType = ONE),
+                        Coordinate(1, 1) to Cell(cellType = MINE),
+                    ),
+                ),
+            )
+
+            val actual = running.open(Coordinate(1, 1))
+            actual.shouldBeInstanceOf<Lose>()
         }
     }
 })
