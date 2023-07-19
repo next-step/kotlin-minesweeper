@@ -14,7 +14,7 @@ class Running(
     override fun open(coordinate: Coordinate): MinesweeperState {
         val cellOpenResult = cells.open(coordinate)
         if (cellOpenResult == 0) {
-            return Lose()
+            return Lose(cells)
         }
         toFindCellCount -= cellOpenResult
         return confirmWin()
@@ -22,7 +22,7 @@ class Running(
 
     private fun confirmWin(): MinesweeperState {
         if (toFindCellCount == 0) {
-            return Win()
+            return Win(cells)
         }
         return this
     }

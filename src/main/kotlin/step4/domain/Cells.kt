@@ -5,7 +5,7 @@ import step4.domain.strategy.CoordinateSelectStrategy
 
 @JvmInline
 value class Cells(
-    val values: Map<Coordinate, Cell>,
+    val values: Map<Coordinate, Cell> = mapOf(),
 ) {
     fun installMine(mineCount: Int, coordinateSelectStrategy: CoordinateSelectStrategy) {
         require(mineCount >= MINIMUM_MINE_COUNT) { "지뢰 갯수는 ${MINIMUM_MINE_COUNT}개 이상이어야 합니다." }
