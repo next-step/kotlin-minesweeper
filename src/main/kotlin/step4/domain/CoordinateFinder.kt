@@ -11,4 +11,9 @@ enum class CoordinateFinder(
     NORTH_SOUTH({ it.up().right() }),
     EAST({ it.right() }),
     SOUTH_EAST({ it.down().right() }),
+    ;
+
+    companion object {
+        fun nearCoordinates(coordinate: Coordinate): List<Coordinate> = values().map { it.find(coordinate) }
+    }
 }

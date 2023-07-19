@@ -3,6 +3,7 @@ package step4.domain
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import step4.domain.CoordinateFinder.EAST
 import step4.domain.CoordinateFinder.NORTH
@@ -30,6 +31,24 @@ class CoordinateFinderTest : FunSpec({
                 val actual = input.find(Coordinate(1, 1))
                 actual shouldBe expected
             }
+        }
+    }
+
+    context("nearCoordinates") {
+        test("근처의 좌표를 반환한다.") {
+            val coordinate = Coordinate(1, 1)
+            val actual = CoordinateFinder.nearCoordinates(coordinate)
+
+            actual shouldContainAll listOf(
+                Coordinate(0, 0),
+                Coordinate(0, 1),
+                Coordinate(0, 2),
+                Coordinate(1, 0),
+                Coordinate(1, 2),
+                Coordinate(2, 0),
+                Coordinate(2, 1),
+                Coordinate(2, 2),
+            )
         }
     }
 })
