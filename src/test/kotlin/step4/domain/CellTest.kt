@@ -7,6 +7,7 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import step4.domain.CellFixture.aCell
+import step4.domain.CellType.MINE
 import step4.domain.CellType.UNKNOWN
 import step4.domain.CellType.ZERO
 
@@ -43,9 +44,17 @@ class CellTest : FunSpec({
 
     context("toMine") {
         test("지뢰를 지뢰로 변경하려하면 예외가 발생한다.") {
-            val cell = aCell(cellType = ZERO)
+            val cell = aCell(cellType = MINE)
             val exception = shouldThrowExactly<IllegalStateException> { cell.toMine() }
             exception shouldHaveMessage "이미 지뢰로 변경된 cell은 다시 지뢰로 변경할 수 없습니다."
+        }
+
+        test("지뢰로 변경한다.") {
+            val cell = aCell(cellType = ZERO)
+            cell.toMine()
+
+            val actual = cell.cellType
+            actual shouldBe MINE
         }
     }
 })

@@ -1,14 +1,16 @@
 package step4.domain
 
+import step4.domain.CellType.MINE
 import step4.domain.CellType.UNKNOWN
 import step4.domain.CellType.ZERO
 
 class Cell(
-    val cellType: CellType = ZERO,
+    var cellType: CellType = ZERO,
     var isOpen: Boolean = false,
 ) {
     fun toMine() {
         check(cellType.isMine().not()) { "이미 지뢰로 변경된 cell은 다시 지뢰로 변경할 수 없습니다." }
+        this.cellType = MINE
     }
 
     fun open() {

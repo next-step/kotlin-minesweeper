@@ -162,7 +162,7 @@ Lose Game.
 - [x] 이미 오픈된 좌표를 오픈하려하면 예외가 발생한다.
 - toMine
   - [x] 지뢰를 지뢰로 변경하려하면 예외가 발생한다.
-  - [ ] cell을 mine으로 변경한다.
+  - [x] cell을 mine으로 변경한다.
 
 ### cell type
 - [x] 0~8, 지뢰, unknown 타입을 가지고 있다.
