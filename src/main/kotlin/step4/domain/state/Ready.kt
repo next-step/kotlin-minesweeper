@@ -1,6 +1,7 @@
 package step4.domain.state
 
 import step4.domain.Cells
+import step4.domain.Coordinate
 import step4.domain.strategy.CoordinateSelectStrategy
 
 class Ready(
@@ -11,4 +12,6 @@ class Ready(
         cells.installMine(mineCount, coordinateSelectStrategy)
         return Running(toFindCellCount - mineCount, cells)
     }
+
+    override fun open(coordinate: Coordinate): MinesweeperState = throw IllegalStateException("게임 시작전에 cell을 열 수 없습니다.")
 }
