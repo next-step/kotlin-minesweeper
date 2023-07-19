@@ -12,6 +12,8 @@ class Running(
         throw IllegalStateException("지뢰를 설치할 수 있는 상태가 아닙니다.")
 
     override fun open(coordinate: Coordinate): MinesweeperState {
-        TODO("Not yet implemented")
+        val cellOpenResult = cells.open(coordinate)
+        toFindCellCount -= cellOpenResult
+        return this
     }
 }
