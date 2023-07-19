@@ -17,6 +17,10 @@ class Running(
             return Lose()
         }
         toFindCellCount -= cellOpenResult
+        return confirmWin()
+    }
+
+    private fun confirmWin(): MinesweeperState {
         if (toFindCellCount == 0) {
             return Win()
         }
