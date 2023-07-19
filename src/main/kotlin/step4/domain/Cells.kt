@@ -12,22 +12,36 @@ value class Cells(
         require(mineCount < values.size) { "보유한 cell보다 많은 지뢰를 설치할 수 없습니다." }
         repeat(mineCount) { coordinateSelectStrategy.select(values).toMine() }
 
-        val mineCoordinates = values.filter { it.value.isMine() }
-            .map { it.key }
-            .toSet()
-
+        val mineCoordinates = findMineCoordinates()
         values.filterNot { it.value.isMine() }
-            .forEach {
-                val nearCoordinates = CoordinateFinder.nearCoordinates(it.key)
-                val cellType = nearCoordinates.count { coordinate -> mineCoordinates.contains(coordinate) }
-                    .toCellType()
-                it.value.changeCellType(cellType)
-            }
+            .forEach { parseCellType(it.key, it.value, mineCoordinates) }
     }
 
     fun open(coordinate: Coordinate) {
         val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
         cell.open()
+    }
+
+    private fun findMineCoordinates(): Set<Coordinate> = values.filter { it.value.isMine() }
+        .map { it.key }
+        .toSet()
+
+    private fun parseCellType(
+        coordinate: Coordinate,
+        cell: Cell,
+        mineCoordinates: Set<Coordinate>,
+    ) {
+        val cellType = calculateCellType(coordinate, mineCoordinates)
+        cell.changeCellType(cellType)
+    }
+
+    private fun calculateCellType(
+        coordinate: Coordinate,
+        mineCoordinates: Set<Coordinate>,
+    ): CellType {
+        val nearCoordinates = CoordinateFinder.nearCoordinates(coordinate)
+        return nearCoordinates.count { mineCoordinates.contains(it) }
+            .toCellType()
     }
 
     companion object {
