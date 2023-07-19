@@ -4,20 +4,37 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import java.util.LinkedList
 
 class CellsTest : FunSpec({
 
     context("installMine") {
         test("입력된 지뢰 갯수가 0개 이하인 경우 예외가 발생한다.") {
             val cells = Cells(mapOf())
-            val exception = shouldThrowExactly<IllegalArgumentException> { cells.installMine(0) }
+            val exception = shouldThrowExactly<IllegalArgumentException> { cells.installMine(0) { Cell() } }
             exception shouldHaveMessage "지뢰 갯수는 1개 이상이어야 합니다."
         }
 
         test("입력된 지뢰 갯수가 보유한 cell보다 많은 경우 예외가 발생한다.") {
             val cells = Cells(mapOf())
-            val exception = shouldThrowExactly<IllegalArgumentException> { cells.installMine(1) }
+            val exception = shouldThrowExactly<IllegalArgumentException> { cells.installMine(1) { Cell() } }
             exception shouldHaveMessage "보유한 cell보다 많은 지뢰를 설치할 수 없습니다."
+        }
+
+        test("지뢰를 설치한다.") {
+            val givenCells = listOf(Cell(), Cell(), Cell(), Cell())
+            val cells = Cells(
+                mapOf(
+                    Coordinate(0, 0) to givenCells[0],
+                    Coordinate(0, 1) to givenCells[1],
+                    Coordinate(1, 0) to givenCells[2],
+                    Coordinate(1, 1) to givenCells[3],
+                ),
+            )
+            cells.installMine(1) { LinkedList(givenCells).poll() }
+
+            val actual = cells.values[Coordinate(0, 0)]!!.isMine()
+            actual shouldBe true
         }
     }
 
