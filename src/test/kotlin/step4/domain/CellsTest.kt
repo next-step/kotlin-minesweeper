@@ -2,6 +2,7 @@ package step4.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class CellsTest : FunSpec({
@@ -29,6 +30,19 @@ class CellsTest : FunSpec({
             )
             val exception = shouldThrowExactly<IllegalArgumentException> { cells.open(Coordinate(1, 1)) }
             exception shouldHaveMessage "존재하지 않는 좌표는 입력될 수 없습니다."
+        }
+
+        test("특정 좌표의 cell을 open한다.") {
+            val coordinate = Coordinate(0, 0)
+            val cells = Cells(
+                mapOf(
+                    coordinate to Cell(),
+                ),
+            )
+            cells.open(coordinate)
+
+            val actual = cells.values[coordinate]!!.isOpen
+            actual shouldBe true
         }
     }
 })

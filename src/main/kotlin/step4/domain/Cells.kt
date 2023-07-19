@@ -10,7 +10,8 @@ value class Cells(
     }
 
     fun open(coordinate: Coordinate) {
-        require(values.containsKey(coordinate)) { "존재하지 않는 좌표는 입력될 수 없습니다." }
+        val cell = values[coordinate] ?: throw IllegalArgumentException("존재하지 않는 좌표는 입력될 수 없습니다.")
+        cell.open()
     }
 
     companion object {

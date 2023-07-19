@@ -172,7 +172,7 @@ Lose Game.
 - [ ] cell과 cell이 위차한 coordinate를 가지고 있다.
 - [ ] 랜덤한 좌표에 지뢰를 설치할 수 있다.
 - open
-  - [ ] 특정 좌표를 open할 수 있다.
+  - [x] 특정 좌표를 open할 수 있다.
   - [x] 없는 좌표를 open하려하면 예외가 발생한다.
 - installMine
   - [ ] 지뢰 갯수를 받아 설치한다. 
