@@ -9,6 +9,6 @@ class Ready(
 ) : MinesweeperState {
     override fun installMine(mineCount: Int, coordinateSelectStrategy: CoordinateSelectStrategy): MinesweeperState {
         cells.installMine(mineCount, coordinateSelectStrategy)
-        return Running()
+        return Running(toFindCellCount - mineCount, cells)
     }
 }

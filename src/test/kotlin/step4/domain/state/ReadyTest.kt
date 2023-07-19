@@ -1,6 +1,7 @@
 package step4.domain.state
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import step4.domain.Cell
 import step4.domain.Cells
@@ -24,6 +25,7 @@ class ReadyTest : FunSpec({
             )
             val actual = ready.installMine(1) { mineCell }
             actual.shouldBeTypeOf<Running>()
+            actual.toFindCellCount shouldBe 3
         }
     }
 })
