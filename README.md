@@ -186,10 +186,32 @@ Lose Game.
 ### finder
 - [x] 좌표의 8방향에 위치한 좌표로 가능 방법을 들고 있다.
 
-### mine game
+### minesweeper game
+- 높이, 너비를 받아 cells를 구성한다.
+- open해야할 cell의 갯수를 가지고 있다.
+- Ready
+  - installMine
+    - 지뢰를 배치하고 Running상태로 변경한다.
+  - open 
+    - 예외가 발생한다.
+- Running
+  - installMine
+    - 예외가 발생한다.
+  - open
+    - open 후 갯수만큼 차감하고 다 찾는다면 win, 지뢰를 찾는다면 lose가 된다.
+- WIN / LOSE
+  - installMine
+    - 예외가 발생한다.
+  - open
+    - 예외가 발생한다.
+
 - installMine
   - [ ] 이미 지뢰가 배치된 상태면 예외가 발생한다.
   - [ ] 종료된 게임에 배치하려하면 예외가 발생한다.
+  - [ ] 설치 후 open할 cell 갯수만큼 제거한다.
+- open
+  - [ ] 진행중 상태가 아니라면 오픈 시 예외가 발생한다.
+  - [ ] open 후 갯수만큼 차감하고 다 찾는다면 win, 지뢰를 찾는다면 lose가 된다.
 
 ### 
 
