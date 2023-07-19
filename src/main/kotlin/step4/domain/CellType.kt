@@ -12,4 +12,7 @@ enum class CellType {
     SEVEN,
     EIGHT,
     MINE,
+    ;
+
+    fun isMine(): Boolean = this == MINE
 }
