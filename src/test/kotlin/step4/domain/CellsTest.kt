@@ -19,4 +19,16 @@ class CellsTest : FunSpec({
             exception shouldHaveMessage "보유한 cell보다 많은 지뢰를 설치할 수 없습니다."
         }
     }
+
+    context("open") {
+        test("없는 좌표를 입력한 경우 예외가 발생한다.") {
+            val cells = Cells(
+                mapOf(
+                    Coordinate(0, 0) to Cell(),
+                ),
+            )
+            val exception = shouldThrowExactly<IllegalArgumentException> { cells.open(Coordinate(1, 1)) }
+            exception shouldHaveMessage "존재하지 않는 좌표는 입력될 수 없습니다."
+        }
+    }
 })

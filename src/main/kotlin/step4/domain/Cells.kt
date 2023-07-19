@@ -9,6 +9,10 @@ value class Cells(
         require(mineCount < values.size) { "보유한 cell보다 많은 지뢰를 설치할 수 없습니다." }
     }
 
+    fun open(coordinate: Coordinate) {
+        require(values.containsKey(coordinate)) { "존재하지 않는 좌표는 입력될 수 없습니다." }
+    }
+
     companion object {
         private const val MINIMUM_MINE_COUNT = 1
     }
