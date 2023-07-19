@@ -20,6 +20,10 @@ class Cell(
         isOpen = true
     }
 
+    fun changeCellType(cellType: CellType) {
+        this.cellType = cellType
+    }
+
     fun cellType(): CellType {
         if (isOpen) {
             return cellType

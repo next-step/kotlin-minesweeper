@@ -4,6 +4,8 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import step4.domain.CellType.MINE
+import step4.domain.CellType.ONE
 import java.util.LinkedList
 
 class CellsTest : FunSpec({
@@ -35,6 +37,10 @@ class CellsTest : FunSpec({
 
             val actual = cells.values[Coordinate(0, 0)]!!.isMine()
             actual shouldBe true
+            givenCells[0].cellType shouldBe MINE
+            givenCells[1].cellType shouldBe ONE
+            givenCells[2].cellType shouldBe ONE
+            givenCells[3].cellType shouldBe ONE
         }
     }
 
