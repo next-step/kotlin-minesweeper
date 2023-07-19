@@ -18,6 +18,8 @@ enum class CellType {
 
     fun isMine(): Boolean = this == MINE
 
+    fun isZero(): Boolean = this == ZERO
+
     companion object {
         fun Int.toCellType(): CellType =
             when (this) {

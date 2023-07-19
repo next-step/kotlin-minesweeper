@@ -49,6 +49,9 @@ value class Cells(
         if (cell.isMine()) {
             return 0
         }
+        if (cell.isZero().not()) {
+            return 1
+        }
         return 1
     }
 

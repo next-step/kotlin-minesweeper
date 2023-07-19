@@ -80,5 +80,18 @@ class CellsTest : FunSpec({
             val actual = cells.open(Coordinate(0, 0))
             actual shouldBe 0
         }
+
+        test("0이 아닌 일반좌표를 열었다면 1이 반환된다.") {
+            val cells = Cells(
+                mapOf(
+                    Coordinate(0, 0) to Cell(cellType = ONE),
+                    Coordinate(0, 1) to Cell(),
+                    Coordinate(1, 0) to Cell(),
+                    Coordinate(1, 1) to Cell(),
+                ),
+            )
+            val actual = cells.open(Coordinate(0, 0))
+            actual shouldBe 1
+        }
     }
 })
