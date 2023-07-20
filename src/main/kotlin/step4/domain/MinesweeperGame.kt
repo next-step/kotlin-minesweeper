@@ -13,7 +13,7 @@ class MinesweeperGame(
     val strategy: CoordinateSelectStrategy = CoordinateRandomSelectStrategy(),
 ) {
     init {
-        require(height > 0) { "높이는 0보다 커야합니다." }
+        require(height > MINIMUM_HEIGHT) { "높이는 ${MINIMUM_HEIGHT}보다 커야합니다." }
     }
 
     fun installMines(mineCount: Int): MinesweeperGame {
@@ -30,6 +30,8 @@ class MinesweeperGame(
     fun currentInfo(): CellInfos = CellInfos(height = height, values = state.cellInfos())
 
     companion object {
+        private const val MINIMUM_HEIGHT = 0
+
         fun createNewGame(height: Int, width: Int): MinesweeperGame {
             return MinesweeperGame(
                 height = height,
