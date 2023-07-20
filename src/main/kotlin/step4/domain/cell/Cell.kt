@@ -5,9 +5,15 @@ import step4.domain.cell.CellType.UNKNOWN
 import step4.domain.cell.CellType.ZERO
 
 class Cell(
-    var cellType: CellType = ZERO,
-    var isOpen: Boolean = false,
+    cellType: CellType = ZERO,
+    isOpen: Boolean = false,
 ) {
+    var cellType: CellType = cellType
+        private set
+
+    var isOpen: Boolean = isOpen
+        private set
+
     fun toMine() {
         check(cellType.isMine().not()) { "이미 지뢰로 변경된 cell은 다시 지뢰로 변경할 수 없습니다." }
         this.cellType = MINE
