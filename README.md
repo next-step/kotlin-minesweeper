@@ -172,8 +172,8 @@ Lose Game.
 - [x] 현재 위치의 상하좌우로 이동된 좌표를 반환할 수 있다.
 
 ### cells
-- [ ] cell과 cell이 위차한 coordinate를 가지고 있다.
-- [ ] 랜덤한 좌표에 지뢰를 설치할 수 있다.
+- [x] cell과 cell이 위차한 coordinate를 가지고 있다.
+- [x] 랜덤한 좌표에 지뢰를 설치할 수 있다.
 - open
   - [x] 특정 좌표를 open할 수 있다.
   - [x] 없는 좌표를 open하려하면 예외가 발생한다.

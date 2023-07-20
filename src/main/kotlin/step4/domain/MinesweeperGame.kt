@@ -1,11 +1,14 @@
 package step4.domain
 
 import step4.domain.state.MinesweeperState
+import step4.domain.state.Ready
+import step4.domain.strategy.CoordinateRandomSelectStrategy
 import step4.domain.strategy.CoordinateSelectStrategy
 
 class MinesweeperGame(
+    val height: Int,
     var state: MinesweeperState,
-    val strategy: CoordinateSelectStrategy,
+    val strategy: CoordinateSelectStrategy = CoordinateRandomSelectStrategy(),
 ) {
     fun installMines(mineCount: Int) {
         state = state.installMine(mineCount, strategy)
@@ -13,5 +16,23 @@ class MinesweeperGame(
 
     fun open(coordinate: Coordinate) {
         state = state.open(coordinate)
+    }
+
+    companion object {
+        fun createNewGame(height: Int, width: Int): MinesweeperGame {
+            return MinesweeperGame(
+                height = height,
+                state = Ready(
+                    toFindCellCount = height * width,
+                    cells = Cells(List(height * width) { index -> parseToCoordinate(index, width) }),
+                ),
+            )
+        }
+
+        private fun parseToCoordinate(index: Int, width: Int): Coordinate {
+            val row = index / width
+            val column = index % width
+            return Coordinate(row = row, column = column)
+        }
     }
 }
