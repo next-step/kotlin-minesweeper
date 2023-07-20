@@ -15,6 +15,12 @@ fun inputMineCount(): Int {
     return readln().toIntOrNull() ?: retryInputMineCount()
 }
 
+fun inputCoordinate(): CoordinateView {
+    print("open: ")
+    return runCatching { CoordinateView.from(readln()) }
+        .getOrNull() ?: retryInputCoordinate()
+}
+
 private fun retryInputHeight(): Int {
     println("높이는 숫자만 입력하여야 합니다.")
     return inputHeight()
@@ -28,4 +34,9 @@ private fun retryInputWidth(): Int {
 private fun retryInputMineCount(): Int {
     println("지뢰는 숫자만 입력하여야 합니다.")
     return inputMineCount()
+}
+
+private fun retryInputCoordinate(): CoordinateView {
+    println("정상적인 좌표로 입력하여야 합니다.")
+    return inputCoordinate()
 }
