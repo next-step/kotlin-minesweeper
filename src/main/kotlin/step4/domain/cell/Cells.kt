@@ -1,6 +1,8 @@
-package step4.domain
+package step4.domain.cell
 
-import step4.domain.CellType.Companion.toCellType
+import step4.domain.coordinate.Coordinate
+import step4.domain.coordinate.CoordinateFinder
+import step4.domain.cell.CellType.Companion.toCellType
 import step4.domain.strategy.CoordinateSelectStrategy
 
 @JvmInline

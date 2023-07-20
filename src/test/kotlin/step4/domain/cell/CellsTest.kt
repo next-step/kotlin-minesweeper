@@ -1,12 +1,13 @@
-package step4.domain
+package step4.domain.cell
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import step4.domain.CellType.MINE
-import step4.domain.CellType.ONE
-import step4.domain.CellType.ZERO
+import step4.domain.coordinate.Coordinate
+import step4.domain.cell.CellType.MINE
+import step4.domain.cell.CellType.ONE
+import step4.domain.cell.CellType.ZERO
 import java.util.LinkedList
 
 class CellsTest : FunSpec({

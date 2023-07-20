@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeTypeOf
 import step4.domain.MinesweeperGame.Companion.createNewGame
+import step4.domain.cell.Cells
 import step4.domain.state.Ready
 
 class MinesweeperGameTest : FunSpec({

@@ -1,5 +1,7 @@
 package step4.domain
 
+import step4.domain.cell.Cells
+import step4.domain.coordinate.Coordinate
 import step4.domain.state.MinesweeperState
 import step4.domain.state.Ready
 import step4.domain.strategy.CoordinateRandomSelectStrategy

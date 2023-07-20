@@ -1,7 +1,8 @@
-package step4.domain
+package step4.domain.coordinate
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import step4.domain.coordinate.Coordinate
 
 class CoordinateTest : FunSpec({
 

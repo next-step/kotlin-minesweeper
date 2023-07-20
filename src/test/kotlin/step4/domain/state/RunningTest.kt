@@ -5,11 +5,11 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
-import step4.domain.Cell
-import step4.domain.CellType.MINE
-import step4.domain.CellType.ONE
-import step4.domain.Cells
-import step4.domain.Coordinate
+import step4.domain.cell.Cell
+import step4.domain.cell.CellType.MINE
+import step4.domain.cell.CellType.ONE
+import step4.domain.cell.Cells
+import step4.domain.coordinate.Coordinate
 
 class RunningTest : FunSpec({
 

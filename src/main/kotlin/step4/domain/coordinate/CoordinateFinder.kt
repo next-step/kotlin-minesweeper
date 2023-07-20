@@ -1,4 +1,4 @@
-package step4.domain
+package step4.domain.coordinate
 
 enum class CoordinateFinder(
     val find: (Coordinate) -> Coordinate,

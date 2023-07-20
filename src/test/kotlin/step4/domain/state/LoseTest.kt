@@ -4,9 +4,9 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import step4.domain.Cell
-import step4.domain.Cells
-import step4.domain.Coordinate
+import step4.domain.cell.Cell
+import step4.domain.cell.Cells
+import step4.domain.coordinate.Coordinate
 
 class LoseTest : FunSpec({
 

@@ -1,8 +1,8 @@
-package step4.domain
+package step4.domain.cell
 
-import step4.domain.CellType.MINE
-import step4.domain.CellType.UNKNOWN
-import step4.domain.CellType.ZERO
+import step4.domain.cell.CellType.MINE
+import step4.domain.cell.CellType.UNKNOWN
+import step4.domain.cell.CellType.ZERO
 
 class Cell(
     var cellType: CellType = ZERO,

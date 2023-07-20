@@ -1,6 +1,6 @@
 package step4.view
 
-import step4.domain.Coordinate
+import step4.domain.coordinate.Coordinate
 
 data class CoordinateView(
     val row: Int,

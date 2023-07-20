@@ -1,6 +1,6 @@
 package step4.domain.state
 
-import step4.domain.Coordinate
+import step4.domain.coordinate.Coordinate
 import step4.domain.strategy.CoordinateSelectStrategy
 
 interface MinesweeperState {

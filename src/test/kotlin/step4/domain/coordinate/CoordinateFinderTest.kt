@@ -1,18 +1,20 @@
-package step4.domain
+package step4.domain.coordinate
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
-import step4.domain.CoordinateFinder.EAST
-import step4.domain.CoordinateFinder.NORTH
-import step4.domain.CoordinateFinder.NORTH_SOUTH
-import step4.domain.CoordinateFinder.NORTH_WEST
-import step4.domain.CoordinateFinder.SOUTH
-import step4.domain.CoordinateFinder.SOUTH_EAST
-import step4.domain.CoordinateFinder.SOUTH_WEST
-import step4.domain.CoordinateFinder.WEST
+import step4.domain.coordinate.Coordinate
+import step4.domain.coordinate.CoordinateFinder
+import step4.domain.coordinate.CoordinateFinder.EAST
+import step4.domain.coordinate.CoordinateFinder.NORTH
+import step4.domain.coordinate.CoordinateFinder.NORTH_SOUTH
+import step4.domain.coordinate.CoordinateFinder.NORTH_WEST
+import step4.domain.coordinate.CoordinateFinder.SOUTH
+import step4.domain.coordinate.CoordinateFinder.SOUTH_EAST
+import step4.domain.coordinate.CoordinateFinder.SOUTH_WEST
+import step4.domain.coordinate.CoordinateFinder.WEST
 
 class CoordinateFinderTest : FunSpec({
 

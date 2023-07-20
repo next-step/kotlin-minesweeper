@@ -1,7 +1,7 @@
 package step4.domain.state
 
-import step4.domain.Cells
-import step4.domain.Coordinate
+import step4.domain.cell.Cells
+import step4.domain.coordinate.Coordinate
 import step4.domain.strategy.CoordinateSelectStrategy
 
 class Ready(

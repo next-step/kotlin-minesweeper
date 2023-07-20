@@ -1,7 +1,7 @@
 package step4.domain.strategy
 
-import step4.domain.Cell
-import step4.domain.Coordinate
+import step4.domain.cell.Cell
+import step4.domain.coordinate.Coordinate
 
 class CoordinateRandomSelectStrategy : CoordinateSelectStrategy {
     override fun select(cells: Map<Coordinate, Cell>): Cell =
