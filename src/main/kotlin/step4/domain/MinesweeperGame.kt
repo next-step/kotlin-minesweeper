@@ -10,6 +10,10 @@ class MinesweeperGame(
     var state: MinesweeperState,
     val strategy: CoordinateSelectStrategy = CoordinateRandomSelectStrategy(),
 ) {
+    init {
+        require(height > 0) { "높이는 0보다 커야합니다." }
+    }
+
     fun installMines(mineCount: Int) {
         state = state.installMine(mineCount, strategy)
     }
