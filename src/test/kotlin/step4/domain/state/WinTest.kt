@@ -2,6 +2,7 @@ package step4.domain.state
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import step4.domain.Cell
 import step4.domain.Cells
@@ -22,6 +23,13 @@ class WinTest : FunSpec({
             val win = Win(Cells())
             val exception = shouldThrowExactly<IllegalStateException> { win.open(Coordinate(0, 0)) }
             exception shouldHaveMessage "종료 상태에선 cell을 열 수 없습니다."
+        }
+    }
+
+    context("isFinished") {
+        test("종료상태이므로 true를 반환한다.") {
+            val actual = Win(Cells()).isFinished()
+            actual shouldBe true
         }
     }
 })

@@ -18,4 +18,6 @@ class Ready(
     }
 
     override fun open(coordinate: Coordinate): MinesweeperState = throw IllegalStateException("게임 시작전에 cell을 열 수 없습니다.")
+
+    override fun isFinished(): Boolean = false
 }

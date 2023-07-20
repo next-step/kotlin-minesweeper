@@ -22,7 +22,7 @@ class RunningTest : FunSpec({
 
     context("installMine") {
         test("지뢰를 설치하려하면 예외가 발생한다.") {
-            val running = Running(0, Cells(mapOf()))
+            val running = Running(1, Cells(mapOf()))
             val exception = shouldThrowExactly<IllegalStateException> { running.installMine(1) { Cell() } }
             exception shouldHaveMessage "지뢰를 설치할 수 있는 상태가 아닙니다."
         }
@@ -79,6 +79,13 @@ class RunningTest : FunSpec({
 
             val actual = running.open(Coordinate(1, 1))
             actual.shouldBeInstanceOf<Lose>()
+        }
+    }
+
+    context("isFinished") {
+        test("종료상태가 아니므로 false를 반환한다.") {
+            val actual = Running(1, Cells(mapOf())).isFinished()
+            actual shouldBe false
         }
     }
 })

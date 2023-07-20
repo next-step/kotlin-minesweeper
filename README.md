@@ -196,18 +196,24 @@ Lose Game.
     - 지뢰를 배치하고 Running상태로 변경한다.
   - open 
     - 예외가 발생한다.
+  - isFinished
+    - false
 - Running
   - 생성 시 toFindCellCount가 0이라면 예외가 발생한다. 
   - installMine
     - 예외가 발생한다.
   - open
     - open 후 갯수만큼 차감하고 다 찾는다면 win, 지뢰를 찾는다면 lose가 된다.
+  - isFinished
+    - false
 - WIN / LOSE
   - 생성 시 toFindCellCount가 0이 아니라면 예외가 발생한다.
   - installMine
     - 예외가 발생한다.
   - open
     - 예외가 발생한다.
+  - isFinished
+    - true
 
 ```
 높이를 입력하세요.

@@ -10,6 +10,8 @@ abstract class Finished : MinesweeperState {
         throw IllegalStateException("지뢰를 설치할 수 있는 상태가 아닙니다.")
 
     final override fun open(coordinate: Coordinate): MinesweeperState = throw IllegalStateException("종료 상태에선 cell을 열 수 없습니다.")
+
+    final override fun isFinished(): Boolean = true
 }
 
 class Win(

@@ -24,6 +24,8 @@ class Running(
         return confirmWin()
     }
 
+    override fun isFinished(): Boolean = false
+
     private fun confirmWin(): MinesweeperState {
         if (toFindCellCount == 0) {
             return Win(cells)

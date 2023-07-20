@@ -40,9 +40,16 @@ class ReadyTest : FunSpec({
 
     context("open") {
         test("준비중에 cell을 열려고하면 예외가 발생한다.") {
-            val ready = Ready(0, Cells(mapOf()))
+            val ready = Ready(1, Cells(mapOf()))
             val exception = shouldThrowExactly<IllegalStateException> { ready.open(Coordinate(0, 0)) }
             exception shouldHaveMessage "게임 시작전에 cell을 열 수 없습니다."
+        }
+    }
+
+    context("isFinished") {
+        test("종료상태가 아니므로 false를 반환한다.") {
+            val actual = Ready(1, Cells(mapOf())).isFinished()
+            actual shouldBe false
         }
     }
 })
