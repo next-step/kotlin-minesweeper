@@ -13,6 +13,13 @@ import step4.domain.Coordinate
 
 class RunningTest : FunSpec({
 
+    context("init") {
+        test("생성 시 toFindCellCount가 0이라면 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> { Running(0, Cells()) }
+            exception shouldHaveMessage "찾아야하는 cell 갯수가 0이 될 수 없습니다."
+        }
+    }
+
     context("installMine") {
         test("지뢰를 설치하려하면 예외가 발생한다.") {
             val running = Running(0, Cells(mapOf()))
