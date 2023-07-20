@@ -3,6 +3,10 @@ package step4.view
 import step4.domain.CellInfo
 import step4.domain.CellInfos
 
+fun printStartGame() {
+    println("지뢰찾기 게임 시작")
+}
+
 fun printCurrentStatus(cellInfos: CellInfos) {
     println(parseToPrintView(cellInfos.height, cellInfos.values))
 }

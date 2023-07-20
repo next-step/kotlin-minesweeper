@@ -7,10 +7,13 @@ import step4.view.inputHeight
 import step4.view.inputMineCount
 import step4.view.inputWidth
 import step4.view.printCurrentStatus
+import step4.view.printStartGame
 
 fun main() {
     val minesweeperGame = createNewGame(inputHeight(), inputWidth())
         .installMines(inputMineCount())
+
+    printStartGame()
     run(minesweeperGame)
 }
 
