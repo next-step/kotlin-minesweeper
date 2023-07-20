@@ -23,6 +23,8 @@ class MinesweeperGame(
         state = state.open(coordinate)
     }
 
+    fun isFinished(): Boolean = state.isFinished()
+
     companion object {
         fun createNewGame(height: Int, width: Int): MinesweeperGame {
             return MinesweeperGame(
