@@ -7,6 +7,7 @@ import step4.view.inputHeight
 import step4.view.inputMineCount
 import step4.view.inputWidth
 import step4.view.printCurrentStatus
+import step4.view.printGameResult
 import step4.view.printStartGame
 
 fun main() {
@@ -19,6 +20,7 @@ fun main() {
 
 private tailrec fun run(minesweeperGame: MinesweeperGame) {
     if (minesweeperGame.isFinished()) {
+        printGameResult(minesweeperGame.state)
         return
     }
     minesweeperGame.open(inputCoordinate().toCoordinate())

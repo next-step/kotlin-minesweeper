@@ -5,7 +5,7 @@ import java.lang.IllegalArgumentException
 
 enum class CellView(
     val cellType: CellType,
-    val printView: String,
+    val view: String,
 ) {
     UNKNOWN_CELL(CellType.UNKNOWN, "C"),
     ZERO_CELL(CellType.ZERO, "0"),
