@@ -8,6 +8,10 @@ class Ready(
     var toFindCellCount: Int,
     val cells: Cells,
 ) : MinesweeperState {
+    init {
+        require(toFindCellCount > 0) { "찾아야하는 cell 갯수가 0이 될 수 없습니다." }
+    }
+
     override fun installMine(mineCount: Int, coordinateSelectStrategy: CoordinateSelectStrategy): MinesweeperState {
         cells.installMine(mineCount, coordinateSelectStrategy)
         return Running(toFindCellCount - mineCount, cells)

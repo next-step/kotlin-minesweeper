@@ -188,18 +188,22 @@ Lose Game.
 
 ### minesweeper game
 - 높이, 너비를 받아 cells를 구성한다.
+  - [x] 높이와 너비가 0이하인 경우 예외가 발생한다.
 - open해야할 cell의 갯수를 가지고 있다.
 - Ready
+  - 생성 시 toFindCellCount가 0이라면 예외가 발생한다.
   - installMine
     - 지뢰를 배치하고 Running상태로 변경한다.
   - open 
     - 예외가 발생한다.
 - Running
+  - 생성 시 toFindCellCount가 0이라면 예외가 발생한다. 
   - installMine
     - 예외가 발생한다.
   - open
     - open 후 갯수만큼 차감하고 다 찾는다면 win, 지뢰를 찾는다면 lose가 된다.
 - WIN / LOSE
+  - 생성 시 toFindCellCount가 0이 아니라면 예외가 발생한다.
   - installMine
     - 예외가 발생한다.
   - open
