@@ -18,7 +18,7 @@ class Running(
 
     override fun open(coordinate: Coordinate): MinesweeperState {
         val cellOpenResult = cells.open(coordinate)
-        if (cellOpenResult == 0) {
+        if (cellOpenResult == CELL_OPEN_MINE_RESULT) {
             return Lose(cells)
         }
         toFindCellCount -= cellOpenResult
@@ -30,7 +30,7 @@ class Running(
     override fun cellInfos(): List<CellInfo> = cells.cellInfos()
 
     private fun confirmWin(): MinesweeperState {
-        if (toFindCellCount == 0) {
+        if (toFindCellCount == FINISHED_GAME_TO_FIND_CELL_COUNT) {
             return Win(cells)
         }
         return this
@@ -38,5 +38,7 @@ class Running(
 
     companion object {
         private const val MINIMUM_TO_FIND_CELL_COUNT = 0
+        private const val CELL_OPEN_MINE_RESULT = 0
+        private const val FINISHED_GAME_TO_FIND_CELL_COUNT = 0
     }
 }
