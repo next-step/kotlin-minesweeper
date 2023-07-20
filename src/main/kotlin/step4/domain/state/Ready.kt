@@ -10,7 +10,7 @@ class Ready(
     val cells: Cells,
 ) : MinesweeperState {
     init {
-        require(toFindCellCount > 0) { "찾아야하는 cell 갯수가 0이 될 수 없습니다." }
+        require(toFindCellCount > MINIMUM_TO_FIND_CELL_COUNT) { "찾아야하는 cell 갯수가 ${MINIMUM_TO_FIND_CELL_COUNT}이 될 수 없습니다." }
     }
 
     override fun installMine(mineCount: Int, coordinateSelectStrategy: CoordinateSelectStrategy): MinesweeperState {
@@ -23,4 +23,8 @@ class Ready(
     override fun isFinished(): Boolean = false
 
     override fun cellInfos(): List<CellInfo> = cells.cellInfos()
+
+    companion object {
+        private const val MINIMUM_TO_FIND_CELL_COUNT = 0
+    }
 }
