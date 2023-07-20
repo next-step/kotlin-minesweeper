@@ -14,8 +14,9 @@ class MinesweeperGame(
         require(height > 0) { "높이는 0보다 커야합니다." }
     }
 
-    fun installMines(mineCount: Int) {
+    fun installMines(mineCount: Int): MinesweeperGame {
         state = state.installMine(mineCount, strategy)
+        return this
     }
 
     fun open(coordinate: Coordinate) {
