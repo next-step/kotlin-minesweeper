@@ -1,5 +1,6 @@
 package step4.domain.state
 
+import step4.domain.CellInfo
 import step4.domain.cell.Cells
 import step4.domain.coordinate.Coordinate
 import step4.domain.strategy.CoordinateSelectStrategy
@@ -16,8 +17,12 @@ abstract class Finished : MinesweeperState {
 
 class Win(
     val cells: Cells,
-) : Finished()
+) : Finished() {
+    override fun cellInfos(): List<CellInfo> = cells.cellInfos()
+}
 
 class Lose(
     val cells: Cells,
-) : Finished()
+) : Finished() {
+    override fun cellInfos(): List<CellInfo> = cells.cellInfos()
+}

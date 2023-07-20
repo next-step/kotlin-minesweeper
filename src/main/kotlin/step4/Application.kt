@@ -6,6 +6,7 @@ import step4.view.inputCoordinate
 import step4.view.inputHeight
 import step4.view.inputMineCount
 import step4.view.inputWidth
+import step4.view.printCurrentStatus
 
 fun main() {
     val minesweeperGame = createNewGame(inputHeight(), inputWidth())
@@ -18,5 +19,6 @@ private tailrec fun run(minesweeperGame: MinesweeperGame) {
         return
     }
     minesweeperGame.open(inputCoordinate().toCoordinate())
+    printCurrentStatus(minesweeperGame.currentInfo())
     run(minesweeperGame)
 }

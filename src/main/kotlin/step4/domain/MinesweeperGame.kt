@@ -27,6 +27,8 @@ class MinesweeperGame(
 
     fun isFinished(): Boolean = state.isFinished()
 
+    fun currentInfo(): CellInfos = CellInfos(height = height, values = state.cellInfos())
+
     companion object {
         fun createNewGame(height: Int, width: Int): MinesweeperGame {
             return MinesweeperGame(

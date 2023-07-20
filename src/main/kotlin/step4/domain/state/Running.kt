@@ -1,5 +1,6 @@
 package step4.domain.state
 
+import step4.domain.CellInfo
 import step4.domain.cell.Cells
 import step4.domain.coordinate.Coordinate
 import step4.domain.strategy.CoordinateSelectStrategy
@@ -25,6 +26,8 @@ class Running(
     }
 
     override fun isFinished(): Boolean = false
+
+    override fun cellInfos(): List<CellInfo> = cells.cellInfos()
 
     private fun confirmWin(): MinesweeperState {
         if (toFindCellCount == 0) {

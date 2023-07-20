@@ -1,8 +1,9 @@
 package step4.domain.cell
 
+import step4.domain.CellInfo
+import step4.domain.cell.CellType.Companion.toCellType
 import step4.domain.coordinate.Coordinate
 import step4.domain.coordinate.CoordinateFinder
-import step4.domain.cell.CellType.Companion.toCellType
 import step4.domain.strategy.CoordinateSelectStrategy
 
 @JvmInline
@@ -31,6 +32,8 @@ value class Cells(
         }
         return 1 + openAround(coordinate)
     }
+
+    fun cellInfos(): List<CellInfo> = values.map { CellInfo.of(it.key, it.value) }
 
     private fun findMineCoordinates(): Set<Coordinate> = values.filter { it.value.isMine() }
         .map { it.key }
