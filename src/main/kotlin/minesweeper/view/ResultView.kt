@@ -16,9 +16,12 @@ object ResultView {
     private fun printRow(row: BoardRow) {
         for (cell in row.rowInfo) {
             print(
-                when (cell) {
-                    is MineCell -> "* "
-                    is EmptyCell -> "${cell.mineCount} "
+                when {
+                    cell.isOpen -> when (cell) {
+                        is MineCell -> "* "
+                        is EmptyCell -> "${cell.mineCount} "
+                    }
+                    else -> "C "
                 }
             )
         }
@@ -26,5 +29,13 @@ object ResultView {
 
     fun printGameStart() {
         println("지뢰찾기 게임 시작")
+    }
+
+    fun printLose() {
+        println("Lose Game.")
+    }
+
+    fun printWin() {
+        println("Win Game.")
     }
 }
