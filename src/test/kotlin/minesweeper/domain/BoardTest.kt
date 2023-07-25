@@ -10,11 +10,10 @@ class BoardTest {
 
     @Test
     fun `사이즈와 지뢰 위치를 받아 게임판을 생성한다`() {
-        val width = 10
-        val height = 10
+        val boardSize = BoardSize(3, 3)
         val minePositions = setOf(Position(1, 1), Position(2, 2))
 
-        val board = Board.create(width, height, minePositions)
+        val board = Board.create(boardSize, minePositions)
 
         assertSoftly {
             board.markMap[Position(1, 1)] shouldBe Mark.MINE

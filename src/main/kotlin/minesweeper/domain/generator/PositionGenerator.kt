@@ -1,7 +1,8 @@
 package minesweeper.domain.generator
 
+import minesweeper.domain.BoardSize
 import minesweeper.domain.field.Position
 
 fun interface PositionGenerator {
-    fun get(maxWidth: Int, maxHeight: Int, count: Int): Set<Position>
+    fun get(boardSize: BoardSize, count: Int): Set<Position>
 }
