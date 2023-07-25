@@ -15,9 +15,9 @@ class Minesweeper(
         val height = input.getHeight()
         val mineCount = input.getMineCount()
 
-        val boardSize = BoardSize(width, height)
-        val minePositions = positionGenerator.get(boardSize, mineCount)
-        val board = Board.create(boardSize, minePositions)
+        val boardMeta = BoardMeta(width, height, mineCount)
+        val minePositions = positionGenerator.get(boardMeta)
+        val board = Board.create(boardMeta.boardSize, minePositions)
         output.printStart(board)
     }
 }
