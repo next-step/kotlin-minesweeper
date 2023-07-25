@@ -2,7 +2,7 @@ package minesweeper.domain.generator
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.BoardMeta
+import minesweeper.domain.board.BoardMeta
 import org.junit.jupiter.api.Test
 
 class RandomPositionGeneratorTest {

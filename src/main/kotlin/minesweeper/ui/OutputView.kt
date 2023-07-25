@@ -1,6 +1,6 @@
 package minesweeper.ui
 
-import minesweeper.domain.Board
+import minesweeper.domain.board.Board
 import minesweeper.domain.field.Mark
 
 class OutputView {

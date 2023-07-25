@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 class BoardSize(val width: Int, val height: Int) {
     init {

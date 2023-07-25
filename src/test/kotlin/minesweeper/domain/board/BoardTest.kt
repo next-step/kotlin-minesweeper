@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe

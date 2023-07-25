@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 import minesweeper.domain.field.Mark
 import minesweeper.domain.field.Position

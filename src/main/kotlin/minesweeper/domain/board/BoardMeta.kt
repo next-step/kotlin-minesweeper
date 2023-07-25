@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 class BoardMeta(val boardSize: BoardSize, val mineCount: Int) {
     val width: Int

@@ -1,5 +1,7 @@
 package minesweeper.domain
 
+import minesweeper.domain.board.Board
+import minesweeper.domain.board.BoardMeta
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
 
