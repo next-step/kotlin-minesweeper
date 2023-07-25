@@ -16,7 +16,7 @@ class OutputView {
     }
 
     private fun groupByLine(board: Board): Map<Int, List<Mark>> {
-        return board.board.entries.groupBy({ it.key.x }, { it.value })
+        return board.markMap.entries.groupBy({ it.key.x }, { it.value })
     }
 
     private fun toSymbol(mark: Mark): String {
