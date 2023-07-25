@@ -18,8 +18,7 @@ class RandomPositionGeneratorTest {
         assertSoftly {
             positions.size shouldBe count
             positions.all {
-                it.x in 0 until maxWidth
-                        && it.y in 0 until maxHeight
+                it.x in 0 until maxWidth && it.y in 0 until maxHeight
             } shouldBe true
         }
     }
