@@ -21,7 +21,13 @@ object MineMapGenerator {
             elementLocations += createRow(i, width, mineLocations)
         }
 
-        return MineMap(elementLocations.toList())
+        val mineMap = MineMap(elementLocations.toList())
+
+        // EmptyElement에 대해 주변 지뢰의 수 기입
+        mineMap.elements.flatMap { innerList -> innerList.filterIsInstance<EmptyElement>() }
+            .forEach { emptyElement -> emptyElement.countMine(mineMap) }
+
+        return mineMap
     }
 
     private fun createRow(
