@@ -37,6 +37,9 @@ C C C C C C C C C C
 - 높이와 너비, 지뢰 개수를 입력받을 수 있다.
   - [x] Test 1 : 높이와 너비, 지뢰 개수를 입력받아 MineMap 객체를 생성할 수 있다.
     - 지뢰 갯수가 높이와 너비의 곱보다 크지 못하도록 설정함
+  - [ ] Test 2 : location을 입력받으면 주위에 몇 개의 mine이 있는지 표시할 수 있다.
+    - MineMap작성한 뒤 mineMap을 입력받아 각 element에 cnt입력하는 객체 생성
+    - DisplayView에서 cnt를 출력
 - 지뢰는 눈에 잘 띄는 것으로 표기한다.
   - MineMap 출력하는 기능 추가
 - 지뢰는 가급적 랜덤에 가깝게 배치한다.
