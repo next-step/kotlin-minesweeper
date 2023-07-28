@@ -1,5 +1,6 @@
 package view
 
+import domain.EmptyElement
 import domain.MapElement
 import domain.MineMap
 
@@ -14,7 +15,5 @@ object DisplayView {
         }
     }
 
-    private fun displayElement(element: MapElement): String {
-        return element.displayCharacter
-    }
+    private fun displayElement(element: MapElement): String = if (element is EmptyElement) element.mineCnt.toString() else element.displayCharacter
 }
