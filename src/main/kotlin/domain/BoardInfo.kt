@@ -1,8 +1,9 @@
 package domain
 
-const val NON_MINE = 'C'
-const val MINE = '*'
-
 data class BoardInfo(
-    val values: List<List<Cell>>
-)
+    val layout: Layout
+) {
+    operator fun get(y: Int): Row {
+        return layout[y]
+    }
+}
