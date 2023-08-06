@@ -1,5 +1,10 @@
 package domain
 
 data class Cell(
-    val value: Char
+    val status: CellStatus
 )
+
+enum class CellStatus {
+    EMPTY,
+    MINE
+}
