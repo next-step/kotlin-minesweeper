@@ -10,7 +10,7 @@ class MineBoardGeneratorTest : FunSpec({
         val width = 5
         val height = 5
         val boardSize = BoardSize(width, height)
-        val mineCount = 3
+        val mineCount = 2
         val mineLocations = MineLocations(Point(1, 1), Point(1, 2))
         val boardInfoGenerator = BoardInfoGenerator(
             boardSize,
@@ -23,7 +23,7 @@ class MineBoardGeneratorTest : FunSpec({
 
         // then
         mineLocations.points.forAll {
-            actual.values[it.y][it.x].value shouldBe MINE
+            actual[it.y][it.x].status shouldBe CellStatus.MINE
         }
     }
 
@@ -42,9 +42,9 @@ class MineBoardGeneratorTest : FunSpec({
         val actual = boardInfoGenerator.generate()
 
         // then
-        actual.values.size shouldBe width
-        actual.values.forAll {
-            it.size shouldBe height
+        actual.layout.rows.size shouldBe height
+        actual.layout.rows.forAll {
+            it.size shouldBe width
         }
     }
 })
