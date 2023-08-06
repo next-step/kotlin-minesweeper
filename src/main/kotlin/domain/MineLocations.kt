@@ -1,11 +1,15 @@
 package domain
 
 data class MineLocations(
-    val points: List<Point>
+    val points: Set<Point>
 ) {
-    constructor(vararg point: Point) : this(points = point.toList())
+    constructor(vararg point: Point) : this(points = point.toSet())
 
-    fun contains(point: Point): Boolean {
-        return points.contains(point)
+    fun layoutWithMines(boardSize: BoardSize): Layout {
+        val layout = Layout(boardSize)
+        points.forEach { point ->
+            layout[point.y][point.x] = Cell(CellStatus.MINE)
+        }
+        return layout
     }
 }
