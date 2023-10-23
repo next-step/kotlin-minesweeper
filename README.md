@@ -152,3 +152,101 @@ open: 1, 1
 Lose Game.
 ```
 - [x] 지뢰를 누르면 종료 문구가 출력된다.
+
+
+## 지뢰찾기(리팩터링)
+
+### cell
+- [x] cell type과 현재 오픈가능한지 여부를 가지고 있다.
+- [x] 오픈되지 않은 상태라면 unknown을, 오픈된 상태라면 현재 cell type을 반환한다.
+- [x] 이미 오픈된 좌표를 오픈하려하면 예외가 발생한다.
+- toMine
+  - [x] 지뢰를 지뢰로 변경하려하면 예외가 발생한다.
+  - [x] cell을 mine으로 변경한다.
+
+### cell type
+- [x] 0~8, 지뢰, unknown 타입을 가지고 있다.
+
+### coordinate
+- [x] 가로 세로 좌표를 가지고 있다.
+- [x] 현재 위치의 상하좌우로 이동된 좌표를 반환할 수 있다.
+
+### cells
+- [x] cell과 cell이 위차한 coordinate를 가지고 있다.
+- [x] 랜덤한 좌표에 지뢰를 설치할 수 있다.
+- open
+  - [x] 특정 좌표를 open할 수 있다.
+  - [x] 없는 좌표를 open하려하면 예외가 발생한다.
+- installMine
+  - [x] 지뢰 갯수를 받아 설치한다. 
+    - 설치 후 일반 cell의 주변 지뢰 갯수 type을 설정한다.
+  - [x] 지뢰 갯수가 0개 이하면 예외가 발생한다.
+  - [x] 지뢰 갯수가 보유한 cell보다 많은 경우 예외가 발생한다.
+
+### finder
+- [x] 좌표의 8방향에 위치한 좌표로 가능 방법을 들고 있다.
+
+### minesweeper game
+- 높이, 너비를 받아 cells를 구성한다.
+  - [x] 높이와 너비가 0이하인 경우 예외가 발생한다.
+- open해야할 cell의 갯수를 가지고 있다.
+- Ready
+  - 생성 시 toFindCellCount가 0이라면 예외가 발생한다.
+  - installMine
+    - 지뢰를 배치하고 Running상태로 변경한다.
+  - open 
+    - 예외가 발생한다.
+  - isFinished
+    - false
+- Running
+  - 생성 시 toFindCellCount가 0이라면 예외가 발생한다. 
+  - installMine
+    - 예외가 발생한다.
+  - open
+    - open 후 갯수만큼 차감하고 다 찾는다면 win, 지뢰를 찾는다면 lose가 된다.
+  - isFinished
+    - false
+- WIN / LOSE
+  - 생성 시 toFindCellCount가 0이 아니라면 예외가 발생한다.
+  - installMine
+    - 예외가 발생한다.
+  - open
+    - 예외가 발생한다.
+  - isFinished
+    - true
+
+```
+높이를 입력하세요.
+10
+
+너비를 입력하세요.
+10
+
+지뢰는 몇 개인가요?
+10
+
+지뢰찾기 게임 시작
+open: 1, 1
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+0 1 C C C C C C C C
+1 1 C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+C C C C C C C C C C
+
+open: 4, 1
+Lose Game.
+
+```
+### input view
+- 높이, 너비, 지뢰를 입력받을 수 있다.
+- open할 좌표를 입력받을 수 있다.
+
+### output view
+- open할 때마다 현재 게임 상황판을 출력한다.
+- 게임이 종료되었다면 종료상태를 반환하고 종료한다.
+
