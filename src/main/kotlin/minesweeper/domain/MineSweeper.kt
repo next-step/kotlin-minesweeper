@@ -11,4 +11,8 @@ class MineSweeper(val mineMap: MineMap, mines: Mines) {
             }
         }
     }
+
+    fun isMine(x: Int, y: Int): Boolean {
+        return mineList.any { it.x == x && it.y == y }
+    }
 }

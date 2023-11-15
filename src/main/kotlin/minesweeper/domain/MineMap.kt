@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineMap(val height: Height, val width: Width) {
+class MineMap(private val height: Height, private val width: Width) {
 
     fun height(): Int {
         return height.value

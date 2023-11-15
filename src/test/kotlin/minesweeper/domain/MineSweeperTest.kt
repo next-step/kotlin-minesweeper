@@ -32,4 +32,16 @@ class MineSweeperTest : BehaviorSpec({
             }
         }
     }
+
+    given("지뢰판(10x10)와 지뢰(1,1)이 주어지고 지뢰찾기 객체가 주어지면") {
+        val mineMap = MineMap(Height(10), Width(10))
+        val mines = Mines(listOf(Mine(1, 1)))
+        val mineSweeper = MineSweeper(mineMap, mines)
+        When("(1,1)이 지뢰인지 확인하면") {
+            val result = mineSweeper.isMine(1, 1)
+            Then("true를 반환한다") {
+                result shouldBe true
+            }
+        }
+    }
 })
