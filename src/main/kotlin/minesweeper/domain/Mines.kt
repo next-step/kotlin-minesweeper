@@ -1,8 +1,12 @@
 package minesweeper.domain
 
-class Mines(val mines: List<Mine>) {
-
+@JvmInline
+value class Mines(val mines: List<Mine>) {
     fun count(): Int {
         return mines.size
+    }
+
+    fun isMine(position: Position): Boolean {
+        return mines.any { it.x == position.x && it.y == position.y }
     }
 }

@@ -1,18 +1,14 @@
 package minesweeper.domain
 
-class MineSweeper(val mineMap: MineMap, mines: Mines) {
+class MineSweeper(val mineMap: MineMap, val mines: Mines) {
 
-    val mineList = mines.mines
+    private val minesList = mines.mines
 
     init {
-        mineList.forEach {
+        minesList.forEach {
             if (it.y > mineMap.height() || it.x > mineMap.width()) {
                 throw IllegalArgumentException("지뢰의 위치가 지뢰지도의 범위를 벗어났습니다.")
             }
         }
-    }
-
-    fun isMine(x: Int, y: Int): Boolean {
-        return mineList.any { it.x == x && it.y == y }
     }
 }

@@ -1,3 +1,8 @@
 package minesweeper.domain
 
-class Mine(val x: Int, val y: Int)
+class Mine(private val position: Position) {
+    val x: Int
+        get() = position.x
+    val y: Int
+        get() = position.y
+}
