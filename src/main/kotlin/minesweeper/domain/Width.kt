@@ -8,6 +8,6 @@ value class Width(val value: Int) {
     }
 
     companion object {
-        private const val MINIMUM_WIDTH = 1
+        const val MINIMUM_WIDTH = 1
     }
 }

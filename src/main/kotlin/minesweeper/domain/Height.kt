@@ -8,6 +8,6 @@ value class Height(val value: Int) {
     }
 
     companion object {
-        private const val MINIMUM_HEIGHT = 1
+        const val MINIMUM_HEIGHT = 1
     }
 }
