@@ -11,10 +11,10 @@ class MineMapTest : BehaviorSpec({
         When("지뢰지도를 생성할 때") {
             val mineMap = MineMap(height, width)
             Then("지뢰지도의 높이는 10이다") {
-                mineMap.height shouldBe height
+                mineMap.height() shouldBe height.value
             }
             Then("지뢰지도의 너비는 10이다") {
-                mineMap.width shouldBe width
+                mineMap.width() shouldBe width.value
             }
         }
     }

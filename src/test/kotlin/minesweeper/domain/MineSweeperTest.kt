@@ -8,21 +8,21 @@ class MineSweeperTest : BehaviorSpec({
 
     given("지뢰판(10x10)과 지뢰2개가 주어지면") {
         val mineMap = MineMap(Height(10), Width(10))
-        val mines = listOf(Mine(1, 1), Mine(1, 2))
+        val mines = Mines(listOf(Mine(1, 1), Mine(1, 2)))
         When("지뢰찾기 객체를 생성하면") {
             val mineSweeper = MineSweeper(mineMap, mines)
             Then("지뢰판은 10x10이다") {
                 mineSweeper.mineMap shouldBe mineMap
             }
             Then("지뢰는 2개이다") {
-                mineSweeper.mines.size shouldBe mines.size
+                mineSweeper.mineList shouldBe mines.mines
             }
         }
     }
 
     given("지뢰판(2x2)와 지뢰(2,3)이 주어지면") {
         val mineMap = MineMap(Height(2), Width(2))
-        val mines = listOf(Mine(2, 3))
+        val mines = Mines(listOf(Mine(2, 3)))
         When("지뢰찾기 객체를 생성하면") {
             val exception = shouldThrow<IllegalArgumentException> {
                 MineSweeper(mineMap, mines)
