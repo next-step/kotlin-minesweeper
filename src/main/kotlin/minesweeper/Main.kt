@@ -13,6 +13,7 @@ fun main() {
     val mineMap = MineMap(height, width)
     val mines = MineGenerator.generate(mineMap, mineCount)
     val mineSweeper = MineSweeper(mineMap, mines)
+    OutputView.printMineSweeperStart()
     mineMap.createPosition().forEach {
         OutputView.printMineSweeper(it, mines)
     }

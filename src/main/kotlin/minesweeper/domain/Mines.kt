@@ -9,16 +9,4 @@ value class Mines(val mines: List<Mine>) {
     fun isMine(position: Position): Boolean {
         return mines.any { it.position.match(position) }
     }
-
-    fun validateMines(mineMap: MineMap) {
-        mines.forEach {
-            if (!mineMap.isInMap(it.position)) {
-                throw IllegalArgumentException(ERROR_MESSAGE)
-            }
-        }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE = "지뢰의 위치가 지뢰지도의 범위를 벗어났습니다."
-    }
 }
