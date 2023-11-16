@@ -15,10 +15,10 @@ class MineGeneratorTest : BehaviorSpec({
                 result.count() shouldBe mineCount
             }
             Then("지뢰의 y좌표는 10이하이다") {
-                result.mines.forEach { it.y shouldBeLessThanOrEqual mineMap.height() }
+                result.mines.forEach { it.position.y shouldBeLessThanOrEqual 10 }
             }
             Then("지뢰의 x좌표는 10이하이다") {
-                result.mines.forEach { it.x shouldBeLessThanOrEqual mineMap.width() }
+                result.mines.forEach { it.position.x shouldBeLessThanOrEqual 10 }
             }
         }
     }

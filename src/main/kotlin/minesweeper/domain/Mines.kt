@@ -13,8 +13,12 @@ value class Mines(val mines: List<Mine>) {
     fun validateMines(mineMap: MineMap) {
         mines.forEach {
             if (!mineMap.isInMap(it.position)) {
-                throw IllegalArgumentException("지뢰의 위치가 지뢰찾기 지도를 벗어났습니다.")
+                throw IllegalArgumentException(ERROR_MESSAGE)
             }
         }
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE = "지뢰의 위치가 지뢰지도의 범위를 벗어났습니다."
     }
 }
