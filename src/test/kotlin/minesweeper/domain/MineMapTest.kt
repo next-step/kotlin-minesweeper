@@ -14,21 +14,4 @@ class MineMapTest : BehaviorSpec({
             }
         }
     }
-
-    given("높이 5, 너미5인 지뢰판이 주어진다면") {
-        val mineSweeperMap = MineSweeperMap(Height(5), Width(5))
-        When("지뢰판 좌표(1,1)이 주어진다면") {
-            val result = mineSweeperMap.isInMap(Position(1, 1))
-            Then("true를 반환한다") {
-                result shouldBe true
-            }
-        }
-
-        When("지뢰판 좌표(6,5) 주어진다면") {
-            val result = mineSweeperMap.isInMap(Position(6, 5))
-            Then("false를 반환한다") {
-                result shouldBe false
-            }
-        }
-    }
 })

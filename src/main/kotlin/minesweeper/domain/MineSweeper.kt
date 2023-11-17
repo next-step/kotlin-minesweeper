@@ -1,22 +1,11 @@
 package minesweeper.domain
 
-class MineSweeper(val mineSweeperMap: MineSweeperMap, val mines: Mines) {
+class MineSweeper(val mapPositions: List<Position>, val mines: Mines) {
     init {
-        validateMines()
+        require(mapPositions.size >= mines.count()) { ERROR_MESSAGE }
     }
 
-    private fun validateMines() {
-        mines.mines.forEach {
-            throwExceptionIfMineInMap(it.position)
-        }
-    }
-
-    private fun throwExceptionIfMineInMap(position: Position) {
-        if (!mineSweeperMap.isInMap(position)) {
-            throw IllegalArgumentException(ERROR_MESSAGE)
-        }
-    }
     companion object {
-        private const val ERROR_MESSAGE = "지뢰의 위치가 지뢰지도의 범위를 벗어났습니다."
+        private const val ERROR_MESSAGE = "맵보다 지뢰가 많습니다."
     }
 }

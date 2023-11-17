@@ -10,7 +10,7 @@ class MineGeneratorTest : BehaviorSpec({
         val mineCount = 20
         val mineSweeperMap = MineSweeperMap(Height(10), Width(10))
         When("지뢰를 생성할 때") {
-            val result = MineGenerator.generate(mineSweeperMap, mineCount)
+            val result = MineGenerator.generate(mineSweeperMap.createPosition(), mineCount)
             Then("지뢰의 개수는 20개이다") {
                 result.count() shouldBe mineCount
             }
