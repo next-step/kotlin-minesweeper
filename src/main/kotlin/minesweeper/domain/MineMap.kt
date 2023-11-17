@@ -4,10 +4,10 @@ import minesweeper.domain.Height.Companion.MINIMUM_HEIGHT
 
 class MineMap(private val height: Height, private val width: Width) {
 
-    fun createPosition(): List<List<Position>> {
+    fun createPosition(): List<Position> {
         return (MINIMUM_HEIGHT..height.value).map {
             createRow(it)
-        }
+        }.flatten()
     }
 
     fun isInMap(position: Position): Boolean {

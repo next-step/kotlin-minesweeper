@@ -10,7 +10,7 @@ class MineMapTest : BehaviorSpec({
         When("지뢰판 좌표를 생성할 시") {
             val result = mineMap.createPosition()
             Then("좌표의 개수는 25개이다") {
-                result.flatten().count() shouldBe 25
+                result.count() shouldBe 25
             }
         }
     }

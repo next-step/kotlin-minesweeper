@@ -14,7 +14,9 @@ fun main() {
     val mines = MineGenerator.generate(mineMap, mineCount)
     val mineSweeper = MineSweeper(mineMap, mines)
     OutputView.printMineSweeperStart()
-    mineMap.createPosition().forEach {
-        OutputView.printMineSweeper(it, mines)
-    }
+    mineMap.createPosition()
+        .groupBy { it.y }
+        .forEach {
+            OutputView.printMineSweeper(it.value, mines)
+        }
 }
