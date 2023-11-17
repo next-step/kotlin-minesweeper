@@ -13,7 +13,7 @@ fun main() {
     val mineSweeperMap = MineSweeperMap(height, width)
     val mapPositions = mineSweeperMap.createPosition()
     val mines = MineGenerator.generate(mapPositions, mineCount)
-    val mineSweeper = MineSweeper(mineSweeperMap, mines)
+    val mineSweeper = MineSweeper(mapPositions, mines)
     OutputView.printMineSweeperStart()
     mapPositions.groupBy { it.y }
         .forEach {
