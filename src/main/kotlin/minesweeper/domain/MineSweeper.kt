@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineSweeper(val mineMap: MineMap, val mines: Mines) {
+class MineSweeper(val mineSweeperMap: MineSweeperMap, val mines: Mines) {
     init {
         validateMines()
     }
@@ -12,7 +12,7 @@ class MineSweeper(val mineMap: MineMap, val mines: Mines) {
     }
 
     private fun throwExceptionIfMineInMap(position: Position) {
-        if (!mineMap.isInMap(position)) {
+        if (!mineSweeperMap.isInMap(position)) {
             throw IllegalArgumentException(ERROR_MESSAGE)
         }
     }
