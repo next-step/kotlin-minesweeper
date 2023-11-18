@@ -28,4 +28,15 @@ class MineSweeperIndexTest : BehaviorSpec({
             }
         }
     }
+
+    given("지뢰판의 인덱스(1,1)이 주어졌을 때") {
+        val position = Position(1, 1)
+        val mineSweeperIndex = MineSweeperIndex(position)
+        When("지뢰가 없다면") {
+            val result = mineSweeperIndex.mineCount(Mines(emptyList()))
+            Then("지뢰의 개수는 0이다.") {
+                result shouldBe 0
+            }
+        }
+    }
 })
