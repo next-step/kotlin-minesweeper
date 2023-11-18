@@ -24,8 +24,8 @@ class MineGeneratorTest : BehaviorSpec({
         }
     }
 
-    given("지뢰 20개와 지뢰판(4x4)이 주어지면") {
-        val mineCount = 20
+    given("지뢰 17개와 지뢰판(4x4)이 주어지면") {
+        val mineCount = 17
         val minSweeperMap = MineSweeperMap(Height(4), Width(4))
         When("지뢰를 생성할 때") {
             val exception = shouldThrow<IllegalArgumentException> {
