@@ -2,13 +2,15 @@ package minesweeper.domain
 
 object MineGenerator {
 
-    // 높이와 너비로 주어진 지뢰만큼 랜덤으로 지뢰를 생성한다.
-    fun generate(mineMap: MineMap, mineCount: Int): Mines {
-        val mines = mineMap.createPosition()
-            .flatten()
+    fun generate(positions: List<Position>, mineCount: Int): Mines {
+        require(positions.size >= mineCount) { ERROR_MESSAGE }
+        val copyPosition = positions.map { it.copy() }
+        val mines = copyPosition
             .map { Mine(it) }
             .shuffled()
             .take(mineCount)
         return Mines(mines)
     }
+
+    private const val ERROR_MESSAGE = "지뢰의 개수는 지뢰판의 크기보다 작아야 합니다."
 }

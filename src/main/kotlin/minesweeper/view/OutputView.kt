@@ -1,29 +1,19 @@
 package minesweeper.view
 
-import minesweeper.domain.Mines
-import minesweeper.domain.Position
-
 object OutputView {
 
     fun printMineSweeperStart() {
         println(MINESWEEPER_START_MESSAGE)
     }
-
-    fun printMineSweeper(positions: List<Position>, mines: Mines) {
-        positions.forEach {
-            printMine(mines.isMine(it))
-        }
-        println()
+    fun printMineSweeper(chunked: Int, result: List<Pair<Int, Boolean>>) {
+        result.chunked(chunked).forEach { it.printMineSweeperRow() }
     }
 
-    private fun printMine(isMine: Boolean) {
-        when (isMine) {
-            true -> print(MINE)
-            false -> print(NO_MINE)
-        }
+    private fun List<Pair<Int, Boolean>>.printMineSweeperRow() {
+        val convert = this.map { if (it.second) MINE else it.first.toString() }
+        println(convert.joinToString(" "))
     }
 
     private const val MINESWEEPER_START_MESSAGE = "지뢰찾기 게임 시작"
-    private const val NO_MINE = "C "
-    private const val MINE = "* "
+    private const val MINE = "*"
 }

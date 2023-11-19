@@ -1,8 +1,8 @@
 package minesweeper
 
 import minesweeper.domain.MineGenerator
-import minesweeper.domain.MineMap
-import minesweeper.domain.MineSweeper
+import minesweeper.domain.MineSweeperMap
+import minesweeper.domain.MineSweeperResult
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -10,11 +10,10 @@ fun main() {
     val height = InputView.inputHeight()
     val width = InputView.inputWidth()
     val mineCount = InputView.inputMines()
-    val mineMap = MineMap(height, width)
-    val mines = MineGenerator.generate(mineMap, mineCount)
-    val mineSweeper = MineSweeper(mineMap, mines)
+    val mineSweeperMap = MineSweeperMap(height, width)
+    val mapPositions = mineSweeperMap.createPosition()
+    val mines = MineGenerator.generate(mapPositions, mineCount)
+    val mineSweeperResult = MineSweeperResult(mapPositions, mines)
     OutputView.printMineSweeperStart()
-    mineMap.createPosition().forEach {
-        OutputView.printMineSweeper(it, mines)
-    }
+    OutputView.printMineSweeper(height.value, mineSweeperResult.resultByRow)
 }

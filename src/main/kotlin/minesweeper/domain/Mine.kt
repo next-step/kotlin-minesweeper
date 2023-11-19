@@ -1,3 +1,4 @@
 package minesweeper.domain
 
-class Mine(val position: Position)
+@JvmInline
+value class Mine(val position: Position)
