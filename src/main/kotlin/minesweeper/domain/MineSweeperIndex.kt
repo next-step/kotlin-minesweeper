@@ -8,6 +8,10 @@ class MineSweeperIndex(val position: Position, var status: PositionStatus = Posi
             .count { mines.isMine(it.position) }
     }
 
+    fun open() {
+        status = PositionStatus.OPENED
+    }
+
     companion object {
         const val MINE = -1
     }
