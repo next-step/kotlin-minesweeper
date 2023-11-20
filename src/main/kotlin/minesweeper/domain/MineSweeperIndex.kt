@@ -1,10 +1,11 @@
 package minesweeper.domain
 
-class MineSweeperIndex(val position: Position) {
+class MineSweeperIndex(val position: Position, var status: PositionStatus = PositionStatus.CLOSED) {
 
-    fun mineCount(mines: Mines): Int {
+    fun mineCount(mines: Mines, mineSweeperIndexes: MineSweeperIndexes): Int {
         if (mines.isMine(position)) return MINE
-        return IndexSquare.values().count { mines.isMine(position + it.position) }
+        return IndexSquare.squareIndex(position, mineSweeperIndexes).mineSweeperIndexes
+            .count { mines.isMine(it.position) }
     }
 
     companion object {
