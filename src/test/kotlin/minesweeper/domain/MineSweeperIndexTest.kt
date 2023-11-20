@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class MineSweeperIndexTest : BehaviorSpec({
 
     given("지뢰판(2,2)의 인덱스(1,1)와 지뢰(1,2)가 주어지면") {
-        val mineSweeperMap = MineSweeperMap(Height(2), Width(2))
+        val mineSweeperMap = MineSweeperMap(2, 2)
         val position = Position(1, 1)
         val mines = Mines(listOf(Mine(Position(1, 2))))
         val mineSweeperIndex = MineSweeperIndex(position)
@@ -19,7 +19,7 @@ class MineSweeperIndexTest : BehaviorSpec({
     }
 
     given("지뢰판(2,2)의 인덱스(1,1)이 주어졌을때") {
-        val mineSweeperMap = MineSweeperMap(Height(2), Width(2))
+        val mineSweeperMap = MineSweeperMap(2, 2)
         val position = Position(1, 1)
         val mines = Mines(listOf(Mine(Position(1, 1))))
         val mineSweeperIndex = MineSweeperIndex(position)
@@ -32,7 +32,7 @@ class MineSweeperIndexTest : BehaviorSpec({
     }
 
     given("지뢰판(2,2)의 인덱스(1,1)이 주어졌을 때") {
-        val mineSweeperMap = MineSweeperMap(Height(2), Width(2))
+        val mineSweeperMap = MineSweeperMap(2, 2)
         val position = Position(1, 1)
         val mineSweeperIndex = MineSweeperIndex(position)
         When("지뢰가 없다면") {

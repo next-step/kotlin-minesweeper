@@ -1,6 +1,8 @@
 package minesweeper.view
 
 import minesweeper.domain.Height
+import minesweeper.domain.MineSweeperIndex
+import minesweeper.domain.Position
 import minesweeper.domain.Width
 
 object InputView {
@@ -38,8 +40,16 @@ object InputView {
         return value.toInt()
     }
 
+    fun inputOpenPosition(): MineSweeperIndex {
+        print(INPUT_OPEN)
+        return readln().split(DELIMITER)
+            .let { MineSweeperIndex(Position(it[0].trim().toInt(), it[1].trim().toInt())) }
+    }
+
     private const val INPUT_HEIGHT = "높이를 입력해주세요."
     private const val INPUT_WIDTH = "너비를 입력해주세요."
     private const val INPUT_MINES = "지뢰는 몇 개인가요?"
     private const val INPUT_NUMBER_ERROR = "숫자만 입력해주세요."
+    private const val DELIMITER = ","
+    private const val INPUT_OPEN = "open : "
 }

@@ -2,21 +2,23 @@ package minesweeper.domain
 
 class MineSweeperIndexes(val mineSweeperIndexes: List<MineSweeperIndex>) {
 
-    fun open(mines: Mines, mineSweeperIndex: MineSweeperIndex): List<MineSweeperIndex> {
-        val result = mutableListOf<MineSweeperIndex>()
-        if (isOpen(mineSweeperIndex.position)) return result
-        if (mines.isMine(mineSweeperIndex.position)) return result
+    fun open(mines: Mines, mineSweeperIndex: MineSweeperIndex): MineStatus {
+        if (isOpen(mineSweeperIndex.position)) return MineStatus.NOT_MINE
+        if (mines.isMine(mineSweeperIndex.position)) return MineStatus.MINE
         mineSweeperIndexes.find { it.position == mineSweeperIndex.position }?.let {
             it.status = PositionStatus.OPENED
-            result.add(it)
         }
-        if (mineSweeperIndex.mineCount(mines, this) != 0) return result
+        if (mineSweeperIndex.mineCount(mines, this) != 0) return MineStatus.NOT_MINE
+        findEmptyIndex(mineSweeperIndex, mines)
+        return MineStatus.NOT_MINE
+    }
+
+    private fun findEmptyIndex(mineSweeperIndex: MineSweeperIndex, mines: Mines) {
         IndexSquare.squareIndex(mineSweeperIndex.position, this).mineSweeperIndexes
             .filter { it.status == PositionStatus.CLOSED }
             .forEach {
-                result.addAll(open(mines, it))
+                open(mines, it)
             }
-        return result
     }
 
     private fun isOpen(position: Position): Boolean {
