@@ -26,14 +26,15 @@ object View {
 
     private fun printMineMap(map: MineMap) {
         val height = map.mapInfo.height
-        repeat(height) { y ->
-            printMineMapByLine(map.mapByLine(y))
+        repeat(height) { h ->
+            printMineMapLine(map, h)
         }
     }
 
-    private fun printMineMapByLine(line: List<Int>) {
-        line.forEach {
-            print(if (it == 1) "*" else "O")
+    private fun printMineMapLine(map: MineMap, line: Int) {
+        val width = map.mapInfo.width
+        repeat(width) { i ->
+            print(map.isMineOn(i, line))
         }
         println()
     }
