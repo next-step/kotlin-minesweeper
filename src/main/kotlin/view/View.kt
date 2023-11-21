@@ -26,7 +26,7 @@ object View {
 
     private fun printMineMap(map: MineMap) {
         val height = map.mapInfo.height
-        for (y in 0 until height) {
+        repeat(height) { y ->
             printMineMapByLine(map.mapByLine(y))
         }
     }
