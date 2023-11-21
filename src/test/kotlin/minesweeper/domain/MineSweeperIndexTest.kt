@@ -3,6 +3,9 @@ package minesweeper.domain
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
+fun MineSweeperIndex(x: Int, y: Int): MineSweeperIndex {
+    return MineSweeperIndex(Position(x, y))
+}
 class MineSweeperIndexTest : BehaviorSpec({
 
     given("지뢰판(2,2)의 인덱스(1,1)와 지뢰(1,2)가 주어지면") {

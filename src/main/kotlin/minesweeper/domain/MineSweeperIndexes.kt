@@ -4,17 +4,21 @@ class MineSweeperIndexes(val mineSweeperIndexes: List<MineSweeperIndex>) {
 
     fun open(mines: Mines, mineSweeperIndex: MineSweeperIndex): MineStatus {
         MineSweeperValidator.validate(mineSweeperIndex, this)
-        if (isOpen(mineSweeperIndex.position)) {
+        val findIndex = findIndex(mineSweeperIndex)
+        return checkMine(findIndex, mines)
+    }
+
+    private fun checkMine(mineSweeperIndex: MineSweeperIndex, mines: Mines): MineStatus {
+        if (mineSweeperIndex.isOpened()) {
             return MineStatus.NOT_MINE
         }
-        if (mines.isMine(mineSweeperIndex.position)) {
+        if (mines.isMine(mineSweeperIndex)) {
             return MineStatus.MINE
         }
-        mineSweeperIndexes.find { it.position == mineSweeperIndex.position }?.open()
+        mineSweeperIndex.open()
         if (mineSweeperIndex.mineCount(mines, this) != 0) {
             return MineStatus.NOT_MINE
         }
-
         findEmptyIndex(mineSweeperIndex, mines)
         return MineStatus.NOT_MINE
     }
@@ -27,7 +31,7 @@ class MineSweeperIndexes(val mineSweeperIndexes: List<MineSweeperIndex>) {
             }
     }
 
-    private fun isOpen(position: Position): Boolean {
-        return mineSweeperIndexes.find { it.position == position }?.status == PositionStatus.OPENED
+    private fun findIndex(index: MineSweeperIndex): MineSweeperIndex {
+        return mineSweeperIndexes.find { it.match(index) } ?: throw IllegalArgumentException("해당 인덱스가 없습니다.")
     }
 }

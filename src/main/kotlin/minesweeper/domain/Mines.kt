@@ -6,7 +6,7 @@ value class Mines(val mines: List<Mine>) {
         return mines.size
     }
 
-    fun isMine(position: Position): Boolean {
-        return mines.any { it.position.match(position) }
+    fun isMine(mineSweeperIndex: MineSweeperIndex): Boolean {
+        return mines.any { it.position.match(mineSweeperIndex.position) }
     }
 }
