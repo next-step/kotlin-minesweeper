@@ -2,6 +2,8 @@ package vo
 
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class MineMapInfoTest {
 
@@ -31,5 +33,11 @@ class MineMapInfoTest {
         assertThatIllegalArgumentException().isThrownBy {
             MineMapInfo(10, 10, 101)
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [1, 100])
+    fun `지뢰가 맵 칸 수 안에 있으면 정상적으로 생성된다`(mineCount: Int) {
+        MineMapInfo(10, 10, mineCount)
     }
 }
