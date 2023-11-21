@@ -19,7 +19,7 @@ class MinesTest : BehaviorSpec({
     given("지뢰(1,1)이 주어지고 지뢰찾기 객체가 주어지면") {
         val mines = Mines(listOf(Mine(1 to 1)))
         When("(1,1)이 지뢰인지 확인하면") {
-            val result = mines.isMine(Position(1, 1))
+            val result = mines.isMine(MineSweeperIndex(1, 1))
             Then("true를 반환한다") {
                 result shouldBe true
             }

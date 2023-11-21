@@ -2,11 +2,10 @@ package minesweeper.domain
 
 object MineGenerator {
 
-    fun generate(positions: List<Position>, mineCount: Int): Mines {
-        require(positions.size >= mineCount) { ERROR_MESSAGE }
-        val copyPosition = positions.map { it.copy() }
-        val mines = copyPosition
-            .map { Mine(it) }
+    fun generate(mineSweeperIndexes: MineSweeperIndexes, mineCount: Int): Mines {
+        require(mineSweeperIndexes.mineSweeperIndexes.size >= mineCount) { ERROR_MESSAGE }
+        val mines = mineSweeperIndexes.mineSweeperIndexes
+            .map { Mine(it.position) }
             .shuffled()
             .take(mineCount)
         return Mines(mines)
