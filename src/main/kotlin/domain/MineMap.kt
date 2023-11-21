@@ -1,17 +1,16 @@
 package domain
 
-import vo.MineMapInfo
 import vo.Spot
 
-class MineMap(val mapInfo: MineMapInfo) {
-
-    private val map: List<Spot> =
-        (List(mapInfo.mineCount) { Spot(true) } + List(mapInfo.height * mapInfo.width - mapInfo.mineCount) { Spot(false) })
-            .shuffled()
+class MineMap(private val map: List<List<Spot>>) {
 
     fun isMineOn(x: Int, y: Int): String {
-        require(x in 0 until mapInfo.width) { "잘못된 x값입니다." }
-        require(y in 0 until mapInfo.height) { "잘못된 y값입니다." }
-        return map[y * mapInfo.width + x].isMineOn()
+        require(y in map.indices) { "잘못된 x값입니다." }
+        require(x in map.first().indices) { "잘못된 y값입니다." }
+        return map[y][x].isMineOn()
     }
+
+    fun getHeight(): Int = map.size
+
+    fun getWidth(): Int = map.first().size
 }

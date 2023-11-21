@@ -10,14 +10,14 @@ object OutputView {
     }
 
     private fun printMineMap(map: MineMap) {
-        val height = map.mapInfo.height
+        val height = map.getHeight()
         repeat(height) { h ->
             printMineMapLine(map, h)
         }
     }
 
     private fun printMineMapLine(map: MineMap, line: Int) {
-        val width = map.mapInfo.width
+        val width = map.getWidth()
         repeat(width) { i ->
             print(map.isMineOn(i, line))
         }
