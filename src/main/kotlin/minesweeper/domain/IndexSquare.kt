@@ -12,12 +12,16 @@ enum class IndexSquare(val position: Position) {
 
     companion object {
         fun squareIndex(position: Position, mineSweeperIndexes: MineSweeperIndexes): MineSweeperIndexes {
-            val squares = values().filter { indexSquare ->
-                (position + indexSquare.position in mineSweeperIndexes.mineSweeperIndexes.map { it.position })
-            }.map {
+            val squares = filterSquare(position, mineSweeperIndexes).map {
                 MineSweeperIndex(position + it.position)
             }
             return MineSweeperIndexes(squares)
+        }
+
+        private fun filterSquare(position: Position, mineSweeperIndexes: MineSweeperIndexes): List<IndexSquare> {
+            return values().filter { indexSquare ->
+                position + indexSquare.position in mineSweeperIndexes.mineSweeperIndexes.map { it.position }
+            }
         }
     }
 }
