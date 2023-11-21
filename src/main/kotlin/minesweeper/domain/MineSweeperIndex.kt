@@ -1,6 +1,9 @@
 package minesweeper.domain
 
-class MineSweeperIndex(val position: Position, var status: PositionStatus = PositionStatus.CLOSED) {
+class MineSweeperIndex(val position: Position, status: PositionStatus = PositionStatus.CLOSED) {
+
+    var status: PositionStatus = status
+        private set
 
     fun mineCount(mines: Mines, mineSweeperIndexes: MineSweeperIndexes): Int {
         if (mines.isMine(this)) return MINE
