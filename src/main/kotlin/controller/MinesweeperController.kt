@@ -1,7 +1,8 @@
 package controller
 
 import domain.MineMap
-import view.View
+import view.InputView
+import view.OutputView
 import vo.MineMapInfo
 
 class MinesweeperController {
@@ -10,13 +11,13 @@ class MinesweeperController {
         val mapInfo = inputCondition()
         val mineMap = MineMap(mapInfo)
 
-        View.outputGameStart(mineMap)
+        OutputView.outputGameStart(mineMap)
     }
 
     private fun inputCondition(): MineMapInfo =
         MineMapInfo(
-            View.inputHeight(),
-            View.inputWidth(),
-            View.inputMineCount()
+            InputView.inputHeight(),
+            InputView.inputWidth(),
+            InputView.inputMineCount()
         )
 }
