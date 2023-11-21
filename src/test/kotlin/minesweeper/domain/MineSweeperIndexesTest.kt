@@ -38,7 +38,7 @@ class MineSweeperIndexesTest : BehaviorSpec({
         val mines = Mines(listOf(Mine(Position(3, 3))))
         val mineSweeperIndex = MineSweeperIndex(position)
         When("인덱스를 열 때") {
-            val result = mineSweeperMap.open(mines, mineSweeperIndex)
+            mineSweeperMap.open(mines, mineSweeperIndex)
             Then("open되는 인덱스는 8개이다.") {
                 mineSweeperMap.mineSweeperIndexes
                     .filter { it.status == PositionStatus.OPENED }.size shouldBe 8

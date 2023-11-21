@@ -3,10 +3,18 @@ package minesweeper.domain
 class MineSweeperIndexes(val mineSweeperIndexes: List<MineSweeperIndex>) {
 
     fun open(mines: Mines, mineSweeperIndex: MineSweeperIndex): MineStatus {
-        if (isOpen(mineSweeperIndex.position)) return MineStatus.NOT_MINE
-        if (mines.isMine(mineSweeperIndex.position)) return MineStatus.MINE
+        MineSweeperValidator.validate(mineSweeperIndex, this)
+        if (isOpen(mineSweeperIndex.position)) {
+            return MineStatus.NOT_MINE
+        }
+        if (mines.isMine(mineSweeperIndex.position)) {
+            return MineStatus.MINE
+        }
         mineSweeperIndexes.find { it.position == mineSweeperIndex.position }?.open()
-        if (mineSweeperIndex.mineCount(mines, this) != 0) return MineStatus.NOT_MINE
+        if (mineSweeperIndex.mineCount(mines, this) != 0) {
+            return MineStatus.NOT_MINE
+        }
+
         findEmptyIndex(mineSweeperIndex, mines)
         return MineStatus.NOT_MINE
     }

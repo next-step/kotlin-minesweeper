@@ -19,12 +19,22 @@ object OutputView {
     }
 
     private fun List<IndexResult>.printMineSweeperRow() {
-        val convert = this.map { if (it.isOpened == PositionStatus.OPENED) it.mineCount.toString() else CLOSED }
+        val convert = this.map {
+            if (it.isOpened == PositionStatus.OPENED) {
+                return@map it.mineCount.toString()
+            }
+            CLOSED
+        }
         println(convert.joinToString(" "))
     }
 
     private fun List<IndexResult>.printLoseMineSweeperRow() {
-        val convert = this.map { if (it.isMine) MINE else it.mineCount.toString() }
+        val convert = this.map {
+            if (it.isMine) {
+                return@map MINE
+            }
+            it.mineCount.toString()
+        }
         println(convert.joinToString(" "))
     }
 

@@ -5,7 +5,6 @@ import minesweeper.domain.MineStatus
 import minesweeper.domain.MineSweeperIndexes
 import minesweeper.domain.MineSweeperMap
 import minesweeper.domain.MineSweeperResult
-import minesweeper.domain.MineSweeperValidator.validate
 import minesweeper.domain.Mines
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -28,6 +27,6 @@ class MineSweeperController {
     }
 
     private fun MineSweeperIndexes.openIndex(mines: Mines): MineStatus {
-        return open(mines, validate(InputView.inputOpenPosition(), this))
+        return open(mines, InputView.inputOpenPosition())
     }
 }
