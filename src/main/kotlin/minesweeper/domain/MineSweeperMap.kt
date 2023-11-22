@@ -12,7 +12,7 @@ class MineSweeperMap(val mineSweeperIndexes: List<MineSweeperIndex>) :
         }
 
         mineSweeperIndex.open()
-        if (mineSweeperIndex.mineCount() != 0) {
+        if (mineSweeperIndex.mineCount() != NO_MINE_COUNT) {
             return GameStatus.CONTINUE
         }
 
@@ -40,5 +40,6 @@ class MineSweeperMap(val mineSweeperIndexes: List<MineSweeperIndex>) :
 
     companion object {
         private const val MINE_SCOPE_ERROR_MESSAGE = "지뢰 찾기 범위를 벗어났습니다."
+        private const val NO_MINE_COUNT = 0
     }
 }
