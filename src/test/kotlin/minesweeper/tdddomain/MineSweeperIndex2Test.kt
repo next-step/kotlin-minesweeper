@@ -33,4 +33,32 @@ class MineSweeperIndex2Test : BehaviorSpec({
             }
         }
     }
+
+    given("지뢰 인덱스(3x3)리스트가 주어지고 (3,3)가 지뢰일때") {
+        val mineSweeperIndexes = listOf(
+            MineSweeperIndex2(1, 1, MineStatus.NOT_MINE),
+            MineSweeperIndex2(1, 2, MineStatus.NOT_MINE),
+            MineSweeperIndex2(1, 3, MineStatus.NOT_MINE),
+            MineSweeperIndex2(2, 1, MineStatus.NOT_MINE),
+            MineSweeperIndex2(2, 2, MineStatus.NOT_MINE),
+            MineSweeperIndex2(2, 3, MineStatus.NOT_MINE),
+            MineSweeperIndex2(3, 1, MineStatus.NOT_MINE),
+            MineSweeperIndex2(3, 2, MineStatus.NOT_MINE),
+            MineSweeperIndex2(3, 3, MineStatus.MINE)
+        )
+        val mineSweeperIndex = MineSweeperIndex2(1, 1, MineStatus.NOT_MINE)
+        When("(1,1)좌표의 지뢰의 개수를 구하면") {
+            val result = mineSweeperIndex.mineCount(mineSweeperIndexes)
+            Then("지뢰의 개수는 0이다.") {
+                result shouldBe 0
+            }
+        }
+
+        When("(2,2)좌표의 지뢰의 개수를 구하면") {
+            val result = MineSweeperIndex2(2, 2, MineStatus.NOT_MINE).mineCount(mineSweeperIndexes)
+            Then("지뢰의 개수는 1이다.") {
+                result shouldBe 1
+            }
+        }
+    }
 })
