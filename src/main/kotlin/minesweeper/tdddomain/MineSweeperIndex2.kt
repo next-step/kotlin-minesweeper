@@ -11,4 +11,9 @@ class MineSweeperIndex2(val position: Position, val mineStatus: MineStatus) {
     init {
         openStatus = PositionStatus.CLOSED
     }
+    constructor(x: Int, y: Int, mineStatus: MineStatus) : this(Position(x, y), mineStatus)
+
+    fun open() {
+        openStatus = PositionStatus.OPENED
+    }
 }
