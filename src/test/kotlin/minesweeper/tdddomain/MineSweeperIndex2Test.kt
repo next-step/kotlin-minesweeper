@@ -61,4 +61,14 @@ class MineSweeperIndex2Test : BehaviorSpec({
             }
         }
     }
+
+    given("지뢰 인덱스(1, 1) 지뢰일때") {
+        val mineSweeperIndex = MineSweeperIndex2(1, 1, MineStatus.MINE)
+        When("해당 좌표가 지뢰인지 판단하면") {
+            val result = mineSweeperIndex.isMine()
+            Then("지뢰이다.") {
+                result shouldBe true
+            }
+        }
+    }
 })
