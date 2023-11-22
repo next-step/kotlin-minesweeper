@@ -5,6 +5,7 @@ import domain.MineMapGenerator
 import view.InputView
 import view.OutputView
 import vo.MineMapInfo
+import vo.Point
 
 class MinesweeperController {
 
@@ -17,8 +18,10 @@ class MinesweeperController {
 
     private fun inputCondition(): MineMapInfo =
         MineMapInfo(
-            InputView.inputHeight(),
-            InputView.inputWidth(),
+            Point(
+                InputView.inputHeight(),
+                InputView.inputWidth()
+            ),
             InputView.inputMineCount()
         )
 }

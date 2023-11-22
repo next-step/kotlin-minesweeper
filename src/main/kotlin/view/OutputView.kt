@@ -19,7 +19,7 @@ object OutputView {
     private fun printMineMapLine(map: MineMap, line: Int) {
         val width = map.getWidth()
         repeat(width) { i ->
-            print(map.isMineOn(i, line))
+            print(map.resultMineStatus(i, line))
         }
         println()
     }
