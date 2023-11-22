@@ -1,6 +1,6 @@
 package vo
 
-class Spot(private val isMine: Boolean) {
+class Spot(private val status: MineStatus) {
 
-    fun isMineOn(): String = if (isMine) "*" else "O"
+    fun isMineOn(): String = OpenStatus.from(status).symbol
 }
