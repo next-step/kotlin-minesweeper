@@ -3,7 +3,7 @@ package minesweeper.domain
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class MineSweeperIndex2Test : BehaviorSpec({
+class MineSweeperIndexTest : BehaviorSpec({
 
     given("좌표(1,1)와 지뢰여부 상태가 주어졌을 때") {
         val position = Position(1, 1)

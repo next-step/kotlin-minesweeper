@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class MineSweeperMap2Test : BehaviorSpec({
+class MineSweeperMapTest : BehaviorSpec({
 
     given("지뢰판(3x3)과 (1,2)가 지뢰일때") {
         val mineSweeperIndexes = listOf(
