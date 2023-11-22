@@ -1,29 +1,25 @@
 package minesweeper.domain
 
-class MineSweeperIndex(val position: Position, status: PositionStatus = PositionStatus.CLOSED) {
-
-    var status: PositionStatus = status
+class MineSweeperIndex(val position: Position, val mineStatus: MineStatus) {
+    var openStatus: PositionStatus
         private set
 
-    fun mineCount(mines: Mines, mineSweeperIndexes: MineSweeperIndexes): Int {
-        if (mines.isMine(this)) return MINE
-        return IndexSquare.squareIndex(position, mineSweeperIndexes).mineSweeperIndexes
-            .count { mines.isMine(it) }
+    init {
+        openStatus = PositionStatus.CLOSED
     }
+
+    constructor(x: Int, y: Int, mineStatus: MineStatus) : this(Position(x, y), mineStatus)
 
     fun open() {
-        status = PositionStatus.OPENED
+        openStatus = PositionStatus.OPENED
     }
 
-    fun isOpened(): Boolean {
-        return status == PositionStatus.OPENED
+    fun mineCount(mineSweeperIndexes: MineSweeperMap): Int {
+        return IndexSquare.squareIndex(this, mineSweeperIndexes)
+            .count { it.mineStatus == MineStatus.MINE }
     }
 
-    fun match(otherMineSweeperIndex: MineSweeperIndex): Boolean {
-        return position.match(otherMineSweeperIndex.position)
-    }
-
-    companion object {
-        const val MINE = -1
+    fun isMine(): Boolean {
+        return mineStatus == MineStatus.MINE
     }
 }

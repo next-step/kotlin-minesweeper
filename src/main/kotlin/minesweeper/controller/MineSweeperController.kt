@@ -4,7 +4,6 @@ import minesweeper.domain.GameStatus
 import minesweeper.domain.MineGenerator
 import minesweeper.domain.MineSweeperMap
 import minesweeper.domain.MineSweeperResult
-import minesweeper.tdddomain.MineSweeperMap2
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -14,9 +13,6 @@ class MineSweeperController {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val mineCount = InputView.inputMines()
-        val mineSweeperMap = MineSweeperMap(height, width)
-        val mapIndexes = mineSweeperMap.createPosition()
-        val mines = MineGenerator.generate(mapIndexes, mineCount)
         val mineSweeperMap2 = MineGenerator.generate(height, width, mineCount)
         OutputView.printMineSweeperStart()
 
@@ -26,7 +22,7 @@ class MineSweeperController {
         OutputView.printLoseMineSweeper(height.value, MineSweeperResult(mineSweeperMap2).resultByRow)
     }
 
-    private fun MineSweeperMap2.openIndex(): GameStatus {
+    private fun MineSweeperMap.openIndex(): GameStatus {
         return open(InputView.inputOpenPosition())
     }
 }
