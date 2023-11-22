@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.tdddomain.MineSweeperIndex2
+import minesweeper.tdddomain.MineSweeperMap2
 
 enum class IndexSquare(val position: Position) {
     LEFT_TOP(Position(-1, 1)),
@@ -22,7 +23,7 @@ enum class IndexSquare(val position: Position) {
 
         fun squareIndex(
             mineSweeperIndex2: MineSweeperIndex2,
-            mineSweeperIndexes: List<MineSweeperIndex2>
+            mineSweeperIndexes: MineSweeperMap2
         ): List<MineSweeperIndex2> {
             val squares = filterSquare(mineSweeperIndex2, mineSweeperIndexes).flatMap { indexSquare ->
                 mineSweeperIndexes.filter {
@@ -40,7 +41,7 @@ enum class IndexSquare(val position: Position) {
 
         private fun filterSquare(
             mineSweeperIndex2: MineSweeperIndex2,
-            mineSweeperIndexes: List<MineSweeperIndex2>
+            mineSweeperIndexes: MineSweeperMap2
         ): List<IndexSquare> {
             return values().filter { indexSquare ->
                 mineSweeperIndex2.position + indexSquare.position in mineSweeperIndexes.map { it.position }

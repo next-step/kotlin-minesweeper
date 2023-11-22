@@ -5,7 +5,10 @@ import minesweeper.domain.IndexSquare
 import minesweeper.domain.Position
 import minesweeper.domain.PositionStatus
 
-class MineSweeperMap2(val mineSweeperIndexes: List<MineSweeperIndex2>) {
+class MineSweeperMap2(val mineSweeperIndexes: List<MineSweeperIndex2>) :
+    Collection<MineSweeperIndex2> by mineSweeperIndexes {
+
+    constructor(vararg mineSweeperIndexes: MineSweeperIndex2) : this(mineSweeperIndexes.toList())
 
     fun open(position: Position): GameStatus {
         val mineSweeperIndex = mineSweeperIndexes.find { it.position == position } ?: throw IllegalArgumentException()
@@ -14,7 +17,7 @@ class MineSweeperMap2(val mineSweeperIndexes: List<MineSweeperIndex2>) {
         }
 
         mineSweeperIndex.open()
-        if (mineSweeperIndex.mineCount(mineSweeperIndexes) != 0) {
+        if (mineSweeperIndex.mineCount() != 0) {
             return GameStatus.CONTINUE
         }
 
@@ -23,10 +26,14 @@ class MineSweeperMap2(val mineSweeperIndexes: List<MineSweeperIndex2>) {
     }
 
     private fun emptyIndex(mineSweeperIndex: MineSweeperIndex2) {
-        IndexSquare.squareIndex(mineSweeperIndex, mineSweeperIndexes)
+        IndexSquare.squareIndex(mineSweeperIndex, this)
             .filter { it.openStatus == PositionStatus.CLOSED }
             .forEach {
                 open(it.position)
             }
+    }
+
+    private fun MineSweeperIndex2.mineCount(): Int {
+        return mineCount(this@MineSweeperMap2)
     }
 }

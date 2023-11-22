@@ -1,11 +1,10 @@
 package minesweeper.controller
 
+import minesweeper.domain.GameStatus
 import minesweeper.domain.MineGenerator
-import minesweeper.domain.MineStatus
-import minesweeper.domain.MineSweeperIndexes
 import minesweeper.domain.MineSweeperMap
 import minesweeper.domain.MineSweeperResult
-import minesweeper.domain.Mines
+import minesweeper.tdddomain.MineSweeperMap2
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
@@ -18,15 +17,16 @@ class MineSweeperController {
         val mineSweeperMap = MineSweeperMap(height, width)
         val mapIndexes = mineSweeperMap.createPosition()
         val mines = MineGenerator.generate(mapIndexes, mineCount)
+        val mineSweeperMap2 = MineGenerator.generate(height, width, mineCount)
         OutputView.printMineSweeperStart()
 
-        while (mapIndexes.openIndex(mines) == MineStatus.NOT_MINE) {
-            OutputView.printMineSweeper(height.value, MineSweeperResult(mapIndexes, mines).resultByRow)
+        while (mineSweeperMap2.openIndex() == GameStatus.CONTINUE) {
+            OutputView.printMineSweeper(height.value, MineSweeperResult(mineSweeperMap2).resultByRow)
         }
-        OutputView.printLoseMineSweeper(height.value, MineSweeperResult(mapIndexes, mines).resultByRow)
+        OutputView.printLoseMineSweeper(height.value, MineSweeperResult(mineSweeperMap2).resultByRow)
     }
 
-    private fun MineSweeperIndexes.openIndex(mines: Mines): MineStatus {
-        return open(mines, InputView.inputOpenPosition())
+    private fun MineSweeperMap2.openIndex(): GameStatus {
+        return open(InputView.inputOpenPosition())
     }
 }

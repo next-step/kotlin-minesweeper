@@ -35,7 +35,7 @@ class MineSweeperIndex2Test : BehaviorSpec({
     }
 
     given("지뢰 인덱스(3x3)리스트가 주어지고 (3,3)가 지뢰일때") {
-        val mineSweeperIndexes = listOf(
+        val mineSweeperIndexes = MineSweeperMap2(
             MineSweeperIndex2(1, 1, MineStatus.NOT_MINE),
             MineSweeperIndex2(1, 2, MineStatus.NOT_MINE),
             MineSweeperIndex2(1, 3, MineStatus.NOT_MINE),

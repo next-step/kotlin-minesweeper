@@ -36,4 +36,19 @@ class MineGeneratorTest : BehaviorSpec({
             }
         }
     }
+
+    given("높이 5, 너비 5, 지뢰갯수 10개가 주어지면") {
+        val height = Height(5)
+        val width = Width(5)
+        val mineCount = 10
+        When("지뢰판을 생성하면") {
+            val result = MineGenerator.generate(height, width, mineCount)
+            Then("지뢰판의 크기는 25이다.") {
+                result.size shouldBe 25
+            }
+            Then("지뢰의 개수는 10개이다.") {
+                result.count { it.isMine() } shouldBe 10
+            }
+        }
+    }
 })
