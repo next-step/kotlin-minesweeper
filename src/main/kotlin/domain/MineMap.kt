@@ -2,6 +2,11 @@ package domain
 
 import vo.Spot
 
+/**
+ * 지뢰찾기 맵은 이중 배열의 형태
+ * 첫 번째 (outer) List는 y축
+ * 두 번째 (inner) List는 x축
+ */
 class MineMap(private val map: List<List<Spot>>) {
 
     fun isMineOn(x: Int, y: Int): String {
