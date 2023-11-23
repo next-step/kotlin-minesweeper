@@ -15,4 +15,19 @@ class GameBoardTest {
         board.cellMatrix.size shouldBe height
         board.cellMatrix[0].size shouldBe width
     }
+
+    @Test
+    fun `지뢰를 랜덤으로 심는다`() {
+        // given
+        val board = GameBoard.of(2, 2)
+
+        // given, when
+        val plantedBoard = board.plantMines(1)
+
+        // when
+        plantedBoard.cellMatrix.stream()
+            .flatMap { it.cellCollection.stream() }
+            .filter { it.value == MineStatus.MINE }
+            .count() shouldBe 1
+    }
 }
