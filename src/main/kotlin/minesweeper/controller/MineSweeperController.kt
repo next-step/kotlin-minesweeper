@@ -13,13 +13,13 @@ class MineSweeperController {
         val height = InputView.inputHeight()
         val width = InputView.inputWidth()
         val mineCount = InputView.inputMines()
-        val mineSweeperMap2 = MineGenerator.generate(height, width, mineCount)
+        val mineSweeperMap = MineGenerator.generate(height, width, mineCount)
         OutputView.printMineSweeperStart()
 
-        while (mineSweeperMap2.openIndex() == GameStatus.CONTINUE) {
-            OutputView.printMineSweeper(height.value, MineSweeperResult(mineSweeperMap2).resultByRow)
+        while (mineSweeperMap.openIndex() == GameStatus.CONTINUE) {
+            OutputView.printMineSweeper(height.value, MineSweeperResult(mineSweeperMap).resultByRow)
         }
-        OutputView.printLoseMineSweeper(height.value, MineSweeperResult(mineSweeperMap2).resultByRow)
+        OutputView.printLoseMineSweeper(height.value, MineSweeperResult(mineSweeperMap).resultByRow)
     }
 
     private fun MineSweeperMap.openIndex(): GameStatus {
