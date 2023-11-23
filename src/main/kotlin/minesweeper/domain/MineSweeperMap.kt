@@ -16,16 +16,31 @@ class MineSweeperMap(val mineSweeperIndexes: List<MineSweeperIndex>) :
             return GameStatus.CONTINUE
         }
 
-        emptyIndex(mineSweeperIndex)
+        findEmptyIndex(mineSweeperIndex)
         return GameStatus.CONTINUE
     }
 
-    private fun emptyIndex(mineSweeperIndex: MineSweeperIndex) {
-        IndexSquare.squareIndex(mineSweeperIndex, this)
+    private fun findEmptyIndex(mineSweeperIndex: MineSweeperIndex) {
+        findIndexSquare(mineSweeperIndex)
             .filter { it.openStatus == PositionStatus.CLOSED }
             .forEach {
                 open(it.position)
             }
+    }
+
+    fun findIndexSquare(mineSweeperIndex: MineSweeperIndex): List<MineSweeperIndex> {
+        val squares = filterSquare(mineSweeperIndex).flatMap { indexSquare ->
+            mineSweeperIndexes.filter {
+                it.position == mineSweeperIndex.position + indexSquare.position
+            }
+        }
+        return squares
+    }
+
+    private fun filterSquare(mineSweeperIndex: MineSweeperIndex): List<IndexSquare> {
+        return IndexSquare.values().filter { indexSquare ->
+            mineSweeperIndex.position + indexSquare.position in mineSweeperIndexes.map { it.position }
+        }
     }
 
     private fun MineSweeperIndex.mineCount(): Int {

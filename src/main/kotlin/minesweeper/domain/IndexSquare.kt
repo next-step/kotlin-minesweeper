@@ -9,27 +9,4 @@ enum class IndexSquare(val position: Position) {
     LEFT_BOTTOM(Position(-1, -1)),
     BOTTOM(Position(0, -1)),
     RIGHT_BOTTOM(Position(1, -1));
-
-    companion object {
-        fun squareIndex(
-            mineSweeperIndex: MineSweeperIndex,
-            mineSweeperIndexes: MineSweeperMap
-        ): List<MineSweeperIndex> {
-            val squares = filterSquare(mineSweeperIndex, mineSweeperIndexes).flatMap { indexSquare ->
-                mineSweeperIndexes.filter {
-                    it.position == mineSweeperIndex.position + indexSquare.position
-                }
-            }
-            return squares
-        }
-
-        private fun filterSquare(
-            mineSweeperIndex: MineSweeperIndex,
-            mineSweeperIndexes: MineSweeperMap
-        ): List<IndexSquare> {
-            return values().filter { indexSquare ->
-                mineSweeperIndex.position + indexSquare.position in mineSweeperIndexes.map { it.position }
-            }
-        }
-    }
 }

@@ -15,7 +15,7 @@ class MineSweeperIndex(val position: Position, val mineStatus: MineStatus) {
     }
 
     fun mineCount(mineSweeperIndexes: MineSweeperMap): Int {
-        return IndexSquare.squareIndex(this, mineSweeperIndexes)
+        return mineSweeperIndexes.findIndexSquare(this)
             .count { it.mineStatus == MineStatus.MINE }
     }
 
