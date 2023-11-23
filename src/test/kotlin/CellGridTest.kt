@@ -11,6 +11,6 @@ class CellGridTest {
         val actual = cellGrid.plantMine(0)
 
         // when
-        actual[0].isMine shouldBe true
+        actual[0].isMine() shouldBe true
     }
 }

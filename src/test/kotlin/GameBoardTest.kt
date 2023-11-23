@@ -31,9 +31,9 @@ class GameBoardTest {
         board.plantMines(points)
 
         // when
-        board.cellMatrix[0][0].isMine shouldBe true
-        board.cellMatrix[0][1].isMine shouldBe true
-        board.cellMatrix[1][0].isMine shouldBe true
-        board.cellMatrix[1][1].isMine shouldBe true
+        board.cellMatrix[0][0].isMine() shouldBe true
+        board.cellMatrix[0][1].isMine() shouldBe true
+        board.cellMatrix[1][0].isMine() shouldBe true
+        board.cellMatrix[1][1].isMine() shouldBe true
     }
 }

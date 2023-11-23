@@ -1,21 +1,13 @@
-class CellGrid(private val cellCollection: List<Cell>) {
+class CellGrid(private val cells: List<Cell>) {
+    val size: Int
+        get() = cells.size
+
     operator fun get(index: Int): Cell {
-        return cellCollection[index]
+        return cells[index]
     }
 
     fun plantMine(targetIndex: Int): CellGrid =
-        CellGrid(
-            cellCollection.mapIndexed { index, cell ->
-                if (index == targetIndex) {
-                    Cell(MineStatus.MINE)
-                } else {
-                    cell
-                }
-            }
-        )
-
-    val size: Int
-        get() = cellCollection.size
+        CellGrid(cells.mapIndexed { index, cell -> if (index == targetIndex) Cell(MineStatus.MINE) else cell })
 
     companion object {
         fun of(width: Int): CellGrid = CellGrid((0 until width).map { Cell(MineStatus.EMPTY) })
