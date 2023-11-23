@@ -2,7 +2,7 @@ import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class MineGeneratorTest {
+class MineRandomGeneratorTest {
     @Test
     fun `랜덤으로 위치를 생성한다`() {
         // given
@@ -11,7 +11,7 @@ class MineGeneratorTest {
         val count = 1
 
         // given, when
-        val pointList = MineGenerator.generate(height, width, count)
+        val pointList = MineRandomGenerator().generate(height, width, count)
 
         // when
         pointList.size shouldBe 1
@@ -25,7 +25,7 @@ class MineGeneratorTest {
         val count = 1
 
         // given, when
-        val pointList = MineGenerator.generate(height, width, count)
+        val pointList = MineRandomGenerator().generate(height, width, count)
 
         // when
         pointList[0].x shouldBeLessThan height
