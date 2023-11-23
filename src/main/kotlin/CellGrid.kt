@@ -1,4 +1,4 @@
-class CellGrid(private val cells: List<Cell>) {
+class CellGrid(val cells: List<Cell>) {
     val size: Int
         get() = cells.size
 

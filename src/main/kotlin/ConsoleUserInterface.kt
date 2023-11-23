@@ -14,7 +14,9 @@ class ConsoleUserInterface {
         return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("지뢰의 개수는 숫자여야 합니다.")
     }
 
-    fun printStartAnnouncement() {
-        println("지뢰찾기 게임을 시작합니다.")
+    fun printStartAnnouncement() = println("지뢰찾기 게임을 시작합니다.")
+
+    fun printGameBoard(gameBoard: GameBoard) = gameBoard.cellMatrix.forEach { cellGrid ->
+        println(cellGrid.cells.joinToString(" ") { if (it.isMine()) "*" else "C" })
     }
 }
