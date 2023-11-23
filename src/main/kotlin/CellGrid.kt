@@ -1,4 +1,19 @@
-class CellGrid(val cellCollection: List<Cell>) {
+class CellGrid(private val cellCollection: List<Cell>) {
+    operator fun get(index: Int): Cell {
+        return cellCollection[index]
+    }
+
+    fun plantMine(targetIndex: Int): CellGrid =
+        CellGrid(
+            cellCollection.mapIndexed { index, cell ->
+                if (index == targetIndex) {
+                    Cell(MineStatus.MINE)
+                } else {
+                    cell
+                }
+            }
+        )
+
     val size: Int
         get() = cellCollection.size
 

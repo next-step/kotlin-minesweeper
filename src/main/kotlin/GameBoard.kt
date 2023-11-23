@@ -1,19 +1,9 @@
-class GameBoard(val cellMatrix: List<CellGrid>) {
+class GameBoard(cellMatrix: List<CellGrid>) {
+    private var _cellMatrix: MutableList<CellGrid> = cellMatrix.toMutableList()
+    val cellMatrix: List<CellGrid>
+        get() = _cellMatrix.toList()
 
-    fun plantMines(count: Int): GameBoard {
-        val size = cellMatrix.size * cellMatrix[0].size
-        val minePositions = (0 until size).shuffled().take(count)
-        val newCellMatrix = cellMatrix.mapIndexed { rowIndex, cellGrid ->
-            CellGrid(cellGrid.cellCollection.mapIndexed { columnIndex, cell ->
-                if (minePositions.contains(rowIndex * cellGrid.size + columnIndex)) {
-                    cell.copy(value = MineStatus.MINE)
-                } else {
-                    cell
-                }
-            })
-        }
-        return GameBoard(newCellMatrix)
-    }
+    fun plantMines(points: List<Point>) = points.forEach { _cellMatrix[it.x] = _cellMatrix[it.x].plantMine(it.y) }
 
     companion object {
         fun of(height: Int, width: Int): GameBoard = GameBoard((0 until height).map { CellGrid.of(width) })

@@ -17,17 +17,23 @@ class GameBoardTest {
     }
 
     @Test
-    fun `지뢰를 랜덤으로 심는다`() {
+    fun `지뢰를 심는다`() {
         // given
         val board = GameBoard.of(2, 2)
+        val points = listOf(
+            Point(0, 0),
+            Point(0, 1),
+            Point(1, 0),
+            Point(1, 1)
+        )
 
         // given, when
-        val plantedBoard = board.plantMines(1)
+        board.plantMines(points)
 
         // when
-        plantedBoard.cellMatrix.stream()
-            .flatMap { it.cellCollection.stream() }
-            .filter { it.value == MineStatus.MINE }
-            .count() shouldBe 1
+        board.cellMatrix[0][0].isMine shouldBe true
+        board.cellMatrix[0][1].isMine shouldBe true
+        board.cellMatrix[1][0].isMine shouldBe true
+        board.cellMatrix[1][1].isMine shouldBe true
     }
 }
