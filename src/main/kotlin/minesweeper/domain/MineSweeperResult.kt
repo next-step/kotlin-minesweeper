@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-class MineSweeperResult(private val mineSweeperIndexes: MineSweeperIndexes, private val mines: Mines) {
+class MineSweeperResult(private val mineSweeperIndexes: MineSweeperMap) {
     val resultByRow
-        get() = mineSweeperIndexes.mineSweeperIndexes.map {
-            IndexResult(it.mineCount(mines, mineSweeperIndexes), mines.isMine(it), it.status)
+        get() = mineSweeperIndexes.map {
+            IndexResult(it.mineCount(mineSweeperIndexes), it.isMine(), it.openStatus)
         }
 }
