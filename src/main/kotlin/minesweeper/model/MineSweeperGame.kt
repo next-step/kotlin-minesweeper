@@ -1,40 +1,22 @@
 package minesweeper.model
 
-import kotlin.random.Random
+import minesweeper.model.board.Minefield
+import minesweeper.model.cell.Opening
 
 class MineSweeperGame(
-    private val rows: Int,
-    private val cols: Int,
-    private val mines: Int
+    private val countOfMine: Int,
+    private val minefield: Minefield
 ) {
-    val minefield = Array(rows) { Array(cols) { "C" } }
+    constructor(rows: Int, cols: Int, countOfMine: Int) : this(
+        countOfMine = countOfMine,
+        minefield = Minefield(rows, cols)
+    )
 
     init {
         plantingMines()
     }
 
-    private fun plantingMines() {
-        var mineCount = 0
+    fun minefield(): Array<Array<Opening>> = minefield.minefield
 
-        while (mineCount < mines) {
-            val row = Random.nextInt(rows)
-            val col = Random.nextInt(cols)
-
-            mineCount = plantingResult(row, col, mineCount)
-        }
-    }
-
-    private fun plantingResult(row: Int, col: Int, mineCount: Int): Int {
-        if (isIsland(row, col)) {
-            plantingMine(row, col)
-            return mineCount + 1
-        }
-        return mineCount
-    }
-
-    private fun isIsland(row: Int, col: Int) = minefield[row][col] == "C"
-
-    private fun plantingMine(row: Int, col: Int) {
-        minefield[row][col] = "*"
-    }
+    private fun plantingMines() = minefield.plantingMine(countOfMine)
 }

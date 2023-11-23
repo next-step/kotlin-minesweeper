@@ -7,7 +7,7 @@ import minesweeper.view.OutputView
 class MineSweeperController {
     fun start() {
         val game = MineSweeperGame(InputView.inputHeight(), InputView.inputWidth(), InputView.inputCountOfMine())
-        OutputView.printMap(game.minefield)
+        OutputView.printMap(game.minefield())
     }
 }
 

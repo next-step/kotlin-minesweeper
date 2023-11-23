@@ -10,13 +10,13 @@ class MineSweeperGameTest {
         // given
         val cols = 10
         val rows = 10
-        val mines = 10
+        val countOfMine = 10
 
         // when
-        val mineSweeperGame = MineSweeperGame(cols = cols, rows = rows, mines = mines)
+        val mineSweeperGame = MineSweeperGame(cols = cols, rows = rows, countOfMine = countOfMine)
 
         // then
         mineSweeperGame.shouldBeInstanceOf<MineSweeperGame>()
-        mineSweeperGame.minefield.size shouldBeSameInstanceAs cols
+        mineSweeperGame.minefield().size shouldBeSameInstanceAs cols
     }
 }
