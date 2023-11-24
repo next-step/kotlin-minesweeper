@@ -1,0 +1,5 @@
+
+
+fun main() {
+    MineSweeper().start()
+}
