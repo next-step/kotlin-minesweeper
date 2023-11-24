@@ -16,4 +16,16 @@ class GameBoardTest {
         assertEquals(height, board.height)
         assertEquals(width, board.width)
     }
+
+    @Test
+    @DisplayName("게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다.")
+    fun `게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다`() {
+        val height = 10
+        val width = 10
+        val mineCount = 10
+        val board = GameBoard(height, width)
+        board.placeMines(mineCount)
+
+        assertEquals(mineCount, board.countMines())
+    }
 }
