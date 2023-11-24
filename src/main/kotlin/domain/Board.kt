@@ -1,11 +1,19 @@
 package domain
 
-class Board(private val height: Int, private val width: Int) {
-    private val cells: Array<Array<Boolean>> = Array(height) { Array(width) { false } }
+import enum.CellStatus
 
-    fun placeMineAt(position: Position) {
-        cells[position.y][position.x] = true
+class Board(private val height: Int, private val width: Int) {
+    private val cells: Array<Cell> = Array(height * width) { yx ->
+        Cell(Position(yx % width, yx / width))
     }
 
-    fun countMines(): Int = cells.sumOf { row -> row.count { it } }
+    fun placeMineAt(position: Position) {
+        findCell(position).status = CellStatus.MINE
+    }
+
+    fun hasMineAt(position: Position): Boolean = findCell(position).status == CellStatus.MINE
+
+    fun countMines(): Int = cells.count { it.status == CellStatus.MINE }
+
+    private fun findCell(position: Position): Cell = cells[position.y * width + position.x]
 }

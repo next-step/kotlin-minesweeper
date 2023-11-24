@@ -28,4 +28,16 @@ class GameBoardTest {
 
         assertEquals(mineCount, board.countMines())
     }
+
+    @Test
+    @DisplayName("forEachCell 메서드는 모든 셀을 순회한다")
+    fun `forEachCell 메서드는 모든 셀을 순회한다`() {
+        val board = GameBoard(10, 10)
+        board.placeMines(10)
+        var cellCount = 0
+
+        board.forEachCell { _, _ -> cellCount++ }
+
+        assertEquals(100, cellCount)
+    }
 }
