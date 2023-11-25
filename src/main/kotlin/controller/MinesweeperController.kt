@@ -1,7 +1,7 @@
 package controller
 
 import domain.MineMap
-import domain.MineMapGenerator
+import domain.RandomMineMap
 import domain.MineMapInfo
 import domain.Point
 import view.InputView
@@ -11,7 +11,7 @@ class MinesweeperController {
 
     fun run() {
         val mapInfo = inputCondition()
-        val mineMap = MineMap(MineMapGenerator.newMap(mapInfo))
+        val mineMap = MineMap(RandomMineMap.newMap(mapInfo))
 
         OutputView.outputGameStart(mineMap)
     }
