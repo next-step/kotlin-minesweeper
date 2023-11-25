@@ -56,9 +56,9 @@ class MockUserInterface : UserInterface {
         outputs.add(startAnnouncement)
     }
 
-    override fun printGameBoard(minefieldMatrix: MinefieldMatrix) {
+    override fun printMinefieldMatrix(minefieldMatrix: List<List<Int>>) {
         outputs.add(
-            minefieldMatrix.getMap().joinToString(separator = "\n") {
+            minefieldMatrix.joinToString(separator = "\n") {
                 it.joinToString(
                     separator = " ",
                     transform = { cell ->

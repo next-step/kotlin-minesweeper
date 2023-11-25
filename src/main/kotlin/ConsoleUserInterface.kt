@@ -16,7 +16,7 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printStartAnnouncement() = println(START_MESSAGE)
 
-    override fun printGameBoard(minefieldMatrix: MinefieldMatrix) = minefieldMatrix.getMap().forEach {
+    override fun printMinefieldMatrix(minefieldMatrix: List<List<Int>>) = minefieldMatrix.forEach {
         println(
             it.joinToString(
                 separator = SEPARATOR,
