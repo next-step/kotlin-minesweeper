@@ -13,6 +13,12 @@ object ConsoleInput {
         return inputNotEmptyString().toInt()
     }
 
+    fun inputNumOfMine(): Int {
+        println("지뢰는 몇 개인가요?")
+
+        return inputNotEmptyString().toInt()
+    }
+
     private fun inputNotEmptyString(): String {
         var input: String
 
