@@ -5,11 +5,10 @@ class MinesWeeper(
     fun start() {
         val height = userInterface.askHeight()
         val width = userInterface.askWidth()
-        val gameBoard = GameBoard.of(height, width)
         val mineCount = userInterface.askMineCount()
         userInterface.printStartAnnouncement()
-        mineGenerator.generate(height, width, mineCount).let(gameBoard::plantMines)
-        userInterface.printMinefieldMatrix(height, width, gameBoard.mines)
+        val mines = mineGenerator.generate(height, width, mineCount)
+        userInterface.printMinefieldMatrix(height, width, mines)
     }
 }
 

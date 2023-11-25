@@ -1,10 +1,15 @@
 class MineRandomGenerator : MineGenerator {
-    override fun generatePoint(height: Int, width: Int, count: Int): List<Point> {
+    override fun generate(height: Int, width: Int, count: Int): Mines {
         val total = height * width
-        return (Const.START_INDEX until total).shuffled().take(count).map { Point(it / width, it % width) }
+        return generateRandomNumber(total, count)
+            .map { Point.indexToPoint(it, width) }
+            .map { Mine(it) }
+            .let { Mines(it) }
     }
 
-    override fun generate(height: Int, width: Int, count: Int): Mines {
-        return Mines(generatePoint(height, width, count).map { Mine(it) })
+    private fun generateRandomNumber(total: Int, count: Int) = (START_INDEX until total).shuffled().take(count)
+
+    companion object {
+        private const val START_INDEX = 0
     }
 }

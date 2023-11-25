@@ -48,4 +48,24 @@ class MinesTest {
         exists shouldBe true
         notExists shouldBe false
     }
+
+    @Test
+    fun `지뢰의 개수를 확인하는 기능`() {
+        // given
+        val mines = Mines(
+            listOf(
+                Point(0, 0),
+                Point(1, 1),
+                Point(2, 2),
+                Point(3, 3),
+                Point(4, 4),
+            ).map { Mine(it) }
+        )
+
+        // when
+        val actual = mines.size()
+
+        // then
+        actual shouldBe 5
+    }
 }

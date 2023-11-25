@@ -20,15 +20,6 @@ class MinesWeeperTest {
 }
 
 class MockMineGenerator : MineGenerator {
-    override fun generatePoint(height: Int, width: Int, count: Int): List<Point> =
-        listOf(
-            Point(0, 0),
-            Point(1, 1),
-            Point(2, 2),
-            Point(3, 3),
-            Point(4, 4),
-        )
-
     override fun generate(height: Int, width: Int, count: Int): Mines {
         return listOf(
             Point(0, 0),
@@ -64,22 +55,6 @@ class MockUserInterface : UserInterface {
 
     override fun printStartAnnouncement() {
         outputs.add(startAnnouncement)
-    }
-
-    override fun printMinefieldMatrix(minefieldMatrix: List<List<Int>>) {
-        outputs.add(
-            minefieldMatrix.joinToString(separator = "\n") {
-                it.joinToString(
-                    separator = " ",
-                    transform = { cell ->
-                        when (cell) {
-                            -1 -> "*"
-                            else -> cell.toString()
-                        }
-                    }
-                )
-            }
-        )
     }
 
     override fun printMinefieldMatrix(height: Int, width: Int, mines: Mines) {

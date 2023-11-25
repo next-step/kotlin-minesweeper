@@ -16,36 +16,25 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printStartAnnouncement() = println(START_MESSAGE)
 
-    override fun printMinefieldMatrix(minefieldMatrix: List<List<Int>>) = minefieldMatrix.forEach {
-        println(
-            it.joinToString(
-                separator = SEPARATOR,
-                transform = { cell -> if (cell == Const.MINE_VALUE) MINE_DELIMITER else cell.toString() })
-        )
-    }
-
     override fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentHeight in 0 until maxHeight) {
-            printMinefieldRow(currentHeight, maxWidth, mines)
-        }
+        for (currentHeight in 0.until(maxHeight)) printMinefieldRow(currentHeight, maxWidth, mines)
     }
 
     private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentWidth in 0 until maxWidth) {
-            printPoint(targetHeight, currentWidth, mines)
+        for (currentWidth in 0.until(maxWidth)) {
+            printMinefield(targetHeight, currentWidth, mines)
+            print(SEPARATOR)
         }
         println()
     }
 
-    private fun printPoint(targetHeight: Int, currentWidth: Int, mines: Mines) {
+    private fun printMinefield(targetHeight: Int, currentWidth: Int, mines: Mines) {
         val point = Point(targetHeight, currentWidth)
         if (mines.contains(point)) {
             print(MINE_DELIMITER)
-            print(SEPARATOR)
             return
         }
         print(mines.countMineAround(point))
-        print(SEPARATOR)
     }
 
     companion object {
