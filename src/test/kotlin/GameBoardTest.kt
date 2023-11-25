@@ -8,7 +8,7 @@ class GameBoardTest {
         val height = 2
         val width = 2
 
-        // given, when
+        // given
         val board = GameBoard.of(height, width)
 
         // when
