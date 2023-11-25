@@ -39,5 +39,16 @@ class MapTest : FunSpec({
         test("맵에 최소 1개 이상의 행이 존재하지 않으면 예외가 발생한다") {
             shouldThrow<IllegalArgumentException> { Map() }
         }
+
+
+        test("맵의 행들의 y값이 1씩 커지지 않으면 예외가 발생한다.") {
+            shouldThrow<IllegalArgumentException> {
+                Map(
+                    Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
+                    Row(Coordinate(x = 0, y = 2), Coordinate(x = 1, y = 2), Coordinate(x = 2, y = 2)),
+                    Row(Coordinate(x = 0, y = 3), Coordinate(x = 1, y = 3), Coordinate(x = 2, y = 3)),
+                )
+            }
+        }
     }
 })
