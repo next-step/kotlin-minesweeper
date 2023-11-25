@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.row
 import io.kotest.datatest.withData
 import io.kotest.matchers.comparables.shouldBeGreaterThan
+import io.kotest.matchers.shouldBe
 
 class CoordinateTest : FunSpec({
     context("좌표의 x, y 값이 음수이면 예외가 발생한다") {
@@ -25,5 +26,9 @@ class CoordinateTest : FunSpec({
         ) { (x1, y1, x2, y2) ->
             Coordinate(x = x1, y = y1) shouldBeGreaterThan Coordinate(x = x2, y = y2)
         }
+    }
+
+    test("동일한 x, y를 갖는 좌표는 같은 좌표다") {
+        Coordinate(0, 0) shouldBe Coordinate(0, 0)
     }
 })
