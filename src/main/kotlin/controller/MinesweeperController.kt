@@ -2,10 +2,10 @@ package controller
 
 import domain.MineMap
 import domain.MineMapGenerator
+import domain.MineMapInfo
+import domain.Point
 import view.InputView
 import view.OutputView
-import vo.MineMapInfo
-import vo.Point
 
 class MinesweeperController {
 

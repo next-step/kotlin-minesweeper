@@ -1,8 +1,5 @@
 package domain
 
-import vo.MineMapInfo
-import vo.MineStatus
-
 object MineMapGenerator {
 
     fun newMap(mapInfo: MineMapInfo): List<List<Spot>> {

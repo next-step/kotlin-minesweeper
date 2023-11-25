@@ -1,4 +1,4 @@
-package vo
+package domain
 
 enum class OpenStatus(val symbol: String) {
     COVERED("@"),

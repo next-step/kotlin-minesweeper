@@ -5,8 +5,6 @@ import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import vo.MineStatus
-import vo.OpenStatus
 
 class SpotTest {
 

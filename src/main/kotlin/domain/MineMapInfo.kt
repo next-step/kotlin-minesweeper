@@ -1,4 +1,4 @@
-package vo
+package domain
 
 data class MineMapInfo(
     val point: Point,
