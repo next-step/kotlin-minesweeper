@@ -1,4 +1,4 @@
-class CellGrid(val cells: List<Cell>) {
+class CellGrid(private val cells: List<Cell>) {
     val size: Int
         get() = cells.size
 
@@ -9,22 +9,19 @@ class CellGrid(val cells: List<Cell>) {
     fun plantMine(targetIndex: Int): CellGrid =
         CellGrid(cells.mapIndexed { index, cell -> if (index == targetIndex) Cell(MineStatus.MINE) else cell })
 
-    fun updateMineCounts(
-        mineCountMatrix: List<List<Int>>,
+    fun updateMineCountsForRow(
+        minefieldMatrix: MinefieldMatrix,
         height: Int,
-        heightRange: IntRange,
-        widthRange: IntRange,
-    ): List<List<Int>> {
-        var result = mineCountMatrix
+    ): MinefieldMatrix {
+        var result = minefieldMatrix
         cells.forEachIndexed { width, cell ->
-            if (cell.isMine()) {
-                result = MineAreaProcessor.updateSurroundingMineCounts(result, height, width, heightRange, widthRange)
-            }
+            if (cell.isMine()) result = result.updateSurroundingMineCounts(height, width)
         }
         return result
     }
 
     companion object {
-        fun of(width: Int): CellGrid = CellGrid((0 until width).map { Cell(MineStatus.EMPTY) })
+        fun of(width: Int): CellGrid =
+            CellGrid((Const.START_INDEX until width).map { Cell(MineStatus.EMPTY) })
     }
 }

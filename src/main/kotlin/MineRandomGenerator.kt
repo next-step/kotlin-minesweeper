@@ -1,7 +1,7 @@
 class MineRandomGenerator : MineGenerator {
     override fun generate(height: Int, width: Int, count: Int): List<Point> {
         val total = height * width
-        return (0 until total).shuffled().take(count).map { Point(it / width, it % width) }
+        return (Const.START_INDEX until total).shuffled().take(count).map { Point(it / width, it % width) }
     }
 }
 

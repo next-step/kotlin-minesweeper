@@ -65,6 +65,6 @@ class GameBoardTest {
         val actual = board.calculateMineCount()
 
         // when
-        actual shouldBe expect
+        actual.getMap() shouldBe expect
     }
 }
