@@ -4,5 +4,3 @@ class MineRandomGenerator : MineGenerator {
         return (Const.START_INDEX until total).shuffled().take(count).map { Point(it / width, it % width) }
     }
 }
-
-data class Point(val x: Int, val y: Int)
