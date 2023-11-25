@@ -13,18 +13,18 @@ class MineMap(private val map: ArrayMap) {
         Point(1, 1)
     )
 
-    fun resultMineStatus(y: Int, x: Int): String {
-        val nearMineCount = nearMineCount(y, x)
-        return map.getPoint(y, x).spotSymbol(nearMineCount)
+    fun resultMineStatus(point: Point): String {
+        val nearMineCount = nearMineCount(point)
+        return map.getPoint(point).spotSymbol(nearMineCount)
     }
 
     fun getHeight(): Int = map.height
 
     fun getWidth(): Int = map.width
 
-    private fun nearMineCount(y: Int, x: Int): Int =
+    private fun nearMineCount(point: Point): Int =
         delta.map {
-            map.getPointOrNull(y + it.y, x + it.x)
+            map.getPointOrNull(point + it)
         }.count {
             it != null && it.isMine()
         }

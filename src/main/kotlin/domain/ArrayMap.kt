@@ -12,12 +12,12 @@ class ArrayMap(private val map: Row<Row<Spot>>) {
 
     constructor(map: List<List<Spot>>) : this(Row(map.map { Row(it) }))
 
-    fun getPoint(y: Int, x: Int): Spot {
-        require(y in map.indices()) { "잘못된 y값입니다." }
-        require(x in map[y].indices()) { "잘못된 x값입니다." }
-        return map[y][x]
+    fun getPoint(point: Point): Spot {
+        require(point.y in map.indices()) { "잘못된 y값입니다." }
+        require(point.x in map[point.y].indices()) { "잘못된 x값입니다." }
+        return map[point.y][point.x]
     }
 
-    fun getPointOrNull(y: Int, x: Int): Spot? =
-        map.getOrNull(y)?.getOrNull(x)
+    fun getPointOrNull(point: Point): Spot? =
+        map.getOrNull(point.y)?.getOrNull(point.x)
 }

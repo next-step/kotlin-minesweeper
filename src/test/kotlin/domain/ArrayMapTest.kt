@@ -24,20 +24,20 @@ class ArrayMapTest {
     @ParameterizedTest
     @CsvSource(value = ["0, 0", "1, 0", "1, 2", "1, 1"])
     fun `맵에서 특정 위치를 가져온다`(y: Int, x: Int) {
-        assertThat(arrayMap.getPoint(y, x).isMine()).isFalse()
+        assertThat(arrayMap.getPoint(Point(y, x)).isMine()).isFalse()
     }
 
     @ParameterizedTest
     @CsvSource(value = ["-1, 0", "0, -1", "2, 0", "0, 3"])
     fun `맵에서 범위를 벗어나면 에러가 발생한다`(y: Int, x: Int) {
         assertThatIllegalArgumentException().isThrownBy {
-            arrayMap.getPoint(y, x)
+            arrayMap.getPoint(Point(y, x))
         }
     }
 
     @ParameterizedTest
     @CsvSource(value = ["-1, 0", "0, -1", "2, 0", "0, 3"])
     fun `범위를 벗어나면 null을 반환한다`(y: Int, x: Int) {
-        assertThat(arrayMap.getPointOrNull(y, x)).isNull()
+        assertThat(arrayMap.getPointOrNull(Point(y, x))).isNull()
     }
 }

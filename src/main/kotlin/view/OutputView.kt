@@ -1,6 +1,7 @@
 package view
 
 import domain.MineMap
+import domain.Point
 
 object OutputView {
 
@@ -19,7 +20,7 @@ object OutputView {
     private fun printMineMapLine(map: MineMap, line: Int) {
         val width = map.getWidth()
         repeat(width) { i ->
-            print(map.resultMineStatus(line, i))
+            print(map.resultMineStatus(Point(line, i)))
         }
         println()
     }
