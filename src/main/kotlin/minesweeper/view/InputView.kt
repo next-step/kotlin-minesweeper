@@ -1,15 +1,19 @@
 package minesweeper.view
 
 object InputView {
+
     fun mapHeight(): Int {
-        TODO("Not yet implemented")
+        println("높이를 입력하세요.")
+        return readln().toInt()
     }
 
     fun mapWidth(): Int {
-        TODO("Not yet implemented")
+        println("너비를 입력하세요.")
+        return readln().toInt()
     }
 
     fun countOfMines(): Int {
-        TODO("Not yet implemented")
+        println("지뢰는 몇 개인가요?")
+        return readln().toInt()
     }
 }
