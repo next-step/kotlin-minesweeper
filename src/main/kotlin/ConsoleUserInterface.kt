@@ -16,7 +16,17 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printStartAnnouncement() = println("지뢰찾기 게임을 시작합니다.")
 
-    override fun printGameBoard(gameBoard: GameBoard) = gameBoard.cellMatrix.forEach { cellGrid ->
-        println(cellGrid.cells.joinToString(" ") { if (it.isMine()) "*" else "C" })
+    override fun printGameBoard(gameBoard: List<List<Int>>) = gameBoard.forEach {
+        println(
+            it.joinToString(
+                separator = " ",
+                transform = { cell ->
+                    when (cell) {
+                        -1 -> "*"
+                        else -> cell.toString()
+                    }
+                }
+            )
+        )
     }
 }

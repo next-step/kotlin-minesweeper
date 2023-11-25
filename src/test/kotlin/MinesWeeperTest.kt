@@ -37,11 +37,11 @@ class MockUserInterface : UserInterface {
     private val mineCount = 5
     private val gameBoard =
         """
-        |* C C C C
-        |C * C C C
-        |C C * C C
-        |C C C * C
-        |C C C C *
+        |* 2 1 0 0
+        |2 * 2 1 0
+        |1 2 * 2 1
+        |0 1 2 * 2
+        |0 0 1 2 *
         """.trimMargin()
 
     private val outputs = mutableListOf<String>()
@@ -56,10 +56,18 @@ class MockUserInterface : UserInterface {
         outputs.add(startAnnouncement)
     }
 
-    override fun printGameBoard(gameBoard: GameBoard) {
+    override fun printGameBoard(gameBoard: List<List<Int>>) {
         outputs.add(
-            gameBoard.cellMatrix.joinToString("\n") { cellGrid ->
-                cellGrid.cells.joinToString(" ") { if (it.isMine()) "*" else "C" }
+            gameBoard.joinToString(separator = "\n") {
+                it.joinToString(
+                    separator = " ",
+                    transform = { cell ->
+                        when (cell) {
+                            -1 -> "*"
+                            else -> cell.toString()
+                        }
+                    }
+                )
             }
         )
     }

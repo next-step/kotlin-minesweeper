@@ -3,5 +3,5 @@ interface UserInterface {
     fun askWidth(): Int
     fun askMineCount(): Int
     fun printStartAnnouncement()
-    fun printGameBoard(gameBoard: GameBoard)
+    fun printGameBoard(gameBoard: List<List<Int>>)
 }
