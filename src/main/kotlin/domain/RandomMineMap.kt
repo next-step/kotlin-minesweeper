@@ -2,9 +2,9 @@ package domain
 
 object RandomMineMap {
 
-    fun newMap(mapInfo: MineMapInfo): List<List<Spot>> {
+    fun newMap(mapInfo: MineMapInfo): ArrayMap {
         val shuffledFlattenMap = flattenMineMap(mapInfo).shuffled()
-        return shuffledFlattenMap.chunked(mapInfo.point.x)
+        return ArrayMap(shuffledFlattenMap.chunked(mapInfo.point.x))
     }
 
     private fun flattenMineMap(mapInfo: MineMapInfo): List<Spot> =

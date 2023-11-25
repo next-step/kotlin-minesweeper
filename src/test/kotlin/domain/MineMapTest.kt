@@ -9,17 +9,19 @@ import org.junit.jupiter.params.provider.CsvSource
 class MineMapTest {
 
     // 10 x 10, 10개의 지뢰
-    private val testMap = listOf(
-        listOf(0, 0, 1, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 1, 0, 0, 1).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 1, 0, 0, 0, 1, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 1).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 1, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 1, 0, 0, 0, 1, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
+    private val testMap = ArrayMap(
+        listOf(
+            listOf(0, 0, 1, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 1, 0, 0, 1).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 1, 0, 0, 0, 1, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 1).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 1, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 1, 0, 0, 0, 1, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
+        )
     )
 
     private fun List<Int>.toMineMapLine(): List<Spot> = map {
@@ -31,7 +33,7 @@ class MineMapTest {
     fun `맵의 범위를 벗어난 범위의 지뢰를 확인하면 에러가 발생한다`(x: Int, y: Int) {
         val mineMap = MineMap(testMap)
         assertThatIllegalArgumentException().isThrownBy {
-            mineMap.resultMineStatus(x, y)
+            mineMap.resultMineStatus(y, x)
         }
     }
 
@@ -40,7 +42,7 @@ class MineMapTest {
         val mineMap = MineMap(testMap)
         var mineCount = 0
         repeat(100) { i ->
-            if (mineMap.resultMineStatus(i % 10, i / 10) == OpenStatus.MINED.symbol) {
+            if (mineMap.resultMineStatus(i / 10, i % 10) == OpenStatus.MINED.symbol) {
                 mineCount++
             }
         }
@@ -58,6 +60,6 @@ class MineMapTest {
     @CsvSource(value = ["0, 0, 0", "2, 0, +", "6, 0, 1", "2, 6, 2"])
     fun `맵을 오픈하면 결과가 나온다`(x: Int, y: Int, result: String) {
         val mineMap = MineMap(testMap)
-        assertThat(mineMap.resultMineStatus(x, y)).isEqualTo(result)
+        assertThat(mineMap.resultMineStatus(y, x)).isEqualTo(result)
     }
 }

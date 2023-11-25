@@ -1,11 +1,6 @@
 package domain
 
-/**
- * 지뢰찾기 맵은 이중 배열의 형태
- * 첫 번째 (outer) List는 y축
- * 두 번째 (inner) List는 x축
- */
-class MineMap(private val map: List<List<Spot>>) {
+class MineMap(private val map: ArrayMap) {
 
     private val delta = listOf(
         Point(-1, -1),
@@ -18,21 +13,18 @@ class MineMap(private val map: List<List<Spot>>) {
         Point(1, 1)
     )
 
-    fun resultMineStatus(x: Int, y: Int): String {
-        require(y in map.indices) { "잘못된 x값입니다." }
-        require(x in map.first().indices) { "잘못된 y값입니다." }
-        val nearMineCount = nearMineCount(x, y)
-        return map[y][x].spotSymbol(nearMineCount)
+    fun resultMineStatus(y: Int, x: Int): String {
+        val nearMineCount = nearMineCount(y, x)
+        return map.getPoint(y, x).spotSymbol(nearMineCount)
     }
 
-    fun getHeight(): Int = map.size
+    fun getHeight(): Int = map.height
 
-    fun getWidth(): Int = map.first().size
+    fun getWidth(): Int = map.width
 
-    private fun nearMineCount(x: Int, y: Int): Int =
+    private fun nearMineCount(y: Int, x: Int): Int =
         delta.map {
-            map.getOrNull(y + it.y)
-                ?.getOrNull(x + it.x)
+            map.getPointOrNull(y + it.y, x + it.x)
         }.count {
             it != null && it.isMine()
         }
