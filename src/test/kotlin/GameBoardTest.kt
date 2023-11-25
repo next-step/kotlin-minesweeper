@@ -67,4 +67,17 @@ class GameBoardTest {
         // when
         actual.getMap() shouldBe expect
     }
+
+    @Test
+    fun `지뢰를 설정한다`() {
+        // given
+        val board = GameBoard.of(2, 2)
+        val mines = Mines(listOf(Mine(Point(0, 0)), Mine(Point(0, 1)), Mine(Point(1, 0)), Mine(Point(1, 1))))
+
+        // given, when
+        board.plantMines(mines)
+
+        // when
+        board.mines shouldBe mines
+    }
 }

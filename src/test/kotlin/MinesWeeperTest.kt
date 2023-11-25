@@ -20,7 +20,7 @@ class MinesWeeperTest {
 }
 
 class MockMineGenerator : MineGenerator {
-    override fun generate(height: Int, width: Int, count: Int): List<Point> =
+    override fun generatePoint(height: Int, width: Int, count: Int): List<Point> =
         listOf(
             Point(0, 0),
             Point(1, 1),
@@ -28,6 +28,16 @@ class MockMineGenerator : MineGenerator {
             Point(3, 3),
             Point(4, 4),
         )
+
+    override fun generate(height: Int, width: Int, count: Int): Mines {
+        return listOf(
+            Point(0, 0),
+            Point(1, 1),
+            Point(2, 2),
+            Point(3, 3),
+            Point(4, 4),
+        ).map(::Mine).let(::Mines)
+    }
 }
 
 class MockUserInterface : UserInterface {

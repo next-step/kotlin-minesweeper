@@ -11,7 +11,7 @@ class MineRandomGeneratorTest {
         val count = 1
 
         // given, when
-        val pointList = MineRandomGenerator().generate(height, width, count)
+        val pointList = MineRandomGenerator().generatePoint(height, width, count)
 
         // when
         pointList.size shouldBe 1
@@ -25,7 +25,7 @@ class MineRandomGeneratorTest {
         val count = 1
 
         // given, when
-        val pointList = MineRandomGenerator().generate(height, width, count)
+        val pointList = MineRandomGenerator().generatePoint(height, width, count)
 
         // when
         pointList[0].x shouldBeLessThan height
