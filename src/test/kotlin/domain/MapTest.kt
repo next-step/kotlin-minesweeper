@@ -3,6 +3,7 @@ package domain
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 
 class MapTest : FunSpec({
     context("맵에 속한 행들은") {
@@ -41,7 +42,7 @@ class MapTest : FunSpec({
         }
 
 
-        test("맵의 행들의 y값이 1씩 커지지 않으면 예외가 발생한다.") {
+        test("맵의 행들의 y값이 1씩 커지지 않으면 예외가 발생한다") {
             shouldThrow<IllegalArgumentException> {
                 Map(
                     Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
@@ -49,6 +50,13 @@ class MapTest : FunSpec({
                     Row(Coordinate(x = 0, y = 3), Coordinate(x = 1, y = 3), Coordinate(x = 2, y = 3)),
                 )
             }
+        }
+
+        test("맵에 y 값이 동일한 행이 두 개 이상 포함될 수 없다") {
+            Map(
+                Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
+                Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
+            ).size shouldBe 1
         }
     }
 })
