@@ -8,8 +8,8 @@ class MinesWeeper(
         val gameBoard = GameBoard.of(height, width)
         val mineCount = userInterface.askMineCount()
         userInterface.printStartAnnouncement()
-        mineGenerator.generatePoint(height, width, mineCount).let(gameBoard::plantMines)
-        userInterface.printMinefieldMatrix(gameBoard.calculateMineCount().getMap())
+        mineGenerator.generate(height, width, mineCount).let(gameBoard::plantMines)
+        userInterface.printMinefieldMatrix(height, width, gameBoard.mines)
     }
 }
 

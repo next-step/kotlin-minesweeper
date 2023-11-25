@@ -1,4 +1,5 @@
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -28,5 +29,23 @@ class MinesTest {
 
         // then
         actual shouldBe expected
+    }
+
+    @Test
+    fun `지뢰가 포함되어 있는지 확인하는 기능`() {
+        // given
+        val mines = Mines(
+            listOf(
+                Point(0, 0),
+            ).map { Mine(it) }
+        )
+
+        // when
+        val exists = mines.contains(Point(0, 0))
+        val notExists = mines.contains(Point(1, 1))
+
+        // then
+        exists shouldBe true
+        notExists shouldBe false
     }
 }

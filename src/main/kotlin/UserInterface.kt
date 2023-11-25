@@ -4,4 +4,5 @@ interface UserInterface {
     fun askMineCount(): Int
     fun printStartAnnouncement()
     fun printMinefieldMatrix(minefieldMatrix: List<List<Int>>)
+    fun printMinefieldMatrix(height: Int, width: Int, mines: Mines)
 }

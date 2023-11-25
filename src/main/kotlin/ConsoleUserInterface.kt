@@ -24,6 +24,30 @@ class ConsoleUserInterface : UserInterface {
         )
     }
 
+    override fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines) {
+        for (currentHeight in 0 until maxHeight) {
+            printMinefieldRow(currentHeight, maxWidth, mines)
+        }
+    }
+
+    private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
+        for (currentWidth in 0 until maxWidth) {
+            printPoint(targetHeight, currentWidth, mines)
+        }
+        println()
+    }
+
+    private fun printPoint(targetHeight: Int, currentWidth: Int, mines: Mines) {
+        val point = Point(targetHeight, currentWidth)
+        if (mines.contains(point)) {
+            print(MINE_DELIMITER)
+            print(SEPARATOR)
+            return
+        }
+        print(mines.countMineAround(point))
+        print(SEPARATOR)
+    }
+
     companion object {
         private const val ASK_HEIGHT_MESSAGE = "높이를 입력하세요."
         private const val ASK_WIDTH_MESSAGE = "너비를 입력하세요."

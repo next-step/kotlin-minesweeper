@@ -82,6 +82,20 @@ class MockUserInterface : UserInterface {
         )
     }
 
+    override fun printMinefieldMatrix(height: Int, width: Int, mines: Mines) {
+        outputs.add(
+            (0 until height).joinToString(separator = "\n") { i ->
+                (0 until width).joinToString(separator = " ") { j ->
+                    val point = Point(i, j)
+                    when {
+                        mines.contains(point) -> "*"
+                        else -> mines.countMineAround(point).toString()
+                    }
+                }
+            }
+        )
+    }
+
     fun assertStartAnnouncement() = outputs[0] shouldBe startAnnouncement
 
     fun assertGameBoard() = outputs[1] shouldBe gameBoard
