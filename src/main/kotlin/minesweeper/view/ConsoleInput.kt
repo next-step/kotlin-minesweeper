@@ -7,6 +7,12 @@ object ConsoleInput {
         return inputNotEmptyString().toInt()
     }
 
+    fun inputBoardWidth(): Int {
+        println("너비를 입력하세요.")
+
+        return inputNotEmptyString().toInt()
+    }
+
     private fun inputNotEmptyString(): String {
         var input: String
 
