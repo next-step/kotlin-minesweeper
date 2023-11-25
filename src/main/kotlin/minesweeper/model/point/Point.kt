@@ -4,6 +4,7 @@ data class Point(
     private val attribute: Attribute,
     private val coordinate: Coordinate,
 ) {
-
-
+    fun symbol(): String {
+        return attribute.symbol
+    }
 }
