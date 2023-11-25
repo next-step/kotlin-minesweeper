@@ -1,7 +1,7 @@
 package minesweeper
 
-import minesweeper.model.MapBuilder
-import minesweeper.model.MineMap
+import minesweeper.model.map.MapBuilder
+import minesweeper.model.map.MineMap
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 

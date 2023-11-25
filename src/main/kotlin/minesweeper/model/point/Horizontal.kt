@@ -1,4 +1,4 @@
-package minesweeper.model
+package minesweeper.model.point
 
 @JvmInline
 value class Horizontal(

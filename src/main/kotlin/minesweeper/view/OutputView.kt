@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.model.MineMap
+import minesweeper.model.map.MineMap
 
 object OutputView {
     fun mineMap(mineMap: MineMap) {
