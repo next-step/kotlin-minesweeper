@@ -12,5 +12,4 @@ object InputView {
     fun countOfMines(): Int {
         TODO("Not yet implemented")
     }
-
 }
