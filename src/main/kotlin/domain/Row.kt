@@ -13,6 +13,10 @@ class Row(private val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by
 
     constructor(vararg coordinates: Coordinate) : this(coordinates.toSortedSet())
 
+    fun getY(): Int {
+        return first().y
+    }
+
     private fun checkColumDiffIsOne(): Boolean {
         return columns.map { it.x } == (columns.first().x..columns.last().x).toList()
     }

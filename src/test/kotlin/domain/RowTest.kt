@@ -72,5 +72,15 @@ class RowTest : FunSpec(
                 row1 shouldBeLessThan row2
             }
         }
+
+        test("행의 y 좌표 값을 알 수 있다") {
+            val row = Row(
+                Coordinate(x = 0, y = 1),
+                Coordinate(x = 1, y = 1),
+                Coordinate(x = 2, y = 1),
+                Coordinate(x = 3, y = 1)
+            )
+            row.getY() shouldBe 1
+        }
     }
 )
