@@ -3,6 +3,7 @@ package domain
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 
 class RowTest : FunSpec(
@@ -63,6 +64,12 @@ class RowTest : FunSpec(
                         Coordinate(x = 4, y = 1)
                     )
                 }
+            }
+
+            test("행은 그것에 속한 좌표들의 y값이 클수록 크다") {
+                val row1 = Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0))
+                val row2 = Row(Coordinate(x = 0, y = 1), Coordinate(x = 1, y = 1), Coordinate(x = 2, y = 1))
+                row1 shouldBeLessThan row2
             }
         }
     }
