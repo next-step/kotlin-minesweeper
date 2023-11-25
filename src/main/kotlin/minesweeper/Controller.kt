@@ -9,6 +9,6 @@ fun main() {
     val mapHeight: Int = InputView.mapHeight()
     val mapWidth: Int = InputView.mapWidth()
     val countOfMines: Int = InputView.countOfMines()
-    val map: MineMap = MapBuilder.generate(mapHeight, mapWidth, countOfMines)
+    val map: MineMap = MapBuilder.build(mapHeight, mapWidth, countOfMines)
     OutputView.mineMap(map)
 }
