@@ -35,5 +35,9 @@ class MapTest : FunSpec({
                 )
             }
         }
+
+        test("맵에 최소 1개 이상의 행이 존재하지 않으면 예외가 발생한다") {
+            shouldThrow<IllegalArgumentException> { Map() }
+        }
     }
 })
