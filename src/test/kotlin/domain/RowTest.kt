@@ -2,6 +2,7 @@ package domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 
 class RowTest : FunSpec(
     {
@@ -13,6 +14,10 @@ class RowTest : FunSpec(
             shouldThrow<IllegalArgumentException> {
                 Row(Coordinate(x = 1, y = 1), Coordinate(x = 2, y = 2))
             }
+        }
+
+        test("행에 x, y 값이 동일한 좌표가 두 개 이상 포함될 수 없다") {
+            Row(Coordinate(x = 1, y = 1), Coordinate(x = 1, y = 1)).size shouldBe 1
         }
     }
 )
