@@ -19,6 +19,16 @@ class ConsoleUserInterface : UserInterface {
         return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(MINE_COUNT_ERROR_MESSAGE)
     }
 
+    override fun askPoint(): Point {
+        print(ASK_POINT_MESSAGE)
+        val input = readlnOrNull() ?: throw IllegalArgumentException()
+        val split = input.split(POINT_DELIMITER)
+        require(split.size == POINT_SIZE) { POINT_SIZE_ERROR_MESSAGE }
+        require(split.all { it.toIntOrNull() != null }) { POINT_NUMBER_ERROR_MESSAGE }
+        val (height, width) = split.map { it.toInt() }
+        return Point(height, width)
+    }
+
     override fun printStartAnnouncement() = println(START_MESSAGE)
 
     override fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines) {
@@ -28,7 +38,7 @@ class ConsoleUserInterface : UserInterface {
     private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
         for (currentWidth in ZERO.until(maxWidth)) {
             printMinefield(targetHeight, currentWidth, mines)
-            print(SEPARATOR)
+            print(MINEFIELD_SEPARATOR)
         }
         println()
     }
@@ -44,14 +54,19 @@ class ConsoleUserInterface : UserInterface {
 
     companion object {
         private const val ZERO = 0
+        private const val POINT_SIZE = 2
+        private const val POINT_SIZE_ERROR_MESSAGE = "쉼표로 구분된 두 개의 숫자여야 합니다."
+        private const val POINT_NUMBER_ERROR_MESSAGE = "숫자여야 합니다."
         private const val ASK_HEIGHT_MESSAGE = "높이를 입력하세요."
         private const val ASK_WIDTH_MESSAGE = "너비를 입력하세요."
         private const val ASK_MINE_COUNT_MESSAGE = "지뢰의 개수를 입력하세요."
+        private const val ASK_POINT_MESSAGE = "open: "
         private const val START_MESSAGE = "지뢰찾기 게임을 시작합니다."
         private const val HEIGHT_ERROR_MESSAGE = "높이는 숫자여야 합니다."
         private const val WIDTH_ERROR_MESSAGE = "너비는 숫자여야 합니다."
         private const val MINE_COUNT_ERROR_MESSAGE = "지뢰의 개수는 숫자여야 합니다."
-        private const val SEPARATOR = " "
+        private const val MINEFIELD_SEPARATOR = " "
+        private const val POINT_DELIMITER = ","
         private const val MINE_DELIMITER = "*"
     }
 }
