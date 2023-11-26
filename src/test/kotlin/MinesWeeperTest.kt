@@ -1,5 +1,10 @@
+import business.Mine
+import business.MineGenerator
+import business.Mines
+import business.Point
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import view.UserInterface
 
 class MinesWeeperTest {
 
@@ -20,14 +25,15 @@ class MinesWeeperTest {
 }
 
 class MockMineGenerator : MineGenerator {
-    override fun generate(height: Int, width: Int, count: Int): List<Point> =
-        listOf(
+    override fun generate(height: Int, width: Int, count: Int): Mines {
+        return listOf(
             Point(0, 0),
             Point(1, 1),
             Point(2, 2),
             Point(3, 3),
             Point(4, 4),
-        )
+        ).map(::Mine).let(::Mines)
+    }
 }
 
 class MockUserInterface : UserInterface {
@@ -37,11 +43,11 @@ class MockUserInterface : UserInterface {
     private val mineCount = 5
     private val gameBoard =
         """
-        |* C C C C
-        |C * C C C
-        |C C * C C
-        |C C C * C
-        |C C C C *
+        |* 2 1 0 0
+        |2 * 2 1 0
+        |1 2 * 2 1
+        |0 1 2 * 2
+        |0 0 1 2 *
         """.trimMargin()
 
     private val outputs = mutableListOf<String>()
@@ -56,10 +62,16 @@ class MockUserInterface : UserInterface {
         outputs.add(startAnnouncement)
     }
 
-    override fun printGameBoard(gameBoard: GameBoard) {
+    override fun printMinefieldMatrix(height: Int, width: Int, mines: Mines) {
         outputs.add(
-            gameBoard.cellMatrix.joinToString("\n") { cellGrid ->
-                cellGrid.cells.joinToString(" ") { if (it.isMine()) "*" else "C" }
+            (0 until height).joinToString(separator = "\n") { i ->
+                (0 until width).joinToString(separator = " ") { j ->
+                    val point = Point(i, j)
+                    when {
+                        mines.contains(point) -> "*"
+                        else -> mines.countMineAround(point).toString()
+                    }
+                }
             }
         )
     }
