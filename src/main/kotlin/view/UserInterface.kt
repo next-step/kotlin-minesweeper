@@ -10,4 +10,5 @@ interface UserInterface {
     fun askPoint(): Point
     fun printStartAnnouncement()
     fun printMinefieldMatrix(height: Int, width: Int, mines: Mines)
+    fun printGameOver()
 }

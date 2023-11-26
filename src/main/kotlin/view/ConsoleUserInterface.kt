@@ -52,6 +52,8 @@ class ConsoleUserInterface : UserInterface {
         print(mines.countMineAround(point))
     }
 
+    override fun printGameOver() = println(GAME_OVER_MESSAGE)
+
     companion object {
         private const val ZERO = 0
         private const val POINT_SIZE = 2
@@ -62,6 +64,7 @@ class ConsoleUserInterface : UserInterface {
         private const val ASK_MINE_COUNT_MESSAGE = "지뢰의 개수를 입력하세요."
         private const val ASK_POINT_MESSAGE = "open: "
         private const val START_MESSAGE = "지뢰찾기 게임을 시작합니다."
+        private const val GAME_OVER_MESSAGE = "Lose Game."
         private const val HEIGHT_ERROR_MESSAGE = "높이는 숫자여야 합니다."
         private const val WIDTH_ERROR_MESSAGE = "너비는 숫자여야 합니다."
         private const val MINE_COUNT_ERROR_MESSAGE = "지뢰의 개수는 숫자여야 합니다."
