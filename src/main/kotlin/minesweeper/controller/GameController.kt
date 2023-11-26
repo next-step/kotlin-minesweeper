@@ -13,5 +13,5 @@ fun main() {
 
     val board = Board(BoardMetadata(boardHeight, boardWidth, numOfMine), RandomBoardGenerationRule())
 
-    ConsoleOutput.printBoard(board)
+    ConsoleOutput.printBoard(boardHeight, boardWidth, board)
 }

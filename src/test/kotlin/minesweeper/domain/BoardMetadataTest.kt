@@ -35,6 +35,6 @@ class BoardMetadataTest {
     fun `보드의 전체 크기보다 많은 개수의 지뢰는 가질 수 없습니다`() {
         shouldThrow<IllegalArgumentException> {
             BoardMetadata(10, 10, 101)
-        }.message shouldBe "지뢰의 개수는 전체 칸의 개수보다 작아야 합니다."
+        }.message shouldBe "지뢰의 개수는 전체 칸의 개수보다 같거나 작아야 합니다."
     }
 }

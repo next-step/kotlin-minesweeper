@@ -24,6 +24,22 @@ class BoardGenerationRuleTest {
     }
 
     @Test
+    fun `랜덤 생성 - 게임판 최소 크기 생성`() {
+        val rule = RandomBoardGenerationRule()
+        val rawBoard = rule.generate(BoardMetadata(1, 1, 1))
+
+        for (row in rawBoard) {
+            for (cell in row) {
+                print("$cell ")
+            }
+            println()
+        }
+
+        rawBoard.size shouldBe 1
+        rawBoard[0].size shouldBe 1
+    }
+
+    @Test
     fun `지뢰의 위치를 직접 좌표로 지정해서 생성`() {
         val mineCoordinates = listOf(0 to 0, 0 to 1, 1 to 0)
         val numOfMine = mineCoordinates.size

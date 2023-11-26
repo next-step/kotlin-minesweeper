@@ -4,12 +4,12 @@ import minesweeper.domain.Board
 import minesweeper.domain.Cell
 
 object ConsoleOutput {
-    fun printBoard(board: Board) {
+    fun printBoard(height: Int, width: Int, board: Board) {
         println("지뢰찾기 게임 시작")
 
-        board.rows.rows.forEach { row ->
-            row.cells.forEach { cell ->
-                val mark = when (cell) {
+        for (row in 0 until height) {
+            for (col in 0 until width) {
+                val mark = when (board.at(row, col)) {
                     Cell.MINE -> "*"
                     Cell.EMPTY -> "C"
                 }
