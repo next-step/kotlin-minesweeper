@@ -11,9 +11,9 @@ data class Point(val x: Int, val y: Int) {
 
     private fun isDifferent(point: Point) = this != point
     fun aroundPoints(): List<Point> {
-        return createRangeAroundCoordinate(x).flatMap { i ->
-            createAdjacentPoints(i)
-        }.filter { it != this }
+        return createRangeAroundCoordinate(x)
+            .flatMap { i -> createAdjacentPoints(i) }
+            .filter { it != this }
     }
 
     private fun createAdjacentPoints(i: Int) = createRangeAroundCoordinate(y).map { j -> Point(i, j) }

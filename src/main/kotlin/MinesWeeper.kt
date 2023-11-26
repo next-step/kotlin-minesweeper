@@ -1,30 +1,28 @@
-import business.MineGenerator
+import business.GameManager
 import business.MineRandomGenerator
-import business.OpenedCells
 import view.ConsoleUserInterface
 import view.UserInterface
 
 class MinesWeeper(
     private val userInterface: UserInterface = ConsoleUserInterface(),
-    private val mineGenerator: MineGenerator = MineRandomGenerator(),
 ) {
     fun start() {
         val height = userInterface.askHeight()
         val width = userInterface.askWidth()
         val mineCount = userInterface.askMineCount()
         userInterface.printStartAnnouncement()
-        val mines = mineGenerator.generate(height, width, mineCount)
-        val openedCells = OpenedCells(height, width)
+        val gameManager = GameManager.of(height, width, mineCount, MineRandomGenerator())
         while (true) {
             val point = userInterface.askPoint()
-            if (mines.contains(point)) {
+            val result = gameManager.open(point)
+            if (!result) {
                 userInterface.printGameOver()
-                userInterface.printMinefieldMatrix(height, width, mines)
+                userInterface.printMinefieldMatrix(height, width, gameManager.mines)
                 return
+            } else {
+                userInterface.printOpenedMinefieldMatrix(height, width, gameManager.openedCells(), gameManager.mines)
             }
-            openedCells.add(point, mines)
-            userInterface.printOpenedMinefieldMatrix(height, width, openedCells, mines)
-            if (openedCells.isAllOpened(mines)) {
+            if (gameManager.isOver()) {
                 userInterface.printWin()
                 return
             }
