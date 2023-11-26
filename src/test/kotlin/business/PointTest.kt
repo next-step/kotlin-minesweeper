@@ -1,6 +1,7 @@
 package business
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -17,5 +18,26 @@ class PointTest {
 
         // then
         actual shouldBe expected
+    }
+
+    @Test
+    fun `주변의 포인트를 생성한다`() {
+        // given
+        val point = Point(1, 1)
+
+        // when
+        val actual = point.aroundPoints()
+
+        // then
+        actual shouldBe listOf(
+            Point(0, 0),
+            Point(0, 1),
+            Point(0, 2),
+            Point(1, 0),
+            Point(1, 2),
+            Point(2, 0),
+            Point(2, 1),
+            Point(2, 2)
+        )
     }
 }
