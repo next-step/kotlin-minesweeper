@@ -1,3 +1,8 @@
+package view
+
+import business.Mines
+import business.Point
+
 class ConsoleUserInterface : UserInterface {
     override fun askHeight(): Int {
         println(ASK_HEIGHT_MESSAGE)

@@ -1,3 +1,8 @@
+import business.MineGenerator
+import business.MineRandomGenerator
+import view.ConsoleUserInterface
+import view.UserInterface
+
 class MinesWeeper(
     private val userInterface: UserInterface = ConsoleUserInterface(),
     private val mineGenerator: MineGenerator = MineRandomGenerator(),

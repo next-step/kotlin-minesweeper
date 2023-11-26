@@ -1,3 +1,5 @@
+package business
+
 import kotlin.math.abs
 
 data class Point(val x: Int, val y: Int) {

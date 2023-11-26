@@ -1,5 +1,10 @@
+import business.Mine
+import business.MineGenerator
+import business.Mines
+import business.Point
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import view.UserInterface
 
 class MinesWeeperTest {
 

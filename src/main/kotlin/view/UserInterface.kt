@@ -1,3 +1,7 @@
+package view
+
+import business.Mines
+
 interface UserInterface {
     fun askHeight(): Int
     fun askWidth(): Int

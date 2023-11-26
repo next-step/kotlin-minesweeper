@@ -1,3 +1,5 @@
+package business
+
 class MineRandomGenerator : MineGenerator {
     override fun generate(height: Int, width: Int, count: Int): Mines {
         val total = height * width
