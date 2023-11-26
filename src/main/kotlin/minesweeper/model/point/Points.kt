@@ -8,6 +8,7 @@ class Points(
     }
 
     fun countOfMine(): Int {
-        TODO("Not yet implemented")
+        return points.values
+            .count { it == Attribute.MINE }
     }
 }
