@@ -1,11 +1,11 @@
-import model.MapGenerator
+import model.GameMap
 import view.InputView
 import view.OutputView
 
 class MineSweeper {
 
     fun start() {
-        val map = MapGenerator.generateMap(
+        val map = GameMap(
             InputView.inputHeight(),
             InputView.inputWidth(),
             InputView.inputMineCount()

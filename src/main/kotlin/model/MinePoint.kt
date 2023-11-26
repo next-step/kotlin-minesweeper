@@ -1,5 +1,5 @@
 package model
 
-class MinePoint(var isMine: Boolean)
+class MinePoint(val isMine: Boolean)
 
 
