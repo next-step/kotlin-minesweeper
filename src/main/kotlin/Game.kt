@@ -20,4 +20,6 @@ fun main() {
     val gameBoard = GameBoard(height, width)
     val mines = MineGenerator(mineCount, RandomPosition(gameBoard)).generate()
     val minesweeperBoard = MinesweeperBoard(gameBoard, mines)
+
+    Output.printMinesweeperBoard(minesweeperBoard)
 }
