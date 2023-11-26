@@ -22,11 +22,11 @@ class ConsoleUserInterface : UserInterface {
     override fun printStartAnnouncement() = println(START_MESSAGE)
 
     override fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentHeight in 0.until(maxHeight)) printMinefieldRow(currentHeight, maxWidth, mines)
+        for (currentHeight in ZERO.until(maxHeight)) printMinefieldRow(currentHeight, maxWidth, mines)
     }
 
     private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentWidth in 0.until(maxWidth)) {
+        for (currentWidth in ZERO.until(maxWidth)) {
             printMinefield(targetHeight, currentWidth, mines)
             print(SEPARATOR)
         }
@@ -43,6 +43,7 @@ class ConsoleUserInterface : UserInterface {
     }
 
     companion object {
+        private const val ZERO = 0
         private const val ASK_HEIGHT_MESSAGE = "높이를 입력하세요."
         private const val ASK_WIDTH_MESSAGE = "너비를 입력하세요."
         private const val ASK_MINE_COUNT_MESSAGE = "지뢰의 개수를 입력하세요."
