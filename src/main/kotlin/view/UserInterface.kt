@@ -1,6 +1,7 @@
 package view
 
 import business.Mines
+import business.OpenedCells
 import business.Point
 
 interface UserInterface {
@@ -11,4 +12,6 @@ interface UserInterface {
     fun printStartAnnouncement()
     fun printMinefieldMatrix(height: Int, width: Int, mines: Mines)
     fun printGameOver()
+    fun printOpenedMinefieldMatrix(height: Int, width: Int, openedCells: OpenedCells, mines: Mines)
+    fun printWin()
 }

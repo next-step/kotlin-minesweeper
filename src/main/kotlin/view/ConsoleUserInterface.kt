@@ -1,6 +1,7 @@
 package view
 
 import business.Mines
+import business.OpenedCells
 import business.Point
 
 class ConsoleUserInterface : UserInterface {
@@ -35,6 +36,36 @@ class ConsoleUserInterface : UserInterface {
         for (currentHeight in ZERO.until(maxHeight)) printMinefieldRow(currentHeight, maxWidth, mines)
     }
 
+    override fun printGameOver() = println(GAME_OVER_MESSAGE)
+
+    override fun printWin() = println(GAME_WIN_MESSAGE)
+
+    override fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, openedCells: OpenedCells, mines: Mines) {
+        for (currentHeight in ZERO.until(maxHeight)) printOpenedMinefieldRow(
+            currentHeight,
+            maxWidth,
+            openedCells,
+            mines
+        )
+    }
+
+    private fun printOpenedMinefieldRow(targetHeight: Int, maxWidth: Int, openedCells: OpenedCells, mines: Mines) {
+        for (currentWidth in ZERO.until(maxWidth)) {
+            printOpenedMinefield(targetHeight, currentWidth, openedCells, mines)
+            print(MINEFIELD_SEPARATOR)
+        }
+        println()
+    }
+
+    private fun printOpenedMinefield(targetHeight: Int, currentWidth: Int, openedCells: OpenedCells, mines: Mines) {
+        val point = Point(targetHeight, currentWidth)
+        if (openedCells.contains(point)) {
+            print(mines.countMineAround(point))
+            return
+        }
+        print(NOT_OPENED_DELIMITER)
+    }
+
     private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
         for (currentWidth in ZERO.until(maxWidth)) {
             printMinefield(targetHeight, currentWidth, mines)
@@ -52,8 +83,6 @@ class ConsoleUserInterface : UserInterface {
         print(mines.countMineAround(point))
     }
 
-    override fun printGameOver() = println(GAME_OVER_MESSAGE)
-
     companion object {
         private const val ZERO = 0
         private const val POINT_SIZE = 2
@@ -65,11 +94,13 @@ class ConsoleUserInterface : UserInterface {
         private const val ASK_POINT_MESSAGE = "open: "
         private const val START_MESSAGE = "지뢰찾기 게임을 시작합니다."
         private const val GAME_OVER_MESSAGE = "Lose Game."
+        private const val GAME_WIN_MESSAGE = "Win Game."
         private const val HEIGHT_ERROR_MESSAGE = "높이는 숫자여야 합니다."
         private const val WIDTH_ERROR_MESSAGE = "너비는 숫자여야 합니다."
         private const val MINE_COUNT_ERROR_MESSAGE = "지뢰의 개수는 숫자여야 합니다."
         private const val MINEFIELD_SEPARATOR = " "
         private const val POINT_DELIMITER = ","
         private const val MINE_DELIMITER = "*"
+        private const val NOT_OPENED_DELIMITER = "C"
     }
 }

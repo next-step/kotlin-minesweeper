@@ -24,4 +24,8 @@ class OpenedCells(private val height: Int, private val width: Int, openedPoints:
     fun contains(point: Point): Boolean {
         return _openedPoints.contains(point)
     }
+
+    fun isAllOpened(mines: Mines): Boolean {
+        return _openedPoints.size == (height * width) - mines.size()
+    }
 }

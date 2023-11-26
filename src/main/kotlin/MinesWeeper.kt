@@ -1,5 +1,6 @@
 import business.MineGenerator
 import business.MineRandomGenerator
+import business.OpenedCells
 import view.ConsoleUserInterface
 import view.UserInterface
 
@@ -13,7 +14,21 @@ class MinesWeeper(
         val mineCount = userInterface.askMineCount()
         userInterface.printStartAnnouncement()
         val mines = mineGenerator.generate(height, width, mineCount)
-        userInterface.printMinefieldMatrix(height, width, mines)
+        val openedCells = OpenedCells(height, width)
+        while (true) {
+            val point = userInterface.askPoint()
+            if (mines.contains(point)) {
+                userInterface.printGameOver()
+                userInterface.printMinefieldMatrix(height, width, mines)
+                return
+            }
+            openedCells.add(point, mines)
+            userInterface.printOpenedMinefieldMatrix(height, width, openedCells, mines)
+            if (openedCells.isAllOpened(mines)) {
+                userInterface.printWin()
+                return
+            }
+        }
     }
 }
 
