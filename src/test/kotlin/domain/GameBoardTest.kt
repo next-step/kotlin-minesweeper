@@ -1,5 +1,7 @@
 package domain
 
+import domain.enums.CellType
+import domain.vo.BoardSettings
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -22,7 +24,7 @@ class GameBoardTest {
         var mineCount = 0
         gameBoard.board.forEach { row ->
             row.forEach { cell ->
-                if (cell == GameBoard.MINE) {
+                if (cell.cellType == CellType.MINE) {
                     mineCount++
                 }
             }

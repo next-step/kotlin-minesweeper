@@ -1,5 +1,6 @@
 package domain
 
+import domain.vo.BoardSettings
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

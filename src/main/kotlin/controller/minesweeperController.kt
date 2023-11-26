@@ -1,7 +1,7 @@
 package controller
 
-import domain.BoardSettings
 import domain.GameBoard
+import domain.vo.BoardSettings
 import view.InputView
 import view.OutputView
 
