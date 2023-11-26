@@ -5,32 +5,35 @@ import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import vo.Spot
 
 class MineMapTest {
 
     // 10 x 10, 10개의 지뢰
-    private val testMap = listOf(
-        listOf(0, 0, 1, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 1, 0, 0, 1).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 1, 0, 0, 0, 1, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 1).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 1, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 1, 0, 0, 0, 1, 0, 0).toMineMapLine(),
-        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
-        listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
+    private val testMap = ArrayMap(
+        listOf(
+            listOf(0, 0, 1, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 1, 0, 0, 1).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 1, 0, 0, 0, 1, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 1).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 1, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 1, 0, 0, 0, 1, 0, 0).toMineMapLine(),
+            listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine(),
+            listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
+        )
     )
 
-    private fun List<Int>.toMineMapLine(): List<Spot> = map { Spot(it == 1) }
+    private fun List<Int>.toMineMapLine(): List<Spot> = map {
+        Spot(if (it == 1) MineStatus.MINED else MineStatus.EMPTY)
+    }
 
     @ParameterizedTest
     @CsvSource(value = ["0, 10", "10, 0", "-1, 0", "0, -1"])
     fun `맵의 범위를 벗어난 범위의 지뢰를 확인하면 에러가 발생한다`(x: Int, y: Int) {
         val mineMap = MineMap(testMap)
         assertThatIllegalArgumentException().isThrownBy {
-            mineMap.isMineOn(x, y)
+            mineMap.resultMineStatus(Point(y, x))
         }
     }
 
@@ -39,7 +42,7 @@ class MineMapTest {
         val mineMap = MineMap(testMap)
         var mineCount = 0
         repeat(100) { i ->
-            if (mineMap.isMineOn(i % 10, i / 10) == "*") {
+            if (mineMap.resultMineStatus(Point(i / 10, i % 10)) == OpenStatus.MINED.symbol) {
                 mineCount++
             }
         }
@@ -51,5 +54,12 @@ class MineMapTest {
         val mineMap = MineMap(testMap)
         assertThat(mineMap.getHeight()).isEqualTo(10)
         assertThat(mineMap.getWidth()).isEqualTo(10)
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["0, 0, 0", "2, 0, +", "6, 0, 1", "2, 6, 2"])
+    fun `맵을 오픈하면 결과가 나온다`(x: Int, y: Int, result: String) {
+        val mineMap = MineMap(testMap)
+        assertThat(mineMap.resultMineStatus(Point(y, x))).isEqualTo(result)
     }
 }

@@ -1,24 +1,27 @@
 package controller
 
 import domain.MineMap
-import domain.MineMapGenerator
+import domain.MineMapInfo
+import domain.Point
+import domain.RandomMineMap
 import view.InputView
 import view.OutputView
-import vo.MineMapInfo
 
 class MinesweeperController {
 
     fun run() {
         val mapInfo = inputCondition()
-        val mineMap = MineMap(MineMapGenerator.newMap(mapInfo))
+        val mineMap = MineMap(RandomMineMap.newMap(mapInfo))
 
         OutputView.outputGameStart(mineMap)
     }
 
     private fun inputCondition(): MineMapInfo =
         MineMapInfo(
-            InputView.inputHeight(),
-            InputView.inputWidth(),
+            Point(
+                InputView.inputHeight(),
+                InputView.inputWidth()
+            ),
             InputView.inputMineCount()
         )
 }

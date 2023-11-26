@@ -1,16 +1,31 @@
 package domain
 
-import vo.Spot
+class MineMap(private val map: ArrayMap) {
 
-class MineMap(private val map: List<List<Spot>>) {
+    private val delta = listOf(
+        Point(-1, -1),
+        Point(0, -1),
+        Point(1, -1),
+        Point(-1, 0),
+        Point(1, 0),
+        Point(-1, 1),
+        Point(0, 1),
+        Point(1, 1)
+    )
 
-    fun isMineOn(x: Int, y: Int): String {
-        require(y in map.indices) { "잘못된 x값입니다." }
-        require(x in map.first().indices) { "잘못된 y값입니다." }
-        return map[y][x].isMineOn()
+    fun resultMineStatus(point: Point): String {
+        val nearMineCount = nearMineCount(point)
+        return map.getPoint(point).spotSymbol(nearMineCount)
     }
 
-    fun getHeight(): Int = map.size
+    fun getHeight(): Int = map.height
 
-    fun getWidth(): Int = map.first().size
+    fun getWidth(): Int = map.width
+
+    private fun nearMineCount(point: Point): Int =
+        delta.map {
+            map.getPointOrNull(point + it)
+        }.count {
+            it != null && it.isMine()
+        }
 }
