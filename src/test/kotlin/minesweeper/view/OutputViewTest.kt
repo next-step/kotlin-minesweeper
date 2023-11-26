@@ -19,5 +19,4 @@ class OutputViewTest : StringSpec({
         val renderingBoard = OutputView.renderingBoard(board)
         println(renderingBoard)
     }
-
 })

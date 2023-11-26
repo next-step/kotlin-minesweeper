@@ -1,6 +1,5 @@
 package minesweeper
 
-
 import minesweeper.model.board.Board
 import minesweeper.model.board.impl.EvenlyStrategy
 import minesweeper.view.InputView

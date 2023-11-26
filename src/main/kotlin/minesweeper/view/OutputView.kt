@@ -12,23 +12,15 @@ object OutputView {
 
     fun renderingBoard(board: Board): String {
         return (0 until board.horizontalSize)
-            .joinToString(separator = "\n")
-            { verticalIndex -> renderingRow(board, Vertical(verticalIndex)) }
+            .joinToString(separator = "\n") { verticalIndex -> renderingRow(board, Vertical(verticalIndex)) }
     }
 
     private fun renderingRow(board: Board, verticalIndex: Vertical): String {
         return (0 until board.verticalSize)
-            .joinToString(separator = " ")
-            { horizontalIndex -> renderingPoint(board, Coordinate(verticalIndex, Horizontal(horizontalIndex))) }
+            .joinToString(separator = " ") { horizontalIndex -> renderingPoint(board, Coordinate(verticalIndex, Horizontal(horizontalIndex))) }
     }
 
     private fun renderingPoint(board: Board, coordinate: Coordinate): String {
         return board.points.symbol(coordinate)
     }
-
 }
-
-
-
-
-
