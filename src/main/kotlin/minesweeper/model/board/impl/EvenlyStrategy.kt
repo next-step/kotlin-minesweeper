@@ -8,6 +8,7 @@ import minesweeper.model.point.Points
 class EvenlyStrategy(
     private val countOfMines: Int,
 ) : MineDeployStrategy {
+
     override fun deployPoints(verticalLimit: Int, horizontalLimit: Int): Points {
         val map = (0 until (verticalLimit * horizontalLimit))
             .asSequence()

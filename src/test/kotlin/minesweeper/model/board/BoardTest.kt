@@ -25,5 +25,4 @@ class BoardTest : StringSpec({
 
         board.verticalSize shouldBe vertical
     }
-
 })
