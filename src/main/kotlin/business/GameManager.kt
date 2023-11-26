@@ -3,7 +3,8 @@ package business
 class GameManager(val mines: Mines, openedCells: OpenedCells) {
     private val _openedCells = openedCells
 
-    fun openedCells(): OpenedCells = _openedCells.copy()
+    val openedCells: OpenedCells
+        get() = _openedCells.copy()
 
     fun open(point: Point): Boolean {
         if (mines.contains(point)) {

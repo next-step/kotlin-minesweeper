@@ -55,7 +55,10 @@ class GameManagerTest {
 
     private fun mines(): Mines = Mines(
         listOf(
-            Mine.of(0, 0), Mine.of(0, 1), Mine.of(1, 0), Mine.of(1, 1)
+            Mine.of(0, 0),
+            Mine.of(0, 1),
+            Mine.of(1, 0),
+            Mine.of(1, 1)
         )
     )
 }
