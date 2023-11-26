@@ -1,19 +1,17 @@
 package domain
 
-import enum.CellStatus
-
 class Board(private val height: Int, private val width: Int) {
-    private val cells: Array<Cell> = Array(height * width) { yx ->
-        Cell(Position(yx % width, yx / width))
+    private val cells: MutableList<Cell> = MutableList(height * width) { index ->
+        Cell(Position(index % width, index / width))
     }
 
     fun placeMineAt(position: Position) {
-        findCell(position).status = CellStatus.MINE
+        findCell(position).placeMine()
     }
 
-    fun hasMineAt(position: Position): Boolean = findCell(position).status == CellStatus.MINE
+    fun hasMineAt(position: Position): Boolean = findCell(position).isMine()
 
-    fun countMines(): Int = cells.count { it.status == CellStatus.MINE }
+    fun countMines(): Int = cells.count { it.isMine() }
 
-    private fun findCell(position: Position): Cell = cells[position.y * width + position.x]
+    private fun findCell(position: Position): Cell = cells.first { it.position == position }
 }
