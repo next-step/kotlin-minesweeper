@@ -4,5 +4,6 @@ enum class Attribute(
     val symbol: String,
 ) {
     MINE("*"),
-    GROUND("C"),
+    FLAG("F"),
+    NONE("C"),
 }

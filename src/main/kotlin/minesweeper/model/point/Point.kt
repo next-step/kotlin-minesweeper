@@ -1,10 +1,7 @@
 package minesweeper.model.point
-
-data class Point(
-    private val attribute: Attribute,
-    private val coordinate: Coordinate,
-) {
-    fun symbol(): String {
-        return attribute.symbol
-    }
-}
+//
+//data class Point(
+//    private val attribute: Attribute,
+//    val coordinate: Coordinate,
+//) {
+//}
