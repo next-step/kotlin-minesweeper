@@ -9,5 +9,5 @@ fun main() {
     val mapWidth: Int = InputView.mapWidth()
     val minesCount: Int = InputView.countOfMines()
     val board: Board = Board(minesCount, mapHeight, mapWidth)
-    OutputView.printMineMap(board)
+    OutputView().printMineMap(board)
 }

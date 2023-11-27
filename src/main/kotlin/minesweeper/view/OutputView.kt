@@ -4,9 +4,12 @@ import minesweeper.model.board.Board
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Horizontal
 import minesweeper.model.point.Vertical
-import minesweeper.view.reder.impl.AdjacentMineCountRenderingStrategy
+import minesweeper.view.reder.MineRenderingStrategy
+import minesweeper.view.reder.impl.AttributeRenderingStrategy
 
-object OutputView {
+class OutputView(
+    private val renderingStrategy: MineRenderingStrategy = AttributeRenderingStrategy,
+) {
     fun printMineMap(board: Board) {
         println(renderingBoard(board))
     }
@@ -22,6 +25,6 @@ object OutputView {
     }
 
     private fun renderingPoint(board: Board, coordinate: Coordinate): String {
-        return board.points.symbol(coordinate, AdjacentMineCountRenderingStrategy(board, coordinate))
+        return board.points.symbol(coordinate, renderingStrategy)
     }
 }
