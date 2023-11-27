@@ -1,5 +1,6 @@
 package domain
 
+import domain.builder.map
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -57,6 +58,20 @@ class MapTest : FunSpec({
                 Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
                 Row(Coordinate(x = 0, y = 0), Coordinate(x = 1, y = 0), Coordinate(x = 2, y = 0)),
             ).size shouldBe 1
+        }
+
+        test("MapBuilder 테스트") {
+            val actual = map {
+                row {
+                    col {
+                        coordinate(y = 0, x = 0)
+                        coordinate(y = 0, x = 1)
+                        coordinate(y = 0, x = 2)
+                    }
+                }
+            }
+
+            actual.rows.first().columns.size shouldBe 3
         }
     }
 })
