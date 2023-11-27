@@ -1,7 +1,6 @@
 package domain
 
 import domain.enums.CellType
-import domain.vo.BoardSettings
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

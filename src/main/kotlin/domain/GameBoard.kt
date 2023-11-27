@@ -1,9 +1,6 @@
 package domain
 
 import domain.enums.CellType
-import domain.vo.BoardSettings
-import domain.vo.Cell
-import domain.vo.Position
 import kotlin.random.Random
 
 class GameBoard private constructor(val board: List<List<Cell>>) {

@@ -1,3 +1,3 @@
-package domain.vo
+package domain
 
 data class Position(val x: Int, val y: Int)

@@ -1,4 +1,4 @@
-package domain.vo
+package domain
 
 import error.ErrorMessage
 
