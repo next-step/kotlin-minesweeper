@@ -1,16 +1,12 @@
 package minesweeper
 
 class Mines(
-    private val mines: MutableMap<Pair<Int, Int>, Mine> = mutableMapOf(),
+    private val _mines: Map<Pair<Int, Int>, Mine> = mutableMapOf(),
 ) {
-
-    fun add(mine: Mine) {
-        val x = mine.x
-        val y = mine.y
-        mines[Pair(x, y)] = mine
-    }
+    val mines: Map<Pair<Int, Int>, Mine>
+        get() = _mines
 
     fun findBy(x: Int, y: Int): Mine? {
-        return mines[Pair(x, y)]
+        return _mines[Pair(x, y)]
     }
 }
