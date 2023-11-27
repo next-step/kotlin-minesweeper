@@ -36,8 +36,4 @@ class EvenlyStrategyTest : StringSpec({
             strategy.deployPoints(5, 5)
         }
     }
-
-
-
-
 })
