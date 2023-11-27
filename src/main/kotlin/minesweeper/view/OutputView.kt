@@ -4,6 +4,7 @@ import minesweeper.model.board.Board
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Horizontal
 import minesweeper.model.point.Vertical
+import minesweeper.view.reder.impl.AttributeRenderingStrategy
 
 object OutputView {
     fun printMineMap(board: Board) {
@@ -21,6 +22,6 @@ object OutputView {
     }
 
     private fun renderingPoint(board: Board, coordinate: Coordinate): String {
-        return board.points.symbol(coordinate)
+        return board.points.symbol(coordinate, AttributeRenderingStrategy)
     }
 }
