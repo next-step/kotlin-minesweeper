@@ -1,5 +1,6 @@
 package minesweeper.model.board
 
+import minesweeper.model.board.impl.EvenlyStrategy
 import minesweeper.model.point.Points
 
 class Board(
@@ -9,16 +10,16 @@ class Board(
 ) {
 
     constructor(
+        mineCount: Int,
         verticalSize: Int,
         horizontalSize: Int,
-        strategy: MineDeployStrategy
     ) : this(
-        points = strategy.deployPoints(verticalSize, horizontalSize),
+        points = EvenlyStrategy(mineCount).deployPoints(verticalSize, horizontalSize),
         verticalSize = verticalSize,
         horizontalSize = horizontalSize
     )
 
-    fun countOfMine(): Int {
+    fun minesCount(): Int {
         return points.countOfMine()
     }
 }

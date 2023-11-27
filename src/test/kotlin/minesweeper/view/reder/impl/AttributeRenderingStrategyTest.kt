@@ -11,5 +11,4 @@ class AttributeRenderingStrategyTest : StringSpec({
         AttributeRenderingStrategy.symbol(Attribute.MINE) shouldBe "*"
         AttributeRenderingStrategy.symbol(Attribute.FLAG) shouldBe "F"
     }
-
 })
