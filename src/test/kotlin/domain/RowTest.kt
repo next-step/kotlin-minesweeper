@@ -13,6 +13,34 @@ class RowTest : FunSpec(
             shouldThrow<IllegalArgumentException> { Row() }
         }
 
+        test("행에 최대 20개 이하의 좌표가 포함된다") {
+            shouldThrow<IllegalArgumentException> {
+                Row(
+                    Coordinate(x = 0, y = 1),
+                    Coordinate(x = 1, y = 1),
+                    Coordinate(x = 2, y = 1),
+                    Coordinate(x = 3, y = 1),
+                    Coordinate(x = 4, y = 1),
+                    Coordinate(x = 5, y = 1),
+                    Coordinate(x = 6, y = 1),
+                    Coordinate(x = 7, y = 1),
+                    Coordinate(x = 8, y = 1),
+                    Coordinate(x = 9, y = 1),
+                    Coordinate(x = 10, y = 1),
+                    Coordinate(x = 11, y = 1),
+                    Coordinate(x = 12, y = 1),
+                    Coordinate(x = 13, y = 1),
+                    Coordinate(x = 14, y = 1),
+                    Coordinate(x = 15, y = 1),
+                    Coordinate(x = 16, y = 1),
+                    Coordinate(x = 17, y = 1),
+                    Coordinate(x = 18, y = 1),
+                    Coordinate(x = 19, y = 1),
+                    Coordinate(x = 20, y = 1),
+                )
+            }
+        }
+
         test("같은 행에 속하는 좌표들은 y 값이 모두 동일해야 한다") {
             shouldThrow<IllegalArgumentException> {
                 Row(Coordinate(x = 0, y = 1), Coordinate(x = 1, y = 2))
