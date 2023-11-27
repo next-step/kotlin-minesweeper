@@ -5,6 +5,7 @@ import domain.RandomPositionSelector
 import view.inputHeight
 import view.inputMineNum
 import view.inputWidth
+import view.printBoard
 import view.printStartMessage
 
 fun main() {
@@ -20,4 +21,5 @@ fun main() {
     }
 
     printStartMessage()
+    printBoard(field.cells)
 }
