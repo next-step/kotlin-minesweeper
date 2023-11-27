@@ -18,7 +18,12 @@ class EvenlyStrategy(
             .take(countOfMines)
             .map { coordinateOrderOf(it, verticalLimit, horizontalLimit) to Attribute.MINE }
             .toMap()
+        requireMineCountDeployed(coordinateAttributeMap.keys.size, countOfMines)
         return Points(coordinateAttributeMap)
+    }
+
+    private fun requireMineCountDeployed(countOfMinesActual: Int, countOfMinesExpect: Int) {
+        require(countOfMinesActual == countOfMinesExpect) { "실제 생성된 지뢰의 수 [$countOfMinesActual] != 생성 요청한 지뢰의 수 [$countOfMinesExpect]" }
     }
 
     private fun requireMineCountLimit(limitMineCounts: Int, countOfMines: Int) {
