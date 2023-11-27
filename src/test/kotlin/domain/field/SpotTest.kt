@@ -12,9 +12,12 @@ class SpotTest {
 
     @Test
     fun `지뢰인지 아닌지 확인한다`() {
+        // given
         val mineSpot = Spot(MineStatus.MINED)
-        assertThat(mineSpot.isMine()).isTrue()
         val emptySpot = Spot(MineStatus.EMPTY)
+
+        // then
+        assertThat(mineSpot.isMine()).isTrue()
         assertThat(emptySpot.isMine()).isFalse()
     }
 

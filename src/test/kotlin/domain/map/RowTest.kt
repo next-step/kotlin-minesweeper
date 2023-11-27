@@ -2,6 +2,8 @@ package domain.map
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class RowTest {
 
@@ -13,9 +15,9 @@ class RowTest {
         assertThat(row.size()).isEqualTo(5)
     }
 
-    @Test
-    fun `Row의 특정 위치의 값을 가져온다`() {
-        val index = (0 until row.size()).random()
+    @ParameterizedTest
+    @ValueSource(ints = [0, 1, 2, 3, 4])
+    fun `Row의 특정 위치의 값을 가져온다`(index: Int) {
         assertThat(row[index]).isEqualTo(sampleList[index])
     }
 
