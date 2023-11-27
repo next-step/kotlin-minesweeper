@@ -1,4 +1,5 @@
 import business.GameManager
+import business.GameStatus
 import business.MineRandomGenerator
 import view.ConsoleUserInterface
 import view.UserInterface
@@ -8,15 +9,12 @@ class MinesWeeper(
 ) {
     fun start() {
         val (height, width, gameManager) = initGame()
-        var result = openPoint(gameManager)
-        while (result) {
+        var status = openPoint(gameManager)
+        while (status.isContinue()) {
             displayOpenResult(height, width, gameManager)
-            if (gameManager.isOver()) {
-                displayWin()
-                return
-            }
-            result = openPoint(gameManager)
+            status = openPoint(gameManager)
         }
+        if (status == GameStatus.WIN) displayWin()
         displayGameOver(height, width, gameManager)
     }
 
@@ -34,7 +32,7 @@ class MinesWeeper(
         userInterface.printMinefieldMatrix(height, width, gameManager.mines)
     }
 
-    private fun openPoint(gameManager: GameManager): Boolean = gameManager.open(userInterface.askPoint())
+    private fun openPoint(gameManager: GameManager): GameStatus = gameManager.open(userInterface.askPoint())
 
     private fun displayOpenResult(height: Int, width: Int, gameManager: GameManager) =
         userInterface.printOpenedMinefieldMatrix(height, width, gameManager.openedCells, gameManager.mines)

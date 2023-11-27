@@ -6,15 +6,13 @@ class GameManager(val mines: Mines, openedCells: OpenedCells) {
     val openedCells: OpenedCells
         get() = _openedCells.copy()
 
-    fun open(point: Point): Boolean {
-        if (mines.contains(point)) {
-            return false
-        }
+    fun open(point: Point): GameStatus {
+        if (mines.contains(point)) return GameStatus.GAME_OVER
         _openedCells.add(point, mines)
-        return true
+        return isOver()
     }
 
-    fun isOver(): Boolean = _openedCells.isAllOpened(mines.size())
+    fun isOver(): GameStatus = if (_openedCells.isAllOpened(mines.size())) GameStatus.WIN else GameStatus.CONTINUE
 
     companion object {
         fun of(height: Int, width: Int, mineCount: Int, mineGenerator: MineGenerator): GameManager {

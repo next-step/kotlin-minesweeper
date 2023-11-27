@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class GameManagerTest {
 
     @Test
-    fun `지뢰가 아니면 open하고 true를 반환한다`() {
+    fun `open한 cell이 지뢰가 아니고 모든 cell이 모두 열지 않는 상태이면 continue상태를 반환하다`() {
         // given
         val gameManager = GameManager(mines(), OpenedCells(5, 5))
 
@@ -14,11 +14,11 @@ class GameManagerTest {
         val open = gameManager.open(Point(0, 2))
 
         // then
-        open shouldBe true
+        open shouldBe GameStatus.CONTINUE
     }
 
     @Test
-    fun `지뢰이면 open하지 않고 false를 반환한다`() {
+    fun `open한 cell이 지뢰이면 game over상태를 반환한다`() {
         // given
         val gameManager = GameManager(mines(), OpenedCells(5, 5))
 
@@ -26,11 +26,11 @@ class GameManagerTest {
         val open = gameManager.open(Point(0, 0))
 
         // then
-        open shouldBe false
+        open shouldBe GameStatus.GAME_OVER
     }
 
     @Test
-    fun `지뢰 뺴고 모두 open 되여 있으면 true를 반환한다`() {
+    fun `지뢰 뺴고 모두 open 되여 있으면 win 상태를 반환한다`() {
         // given
         val gameManager = GameManager(mines(), OpenedCells(2, 2))
 
@@ -38,11 +38,11 @@ class GameManagerTest {
         val isOver = gameManager.isOver()
 
         // then
-        isOver shouldBe true
+        isOver shouldBe GameStatus.WIN
     }
 
     @Test
-    fun `지뢰 뺴고 모두 open 되여 있지 않으면 false를 반환한다`() {
+    fun `지뢰 뺴고 모두 open 되여 있지 않으면 continue 상태를 반환한다`() {
         // given
         val gameManager = GameManager(mines(), OpenedCells(5, 5))
 
@@ -50,7 +50,7 @@ class GameManagerTest {
         val isOver = gameManager.isOver()
 
         // then
-        isOver shouldBe false
+        isOver shouldBe GameStatus.CONTINUE
     }
 
     private fun mines(): Mines = Mines(
