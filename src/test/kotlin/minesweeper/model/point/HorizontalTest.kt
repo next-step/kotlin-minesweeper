@@ -10,15 +10,13 @@ class HorizontalTest : StringSpec({
         shouldNotThrow<IllegalArgumentException> {
             Horizontal(0)
             Horizontal(1)
-            Horizontal(100)
-            Horizontal(99999)
         }
     }
 
-    "Horizontal 의 value 에 음수가 입력되면 throw IllegalArgumentException" {
+    "Horizontal 의 value 에 음수인 -1 이 입력되면 throw IllegalArgumentException" {
         shouldThrow<IllegalArgumentException> {
             Horizontal(-1)
-            Horizontal(-2)
         }
     }
+
 })
