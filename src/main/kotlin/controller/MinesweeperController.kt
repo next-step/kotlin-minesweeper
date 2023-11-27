@@ -1,9 +1,9 @@
 package controller
 
 import domain.MineMap
-import domain.MineMapInfo
-import domain.Point
 import domain.RandomMineMap
+import domain.field.MineMapInfo
+import domain.field.Point
 import view.InputView
 import view.OutputView
 

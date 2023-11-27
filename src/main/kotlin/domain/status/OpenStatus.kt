@@ -1,4 +1,4 @@
-package domain
+package domain.status
 
 enum class OpenStatus(val symbol: String) {
     COVERED("@"),

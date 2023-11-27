@@ -1,5 +1,8 @@
 package domain
 
+import domain.field.Point
+import domain.map.ArrayMap
+
 class MineMap(private val map: ArrayMap) {
 
     private val delta = listOf(

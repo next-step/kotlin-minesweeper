@@ -1,5 +1,7 @@
-package domain
+package domain.field
 
+import domain.status.MineStatus
+import domain.status.OpenStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test

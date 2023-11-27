@@ -1,4 +1,7 @@
-package domain
+package domain.map
+
+import domain.field.Point
+import domain.field.Spot
 
 /**
  * 지뢰찾기 맵은 이중 배열의 형태

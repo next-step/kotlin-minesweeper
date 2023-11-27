@@ -1,4 +1,4 @@
-package domain
+package domain.map
 
 open class Row<T>(private val row: List<T>) {
 

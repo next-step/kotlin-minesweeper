@@ -1,5 +1,10 @@
 package domain
 
+import domain.field.Point
+import domain.field.Spot
+import domain.map.ArrayMap
+import domain.status.MineStatus
+import domain.status.OpenStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test

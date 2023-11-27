@@ -1,7 +1,7 @@
 package view
 
 import domain.MineMap
-import domain.Point
+import domain.field.Point
 
 object OutputView {
 

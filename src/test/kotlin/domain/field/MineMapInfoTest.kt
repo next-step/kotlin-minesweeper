@@ -1,4 +1,4 @@
-package domain
+package domain.field
 
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test

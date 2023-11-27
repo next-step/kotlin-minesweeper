@@ -1,4 +1,4 @@
-package domain
+package domain.field
 
 data class Point(
     val y: Int,
