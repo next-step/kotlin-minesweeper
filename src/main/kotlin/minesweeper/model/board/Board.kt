@@ -24,7 +24,7 @@ class Board(
         return points.countOfMine()
     }
 
-    fun adjucentMineCount(coordinate: Coordinate) {
+    fun adjacentMineCount(coordinate: Coordinate) {
         TODO("Not yet implemented")
     }
 }

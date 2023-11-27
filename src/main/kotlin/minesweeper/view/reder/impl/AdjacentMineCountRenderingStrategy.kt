@@ -16,6 +16,6 @@ class AdjacentMineCountRenderingStrategy(
         if (attribute == Attribute.FLAG) {
             return "F"
         }
-        return board.adjucentMineCount(coordinate).toString()
+        return board.adjacentMineCount(coordinate).toString()
     }
 }
