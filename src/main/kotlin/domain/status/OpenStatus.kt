@@ -14,24 +14,14 @@ enum class OpenStatus(val symbol: String) {
     EIGHT("8");
 
     companion object {
-        fun from(mineStatus: MineStatus, nearMineCount: Int) =
+        private val properties = values().associateBy(OpenStatus::symbol)
+        fun from(mineStatus: MineStatus, nearMineCount: Int): OpenStatus =
             when (mineStatus) {
                 MineStatus.MINED -> MINED
                 MineStatus.EMPTY -> from(nearMineCount)
             }
 
-        private fun from(nearMineCount: Int) =
-            when (nearMineCount) {
-                0 -> ZERO
-                1 -> ONE
-                2 -> TWO
-                3 -> THREE
-                4 -> FOUR
-                5 -> FIVE
-                6 -> SIX
-                7 -> SEVEN
-                8 -> EIGHT
-                else -> throw IllegalArgumentException("잘못된 지뢰 개수입니다.")
-            }
+        private fun from(nearMineCount: Int): OpenStatus =
+            properties[nearMineCount.toString()] ?: throw IllegalArgumentException("잘못된 지뢰 개수입니다.")
     }
 }
