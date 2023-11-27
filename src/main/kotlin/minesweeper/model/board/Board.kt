@@ -37,7 +37,7 @@ class Board(
     private fun adjacentPointTraversal(coordinate: Coordinate): List<Coordinate> {
         return deltas.asSequence()
             .filter { delta -> inRange(coordinate, delta) }
-            .map { coordinate.next(it) }
+            .map { coordinate.moveTo(it) }
             .toList()
     }
 
