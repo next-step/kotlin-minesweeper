@@ -8,10 +8,14 @@ class Board(
     val horizontalSize: Int,
 ) {
 
-    constructor(verticalSize: Int, horizontalSize: Int, s: MineDeployStrategy) : this(
-        s.deployPoints(verticalSize, horizontalSize),
-        verticalSize,
-        horizontalSize
+    constructor(
+        verticalSize: Int,
+        horizontalSize: Int,
+        strategy: MineDeployStrategy
+    ) : this(
+        points = strategy.deployPoints(verticalSize, horizontalSize),
+        verticalSize = verticalSize,
+        horizontalSize = horizontalSize
     )
 
     fun countOfMine(): Int {
