@@ -1,6 +1,6 @@
 package domain
 
-class Row<T>(private val row: List<T>) {
+open class Row<T>(private val row: List<T>) {
 
     operator fun get(index: Int): T {
         require(index in row.indices)
