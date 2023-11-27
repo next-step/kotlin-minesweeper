@@ -6,8 +6,8 @@ open class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
     }
 
     companion object {
-        private const val MIN_X = 0
-        private const val MIN_Y = 0
+        const val MIN_X = 0
+        const val MIN_Y = 0
     }
 
     override fun compareTo(other: Coordinate): Int {
