@@ -3,9 +3,7 @@ package minesweeper.view.reder.impl
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.model.point.Attribute
-import minesweeper.model.point.Coordinate
-import minesweeper.model.point.Horizontal
-import minesweeper.model.point.Vertical
+import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class AttributeRenderingStrategyTest : StringSpec({
 
@@ -15,7 +13,3 @@ class AttributeRenderingStrategyTest : StringSpec({
         AttributeRenderingStrategy.symbol(Attribute.FLAG, (2 to 2).toCoordinate()) shouldBe "F"
     }
 })
-
-private fun Pair<Int, Int>.toCoordinate(): Coordinate {
-    return Coordinate(Vertical(this.first), Horizontal(this.second))
-}
