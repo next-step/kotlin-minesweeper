@@ -4,6 +4,17 @@ data class Coordinate(
     private val vertical: Vertical,
     private val horizontal: Horizontal,
 ) {
+    fun moveTo(delta: Delta): Coordinate {
+        return Coordinate(
+            vertical = vertical.moveTo(delta.verticalDelta),
+            horizontal = horizontal.moveTo(delta.horizontalDelta)
+        )
+    }
+
+    fun movePossible(delta: Delta, verticalLimit: Int, horizontalLimit: Int): Boolean {
+        return vertical.movePossible(delta.verticalDelta, verticalLimit) && horizontal.movePossible(delta.horizontalDelta, horizontalLimit)
+    }
+
     // constructor(vertical: Int, horizontal: Int) : this(Vertical(vertical), Horizontal(horizontal))
     /*
     이슈 해결 필요
