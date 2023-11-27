@@ -5,8 +5,9 @@ import domain.status.OpenStatus
 
 class Spot(private val status: MineStatus) {
 
-    fun spotSymbol(nearMineCount: Int): String =
-        OpenStatus.from(status, nearMineCount).symbol
+    private var openStatus = OpenStatus.COVERED
+
+    fun spotSymbol(): String = openStatus.symbol
 
     fun isMine(): Boolean =
         status == MineStatus.MINED

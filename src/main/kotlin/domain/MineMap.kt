@@ -16,10 +16,8 @@ class MineMap(private val map: ArrayMap) {
         Point(1, 1)
     )
 
-    fun resultMineStatus(point: Point): String {
-        val nearMineCount = nearMineCount(point)
-        return map.getPoint(point).spotSymbol(nearMineCount)
-    }
+    fun resultMineStatus(point: Point): String =
+        map.getPoint(point).spotSymbol()
 
     fun getHeight(): Int = map.height
 
