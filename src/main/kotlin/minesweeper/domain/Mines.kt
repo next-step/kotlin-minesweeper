@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class Mines(
     private val _mines: Map<Pair<Int, Int>, Mine> = mutableMapOf(),

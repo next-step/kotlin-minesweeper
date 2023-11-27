@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.domain
 
 class RandomMineGenerator(
     private val height: Int,
