@@ -23,4 +23,12 @@ class ArrayMap(private val map: Row<Column<Spot>>) {
 
     fun getPointOrNull(point: Point): Spot? =
         map.getOrNull(point.y)?.getOrNull(point.x)
+
+    fun flatten(): List<Spot> {
+        val flattenList = mutableListOf<Spot>()
+        repeat(height) { h ->
+            flattenList.addAll(map[h].toList())
+        }
+        return flattenList.toList()
+    }
 }

@@ -14,4 +14,6 @@ open class Row<T>(private val row: List<T>) {
     fun first(): T = row.first()
 
     fun getOrNull(index: Int): T? = row.getOrNull(index)
+
+    fun toList(): List<T> = row
 }

@@ -52,4 +52,7 @@ class MineMap(private val map: ArrayMap) {
             open(nextPoint)
         }
     }
+
+    fun noMoreOpenSpot(): Boolean =
+        map.flatten().find { it.isOpen().not() && it.isMine().not() } == null
 }

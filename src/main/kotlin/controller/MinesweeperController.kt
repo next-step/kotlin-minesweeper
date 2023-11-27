@@ -15,7 +15,8 @@ class MinesweeperController {
         val mineMap = MineMap(RandomMineMap.newMap(mapInfo))
 
         OutputView.outputGameStart()
-        while (processGame(mineMap) != MineStatus.MINED) {}
+        val isWin = processGame(mineMap)
+        OutputView.printResultMessage(isWin)
     }
 
     private fun inputCondition(): MineMapInfo =
@@ -27,10 +28,22 @@ class MinesweeperController {
             InputView.inputMineCount()
         )
 
-    private fun processGame(mineMap: MineMap): MineStatus {
+    private fun openSpot(mineMap: MineMap): MineStatus {
         val openSpot = InputView.inputOpenSpot()
         val mineStatus = mineMap.open(openSpot)
         OutputView.printMineMap(mineMap)
         return mineStatus
+    }
+
+    private fun processGame(mineMap: MineMap): Boolean {
+        var isWin = true
+        while (mineMap.noMoreOpenSpot().not()) {
+            if (openSpot(mineMap) == MineStatus.MINED) {
+                isWin = false
+                break
+            }
+        }
+
+        return isWin
     }
 }

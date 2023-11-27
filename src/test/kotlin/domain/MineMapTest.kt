@@ -28,6 +28,14 @@ class MineMapTest {
             listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
         )
     )
+    // 3 x 3, 8개의 지뢰
+    private val smallTestMap = ArrayMap(
+        listOf(
+            listOf(1, 1, 1).toMineMapLine(),
+            listOf(1, 0, 1).toMineMapLine(),
+            listOf(1, 1, 1).toMineMapLine()
+        )
+    )
 
     private fun List<Int>.toMineMapLine(): List<Spot> = map {
         Spot(if (it == 1) MineStatus.MINED else MineStatus.EMPTY)
@@ -57,5 +65,18 @@ class MineMapTest {
         assertThat(mineMap.resultMineStatus(Point(0, 1))).isEqualTo(OpenStatus.ONE.symbol)
         assertThat(mineMap.resultMineStatus(Point(1, 0))).isEqualTo(OpenStatus.ZERO.symbol)
         assertThat(mineMap.resultMineStatus(Point(1, 1))).isEqualTo(OpenStatus.ONE.symbol)
+    }
+
+    @Test
+    fun `open할 수 있는지 확인한다`() {
+        // given
+        val mineMap = MineMap(smallTestMap)
+        assertThat(mineMap.noMoreOpenSpot()).isFalse()
+
+        // when
+        mineMap.open(Point(1, 1))
+
+        // then
+        assertThat(mineMap.noMoreOpenSpot()).isTrue()
     }
 }

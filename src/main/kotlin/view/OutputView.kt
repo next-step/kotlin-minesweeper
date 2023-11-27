@@ -23,4 +23,8 @@ object OutputView {
         }
         println()
     }
+
+    fun printResultMessage(isWin: Boolean) {
+        println("${if (isWin) "Win" else "Lose"} Game.")
+    }
 }
