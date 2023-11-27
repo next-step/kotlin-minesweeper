@@ -27,7 +27,7 @@ class EvenlyStrategy(
 
     private fun coordinateOrderOf(order: Int, verticalLimit: Int, horizontalLimit: Int): Coordinate {
         return Coordinate.of(
-            vertical = verticalLimit / verticalLimit,
+            vertical = order / verticalLimit,
             horizontal = order % horizontalLimit
         )
     }
