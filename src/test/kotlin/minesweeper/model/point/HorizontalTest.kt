@@ -18,5 +18,4 @@ class HorizontalTest : StringSpec({
             Horizontal(-1)
         }
     }
-
 })
