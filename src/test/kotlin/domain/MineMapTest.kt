@@ -4,6 +4,7 @@ import domain.field.Point
 import domain.field.Spot
 import domain.map.ArrayMap
 import domain.status.MineStatus
+import domain.status.OpenStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -46,5 +47,15 @@ class MineMapTest {
         val mineMap = MineMap(testMap)
         assertThat(mineMap.getHeight()).isEqualTo(10)
         assertThat(mineMap.getWidth()).isEqualTo(10)
+    }
+
+    @Test
+    fun `open한다`() {
+        val mineMap = MineMap(testMap)
+        mineMap.open(Point(0, 0))
+        assertThat(mineMap.resultMineStatus(Point(0, 0))).isEqualTo(OpenStatus.ZERO.symbol)
+        assertThat(mineMap.resultMineStatus(Point(0, 1))).isEqualTo(OpenStatus.ONE.symbol)
+        assertThat(mineMap.resultMineStatus(Point(1, 0))).isEqualTo(OpenStatus.ZERO.symbol)
+        assertThat(mineMap.resultMineStatus(Point(1, 1))).isEqualTo(OpenStatus.ONE.symbol)
     }
 }

@@ -11,4 +11,12 @@ class Spot(private val status: MineStatus) {
 
     fun isMine(): Boolean =
         status == MineStatus.MINED
+
+    fun open(nearMineCount: Int): MineStatus {
+        openStatus = OpenStatus.from(status, nearMineCount)
+        return if (isMine()) MineStatus.MINED else MineStatus.EMPTY
+    }
+
+    fun isOpen(): Boolean =
+        openStatus != OpenStatus.COVERED
 }

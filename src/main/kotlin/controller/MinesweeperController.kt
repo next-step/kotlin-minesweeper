@@ -4,6 +4,7 @@ import domain.MineMap
 import domain.RandomMineMap
 import domain.field.MineMapInfo
 import domain.field.Point
+import domain.status.MineStatus
 import view.InputView
 import view.OutputView
 
@@ -14,7 +15,7 @@ class MinesweeperController {
         val mineMap = MineMap(RandomMineMap.newMap(mapInfo))
 
         OutputView.outputGameStart()
-        processGame(mineMap)
+        while (processGame(mineMap) != MineStatus.MINED) {}
     }
 
     private fun inputCondition(): MineMapInfo =
@@ -26,9 +27,10 @@ class MinesweeperController {
             InputView.inputMineCount()
         )
 
-    private fun processGame(mineMap: MineMap) {
+    private fun processGame(mineMap: MineMap): MineStatus {
         val openSpot = InputView.inputOpenSpot()
-        mineMap.open(openSpot)
+        val mineStatus = mineMap.open(openSpot)
         OutputView.printMineMap(mineMap)
+        return mineStatus
     }
 }

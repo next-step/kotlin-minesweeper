@@ -1,7 +1,7 @@
 package domain.status
 
 enum class OpenStatus(val symbol: String) {
-    COVERED("@"),
+    COVERED("X"),
     MINED("+"),
     ZERO("0"),
     ONE("1"),

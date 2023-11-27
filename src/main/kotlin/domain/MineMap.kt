@@ -2,6 +2,7 @@ package domain
 
 import domain.field.Point
 import domain.map.ArrayMap
+import domain.status.MineStatus
 
 class MineMap(private val map: ArrayMap) {
 
@@ -30,6 +31,25 @@ class MineMap(private val map: ArrayMap) {
             it != null && it.isMine()
         }
 
-    fun open(point: Point) {
+    fun open(point: Point): MineStatus {
+        val spot = map.getPointOrNull(point) ?: return MineStatus.EMPTY
+        val nearMineCount = nearMineCount(point)
+        val openStatus = spot.open(nearMineCount)
+        if (nearMineCount == 0) {
+            openNearSpot(point)
+        }
+
+        return openStatus
+    }
+
+    private fun openNearSpot(point: Point) {
+        delta.forEach {
+            val nextPoint = point + it
+            val spot = map.getPointOrNull(nextPoint) ?: return@forEach
+            if (spot.isOpen()) {
+                return@forEach
+            }
+            open(nextPoint)
+        }
     }
 }
