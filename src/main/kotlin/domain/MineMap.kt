@@ -31,4 +31,7 @@ class MineMap(private val map: ArrayMap) {
         }.count {
             it != null && it.isMine()
         }
+
+    fun open(point: Point) {
+    }
 }

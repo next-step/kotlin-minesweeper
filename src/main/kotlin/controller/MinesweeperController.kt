@@ -13,7 +13,8 @@ class MinesweeperController {
         val mapInfo = inputCondition()
         val mineMap = MineMap(RandomMineMap.newMap(mapInfo))
 
-        OutputView.outputGameStart(mineMap)
+        OutputView.outputGameStart()
+        processGame(mineMap)
     }
 
     private fun inputCondition(): MineMapInfo =
@@ -24,4 +25,10 @@ class MinesweeperController {
             ),
             InputView.inputMineCount()
         )
+
+    private fun processGame(mineMap: MineMap) {
+        val openSpot = InputView.inputOpenSpot()
+        mineMap.open(openSpot)
+        OutputView.printMineMap(mineMap)
+    }
 }
