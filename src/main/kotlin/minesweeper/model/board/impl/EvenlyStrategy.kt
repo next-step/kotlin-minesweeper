@@ -23,11 +23,13 @@ class EvenlyStrategy(
     }
 
     private fun requireMineCountDeployed(countOfMinesActual: Int, countOfMinesExpect: Int) {
-        require(countOfMinesActual == countOfMinesExpect) { "실제 생성된 지뢰의 수 [$countOfMinesActual] != 생성 요청한 지뢰의 수 [$countOfMinesExpect]" }
+        require(countOfMinesActual == countOfMinesExpect)
+        { "실제 생성된 지뢰의 수 [$countOfMinesActual] != 생성 요청한 지뢰의 수 [$countOfMinesExpect]" }
     }
 
     private fun requireMineCountLimit(limitMineCounts: Int, countOfMines: Int) {
-        require(limitMineCounts >= countOfMines) { "요청된 $countOfMines 개의 지뢰는 생성할 수 없습니다. 지뢰의 최대 생성 가능 수는 $limitMineCounts 개 입니다. " }
+        require(limitMineCounts >= countOfMines)
+        { "요청된 $countOfMines 개의 지뢰는 생성할 수 없습니다. 지뢰의 최대 생성 가능 수는 $limitMineCounts 개 입니다. " }
     }
 
     private fun coordinateOrderOf(order: Int, verticalLimit: Int, horizontalLimit: Int): Coordinate {
