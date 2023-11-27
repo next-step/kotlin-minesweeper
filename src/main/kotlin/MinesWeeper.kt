@@ -8,18 +8,16 @@ class MinesWeeper(
 ) {
     fun start() {
         val (height, width, gameManager) = initGame()
-        while (true) {
-            val result = openPoint(gameManager)
-            if (!result) {
-                displayGameOver(height, width, gameManager)
-                return
-            }
+        var result = openPoint(gameManager)
+        while (result) {
             displayOpenResult(height, width, gameManager)
             if (gameManager.isOver()) {
                 displayWin()
                 return
             }
+            result = openPoint(gameManager)
         }
+        displayGameOver(height, width, gameManager)
     }
 
     private fun initGame(): Triple<Int, Int, GameManager> {
