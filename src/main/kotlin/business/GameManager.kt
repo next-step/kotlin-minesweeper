@@ -17,7 +17,7 @@ class GameManager(val mines: Mines, openedCells: OpenedCells) {
     companion object {
         fun of(height: Int, width: Int, mineCount: Int, mineGenerator: MineGenerator): GameManager {
             val mines = mineGenerator.generate(height, width, mineCount)
-            val openedCells = OpenedCells(height, width)
+            val openedCells = OpenedCells.of(height, width)
             return GameManager(mines, openedCells)
         }
     }

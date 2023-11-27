@@ -8,7 +8,7 @@ class GameManagerTest {
     @Test
     fun `open한 cell이 지뢰가 아니고 모든 cell이 모두 열지 않는 상태이면 continue상태를 반환하다`() {
         // given
-        val gameManager = GameManager(mines(), OpenedCells(5, 5))
+        val gameManager = GameManager(mines(), OpenedCells.of(5, 5))
 
         // when
         val open = gameManager.open(Point(0, 2))
@@ -20,7 +20,7 @@ class GameManagerTest {
     @Test
     fun `open한 cell이 지뢰이면 game over상태를 반환한다`() {
         // given
-        val gameManager = GameManager(mines(), OpenedCells(5, 5))
+        val gameManager = GameManager(mines(), OpenedCells.of(5, 5))
 
         // when
         val open = gameManager.open(Point(0, 0))
@@ -32,7 +32,7 @@ class GameManagerTest {
     @Test
     fun `지뢰 뺴고 모두 open 되여 있으면 win 상태를 반환한다`() {
         // given
-        val gameManager = GameManager(mines(), OpenedCells(2, 2))
+        val gameManager = GameManager(mines(), OpenedCells.of(2, 2))
 
         // when
         val isOver = gameManager.isOver()
@@ -44,7 +44,7 @@ class GameManagerTest {
     @Test
     fun `지뢰 뺴고 모두 open 되여 있지 않으면 continue 상태를 반환한다`() {
         // given
-        val gameManager = GameManager(mines(), OpenedCells(5, 5))
+        val gameManager = GameManager(mines(), OpenedCells.of(5, 5))
 
         // when
         val isOver = gameManager.isOver()

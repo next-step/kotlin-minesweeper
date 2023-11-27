@@ -16,7 +16,7 @@ class OpenedCellsTest {
     @Test
     fun `open위치를 추가한다`() {
         // given
-        val openedCells = OpenedCells(5, 5)
+        val openedCells = OpenedCells.of(5, 5)
         val mines = Mines(listOf(Mine(Point(0, 0))))
 
         // when
@@ -36,7 +36,7 @@ class OpenedCellsTest {
     @Test
     fun `주변에 지뢰가 없는 위치를 open한다`() {
         // given
-        val openedCells = OpenedCells(5, 5, listOf(Point(1, 1)))
+        val openedCells = OpenedCells.of(5, 5, listOf(Point(1, 1)))
         val mines = `주변에 지뢰가 없는 위치를 open 테스트 시나리오 지뢰`()
 
         // when
@@ -49,7 +49,7 @@ class OpenedCellsTest {
     @Test
     fun `포인트를 포함하는지 확인한다`() {
         // given
-        val openedCells = OpenedCells(5, 5, listOf(Point(1, 1)))
+        val openedCells = OpenedCells.of(5, 5, listOf(Point(1, 1)))
 
         // when
         val contains = openedCells.contains(Point(1, 1))
@@ -61,7 +61,7 @@ class OpenedCellsTest {
     @Test
     fun `모든 지뢰가 open되었는지 확인한다`() {
         // given
-        val openedCells = OpenedCells(
+        val openedCells = OpenedCells.of(
             5, 5,
             listOf(Point(1, 0), Point(1, 1), Point(1, 2), Point(1, 3), Point(1, 4))
         )
@@ -77,7 +77,7 @@ class OpenedCellsTest {
     @Test
     fun `모든 지뢰가 open되지 않았는지 확인한다`() {
         // given
-        val openedCells = OpenedCells(
+        val openedCells = OpenedCells.of(
             5, 5,
             listOf(Point(1, 1), Point(1, 2), Point(1, 3), Point(1, 4))
         )
@@ -99,7 +99,7 @@ class OpenedCellsTest {
 
         // when, then
         shouldThrow<IllegalArgumentException> {
-            OpenedCells(
+            OpenedCells.of(
                 height,
                 width,
                 openedPoints
