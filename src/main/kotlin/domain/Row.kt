@@ -2,7 +2,7 @@ package domain
 
 import java.util.SortedSet
 
-class Row(private val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by columns,
+class Row(val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by columns,
     Comparable<Row> {
     init {
         require(columns.size >= MIN_SIZE) { "행에는 최소 ${MIN_SIZE}개 이상의 좌표가 포함되어야 합니다." }
@@ -15,6 +15,14 @@ class Row(private val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by
 
     fun getY(): Int {
         return first().y
+    }
+
+    fun findAndSetMine(mines: Coordinates): Row {
+        return Row(columns.map {
+            if (it in mines) {
+                Mine(it.x, it.y)
+            } else SafeZone(it.x, it.y)
+        }.toSortedSet())
     }
 
     private fun checkColumDiffIsOne(): Boolean {

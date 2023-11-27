@@ -5,6 +5,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class RowTest : FunSpec(
     {
@@ -81,6 +82,25 @@ class RowTest : FunSpec(
                 Coordinate(x = 3, y = 1)
             )
             row.getY() shouldBe 1
+        }
+
+        test("행에 특정 좌표 묶음을 전달하면 일치하는 좌표에 지뢰를 매설할 수 있다") {
+            val row = Row(
+                Coordinate(x = 0, y = 1),
+                Coordinate(x = 1, y = 1),
+                Coordinate(x = 2, y = 1),
+                Coordinate(x = 3, y = 1)
+            )
+
+            val mines = Coordinates(
+                Mine(x = 0, y = 1),
+            )
+
+            val actual = row.findAndSetMine(mines).toList()
+            actual[0].shouldBeInstanceOf<Mine>()
+            actual[1].shouldBeInstanceOf<SafeZone>()
+            actual[2].shouldBeInstanceOf<SafeZone>()
+            actual[3].shouldBeInstanceOf<SafeZone>()
         }
     }
 )
