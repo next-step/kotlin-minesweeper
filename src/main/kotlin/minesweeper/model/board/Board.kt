@@ -1,6 +1,7 @@
 package minesweeper.model.board
 
 import minesweeper.model.board.impl.EvenlyStrategy
+import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Points
 
 class Board(
@@ -21,5 +22,9 @@ class Board(
 
     fun minesCount(): Int {
         return points.countOfMine()
+    }
+
+    fun adjucentMineCount(coordinate: Coordinate) {
+        TODO("Not yet implemented")
     }
 }
