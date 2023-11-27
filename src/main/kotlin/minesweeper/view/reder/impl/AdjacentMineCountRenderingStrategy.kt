@@ -7,9 +7,8 @@ import minesweeper.view.reder.MineRenderingStrategy
 
 class AdjacentMineCountRenderingStrategy(
     private val board: Board,
-    private val coordinate: Coordinate
 ) : MineRenderingStrategy {
-    override fun symbol(attribute: Attribute): String {
+    override fun symbol(attribute: Attribute, coordinate: Coordinate): String {
         if (attribute == Attribute.MINE) {
             return "*"
         }
