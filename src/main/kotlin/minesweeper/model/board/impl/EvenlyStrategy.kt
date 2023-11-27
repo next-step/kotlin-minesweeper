@@ -10,14 +10,15 @@ class EvenlyStrategy(
 ) : MineDeployStrategy {
 
     override fun deployPoints(verticalLimit: Int, horizontalLimit: Int): Points {
+
         requireMineCountLimit(verticalLimit * horizontalLimit, countOfMines)
-        val map = (0 until (verticalLimit * horizontalLimit))
+        val coordinateAttributeMap = (0 until (verticalLimit * horizontalLimit))
             .asSequence()
             .shuffled()
             .take(countOfMines)
             .map { coordinateOrderOf(it, verticalLimit, horizontalLimit) to Attribute.MINE }
             .toMap()
-        return Points(map)
+        return Points(coordinateAttributeMap)
     }
 
     private fun requireMineCountLimit(limitMineCounts: Int, countOfMines: Int) {
@@ -25,6 +26,9 @@ class EvenlyStrategy(
     }
 
     private fun coordinateOrderOf(order: Int, verticalLimit: Int, horizontalLimit: Int): Coordinate {
-        return Coordinate.of(order / verticalLimit, order % horizontalLimit)
+        return Coordinate.of(
+            vertical = verticalLimit / verticalLimit,
+            horizontal = order % horizontalLimit
+        )
     }
 }
