@@ -9,4 +9,8 @@ class Mines(
     fun findBy(x: Int, y: Int): Mine? {
         return _mines[Pair(x, y)]
     }
+
+    fun contains(x: Int, y: Int): Boolean {
+        return _mines.contains(Pair(x, y))
+    }
 }
