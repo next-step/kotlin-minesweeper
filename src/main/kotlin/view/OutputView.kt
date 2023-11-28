@@ -16,7 +16,7 @@ object OutputView {
         if (it.isMine) {
             print("* ")
         } else {
-            print("C ")
+            print("${it.mineCountNear.toString()} ")
         }
     }
 }
