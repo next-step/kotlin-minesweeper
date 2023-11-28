@@ -1,19 +1,15 @@
 package minesweeper.domain
 
-import minesweeper.domain.rule.BoardGenerationRule
+import minesweeper.domain.rule.MineGenerationRule
 
-class Board(private val metadata: BoardMetadata, rule: BoardGenerationRule) {
-    private val rows: Rows
+class Board(metadata: BoardMetadata, rule: MineGenerationRule) {
+    private val rows: Map<Coordinate, Cell>
 
     init {
-        val rawBoard = rule.generate(metadata)
-        rows = Rows(rawBoard.map { Row(it) })
+        rows = rule.generate(metadata)
     }
 
-    fun at(row: Int, col: Int): Cell {
-        require(row >= 0 && row < metadata.height) { "존재하지 않는 좌표입니다." }
-        require(col >= 0 && col < metadata.width) { "존재하지 않는 좌표입니다." }
-
-        return rows.at(row, col)
+    fun at(x: Int, y: Int): Cell {
+        return rows[Coordinate(x, y)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 }

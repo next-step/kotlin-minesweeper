@@ -3,8 +3,8 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.rule.RandomBoardGenerationRule
-import minesweeper.domain.rule.TestBoardGenerationRule
+import minesweeper.domain.rule.RandomMineGenerationRule
+import minesweeper.domain.rule.TestMineGenerationRule
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -15,7 +15,7 @@ class BoardTest {
     @Test
     fun `지뢰찾기 게임판은 높이,넓이,지뢰의개수,생성규칙을 받아 생성한다`() {
         shouldNotThrow<Exception> {
-            Board(BoardMetadata(10, 10, 10), RandomBoardGenerationRule())
+            Board(BoardMetadata(10, 10, 10), RandomMineGenerationRule())
         }
     }
 
@@ -25,7 +25,7 @@ class BoardTest {
         val numOfMine = mineCoordinates.size
         val board = Board(
             BoardMetadata(10, 10, numOfMine),
-            TestBoardGenerationRule(mineCoordinates)
+            TestMineGenerationRule(mineCoordinates)
         )
 
         mineCoordinates.forEach() {
@@ -38,7 +38,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("invalidCoordinates")
     fun `존재하지 않는 좌표에는 접근할 수 없다`(coordinate: Pair<Int, Int>) {
-        val board = Board(BoardMetadata(10, 10, 10), RandomBoardGenerationRule())
+        val board = Board(BoardMetadata(10, 10, 10), RandomMineGenerationRule())
 
         shouldThrow<IllegalArgumentException> {
             board.at(coordinate.first, coordinate.second)
