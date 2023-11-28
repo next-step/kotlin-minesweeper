@@ -10,16 +10,30 @@ class EvenlyStrategy(
 ) : MineDeployStrategy {
 
     override fun deployPoints(verticalLimit: Int, horizontalLimit: Int): Points {
-        val map = (0 until (verticalLimit * horizontalLimit))
+
+        requireMineCountLimit(verticalLimit * horizontalLimit, countOfMines)
+        val coordinateAttributeMap = (0 until (verticalLimit * horizontalLimit))
             .asSequence()
             .shuffled()
             .take(countOfMines)
             .map { coordinateOrderOf(it, verticalLimit, horizontalLimit) to Attribute.MINE }
             .toMap()
-        return Points(map)
+        requireMineCountDeployed(coordinateAttributeMap.keys.size, countOfMines)
+        return Points(coordinateAttributeMap)
+    }
+
+    private fun requireMineCountDeployed(countOfMinesActual: Int, countOfMinesExpect: Int) {
+        require(countOfMinesActual == countOfMinesExpect) { "실제 생성된 지뢰의 수 [$countOfMinesActual] != 생성 요청한 지뢰의 수 [$countOfMinesExpect]" }
+    }
+
+    private fun requireMineCountLimit(limitMineCounts: Int, countOfMines: Int) {
+        require(limitMineCounts >= countOfMines) { "요청된 $countOfMines 개의 지뢰는 생성할 수 없습니다. 지뢰의 최대 생성 가능 수는 $limitMineCounts 개 입니다. " }
     }
 
     private fun coordinateOrderOf(order: Int, verticalLimit: Int, horizontalLimit: Int): Coordinate {
-        return Coordinate.of(order / verticalLimit, order % horizontalLimit)
+        return Coordinate.of(
+            vertical = order / verticalLimit,
+            horizontal = order % horizontalLimit
+        )
     }
 }
