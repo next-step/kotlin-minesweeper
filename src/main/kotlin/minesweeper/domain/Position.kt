@@ -1,6 +1,5 @@
 package minesweeper.domain
 
-// TODO data class 유효성 검증
 data class Position(
     val y: Int,
     val x: Int

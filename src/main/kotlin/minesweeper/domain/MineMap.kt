@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineMap( // TODO 불변 객체로 변경해보자
+class MineMap(
     private val _values: MutableMap<Position, Cell> = mutableMapOf()
 ) {
     val values: Map<Position, Cell>

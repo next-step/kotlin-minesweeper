@@ -12,7 +12,7 @@ class MineMapGeneratorTest {
             Position(1, 1),
             Position(2, 2),
             Position(3, 3)
-        )
+        ).toPositions()
         val emptyPositions = setOf(
             Position(1, 2),
             Position(1, 3),
@@ -20,11 +20,10 @@ class MineMapGeneratorTest {
             Position(2, 3),
             Position(3, 1),
             Position(3, 2)
-        )
+        ).toPositions()
 
         // when
-        val mineMapGenerator = MineMapGenerator(mineMapMeta)
-        val mineMap = mineMapGenerator.generate(minePositions, emptyPositions)
+        val mineMap = MineMapGenerator.generate(minePositions, emptyPositions)
 
         // then
         assertEquals(mineMapMeta.getCellCount(), mineMap.values.size)

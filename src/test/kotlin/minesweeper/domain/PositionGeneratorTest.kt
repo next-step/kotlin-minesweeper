@@ -26,7 +26,7 @@ class PositionGeneratorTest {
             Position(1, 1),
             Position(5, 5),
             Position(10, 10)
-        )
+        ).toPositions()
         val positionGenerator = PositionGenerator(mineMapMeta)
 
         // when
