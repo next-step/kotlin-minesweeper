@@ -32,13 +32,17 @@ class CoordinateTest : StringSpec({
         ) shouldBe false
     }
 
-    "범위 내 위치로 이동이 가능 해야 한다" {
+    "범위 내 위치로 + 방향의 이동이 가능 해야 한다" {
         val coordinate = (3 to 3).toCoordinate()
 
         coordinate.movePossible(
             delta = Delta(2, 2),
             limit = (5 to 5).toBoardLimit(),
         ) shouldBe true
+    }
+
+    "범위 내 위치로 - 방향의 이동이 가능 해야 한다" {
+        val coordinate = (3 to 3).toCoordinate()
 
         coordinate.movePossible(
             delta = Delta(-2, -2),
