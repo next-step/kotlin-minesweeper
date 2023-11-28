@@ -1,6 +1,7 @@
 package business
 
-class GameManager(private val mines: Mines, private val openedCells: OpenedCells) {
+class GameManager(private val mines: Mines, limit: OpenedCellsLimit) {
+    private val openedCells = OpenedCells(limit)
     fun open(point: Point): GameStatus {
         if (mines.contains(point)) return GameStatus.GAME_OVER
         openedCells.add(point, mines)
@@ -14,8 +15,8 @@ class GameManager(private val mines: Mines, private val openedCells: OpenedCells
     companion object {
         fun of(height: Int, width: Int, mineCount: Int, mineGenerator: MineGenerator): GameManager {
             val mines = mineGenerator.generate(height, width, mineCount)
-            val openedCells = OpenedCells.of(height, width)
-            return GameManager(mines, openedCells)
+            val limit = OpenedCellsLimit(height, width)
+            return GameManager(mines, limit)
         }
     }
 }
