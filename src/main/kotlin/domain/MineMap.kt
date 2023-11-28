@@ -1,5 +1,9 @@
 package domain
 
+import domain.field.Point
+import domain.map.ArrayMap
+import domain.status.MineStatus
+
 class MineMap(private val map: ArrayMap) {
 
     private val delta = listOf(
@@ -13,10 +17,8 @@ class MineMap(private val map: ArrayMap) {
         Point(1, 1)
     )
 
-    fun resultMineStatus(point: Point): String {
-        val nearMineCount = nearMineCount(point)
-        return map.getPoint(point).spotSymbol(nearMineCount)
-    }
+    fun resultMineStatus(point: Point): String =
+        map.getPoint(point).spotSymbol()
 
     fun getHeight(): Int = map.height
 
@@ -28,4 +30,29 @@ class MineMap(private val map: ArrayMap) {
         }.count {
             it != null && it.isMine()
         }
+
+    fun open(point: Point): MineStatus {
+        val spot = map.getPointOrNull(point) ?: return MineStatus.EMPTY
+        val nearMineCount = nearMineCount(point)
+        val openStatus = spot.open(nearMineCount)
+        if (nearMineCount == 0) {
+            openNearSpot(point)
+        }
+
+        return openStatus
+    }
+
+    private fun openNearSpot(point: Point) {
+        delta.forEach {
+            val nextPoint = point + it
+            val spot = map.getPointOrNull(nextPoint) ?: return@forEach
+            if (spot.isOpen()) {
+                return@forEach
+            }
+            open(nextPoint)
+        }
+    }
+
+    fun noMoreOpenSpot(): Boolean =
+        map.flatten().find { it.isOpen().not() && it.isMine().not() } == null
 }

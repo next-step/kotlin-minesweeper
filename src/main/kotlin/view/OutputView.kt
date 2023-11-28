@@ -1,16 +1,15 @@
 package view
 
 import domain.MineMap
-import domain.Point
+import domain.field.Point
 
 object OutputView {
 
-    fun outputGameStart(map: MineMap) {
+    fun outputGameStart() {
         println("지뢰찾기 게임 시작")
-        printMineMap(map)
     }
 
-    private fun printMineMap(map: MineMap) {
+    fun printMineMap(map: MineMap) {
         val height = map.getHeight()
         repeat(height) { h ->
             printMineMapLine(map, h)
@@ -23,5 +22,9 @@ object OutputView {
             print(map.resultMineStatus(Point(line, i)))
         }
         println()
+    }
+
+    fun printResultMessage(isWin: Boolean) {
+        println("${if (isWin) "Win" else "Lose"} Game.")
     }
 }

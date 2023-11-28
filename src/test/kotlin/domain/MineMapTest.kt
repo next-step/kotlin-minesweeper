@@ -1,5 +1,10 @@
 package domain
 
+import domain.field.Point
+import domain.field.Spot
+import domain.map.ArrayMap
+import domain.status.MineStatus
+import domain.status.OpenStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -23,6 +28,14 @@ class MineMapTest {
             listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0).toMineMapLine()
         )
     )
+    // 3 x 3, 8개의 지뢰
+    private val smallTestMap = ArrayMap(
+        listOf(
+            listOf(1, 1, 1).toMineMapLine(),
+            listOf(1, 0, 1).toMineMapLine(),
+            listOf(1, 1, 1).toMineMapLine()
+        )
+    )
 
     private fun List<Int>.toMineMapLine(): List<Spot> = map {
         Spot(if (it == 1) MineStatus.MINED else MineStatus.EMPTY)
@@ -38,28 +51,32 @@ class MineMapTest {
     }
 
     @Test
-    fun `맵의 지뢰 수는 MineMapInfo의 값과 동일하다`() {
-        val mineMap = MineMap(testMap)
-        var mineCount = 0
-        repeat(100) { i ->
-            if (mineMap.resultMineStatus(Point(i / 10, i % 10)) == OpenStatus.MINED.symbol) {
-                mineCount++
-            }
-        }
-        assertThat(mineCount).isEqualTo(10)
-    }
-
-    @Test
     fun `맵의 높이와 너비를 가져온다`() {
         val mineMap = MineMap(testMap)
         assertThat(mineMap.getHeight()).isEqualTo(10)
         assertThat(mineMap.getWidth()).isEqualTo(10)
     }
 
-    @ParameterizedTest
-    @CsvSource(value = ["0, 0, 0", "2, 0, +", "6, 0, 1", "2, 6, 2"])
-    fun `맵을 오픈하면 결과가 나온다`(x: Int, y: Int, result: String) {
+    @Test
+    fun `open한다`() {
         val mineMap = MineMap(testMap)
-        assertThat(mineMap.resultMineStatus(Point(y, x))).isEqualTo(result)
+        mineMap.open(Point(0, 0))
+        assertThat(mineMap.resultMineStatus(Point(0, 0))).isEqualTo(OpenStatus.ZERO.symbol)
+        assertThat(mineMap.resultMineStatus(Point(0, 1))).isEqualTo(OpenStatus.ONE.symbol)
+        assertThat(mineMap.resultMineStatus(Point(1, 0))).isEqualTo(OpenStatus.ZERO.symbol)
+        assertThat(mineMap.resultMineStatus(Point(1, 1))).isEqualTo(OpenStatus.ONE.symbol)
+    }
+
+    @Test
+    fun `open할 수 있는지 확인한다`() {
+        // given
+        val mineMap = MineMap(smallTestMap)
+        assertThat(mineMap.noMoreOpenSpot()).isFalse()
+
+        // when
+        mineMap.open(Point(1, 1))
+
+        // then
+        assertThat(mineMap.noMoreOpenSpot()).isTrue()
     }
 }

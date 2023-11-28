@@ -1,5 +1,10 @@
 package domain
 
+import domain.field.MineMapInfo
+import domain.field.Spot
+import domain.map.ArrayMap
+import domain.status.MineStatus
+
 object RandomMineMap {
 
     fun newMap(mapInfo: MineMapInfo): ArrayMap {

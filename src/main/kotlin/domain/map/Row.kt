@@ -1,6 +1,6 @@
-package domain
+package domain.map
 
-class Row<T>(private val row: List<T>) {
+open class Row<T>(private val row: List<T>) {
 
     operator fun get(index: Int): T {
         require(index in row.indices)
@@ -14,4 +14,6 @@ class Row<T>(private val row: List<T>) {
     fun first(): T = row.first()
 
     fun getOrNull(index: Int): T? = row.getOrNull(index)
+
+    fun toList(): List<T> = row
 }
