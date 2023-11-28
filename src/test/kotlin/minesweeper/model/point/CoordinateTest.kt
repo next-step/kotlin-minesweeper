@@ -2,6 +2,7 @@ package minesweeper.model.point
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class CoordinateTest : StringSpec({
@@ -18,8 +19,7 @@ class CoordinateTest : StringSpec({
 
         coordinate.movePossible(
             delta = Delta(3, 3),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe false
     }
 
@@ -28,8 +28,7 @@ class CoordinateTest : StringSpec({
 
         coordinate.movePossible(
             delta = Delta(-4, -3),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe false
     }
 
@@ -38,14 +37,12 @@ class CoordinateTest : StringSpec({
 
         coordinate.movePossible(
             delta = Delta(2, 2),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe true
 
         coordinate.movePossible(
             delta = Delta(-2, -2),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe true
     }
 })
