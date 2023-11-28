@@ -13,11 +13,10 @@ class Convention : StringSpec({
               2. Secondary constructors
               3. Method declarations
               4. Companion object
-        """.trimIndent()
+            """.trimIndent()
         )
         println(layoutSample.funny())
     }
-
 })
 
 class LayoutSample(
