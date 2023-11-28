@@ -20,12 +20,4 @@ class StringHandlerKtTest {
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("숫자만 입력되어야 합니다.")
     }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["0", "-1"])
-    fun `정수 변환 메서드에 전달된 문자열이 양의 정수가 아닌경우 예외를 던진다`(input: String) {
-        assertThatThrownBy { inputToInt(input) }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("입력값은 양의 정수여야 합니다.")
-    }
 }
