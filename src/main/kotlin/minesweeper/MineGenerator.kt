@@ -1,22 +1,16 @@
 package minesweeper
 
 class MineGenerator(
-    private val mineCount: Int,
+    private val mineCount: MineCount,
     private val randomPosition: PositionGenerateStrategy
 ) {
-    constructor(mineCount: String, randomPosition: PositionGenerateStrategy) :
-        this(mineCount.toInt(), randomPosition)
 
     fun generate(): Mines {
-        return Mines(generate(mutableSetOf()))
-    }
-
-    private tailrec fun generate(positions: MutableSet<Position>): MutableSet<Position> {
-        return if (positions.size >= mineCount) positions
-        else generate(
-            positions.apply {
+        val positions = mutableSetOf<Position>().apply {
+            while (mineCount > this.size) {
                 this.add(randomPosition.generate())
             }
-        )
+        }
+        return Mines(positions)
     }
 }

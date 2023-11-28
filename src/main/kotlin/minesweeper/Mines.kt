@@ -1,5 +1,6 @@
 package minesweeper
 
-data class Mines(
+@JvmInline
+value class Mines(
     val mines: Set<Position>
 )

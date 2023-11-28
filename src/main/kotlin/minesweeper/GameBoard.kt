@@ -1,8 +1,10 @@
 package minesweeper
 
 data class GameBoard(
-    val height: Int,
-    val width: Int
+    val height: Height,
+    val width: Width
 ) {
-    constructor(height: String, width: String) : this(height.toInt(), width.toInt())
+
+    fun toBooleanBoard(): Array<Array<Boolean>> =
+        Array(height.value) { Array(width.value) { false } }
 }

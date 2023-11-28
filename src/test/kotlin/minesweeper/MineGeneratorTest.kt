@@ -11,7 +11,7 @@ class MineGeneratorTest : BehaviorSpec({
             override fun generate(): Position =
                 Position(++index, ++index)
         }
-        val mineGenerator = MineGenerator(5, generator)
+        val mineGenerator = MineGenerator(MineCount(5), generator)
         When("원하는 지뢰 개수와 지뢰 생성기가 있다면") {
             Then("지뢰들을 생성한다.") {
                 mineGenerator.generate() shouldBe Mines(
