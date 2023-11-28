@@ -9,8 +9,7 @@ import minesweeper.model.point.Points
 
 class Board(
     val points: Points,
-    val verticalSize: Int,
-    val horizontalSize: Int,
+    val boardSize: BoardSize,
 ) {
 
     constructor(
@@ -44,8 +43,7 @@ class Board(
     private fun inRange(coordinate: Coordinate, delta: Delta): Boolean {
         return coordinate.movePossible(
             delta = delta,
-            verticalLimit = verticalSize,
-            horizontalLimit = horizontalSize
+            boardSize = boardSize
         )
     }
 }

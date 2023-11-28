@@ -1,5 +1,7 @@
 package minesweeper.model.point
 
+import minesweeper.model.board.BoardSize
+
 data class Coordinate(
     private val vertical: Vertical,
     private val horizontal: Horizontal,
@@ -11,7 +13,7 @@ data class Coordinate(
         )
     }
 
-    fun movePossible(delta: Delta, verticalLimit: Int, horizontalLimit: Int): Boolean {
+    fun movePossible(delta: Delta, boardSize: BoardSize): Boolean {
         return vertical.movePossible(delta.verticalDelta, verticalLimit) && horizontal.movePossible(delta.horizontalDelta, horizontalLimit)
     }
 
