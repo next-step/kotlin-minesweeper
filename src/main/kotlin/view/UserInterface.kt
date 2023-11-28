@@ -10,8 +10,8 @@ interface UserInterface {
     fun askMineCount(): Int
     fun askPoint(): Point
     fun printStartAnnouncement()
-    fun printMinefieldMatrix(height: Int, width: Int, mines: Mines)
+    fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines)
     fun printGameOver()
-    fun printOpenedMinefieldMatrix(height: Int, width: Int, mines: Mines, openedCells: OpenedCells)
+    fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines, openedCells: OpenedCells)
     fun printWin()
 }
