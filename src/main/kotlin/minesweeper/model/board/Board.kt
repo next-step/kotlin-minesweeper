@@ -43,7 +43,7 @@ class Board(
     private fun inRange(coordinate: Coordinate, delta: Delta): Boolean {
         return coordinate.movePossible(
             delta = delta,
-            boardSize = boardSize
+            limit = limit
         )
     }
 }
