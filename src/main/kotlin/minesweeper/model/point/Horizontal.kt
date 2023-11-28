@@ -2,14 +2,14 @@ package minesweeper.model.point
 
 @JvmInline
 value class Horizontal(
-    private val value: Int,
+    val value: Int,
 ) {
     fun moveTo(delta: Int): Horizontal {
         return Horizontal(value + delta)
     }
 
-    fun movePossible(delta: Int, horizontalLimit: Int): Boolean {
-        return (this.value + delta) in 0..horizontalLimit
+    fun movePossible(delta: Int, limit: Horizontal): Boolean {
+        return (this.value + delta) in 0..limit.value
     }
 
     init {

@@ -2,7 +2,7 @@ package minesweeper.model.point
 
 @JvmInline
 value class Vertical(
-    private val value: Int,
+    val value: Int,
 ) {
 
     init {
@@ -13,8 +13,7 @@ value class Vertical(
         return Vertical(value + delta)
     }
 
-    fun movePossible(delta: Int, verticalLimit: Int): Boolean {
-        return (delta + value) in 0..verticalLimit
+    fun movePossible(delta: Int, limit: Vertical): Boolean {
+        return (delta + value) in 0..limit.value
     }
-
 }
