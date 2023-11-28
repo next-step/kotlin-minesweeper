@@ -8,8 +8,8 @@ class MineMap( // TODO 불변 객체로 변경해보자
     val size: Int
         get() = _values.keys.size
 
-    fun plantCell(position: Position, cellState: CellState) {
-        _values[position] = Cell(position, cellState)
+    fun plantCell(position: Position, cell: Cell) {
+        _values[position] = cell
     }
 
     fun getCell(position: Position): Cell {

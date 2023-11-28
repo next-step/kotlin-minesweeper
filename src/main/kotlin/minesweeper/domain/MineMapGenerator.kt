@@ -8,8 +8,8 @@ class MineMapGenerator(
         require(minePositions.size + emptyPositions.size == mineMapMeta.getCellCount()) { "지뢰와 빈 공간은 주어진 지뢰맵 크기와 같아야 합니다" }
 
         val mineMap = MineMap()
-        minePositions.forEach { mineMap.plantCell(it, CellState.MINE) }
-        emptyPositions.forEach { mineMap.plantCell(it, CellState.EMPTY) }
+        minePositions.forEach { mineMap.plantCell(it, Cell(CellState.MINE)) }
+        emptyPositions.forEach { mineMap.plantCell(it, Cell(CellState.EMPTY)) }
         return mineMap
     }
 }

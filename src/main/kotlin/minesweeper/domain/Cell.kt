@@ -1,7 +1,6 @@
 package minesweeper.domain
 
 data class Cell(
-    val position: Position,
     val state: CellState
 )
 

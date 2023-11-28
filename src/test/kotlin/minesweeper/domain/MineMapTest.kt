@@ -11,7 +11,7 @@ class MineMapTest {
         val mineMap = MineMap()
 
         // when
-        mineMap.plantCell(Position(1, 1), CellState.MINE)
+        mineMap.plantCell(Position(1, 1), Cell(CellState.MINE))
 
         // then
         assertEquals(1, mineMap.size)
@@ -24,8 +24,8 @@ class MineMapTest {
         val mineMap = MineMap()
 
         // when
-        mineMap.plantCell(Position(1, 1), CellState.EMPTY)
-        mineMap.plantCell(Position(2, 2), CellState.EMPTY)
+        mineMap.plantCell(Position(1, 1), Cell(CellState.EMPTY))
+        mineMap.plantCell(Position(2, 2), Cell(CellState.EMPTY))
 
         // then
         assertEquals(2, mineMap.size)
@@ -38,7 +38,7 @@ class MineMapTest {
         // given
         val mineMap = MineMap()
         val position = Position(1, 1)
-        mineMap.plantCell(position, CellState.EMPTY)
+        mineMap.plantCell(position, Cell(CellState.EMPTY))
 
         // when
         val cell = mineMap.getCell(position)
