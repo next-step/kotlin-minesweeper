@@ -9,17 +9,15 @@ import minesweeper.model.point.Points
 
 class Board(
     val points: Points,
-    val boardSize: BoardSize,
+    val limit: BoardLimit,
 ) {
 
     constructor(
         mineCount: Int,
-        verticalSize: Int,
-        horizontalSize: Int,
+        limit: BoardLimit,
     ) : this(
-        points = EvenlyStrategy(mineCount).deployPoints(verticalSize, horizontalSize),
-        verticalSize = verticalSize,
-        horizontalSize = horizontalSize
+        points = EvenlyStrategy(mineCount).deployPoints(limit),
+        limit = limit
     )
 
     fun minesCount(): Int {
