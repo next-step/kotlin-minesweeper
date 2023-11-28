@@ -15,7 +15,7 @@ data class Coordinate(
 
     fun movePossible(delta: Delta, limit: BoardLimit): Boolean {
         return movePossibleVertical(delta, limit) &&
-                movePossibleHorizontal(delta, limit)
+            movePossibleHorizontal(delta, limit)
     }
 
     private fun movePossibleHorizontal(delta: Delta, boardLimit: BoardLimit) =
