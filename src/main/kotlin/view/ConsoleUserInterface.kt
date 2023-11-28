@@ -40,7 +40,7 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printWin() = println(GAME_WIN_MESSAGE)
 
-    override fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, openedCells: OpenedCells, mines: Mines) {
+    override fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines, openedCells: OpenedCells) {
         for (currentHeight in ZERO.until(maxHeight)) printOpenedMinefieldRow(
             currentHeight,
             maxWidth,

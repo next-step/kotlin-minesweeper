@@ -12,6 +12,6 @@ interface UserInterface {
     fun printStartAnnouncement()
     fun printMinefieldMatrix(height: Int, width: Int, mines: Mines)
     fun printGameOver()
-    fun printOpenedMinefieldMatrix(height: Int, width: Int, openedCells: OpenedCells, mines: Mines)
+    fun printOpenedMinefieldMatrix(height: Int, width: Int, mines: Mines, openedCells: OpenedCells)
     fun printWin()
 }

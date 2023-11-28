@@ -29,13 +29,15 @@ class MinesWeeper(
 
     private fun displayGameOver(height: Int, width: Int, gameManager: GameManager) {
         userInterface.printGameOver()
-        userInterface.printMinefieldMatrix(height, width, gameManager.mines)
+        gameManager.doActionWithMines { userInterface.printMinefieldMatrix(height, width, it) }
     }
 
     private fun openPoint(gameManager: GameManager): GameStatus = gameManager.open(userInterface.askPoint())
 
     private fun displayOpenResult(height: Int, width: Int, gameManager: GameManager) =
-        userInterface.printOpenedMinefieldMatrix(height, width, gameManager.openedCells, gameManager.mines)
+        gameManager.doActionWithMinesAndOpenedCells { mines, openedCells ->
+            userInterface.printOpenedMinefieldMatrix(height, width, mines, openedCells)
+        }
 
     private fun displayWin() = userInterface.printWin()
 }
