@@ -15,12 +15,12 @@ class OutputView(
     }
 
     fun renderingBoard(board: Board): String {
-        return (0 until board.horizontalSize)
+        return (0 until board.limit.horizontalLimit.value)
             .joinToString(separator = "\n") { verticalIndex -> renderingRow(board, Vertical(verticalIndex)) }
     }
 
     private fun renderingRow(board: Board, verticalIndex: Vertical): String {
-        return (0 until board.verticalSize)
+        return (0 until board.limit.verticalLimit.value)
             .joinToString(separator = " ") { horizontalIndex -> renderingPoint(board, Coordinate(verticalIndex, Horizontal(horizontalIndex))) }
     }
 
