@@ -1,7 +1,7 @@
 package domain
 
-class Board(private val height: Int, private val width: Int) {
-    private val cells: MutableList<Cell> = MutableList(height * width) { index ->
+class Board(height: Int, width: Int) {
+    private val cells: List<Cell> = List(height * width) { index ->
         Cell(Position(index % width, index / width))
     }
 
