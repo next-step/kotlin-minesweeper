@@ -47,4 +47,21 @@ class BoardTest {
 
         assertEquals(minePositions.size, board.countMines())
     }
+
+    @Test
+    @DisplayName("Board는 주변 지뢰의 수를 정확히 계산한다")
+    fun `주변 지뢰의 수를 정확히 계산한다`() {
+        val height = 3
+        val width = 3
+        val board = Board(height, width)
+        val minePositions = listOf(Position(0, 0), Position(1, 1), Position(2, 2))
+
+        minePositions.forEach { board.placeMineAt(it) }
+        val testPosition = Position(1, 0)
+
+        val expectedMineCount = 2
+        val actualMineCount = board.countMinesAround(testPosition)
+
+        assertEquals(expectedMineCount, actualMineCount)
+    }
 }
