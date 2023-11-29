@@ -161,7 +161,7 @@ class RowTest : FunSpec(
                 Mine(x = 0, y = 1),
             )
 
-            val actual = row.findAndSetMine(mines).toList()
+            val actual = row.createSafeOrMine(mines).toList()
             actual[0].shouldBeInstanceOf<Mine>()
             actual[1].shouldBeInstanceOf<SafeZone>()
             actual[2].shouldBeInstanceOf<SafeZone>()

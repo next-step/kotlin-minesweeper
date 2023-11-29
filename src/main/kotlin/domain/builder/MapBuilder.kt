@@ -14,7 +14,7 @@ class MapBuilder {
     fun mines(block: () -> Coordinates) {
         val mines = block()
         rows = rows.map {
-            it.findAndSetMine(mines)
+            it.createSafeOrMine(mines)
         }.toSortedSet()
     }
 

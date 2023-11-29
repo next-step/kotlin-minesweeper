@@ -18,7 +18,7 @@ class Row(val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by columns
         return first().y
     }
 
-    fun findAndSetMine(mines: Coordinates): Row {
+    fun createSafeOrMine(mines: Coordinates): Row {
         return Row(columns.map {
             if (it in mines) {
                 Mine(it.x, it.y)
