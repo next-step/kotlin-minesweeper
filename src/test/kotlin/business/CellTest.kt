@@ -43,8 +43,7 @@ class CellTest {
     @Test
     fun `현재 cell이 열려 있지 않으면 false`() {
         // given
-        val cell = Cell(CellStatus.EMPTY)
-        cell.open()
+        val cell = Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE)
 
         // when
         val result = cell.isOpen()
@@ -87,5 +86,17 @@ class CellTest {
 
         // then
         result shouldBe true
+    }
+
+    @Test
+    fun `cell open하면 열린 cell를 반환한다`() {
+        // given
+        val cell = Cell(CellStatus.EMPTY)
+
+        // when
+        val result = cell.open()
+
+        // then
+        result.isOpen() shouldBe true
     }
 }

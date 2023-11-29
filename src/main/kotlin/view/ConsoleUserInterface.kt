@@ -2,6 +2,7 @@ package view
 
 import business.Board
 import business.BoardInfo
+import business.Cell
 import business.Point
 
 class ConsoleUserInterface : UserInterface {
@@ -23,23 +24,23 @@ class ConsoleUserInterface : UserInterface {
         return Point(height, width)
     }
 
-    override fun displayOpenResult(board: Board) {
-        board.executeWithOpenStatusAndMineCount({ isOpened: Boolean, count: Int ->
-            printOpenedResult(
-                isOpened, count
-            )
-        }) { println() }.let { println() }
-    }
+    override fun displayOpenResult(board: Board) = board.cells.processEachCellAndPoint(
+        { cell: Cell, point: Point ->
+            if (cell.isOpen()) print(board.cells.countMines(point).toString() + MINEFIELD_SEPARATOR)
+            else print(NOT_OPENED_DELIMITER + MINEFIELD_SEPARATOR)
+        },
+    ) { println() }
 
     override fun printWin() = println(GAME_WIN_MESSAGE)
 
     override fun displayGameOver(board: Board) {
+        board.cells.processEachCellAndPoint(
+            { cell: Cell, point: Point ->
+                if (cell.isMine()) print(MINE_DELIMITER + MINEFIELD_SEPARATOR)
+                else print(board.cells.countMines(point).toString() + MINEFIELD_SEPARATOR)
+            },
+        ) { println() }
         println(GAME_OVER_MESSAGE)
-        board.executeWithMineStatusAndCount({ isMines: Boolean, count: Int ->
-            printAll(
-                isMines, count
-            )
-        }) { println() }.let { println() }
     }
 
     private fun askHeight(): Int {
@@ -55,22 +56,6 @@ class ConsoleUserInterface : UserInterface {
     private fun askMineCount(): Int {
         println(ASK_MINE_COUNT_MESSAGE)
         return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(MINE_COUNT_ERROR_MESSAGE)
-    }
-
-    private fun printOpenedResult(isOpen: Boolean, count: Int) {
-        if (!isOpen) {
-            print(NOT_OPENED_DELIMITER + MINEFIELD_SEPARATOR)
-            return
-        }
-        print(count.toString() + MINEFIELD_SEPARATOR)
-    }
-
-    private fun printAll(mines: Boolean, count: Int) {
-        if (mines) {
-            print(MINE_DELIMITER + MINEFIELD_SEPARATOR)
-            return
-        }
-        print(count.toString() + MINEFIELD_SEPARATOR)
     }
 
     companion object {

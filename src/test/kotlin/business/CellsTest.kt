@@ -195,8 +195,8 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.executeWithOpenStatusAndMineCount(
-            { isOpen, mineCount -> result.add("$isOpen, $mineCount") },
+        cells.processEachCellAndPoint(
+            { cell, point -> result.add("${cell.isOpen()}, ${cells.countMines(point)}") },
             { }
         )
 
@@ -228,8 +228,8 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.executeWithMineStatusAndCount(
-            { isMine, mineCount -> result.add("$isMine, $mineCount") },
+        cells.processEachCellAndPoint(
+            { cell, point -> result.add("${cell.isMine()}, ${cells.countMines(point)}") },
             { }
         )
 

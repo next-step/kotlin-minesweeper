@@ -1,13 +1,18 @@
 package business
 
-class Cells(private val cells: List<List<Cell>>) {
-    private operator fun get(point: Point): Cell = cells[point.x][point.y]
+class Cells(cells: List<List<Cell>>) {
+    private val _cells: MutableList<MutableList<Cell>> = cells.map(List<Cell>::toMutableList).toMutableList()
+    private operator fun get(point: Point): Cell = _cells[point.x][point.y]
+    private operator fun set(point: Point, cell: Cell) {
+        _cells[point.x][point.y] = cell
+    }
 
+    fun copy(): Cells = Cells(_cells.map { it.map { cell: Cell -> cell } })
     fun isMine(point: Point): Boolean = this[point].isMine()
     fun isOpen(point: Point): Boolean = this[point].isOpen()
 
     fun open(point: Point) {
-        this[point].open()
+        this[point] = this[point].open()
         if (isSafePoint(point)) openAround(point)
     }
 
@@ -15,7 +20,7 @@ class Cells(private val cells: List<List<Cell>>) {
         .filter { isValidPoint(it) }
         .count { isMine(it) }
 
-    fun isAllOpen(): Boolean = cells.all { it.all(Cell::isClear) }
+    fun isAllOpen(): Boolean = _cells.all { it.all(Cell::isClear) }
 
     private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
 
@@ -24,18 +29,12 @@ class Cells(private val cells: List<List<Cell>>) {
         .filter { !isOpen(it) }
         .forEach { open(it) }
 
-    private fun isValidPoint(point: Point): Boolean = point.x in cells.indices && point.y in cells[FIRST_INDEX].indices
+    private fun isValidPoint(point: Point): Boolean =
+        point.x in _cells.indices && point.y in _cells[FIRST_INDEX].indices
 
-    fun executeWithOpenStatusAndMineCount(action: (Boolean, Int) -> Unit, rowAction: () -> Unit) {
-        cells.forEachIndexed { x, it ->
-            it.forEachIndexed { y, cell -> action(cell.isOpen(), countMines(Point(x, y))) }
-            rowAction()
-        }
-    }
-
-    fun executeWithMineStatusAndCount(action: (Boolean, Int) -> Unit, rowAction: () -> Unit) {
-        cells.forEachIndexed { x, it ->
-            it.forEachIndexed { y, cell -> action(cell.isMine(), countMines(Point(x, y))) }
+    fun processEachCellAndPoint(action: (Cell, Point) -> Unit, rowAction: () -> Unit) {
+        _cells.forEachIndexed { x, row ->
+            row.forEachIndexed { y, cell -> action(cell, Point(x, y)) }
             rowAction()
         }
     }

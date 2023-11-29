@@ -2,6 +2,8 @@ package business
 
 class Board(cells: Cells) {
     private val _cells: Cells = cells
+    val cells: Cells
+        get() = _cells.copy()
     fun isMine(point: Point): Boolean = _cells.isMine(point)
     fun open(point: Point): GameStatus {
         if (isMine(point)) {
@@ -16,13 +18,6 @@ class Board(cells: Cells) {
 
     fun isOpen(point: Point): Boolean = _cells.isOpen(point)
     fun countMines(point: Point): Any = _cells.countMines(point)
-    fun executeWithOpenStatusAndMineCount(action: (Boolean, Int) -> Unit, rowAction: () -> Unit) {
-        _cells.executeWithOpenStatusAndMineCount(action, rowAction)
-    }
-
-    fun executeWithMineStatusAndCount(action: (Boolean, Int) -> Unit, rowAction: () -> Unit) {
-        _cells.executeWithMineStatusAndCount(action, rowAction)
-    }
 
     companion object {
         const val SAFE_MINE_COUNT = 0

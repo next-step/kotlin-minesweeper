@@ -8,13 +8,17 @@ class MinesWeeper(private val userInterface: UserInterface = ConsoleUserInterfac
     fun start() {
         val board = initBoard()
         val status = continueGame(board)
-        if (status.isWin()) userInterface.printWin()
+        if (status.isWin()) printWin(board)
         else userInterface.displayGameOver(board)
+    }
+
+    private fun printWin(board: Board) {
+        userInterface.displayOpenResult(board)
+        userInterface.printWin()
     }
 
     private fun continueGame(board: Board): GameStatus {
         var status = openPoint(board)
-        userInterface.displayOpenResult(board)
         while (status.isContinue()) {
             userInterface.displayOpenResult(board)
             status = openPoint(board)
