@@ -5,6 +5,10 @@ data class GameBoard(
     val width: Width
 ) {
 
-    fun toBooleanBoard(): Array<Array<Boolean>> =
-        Array(height.value) { Array(width.value) { false } }
+    fun toIntBoard(): Array<Array<Int>> =
+        Array(height.value) { Array(width.value) { INIT_CELL } }
+
+    companion object {
+        private const val INIT_CELL = 0
+    }
 }

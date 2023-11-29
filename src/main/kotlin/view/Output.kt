@@ -8,7 +8,6 @@ object Output {
     private const val INPUT_WIDTH = "너비를 입력하세요."
     private const val INPUT_MINES = "지뢰는 몇 개인가요?"
     private const val OUTPUT_START_MINESWEEPER = "지뢰찾기 게임 시작"
-    private const val CELL: String = "C"
     private const val MINE: String = "*"
 
     fun printHeightMessage() {
@@ -32,9 +31,9 @@ object Output {
     }
 
     private fun fillingBoard(minesweeperBoard: MinesweeperBoard): String =
-        minesweeperBoard.toBooleanBoard()
+        minesweeperBoard.calculateAdjacentMineCounts()
             .joinToString("\n") { fillingCell(it) }
 
-    private fun fillingCell(row: Array<Boolean>) =
-        row.joinToString(" ") { if (it) MINE else CELL }
+    private fun fillingCell(row: Array<Int>) =
+        row.joinToString(" ") { if (it < 0) MINE else it.toString() }
 }
