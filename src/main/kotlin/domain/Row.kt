@@ -26,12 +26,12 @@ class Row(val columns: SortedSet<Coordinate>) : SortedSet<Coordinate> by columns
         }.toSortedSet())
     }
 
-    private fun checkColumDiffIsOne(): Boolean {
-        return columns.map { it.x } == (columns.first().x..columns.last().x).toList()
-    }
-
     override fun compareTo(other: Row): Int {
         return first().y - other.first().y
+    }
+
+    private fun checkColumDiffIsOne(): Boolean {
+        return columns.map { it.x } == (columns.first().x..columns.last().x).toList()
     }
 
     companion object {
