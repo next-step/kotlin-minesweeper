@@ -56,7 +56,9 @@ C C C C C C C C C C
   - [ ] 너비를 입력 받는다
   - [ ] 지뢰 개수를 입력 받는다
 - Minesweeper
-  - [ ] InputView 로부터 높이와 너비를 입력 받아 보드를 생성한다
+  - [x] Height: InputView 로부터 입력 받아 높이를 생성한다
+    - 높이는 1이상 이어야 한다 
+  - [ ] Width: InputView 로부터 입력 받아 너비를 생성한다
   - [ ] InputView 로부터 지뢰 개수를 입력 받아 지뢰를 생성한다
 - MineGenerator
   - [ ] 지뢰를 랜덤으로 생성한다
