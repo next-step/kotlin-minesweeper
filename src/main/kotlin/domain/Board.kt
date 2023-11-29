@@ -1,6 +1,14 @@
 package domain
 
-class Board(height: Int, width: Int) {
+import inteface.MineCounter
+import inteface.MinePlacer
+
+class Board(
+    val height: Int, val width: Int,
+    private val minePlacer: MinePlacer,
+    private val mineCounter: MineCounter
+) {
+
     private val cells: List<Cell> = List(height * width) { index ->
         Cell(Position(index % width, index / width))
     }

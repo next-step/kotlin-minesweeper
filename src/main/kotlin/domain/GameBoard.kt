@@ -1,10 +1,18 @@
 package domain
 
 import enum.CellStatus
+import inteface.MineCounter
 import inteface.MinePlacementStrategy
+import inteface.MinePlacer
 
-class GameBoard(val height: Int, val width: Int, private val minePlacementStrategy: MinePlacementStrategy) {
-    private val board = Board(height, width)
+class GameBoard(
+    val height: Int,
+    val width: Int,
+    private val minePlacementStrategy: MinePlacementStrategy,
+    private val minePlacer: MinePlacer,
+    private val mineCounter: MineCounter
+) {
+    private val board = Board(height, width, minePlacer, mineCounter)
 
     fun placeMines(mineCount: Int) {
         val minePositions = minePlacementStrategy.placeMines(height, width, mineCount)
