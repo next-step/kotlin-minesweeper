@@ -8,9 +8,11 @@ class BoardTest {
     fun `특정 위치에 지뢰이면 ture`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -25,9 +27,11 @@ class BoardTest {
     fun `특정 위치에 지뢰가 아니면 false`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -42,9 +46,11 @@ class BoardTest {
     fun `특정 위치의 주변에 지뢰가 없으면 0`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -59,9 +65,11 @@ class BoardTest {
     fun `특정 위치의 주변에 지뢰가 개수를 계산한다`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -76,9 +84,11 @@ class BoardTest {
     fun `특정 위치가 open이면 true`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -93,9 +103,11 @@ class BoardTest {
     fun `특정 위치가 open이 아니면 false`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -110,9 +122,11 @@ class BoardTest {
     fun `지뢰 위치를 open하면 실패 결과를 반환한다`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                )
             )
         )
 
@@ -127,9 +141,11 @@ class BoardTest {
     fun `지뢰가 아니고 주변에 지뢰가 있는 위치를 open하면 해당 위치를 open하고 continue 결과를 반환한다`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+            Cells(
+                listOf(
+                    listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
+                    listOf(Cell(CellStatus.MINE), Cell(CellStatus.EMPTY)),
+                )
             )
         )
         val targetPoint = Point(0, 0)
@@ -153,12 +169,39 @@ class BoardTest {
     fun `지뢰가 아니고 주변에 지뢰가 없는 위치를 open하면 해당 위치를 open하고 주변도 모두 open하며 continue 결과를 반환한다`() {
         // given
         val board = Board(
-            listOf(
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.MINE), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY)),
-                listOf(Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.EMPTY), Cell(CellStatus.MINE)),
+            Cells(
+                listOf(
+                    listOf(
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.MINE),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY)
+                    ),
+                    listOf(
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY)
+                    ),
+                    listOf(
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY)
+                    ),
+                    listOf(
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY)
+                    ),
+                    listOf(
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.EMPTY),
+                        Cell(CellStatus.MINE)
+                    ),
+                )
             )
         )
         val targetPoint = Point(2, 1)
