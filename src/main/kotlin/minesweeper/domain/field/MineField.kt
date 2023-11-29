@@ -1,4 +1,6 @@
-package minesweeper.domain
+package minesweeper.domain.field
+
+import minesweeper.domain.cell.Cell
 
 class MineField(
     val height: Height,

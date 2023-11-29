@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.field
 
 data class Height(
     val value: Int

@@ -1,11 +1,11 @@
-package domain
+package domain.field
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Height
-import minesweeper.domain.MineField
-import minesweeper.domain.Width
+import minesweeper.domain.field.Height
+import minesweeper.domain.field.MineField
+import minesweeper.domain.field.Width
 
 class MineFieldTest : DescribeSpec({
     describe("MineField.of()") {

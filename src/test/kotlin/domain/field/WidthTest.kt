@@ -1,9 +1,9 @@
-package domain
+package domain.field
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Width
+import minesweeper.domain.field.Width
 
 class WidthTest : StringSpec({
     "입력 받은 숫자로 너비 생성" {

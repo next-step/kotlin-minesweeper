@@ -1,9 +1,9 @@
-package domain
+package domain.field
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.Height
+import minesweeper.domain.field.Height
 
 class HeightTest : StringSpec({
     "입력 받은 숫자로 높이 생성" {
