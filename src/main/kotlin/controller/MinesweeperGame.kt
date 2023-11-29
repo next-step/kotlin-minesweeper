@@ -23,6 +23,7 @@ class MinesweeperGame(
 
         val gameBoard = GameBoard(height, width, minePlacementStrategy, minePlacer, mineCounter)
         gameBoard.placeMines(mineCount)
+        gameBoard.initializeBoard(mineCount)
         outputView.displayBoard(gameBoard)
     }
 }

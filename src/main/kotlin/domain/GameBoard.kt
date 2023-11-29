@@ -14,6 +14,10 @@ class GameBoard(
 ) {
     private val board = Board(height, width, minePlacer, mineCounter)
 
+    fun initializeBoard(mineCount: Int) {
+        board.initializeBoard(mineCount)
+    }
+
     fun placeMines(mineCount: Int) {
         val minePositions = minePlacementStrategy.placeMines(height, width, mineCount)
         minePositions.forEach { board.placeMineAt(it) }
@@ -25,6 +29,10 @@ class GameBoard(
         for (row in 0 until height) {
             processRow(row, onEachCell)
         }
+    }
+
+    fun countMinesAround(position: Position): Int {
+        return mineCounter.countMinesAround(board, position)
     }
 
     private fun processRow(row: Int, onEachCell: (Position, CellStatus) -> Unit) {

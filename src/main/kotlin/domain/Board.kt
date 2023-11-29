@@ -8,9 +8,15 @@ class Board(
     private val minePlacer: MinePlacer,
     private val mineCounter: MineCounter
 ) {
-
     private val cells: List<Cell> = List(height * width) { index ->
         Cell(Position(index % width, index / width))
+    }
+
+    fun initializeBoard(mineCount: Int) {
+        minePlacer.placeMines(this, mineCount)
+        cells.forEach { cell ->
+            cell.adjacentMines = mineCounter.countMinesAround(this, cell.position)
+        }
     }
 
     fun placeMineAt(position: Position) {
