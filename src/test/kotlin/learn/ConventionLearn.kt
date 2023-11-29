@@ -2,7 +2,7 @@ package learn
 
 import io.kotest.core.spec.style.StringSpec
 
-class Convention : StringSpec({
+class ConventionLearn : StringSpec({
 
     "코틀린 클래스 레이아웃을 학습한다" {
         print("https://kotlinlang.org/docs/coding-conventions.html#function-names")
