@@ -10,9 +10,9 @@ object InputView {
         println(INPUT_HEIGHT_MESSAGE)
         val inputHeight = readln().toInt()
 
-        try {
+        runCatching {
             checkValidHeight(inputHeight)
-        } catch (e: IllegalArgumentException) {
+        }.onFailure { e ->
             println(e.message)
             return inputHeight()
         }
@@ -28,9 +28,9 @@ object InputView {
         println(INPUT_WIDTH_MESSAGE)
         val inputWidth = readln().toInt()
 
-        try {
+        runCatching {
             checkValidWidth(inputWidth)
-        } catch (e: IllegalArgumentException) {
+        }.onFailure { e ->
             println(e.message)
             return inputWidth()
         }
@@ -46,9 +46,9 @@ object InputView {
         println(INPUT_COUNT_MESSAGE)
         val inputCount = readln().toInt()
 
-        try {
+        runCatching {
             checkValidCount(inputCount)
-        } catch (e: IllegalArgumentException) {
+        }.onFailure { e ->
             println(e.message)
             return inputCount()
         }
