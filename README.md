@@ -52,7 +52,7 @@ C C C C C C C C C C
 ### 기능 목록 
 
 - InputView
-  - [ ] 높이를 입력 받는다
+  - [x] 높이를 입력 받는다
   - [ ] 너비를 입력 받는다
   - [ ] 지뢰 개수를 입력 받는다
 - Minesweeper
