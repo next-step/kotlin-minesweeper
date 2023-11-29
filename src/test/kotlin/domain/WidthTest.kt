@@ -14,11 +14,17 @@ class WidthTest : StringSpec({
         width.value shouldBe number
     }
 
-    "높이는 1이상" {
+    "너비는 1이상" {
         val number = 0
 
         shouldThrowExactly<IllegalArgumentException> {
             Width(number)
         }
+    }
+
+    "너비에 대한 행의 범위는 0부터 (너비 - 1)" {
+        val value = 10
+
+        Width(value).columnRange shouldBe 0..9
     }
 })

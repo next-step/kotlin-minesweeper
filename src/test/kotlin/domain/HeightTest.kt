@@ -21,4 +21,10 @@ class HeightTest : StringSpec({
             Height(number)
         }
     }
+
+    "높이에 대한 열의 범위는 0부터 (높이 - 1)" {
+        val value = 10
+
+        Height(value).rowRange shouldBe 0..9
+    }
 })
