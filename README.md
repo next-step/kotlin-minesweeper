@@ -54,7 +54,7 @@ C C C C C C C C C C
 - InputView
   - [x] 높이를 입력 받는다
   - [x] 너비를 입력 받는다
-  - [ ] 지뢰 개수를 입력 받는다
+  - [x] 지뢰 개수를 입력 받는다
 - Minesweeper
   - [x] Height: InputView 로부터 입력 받아 높이를 생성한다
     - 높이는 1이상 이어야 한다 

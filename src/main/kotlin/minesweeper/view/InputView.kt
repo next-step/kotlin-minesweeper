@@ -3,6 +3,7 @@ package minesweeper.view
 object InputView {
     private const val HEIGHT_REQUEST_MESSAGE = "높이를 입력하세요."
     private const val WIDTH_REQUEST_MESSAGE = "너비를 입력하세요."
+    private const val MINE_COUNT_REQUEST_MESSAGE = "지뢰는 몇 개인가요?"
 
     val height: Int
         get() {
@@ -13,6 +14,12 @@ object InputView {
     val width: Int
         get() {
             println(WIDTH_REQUEST_MESSAGE)
+            return readIntInput()
+        }
+
+    val mineCount: Int
+        get() {
+            println(MINE_COUNT_REQUEST_MESSAGE)
             return readIntInput()
         }
 

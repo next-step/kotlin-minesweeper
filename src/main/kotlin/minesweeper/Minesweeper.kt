@@ -11,5 +11,6 @@ object Minesweeper {
         val height = InputView.height.let(::Height)
         val width = InputView.width.let(::Width)
         MineField(height, width)
+        InputView.mineCount
     }
 }
