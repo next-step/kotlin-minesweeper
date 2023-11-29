@@ -52,4 +52,40 @@ class CellTest {
         // then
         result shouldBe true
     }
+
+    @Test
+    fun `현재 cell이 지뢰이면 true`() {
+        // given
+        val cell = Cell(CellStatus.MINE)
+
+        // when
+        val result = cell.isClear()
+
+        // then
+        result shouldBe true
+    }
+
+    @Test
+    fun `현재 cell이 open이면 true`() {
+        // given
+        val cell = Cell(CellStatus.EMPTY)
+
+        // when
+        val result = cell.isClear()
+
+        // then
+        result shouldBe false
+    }
+
+    @Test
+    fun `현재 cell이 지뢰가 아니고 open이 아니면 false`() {
+        // given
+        val cell = Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE)
+
+        // when
+        val result = cell.isClear()
+
+        // then
+        result shouldBe true
+    }
 }

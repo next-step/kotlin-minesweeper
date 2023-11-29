@@ -115,19 +115,19 @@ class BoardTest {
     }
 
     /**
-     *  | C | * | C | C |                          | C | * | 1 | 0 |
-     *  | C | C | C | C |                          | 1 | 1 | 1 | 0 |
-     *  | C | C | C | C |      =>  open(2,1)  =>   | 0 | 0 | 0 | 0 |
-     *  | C | C | C | C |                          | 0 | 0 | 1 | 1 |
-     *  | C | C | C | * |                          | 0 | 1 | 2 | * |
-     *  | C | C | C | * |                          | 0 | 1 | * | C |
+     *         0   1   2   3                             0   1   2   3
+     *
+     *  0    | C | * | C | C |                         | C | * | 1 | 0 |
+     *  1    | C | C | C | C |                         | 1 | 1 | 1 | 0 |
+     *  2    | C | C | C | C |      =>  open(2,1) =>   | 0 | 0 | 0 | 0 |
+     *  3    | C | C | C | C |                         | 0 | 0 | 1 | 1 |
+     *  4    | C | C | C | * |                         | 0 | 1 | 2 | * |
+     *  5    | C | C | C | * |                         | 0 | 1 | * | C |
      */
     @Test
     fun `지뢰가 아니고 주변에 지뢰가 없는 위치를 open하면 해당 위치를 open하고 주변도 모두 open하며 continue 결과를 반환한다`() {
         // given
-        val board = Board(
-            testCells()
-        )
+        val board = Board(testCells())
         val targetPoint = Point(2, 1)
 
         // when
@@ -135,5 +135,30 @@ class BoardTest {
 
         // then
         result shouldBe GameStatus.CONTINUE
+    }
+
+    /**
+     *         0   1   2   3                                   0   1   2   3
+     *
+     *  0    | C | * | C | C |                               | C | * | 1 | 0 |
+     *  1    | C | C | C | C |                               | 1 | 1 | 1 | 0 |
+     *  2    | C | C | C | C |      =>  open(2,1)(5,3)  =>   | 0 | 0 | 0 | 0 |
+     *  3    | C | C | C | C |                               | 0 | 0 | 1 | 1 |
+     *  4    | C | C | C | * |                               | 0 | 1 | 2 | * |
+     *  5    | C | C | C | * |                               | 0 | 1 | * | 2 |
+     */
+    @Test
+    fun `open 후 지뢰가 아닌 위치가 없으면 win 결과를 반환한다`() {
+        // given
+        val board = Board(testCells())
+        val targetPoint = Point(2, 1)
+        val targetPoint2 = Point(5, 3)
+
+        // when
+        board.open(targetPoint)
+        val result = board.open(targetPoint2)
+
+        // then
+        result shouldBe GameStatus.WIN
     }
 }

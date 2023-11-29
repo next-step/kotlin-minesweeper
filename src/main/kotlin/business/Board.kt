@@ -4,11 +4,14 @@ class Board(cells: Cells) {
     private val _cells: Cells = cells
     fun isMine(point: Point): Boolean = _cells.isMine(point)
     fun open(point: Point): GameStatus {
-        return if (isMine(point)) GameStatus.GAME_OVER
-        else {
-            _cells.open(point)
-            GameStatus.CONTINUE
+        if (isMine(point)) {
+            return GameStatus.GAME_OVER
         }
+        _cells.open(point)
+        if (_cells.isAllOpen()) {
+            return GameStatus.WIN
+        }
+        return GameStatus.CONTINUE
     }
 
     fun isOpen(point: Point): Boolean = _cells.isOpen(point)

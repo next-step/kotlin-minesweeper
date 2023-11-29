@@ -9,4 +9,5 @@ class Cell(private val cellStatus: CellStatus, visibilityState: CardVisibilitySt
     }
 
     fun isOpen(): Boolean = _visibilityState.isVisible()
+    fun isClear(): Boolean = _visibilityState.isVisible() || cellStatus.isMine()
 }

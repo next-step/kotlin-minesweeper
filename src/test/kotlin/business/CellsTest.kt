@@ -141,4 +141,40 @@ class CellsTest {
         // then
         result shouldBe 1
     }
+
+    /**
+     *         0   1   2   3                                   0   1   2   3
+     *
+     *  0    | C | * | C | C |                               | C | * | 1 | 0 |
+     *  1    | C | C | C | C |                               | 1 | 1 | 1 | 0 |
+     *  2    | C | C | C | C |      =>  open(2,1)(5,3)  =>   | 0 | 0 | 0 | 0 |
+     *  3    | C | C | C | C |                               | 0 | 0 | 1 | 1 |
+     *  4    | C | C | C | * |                               | 0 | 1 | 2 | * |
+     *  5    | C | C | C | * |                               | 0 | 1 | * | 2 |
+     */
+    @Test
+    fun `지뢰 빼고 모든 칸이 open되여 있으면 true`() {
+        // given
+        val cells = testCells()
+        cells.open(Point(2, 0))
+        cells.open(Point(2, 1))
+
+        // when
+        val result = cells.isAllOpen()
+
+        // then
+        result shouldBe false
+    }
+
+    @Test
+    fun `지뢰 빼고 모든 칸이 open되여 있지 않으면 false`() {
+        // given
+        val cells = testCells()
+
+        // when
+        val result = cells.isAllOpen()
+
+        // then
+        result shouldBe false
+    }
 }

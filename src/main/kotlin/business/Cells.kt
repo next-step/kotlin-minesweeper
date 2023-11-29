@@ -14,13 +14,15 @@ class Cells(private val cells: List<List<Cell>>) {
     fun countMines(point: Point): Int = point.aroundPoints()
         .filter { isValidPoint(it) }
         .count { isMine(it) }
+
+    fun isAllOpen(): Boolean = cells.all { it.all(Cell::isClear) }
+
     private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
 
     private fun openAround(point: Point) = point.aroundPoints()
         .filter { isValidPoint(it) }
         .filter { !isOpen(it) }
         .forEach { open(it) }
-
     private fun isValidPoint(point: Point): Boolean = point.x in cells.indices && point.y in cells[FIRST_INDEX].indices
 
     companion object {
