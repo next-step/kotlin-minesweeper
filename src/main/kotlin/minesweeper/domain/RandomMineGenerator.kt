@@ -6,16 +6,16 @@ class RandomMineGenerator(
 ) : MineGenerator {
 
     override fun generate(count: Int): Mines {
-        val list = mutableListOf<Pair<Int, Int>>()
+        val list = mutableListOf<Position>()
         for (x in 1..height) {
             (1..width).forEach { y ->
-                list.add(Pair(x, y))
+                list.add(Position(x, y))
             }
         }
         return Mines(
             list.shuffled()
                 .take(count).associateWith {
-                    Mine(it.first, it.second)
+                    Mine(it.x, it.y)
                 }
         )
     }
