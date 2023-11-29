@@ -5,7 +5,7 @@ import domain.Row
 import java.util.*
 
 class RowBuilder {
-    private var columns: SortedSet<Coordinate> = sortedSetOf()
+    private val columns: SortedSet<Coordinate> = sortedSetOf()
 
     fun col(block: CoordinateBuilder.() -> Unit) {
         columns.addAll(CoordinateBuilder().apply(block).build())
