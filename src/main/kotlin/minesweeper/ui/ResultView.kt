@@ -1,23 +1,24 @@
 package minesweeper.ui
 
 import minesweeper.domain.Mines
+import minesweeper.domain.Size
 
 object ResultView {
 
     private const val mine_symbol = "*"
     private const val none_mine_symbol = "C"
 
-    fun printMines(height: Int, width: Int, mines: Mines) {
+    fun printMines(height: Size, width: Size, mines: Mines) {
         println()
         println("지뢰찾기 게임 시작")
-        for (rowNum in 1..height) {
+        for (rowNum in 1..height.value) {
             printMineRow(rowNum, width, mines)
             println()
         }
     }
 
-    private fun printMineRow(x: Int, width: Int, mines: Mines) {
-        for (y in 1..width) {
+    private fun printMineRow(x: Int, width: Size, mines: Mines) {
+        for (y in 1..width.value) {
             printMine(x, y, mines)
         }
     }

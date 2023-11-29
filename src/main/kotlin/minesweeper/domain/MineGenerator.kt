@@ -1,5 +1,5 @@
 package minesweeper.domain
 
 interface MineGenerator {
-    fun generate(count: Int): Mines
+    fun generate(count: Size): Mines
 }
