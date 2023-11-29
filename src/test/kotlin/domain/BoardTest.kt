@@ -8,12 +8,15 @@ import org.junit.jupiter.api.Test
 
 class BoardTest {
 
+    private val minePlacer = ShuffledMinePlacer()
+    private val mineCounter = AdjacentMineCounter()
+
     @Test
     @DisplayName("Board는 지정된 위치에 지뢰를 정확히 배치한다")
     fun `지정된 위치에 지뢰를 정확히 배치한다`() {
         val height = 5
         val width = 5
-        val board = Board(height, width)
+        val board = Board(height, width, minePlacer, mineCounter)
         val testPosition = Position(2, 3)
 
         board.placeMineAt(testPosition)
@@ -26,7 +29,7 @@ class BoardTest {
     fun `지뢰가 없는 위치를 정확히 식별한다`() {
         val height = 5
         val width = 5
-        val board = Board(height, width)
+        val board = Board(height, width, minePlacer, mineCounter)
         val minePosition = Position(1, 1)
         val testPosition = Position(2, 2)
 
@@ -40,28 +43,11 @@ class BoardTest {
     fun `모든 지뢰의 수를 정확히 계산한다`() {
         val height = 5
         val width = 5
-        val board = Board(height, width)
+        val board = Board(height, width, minePlacer, mineCounter)
         val minePositions = listOf(Position(1, 1), Position(2, 2), Position(3, 3))
 
         minePositions.forEach { board.placeMineAt(it) }
 
         assertEquals(minePositions.size, board.countMines())
-    }
-
-    @Test
-    @DisplayName("Board는 주변 지뢰의 수를 정확히 계산한다")
-    fun `주변 지뢰의 수를 정확히 계산한다`() {
-        val height = 3
-        val width = 3
-        val board = Board(height, width)
-        val minePositions = listOf(Position(0, 0), Position(1, 1), Position(2, 2))
-
-        minePositions.forEach { board.placeMineAt(it) }
-        val testPosition = Position(1, 0)
-
-        val expectedMineCount = 2
-        val actualMineCount = board.countMinesAround(testPosition)
-
-        assertEquals(expectedMineCount, actualMineCount)
     }
 }

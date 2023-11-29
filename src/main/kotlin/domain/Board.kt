@@ -4,7 +4,8 @@ import inteface.MineCounter
 import inteface.MinePlacer
 
 class Board(
-    val height: Int, val width: Int,
+    val height: Int,
+    val width: Int,
     private val minePlacer: MinePlacer,
     private val mineCounter: MineCounter
 ) {
