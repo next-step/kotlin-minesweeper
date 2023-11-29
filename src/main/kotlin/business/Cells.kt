@@ -44,11 +44,13 @@ class Cells(private val cells: List<List<Cell>>) {
         const val FIRST_INDEX = 0
 
         fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells {
-            return Cells(List(boardInfo.height) { y ->
-                List(boardInfo.width) { x ->
-                    if (minePoints.contains(Point(x, y))) Cell(CellStatus.MINE) else Cell()
+            return Cells(
+                List(boardInfo.height) { y ->
+                    List(boardInfo.width) { x ->
+                        if (minePoints.contains(Point(x, y))) Cell(CellStatus.MINE) else Cell()
+                    }
                 }
-            })
+            )
         }
     }
 }

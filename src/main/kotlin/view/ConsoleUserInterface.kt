@@ -5,19 +5,12 @@ import business.BoardInfo
 import business.Point
 
 class ConsoleUserInterface : UserInterface {
-    override fun askHeight(): Int {
-        println(ASK_HEIGHT_MESSAGE)
-        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(HEIGHT_ERROR_MESSAGE)
-    }
-
-    override fun askWidth(): Int {
-        println(ASK_WIDTH_MESSAGE)
-        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(WIDTH_ERROR_MESSAGE)
-    }
-
-    override fun askMineCount(): Int {
-        println(ASK_MINE_COUNT_MESSAGE)
-        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(MINE_COUNT_ERROR_MESSAGE)
+    override fun askBoardInfo(): BoardInfo {
+        val height = askHeight()
+        val width = askWidth()
+        val mineCount = askMineCount()
+        println(START_MESSAGE)
+        return BoardInfo(height, width, mineCount)
     }
 
     override fun askPoint(): Point {
@@ -30,13 +23,41 @@ class ConsoleUserInterface : UserInterface {
         return Point(height, width)
     }
 
-    override fun printStartAnnouncement() = println(START_MESSAGE)
-
-    override fun printGameOver() = println(GAME_OVER_MESSAGE)
+    override fun displayOpenResult(board: Board) {
+        board.executeWithOpenStatusAndMineCount({ isOpened: Boolean, count: Int ->
+            printOpenedResult(
+                isOpened, count
+            )
+        }) { println() }.let { println() }
+    }
 
     override fun printWin() = println(GAME_WIN_MESSAGE)
 
-    override fun printOpenedResult(isOpen: Boolean, count: Int) {
+    override fun displayGameOver(board: Board) {
+        println(GAME_OVER_MESSAGE)
+        board.executeWithMineStatusAndCount({ isMines: Boolean, count: Int ->
+            printAll(
+                isMines, count
+            )
+        }) { println() }.let { println() }
+    }
+
+    private fun askHeight(): Int {
+        println(ASK_HEIGHT_MESSAGE)
+        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(HEIGHT_ERROR_MESSAGE)
+    }
+
+    private fun askWidth(): Int {
+        println(ASK_WIDTH_MESSAGE)
+        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(WIDTH_ERROR_MESSAGE)
+    }
+
+    private fun askMineCount(): Int {
+        println(ASK_MINE_COUNT_MESSAGE)
+        return readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException(MINE_COUNT_ERROR_MESSAGE)
+    }
+
+    private fun printOpenedResult(isOpen: Boolean, count: Int) {
         if (!isOpen) {
             print(NOT_OPENED_DELIMITER + MINEFIELD_SEPARATOR)
             return
@@ -44,42 +65,12 @@ class ConsoleUserInterface : UserInterface {
         print(count.toString() + MINEFIELD_SEPARATOR)
     }
 
-    override fun printAll(mines: Boolean, count: Int) {
+    private fun printAll(mines: Boolean, count: Int) {
         if (mines) {
             print(MINE_DELIMITER + MINEFIELD_SEPARATOR)
             return
         }
         print(count.toString() + MINEFIELD_SEPARATOR)
-    }
-
-    override fun printNextLine() {
-        println()
-    }
-
-    override fun displayGameOver(board: Board) {
-        printGameOver()
-        board.executeWithMineStatusAndCount({ isMines: Boolean, count: Int ->
-            printAll(
-                isMines,
-                count
-            )
-        }) { printNextLine() }.let { printNextLine() }
-    }
-
-    override fun displayOpenResult(board: Board) {
-        board.executeWithOpenStatusAndMineCount({ isOpened: Boolean, count: Int ->
-            printOpenedResult(
-                isOpened, count
-            )
-        }) { printNextLine() }.let { printNextLine() }
-    }
-
-    override fun askBoardInfo(): BoardInfo {
-        val height = askHeight()
-        val width = askWidth()
-        val mineCount = askMineCount()
-        printStartAnnouncement()
-        return BoardInfo(height, width, mineCount)
     }
 
     companion object {
