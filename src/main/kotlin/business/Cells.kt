@@ -43,9 +43,9 @@ class Cells(private val cells: List<List<Cell>>) {
     companion object {
         const val FIRST_INDEX = 0
 
-        fun of(height: Int, width: Int, minePoints: List<Point>): Cells {
-            return Cells(List(height) { y ->
-                List(width) { x ->
+        fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells {
+            return Cells(List(boardInfo.height) { y ->
+                List(boardInfo.width) { x ->
                     if (minePoints.contains(Point(x, y))) Cell(CellStatus.MINE) else Cell()
                 }
             })

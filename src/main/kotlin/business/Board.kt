@@ -26,8 +26,8 @@ class Board(cells: Cells) {
 
     companion object {
         const val SAFE_MINE_COUNT = 0
-        fun of(height: Int, width: Int, minesPoints: List<Point>): Board = Board(Cells.of(height, width, minesPoints))
-        fun of(height: Int, width: Int, mineCount: Int, minePointGenerator: MinePointGenerator): Board =
-            of(height, width, minePointGenerator.generate(height, width, mineCount))
+
+        fun of(boardInfo: BoardInfo, minePointGenerator: MinePointGenerator): Board =
+            Board(Cells.of(boardInfo, minePointGenerator.generate(boardInfo)))
     }
 }

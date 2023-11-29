@@ -1,5 +1,7 @@
 package view
 
+import business.Board
+import business.BoardInfo
 import business.Point
 
 interface UserInterface {
@@ -13,4 +15,7 @@ interface UserInterface {
     fun printWin()
     fun printNextLine()
     fun printAll(mines: Boolean, count: Int)
+    fun displayGameOver(board: Board)
+    fun displayOpenResult(board: Board)
+    fun askBoardInfo(): BoardInfo
 }

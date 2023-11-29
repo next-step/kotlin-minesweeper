@@ -1,5 +1,7 @@
 package view
 
+import business.Board
+import business.BoardInfo
 import business.Point
 
 class ConsoleUserInterface : UserInterface {
@@ -52,6 +54,32 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printNextLine() {
         println()
+    }
+
+    override fun displayGameOver(board: Board) {
+        printGameOver()
+        board.executeWithMineStatusAndCount({ isMines: Boolean, count: Int ->
+            printAll(
+                isMines,
+                count
+            )
+        }) { printNextLine() }.let { printNextLine() }
+    }
+
+    override fun displayOpenResult(board: Board) {
+        board.executeWithOpenStatusAndMineCount({ isOpened: Boolean, count: Int ->
+            printOpenedResult(
+                isOpened, count
+            )
+        }) { printNextLine() }.let { printNextLine() }
+    }
+
+    override fun askBoardInfo(): BoardInfo {
+        val height = askHeight()
+        val width = askWidth()
+        val mineCount = askMineCount()
+        printStartAnnouncement()
+        return BoardInfo(height, width, mineCount)
     }
 
     companion object {
