@@ -12,9 +12,9 @@ class MineRandomGeneratorTest {
         val count = 1
 
         // when
-        val mines = MineRandomGenerator().generate(height, width, count)
+        val mines = MineRandomPointGenerator().generate(height, width, count)
 
         // when
-        mines.size() shouldBe 1
+        mines.size shouldBe 1
     }
 }

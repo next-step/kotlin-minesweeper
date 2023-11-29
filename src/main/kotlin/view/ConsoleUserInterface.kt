@@ -1,7 +1,5 @@
 package view
 
-import business.Mines
-import business.OpenedCells
 import business.Point
 
 class ConsoleUserInterface : UserInterface {
@@ -32,59 +30,31 @@ class ConsoleUserInterface : UserInterface {
 
     override fun printStartAnnouncement() = println(START_MESSAGE)
 
-    override fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentHeight in ZERO.until(maxHeight)) printMinefieldRow(currentHeight, maxWidth, mines)
-    }
-
     override fun printGameOver() = println(GAME_OVER_MESSAGE)
 
     override fun printWin() = println(GAME_WIN_MESSAGE)
 
-    override fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines, openedCells: OpenedCells) {
-        for (currentHeight in ZERO.until(maxHeight)) printOpenedMinefieldRow(
-            currentHeight,
-            maxWidth,
-            openedCells,
-            mines
-        )
-    }
-
-    private fun printOpenedMinefieldRow(targetHeight: Int, maxWidth: Int, openedCells: OpenedCells, mines: Mines) {
-        for (currentWidth in ZERO.until(maxWidth)) {
-            printOpenedMinefield(targetHeight, currentWidth, openedCells, mines)
-            print(MINEFIELD_SEPARATOR)
-        }
-        println()
-    }
-
-    private fun printOpenedMinefield(targetHeight: Int, currentWidth: Int, openedCells: OpenedCells, mines: Mines) {
-        val point = Point(targetHeight, currentWidth)
-        if (openedCells.contains(point)) {
-            print(mines.countMineAround(point))
+    override fun printOpenedResult(isOpen: Boolean, count: Int) {
+        if (!isOpen) {
+            print(NOT_OPENED_DELIMITER + MINEFIELD_SEPARATOR)
             return
         }
-        print(NOT_OPENED_DELIMITER)
+        print(count.toString() + MINEFIELD_SEPARATOR)
     }
 
-    private fun printMinefieldRow(targetHeight: Int, maxWidth: Int, mines: Mines) {
-        for (currentWidth in ZERO.until(maxWidth)) {
-            printMinefield(targetHeight, currentWidth, mines)
-            print(MINEFIELD_SEPARATOR)
-        }
-        println()
-    }
-
-    private fun printMinefield(targetHeight: Int, currentWidth: Int, mines: Mines) {
-        val point = Point(targetHeight, currentWidth)
-        if (mines.contains(point)) {
-            print(MINE_DELIMITER)
+    override fun printAll(mines: Boolean, count: Int) {
+        if (mines) {
+            print(MINE_DELIMITER + MINEFIELD_SEPARATOR)
             return
         }
-        print(mines.countMineAround(point))
+        print(count.toString() + MINEFIELD_SEPARATOR)
+    }
+
+    override fun printNextLine() {
+        println()
     }
 
     companion object {
-        private const val ZERO = 0
         private const val POINT_SIZE = 2
         private const val POINT_SIZE_ERROR_MESSAGE = "쉼표로 구분된 두 개의 숫자여야 합니다."
         private const val POINT_NUMBER_ERROR_MESSAGE = "숫자여야 합니다."

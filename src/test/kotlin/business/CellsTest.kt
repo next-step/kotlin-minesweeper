@@ -150,7 +150,7 @@ class CellsTest {
      *  2    | C | C | C | C |      =>  open(2,1)(5,3)  =>   | 0 | 0 | 0 | 0 |
      *  3    | C | C | C | C |                               | 0 | 0 | 1 | 1 |
      *  4    | C | C | C | * |                               | 0 | 1 | 2 | * |
-     *  5    | C | C | C | * |                               | 0 | 1 | * | 2 |
+     *  5    | C | C | * | C |                               | 0 | 1 | * | 2 |
      */
     @Test
     fun `지뢰 빼고 모든 칸이 open되여 있으면 true`() {
@@ -176,5 +176,71 @@ class CellsTest {
 
         // then
         result shouldBe false
+    }
+
+    /**
+     *         0   1   2   3
+     *
+     *  0    | C | * | C | C |
+     *  1    | C | C | C | C |
+     *  2    | C | C | C | C |
+     *  3    | C | C | C | C |
+     *  4    | C | C | C | * |
+     *  5    | C | C | * | C |
+     */
+    @Test
+    fun `각 셀이 열렸는지의 여부와 주변의 지뢰의 개수를 전달한다`() {
+        // given
+        val cells = testCells()
+        val result = mutableListOf<String>()
+
+        // when
+        cells.executeWithOpenStatusAndMineCount(
+            { isOpen, mineCount -> result.add("$isOpen, $mineCount") },
+            { }
+        )
+
+        // then
+        result shouldBe listOf(
+            "true, 1", "false, 0", "false, 1", "false, 0",
+            "false, 1", "false, 1", "false, 1", "false, 0",
+            "false, 0", "false, 0", "false, 0", "false, 0",
+            "false, 0", "false, 0", "false, 1", "false, 1",
+            "false, 0", "false, 1", "false, 2", "false, 1",
+            "false, 0", "false, 1", "false, 1", "false, 2",
+        )
+    }
+
+    /**
+     *         0   1   2   3
+     *
+     *  0    | C | * | C | C |
+     *  1    | C | C | C | C |
+     *  2    | C | C | C | C |
+     *  3    | C | C | C | C |
+     *  4    | C | C | C | * |
+     *  5    | C | C | * | C |
+     */
+    @Test
+    fun `각 셀이 지뢰인지와 주변의 지뢰의 개수를 전달한다`() {
+        // given
+        val cells = testCells()
+        val result = mutableListOf<String>()
+
+        // when
+        cells.executeWithMineStatusAndCount(
+            { isMine, mineCount -> result.add("$isMine, $mineCount") },
+            { }
+        )
+
+        // then
+        result shouldBe listOf(
+            "false, 1", "true, 0", "false, 1", "false, 0",
+            "false, 1", "false, 1", "false, 1", "false, 0",
+            "false, 0", "false, 0", "false, 0", "false, 0",
+            "false, 0", "false, 0", "false, 1", "false, 1",
+            "false, 0", "false, 1", "false, 2", "true, 1",
+            "false, 0", "false, 1", "true, 1", "false, 2",
+        )
     }
 }

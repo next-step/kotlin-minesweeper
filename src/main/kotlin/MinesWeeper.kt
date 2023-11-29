@@ -1,6 +1,6 @@
-import business.GameManager
+import business.Board
 import business.GameStatus
-import business.MineRandomGenerator
+import business.MineRandomPointGenerator
 import view.ConsoleUserInterface
 import view.UserInterface
 
@@ -8,36 +8,45 @@ class MinesWeeper(
     private val userInterface: UserInterface = ConsoleUserInterface(),
 ) {
     fun start() {
-        val (height, width, gameManager) = initGame()
-        var status = openPoint(gameManager)
+        val board = initBoard()
+        var status = openPoint(board)
         while (status.isContinue()) {
-            displayOpenResult(height, width, gameManager)
-            status = openPoint(gameManager)
+            displayOpenResult(board)
+            status = openPoint(board)
         }
-        if (status == GameStatus.WIN) displayWin()
-        displayGameOver(height, width, gameManager)
+        if (status == GameStatus.WIN) {
+            displayWin()
+            return
+        }
+        displayGameOver(board)
     }
 
-    private fun initGame(): Triple<Int, Int, GameManager> {
+    private fun initBoard(): Board {
         val height = userInterface.askHeight()
         val width = userInterface.askWidth()
         val mineCount = userInterface.askMineCount()
         userInterface.printStartAnnouncement()
-        val gameManager = GameManager.of(height, width, mineCount, MineRandomGenerator())
-        return Triple(height, width, gameManager)
+        return Board.of(height, width, mineCount, MineRandomPointGenerator())
     }
 
-    private fun displayGameOver(height: Int, width: Int, gameManager: GameManager) {
+    private fun displayGameOver(board: Board) {
         userInterface.printGameOver()
-        gameManager.doActionWithMines { userInterface.printMinefieldMatrix(height, width, it) }
+        board.executeWithMineStatusAndCount({ isMines: Boolean, count: Int ->
+            userInterface.printAll(
+                isMines,
+                count
+            )
+        }) { userInterface.printNextLine() }.let { userInterface.printNextLine() }
     }
 
-    private fun openPoint(gameManager: GameManager): GameStatus = gameManager.open(userInterface.askPoint())
+    private fun openPoint(board: Board): GameStatus = board.open(userInterface.askPoint())
 
-    private fun displayOpenResult(height: Int, width: Int, gameManager: GameManager) =
-        gameManager.doActionWithMinesAndOpenedCells { mines, openedCells ->
-            userInterface.printOpenedMinefieldMatrix(height, width, mines, openedCells)
-        }
+    private fun displayOpenResult(board: Board) =
+        board.executeWithOpenStatusAndMineCount({ isOpened: Boolean, count: Int ->
+            userInterface.printOpenedResult(
+                isOpened, count
+            )
+        }) { userInterface.printNextLine() }.let { userInterface.printNextLine() }
 
     private fun displayWin() = userInterface.printWin()
 }

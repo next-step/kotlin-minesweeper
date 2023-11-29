@@ -1,6 +1,9 @@
 package business
 
-class Cell(private val cellStatus: CellStatus, visibilityState: CardVisibilityState = CardVisibilityState.HIDDEN) {
+class Cell(
+    private val cellStatus: CellStatus = CellStatus.EMPTY,
+    visibilityState: CardVisibilityState = CardVisibilityState.HIDDEN,
+) {
     private var _visibilityState = visibilityState
 
     fun isMine(): Boolean = cellStatus.isMine()
