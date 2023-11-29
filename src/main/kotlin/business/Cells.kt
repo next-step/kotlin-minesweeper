@@ -11,10 +11,10 @@ class Cells(private val cells: List<List<Cell>>) {
         if (isSafePoint(point)) openAround(point)
     }
 
-    private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
     fun countMines(point: Point): Int = point.aroundPoints()
         .filter { isValidPoint(it) }
         .count { isMine(it) }
+    private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
 
     private fun openAround(point: Point) = point.aroundPoints()
         .filter { isValidPoint(it) }

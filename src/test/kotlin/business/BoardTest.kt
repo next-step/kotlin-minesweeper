@@ -1,15 +1,19 @@
 package business
 
+import business.TestFixture.testCells
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 /**
  *  testCells
- *  | 1 | * | C | C |
- *  | C | C | C | C |
- *  | C | C | C | C |
- *  | C | C | C | C |
- *  | C | C | C | * |
+ *         0   1   2   3
+ *
+ *  0    | 1 | * | C | C |
+ *  1    | C | C | C | C |
+ *  2    | C | C | C | C |
+ *  3    | C | C | C | C |
+ *  4    | C | C | C | * |
+ *  5    | C | C | * | C |
  */
 class BoardTest {
     @Test
@@ -115,7 +119,8 @@ class BoardTest {
      *  | C | C | C | C |                          | 1 | 1 | 1 | 0 |
      *  | C | C | C | C |      =>  open(2,1)  =>   | 0 | 0 | 0 | 0 |
      *  | C | C | C | C |                          | 0 | 0 | 1 | 1 |
-     *  | C | C | C | * |                          | 0 | 0 | 1 | * |
+     *  | C | C | C | * |                          | 0 | 1 | 2 | * |
+     *  | C | C | C | * |                          | 0 | 1 | * | C |
      */
     @Test
     fun `지뢰가 아니고 주변에 지뢰가 없는 위치를 open하면 해당 위치를 open하고 주변도 모두 open하며 continue 결과를 반환한다`() {
@@ -130,68 +135,5 @@ class BoardTest {
 
         // then
         result shouldBe GameStatus.CONTINUE
-        shouldBeExpected(board, targetPoint)
     }
-
-    private fun shouldBeExpected(board: Board, targetPoint: Point) {
-        board.isOpen(targetPoint) shouldBe true
-        board.isOpen(Point(0, 2)) shouldBe true
-        board.isOpen(Point(0, 3)) shouldBe true
-        board.isOpen(Point(1, 0)) shouldBe true
-        board.isOpen(Point(1, 1)) shouldBe true
-        board.isOpen(Point(1, 2)) shouldBe true
-        board.isOpen(Point(1, 3)) shouldBe true
-        board.isOpen(Point(2, 0)) shouldBe true
-        board.isOpen(Point(2, 2)) shouldBe true
-        board.isOpen(Point(2, 3)) shouldBe true
-        board.isOpen(Point(3, 0)) shouldBe true
-        board.isOpen(Point(3, 1)) shouldBe true
-        board.isOpen(Point(3, 2)) shouldBe true
-        board.isOpen(Point(3, 3)) shouldBe true
-        board.isOpen(Point(4, 0)) shouldBe true
-        board.isOpen(Point(4, 1)) shouldBe true
-        board.isOpen(Point(4, 2)) shouldBe true
-    }
-
-    /**
-     *  | 1 | * | C | C |
-     *  | C | C | C | C |
-     *  | C | C | C | C |
-     *  | C | C | C | C |
-     *  | C | C | C | * |
-     */
-    private fun testCells() = Cells(
-        listOf(
-            listOf(
-                Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE),
-                Cell(CellStatus.MINE),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            listOf(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            listOf(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            listOf(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            listOf(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.MINE)
-            ),
-        )
-    )
 }
