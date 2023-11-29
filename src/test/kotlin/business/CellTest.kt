@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class CellTest {
     @Test
-    fun `지뢰가 맞는지 확인한다`() {
+    fun `지뢰가 맞으면 true`() {
         // given
         val cell = Cell(CellStatus.MINE)
 
@@ -17,7 +17,7 @@ class CellTest {
     }
 
     @Test
-    fun `지뢰가 아닌지 확인한다`() {
+    fun `지뢰가 아나면 false`() {
         // given
         val cell = Cell(CellStatus.EMPTY)
 
@@ -26,5 +26,30 @@ class CellTest {
 
         // then
         result shouldBe false
+    }
+
+    @Test
+    fun `현재 cell이 열려 있으면 true`() {
+        // given
+        val cell = Cell(CellStatus.EMPTY)
+
+        // when
+        val result = cell.isOpen()
+
+        // then
+        result shouldBe false
+    }
+
+    @Test
+    fun `현재 cell이 열려 있지 않으면 false`() {
+        // given
+        val cell = Cell(CellStatus.EMPTY)
+        cell.open()
+
+        // when
+        val result = cell.isOpen()
+
+        // then
+        result shouldBe true
     }
 }

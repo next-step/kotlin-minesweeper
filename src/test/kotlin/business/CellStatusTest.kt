@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CellStatusTest {
 
     @Test
-    fun `지뢰가 맞는지 확인한다`() {
+    fun `지뢰가 맞으면 true`() {
         // given
         val cellStatus = CellStatus.MINE
 
@@ -18,7 +18,7 @@ class CellStatusTest {
     }
 
     @Test
-    fun `지뢰가 아닌지 확인한다`() {
+    fun `지뢰가 아니면 false`() {
         // given
         val cellStatus = CellStatus.EMPTY
 
