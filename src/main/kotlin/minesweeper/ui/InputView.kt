@@ -1,61 +1,52 @@
 package minesweeper.ui
 
+import minesweeper.domain.Size
+
 object InputView {
 
     private const val INPUT_HEIGHT_MESSAGE = "높이를 입력하세요."
     private const val INPUT_WIDTH_MESSAGE = "너비를 입력하세요."
     private const val INPUT_COUNT_MESSAGE = "지뢰는 몇 개인가요?"
 
-    fun inputHeight(): Int {
+    fun inputHeight(): Size {
         println(INPUT_HEIGHT_MESSAGE)
-        val inputHeight = readln().toInt()
 
-        runCatching {
-            checkValidHeight(inputHeight)
-        }.onFailure { e ->
-            println(e.message)
-            return inputHeight()
+        val result = runCatching {
+            val inputHeight = readln()
+            Size(inputHeight)
         }
-        return inputHeight
+
+        return result.getOrElse { e ->
+            println(e.message)
+            inputHeight()
+        }
     }
 
-    private fun checkValidHeight(height: Int) {
-        require(height in 1..100) { "높이는 1 이상 100 이하의 숫자여야 합니다." }
-    }
-
-    fun inputWidth(): Int {
+    fun inputWidth(): Size {
         println()
         println(INPUT_WIDTH_MESSAGE)
-        val inputWidth = readln().toInt()
-
-        runCatching {
-            checkValidWidth(inputWidth)
-        }.onFailure { e ->
-            println(e.message)
-            return inputWidth()
+        val result = runCatching {
+            val inputWidth = readln()
+            Size(inputWidth)
         }
-        return inputWidth
+
+        return result.getOrElse { e ->
+            println(e.message)
+            inputWidth()
+        }
     }
 
-    private fun checkValidWidth(width: Int) {
-        require(width in 1..100) { "너비는 1 이상 100 이하의 숫자여야 합니다." }
-    }
-
-    fun inputCount(): Int {
+    fun inputCount(): Size {
         println()
         println(INPUT_COUNT_MESSAGE)
-        val inputCount = readln().toInt()
-
-        runCatching {
-            checkValidCount(inputCount)
-        }.onFailure { e ->
-            println(e.message)
-            return inputCount()
+        val result = runCatching {
+            val inputCount = readln()
+            Size(inputCount)
         }
-        return inputCount
-    }
 
-    private fun checkValidCount(count: Int) {
-        require(count in 1..100) { "지뢰 개수는 1 이상 100 이하의 숫자여야 합니다." }
+        return result.getOrElse { e ->
+            println(e.message)
+            inputCount()
+        }
     }
 }

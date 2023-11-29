@@ -5,9 +5,9 @@ import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
 
 fun main() {
-    val height = InputView.inputHeight()
-    val width = InputView.inputWidth()
-    val count = InputView.inputCount()
+    val height = InputView.inputHeight().value
+    val width = InputView.inputWidth().value
+    val count = InputView.inputCount().value
 
     val mines = RandomMineGenerator(height, width).generate(count)
     ResultView.printMines(height, width, mines)
