@@ -11,12 +11,6 @@ class ArrayMapTest : StringSpec({
         "1 0 0 0 0"
     )
 
-    "ArrayMap은 높이와 너비를 가진다" {
-        val arrayMap = fixedMap.toArrayMap()
-        arrayMap.getHeight() shouldBe 4
-        arrayMap.getWidth() shouldBe 5
-    }
-
     "ArrayMap에서 get으로 지정 위치의 값을 가져올 수 있다" {
         val arrayMap = fixedMap.toArrayMap()
         arrayMap.get(Point(0, 0)).hasMine.shouldBe(false)

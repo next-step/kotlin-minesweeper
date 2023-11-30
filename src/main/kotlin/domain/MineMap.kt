@@ -17,12 +17,12 @@ class MineMap(
     private var closedCount = mapInfo.point.getArea()
 
     init {
-        repeat(height) { y ->
-            repeat(width) { x ->
-                val point = Point(y, x)
-                get(point).setNearMineCount(countNearMine(point))
+        mineMap
+            .flatMap()
+            .forEachIndexed { index, spot ->
+                val point = Point(index / width, index % width)
+                spot.setNearMineCount(countNearMine(point))
             }
-        }
     }
 
     fun get(point: Point): Spot = mineMap.get(point)

@@ -8,7 +8,5 @@ class ArrayMap(
 
     fun get(point: Point): Spot = list[point.y][point.x]
 
-    fun getHeight(): Int = list.size
-
-    fun getWidth(): Int = list.first().size
+    fun flatMap(): List<Spot> = list.flatMap { it }
 }
