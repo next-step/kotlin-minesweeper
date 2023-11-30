@@ -13,9 +13,13 @@ object ResultView {
         row: Int
     ) {
         for (col in 0 until mineMap.mineMapInfo.colCnt) {
-            when (mineMap.mineMap[Point(row, col)]) {
-                MapTile.MINE -> print("* ")
-                else -> print("C ")
+            when (val info = mineMap.mineMap[Point(row, col)]) {
+                is MapTile.Mine -> print("* ")
+                is MapTile.Blank -> {
+                    print("${info.nearCount} ")
+                }
+
+                else -> print("0 ")
             }
         }
         println()
