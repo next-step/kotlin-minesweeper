@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 class MineTest : BehaviorSpec({
     Given("위치와 지뢰 여부가 주어지면") {
-        val position = Position(1, 1)
+        val position = Position(Size(1), Size(1))
         val isMine = true
         When("지뢰는") {
             val mine = Mine(position, isMine)

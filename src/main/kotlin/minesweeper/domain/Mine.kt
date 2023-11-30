@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-data class Mine(
+class Mine(
     val position: Position,
-    val isMine: Boolean,
+    var isMine: Boolean = false,
 ) {
 
 }

@@ -11,18 +11,21 @@ data class Size(val value: Int) {
         return Size(value * other.value)
     }
 
-    fun getRandomNumbers(count: Size): List<Size> {
+    fun getNumbers(): List<Size> {
         return (1..value)
-            .shuffled()
-            .take(count.value)
             .map { Size(it) }
     }
 
-    operator fun div(height: Size): Int {
-        return value / height.value
+    operator fun div(height: Size): Size {
+        return Size(value / height.value + 1)
     }
 
-    operator fun rem(width: Size): Int {
-        return value % width.value
+    operator fun rem(width: Size): Size {
+        return Size(value % width.value + 1)
+    }
+
+    fun getRows(x: Size): List<Position> {
+        return getNumbers()
+            .map { Position(x, it) }
     }
 }
