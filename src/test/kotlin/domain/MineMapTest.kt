@@ -10,14 +10,23 @@ class MineMapTest : StringSpec({
         mineMap.width shouldBe 10
     }
 
-    "MineMap은 지뢰가 있다" {
+    "MineMap은 지뢰가 있는 지점이 있고, 없는 지점도 있다" {
         val height = 10
         val width = 10
+        var hasMine = false
+        var hasNotMine = false
         val mineMap = MineMap(height, width)
         repeat(height) { y ->
             repeat(width) { x ->
-                mineMap.get(x, y).hasMine shouldBe true
+                if (mineMap.get(x, y).hasMine) {
+                    hasMine = true
+                } else {
+                    hasNotMine = true
+                }
             }
         }
+
+        hasMine shouldBe true
+        hasNotMine shouldBe true
     }
 })
