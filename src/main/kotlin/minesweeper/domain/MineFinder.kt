@@ -18,5 +18,4 @@ class MineFinder(private val map: Map<Position, Mine>) {
             return MineFinder(initPosition.associateWith { Mine(it) })
         }
     }
-
 }

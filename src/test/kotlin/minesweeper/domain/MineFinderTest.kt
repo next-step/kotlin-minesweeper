@@ -21,4 +21,3 @@ fun createMineFinder(): MineFinder {
     val initPositions = FixedPositionGenerator(Size(10), Size(10)).init()
     return MineFinder(initPositions)
 }
-
