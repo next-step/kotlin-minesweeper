@@ -1,5 +1,6 @@
 package view
 
+import domain.MineMap
 import domain.Point
 
 object View {
@@ -30,6 +31,18 @@ object View {
 
     fun outputStartGame() {
         println("지뢰찾기 게임을 시작합니다.")
+    }
+
+    fun outputMineMap(mineMap: MineMap) {
+        val height = mineMap.point.y
+        val width = mineMap.point.x
+
+        repeat(height) { y ->
+            repeat(width) { x ->
+                print(mineMap.viewSpot(Point(y, x)))
+            }
+            println()
+        }
     }
 
     fun outputWinGame() {

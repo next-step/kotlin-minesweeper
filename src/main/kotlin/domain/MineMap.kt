@@ -31,7 +31,11 @@ class MineMap(
     fun get(point: Point): Spot = get(point.y, point.x)
 
     fun open(point: Point): OpenStatus {
-        val openResult = get(point).open()
+        val spot = get(point)
+        if (spot.isOpen()) {
+            return spot.getOpenStatus()
+        }
+        val openResult = spot.open()
         closedCount -= 1
         if (openResult == OpenStatus.ZERO) {
             validPoint(point)
@@ -49,6 +53,8 @@ class MineMap(
     fun isOpened(point: Point): Boolean = get(point).isOpen()
 
     fun isAllOpened(): Boolean = closedCount == mineCount
+
+    fun viewSpot(point: Point): String = get(point).viewSpot()
 
     private fun countNearMine(point: Point): Int =
         validPoint(point).count { get(it).hasMine }

@@ -16,6 +16,7 @@ class MineMapController {
         View.outputStartGame()
 
         while (mineMap.isAllOpened().not()) {
+            View.outputMineMap(mineMap)
             val openPoint = View.inputOpenSpot()
             val openStatus = mineMap.open(openPoint)
 
@@ -25,6 +26,7 @@ class MineMapController {
             }
         }
 
+        View.outputMineMap(mineMap)
         View.outputWinGame()
     }
 }
