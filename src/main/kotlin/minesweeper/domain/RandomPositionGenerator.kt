@@ -6,6 +6,7 @@ class RandomPositionGenerator(
 ) : PositionGenerator(height, width) {
 
     override fun generate(count: Size): List<Position> {
+        checkValidCount(count)
         return (height * width).getNumbers()
             .shuffled()
             .take(count.value)
