@@ -1,5 +1,14 @@
 package domain
 
-import domain.enums.CellType
+class Cell(
+    val point: Point,
+    val cellInfo: CellInfo,
+) {
+    fun installMine() = cellInfo.installMine()
 
-data class Cell(val position: Position, val cellType: CellType = CellType.NOT_MINE)
+    companion object {
+        fun createEmptyCell(row: Int, col: Int): Cell {
+            return Cell(Point(row, col), CellInfo())
+        }
+    }
+}

@@ -8,8 +8,8 @@ class GameBoardTest {
 
     @Test
     fun `높이, 너비를 입력하면 그 크기만큼 gameBoard 가 만들어 진다`() {
-        val boardSettings = BoardSettings(height = 10, width = 3, mineCount = 5)
-        val gameBoard = GameBoard.createGameBoard(boardSettings)
+        val boardSettings = BoardSettings(row = 10, col = 3, mineCount = 5)
+        val gameBoard = GameBoard.createBoard(boardSettings)
 
         assertEquals(10, gameBoard.board.size)
         assertEquals(3, gameBoard.board[0].size)
@@ -17,13 +17,13 @@ class GameBoardTest {
 
     @Test
     fun `mineCount 의 갯수 만큼 지뢰가 만들어진다`() {
-        val boardSettings = BoardSettings(height = 10, width = 3, mineCount = 4)
-        val gameBoard = GameBoard.createGameBoard(boardSettings)
+        val boardSettings = BoardSettings(row = 10, col = 3, mineCount = 4)
+        val gameBoard = GameBoard.createBoard(boardSettings)
 
         var mineCount = 0
         gameBoard.board.forEach { row ->
             row.forEach { cell ->
-                if (cell.cellType == CellType.MINE) {
+                if (cell.cellInfo.cellType == CellType.MINE) {
                     mineCount++
                 }
             }

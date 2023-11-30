@@ -16,7 +16,9 @@ object OutputView {
 
     fun printGameBoard(gameBoard: GameBoard) {
         gameBoard.board.forEach { row ->
-            row.forEach { print("${it.cellType.symbol} ") }
+            row.cells.forEach { cell ->
+                print(cell.cellInfo.cellType.symbol + " ")
+            }
             println()
         }
     }

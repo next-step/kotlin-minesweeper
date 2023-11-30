@@ -2,6 +2,7 @@ package controller
 
 import domain.GameBoard
 import domain.BoardSettings
+import domain.strategyImpl.RandomPointFactory
 import view.InputView
 import view.OutputView
 
@@ -19,7 +20,7 @@ private fun gameSetUp(): GameBoard {
     val mineCount = InputView.inputNumber()
     val boardSettings = BoardSettings(height, width, mineCount)
 
-    return GameBoard.createGameBoard(boardSettings)
+    return GameBoard.createBoard(boardSettings, RandomPointFactory())
 }
 
 private fun gameStart(gameBoard: GameBoard) {

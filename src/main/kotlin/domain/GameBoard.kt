@@ -1,33 +1,29 @@
 package domain
 
-import domain.enums.CellType
-import kotlin.random.Random
+import domain.strategy.CreatePointStrategy
 
-class GameBoard private constructor(val board: List<List<Cell>>) {
+class GameBoard private constructor(val board: List<CellList>) {
 
     companion object {
-        fun createGameBoard(boardSettings: BoardSettings): GameBoard {
-            val board = MutableList(boardSettings.height) { row ->
-                MutableList(boardSettings.width) { col ->
-                    Cell(Position(col, row))
-                }
-            }
-            installMines(boardSettings, board)
+        fun createBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy): GameBoard {
+            val emptyBoard = createEmptyBoard(boardSettings)
+            val board = installMines(boardSettings, emptyBoard, createPointStrategy)
 
-            return GameBoard(board.map { it.toList() })
+            return GameBoard(board)
         }
 
-        private fun installMines(boardSettings: BoardSettings, board: MutableList<MutableList<Cell>>) {
-            var minesPlaced = 0
-            while (minesPlaced < boardSettings.mineCount) {
-                val row = Random.nextInt(boardSettings.height)
-                val col = Random.nextInt(boardSettings.width)
+        private fun createEmptyBoard(boardSettings: BoardSettings): MutableList<CellList> {
+            return (0 until boardSettings.row).map { row ->
+                CellList.createEmptyRow(row, boardSettings.col)
+            }.toMutableList()
+        }
 
-                if (board[row][col].cellType != CellType.MINE) {
-                    board[row][col] = Cell(Position(col, row), CellType.MINE)
-                    minesPlaced++
-                }
+        private fun installMines(boardSettings: BoardSettings, board: MutableList<CellList>, createPointStrategy: CreatePointStrategy): List<CellList> {
+            createPointStrategy.createMinePoints(boardSettings).forEach { point ->
+                val (row, col) = point / boardSettings.col to point % boardSettings.col
+                board[row].cells[col].installMine()
             }
+            return board
         }
     }
 }
