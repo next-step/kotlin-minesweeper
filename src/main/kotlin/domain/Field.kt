@@ -1,15 +1,13 @@
 package domain
 
-class Field(width: Int, height: Int) {
+class Field(val width: Int, val height: Int) {
     val cells: List<List<Cell>>
     init {
         validateSize(width)
         validateSize(height)
 
-        cells = (0 until height).map { y ->
-            (0 until width).map { x ->
-                Cell(Position(x, y))
-            }
+        cells = (0 until height).map {
+            (0 until width).map { Cell() }
         }
     }
 
@@ -19,18 +17,28 @@ class Field(width: Int, height: Int) {
 
     fun setMine(selector: PositionSelector) {
         var position = selector.selectPosition()
-        while (isMine(position)) {
+        while (cellOf(position).isMine) {
             position = selector.selectPosition()
         }
 
         cellOf(position).isMine = true
     }
 
-    private fun cellOf(position: Position): Cell {
-        return cells[position.y][position.x]
+    fun setHints() = recursiveSetHint(Position(0, 0))
+
+    private fun recursiveSetHint(position: Position) {
+        val cell = cellOf(position)
+        if (cell.hint != null) return
+
+        val aroundPositions = position.getArounds(width = width, height = height)
+        cell.hint = aroundPositions.count { cellOf(it).isMine }
+
+        aroundPositions.forEach {
+            recursiveSetHint(it)
+        }
     }
 
-    fun isMine(position: Position): Boolean {
-        return cellOf(position).isMine
+    private fun cellOf(position: Position): Cell {
+        return cells[position.y][position.x]
     }
 }

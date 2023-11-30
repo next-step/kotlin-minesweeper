@@ -8,6 +8,6 @@ fun printStartMessage() {
 
 fun printBoard(cells: List<List<Cell>>) {
     cells.forEach { row ->
-        row.joinToString(" ") { it.toChar() }.let(::println)
+        row.joinToString(" ") { it.toStr() }.let(::println)
     }
 }

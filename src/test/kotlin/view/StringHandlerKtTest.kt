@@ -1,6 +1,9 @@
 package view
 
+import domain.Cell
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -19,5 +22,25 @@ class StringHandlerKtTest {
         assertThatThrownBy { inputToInt(input) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("숫자만 입력되어야 합니다.")
+    }
+
+    @Test
+    fun `지뢰 cell을 알맞은 문자로 변환한다`() {
+        val cell = Cell(isMine = true)
+        assertThat(cell.toStr()).isEqualTo(MINE_SYMBOL)
+    }
+
+    @Test
+    fun `비 지뢰 cell을 힌트에 해당하는 문자로 변환한다`() {
+        val cell = Cell(isMine = false, hint = 8)
+        assertThat(cell.toStr()).isEqualTo(cell.hint?.toString())
+    }
+
+    @Test
+    fun `지뢰가 아니면서 힌트가 null인 cell을 문자로 변환할 경우 예외를 던진다`() {
+        val cell = Cell(isMine = false, hint = null)
+        assertThatThrownBy { cell.toStr() }
+            .isInstanceOf(IllegalStateException::class.java)
+            .hasMessage("null 값에 대한 String 변환이 요청되었습니다")
     }
 }
