@@ -1,16 +1,9 @@
 package minesweeper.domain
 
 class RandomPositionGenerator(
-    private val height: Size,
-    private val width: Size,
-) : PositionGenerator {
-
-    fun init(): List<Position> {
-        return height.getNumbers()
-            .flatMap { rowNum ->
-                width.getRows(rowNum)
-            }.toList()
-    }
+    height: Size,
+    width: Size,
+) : PositionGenerator(height, width) {
 
     override fun generate(count: Size): List<Position> {
         return (height * width).getNumbers()
