@@ -2,7 +2,6 @@ package minesweeper
 
 import minesweeper.domain.RandomPositionGenerator
 import minesweeper.ui.InputView
-import minesweeper.ui.ResultView
 
 fun main() {
     val height = InputView.inputHeight()

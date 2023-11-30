@@ -1,3 +1,8 @@
 package minesweeper.domain
 
-data class Mine(val x: Int, val y: Int)
+data class Mine(
+    val position: Position,
+    val isMine: Boolean,
+) {
+
+}

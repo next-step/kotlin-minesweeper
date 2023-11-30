@@ -1,6 +1,5 @@
 package minesweeper.ui
 
-import minesweeper.domain.Mines
 import minesweeper.domain.Size
 
 object ResultView {
@@ -8,6 +7,7 @@ object ResultView {
     private const val mine_symbol = "*"
     private const val none_mine_symbol = "C"
 
+    /*
     fun printMines(height: Size, width: Size, mines: Mines) {
         println()
         println("지뢰찾기 게임 시작")
@@ -29,4 +29,5 @@ object ResultView {
             false -> print("$none_mine_symbol ")
         }
     }
+     */
 }
