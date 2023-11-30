@@ -1,6 +1,7 @@
 package controller
 
 import domain.MineMap
+import domain.MineMapInfo
 import domain.OpenStatus
 import domain.Point
 import view.View
@@ -11,7 +12,8 @@ class MineMapController {
         val height = View.inputHeight()
         val width = View.inputWidth()
         val mineCount = View.inputMineCount()
-        val mineMap = MineMap(Point(height, width), mineCount)
+        val mapInfo = MineMapInfo(Point(height, width), mineCount)
+        val mineMap = MineMap(mapInfo)
 
         View.outputStartGame()
 

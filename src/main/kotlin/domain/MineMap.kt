@@ -1,9 +1,8 @@
 package domain
 
 class MineMap(
-    val point: Point,
-    private val mineCount: Int,
-    private val mineMap: ArrayMap = RandomMineMap.newRandomMineMap(point, mineCount)
+    mapInfo: MineMapInfo,
+    private val mineMap: ArrayMap = RandomMineMap.newRandomMineMap(mapInfo.point, mapInfo.mineCount)
 ) {
 
     private val delta = listOf(
@@ -12,15 +11,14 @@ class MineMap(
         Point(1, -1), Point(1, 0), Point(1, 1)
     )
 
-    private var closedCount = point.getArea()
+    val height = mapInfo.point.y
+    val width = mapInfo.point.x
+    private val mineCount = mapInfo.mineCount
+    private var closedCount = mapInfo.point.getArea()
 
     init {
-        require(point.y > 0)
-        require(point.x > 0)
-        require(mineCount in 0 until point.getArea())
-
-        repeat(point.y) { y ->
-            repeat(point.x) { x ->
+        repeat(height) { y ->
+            repeat(width) { x ->
                 val point = Point(y, x)
                 get(point).setNearMineCount(countNearMine(point))
             }
@@ -58,6 +56,6 @@ class MineMap(
 
     private fun validPoint(point: Point): List<Point> =
         delta.map { point + it }
-            .filter { it.y in 0 until this.point.y }
-            .filter { it.x in 0 until this.point.x }
+            .filter { it.y in 0 until height }
+            .filter { it.x in 0 until width }
 }

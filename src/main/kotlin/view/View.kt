@@ -34,8 +34,8 @@ object View {
     }
 
     fun outputMineMap(mineMap: MineMap) {
-        val height = mineMap.point.y
-        val width = mineMap.point.x
+        val height = mineMap.height
+        val width = mineMap.width
 
         repeat(height) { y ->
             repeat(width) { x ->
