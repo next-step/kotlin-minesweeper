@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineFinder(val map: Map<Position, Mine>) {
+class MineFinder(private val map: Map<Position, Mine>) {
 
     fun convert(minePosition: List<Position>) {
         minePosition.forEach {
