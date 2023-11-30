@@ -1,5 +1,7 @@
 package ui
 
+import domain.FieldInfo
+import domain.Length
 import domain.MinesweeperGame
 
 fun main() {
@@ -7,8 +9,10 @@ fun main() {
         it.show()
     }
     val minesweeperGame = MinesweeperGame(
-        width = inputView.width,
-        height = inputView.height,
+        fieldInfo = FieldInfo(
+            width = Length(inputView.width),
+            height = Length(inputView.height)
+        ),
         mineSize = inputView.mineSize
     )
     val minesweeperGameView = MinesweeperGameView()

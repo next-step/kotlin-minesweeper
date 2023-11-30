@@ -1,3 +1,5 @@
+import domain.FieldInfo
+import domain.Length
 import domain.MinesweeperGame
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,12 +12,14 @@ class MinesweeperTest {
         val height = 5
         val mineSize = 3
         val game = MinesweeperGame(
-            width = width,
-            height = height,
+            fieldInfo = FieldInfo(
+                width = Length(width),
+                height = Length(height)
+            ),
             mineSize = mineSize
         )
-        assertThat(width).isEqualTo(game.width)
-        assertThat(height).isEqualTo(game.height)
+        assertThat(width).isEqualTo(game.fieldInfo.width.value)
+        assertThat(height).isEqualTo(game.fieldInfo.height.value)
         assertThat(mineSize).isEqualTo(game.mineSize)
     }
 }
