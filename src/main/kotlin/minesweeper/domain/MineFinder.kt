@@ -9,7 +9,7 @@ class MineFinder(val map: Map<Position, Mine>) {
     }
 
     fun find(position: Position): Mine {
-        return map[position] ?: throw IllegalArgumentException()
+        return map[position] ?: throw IllegalArgumentException("해당하는 위치가 존재하지 않습니다.")
     }
 
     companion object {
