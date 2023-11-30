@@ -1,6 +1,9 @@
 package domain
 
-class Spot(private var status: SpotStatus = SpotStatus.CLOSED) {
+class Spot(
+    val hasMine: Boolean,
+    private var status: SpotStatus = SpotStatus.CLOSED
+) {
 
     fun isOpen(): Boolean {
         return status == SpotStatus.OPENED
@@ -10,3 +13,4 @@ class Spot(private var status: SpotStatus = SpotStatus.CLOSED) {
         status = SpotStatus.OPENED
     }
 }
+
