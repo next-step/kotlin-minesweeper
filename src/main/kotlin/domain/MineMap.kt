@@ -14,7 +14,6 @@ class MineMap(
     val height = mapInfo.point.y
     val width = mapInfo.point.x
     private val mineCount = mapInfo.mineCount
-    private var closedCount = mapInfo.point.getArea()
 
     init {
         mineMap
@@ -29,11 +28,7 @@ class MineMap(
 
     fun open(point: Point): OpenStatus {
         val spot = get(point)
-        if (spot.isOpen()) {
-            return spot.getOpenStatus()
-        }
         val openResult = spot.open()
-        closedCount -= 1
         if (openResult == OpenStatus.ZERO) {
             validPoint(point)
                 .filter { get(it).isOpen().not() }
@@ -47,7 +42,7 @@ class MineMap(
 
     fun isOpened(y: Int, x: Int): Boolean = get(Point(y, x)).isOpen()
 
-    fun isAllOpened(): Boolean = closedCount == mineCount
+    fun isAllOpened(): Boolean = mineMap.getClosedCount() == mineCount
 
     fun viewSpot(point: Point): String = get(point).viewSpot()
 

@@ -17,6 +17,15 @@ class ArrayMapTest : StringSpec({
         arrayMap.get(Point(0, 4)).hasMine.shouldBe(true)
         arrayMap.get(Point(3, 0)).hasMine.shouldBe(true)
     }
+
+    "ArrayMap에서 닫혀진 지점의 개수를 구한다" {
+        val arrayMap = fixedMap.toArrayMap()
+        arrayMap.get(Point(0, 0)).open()
+        arrayMap.get(Point(0, 1)).open()
+        arrayMap.get(Point(0, 2)).open()
+
+        arrayMap.getClosedCount().shouldBe(17)
+    }
 })
 
 fun List<String>.toArrayMap(): ArrayMap =

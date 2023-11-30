@@ -9,4 +9,6 @@ class ArrayMap(
     fun get(point: Point): Spot = list[point.y][point.x]
 
     fun flatMap(): List<Spot> = list.flatMap { it }
+
+    fun getClosedCount(): Int = flatMap().count { it.isOpen().not() }
 }
