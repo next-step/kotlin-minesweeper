@@ -2,6 +2,8 @@ package domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class MineMapTest : ShouldSpec({
@@ -80,6 +82,19 @@ class MineMapTest : ShouldSpec({
             mineMap.open(0, 0) shouldBe OpenStatus.TWO
             mineMap.open(0, 2) shouldBe OpenStatus.THREE
             mineMap.open(3, 0) shouldBe OpenStatus.ZERO
+        }
+
+        should("지뢰가 없는 칸을 오픈하면 인접한 다른 지뢰가 없는 칸이 모두 오픈된다") {
+            val mineMap = MineMap(point, mineCount, fixedMap)
+            mineMap.open(3, 0) shouldBe OpenStatus.ZERO
+            mineMap.isOpened(3, 1).shouldBeTrue()
+            mineMap.isOpened(3, 2).shouldBeTrue()
+            mineMap.isOpened(2, 0).shouldBeTrue()
+            mineMap.isOpened(2, 1).shouldBeTrue()
+            mineMap.isOpened(2, 2).shouldBeTrue()
+            mineMap.isOpened(1, 0).shouldBeFalse()
+            mineMap.isOpened(1, 1).shouldBeFalse()
+            mineMap.isOpened(1, 2).shouldBeFalse()
         }
     }
 })

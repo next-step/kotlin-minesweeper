@@ -28,15 +28,30 @@ class MineMap(
 
     fun get(point: Point): Spot = get(point.y, point.x)
 
-    fun open(point: Point): OpenStatus = get(point).open()
+    fun open(point: Point): OpenStatus {
+        val openResult = get(point).open()
+        if (openResult == OpenStatus.ZERO) {
+            validPoint(point)
+                .filter { get(it).isOpen().not() }
+                .forEach { open(it) }
+        }
 
-    fun open(y: Int, x: Int): OpenStatus = get(y, x).open()
+        return openResult
+    }
+
+    fun open(y: Int, x: Int): OpenStatus = open(Point(y, x))
+
+    fun isOpened(y: Int, x: Int): Boolean = get(y, x).isOpen()
+
+    fun isOpened(point: Point): Boolean = get(point).isOpen()
 
     private fun countNearMine(point: Point): Int =
+        validPoint(point).count { get(it).hasMine }
+
+    private fun countNearMine(y: Int, x: Int): Int = countNearMine(Point(y, x))
+
+    private fun validPoint(point: Point): List<Point> =
         delta.map { point + it }
             .filter { it.y in 0 until this.point.y }
             .filter { it.x in 0 until this.point.x }
-            .count { get(it).hasMine }
-
-    private fun countNearMine(y: Int, x: Int): Int = countNearMine(Point(y, x))
 }
