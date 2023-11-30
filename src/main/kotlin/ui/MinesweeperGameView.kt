@@ -6,18 +6,11 @@ import domain.SlotInfo
 class MinesweeperGameView {
 
     fun printField(game: MinesweeperGame) {
-        val fieldStr: String = buildString {
-            game.field.forEach { slotInfos: Array<SlotInfo> ->
-                val lineStr = buildString {
-                    slotInfos.forEach { slotInfo: SlotInfo ->
-                        append(
-                            if (slotInfo.isMineExist) "*" else "C"
-                        )
-                        append(" ")
-                    }
-                }
-                appendLine(lineStr)
-            }
+        var fieldStr = ""
+        game.field.forEach { slotInfos: Array<SlotInfo> ->
+            var lineStr = ""
+            slotInfos.forEach { lineStr += "${if (it.isMineExist) "*" else "C"} " }
+            fieldStr += "${lineStr}\n"
         }
         println(fieldStr)
     }
