@@ -11,13 +11,18 @@ class Spot(
         return status == SpotStatus.OPENED
     }
 
-    fun open(): Int {
+    fun open(): OpenStatus {
         status = SpotStatus.OPENED
-        return nearMineCount
+        return OpenStatus.from(nearMineCount, hasMine)
     }
 
     fun setNearMineCount(count: Int) {
+        check(count in VALIDATE_NEAR_MINE_COUNT)
         nearMineCount = count
+    }
+
+    companion object {
+        val VALIDATE_NEAR_MINE_COUNT = 0..8
     }
 }
 
