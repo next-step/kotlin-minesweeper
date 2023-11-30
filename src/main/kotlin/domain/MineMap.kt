@@ -1,5 +1,8 @@
 package domain
 
+import domain.status.Opened
+import domain.status.SpotStatus
+
 class MineMap(
     mapInfo: MineMapInfo,
     private val mineMap: ArrayMap = RandomMineMap.newRandomMineMap(mapInfo.point, mapInfo.mineCount)
@@ -26,10 +29,9 @@ class MineMap(
 
     fun get(point: Point): Spot = mineMap.get(point)
 
-    fun open(point: Point): OpenStatus {
-        val spot = get(point)
-        val openResult = spot.open()
-        if (openResult == OpenStatus.ZERO) {
+    fun open(point: Point): SpotStatus {
+        val openResult = get(point).open()
+        if (openResult is Opened.Zero) {
             validPoint(point)
                 .filter { get(it).isOpen().not() }
                 .forEach { open(it) }
@@ -38,7 +40,7 @@ class MineMap(
         return openResult
     }
 
-    fun open(y: Int, x: Int): OpenStatus = open(Point(y, x))
+    fun open(y: Int, x: Int): SpotStatus = open(Point(y, x))
 
     fun isOpened(y: Int, x: Int): Boolean = get(Point(y, x)).isOpen()
 

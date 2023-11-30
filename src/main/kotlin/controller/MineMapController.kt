@@ -2,7 +2,6 @@ package controller
 
 import domain.MineMap
 import domain.MineMapInfo
-import domain.OpenStatus
 import domain.Point
 import view.View
 
@@ -22,7 +21,7 @@ class MineMapController {
             val openPoint = View.inputOpenSpot()
             val openStatus = mineMap.open(openPoint)
 
-            if (openStatus == OpenStatus.MINE) {
+            if (openStatus.mineTrapped()) {
                 View.outputLoseGame()
                 return
             }

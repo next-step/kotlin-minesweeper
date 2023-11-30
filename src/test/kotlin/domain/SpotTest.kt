@@ -1,10 +1,12 @@
 package domain
 
+import domain.status.Opened
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
 class SpotTest : StringSpec({
     "Spot은 초기에 닫힌 상태이다" {
@@ -32,7 +34,7 @@ class SpotTest : StringSpec({
         Spot.VALIDATE_NEAR_MINE_COUNT.forEach { mineCount ->
             val spot = Spot(false)
             spot.setNearMineCount(mineCount)
-            spot.open().symbol shouldBe mineCount.toString()
+            spot.open().getSymbol() shouldBe mineCount.toString()
         }
     }
 
@@ -49,7 +51,7 @@ class SpotTest : StringSpec({
         Spot.VALIDATE_NEAR_MINE_COUNT.forEach { mineCount ->
             val spot = Spot(true)
             spot.setNearMineCount(mineCount)
-            spot.open() shouldBe OpenStatus.MINE
+            spot.open().shouldBeTypeOf<Opened.Mine>()
         }
     }
 })

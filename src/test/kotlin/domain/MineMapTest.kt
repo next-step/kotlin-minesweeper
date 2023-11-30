@@ -1,10 +1,12 @@
 package domain
 
+import domain.status.Opened
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
 class MineMapTest : ShouldSpec({
 
@@ -78,15 +80,15 @@ class MineMapTest : ShouldSpec({
 
         should("좌표를 입력받아 해당 지점의 Spot을 오픈한다") {
             val mineMap = MineMap(MineMapInfo(point, mineCount), fixedMap.toArrayMap())
-            mineMap.open(0, 1) shouldBe OpenStatus.MINE
-            mineMap.open(0, 0) shouldBe OpenStatus.TWO
-            mineMap.open(0, 2) shouldBe OpenStatus.THREE
-            mineMap.open(3, 0) shouldBe OpenStatus.ZERO
+            mineMap.open(0, 1).shouldBeTypeOf<Opened.Mine>()
+            mineMap.open(0, 0).shouldBeTypeOf<Opened.Two>()
+            mineMap.open(0, 2).shouldBeTypeOf<Opened.Three>()
+            mineMap.open(3, 0).shouldBeTypeOf<Opened.Zero>()
         }
 
         should("지뢰가 없는 칸을 오픈하면 인접한 다른 지뢰가 없는 칸이 모두 오픈된다") {
             val mineMap = MineMap(MineMapInfo(point, mineCount), fixedMap.toArrayMap())
-            mineMap.open(3, 0) shouldBe OpenStatus.ZERO
+            mineMap.open(3, 0).shouldBeTypeOf<Opened.Zero>()
             mineMap.isOpened(3, 1).shouldBeTrue()
             mineMap.isOpened(3, 2).shouldBeTrue()
             mineMap.isOpened(2, 0).shouldBeTrue()
