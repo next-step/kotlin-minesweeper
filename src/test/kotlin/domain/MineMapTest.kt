@@ -37,7 +37,7 @@ class MineMapTest : ShouldSpec({
             val mineMap = MineMap(point, 10)
             repeat(point.y) { y ->
                 repeat(point.x) { x ->
-                    if (mineMap.get(y, x).hasMine) {
+                    if (mineMap.get(Point(y, x)).hasMine) {
                         hasMine = true
                     } else {
                         hasNotMine = true
@@ -55,7 +55,7 @@ class MineMapTest : ShouldSpec({
             var count = 0
             repeat(point.y) { y ->
                 repeat(point.x) { x ->
-                    if (mineMap.get(y, x).hasMine) {
+                    if (mineMap.get(Point(y, x)).hasMine) {
                         count++
                     }
                 }
@@ -70,14 +70,14 @@ class MineMapTest : ShouldSpec({
         val mineCount = 3
         val fixedMap =
             listOf(
-                listOf(Spot(false), Spot(true), Spot(false)),
-                listOf(Spot(false), Spot(true), Spot(true)),
-                listOf(Spot(false), Spot(false), Spot(false)),
-                listOf(Spot(false), Spot(false), Spot(false))
+                "0 1 0",
+                "0 1 1",
+                "0 0 0",
+                "0 0 0"
             )
 
         should("좌표를 입력받아 해당 지점의 Spot을 오픈한다") {
-            val mineMap = MineMap(point, mineCount, fixedMap)
+            val mineMap = MineMap(point, mineCount, fixedMap.toArrayMap())
             mineMap.open(0, 1) shouldBe OpenStatus.MINE
             mineMap.open(0, 0) shouldBe OpenStatus.TWO
             mineMap.open(0, 2) shouldBe OpenStatus.THREE
@@ -85,7 +85,7 @@ class MineMapTest : ShouldSpec({
         }
 
         should("지뢰가 없는 칸을 오픈하면 인접한 다른 지뢰가 없는 칸이 모두 오픈된다") {
-            val mineMap = MineMap(point, mineCount, fixedMap)
+            val mineMap = MineMap(point, mineCount, fixedMap.toArrayMap())
             mineMap.open(3, 0) shouldBe OpenStatus.ZERO
             mineMap.isOpened(3, 1).shouldBeTrue()
             mineMap.isOpened(3, 2).shouldBeTrue()
@@ -98,16 +98,11 @@ class MineMapTest : ShouldSpec({
         }
 
         should("지뢰가 있는 칸을 제외한 모든 칸이 열리면 게임이 종료된다") {
-            val mineMap = MineMap(point, mineCount, fixedMap)
+            val mineMap = MineMap(point, mineCount, fixedMap.toArrayMap())
             mineMap.open(0, 0)
             mineMap.open(0, 2)
             mineMap.open(1, 0)
-            mineMap.open(2, 0)
-            mineMap.open(2, 1)
-            mineMap.open(2, 2)
             mineMap.open(3, 0)
-            mineMap.open(3, 1)
-            mineMap.open(3, 2)
             mineMap.isAllOpened().shouldBeTrue()
         }
     }
