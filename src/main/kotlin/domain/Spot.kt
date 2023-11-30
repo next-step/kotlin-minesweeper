@@ -6,7 +6,7 @@ import domain.status.SpotStatus
 
 class Spot(
     val hasMine: Boolean,
-    private var status: SpotStatus = Closed()
+    private var status: SpotStatus = Closed
 ) {
 
     private var nearMineCount: Int = 0

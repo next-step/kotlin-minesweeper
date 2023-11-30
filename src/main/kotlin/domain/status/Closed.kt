@@ -1,6 +1,6 @@
 package domain.status
 
-class Closed : SpotStatus {
+object Closed : SpotStatus {
 
     override fun getSymbol(): String = "X"
 }
