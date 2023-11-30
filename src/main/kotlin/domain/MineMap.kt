@@ -2,7 +2,7 @@ package domain
 
 class MineMap(
     val point: Point,
-    mineCount: Int = 10,
+    private val mineCount: Int,
     private val mineMap: List<List<Spot>> = RandomMineMap.newMineMap(point, mineCount)
 ) {
 
@@ -11,6 +11,8 @@ class MineMap(
         Point(0, -1), Point(0, 1),
         Point(1, -1), Point(1, 0), Point(1, 1)
     )
+
+    private var closedCount = point.getArea()
 
     init {
         require(point.y > 0)
@@ -30,6 +32,7 @@ class MineMap(
 
     fun open(point: Point): OpenStatus {
         val openResult = get(point).open()
+        closedCount -= 1
         if (openResult == OpenStatus.ZERO) {
             validPoint(point)
                 .filter { get(it).isOpen().not() }
@@ -44,6 +47,8 @@ class MineMap(
     fun isOpened(y: Int, x: Int): Boolean = get(y, x).isOpen()
 
     fun isOpened(point: Point): Boolean = get(point).isOpen()
+
+    fun isAllOpened(): Boolean = closedCount == mineCount
 
     private fun countNearMine(point: Point): Int =
         validPoint(point).count { get(it).hasMine }

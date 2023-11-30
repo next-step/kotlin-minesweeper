@@ -96,5 +96,19 @@ class MineMapTest : ShouldSpec({
             mineMap.isOpened(1, 1).shouldBeFalse()
             mineMap.isOpened(1, 2).shouldBeFalse()
         }
+
+        should("지뢰가 있는 칸을 제외한 모든 칸이 열리면 게임이 종료된다") {
+            val mineMap = MineMap(point, mineCount, fixedMap)
+            mineMap.open(0, 0)
+            mineMap.open(0, 2)
+            mineMap.open(1, 0)
+            mineMap.open(2, 0)
+            mineMap.open(2, 1)
+            mineMap.open(2, 2)
+            mineMap.open(3, 0)
+            mineMap.open(3, 1)
+            mineMap.open(3, 2)
+            mineMap.isAllOpened().shouldBeTrue()
+        }
     }
 })
