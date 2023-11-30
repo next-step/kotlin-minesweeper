@@ -1,10 +1,12 @@
 package minesweeper.domain
 
 class MineMap(
-    private val _values: MutableMap<Position, Cell> = mutableMapOf()
+    values: Map<Position, Cell> = mapOf()
 ) {
+    private val _values = values.toMutableMap()
     val values: Map<Position, Cell>
-        get() = _values
+        get() = _values.toMap()
+
     val size: Int
         get() = _values.keys.size
 

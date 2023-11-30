@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -55,5 +56,36 @@ class MineMapTest {
         assertThrows<IllegalArgumentException> { // then
             mineMap.getCell(Position(1, 1)) // when
         }
+    }
+
+
+
+    @Test
+    fun `방어적 복사를 통해 외부 수정으로 인한 내부 상태 볁경이 발생하지 않는지 확인`() {
+        // given
+        val mutableMap = mutableMapOf(
+            Position(1, 1) to Cell(CellState.MINE),
+            Position(2, 2) to Cell(CellState.EMPTY),
+            Position(3, 3) to Cell(CellState.MINE)
+        )
+        val mineMap = MineMap(mutableMap)
+
+        assertAll(
+            { assertEquals("*", mineMap.getCell(Position(1, 1)).getStateSymbol()) },
+            { assertEquals("C", mineMap.getCell(Position(2, 2)).getStateSymbol()) },
+            { assertEquals("*", mineMap.getCell(Position(3, 3)).getStateSymbol()) },
+            { assertEquals(3, mineMap.size) }
+        )
+
+        // when
+        mutableMap.clear()
+
+        // then
+        assertAll(
+            { assertEquals("*", mineMap.getCell(Position(1, 1)).getStateSymbol()) },
+            { assertEquals("C", mineMap.getCell(Position(2, 2)).getStateSymbol()) },
+            { assertEquals("*", mineMap.getCell(Position(3, 3)).getStateSymbol()) },
+            { assertEquals(3, mineMap.size) }
+        )
     }
 }
