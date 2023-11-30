@@ -9,4 +9,15 @@ class MineMapTest : StringSpec({
         mineMap.height shouldBe 10
         mineMap.width shouldBe 10
     }
+
+    "MineMap은 지뢰가 있다" {
+        val height = 10
+        val width = 10
+        val mineMap = MineMap(height, width)
+        repeat(height) { y ->
+            repeat(width) { x ->
+                mineMap.get(x, y).hasMine shouldBe true
+            }
+        }
+    }
 })
