@@ -3,6 +3,7 @@ package domain
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 
 class SpotTest : StringSpec({
     "Spot은 초기에 닫힌 상태이다" {
@@ -24,5 +25,13 @@ class SpotTest : StringSpec({
     "지뢰가 없는 Spot을 생성하면 지뢰가 없다" {
         val spot = Spot(false)
         spot.hasMine.shouldBeFalse()
+    }
+
+    "지뢰가 없는 Spot이 열리면 주위 지뢰 수가 표시된다" {
+        (0..8).toList().forEach { mineCount ->
+            val spot = Spot(false)
+            spot.setNearMineCount(mineCount)
+            spot.open() shouldBe mineCount
+        }
     }
 })
