@@ -8,35 +8,34 @@ class MineMapTest : ShouldSpec({
 
     should("1보다 작은 높이와 너비를 입력하면 에러가 발생한다") {
         shouldThrow<IllegalArgumentException> {
-            MineMap(1, 0, 0)
+            MineMap(Point(1, 0), 0)
         }
         shouldThrow<IllegalArgumentException> {
-            MineMap(0, 1, 0)
+            MineMap(Point(0, 1), 0)
         }
     }
 
     should("맵의 칸보다 더 많은 수의 지뢰를 입력하면 에러가 발생한다") {
         shouldThrow<IllegalArgumentException> {
-            MineMap(2, 2, 5)
+            MineMap(Point(2, 2), 5)
         }
     }
 
     context("10 X 10 map") {
-        val height = 10
-        val width = 10
+        val point = Point(10, 10)
         should("MineMap은 높이와 너비를 가진다") {
-            val mineMap = MineMap(height, width, 10)
-            mineMap.height shouldBe 10
-            mineMap.width shouldBe 10
+            val mineMap = MineMap(point, 10)
+            mineMap.point.y shouldBe 10
+            mineMap.point.x shouldBe 10
         }
 
         should("MineMap은 지뢰가 있는 지점이 있고, 없는 지점도 있다") {
             var hasMine = false
             var hasNotMine = false
-            val mineMap = MineMap(height, width, 10)
-            repeat(height) { y ->
-                repeat(width) { x ->
-                    if (mineMap.get(x, y).hasMine) {
+            val mineMap = MineMap(point, 10)
+            repeat(point.y) { y ->
+                repeat(point.x) { x ->
+                    if (mineMap.get(y, x).hasMine) {
                         hasMine = true
                     } else {
                         hasNotMine = true
@@ -50,17 +49,37 @@ class MineMapTest : ShouldSpec({
 
         should("MineMap에 지뢰 개수를 입력하면 입력한 수만큼의 지뢰가 있다") {
             val mineCount = 10
-            val mineMap = MineMap(height, width, mineCount)
+            val mineMap = MineMap(point, mineCount)
             var count = 0
-            repeat(height) { y ->
-                repeat(width) { x ->
-                    if (mineMap.get(x, y).hasMine) {
+            repeat(point.y) { y ->
+                repeat(point.x) { x ->
+                    if (mineMap.get(y, x).hasMine) {
                         count++
                     }
                 }
             }
 
             count shouldBe mineCount
+        }
+    }
+
+    context("고정된 맵을 생성 및 주입") {
+        val point = Point(4, 3)
+        val mineCount = 3
+        val fixedMap =
+            listOf(
+                listOf(Spot(false), Spot(true), Spot(false)),
+                listOf(Spot(false), Spot(true), Spot(true)),
+                listOf(Spot(false), Spot(false), Spot(false)),
+                listOf(Spot(false), Spot(false), Spot(false))
+            )
+
+        should("좌표를 입력받아 해당 지점의 Spot을 오픈한다") {
+            val mineMap = MineMap(point, mineCount, fixedMap)
+            mineMap.open(0, 1) shouldBe OpenStatus.MINE
+            mineMap.open(0, 0) shouldBe OpenStatus.TWO
+            mineMap.open(0, 2) shouldBe OpenStatus.THREE
+            mineMap.open(3, 0) shouldBe OpenStatus.ZERO
         }
     }
 })

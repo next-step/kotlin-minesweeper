@@ -1,28 +1,42 @@
 package domain
 
-import kotlin.random.Random
-
 class MineMap(
-    val height: Int,
-    val width: Int,
-    mineCount: Int = 10
+    val point: Point,
+    mineCount: Int = 10,
+    private val mineMap: List<List<Spot>> = RandomMineMap.newMineMap(point, mineCount)
 ) {
 
-    private val mineMap: List<List<Spot>> =
-        (initialList(mineCount, true) + initialList(height * width - mineCount, false))
-            .shuffled()
-            .chunked(width)
+    private val delta = listOf(
+        Point(-1, -1), Point(-1, 0), Point(-1, 1),
+        Point(0, -1), Point(0, 1),
+        Point(1, -1), Point(1, 0), Point(1, 1)
+    )
 
     init {
-        require(height > 0)
-        require(width > 0)
-        require(mineCount in 0 until height * width)
+        require(point.y > 0)
+        require(point.x > 0)
+        require(mineCount in 0 until point.getArea())
+
+        repeat(point.y) { y ->
+            repeat(point.x) { x ->
+                get(y, x).setNearMineCount(countNearMine(y, x))
+            }
+        }
     }
 
-    fun get(x: Int, y: Int): Spot {
-        return mineMap[y][x]
-    }
+    fun get(y: Int, x: Int): Spot = mineMap[y][x]
 
-    private fun initialList(size: Int, isMine: Boolean): List<Spot> =
-        List(size) { Spot(isMine) }
+    fun get(point: Point): Spot = get(point.y, point.x)
+
+    fun open(point: Point): OpenStatus = get(point).open()
+
+    fun open(y: Int, x: Int): OpenStatus = get(y, x).open()
+
+    private fun countNearMine(point: Point): Int =
+        delta.map { point + it }
+            .filter { it.y in 0 until this.point.y }
+            .filter { it.x in 0 until this.point.x }
+            .count { get(it).hasMine }
+
+    private fun countNearMine(y: Int, x: Int): Int = countNearMine(Point(y, x))
 }
