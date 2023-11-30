@@ -13,9 +13,9 @@ fun main() {
     val width = inputWidth()
     val mineNum = inputMineNum()
 
-    val field = Field(height, width)
+    val field = Field(width = width, height = height)
 
-    val selector = RandomPositionSelector(width, height)
+    val selector = RandomPositionSelector(width = width, height = height)
     repeat(mineNum) {
         field.setMine(selector)
     }

@@ -27,7 +27,7 @@ class Field(width: Int, height: Int) {
     }
 
     private fun cellOf(position: Position): Cell {
-        return cells[position.x][position.y]
+        return cells[position.y][position.x]
     }
 
     fun isMine(position: Position): Boolean {
