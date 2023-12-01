@@ -1,8 +1,11 @@
+import minesweeper.BoardDimensions
+import minesweeper.CharBoard
 import minesweeper.GameBoard
 import minesweeper.Height
 import minesweeper.MineCount
 import minesweeper.MineGenerator
 import minesweeper.MinesweeperBoard
+import minesweeper.NumberBoard
 import minesweeper.RandomPosition
 import minesweeper.Width
 import view.Input
@@ -18,10 +21,14 @@ fun main() {
     Output.printMinesMessage()
     val mineCount: MineCount = MineCount(Input.getLine())
 
-    val gameBoard = GameBoard(height, width)
-    val mines = MineGenerator(mineCount, RandomPosition(gameBoard)).generate()
-    val minesweeperBoard = MinesweeperBoard(gameBoard, mines)
+    val dimensions = BoardDimensions(height, width)
+
+    val mines = MineGenerator(mineCount, RandomPosition(dimensions)).generate()
+    val numberBoard = NumberBoard(dimensions)
+    val charBoard = CharBoard(dimensions)
+
+    val minesweeperBoard = MinesweeperBoard(numberBoard, mines)
 
     Output.printStartMessage()
-    Output.printMinesweeperBoard(minesweeperBoard)
+    Output.printBoard(minesweeperBoard.render())
 }

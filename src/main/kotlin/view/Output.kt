@@ -26,14 +26,10 @@ object Output {
         println(OUTPUT_START_MINESWEEPER)
     }
 
-    fun printMinesweeperBoard(minesweeperBoard: MinesweeperBoard) {
-        println(fillingBoard(minesweeperBoard))
+    fun printBoard(board: Array<Array<String>>) {
+        val result = board.joinToString("\n") {
+            it.joinToString(" ")
+        }
+        println(result)
     }
-
-    private fun fillingBoard(minesweeperBoard: MinesweeperBoard): String =
-        minesweeperBoard.calculateAdjacentMineCounts()
-            .joinToString("\n") { fillingCell(it) }
-
-    private fun fillingCell(row: Array<Int>) =
-        row.joinToString(" ") { if (it < 0) MINE else it.toString() }
 }

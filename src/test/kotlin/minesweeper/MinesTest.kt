@@ -12,13 +12,11 @@ class MinesTest: BehaviorSpec({
             Position(0, 1)
         )
         When("2차원 정수 배열 게임판을 받는다면") {
-            val intBoard = arrayOf(
-                arrayOf(0,0,0),
-                arrayOf(0,0,0),
-                arrayOf(0,0,0)
-            )
+            val height = Height(3)
+            val width = Width(3)
+            val dimensions = BoardDimensions(height, width)
             Then("지뢰 위치를 표시하고 주변 셀들의 숫자를 증가시킨다.") {
-                Mines(mines).nearIncrementCellNumber(intBoard) shouldBe arrayOf(
+                Mines(mines).increaseNearCellNumbers(NumberBoard(dimensions)) shouldBe arrayOf(
                     arrayOf(-1,-1,2),
                     arrayOf(3,-1,2),
                     arrayOf(1,1,1)

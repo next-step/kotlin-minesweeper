@@ -1,14 +1,10 @@
 package minesweeper
 
-data class GameBoard(
-    val height: Height,
-    val width: Width
-) {
+interface GameBoard {
 
-    fun toIntBoard(): Array<Array<Int>> =
-        Array(height.value) { Array(width.value) { INIT_CELL } }
+     fun render(mines: Mines): Array<Array<String>>
 
-    companion object {
-        private const val INIT_CELL = 0
-    }
+     companion object {
+         const val MINE = "*"
+     }
 }
