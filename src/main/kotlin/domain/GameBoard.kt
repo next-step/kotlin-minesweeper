@@ -1,25 +1,20 @@
 package domain
 
 import enum.CellStatus
-import inteface.MineCounter
-import inteface.MinePlacementStrategy
-import inteface.MinePlacer
 
 class GameBoard(
     val height: Int,
     val width: Int,
-    private val minePlacementStrategy: MinePlacementStrategy,
-    private val minePlacer: MinePlacer,
-    private val mineCounter: MineCounter
+    private val mineManager: MineManager
 ) {
-    private val board = Board(height, width, minePlacer, mineCounter)
+    private val board = Board(height, width, mineManager.minePlacer, mineManager.mineCounter)
 
     fun initializeBoard(mineCount: Int) {
         board.initializeBoard(mineCount)
     }
 
     fun placeMines(mineCount: Int) {
-        val minePositions = minePlacementStrategy.placeMines(height, width, mineCount)
+        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
         minePositions.forEach { board.placeMineAt(it) }
     }
 
@@ -32,7 +27,7 @@ class GameBoard(
     }
 
     fun countMinesAround(position: Position): Int {
-        return mineCounter.countMinesAround(board, position)
+        return mineManager.mineCounter.countMinesAround(board, position)
     }
 
     private fun processRow(row: Int, onEachCell: (Position, CellStatus) -> Unit) {
