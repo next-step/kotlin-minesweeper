@@ -57,8 +57,8 @@ class Cells(cells: List<Cell>) {
         point.aroundPoints().filter(::containsPoint).filter(::isClose).forEach(::open)
 
     companion object {
-        fun of(minePoints: List<Point>, allPoints: List<Point>): Cells = Cells(
-            allPoints.map { point -> if (minePoints.contains(point)) Cell.mine(point) else Cell.empty(point) }.toList()
+        fun of(minePoints: Points, allPoints: Points): Cells = Cells(
+            allPoints.exclude(minePoints).toNonMineCells() + minePoints.toMineCells()
         )
     }
 }
