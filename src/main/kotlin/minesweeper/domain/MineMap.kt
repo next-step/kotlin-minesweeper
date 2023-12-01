@@ -5,7 +5,7 @@ class MineMap(
     emptyPositions: Positions
 ) {
     private val values: Map<Position, Cell> =
-        minePositions.associateWith { Mine() } + emptyPositions.associateWith { Empty() }
+        minePositions.getValues().associateWith { Mine() } + emptyPositions.getValues().associateWith { Empty() }
 
     val size: Int
         get() = values.keys.size

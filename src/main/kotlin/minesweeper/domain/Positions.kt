@@ -2,8 +2,13 @@ package minesweeper.domain
 
 class Positions(
     private val positions: Set<Position> = emptySet()
-) : Set<Position> by positions {
-    infix fun containSamePosition(otherPositions: Positions): Boolean = positions.intersect(otherPositions).isNotEmpty()
+) {
+    val size
+        get() = positions.size
+
+    fun getValues(): Set<Position> = positions
+
+    infix fun containSamePosition(otherPositions: Positions): Boolean = positions.intersect(otherPositions.getValues()).isNotEmpty()
 
     operator fun plus(position: Position): Positions = Positions(this.positions + position)
     operator fun plus(positions: Positions): Positions = Positions(this.positions + positions.positions)
