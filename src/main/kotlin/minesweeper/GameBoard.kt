@@ -1,10 +1,10 @@
 package minesweeper
 
-data class GameBoard(
-    val height: Height,
-    val width: Width
-) {
+interface GameBoard {
 
-    fun toBooleanBoard(): Array<Array<Boolean>> =
-        Array(height.value) { Array(width.value) { false } }
+     fun render(mines: Mines): Array<Array<String>>
+
+     companion object {
+         const val MINE = "*"
+     }
 }
