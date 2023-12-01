@@ -14,7 +14,7 @@ class Cells(cells: List<Cell>) {
 
     init {
         _cells.map {
-            if (it.isMine() && !it.isOpen()) {
+            if (it.isMineAndNotOpen()) {
                 _cells[_cells.indexOf(it)] = it.open()
                 addAroundMineCount(it.point)
             }

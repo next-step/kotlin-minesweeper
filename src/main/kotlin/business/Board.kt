@@ -6,13 +6,9 @@ class Board(cells: Cells) {
         get() = Cells(_cells.cells)
 
     fun open(point: Point): GameStatus {
-        if (isMine(point)) {
-            return GameStatus.GAME_OVER
-        }
+        if (isMine(point)) return GameStatus.GAME_OVER
         _cells.open(point)
-        if (_cells.isAllOpen()) {
-            return GameStatus.WIN
-        }
+        if (_cells.isAllOpen()) return GameStatus.WIN
         return GameStatus.CONTINUE
     }
 
