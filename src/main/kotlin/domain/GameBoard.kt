@@ -7,10 +7,11 @@ class GameBoard(
     val width: Int,
     private val mineManager: MineManager
 ) {
-    private val board = Board(height, width, mineManager.minePlacer, mineManager.mineCounter)
+    private val board = Board(mineManager)
 
     fun initializeBoard(mineCount: Int) {
-        board.initializeBoard(mineCount)
+        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
+        board.initializeBoard(minePositions)
     }
 
     fun placeMines(mineCount: Int) {

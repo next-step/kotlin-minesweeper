@@ -1,22 +1,14 @@
 package domain
 
-import inteface.MineCounter
-import inteface.MinePlacer
-
 class Board(
-    val height: Int,
-    val width: Int,
-    private val minePlacer: MinePlacer,
-    private val mineCounter: MineCounter
+    private val mineManager: MineManager
 ) {
-    private val cells: List<Cell> = List(height * width) { index ->
-        Cell(Position(index % width, index / width))
-    }
+    private lateinit var cells: List<Cell>
 
-    fun initializeBoard(mineCount: Int) {
-        minePlacer.placeMines(this, mineCount)
+    fun initializeBoard(minePositions: List<Position>) {
+        mineManager.minePlacer.placeMines(this, minePositions)
         cells.forEach { cell ->
-            cell.adjacentMines = mineCounter.countMinesAround(this, cell.position)
+            cell.adjacentMines = mineManager.mineCounter.countMinesAround(this, cell.position)
         }
     }
 
