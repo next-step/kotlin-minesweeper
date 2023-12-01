@@ -22,7 +22,7 @@ class MineMap(
                         createNear(this, mine, mineMapInfo.rowCnt, mineMapInfo.colCnt)
                     }
                 },
-                MapSize(mineMapInfo.rowNum, mineMapInfo.colNum)
+                mineMapInfo.mapSize
             )
         }
 

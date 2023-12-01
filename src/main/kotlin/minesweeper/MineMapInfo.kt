@@ -1,8 +1,10 @@
 package minesweeper
 
-data class MineMapInfo(val rowNum: LineCount, val colNum: LineCount, private val mineNum: MineCount) {
-    val rowCnt = rowNum.count
-    val colCnt = colNum.count
+data class MineMapInfo(val mapSize: MapSize, private val mineNum: MineCount) {
+    constructor(row: LineCount, col: LineCount, mineNum: MineCount) : this(MapSize(row, col), mineNum)
+
+    val rowCnt = mapSize.row.count
+    val colCnt = mapSize.column.count
     val mineCnt = mineNum.count
 
     val total = rowCnt * colCnt
