@@ -115,16 +115,8 @@ class CellsTest {
         val expectedNotOpenedPoints = listOf(
             Point(5, 3),
         )
-        expectedNotOpenedPoints.forEach {
-            cells.isOpen(it) shouldBe false
-        }
-        for (x in 0..5) {
-            for (y in 0..3) {
-                if (Point(x, y) !in expectedNotOpenedPoints) {
-                    cells.isOpen(Point(x, y)) shouldBe true
-                }
-            }
-        }
+        expectedNotOpenedPoints.forEach { cells.isOpen(it) shouldBe false }
+        cells.cells.forEach { if (it.point !in expectedNotOpenedPoints) cells.isOpen(it.point) shouldBe true }
     }
 
     @Test
@@ -192,9 +184,7 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.processEachCell(
-            { cell -> result.add("${cell.isOpen()}, ${cell.aroundMineCount}") }
-        ) { }
+        cells.processEachCell({ result.add("${it.isOpen()}, ${it.aroundMineCount}") }) { }
 
         // then
         result shouldBe listOf(
@@ -224,9 +214,7 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.processEachCell(
-            { cell -> result.add("${cell.isMine()}, ${cell.aroundMineCount}") }
-        ) { }
+        cells.processEachCell({ result.add("${it.isMine()}, ${it.aroundMineCount}") }) { }
 
         // then
         result shouldBe listOf(

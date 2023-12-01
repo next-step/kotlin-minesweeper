@@ -16,7 +16,5 @@ data class Cell(
     companion object {
         private const val INIT_VALUE = 0
         private const val ADD_VALUE = 1
-        fun mine(point: Point): Cell = Cell(CellStatus.MINE, point = point)
-        fun empty(point: Point): Cell = Cell(point = point)
     }
 }
