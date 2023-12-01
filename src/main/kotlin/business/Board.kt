@@ -16,9 +16,6 @@ class Board(cells: Cells) {
         return GameStatus.CONTINUE
     }
 
-    fun isOpen(point: Point): Boolean = _cells.isOpen(point)
-    fun countMines(point: Point): Any = _cells.countMines(point)
-
     companion object {
         const val SAFE_MINE_COUNT = 0
 
