@@ -13,43 +13,29 @@ object TestFixture {
      *  5    | C | C | * | C |
      */
     fun testCells() = Cells(
-        listOf(
-            RowCells(
-                Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE),
-                Cell(CellStatus.MINE),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            RowCells(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            RowCells(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            RowCells(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY)
-            ),
-            RowCells(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.MINE)
-            ),
-            RowCells(
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.EMPTY),
-                Cell(CellStatus.MINE),
-                Cell(CellStatus.EMPTY),
-            ),
-        )
+        Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE, point = Point(0, 0)),
+        Cell(CellStatus.MINE, point = Point(0, 1)),
+        Cell(CellStatus.EMPTY, point = Point(0, 2)),
+        Cell(CellStatus.EMPTY, point = Point(0, 3)),
+        Cell(CellStatus.EMPTY, point = Point(1, 0)),
+        Cell(CellStatus.EMPTY, point = Point(1, 1)),
+        Cell(CellStatus.EMPTY, point = Point(1, 2)),
+        Cell(CellStatus.EMPTY, point = Point(1, 3)),
+        Cell(CellStatus.EMPTY, point = Point(2, 0)),
+        Cell(CellStatus.EMPTY, point = Point(2, 1)),
+        Cell(CellStatus.EMPTY, point = Point(2, 2)),
+        Cell(CellStatus.EMPTY, point = Point(2, 3)),
+        Cell(CellStatus.EMPTY, point = Point(3, 0)),
+        Cell(CellStatus.EMPTY, point = Point(3, 1)),
+        Cell(CellStatus.EMPTY, point = Point(3, 2)),
+        Cell(CellStatus.EMPTY, point = Point(3, 3)),
+        Cell(CellStatus.EMPTY, point = Point(4, 0)),
+        Cell(CellStatus.EMPTY, point = Point(4, 1)),
+        Cell(CellStatus.EMPTY, point = Point(4, 2)),
+        Cell(CellStatus.MINE, point = Point(4, 3)),
+        Cell(CellStatus.EMPTY, point = Point(5, 0)),
+        Cell(CellStatus.EMPTY, point = Point(5, 1)),
+        Cell(CellStatus.MINE, point = Point(5, 2)),
+        Cell(CellStatus.EMPTY, point = Point(5, 3)),
     )
 }

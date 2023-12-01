@@ -59,7 +59,7 @@ class CellsTest {
         val cells = testCells()
 
         // when
-        val result = cells.isOpen(Point(0, 1))
+        val result = cells.isOpen(Point(0, 2))
 
         // then
         result shouldBe false
@@ -113,9 +113,6 @@ class CellsTest {
 
         // then
         val expectedNotOpenedPoints = listOf(
-            Point(0, 1),
-            Point(4, 3),
-            Point(5, 2),
             Point(5, 3),
         )
         expectedNotOpenedPoints.forEach {
@@ -195,19 +192,18 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.processEachCellAndPoint(
-            { cell, point -> result.add("${cell.isOpen()}, ${cells.countMines(point)}") },
-            { }
-        )
+        cells.processEachCell(
+            { cell -> result.add("${cell.isOpen()}, ${cell.aroundMineCount}") }
+        ) { }
 
         // then
         result shouldBe listOf(
-            "true, 1", "false, 0", "false, 1", "false, 0",
+            "true, 1", "true, 0", "false, 1", "false, 0",
             "false, 1", "false, 1", "false, 1", "false, 0",
             "false, 0", "false, 0", "false, 0", "false, 0",
             "false, 0", "false, 0", "false, 1", "false, 1",
-            "false, 0", "false, 1", "false, 2", "false, 1",
-            "false, 0", "false, 1", "false, 1", "false, 2",
+            "false, 0", "false, 1", "false, 2", "true, 1",
+            "false, 0", "false, 1", "true, 1", "false, 2",
         )
     }
 
@@ -228,10 +224,9 @@ class CellsTest {
         val result = mutableListOf<String>()
 
         // when
-        cells.processEachCellAndPoint(
-            { cell, point -> result.add("${cell.isMine()}, ${cells.countMines(point)}") },
-            { }
-        )
+        cells.processEachCell(
+            { cell -> result.add("${cell.isMine()}, ${cell.aroundMineCount}") }
+        ) { }
 
         // then
         result shouldBe listOf(

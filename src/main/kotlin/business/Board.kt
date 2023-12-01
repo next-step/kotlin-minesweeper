@@ -5,7 +5,6 @@ class Board(cells: Cells) {
     val cells: Cells
         get() = Cells(_cells.cells)
 
-    fun isMine(point: Point): Boolean = _cells.isMine(point)
     fun open(point: Point): GameStatus {
         if (isMine(point)) {
             return GameStatus.GAME_OVER
@@ -17,10 +16,12 @@ class Board(cells: Cells) {
         return GameStatus.CONTINUE
     }
 
+    fun isMine(point: Point): Boolean = _cells.isMine(point)
+
     companion object {
         const val SAFE_MINE_COUNT = 0
 
         fun of(boardInfo: BoardInfo, minePointGenerator: MinePointGenerator): Board =
-            Board(Cells.of(boardInfo, minePointGenerator.generate(boardInfo)))
+            Board(Cells.of(minePointGenerator.generate(boardInfo), boardInfo.getAllPoints()))
     }
 }

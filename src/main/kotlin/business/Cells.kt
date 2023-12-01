@@ -1,61 +1,64 @@
 package business
 
-class Cells(cells: List<RowCells>) {
-    private val _cells: MutableList<RowCells> = cells.toMutableList()
-    private operator fun get(point: Point): Cell = _cells[point.x][point.y]
-    private operator fun set(index: Int, rowCells: RowCells) {
-        _cells[index] = rowCells
-    }
+class Cells(cells: List<Cell>) {
+    constructor(vararg cells: Cell) : this(cells.toList())
 
-    val cells: List<RowCells>
+    private val _cells: MutableList<Cell> = cells.toMutableList()
+    private val heights: IntRange =
+        _cells.map(Cell::point).map(Point::x).distinct().sorted().let { it.first()..it.last() }
+    private val widths: IntRange =
+        _cells.map(Cell::point).map(Point::y).distinct().sorted().let { it.first()..it.last() }
+
+    val cells: List<Cell>
         get() = _cells.toList()
 
     init {
-        _cells.forEachIndexed { x: Int, rowCells: RowCells ->
-            rowCells.forEachIndexed { y: Int, cell: Cell ->
-                if (cell.isMine()) addAroundMineCount(Point(x, y))
+        _cells.map {
+            if (it.isMine() && !it.isOpen()) {
+                _cells[_cells.indexOf(it)] = it.open()
+                addAroundMineCount(it.point)
             }
         }
     }
 
-    private fun addAroundMineCount(point: Point) {
-        point.aroundPoints()
-            .filter { isValidPoint(it) }
-            .forEach { _cells[it.x] = _cells[it.x].addAroundMineCount(it.y) }
-    }
+    fun isMine(point: Point): Boolean = getCell(point).isMine()
+    fun isOpen(point: Point): Boolean = getCell(point).isOpen()
+    fun countMines(point: Point): Int = getCell(point).aroundMineCount
+    fun isAllOpen(): Boolean = _cells.all(Cell::isClear)
 
-    fun isMine(point: Point): Boolean = this[point].isMine()
-    fun isOpen(point: Point): Boolean = this[point].isOpen()
-
-    fun open(point: Point) {
-        _cells[point.x] = _cells[point.x].open(point.y)
-        if (isSafePoint(point)) openAround(point)
-    }
-
-    fun countMines(point: Point): Int = _cells[point.x][point.y].aroundMineCount
-    fun isAllOpen(): Boolean = _cells.all(RowCells::isAllOpen)
-
-    private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
-
-    private fun openAround(point: Point) = point.aroundPoints()
-        .filter { isValidPoint(it) }
-        .filter { !isOpen(it) }
-        .forEach { open(it) }
-
-    private fun isValidPoint(point: Point): Boolean =
-        point.x in _cells.indices && point.y in _cells[FIRST_INDEX].indices
-
-    fun processEachCellAndPoint(action: (Cell, Point) -> Unit, rowAction: () -> Unit) {
-        _cells.forEachIndexed { x: Int, row: RowCells ->
-            row.processEachCellAndPoint(x, action)
+    fun processEachCell(action: (Cell) -> Unit, rowAction: () -> Unit) {
+        heights.forEach { height ->
+            widths.forEach { width ->
+                val point = Point(height, width)
+                action(getCell(point))
+            }
             rowAction()
         }
     }
 
-    companion object {
-        const val FIRST_INDEX = 0
+    fun open(point: Point) {
+        val element = getCell(point)
+        _cells.remove(element)
+        _cells.add(element.open())
+        if (isSafePoint(point)) openAround(point)
+    }
 
-        fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells =
-            Cells(List(boardInfo.height) { x -> RowCells.of(boardInfo.width, x, minePoints) })
+    private fun getCell(point: Point): Cell = _cells.first { it.point == point }
+    private fun containsPoint(point: Point) = _cells.any { cell: Cell -> cell.point == point }
+    private fun isClose(point: Point): Boolean = !isOpen(point)
+    private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
+
+    private fun addAroundMineCount(point: Point) {
+        point.aroundPoints().filter(::containsPoint)
+            .forEach { _cells[_cells.indexOf(getCell(it))] = getCell(it).addAroundMineCount() }
+    }
+
+    private fun openAround(point: Point) =
+        point.aroundPoints().filter(::containsPoint).filter(::isClose).forEach(::open)
+
+    companion object {
+        fun of(minePoints: List<Point>, allPoints: List<Point>): Cells = Cells(
+            allPoints.map { point -> if (minePoints.contains(point)) Cell.mine(point) else Cell.empty(point) }.toList()
+        )
     }
 }

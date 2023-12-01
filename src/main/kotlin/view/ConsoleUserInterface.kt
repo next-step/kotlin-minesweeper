@@ -24,9 +24,11 @@ class ConsoleUserInterface : UserInterface {
         return Point(height, width)
     }
 
-    override fun displayOpenResult(board: Board) = board.cells.processEachCellAndPoint(
-        { cell: Cell, point: Point ->
-            if (cell.isOpen()) print(board.cells.countMines(point).toString() + MINEFIELD_SEPARATOR)
+    override fun displayOpenResult(board: Board) = board.cells.processEachCell(
+        { cell: Cell ->
+            if (cell.isOpen() && !cell.isMine()) print(
+                board.cells.countMines(cell.point).toString() + MINEFIELD_SEPARATOR
+            )
             else print(NOT_OPENED_DELIMITER + MINEFIELD_SEPARATOR)
         },
     ) { println() }
@@ -34,10 +36,10 @@ class ConsoleUserInterface : UserInterface {
     override fun printWin() = println(GAME_WIN_MESSAGE)
 
     override fun displayGameOver(board: Board) {
-        board.cells.processEachCellAndPoint(
-            { cell: Cell, point: Point ->
+        board.cells.processEachCell(
+            { cell: Cell ->
                 if (cell.isMine()) print(MINE_DELIMITER + MINEFIELD_SEPARATOR)
-                else print(board.cells.countMines(point).toString() + MINEFIELD_SEPARATOR)
+                else print(board.cells.countMines(cell.point).toString() + MINEFIELD_SEPARATOR)
             },
         ) { println() }
         println(GAME_OVER_MESSAGE)
