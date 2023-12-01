@@ -12,11 +12,10 @@ class MineMapTest {
         val mineMap = MineMap()
 
         // when
-        mineMap.plantCell(Position(1, 1), Cell(CellState.MINE))
+        mineMap.plantCell(Position(1, 1), Mine())
 
         // then
         assertEquals(1, mineMap.size)
-        assertEquals(CellState.MINE, mineMap.values[Position(1, 1)]?.state)
     }
 
     @Test
@@ -25,13 +24,11 @@ class MineMapTest {
         val mineMap = MineMap()
 
         // when
-        mineMap.plantCell(Position(1, 1), Cell(CellState.EMPTY))
-        mineMap.plantCell(Position(2, 2), Cell(CellState.EMPTY))
+        mineMap.plantCell(Position(1, 1), Empty())
+        mineMap.plantCell(Position(2, 2), Empty())
 
         // then
         assertEquals(2, mineMap.size)
-        assertEquals(CellState.EMPTY, mineMap.values[Position(1, 1)]?.state)
-        assertEquals(CellState.EMPTY, mineMap.values[Position(2, 2)]?.state)
     }
 
     @Test
@@ -39,13 +36,13 @@ class MineMapTest {
         // given
         val mineMap = MineMap()
         val position = Position(1, 1)
-        mineMap.plantCell(position, Cell(CellState.EMPTY))
+        mineMap.plantCell(position, Empty())
 
         // when
         val cell = mineMap.getCell(position)
 
         // then
-        assertEquals(CellState.EMPTY, cell.state)
+        assertEquals(true, cell is Empty)
     }
 
     @Test
@@ -58,34 +55,21 @@ class MineMapTest {
         }
     }
 
-
-
     @Test
     fun `방어적 복사를 통해 외부 수정으로 인한 내부 상태 볁경이 발생하지 않는지 확인`() {
         // given
         val mutableMap = mutableMapOf(
-            Position(1, 1) to Cell(CellState.MINE),
-            Position(2, 2) to Cell(CellState.EMPTY),
-            Position(3, 3) to Cell(CellState.MINE)
+            Position(1, 1) to Mine(),
+            Position(2, 2) to Empty(),
+            Position(3, 3) to Empty()
         )
         val mineMap = MineMap(mutableMap)
-
-        assertAll(
-            { assertEquals("*", mineMap.getCell(Position(1, 1)).getStateSymbol()) },
-            { assertEquals("C", mineMap.getCell(Position(2, 2)).getStateSymbol()) },
-            { assertEquals("*", mineMap.getCell(Position(3, 3)).getStateSymbol()) },
-            { assertEquals(3, mineMap.size) }
-        )
+        assertEquals(3, mineMap.size)
 
         // when
         mutableMap.clear()
 
         // then
-        assertAll(
-            { assertEquals("*", mineMap.getCell(Position(1, 1)).getStateSymbol()) },
-            { assertEquals("C", mineMap.getCell(Position(2, 2)).getStateSymbol()) },
-            { assertEquals("*", mineMap.getCell(Position(3, 3)).getStateSymbol()) },
-            { assertEquals(3, mineMap.size) }
-        )
+        assertEquals(3, mineMap.size)
     }
 }

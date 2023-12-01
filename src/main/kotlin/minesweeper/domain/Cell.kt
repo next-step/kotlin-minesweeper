@@ -1,9 +1,7 @@
 package minesweeper.domain
 
-data class Cell(
-    val state: CellState
-)
+sealed interface Cell
 
-fun Cell.getStateSymbol(): String {
-    return this.state.symbol
-}
+data class Mine(val mineCount: Int = 0) : Cell
+data class Empty(val mineCount: Int = 0) : Cell
+

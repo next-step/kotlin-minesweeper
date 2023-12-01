@@ -1,11 +1,15 @@
 package minesweeper.view
 
+import minesweeper.domain.Empty
+import minesweeper.domain.Mine
 import minesweeper.domain.MineMap
 import minesweeper.domain.MineMapMeta
 import minesweeper.domain.Position
-import minesweeper.domain.getStateSymbol
 
 object OutputView {
+    private const val MINE_CHAR= "*"
+    private const val EMPTY_CHAR= "C"
+
     fun printGameStartMsg() {
         println("\n지뢰 찾기 게임 시작")
     }
@@ -18,7 +22,11 @@ object OutputView {
 
     private fun printRowCells(mineMapMeta: MineMapMeta, mineMap: MineMap, row: Int) {
         for (col in 1 until mineMapMeta.width + 1) {
-            print(mineMap.getCell(Position(row, col)).getStateSymbol() + " ")
+            val cell = mineMap.getCell(Position(row, col))
+            when (cell) {
+                is Mine -> print("$MINE_CHAR ")
+                is Empty -> print("$EMPTY_CHAR ")
+            }
         }
         println()
     }
