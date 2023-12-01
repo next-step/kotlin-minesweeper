@@ -79,7 +79,7 @@ class MineMapTest {
             }
         }
 
-        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(2, 2)]).isEqualTo(null)
+        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(2, 2)]).isEqualTo(MapTile.Blank(0))
     }
 
     @Test

@@ -13,23 +13,33 @@ class MineMap(
                 MineList.createMineList(mineMapInfo, createStrategy)
 
             return MineMap(
-                mutableMapOf<Point, MapTile>().apply {
+                emptyMap(mineMapInfo.mapSize).apply {
                     for (mine in mineList.mineList) {
                         this[mine] = MapTile.Mine
                     }
 
                     for (mine in mineList.mineList) {
-                        createNear(this, mine, mineMapInfo.rowCnt, mineMapInfo.colCnt)
+                        createNear(this, mine, mineMapInfo.mapSize)
                     }
                 },
                 mineMapInfo.mapSize
             )
         }
 
-        private fun createNear(map: MutableMap<Point, MapTile>, mine: Point, rowNum: Int, colNum: Int) {
-            val adjacentPoints = AdjacentPoints.create(mine, rowNum, colNum)
-            for (adj in adjacentPoints.points) {
-                val nearInfo = map.getOrDefault(adj, MapTile.Blank(0))
+        private fun emptyMap(mapSize: MapSize): MutableMap<Point, MapTile> {
+            return mutableMapOf<Point, MapTile>().apply {
+                for (i in 0 until mapSize.row.count) {
+                    for (j in 0 until mapSize.column.count) {
+                        put(Point(i, j), MapTile.Blank(0))
+                    }
+                }
+            }
+        }
+
+        private fun createNear(map: MutableMap<Point, MapTile>, mine: Point, mapSize: MapSize) {
+            val adjacentPoints = mine.getAdjacentPoint(mapSize)
+            for (adj in adjacentPoints) {
+                val nearInfo = map[adj]
                 if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1
             }
         }
