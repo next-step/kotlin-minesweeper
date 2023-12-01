@@ -1,15 +1,25 @@
 package domain
 
-class Board(
-    private val mineManager: MineManager
-) {
+class Board(private val mineManager: MineManager) {
     private lateinit var cells: List<Cell>
+    private var height: Int = 0
+    private var width: Int = 0
 
-    fun initializeBoard(minePositions: List<Position>) {
+    fun initializeBoard(height: Int, width: Int, minePositions: List<Position>) {
+        this.height = height
+        this.width = width
+        cells = List(height * width) { index ->
+            Cell(Position(index % width, index / width))
+        }
+
         mineManager.minePlacer.placeMines(this, minePositions)
         cells.forEach { cell ->
-            cell.adjacentMines = mineManager.mineCounter.countMinesAround(this, cell.position)
+            cell.adjacentMines = calculateAdjacentMines(cell.position)
         }
+    }
+
+    private fun calculateAdjacentMines(position: Position): Int {
+        return mineManager.mineCounter.countMinesAround(this, position)
     }
 
     fun placeMineAt(position: Position) {

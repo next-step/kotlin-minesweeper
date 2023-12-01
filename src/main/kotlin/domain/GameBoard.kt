@@ -2,16 +2,17 @@ package domain
 
 import enum.CellStatus
 
-class GameBoard(
-    val height: Int,
-    val width: Int,
-    private val mineManager: MineManager
-) {
-    private val board = Board(mineManager)
+class GameBoard(private val mineManager: MineManager) {
+    private lateinit var board: Board
+    var height: Int = 0
+    var width: Int = 0
 
-    fun initializeBoard(mineCount: Int) {
+    fun initializeBoard(height: Int, width: Int, mineCount: Int) {
+        this.height = height
+        this.width = width
+        board = Board(mineManager)
         val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
-        board.initializeBoard(minePositions)
+        board.initializeBoard(height, width, minePositions)
     }
 
     fun placeMines(mineCount: Int) {
