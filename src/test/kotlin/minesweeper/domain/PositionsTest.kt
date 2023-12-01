@@ -1,8 +1,8 @@
 package minesweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PositionsTest {
     private val positions = setOf(
@@ -12,7 +12,7 @@ class PositionsTest {
     ).toPositions()
 
     @Test
-    fun `두 Positions 중 중복 Position 포함 여부를 알 수 있다`() {
+    fun `두 Positions중 중복 Position 포함 여부를 알 수 있다`() {
         // given
         val anotherPosition = setOf(
             Position(1, 1),
@@ -24,7 +24,7 @@ class PositionsTest {
         val isContainSamePosition = positions containSamePosition anotherPosition
 
         // then
-        assertEquals(true, isContainSamePosition)
+        assertThat(isContainSamePosition).isEqualTo(true)
     }
 
     @Test
@@ -36,13 +36,19 @@ class PositionsTest {
         val newPositions = positions + position
 
         // then
-        assertEquals(4, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(1, 1),
-            Position(2, 2),
-            Position(3, 3),
-            Position(100, 100)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(4) },
+            {
+                assertThat(
+                    newPositions == setOf(
+                        Position(1, 1),
+                        Position(2, 2),
+                        Position(3, 3),
+                        Position(100, 100)
+                    ).toPositions()
+                )
+            }
+        )
     }
 
     @Test
@@ -54,12 +60,18 @@ class PositionsTest {
         val newPositions = positions + position
 
         // then
-        assertEquals(3, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(1, 1),
-            Position(2, 2),
-            Position(3, 3)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(3) },
+            {
+                assertThat(
+                    newPositions == setOf(
+                        Position(1, 1),
+                        Position(2, 2),
+                        Position(3, 3)
+                    ).toPositions()
+                )
+            }
+        )
     }
 
     @Test
@@ -75,15 +87,21 @@ class PositionsTest {
         val newPositions = positions + anotherPositions
 
         // then
-        assertEquals(6, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(1, 1),
-            Position(2, 2),
-            Position(3, 3),
-            Position(100, 100),
-            Position(200, 200),
-            Position(300, 300)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(6) },
+            {
+                assertThat(
+                    newPositions == setOf(
+                        Position(1, 1),
+                        Position(2, 2),
+                        Position(3, 3),
+                        Position(100, 100),
+                        Position(200, 200),
+                        Position(300, 300)
+                    ).toPositions()
+                )
+            }
+        )
     }
 
     @Test
@@ -99,14 +117,20 @@ class PositionsTest {
         val newPositions = positions + anotherPositions
 
         // then
-        assertEquals(5, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(1, 1),
-            Position(2, 2),
-            Position(3, 3),
-            Position(20, 20),
-            Position(30, 30)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(5) },
+            {
+                assertThat(
+                    newPositions == setOf(
+                        Position(1, 1),
+                        Position(2, 2),
+                        Position(3, 3),
+                        Position(20, 20),
+                        Position(30, 30)
+                    ).toPositions()
+                )
+            }
+        )
     }
 
     @Test
@@ -118,11 +142,17 @@ class PositionsTest {
         val newPositions = positions - position
 
         // then
-        assertEquals(2, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(2, 2),
-            Position(3, 3)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(2) },
+            {
+                assertThat(
+                    newPositions == setOf(
+                        Position(2, 2),
+                        Position(3, 3)
+                    ).toPositions()
+                )
+            }
+        )
     }
 
     @Test
@@ -138,9 +168,9 @@ class PositionsTest {
         val newPositions = positions - anotherPositions
 
         // then
-        assertEquals(1, newPositions.size)
-        assertThat(newPositions == setOf(
-            Position(3, 3)
-        ).toPositions())
+        assertAll(
+            { assertThat(newPositions.size).isEqualTo(1) },
+            { assertThat(newPositions == setOf(Position(3, 3)).toPositions()) }
+        )
     }
 }

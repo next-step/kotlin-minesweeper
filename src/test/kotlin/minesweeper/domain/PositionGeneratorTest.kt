@@ -1,7 +1,8 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PositionGeneratorTest {
     @Test
@@ -14,8 +15,10 @@ class PositionGeneratorTest {
         val minePositions = positionGenerator.generateMinePositions()
 
         // then
-        assertEquals(mineMapMeta.mineCount, minePositions.size)
-        assertEquals(true, minePositions.all { it.x in 1..10 && it.y in 1..10 })
+        assertAll(
+            { assertThat(minePositions.size).isEqualTo(mineMapMeta.mineCount) },
+            { assertThat(minePositions.getValues().all { it.x in 1..10 && it.y in 1..10 }).isEqualTo(true) }
+        )
     }
 
     @Test
@@ -33,7 +36,9 @@ class PositionGeneratorTest {
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
 
         // then
-        assertEquals(mineMapMeta.getCellCount() - minePositions.size, emptyPositions.size)
-        assertEquals(true, emptyPositions.all { it.x in 1..10 && it.y in 1..10 })
+        assertAll(
+            { assertThat(emptyPositions.size).isEqualTo(mineMapMeta.getCellCount() - minePositions.size) },
+            { assertThat(emptyPositions.getValues().all { it.x in 1..10 && it.y in 1..10 }).isEqualTo(true) }
+        )
     }
 }

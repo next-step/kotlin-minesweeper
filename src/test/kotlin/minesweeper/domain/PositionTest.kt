@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.assertThrows
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -16,7 +16,7 @@ class PositionTest {
         // given
         val properties = input.split(" ").map { it.toInt() }
 
-        assertThrows<IllegalArgumentException> { // then
+        assertThatIllegalArgumentException().isThrownBy { // then
             Position(properties[0], properties[1]) // when
         }
     }
