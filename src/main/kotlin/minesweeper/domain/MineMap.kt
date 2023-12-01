@@ -1,12 +1,8 @@
 package minesweeper.domain
 
 class MineMap(
-    minePositions: Positions,
-    emptyPositions: Positions
+    private val values: Map<Position, Cell>
 ) {
-    private val values: Map<Position, Cell> =
-        minePositions.getValues().associateWith { Mine() } + emptyPositions.getValues().associateWith { Empty() }
-
     val size: Int
         get() = values.keys.size
 
