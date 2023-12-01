@@ -1,45 +1,33 @@
-import business.GameManager
+import business.Board
 import business.GameStatus
-import business.MineRandomGenerator
+import business.MineRandomPointGenerator
 import view.ConsoleUserInterface
 import view.UserInterface
 
-class MinesWeeper(
-    private val userInterface: UserInterface = ConsoleUserInterface(),
-) {
+class MinesWeeper(private val userInterface: UserInterface = ConsoleUserInterface()) {
     fun start() {
-        val (height, width, gameManager) = initGame()
-        var status = openPoint(gameManager)
+        val board = initBoard()
+        val status = continueGame(board)
+        if (status.isWin()) printWin(board)
+        else userInterface.displayGameOver(board)
+    }
+
+    private fun printWin(board: Board) {
+        userInterface.displayOpenResult(board)
+        userInterface.printWin()
+    }
+
+    private fun continueGame(board: Board): GameStatus {
+        var status = openPoint(board)
         while (status.isContinue()) {
-            displayOpenResult(height, width, gameManager)
-            status = openPoint(gameManager)
+            userInterface.displayOpenResult(board)
+            status = openPoint(board)
         }
-        if (status == GameStatus.WIN) displayWin()
-        displayGameOver(height, width, gameManager)
+        return status
     }
 
-    private fun initGame(): Triple<Int, Int, GameManager> {
-        val height = userInterface.askHeight()
-        val width = userInterface.askWidth()
-        val mineCount = userInterface.askMineCount()
-        userInterface.printStartAnnouncement()
-        val gameManager = GameManager.of(height, width, mineCount, MineRandomGenerator())
-        return Triple(height, width, gameManager)
-    }
-
-    private fun displayGameOver(height: Int, width: Int, gameManager: GameManager) {
-        userInterface.printGameOver()
-        gameManager.doActionWithMines { userInterface.printMinefieldMatrix(height, width, it) }
-    }
-
-    private fun openPoint(gameManager: GameManager): GameStatus = gameManager.open(userInterface.askPoint())
-
-    private fun displayOpenResult(height: Int, width: Int, gameManager: GameManager) =
-        gameManager.doActionWithMinesAndOpenedCells { mines, openedCells ->
-            userInterface.printOpenedMinefieldMatrix(height, width, mines, openedCells)
-        }
-
-    private fun displayWin() = userInterface.printWin()
+    private fun initBoard(): Board = Board.of(userInterface.askBoardInfo(), MineRandomPointGenerator())
+    private fun openPoint(board: Board): GameStatus = board.open(userInterface.askPoint())
 }
 
 fun main() {

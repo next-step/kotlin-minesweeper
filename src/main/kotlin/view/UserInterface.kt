@@ -1,17 +1,13 @@
 package view
 
-import business.Mines
-import business.OpenedCells
+import business.Board
+import business.BoardInfo
 import business.Point
 
 interface UserInterface {
-    fun askHeight(): Int
-    fun askWidth(): Int
-    fun askMineCount(): Int
+    fun askBoardInfo(): BoardInfo
     fun askPoint(): Point
-    fun printStartAnnouncement()
-    fun printMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines)
-    fun printGameOver()
-    fun printOpenedMinefieldMatrix(maxHeight: Int, maxWidth: Int, mines: Mines, openedCells: OpenedCells)
+    fun displayOpenResult(board: Board)
     fun printWin()
+    fun displayGameOver(board: Board)
 }
