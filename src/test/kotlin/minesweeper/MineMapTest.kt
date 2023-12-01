@@ -7,10 +7,10 @@ class MineMapTest {
     @Test
     fun `지뢰는 맵 안에서 개수대로 배치된다`() {
         val tenMines = MineMapInfo(LineCount(10), LineCount(10), MineCount(10))
-        assertThat(MineMap(tenMines).mineMap.count { it.value is MapTile.Mine }).isEqualTo(10)
+        assertThat(MineMap.create(tenMines).mineMap.count { it.value is MapTile.Mine }).isEqualTo(10)
 
         val twentyMines = MineMapInfo(LineCount(10), LineCount(10), MineCount(20))
-        assertThat(MineMap(twentyMines).mineMap.count { it.value is MapTile.Mine }).isEqualTo(20)
+        assertThat(MineMap.create(twentyMines).mineMap.count { it.value is MapTile.Mine }).isEqualTo(20)
     }
 
     @Test
@@ -29,7 +29,7 @@ class MineMapTest {
 
         val isMinesInFirstRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 0 && it.value == MapTile.Mine }
         assertThat(
-            MineMap(tenMines, firstRowStrategy).mineMap
+            MineMap.create(tenMines, firstRowStrategy).mineMap
                 .count(isMinesInFirstRow)
         ).isEqualTo(10)
 
@@ -46,7 +46,7 @@ class MineMapTest {
         }
 
         assertThat(
-            MineMap(tenMines2, lastRowStrategy).mineMap
+            MineMap.create(tenMines2, lastRowStrategy).mineMap
                 .count { it.key.row == 9 && it.value == MapTile.Mine }
         ).isEqualTo(10)
     }
@@ -67,7 +67,7 @@ class MineMapTest {
             }
         }
 
-        assertThat(MineMap(mineEight, edgeStrategy).mineMap[Point(1, 1)]).isEqualTo(MapTile.Blank(8))
+        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(1, 1)]).isEqualTo(MapTile.Blank(8))
     }
 
     @Test
@@ -79,7 +79,7 @@ class MineMapTest {
             }
         }
 
-        assertThat(MineMap(mineEight, edgeStrategy).mineMap[Point(2, 2)]).isEqualTo(null)
+        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(2, 2)]).isEqualTo(null)
     }
 
     @Test
@@ -91,7 +91,7 @@ class MineMapTest {
             }
         }
 
-        assertThat(MineMap(mineEight, edgeStrategy).mineMap[Point(0, 0)]).isEqualTo(MapTile.Blank(1))
-        assertThat(MineMap(mineEight, edgeStrategy).mineMap[Point(0, 1)]).isEqualTo(MapTile.Blank(2))
+        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(0, 0)]).isEqualTo(MapTile.Blank(1))
+        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(0, 1)]).isEqualTo(MapTile.Blank(2))
     }
 }

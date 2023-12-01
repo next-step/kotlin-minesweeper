@@ -9,6 +9,6 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         val mineNum = MineCount(readln().toInt())
 
-        return MineMap(MineMapInfo(row, col, mineNum))
+        return MineMap.create(MineMapInfo(row, col, mineNum))
     }
 }

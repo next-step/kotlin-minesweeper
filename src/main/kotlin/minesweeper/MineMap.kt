@@ -1,26 +1,37 @@
 package minesweeper
 
 class MineMap(
-    val mineMapInfo: MineMapInfo,
-    createStrategy: MinePointCreateStrategy = RandomPointCreateStrategy()
+    val mineMap: Map<Point, MapTile>,
+    val mapSize: MapSize
 ) {
-    private val mineList: MineList =
-        MineList.createMineList(mineMapInfo, createStrategy)
-    val mineMap: Map<Point, MapTile> = mutableMapOf<Point, MapTile>().apply {
-        for (mine in mineList.mineList) {
-            this[mine] = MapTile.Mine
+    companion object {
+        fun create(
+            mineMapInfo: MineMapInfo,
+            createStrategy: MinePointCreateStrategy = RandomPointCreateStrategy()
+        ): MineMap {
+            val mineList: MineList =
+                MineList.createMineList(mineMapInfo, createStrategy)
+
+            return MineMap(
+                mutableMapOf<Point, MapTile>().apply {
+                    for (mine in mineList.mineList) {
+                        this[mine] = MapTile.Mine
+                    }
+
+                    for (mine in mineList.mineList) {
+                        createNear(this, mine, mineMapInfo.rowCnt, mineMapInfo.colCnt)
+                    }
+                },
+                MapSize(mineMapInfo.rowNum, mineMapInfo.colNum)
+            )
         }
 
-        for (mine in mineList.mineList) {
-            createNear(this, mine)
-        }
-    }
-
-    private fun createNear(map: MutableMap<Point, MapTile>, mine: Point) {
-        val adjacentPoints = AdjacentPoints.create(mine, mineMapInfo.rowCnt, mineMapInfo.colCnt)
-        for (adj in adjacentPoints.points) {
-            val nearInfo = map.getOrDefault(adj, MapTile.Blank(0))
-            if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1
+        private fun createNear(map: MutableMap<Point, MapTile>, mine: Point, rowNum: Int, colNum: Int) {
+            val adjacentPoints = AdjacentPoints.create(mine, rowNum, colNum)
+            for (adj in adjacentPoints.points) {
+                val nearInfo = map.getOrDefault(adj, MapTile.Blank(0))
+                if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1
+            }
         }
     }
 }

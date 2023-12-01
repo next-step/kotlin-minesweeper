@@ -1,6 +1,6 @@
 package minesweeper
 
-data class MineMapInfo(private val rowNum: LineCount, private val colNum: LineCount, private val mineNum: MineCount) {
+data class MineMapInfo(val rowNum: LineCount, val colNum: LineCount, private val mineNum: MineCount) {
     val rowCnt = rowNum.count
     val colCnt = colNum.count
     val mineCnt = mineNum.count
