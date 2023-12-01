@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.MineMap
+import minesweeper.domain.MineCountMapFactory
 import minesweeper.domain.MineMapMeta
 import minesweeper.domain.PositionGenerator
 import minesweeper.view.InputView
@@ -16,7 +16,10 @@ object MineSweeper {
         val positionGenerator = PositionGenerator(mineMapMeta)
         val minePositions = positionGenerator.generateMinePositions()
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
-        val mineMap = MineMap(minePositions, emptyPositions)
+        val mineMap = MineCountMapFactory.create(
+            minePositions = minePositions,
+            emptyPositions = emptyPositions
+        )
 
         OutputView.printGameStartMsg()
         OutputView.printMineMap(mineMapMeta, mineMap)

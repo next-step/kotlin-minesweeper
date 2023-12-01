@@ -7,8 +7,7 @@ import minesweeper.domain.MineMapMeta
 import minesweeper.domain.Position
 
 object OutputView {
-    private const val MINE_CHAR= "*"
-    private const val EMPTY_CHAR= "C"
+    private const val MINE_CHAR = "*"
 
     fun printGameStartMsg() {
         println("\n지뢰 찾기 게임 시작")
@@ -22,10 +21,9 @@ object OutputView {
 
     private fun printRowCells(mineMapMeta: MineMapMeta, mineMap: MineMap, row: Int) {
         for (col in 1 until mineMapMeta.width + 1) {
-            val cell = mineMap.getCell(Position(row, col))
-            when (cell) {
+            when (val cell = mineMap.getCell(Position(row, col))) {
                 is Mine -> print("$MINE_CHAR ")
-                is Empty -> print("$EMPTY_CHAR ")
+                is Empty -> print("${cell.mineCount} ")
             }
         }
         println()
