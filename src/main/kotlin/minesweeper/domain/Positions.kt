@@ -7,6 +7,7 @@ class Positions(
         get() = positions.size
 
     fun getValues(): Set<Position> = positions
+    fun contains(position: Position): Boolean = positions.contains(position)
 
     infix fun containSamePosition(otherPositions: Positions): Boolean = positions.intersect(otherPositions.getValues()).isNotEmpty()
 
