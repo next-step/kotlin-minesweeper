@@ -2,10 +2,10 @@ package dto
 
 import domain.GameBoard
 
-data class GameBoardDto(val board: List<List<String>>) {
+data class GameBoardDto(val board: List<List<CellTypeDto>>) {
     constructor(board: GameBoard) : this(board.board.map { row ->
         row.cells.map { cell ->
-            cell.cellInfo.cellType.symbol
+            CellTypeDto(cell.cellInfo.cellType.symbol, cell.cellInfo.neighborMineCount.count)
         }
     })
 }
