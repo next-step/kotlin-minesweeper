@@ -1,8 +1,34 @@
 package domain
 
-class Board(private val height: Int, private val width: Int) {
-    private val cells: MutableList<Cell> = MutableList(height * width) { index ->
-        Cell(Position(index % width, index / width))
+import enum.CellStatus
+
+class Board(
+    val height: Int,
+    val width: Int,
+    private val mineManager: MineManager
+) {
+    private lateinit var cells: List<Cell>
+
+    fun initializeBoard(minePositions: List<Position>) {
+        cells = List(height * width) { index ->
+            Cell(Position(index % width, index / width))
+        }
+
+        minePositions.forEach { placeMineAt(it) }
+
+        cells.forEach { cell ->
+            cell.adjacentMines = calculateAdjacentMines(cell.position)
+        }
+    }
+
+    fun forEachCell(onEachCell: (Position, CellStatus) -> Unit) {
+        cells.forEach { cell ->
+            onEachCell(cell.position, if (cell.isMine()) CellStatus.MINE else CellStatus.EMPTY)
+        }
+    }
+
+    private fun calculateAdjacentMines(position: Position): Int {
+        return mineManager.mineCounter.countMinesAround(this, position)
     }
 
     fun placeMineAt(position: Position) {

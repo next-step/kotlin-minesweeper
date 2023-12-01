@@ -1,30 +1,26 @@
 package domain
 
 import enum.CellStatus
-import inteface.MinePlacementStrategy
 
-class GameBoard(val height: Int, val width: Int, private val minePlacementStrategy: MinePlacementStrategy) {
-    private val board = Board(height, width)
+class GameBoard(private val mineManager: MineManager) {
+    private lateinit var board: Board
 
-    fun placeMines(mineCount: Int) {
-        val minePositions = minePlacementStrategy.placeMines(height, width, mineCount)
-        minePositions.forEach { board.placeMineAt(it) }
+    val boardWidth: Int
+        get() = if (::board.isInitialized) board.width else 0
+
+    fun initializeBoard(height: Int, width: Int, mineCount: Int) {
+        board = Board(height, width, mineManager)
+        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
+        board.initializeBoard(minePositions)
     }
 
     fun countMines(): Int = board.countMines()
 
     fun forEachCell(onEachCell: (Position, CellStatus) -> Unit) {
-        for (row in 0 until height) {
-            processRow(row, onEachCell)
-        }
+        board.forEachCell(onEachCell)
     }
 
-    private fun processRow(row: Int, onEachCell: (Position, CellStatus) -> Unit) {
-        for (column in 0 until width) {
-            val position = Position(column, row)
-            onEachCell(position, if (hasMineAt(position)) CellStatus.MINE else CellStatus.EMPTY)
-        }
+    fun countMinesAround(position: Position): Int {
+        return mineManager.mineCounter.countMinesAround(board, position)
     }
-
-    private fun hasMineAt(position: Position): Boolean = board.hasMineAt(position)
 }
