@@ -47,6 +47,6 @@
 - 각 사각형에 표시될 숫자는 자신을 제외한 주변 8개 사각형에 포함된 지뢰의 개수다.
 
 ### TODO
-- [ ] Cell은 지뢰인지, 비어있느지 CellType과 주변 지뢰 개수(numOfMineNearby)를 갖는다.
+- [x] Cell은 지뢰인지, 비어있느지 CellType과 주변 지뢰 개수 aroundMineCount를 갖는다.
 - [ ] Board 생성시, 지뢰를 만들고 난 다음 주변 지뢰 개수를 계산하여 Cell에 저장한다.
 

@@ -29,10 +29,10 @@ class BoardTest {
         )
 
         mineCoordinates.forEach() {
-            board.at(it.first, it.second) shouldBe Cell.MINE
+            board.at(it.first, it.second).type shouldBe CellType.MINE
         }
-        board.at(2, 2) shouldBe Cell.EMPTY
-        board.at(9, 9) shouldBe Cell.EMPTY
+        board.at(2, 2).type shouldBe CellType.EMPTY
+        board.at(9, 9).type shouldBe CellType.EMPTY
     }
 
     @ParameterizedTest

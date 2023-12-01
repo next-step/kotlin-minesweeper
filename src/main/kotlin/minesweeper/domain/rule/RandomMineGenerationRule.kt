@@ -2,6 +2,7 @@ package minesweeper.domain.rule
 
 import minesweeper.domain.BoardMetadata
 import minesweeper.domain.Cell
+import minesweeper.domain.CellType
 import minesweeper.domain.Coordinate
 
 class RandomMineGenerationRule : MineGenerationRule {
@@ -9,14 +10,14 @@ class RandomMineGenerationRule : MineGenerationRule {
         val resultBoard: MutableMap<Coordinate, Cell> =
             (0 until metadata.width).flatMap { x ->
                 (0 until metadata.height).map { y ->
-                    Coordinate(x, y) to Cell.EMPTY
+                    Coordinate(x, y) to Cell(CellType.EMPTY, 0)
                 }
             }.toMap().toMutableMap()
 
         val coordinates = resultBoard.keys.toList()
         val mineCoordinates = coordinates.shuffled().take(metadata.numOfMine)
         for (coordinate in mineCoordinates) {
-            resultBoard[coordinate] = Cell.MINE
+            resultBoard[coordinate] = Cell(CellType.MINE, 0)
         }
 
         return resultBoard

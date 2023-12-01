@@ -2,7 +2,7 @@ package minesweeper.domain.rule
 
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.BoardMetadata
-import minesweeper.domain.Cell
+import minesweeper.domain.CellType
 import minesweeper.domain.Coordinate
 import org.junit.jupiter.api.Test
 
@@ -14,7 +14,7 @@ class MineGenerationRuleTest {
         val rawBoard = rule.generate(BoardMetadata(10, 10, 10))
 
         rawBoard.keys.size shouldBe 100
-        rawBoard.values.filter { it == Cell.MINE }.size shouldBe 10
+        rawBoard.values.filter { it.type == CellType.MINE }.size shouldBe 10
     }
 
     @Test
@@ -23,7 +23,7 @@ class MineGenerationRuleTest {
         val rawBoard = rule.generate(BoardMetadata(1, 1, 1))
 
         rawBoard.keys.size shouldBe 1
-        rawBoard.values.filter { it == Cell.MINE }.size shouldBe 1
+        rawBoard.values.filter { it.type == CellType.MINE }.size shouldBe 1
     }
 
     @Test
@@ -34,9 +34,9 @@ class MineGenerationRuleTest {
         val rawBoard = rule.generate(BoardMetadata(4, 5, numOfMine))
 
         rawBoard.keys.size shouldBe 20
-        rawBoard.values.filter { it == Cell.MINE }.size shouldBe numOfMine
-        rawBoard[Coordinate(0, 0)] shouldBe Cell.MINE
-        rawBoard[Coordinate(0, 1)] shouldBe Cell.MINE
-        rawBoard[Coordinate(1, 0)] shouldBe Cell.MINE
+        rawBoard.values.filter { it.type == CellType.MINE }.size shouldBe numOfMine
+        rawBoard[Coordinate(0, 0)]!!.type shouldBe CellType.MINE
+        rawBoard[Coordinate(0, 1)]!!.type shouldBe CellType.MINE
+        rawBoard[Coordinate(1, 0)]!!.type shouldBe CellType.MINE
     }
 }

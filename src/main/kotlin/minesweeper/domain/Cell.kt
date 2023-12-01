@@ -1,5 +1,3 @@
 package minesweeper.domain
 
-enum class Cell {
-    MINE, EMPTY
-}
+data class Cell(val type: CellType, val aroundMineCount: Int)

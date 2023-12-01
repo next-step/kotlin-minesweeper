@@ -1,7 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
-import minesweeper.domain.Cell
+import minesweeper.domain.CellType
 
 object ConsoleOutput {
     fun printBoard(height: Int, width: Int, board: Board) {
@@ -9,9 +9,9 @@ object ConsoleOutput {
 
         for (row in 0 until height) {
             for (col in 0 until width) {
-                val mark = when (board.at(row, col)) {
-                    Cell.MINE -> "*"
-                    Cell.EMPTY -> "C"
+                val mark = when (board.at(row, col).type) {
+                    CellType.MINE -> "*"
+                    CellType.EMPTY -> "C"
                 }
                 print("$mark ")
             }
