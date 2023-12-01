@@ -1,3 +1,3 @@
 package domain
 
-class Cell(val position: Position, var isMine: Boolean = false)
+class Cell(var hint: Int? = null, var isMine: Boolean = false)
