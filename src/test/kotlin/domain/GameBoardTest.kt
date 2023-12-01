@@ -15,31 +15,18 @@ class GameBoardTest {
     @BeforeEach
     fun setUp() {
         val minePlacementStrategy = RandomMinePlacementStrategy()
-        val minePlacer = ShuffledMinePlacer()
         val mineCounter = AdjacentMineCounter()
-        mineManager = MineManager(minePlacementStrategy, minePlacer, mineCounter)
+        mineManager = MineManager(minePlacementStrategy, mineCounter)
         gameBoard = GameBoard(mineManager)
     }
 
     @Test
-    @DisplayName("게임 보드는 주어진 높이와 너비를 가진다")
-    fun `게임 보드는 주어진 높이와 너비를 가진다`() {
-        val height = 10
-        val width = 10
-        gameBoard.initializeBoard(height, width, 0)
-
-        assertEquals(height, gameBoard.height)
-        assertEquals(width, gameBoard.width)
-    }
-
-    @Test
-    @DisplayName("게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다.")
+    @DisplayName("게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다")
     fun `게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다`() {
         val height = 10
         val width = 10
         val mineCount = 10
         gameBoard.initializeBoard(height, width, mineCount)
-        gameBoard.placeMines(mineCount)
 
         assertEquals(mineCount, gameBoard.countMines())
     }
@@ -64,7 +51,6 @@ class GameBoardTest {
         val width = 5
         val mineCount = 3
         gameBoard.initializeBoard(height, width, mineCount)
-        gameBoard.placeMines(mineCount)
 
         var identifiedMineCount = 0
         gameBoard.forEachCell { _, cellStatus ->
