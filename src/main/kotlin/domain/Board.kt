@@ -2,8 +2,8 @@ package domain
 
 class Board(private val mineManager: MineManager) {
     private lateinit var cells: List<Cell>
-    private var height: Int = 0
-    private var width: Int = 0
+    var height: Int = 0
+    var width: Int = 0
 
     fun initializeBoard(height: Int, width: Int, minePositions: List<Position>) {
         this.height = height
