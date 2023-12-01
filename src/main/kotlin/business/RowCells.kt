@@ -19,4 +19,19 @@ data class RowCells(private val cells: List<Cell>) {
     fun isAllOpen(): Boolean = cells.all(Cell::isClear)
     fun processEachCellAndPoint(x: Int, action: (Cell, Point) -> Unit) =
         cells.forEachIndexed { y: Int, cell: Cell -> action(cell, Point(x, y)) }
+
+    fun addAroundMineCount(y: Int): RowCells {
+        val muTablesCells = cells.toMutableList()
+        muTablesCells[y] = cells[y].addAroundMineCount()
+        return RowCells(muTablesCells)
+    }
+
+    fun forEachIndexed(function: (Int, Cell) -> Unit) {
+        cells.forEachIndexed(function)
+    }
+
+    companion object {
+        fun of(width: Int, y: Int, minePoints: List<Point>): RowCells =
+            RowCells(List(width) { x -> if (minePoints.contains(Point(x, y))) Cell.mine() else Cell.empty() })
+    }
 }

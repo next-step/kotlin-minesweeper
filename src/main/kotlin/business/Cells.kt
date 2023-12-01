@@ -3,9 +3,26 @@ package business
 class Cells(cells: List<RowCells>) {
     private val _cells: MutableList<RowCells> = cells.toMutableList()
     private operator fun get(point: Point): Cell = _cells[point.x][point.y]
+    private operator fun set(index: Int, rowCells: RowCells) {
+        _cells[index] = rowCells
+    }
 
     val cells: List<RowCells>
         get() = _cells.toList()
+
+    init {
+        _cells.forEachIndexed { x: Int, rowCells: RowCells ->
+            rowCells.forEachIndexed { y: Int, cell: Cell ->
+                if (cell.isMine()) addAroundMineCount(Point(x, y))
+            }
+        }
+    }
+
+    private fun addAroundMineCount(point: Point) {
+        point.aroundPoints()
+            .filter { isValidPoint(it) }
+            .forEach { _cells[it.x] = _cells[it.x].addAroundMineCount(it.y) }
+    }
 
     fun isMine(point: Point): Boolean = this[point].isMine()
     fun isOpen(point: Point): Boolean = this[point].isOpen()
@@ -15,10 +32,7 @@ class Cells(cells: List<RowCells>) {
         if (isSafePoint(point)) openAround(point)
     }
 
-    fun countMines(point: Point): Int = point.aroundPoints()
-        .filter { isValidPoint(it) }
-        .count { isMine(it) }
-
+    fun countMines(point: Point): Int = _cells[point.x][point.y].aroundMineCount
     fun isAllOpen(): Boolean = _cells.all(RowCells::isAllOpen)
 
     private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
@@ -41,18 +55,7 @@ class Cells(cells: List<RowCells>) {
     companion object {
         const val FIRST_INDEX = 0
 
-        fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells {
-            return Cells(
-                List(boardInfo.height) { y ->
-                    RowCells(
-                        List(boardInfo.width) { x ->
-                            Cell(
-                                cellStatus = if (minePoints.contains(Point(x, y))) CellStatus.MINE else CellStatus.EMPTY
-                            )
-                        }
-                    )
-                }
-            )
-        }
+        fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells =
+            Cells(List(boardInfo.height) { x -> RowCells.of(boardInfo.width, x, minePoints) })
     }
 }

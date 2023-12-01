@@ -100,4 +100,18 @@ class RowCellsTest {
         // when, then
         rowCells.processEachCellAndPoint(0, action)
     }
+
+    @Test
+    fun `특정 위치의 cell에 주변 지뢰 수를 더한다`() {
+        // when
+        val newCells = rowCells.addAroundMineCount(1)
+
+        // then
+        newCells shouldBe RowCells(
+            Cell(CellStatus.EMPTY),
+            Cell(CellStatus.MINE, aroundMineCount = 1),
+            Cell(CellStatus.EMPTY)
+        )
+        newCells shouldNotBe rowCells
+    }
 }
