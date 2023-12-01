@@ -13,85 +13,116 @@ class MineMapTest {
         assertThat(MineMap.create(twentyMines).mineMap.count { it.value is MapTile.Mine }).isEqualTo(20)
     }
 
-    @Test
-    fun `지뢰는 전략대로 배치된다`() {
-        val tenMines = MineMapInfo(LineCount(10), LineCount(10), MineCount(10))
-        val firstRowStrategy = object : MinePointCreateStrategy {
-            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
-                val mineNum = mineMapInfo.mineCnt
-                return buildList {
-                    for (i in 0 until mineNum) {
-                        add(i.toPoint(mineMapInfo.rowCnt))
-                    }
-                }
+    /**
+     * 테스트 내에서만 쓰는, 특정 형태의 string을 입력 시 MineMap을 뽑아주는 메소드
+     *
+     * ex)
+     *      ...*
+     *      ....
+     *      .*..
+     *      ....
+     *
+     * -> 4x4 맵에 (1열 4행), (3열 2행) 지뢰가 있음
+     */
+    private fun createMap(mapString: String): MineMap {
+        val rows = mapString.split("\n")
+
+        val mines = mutableListOf<Point>()
+        var mineCount = 0
+        rows.forEachIndexed { row, str ->
+            val columnList = str.withIndex().filter { it.value == '*' }.map { it.index }
+            for (col in columnList) {
+                mines.add(Point(row, col))
+                mineCount++
             }
         }
+
+        val mineMapInfo = MineMapInfo(MapSize(LineCount(rows.size), LineCount(rows[0].length)), MineCount(mineCount))
+        val mineStrategy = object : MinePointCreateStrategy {
+            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
+                return mines
+            }
+        }
+
+        return MineMap.create(mineMapInfo, mineStrategy)
+    }
+
+    @Test
+    fun `지뢰는 전략에 맞게 배치된다`() {
+        val firstLineMine =
+            """
+                **********
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+            """.trimIndent()
 
         val isMinesInFirstRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 0 && it.value == MapTile.Mine }
-        assertThat(
-            MineMap.create(tenMines, firstRowStrategy).mineMap
-                .count(isMinesInFirstRow)
-        ).isEqualTo(10)
+        assertThat(createMap(firstLineMine).mineMap.count(isMinesInFirstRow)).isEqualTo(10)
 
-        val tenMines2 = MineMapInfo(LineCount(10), LineCount(10), MineCount(10))
-        val lastRowStrategy = object : MinePointCreateStrategy {
-            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
-                val mineNum = mineMapInfo.mineCnt
-                return buildList {
-                    for (i in mineMapInfo.total - mineNum until mineMapInfo.total) {
-                        add(i.toPoint(mineMapInfo.rowCnt))
-                    }
-                }
-            }
-        }
+        val lastLineMine =
+            """
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                ..........
+                **********
+            """.trimIndent()
 
-        assertThat(
-            MineMap.create(tenMines2, lastRowStrategy).mineMap
-                .count { it.key.row == 9 && it.value == MapTile.Mine }
-        ).isEqualTo(10)
+        val isMinesInLastRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 9 && it.value == MapTile.Mine }
+        assertThat(createMap(lastLineMine).mineMap.count(isMinesInLastRow)).isEqualTo(10)
     }
 
     @Test
-    fun `지뢰에 다 둘러쌓여 있으면 Blank의 nearCount는 8이다`() {
-        val mineEight = MineMapInfo(LineCount(3), LineCount(3), MineCount(8))
-        val edgeStrategy = object : MinePointCreateStrategy {
-            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
-                return buildList {
-                    for (i in 0..2) {
-                        for (j in 0..2) {
-                            if (i == 1 && j == 1) continue
-                            add(Point(i, j))
-                        }
-                    }
-                }
-            }
-        }
+    fun `지뢰에 안 둘러쌓여 있다면 둘러쌓인 지뢰의 수는 0이다`() {
+        val mapCenterBlank =
+            """
+                ...
+                ...
+                ...
+            """.trimIndent()
 
-        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(1, 1)]).isEqualTo(MapTile.Blank(8))
+        val center = Point(1, 1)
+        assertThat(createMap(mapCenterBlank).mineMap[center]).isEqualTo(MapTile.Blank(0))
     }
 
     @Test
-    fun `지뢰에 안 둘러쌓여 있다면 MineMap에 정보가 없다`() {
-        val mineEight = MineMapInfo(LineCount(3), LineCount(3), MineCount(1))
-        val edgeStrategy = object : MinePointCreateStrategy {
-            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
-                return listOf(Point(0, 0))
-            }
-        }
+    fun `지뢰에 모두 둘러쌓여 있다면 둘러쌓인 지뢰의 수는 8이다`() {
 
-        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(2, 2)]).isEqualTo(MapTile.Blank(0))
+        val mapCenterBlank =
+            """
+                ***
+                *.*
+                ***
+            """.trimIndent()
+
+        val center = Point(1, 1)
+        assertThat(createMap(mapCenterBlank).mineMap[center]).isEqualTo(MapTile.Blank(8))
     }
 
     @Test
-    fun `근처 지뢰가 있냐에 따라 카운트가 달라진다`() {
-        val mineEight = MineMapInfo(LineCount(3), LineCount(4), MineCount(2))
-        val edgeStrategy = object : MinePointCreateStrategy {
-            override fun createMinePoints(mineMapInfo: MineMapInfo): List<Point> {
-                return listOf(Point(1, 1), Point(1, 2))
-            }
-        }
+    fun `지뢰가 아닌 칸은 인접한 칸의 지뢰의 수를 표시한다`() {
+        val mapString =
+            """
+                ....
+                .**.
+                ....
+            """.trimIndent()
 
-        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(0, 0)]).isEqualTo(MapTile.Blank(1))
-        assertThat(MineMap.create(mineEight, edgeStrategy).mineMap[Point(0, 1)]).isEqualTo(MapTile.Blank(2))
+        val map = createMap(mapString)
+
+        assertThat(map.mineMap[Point(0, 0)]).isEqualTo(MapTile.Blank(1))
+        assertThat(map.mineMap[Point(0, 1)]).isEqualTo(MapTile.Blank(2))
     }
 }
