@@ -1,6 +1,6 @@
 package business
 
-class Cell(
+data class Cell(
     private val cellStatus: CellStatus = CellStatus.EMPTY,
     private val visibilityState: CardVisibilityState = CardVisibilityState.HIDDEN,
 ) {

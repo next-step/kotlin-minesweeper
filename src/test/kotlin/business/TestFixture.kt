@@ -14,37 +14,37 @@ object TestFixture {
      */
     fun testCells() = Cells(
         listOf(
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY, CardVisibilityState.VISIBLE),
                 Cell(CellStatus.MINE),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY)
             ),
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY)
             ),
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY)
             ),
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY)
             ),
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.MINE)
             ),
-            listOf(
+            RowCells(
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.EMPTY),
                 Cell(CellStatus.MINE),

@@ -1,18 +1,17 @@
 package business
 
-class Cells(cells: List<List<Cell>>) {
-    private val _cells: MutableList<MutableList<Cell>> = cells.map(List<Cell>::toMutableList).toMutableList()
+class Cells(cells: List<RowCells>) {
+    private val _cells: MutableList<RowCells> = cells.toMutableList()
     private operator fun get(point: Point): Cell = _cells[point.x][point.y]
-    private operator fun set(point: Point, cell: Cell) {
-        _cells[point.x][point.y] = cell
-    }
 
-    fun copy(): Cells = Cells(_cells.map { it.map { cell: Cell -> cell } })
+    val cells: List<RowCells>
+        get() = _cells.toList()
+
     fun isMine(point: Point): Boolean = this[point].isMine()
     fun isOpen(point: Point): Boolean = this[point].isOpen()
 
     fun open(point: Point) {
-        this[point] = this[point].open()
+        _cells[point.x] = _cells[point.x].open(point.y)
         if (isSafePoint(point)) openAround(point)
     }
 
@@ -20,7 +19,7 @@ class Cells(cells: List<List<Cell>>) {
         .filter { isValidPoint(it) }
         .count { isMine(it) }
 
-    fun isAllOpen(): Boolean = _cells.all { it.all(Cell::isClear) }
+    fun isAllOpen(): Boolean = _cells.all(RowCells::isAllOpen)
 
     private fun isSafePoint(point: Point) = countMines(point) == Board.SAFE_MINE_COUNT
 
@@ -33,8 +32,8 @@ class Cells(cells: List<List<Cell>>) {
         point.x in _cells.indices && point.y in _cells[FIRST_INDEX].indices
 
     fun processEachCellAndPoint(action: (Cell, Point) -> Unit, rowAction: () -> Unit) {
-        _cells.forEachIndexed { x, row ->
-            row.forEachIndexed { y, cell -> action(cell, Point(x, y)) }
+        _cells.forEachIndexed { x: Int, row: RowCells ->
+            row.processEachCellAndPoint(x, action)
             rowAction()
         }
     }
@@ -45,9 +44,13 @@ class Cells(cells: List<List<Cell>>) {
         fun of(boardInfo: BoardInfo, minePoints: List<Point>): Cells {
             return Cells(
                 List(boardInfo.height) { y ->
-                    List(boardInfo.width) { x ->
-                        if (minePoints.contains(Point(x, y))) Cell(CellStatus.MINE) else Cell()
-                    }
+                    RowCells(
+                        List(boardInfo.width) { x ->
+                            Cell(
+                                cellStatus = if (minePoints.contains(Point(x, y))) CellStatus.MINE else CellStatus.EMPTY
+                            )
+                        }
+                    )
                 }
             )
         }

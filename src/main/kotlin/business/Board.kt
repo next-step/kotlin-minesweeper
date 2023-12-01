@@ -3,7 +3,8 @@ package business
 class Board(cells: Cells) {
     private val _cells: Cells = cells
     val cells: Cells
-        get() = _cells.copy()
+        get() = Cells(_cells.cells)
+
     fun isMine(point: Point): Boolean = _cells.isMine(point)
     fun open(point: Point): GameStatus {
         if (isMine(point)) {
