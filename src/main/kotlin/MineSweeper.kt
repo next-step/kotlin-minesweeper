@@ -10,16 +10,14 @@ class MineSweeper(
     }
 
     fun initialize(): List<List<String>> {
-        var mineCount1 = mineCount
-        val initialList = (1..(height * width)).map {
-            if (mineCount1 != 0) {
-                mineCount1 -= 1
-                "*"
-            } else {
-                "C"
-            }
-        }.shuffled()
-        return getResultList(initialList)
+        val initialList = (1..(height * width - mineCount)).map {
+            "C"
+        }
+        val mineList = (1..mineCount).map {
+            "*"
+        }
+        val mineSweeperList = (initialList + mineList).shuffled()
+        return getResultList(mineSweeperList)
     }
 
     private fun getResultList(initialList: List<String>): List<List<String>> {
