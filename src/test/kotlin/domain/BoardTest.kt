@@ -18,14 +18,14 @@ class BoardTest {
         val mineCounter = AdjacentMineCounter()
         val minePlacementStrategy = RandomMinePlacementStrategy()
         mineManager = MineManager(minePlacementStrategy, mineCounter)
-        board = Board(5, 5, mineManager) // Board 객체 생성 시 height, width 추가
+        board = Board(5, 5, mineManager)
     }
 
     @Test
     @DisplayName("Board는 지정된 위치에 지뢰를 정확히 배치한다")
     fun `지정된 위치에 지뢰를 정확히 배치한다`() {
         val testPosition = Position(2, 3)
-        board.initializeBoard(listOf(testPosition)) // 높이와 너비를 다시 전달할 필요 없음
+        board.initializeBoard(listOf(testPosition))
 
         assertTrue(board.hasMineAt(testPosition))
     }
