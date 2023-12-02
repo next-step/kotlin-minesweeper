@@ -14,5 +14,4 @@ class KoTestLearn : StringSpec({
             print((a + b).length == a.length + b.length)
         }
     }
-
 })
