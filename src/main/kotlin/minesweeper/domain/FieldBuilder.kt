@@ -18,7 +18,9 @@ class FieldBuilder(
 ) {
     private val allPositions by lazy { size.allPositionsOfRowAndColumns }
     private var minePositions: Set<Position>? = null
-    private var cells: Set<Cell>? = null
+    fun installMines(count: MineCount) {
+        minePositions = minePicker.pick(allPositions, count.value)
+    }
 
     fun build(): Field {
         val minePositions = minePositions ?: throw IllegalStateException("지뢰가 설치되지 않았습니다")

@@ -56,9 +56,11 @@ C C C C C C C C C C
   - [x] 너비를 입력 받는다
   - [x] 지뢰 개수를 입력 받는다
 - FieldBuilder
-  - [] FieldSize와 PositionPicker를 받아, 지뢰가 설치되면 Field를 생성
+  - [x] FieldSize와 PositionPicker를 받아, 지뢰가 설치되면 Field를 생성
   - [x] 필드생성시 모든 행과 열에 대한 셀을 생성한다
     - (높이에 대한 행의 값(0..(높이-1)) * 너비에 대한 열의 값(0..(너비-1)))
+  - [x] 요청된 지뢰 개수만큼 랜덤한 위치에 지뢰 생성
+    - [x] MineCount: 지뢰 개수는 1이상
 - FieldSize
   - [x] 높이와 너비를 프로퍼티로 가지고, 모든 행 * 열에 대한 Position 생성 
 - Minesweeper
@@ -66,7 +68,7 @@ C C C C C C C C C C
     - 높이는 1이상 이어야 한다 
   - [x] Width: InputView 로부터 입력 받아 너비를 생성한다
     - 너비는 1이상 이어야 한다
-  - [ ] InputView 로부터 지뢰 개수를 입력 받아 지뢰 개수를 생성한다
+  - [x] InputView 로부터 지뢰 개수를 입력 받아 지뢰 개수를 생성한다
 - Field
   - [x] 셀을 갖고 관리 
 - Cell
