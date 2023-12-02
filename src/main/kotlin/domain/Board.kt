@@ -3,19 +3,16 @@ package domain
 import enum.CellStatus
 
 class Board(
-    val height: Int,
-    val width: Int,
+    private val height: Int,
+    private val width: Int,
     private val mineManager: MineManager
 ) {
-    private lateinit var cells: List<Cell>
+    private val cells: List<Cell> = List(height * width) { index ->
+        Cell(Position(index % width, index / width))
+    }
 
-    fun initializeBoard(minePositions: List<Position>) {
-        cells = List(height * width) { index ->
-            Cell(Position(index % width, index / width))
-        }
-
+    fun placeMines(minePositions: List<Position>) {
         minePositions.forEach { placeMineAt(it) }
-
         cells.forEach { cell ->
             cell.adjacentMines = calculateAdjacentMines(cell.position)
         }
@@ -28,7 +25,7 @@ class Board(
     }
 
     private fun calculateAdjacentMines(position: Position): Int {
-        return mineManager.mineCounter.countMinesAround(this, position)
+        return mineManager.mineCounter.countMinesAround(this, position, height, width)
     }
 
     fun placeMineAt(position: Position) {

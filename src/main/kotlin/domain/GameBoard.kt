@@ -4,14 +4,15 @@ import enum.CellStatus
 
 class GameBoard(private val mineManager: MineManager) {
     private lateinit var board: Board
-
-    val boardWidth: Int
-        get() = if (::board.isInitialized) board.width else 0
+    var width: Int = 0
+    private var height: Int = 0
 
     fun initializeBoard(height: Int, width: Int, mineCount: Int) {
+        this.height = height
+        this.width = width
         board = Board(height, width, mineManager)
         val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
-        board.initializeBoard(minePositions)
+        board.placeMines(minePositions)
     }
 
     fun countMines(): Int = board.countMines()
@@ -21,6 +22,6 @@ class GameBoard(private val mineManager: MineManager) {
     }
 
     fun countMinesAround(position: Position): Int {
-        return mineManager.mineCounter.countMinesAround(board, position)
+        return mineManager.mineCounter.countMinesAround(board, position, height, width)
     }
 }

@@ -8,7 +8,7 @@ class OutputView {
     fun displayBoard(board: GameBoard) {
         board.forEachCell { position, cellStatus ->
             print("${getDisplayChar(board, position, cellStatus)} ")
-            if (position.x == board.boardWidth - 1) println()
+            if (position.x == board.width - 1) println()
         }
     }
 
