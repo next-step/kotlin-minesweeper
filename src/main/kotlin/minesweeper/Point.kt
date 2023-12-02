@@ -14,7 +14,7 @@ data class Point(val row: Int, val col: Int) {
     }
 
     private fun Point.isOutOfBound(mapRow: Int, mapCol: Int): Boolean =
-        this.row < 0 || this.col < 0 || this.row >= mapRow || this.col >= mapCol
+        this.row < 1 || this.col < 1 || this.row > mapRow || this.col > mapCol
 
     enum class Direction(val row: Int, val col: Int) {
         NORTH(-1, 0),

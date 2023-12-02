@@ -8,4 +8,10 @@ class RandomPointCreateStrategy : MinePointCreateStrategy {
             .take(mineMapInfo.mineNumber)
             .map { it.toPoint(mineMapInfo.rowNumber) }
     }
+
+    private fun Int.toPoint(rowNum: Int): Point {
+        val rowIdx = this / rowNum
+        val colIdx = this % rowNum
+        return Point(rowIdx + 1, colIdx + 1)
+    }
 }

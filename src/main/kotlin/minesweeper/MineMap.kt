@@ -28,8 +28,8 @@ class MineMap(
 
         private fun emptyMap(mapSize: MapSize): MutableMap<Point, MapTile> {
             return mutableMapOf<Point, MapTile>().apply {
-                for (i in 0 until mapSize.row.count) {
-                    for (j in 0 until mapSize.column.count) {
+                for (i in 1..mapSize.row.count) {
+                    for (j in 1..mapSize.column.count) {
                         put(Point(i, j), MapTile.Blank(0))
                     }
                 }

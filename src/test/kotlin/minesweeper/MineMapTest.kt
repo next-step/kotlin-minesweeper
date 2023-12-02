@@ -32,7 +32,7 @@ class MineMapTest {
         rows.forEachIndexed { row, str ->
             val columnList = str.withIndex().filter { it.value == '*' }.map { it.index }
             for (col in columnList) {
-                mines.add(Point(row, col))
+                mines.add(Point(row + 1, col + 1))
                 mineCount++
             }
         }
@@ -63,7 +63,7 @@ class MineMapTest {
                 ..........
             """.trimIndent()
 
-        val isMinesInFirstRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 0 && it.value == MapTile.Mine }
+        val isMinesInFirstRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 1 && it.value == MapTile.Mine }
         assertThat(createMap(firstLineMine).mineMap.count(isMinesInFirstRow)).isEqualTo(10)
 
         val lastLineMine =
@@ -80,7 +80,7 @@ class MineMapTest {
                 **********
             """.trimIndent()
 
-        val isMinesInLastRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 9 && it.value == MapTile.Mine }
+        val isMinesInLastRow: (Map.Entry<Point, MapTile>) -> Boolean = { it.key.row == 10 && it.value == MapTile.Mine }
         assertThat(createMap(lastLineMine).mineMap.count(isMinesInLastRow)).isEqualTo(10)
     }
 
@@ -93,7 +93,7 @@ class MineMapTest {
                 ...
             """.trimIndent()
 
-        val center = Point(1, 1)
+        val center = Point(2, 2)
         assertThat(createMap(mapCenterBlank).mineMap[center]).isEqualTo(MapTile.Blank(0))
     }
 
@@ -107,7 +107,7 @@ class MineMapTest {
                 ***
             """.trimIndent()
 
-        val center = Point(1, 1)
+        val center = Point(2, 2)
         assertThat(createMap(mapCenterBlank).mineMap[center]).isEqualTo(MapTile.Blank(8))
     }
 
@@ -122,7 +122,7 @@ class MineMapTest {
 
         val map = createMap(mapString)
 
-        assertThat(map.mineMap[Point(0, 0)]).isEqualTo(MapTile.Blank(1))
-        assertThat(map.mineMap[Point(0, 1)]).isEqualTo(MapTile.Blank(2))
+        assertThat(map.mineMap[Point(1, 1)]).isEqualTo(MapTile.Blank(1))
+        assertThat(map.mineMap[Point(1, 2)]).isEqualTo(MapTile.Blank(2))
     }
 }
