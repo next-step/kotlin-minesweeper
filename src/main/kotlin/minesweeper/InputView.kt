@@ -11,4 +11,10 @@ object InputView {
 
         return MineMap.create(MineMapInfo(row, col, mineNum))
     }
+
+    fun getClickedPoint(): Point {
+        print("open: ")
+        val pointString = readln().split(",").map { it.trim().toInt() }
+        return Point(pointString[0], pointString[1])
+    }
 }
