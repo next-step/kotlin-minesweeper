@@ -6,6 +6,10 @@ class Board(private val height: Height, private val width: Width, private val mi
     val rows: SortedSet<Row>
         get() = generateMap()
 
+    init {
+        require(mineCount.value < height.value * width.value) { "지뢰 숫자는 보드 크기보다 작아야 합니다." }
+    }
+
     private fun generateMap(): SortedSet<Row> {
         val sortedSet: SortedSet<Row> = sortedSetOf<Row>()
         for (y in 0 until height.value) {
