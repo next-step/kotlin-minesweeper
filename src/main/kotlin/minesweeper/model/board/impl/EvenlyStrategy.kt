@@ -2,7 +2,7 @@ package minesweeper.model.board.impl
 
 import minesweeper.model.board.BoardLimit
 import minesweeper.model.board.MineDeployStrategy
-import minesweeper.model.point.Attribute
+import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Points
 
@@ -12,14 +12,14 @@ class EvenlyStrategy(
 
     override fun deployPoints(boardLimit: BoardLimit): Points {
         requireMineCountLimit(boardLimit.area(), countOfMines)
-        val coordinateAttributeMap = (0 until boardLimit.area())
+        val coordinateTileTypeMap = (0 until boardLimit.area())
             .asSequence()
             .shuffled()
             .take(countOfMines)
-            .map { coordinateOrderOf(it, boardLimit) to Attribute.MINE }
+            .map { coordinateOrderOf(it, boardLimit) to TileType.MINE }
             .toMap()
-        requireMineCountDeployed(coordinateAttributeMap.keys.size, countOfMines)
-        return Points(coordinateAttributeMap)
+        requireMineCountDeployed(coordinateTileTypeMap.keys.size, countOfMines)
+        return Points(coordinateTileTypeMap)
     }
 
     private fun requireMineCountDeployed(countOfMinesActual: Int, countOfMinesExpect: Int) {

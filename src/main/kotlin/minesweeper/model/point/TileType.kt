@@ -1,6 +1,6 @@
 package minesweeper.model.point
 
-enum class Attribute {
+enum class TileType {
     MINE,
     FLAG,
     NONE,

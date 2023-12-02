@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.model.board.Board
 import minesweeper.model.board.toBoardLimit
-import minesweeper.model.point.Attribute
+import minesweeper.model.point.TileType
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 import minesweeper.model.point.PointsFixture
 
@@ -21,7 +21,7 @@ class AdjacentMineCountRenderingStrategyTest : StringSpec({
             limit = (4 to 4).toBoardLimit(),
         )
         val strategy = AdjacentMineCountRenderingStrategy(board)
-        val actual = strategy.symbol(Attribute.NONE, (0 to 1).toCoordinate())
+        val actual = strategy.symbol(TileType.NONE, (0 to 1).toCoordinate())
         actual shouldBe "2"
     }
 })

@@ -5,7 +5,7 @@ object PointsFixture {
         return Points(
             pairs.asSequence()
                 .map { Coordinate(Vertical(it.first), Horizontal(it.second)) }
-                .map { it to Attribute.MINE }
+                .map { it to TileType.MINE }
                 .toMap()
         )
     }

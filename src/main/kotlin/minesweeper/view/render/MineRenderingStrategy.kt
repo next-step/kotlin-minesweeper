@@ -1,8 +1,8 @@
 package minesweeper.view.render
 
-import minesweeper.model.point.Attribute
+import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
 
 interface MineRenderingStrategy {
-    fun symbol(attribute: Attribute, coordinate: Coordinate): String
+    fun symbol(tileType: TileType, coordinate: Coordinate): String
 }

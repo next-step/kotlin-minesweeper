@@ -1,7 +1,7 @@
 package minesweeper.model.board
 
 import minesweeper.model.board.impl.EvenlyStrategy
-import minesweeper.model.point.Attribute
+import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import minesweeper.model.point.Delta.Companion.deltas
@@ -28,7 +28,7 @@ class Board(
         return this.adjacentPointTraversal(coordinate)
             .asSequence()
             .map { points.attribute(it) }
-            .count { it == Attribute.MINE }
+            .count { it == TileType.MINE }
     }
 
     private fun adjacentPointTraversal(coordinate: Coordinate): List<Coordinate> {
@@ -45,7 +45,7 @@ class Board(
         )
     }
 
-    fun tryOpen(coordinate: Coordinate): Attribute {
+    fun tryOpen(coordinate: Coordinate): TileType {
         return points.attribute(coordinate)
     }
 }
