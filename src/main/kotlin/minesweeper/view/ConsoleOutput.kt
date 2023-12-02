@@ -9,9 +9,10 @@ object ConsoleOutput {
 
         for (row in 0 until height) {
             for (col in 0 until width) {
-                val mark = when (board.at(row, col).type) {
+                val currentCell = board.at(row, col)
+                val mark = when (currentCell.type) {
                     CellType.MINE -> "*"
-                    CellType.EMPTY -> "C"
+                    CellType.EMPTY -> currentCell.aroundMineCount.toString()
                 }
                 print("$mark ")
             }
