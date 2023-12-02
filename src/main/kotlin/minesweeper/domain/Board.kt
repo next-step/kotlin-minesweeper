@@ -28,7 +28,7 @@ class Board(private val metadata: BoardMetadata, rule: MineGenerationRule) {
         var mineCount = 0
         for (aroundCoordinate in AROUND_COORDINATES) {
             val nextCoordinate = coordinate + aroundCoordinate
-            if (nextCoordinate.isOutOfBound(metadata.height, metadata.width)) continue
+            if (nextCoordinate.isOutOfBound(MIN_HEIGHT, metadata.height, MIN_WIDTH, metadata.width)) continue
             if (at(nextCoordinate.row, nextCoordinate.col) is MineCell) {
                 mineCount++
             }
@@ -37,6 +37,8 @@ class Board(private val metadata: BoardMetadata, rule: MineGenerationRule) {
     }
 
     companion object {
+        const val MIN_HEIGHT = 0
+        const val MIN_WIDTH = 0
         private val AROUND_COORDINATES = listOf(
             Coordinate(-1, -1),
             Coordinate(-1, 0),

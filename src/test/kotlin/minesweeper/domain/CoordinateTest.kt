@@ -27,18 +27,18 @@ class CoordinateTest {
         val height = 3
         val width = 3
 
-        Coordinate(0, 0).isOutOfBound(height, width) shouldBe false
-        Coordinate(0, 1).isOutOfBound(height, width) shouldBe false
-        Coordinate(0, 2).isOutOfBound(height, width) shouldBe false
-        Coordinate(1, 0).isOutOfBound(height, width) shouldBe false
-        Coordinate(1, 1).isOutOfBound(height, width) shouldBe false
-        Coordinate(1, 2).isOutOfBound(height, width) shouldBe false
-        Coordinate(2, 0).isOutOfBound(height, width) shouldBe false
-        Coordinate(2, 1).isOutOfBound(height, width) shouldBe false
-        Coordinate(2, 2).isOutOfBound(height, width) shouldBe false
-        Coordinate(-1, 0).isOutOfBound(height, width) shouldBe true
-        Coordinate(-1, -1).isOutOfBound(height, width) shouldBe true
-        Coordinate(2, 3).isOutOfBound(height, width) shouldBe true
-        Coordinate(3, 3).isOutOfBound(height, width) shouldBe true
+        Coordinate(0, 0).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(0, 1).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(0, 2).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(1, 0).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(1, 1).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(1, 2).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(2, 0).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(2, 1).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(2, 2).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe false
+        Coordinate(-1, 0).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe true
+        Coordinate(-1, -1).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe true
+        Coordinate(2, 3).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe true
+        Coordinate(3, 3).isOutOfBound(Board.MIN_HEIGHT, height, Board.MIN_WIDTH, width) shouldBe true
     }
 }
