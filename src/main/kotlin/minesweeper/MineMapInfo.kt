@@ -1,16 +1,16 @@
 package minesweeper
 
-data class MineMapInfo(val mapSize: MapSize, private val mineNum: MineCount) {
+data class MineMapInfo(val mapSize: MapSize, private val mineCount: MineCount) {
     constructor(row: LineCount, col: LineCount, mineNum: MineCount) : this(MapSize(row, col), mineNum)
 
-    val rowCnt = mapSize.row.count
-    val colCnt = mapSize.column.count
-    val mineCnt = mineNum.count
+    val rowNumber = mapSize.row.count
+    val columnNumber = mapSize.column.count
+    val mineNumber = mineCount.count
 
-    val total = rowCnt * colCnt
+    private val totalNumber = rowNumber * columnNumber
 
     init {
-        require(mineCnt <= total) {
+        require(mineNumber <= totalNumber) {
             "Mine Count should not be bigger than total map tile"
         }
     }
