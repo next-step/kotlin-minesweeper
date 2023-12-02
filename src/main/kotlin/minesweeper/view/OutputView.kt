@@ -6,7 +6,7 @@ import minesweeper.domain.Row
 object OutputView {
     fun printBoard(board: Board) {
         println("지뢰찾기 게임 시작")
-        board.rows.forEach { row ->
+        board.mineMap.forEach { row ->
             printOneRow(row)
         }
     }

@@ -1,5 +1,5 @@
 package minesweeper.domain
 
 fun interface MinePlacementStrategy {
-    fun selectIndices(allCells: MutableList<Cell>, mineCount: Int): List<Int>
+    fun placeMine(rows: List<Row>, mineCount: Int): List<Row>
 }
