@@ -20,9 +20,9 @@ class MineMapInfoTest {
     }
 
     @Test
-    fun `지뢰 개수는 양수여야한다`() {
+    fun `지뢰 개수는 음수이면 안된다`() {
         assertThatThrownBy {
-            MineMapInfo(LineCount(5), LineCount(5), MineCount(0))
+            MineMapInfo(LineCount(5), LineCount(5), MineCount(-1))
         }.isInstanceOf(IllegalArgumentException::class.java)
     }
 

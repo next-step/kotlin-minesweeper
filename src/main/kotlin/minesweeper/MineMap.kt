@@ -1,26 +1,49 @@
 package minesweeper
 
 class MineMap(
-    val mineMapInfo: MineMapInfo,
-    createStrategy: MinePointCreateStrategy = RandomPointCreateStrategy()
+    val mineMap: Map<Point, MapTile>,
+    val mapInfo: MineMapInfo
 ) {
-    private val mineList: MineList =
-        MineList.createMineList(mineMapInfo, createStrategy)
-    val mineMap: Map<Point, MapTile> = mutableMapOf<Point, MapTile>().apply {
-        for (mine in mineList.mineList) {
-            this[mine] = MapTile.Mine
+    val totalSize = mapInfo.totalNumber
+
+    companion object {
+        fun create(
+            mineMapInfo: MineMapInfo,
+            createStrategy: MinePointCreateStrategy = RandomPointCreateStrategy()
+        ): MineMap {
+            val mineList: MineList =
+                MineList.createMineList(mineMapInfo, createStrategy)
+
+            return MineMap(
+                emptyMap(mineMapInfo.mapSize).apply {
+                    for (mine in mineList.mineList) {
+                        this[mine] = MapTile.Mine
+                    }
+
+                    for (mine in mineList.mineList) {
+                        createNear(this, mine, mineMapInfo.mapSize)
+                    }
+                },
+                mineMapInfo
+            )
         }
 
-        for (mine in mineList.mineList) {
-            createNear(this, mine)
+        private fun emptyMap(mapSize: MapSize): MutableMap<Point, MapTile> {
+            return mutableMapOf<Point, MapTile>().apply {
+                for (i in 1..mapSize.row.count) {
+                    for (j in 1..mapSize.column.count) {
+                        put(Point(i, j), MapTile.Blank(0))
+                    }
+                }
+            }
         }
-    }
 
-    private fun createNear(map: MutableMap<Point, MapTile>, mine: Point) {
-        val adjacentPoints = AdjacentPoints.create(mine, mineMapInfo.rowCnt, mineMapInfo.colCnt)
-        for (adj in adjacentPoints.points) {
-            val nearInfo = map.getOrDefault(adj, MapTile.Blank(0))
-            if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1
+        private fun createNear(map: MutableMap<Point, MapTile>, mine: Point, mapSize: MapSize) {
+            val adjacentPoints = mine.getAdjacentPoints(mapSize)
+            for (adj in adjacentPoints) {
+                val nearInfo = map[adj]
+                if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1
+            }
         }
     }
 }
