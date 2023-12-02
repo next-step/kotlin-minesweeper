@@ -11,8 +11,8 @@ data class BoardDimensions(
         runCatching {
             input.split(DELIMITER).let {
                 validateInputSize(input, it)
-                val row = it[ROW].toInt()
-                val col = it[COL].toInt()
+                val row = it[ROW].toInt() - 1
+                val col = it[COL].toInt() - 1
                 validateSize(row, col)
                 Position(row, col)
             }
@@ -25,7 +25,7 @@ data class BoardDimensions(
     }
 
     private fun validateSize(row: Int, col: Int) {
-        if(this.height < row || this.width < col) {
+        if(this.height < row || this.width < col || row < 0 || col < 0) {
             throw BoardSizeOverException(SIZE_OVER_MESSAGE.format(height.value, width.value, row, col))
         }
     }
