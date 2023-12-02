@@ -1,5 +1,6 @@
 package minesweeper
 
+import minesweeper.app.MineSweeperGame
 import minesweeper.model.board.Board
 import minesweeper.model.board.toBoardLimit
 import minesweeper.view.InputView
@@ -12,5 +13,6 @@ fun main() {
     val minesCount: Int = InputView.countOfMines()
     val board = Board(minesCount, (mapHeight to mapWidth).toBoardLimit())
     val outputView = OutputView(AdjacentMineCountRenderingStrategy(board))
-    outputView.printMineMap(board)
+    val game = MineSweeperGame(InputView, outputView)
+    game.start(board)
 }
