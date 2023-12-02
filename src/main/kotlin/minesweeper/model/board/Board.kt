@@ -44,4 +44,8 @@ class Board(
             limit = limit
         )
     }
+
+    fun tryOpen(coordinate: Coordinate): Attribute {
+        return points.attribute(coordinate)
+    }
 }
