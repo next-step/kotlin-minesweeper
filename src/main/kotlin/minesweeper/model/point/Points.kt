@@ -1,6 +1,6 @@
 package minesweeper.model.point
 
-import minesweeper.view.reder.MineRenderingStrategy
+import minesweeper.view.render.MineRenderingStrategy
 
 class Points(
     private val points: Map<Coordinate, Attribute>

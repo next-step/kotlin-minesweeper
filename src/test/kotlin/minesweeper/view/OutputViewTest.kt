@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.model.board.Board
 import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.PointsFixture
-import minesweeper.view.reder.impl.AdjacentMineCountRenderingStrategy
+import minesweeper.view.render.impl.AdjacentMineCountRenderingStrategy
 
 class OutputViewTest : StringSpec({
 

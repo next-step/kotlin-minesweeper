@@ -1,4 +1,4 @@
-package minesweeper.view.reder.impl
+package minesweeper.view.render.impl
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

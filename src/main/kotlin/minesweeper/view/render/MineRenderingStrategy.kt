@@ -1,4 +1,4 @@
-package minesweeper.view.reder
+package minesweeper.view.render
 
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate

@@ -5,7 +5,7 @@ import minesweeper.model.board.Board
 import minesweeper.model.board.toBoardLimit
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
-import minesweeper.view.reder.impl.AdjacentMineCountRenderingStrategy
+import minesweeper.view.render.impl.AdjacentMineCountRenderingStrategy
 
 fun main() {
     val mapHeight: Int = InputView.mapHeight()

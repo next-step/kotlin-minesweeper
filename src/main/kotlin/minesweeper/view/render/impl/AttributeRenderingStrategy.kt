@@ -1,8 +1,8 @@
-package minesweeper.view.reder.impl
+package minesweeper.view.render.impl
 
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
-import minesweeper.view.reder.MineRenderingStrategy
+import minesweeper.view.render.MineRenderingStrategy
 
 object AttributeRenderingStrategy : MineRenderingStrategy {
 

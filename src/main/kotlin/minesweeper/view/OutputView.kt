@@ -4,8 +4,8 @@ import minesweeper.model.board.Board
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Horizontal
 import minesweeper.model.point.Vertical
-import minesweeper.view.reder.MineRenderingStrategy
-import minesweeper.view.reder.impl.AttributeRenderingStrategy
+import minesweeper.view.render.MineRenderingStrategy
+import minesweeper.view.render.impl.AttributeRenderingStrategy
 
 class OutputView(
     private val renderingStrategy: MineRenderingStrategy = AttributeRenderingStrategy,
