@@ -1,9 +1,6 @@
 package minesweeper.domain.rule
 
-import minesweeper.domain.BoardMetadata
-import minesweeper.domain.Cell
-import minesweeper.domain.CellType
-import minesweeper.domain.Coordinate
+import minesweeper.domain.*
 
 class TestMineGenerationRule(private val mineCoordinates: List<Coordinate>) : MineGenerationRule {
 
@@ -15,10 +12,10 @@ class TestMineGenerationRule(private val mineCoordinates: List<Coordinate>) : Mi
         }
         return coordinates.associateWith {
             if (mineCoordinates.contains(it)) {
-                return@associateWith Cell(CellType.MINE)
+                return@associateWith MineCell()
             }
 
-            Cell(CellType.EMPTY)
+            EmptyCell()
         }
     }
 }

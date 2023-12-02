@@ -21,7 +21,7 @@ class Board(private val metadata: BoardMetadata, rule: MineGenerationRule) {
     fun countAllAroundMine() {
         (0 until metadata.width).flatMap { row ->
             (0 until metadata.height)
-                .filter { col -> at(row, col).type != CellType.MINE }
+                .filter { col -> at(row, col) is EmptyCell }
                 .map { col ->
                     this.countsOfAroundMines[Coordinate(row, col)] = countAroundMine(row, col)
                 }
@@ -34,7 +34,7 @@ class Board(private val metadata: BoardMetadata, rule: MineGenerationRule) {
         for (aroundCoordinate in AROUND_COORDINATES) {
             val nextCoordinate = currentCoordinate + aroundCoordinate
             if (nextCoordinate.isOutOfBound(metadata.height, metadata.width)) continue
-            if (at(nextCoordinate.row, nextCoordinate.col).type == CellType.MINE) {
+            if (at(nextCoordinate.row, nextCoordinate.col) is MineCell) {
                 mineCount++
             }
         }

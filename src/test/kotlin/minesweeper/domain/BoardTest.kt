@@ -3,6 +3,8 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import minesweeper.domain.rule.RandomMineGenerationRule
 import minesweeper.domain.rule.TestMineGenerationRule
 import org.junit.jupiter.api.Test
@@ -36,10 +38,10 @@ class BoardTest {
         )
 
         mineCoordinates.forEach() {
-            board.at(it.row, it.col).type shouldBe CellType.MINE
+            board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
         }
-        board.at(2, 2).type shouldBe CellType.EMPTY
-        board.at(9, 9).type shouldBe CellType.EMPTY
+        board.at(2, 2).shouldBeInstanceOf<EmptyCell>()
+        board.at(9, 9).shouldBeInstanceOf<EmptyCell>()
     }
 
     @ParameterizedTest
@@ -91,20 +93,8 @@ class BoardTest {
         )
         board.countAllAroundMine()
 
-        for (row in 0 until 5) {
-            for (col in 0 until 5) {
-                val currentCell = board.at(row, col)
-                val mark = when (currentCell.type) {
-                    CellType.MINE -> "*"
-                    CellType.EMPTY -> currentCell.aroundMineCount.toString()
-                }
-                print("$mark ")
-            }
-            println()
-        }
-
         mineCoordinates.forEach() {
-            board.at(it.row, it.col).type shouldBe CellType.MINE
+            board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
         }
         board.countOf(0, 1) shouldBe 2
         board.countOf(0, 2) shouldBe 1

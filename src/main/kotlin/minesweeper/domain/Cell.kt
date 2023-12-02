@@ -1,5 +1,13 @@
 package minesweeper.domain
 
-class Cell(val type: CellType) {
-    var aroundMineCount: Int = 0
+sealed class Cell {
+    abstract val type: CellType
 }
+
+enum class CellType {
+    MINE, EMPTY
+}
+
+data class MineCell(override val type: CellType = CellType.MINE) : Cell()
+
+data class EmptyCell(override val type: CellType = CellType.EMPTY) : Cell()
