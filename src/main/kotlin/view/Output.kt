@@ -1,6 +1,6 @@
 package view
 
-import minesweeper.MinesweeperBoard
+import minesweeper.RenderedGameBoard
 
 object Output {
 
@@ -31,10 +31,7 @@ object Output {
         print(OPEN)
     }
 
-    fun printBoard(board: Array<Array<String>>) {
-        val result = board.joinToString("\n") {
-            it.joinToString(" ")
-        }
-        println(result)
+    fun printAny(any: Any?) {
+        println(any)
     }
 }

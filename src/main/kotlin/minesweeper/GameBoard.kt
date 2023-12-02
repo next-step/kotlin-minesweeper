@@ -2,9 +2,9 @@ package minesweeper
 
 interface GameBoard {
 
-     fun render(mines: Mines): Array<Array<String>>
+     fun render(mines: Mines): RenderedGameBoard
 
      companion object {
-         const val MINE = "*"
+         const val MINE = '*'
      }
 }
