@@ -25,10 +25,10 @@ fun main() {
 
     printStartMessage()
 
-    var boom = false
-    while (!boom) {
+    var isFinished = field.isFinished()
+    while (!isFinished) {
         val (x, y) = inputOpenPosition()
-        boom = !field.clickCell(x, y)
+        isFinished = !field.clickCell(x, y) || field.isFinished()
 
         printBoard(field.cells)
     }
