@@ -1,6 +1,8 @@
 package minesweeper
 
-import minesweeper.domain.field.Field
+import minesweeper.domain.RandomPositionPicker
+import minesweeper.domain.field
+import minesweeper.domain.field.FieldSize
 import minesweeper.domain.field.Height
 import minesweeper.domain.field.Width
 import minesweeper.view.InputView
@@ -8,13 +10,13 @@ import minesweeper.view.InputView
 object Minesweeper {
 
     fun start() {
-        createField()
+        field(createSize(), RandomPositionPicker()) {}
         InputView.mineCount
     }
 
-    private fun createField(): Field {
+    private fun createSize(): FieldSize {
         val height = InputView.height.let(::Height)
         val width = InputView.width.let(::Width)
-        return Field.of(height, width)
+        return FieldSize(height, width)
     }
 }
