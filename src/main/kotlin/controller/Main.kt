@@ -13,16 +13,13 @@ fun main() {
     val width = inputWidth()
     val mineNum = inputMineNum()
 
-    // 가로,세로길이 입력 & 필드 생성
     val field = Field(width = width, height = height)
 
-    // 지뢰 배치
     val selector = RandomPositionSelector(width = width, height = height)
     repeat(mineNum) {
         field.setMine(selector)
     }
 
-    // 힌트 설정
     field.setHints()
 
     printStartMessage()
