@@ -1,3 +1,5 @@
 package minesweeper.domain
 
-data class Cell(val type: CellType, val aroundMineCount: Int)
+class Cell(val type: CellType) {
+    var aroundMineCount: Int = 0
+}
