@@ -25,9 +25,11 @@ fun main() {
 
     printStartMessage()
 
-    var gameFinished = false
-    while (!gameFinished) {
+    var boom = false
+    while (!boom) {
         val (x, y) = inputOpenPosition()
+        boom = !field.clickCell(x, y)
+
         printBoard(field.cells)
     }
 }

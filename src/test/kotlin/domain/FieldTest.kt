@@ -57,4 +57,28 @@ class FieldTest {
             { assertThat(field.cells[2][2].hint).isEqualTo(2) },
         )
     }
+
+    /**
+     * 0 0 0
+     * 0 1 1
+     * 0 1 C
+     */
+    @Test
+    fun `선택한 좌표로부터 힌트가 0이 아닌 셀을 만날때 까지 인접 셀을 연쇄적으로 오픈한다`() {
+        val field = Field(3, 3)
+        val mine = mutableListOf(Position(2, 2))
+
+        field.setMine(TestSelector(mine))
+        field.setHints()
+        field.clickCell(0, 0)
+
+        assertAll(
+            { assertThat(field.cells[0][0].isOpened).isTrue() },
+            { assertThat(field.cells[0][2].isOpened).isTrue() },
+            { assertThat(field.cells[1][0].isOpened).isTrue() },
+            { assertThat(field.cells[2][0].isOpened).isTrue() },
+            { assertThat(field.cells[2][1].isOpened).isTrue() },
+            { assertThat(field.cells[2][2].isOpened).isFalse() },
+        )
+    }
 }
