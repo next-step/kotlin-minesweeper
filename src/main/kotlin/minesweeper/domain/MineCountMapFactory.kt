@@ -2,7 +2,7 @@ package minesweeper.domain
 
 class MineCountMapFactory(
     private val positionGenerator: PositionGenerator
-): MineMapFactory {
+) : MineMapFactory {
     override fun create(): MineMap {
         val minePositions = positionGenerator.generateMinePositions()
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
@@ -21,5 +21,4 @@ class MineCountMapFactory(
             Empty(mineCount)
         }
     }
-
 }

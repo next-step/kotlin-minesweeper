@@ -18,10 +18,8 @@ class MineMapMetaTest {
         // given
         val properties = input.split(" ").map { it.toInt() }
 
-        // then
-        assertThatIllegalArgumentException().isThrownBy {
-            // when
-            MineMapMeta(
+        assertThatIllegalArgumentException().isThrownBy { // then
+            MineMapMeta( // when
                 height = properties[0],
                 width = properties[1],
                 mineCount = properties[2]
@@ -39,10 +37,8 @@ class MineMapMetaTest {
         // given
         val properties = input.split(" ").map { it.toInt() }
 
-        // then
-        assertThatIllegalArgumentException().isThrownBy {
-            // when
-            MineMapMeta(
+        assertThatIllegalArgumentException().isThrownBy { // then
+            MineMapMeta( // when
                 height = properties[0],
                 width = properties[1],
                 mineCount = properties[2]
