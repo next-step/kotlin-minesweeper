@@ -7,4 +7,5 @@ value class Width(
     constructor(input: String) : this(input.toInt())
 
     operator fun minus(other: Int) = value - other
+    operator fun compareTo(other: Int) = this.value - other
 }

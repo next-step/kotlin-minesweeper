@@ -9,6 +9,7 @@ object Output {
     private const val INPUT_MINES = "지뢰는 몇 개인가요?"
     private const val OUTPUT_START_MINESWEEPER = "지뢰찾기 게임 시작"
     private const val MINE: String = "*"
+    private const val OPEN = "open: "
 
     fun printHeightMessage() {
         println(INPUT_HEIGHT)
@@ -24,6 +25,10 @@ object Output {
 
     fun printStartMessage() {
         println(OUTPUT_START_MINESWEEPER)
+    }
+
+    fun printCellMessage() {
+        print(OPEN)
     }
 
     fun printBoard(board: Array<Array<String>>) {
