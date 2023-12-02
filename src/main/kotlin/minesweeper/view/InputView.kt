@@ -1,4 +1,4 @@
-package mineswipper.view
+package minesweeper.view
 
 object InputView {
     fun receiveHeight(): Int {
