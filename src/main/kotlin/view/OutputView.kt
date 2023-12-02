@@ -6,10 +6,15 @@ import enum.CellStatus
 
 class OutputView {
     fun displayBoard(board: GameBoard) {
-        board.forEachCell { position, cellStatus ->
-            print("${getDisplayChar(board, position, cellStatus)} ")
+        board.processEachCell { position, cellStatus ->
+            printCell(board, position, cellStatus)
             if (position.x == board.width - 1) println()
         }
+    }
+
+    private fun printCell(board: GameBoard, position: Position, cellStatus: CellStatus) {
+        val displayChar = getDisplayChar(board, position, cellStatus)
+        print("$displayChar ")
     }
 
     private fun getDisplayChar(board: GameBoard, position: Position, cellStatus: CellStatus): String {

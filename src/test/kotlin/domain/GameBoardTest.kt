@@ -39,7 +39,7 @@ class GameBoardTest {
         gameBoard.setupBoardAndPlaceMines(height, width, 10)
         var cellCount = 0
 
-        gameBoard.forEachCell { _, _ -> cellCount++ }
+        gameBoard.processEachCell { _, _ -> cellCount++ }
 
         assertEquals(height * width, cellCount)
     }
@@ -53,7 +53,7 @@ class GameBoardTest {
         gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
 
         var identifiedMineCount = 0
-        gameBoard.forEachCell { _, cellStatus ->
+        gameBoard.processEachCell { _, cellStatus ->
             if (cellStatus == CellStatus.MINE) identifiedMineCount++
         }
 

@@ -17,7 +17,7 @@ class GameBoard(private val mineManager: MineManager) {
 
     fun countMines(): Int = board.countMines()
 
-    fun forEachCell(onEachCell: (Position, CellStatus) -> Unit) {
+    fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
         board.forEachCell(onEachCell)
     }
 
