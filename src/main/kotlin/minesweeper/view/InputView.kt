@@ -13,12 +13,14 @@ object InputView {
 
     val width: Int
         get() {
+            println()
             println(WIDTH_REQUEST_MESSAGE)
             return readIntInput()
         }
 
     val mineCount: Int
         get() {
+            println()
             println(MINE_COUNT_REQUEST_MESSAGE)
             return readIntInput()
         }
