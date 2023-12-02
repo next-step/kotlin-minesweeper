@@ -2,7 +2,12 @@ package minesweeper.domain
 
 import java.util.*
 
-class Board(private val height: Height, private val width: Width, private val mineCount: MineCount) {
+class Board(
+    private val height: Height,
+    private val width: Width,
+    private val mineCount: MineCount,
+    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy()
+) {
     val rows: SortedSet<Row>
         get() = generateMap()
 
@@ -22,10 +27,9 @@ class Board(private val height: Height, private val width: Width, private val mi
 
     private fun placeMines(rows: SortedSet<Row>) {
         val allCells = rows.flatMap { it.cells }.toMutableList()
-        repeat(mineCount.value) {
-            val randomIndex = allCells.indices.random()
-            allCells[randomIndex].state = State.MINE
-            allCells.removeAt(randomIndex)
+        val mineIndices = minePlacementStrategy.selectIndices(allCells, mineCount.value)
+        mineIndices.forEach { index ->
+            allCells[index].state = State.MINE
         }
     }
 }
