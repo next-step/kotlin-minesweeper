@@ -2,8 +2,10 @@ package minesweeper
 
 class MineMap(
     val mineMap: Map<Point, MapTile>,
-    val mapSize: MapSize
+    val mapInfo: MineMapInfo
 ) {
+    val totalSize = mapInfo.totalNumber
+
     companion object {
         fun create(
             mineMapInfo: MineMapInfo,
@@ -22,7 +24,7 @@ class MineMap(
                         createNear(this, mine, mineMapInfo.mapSize)
                     }
                 },
-                mineMapInfo.mapSize
+                mineMapInfo
             )
         }
 
@@ -37,7 +39,7 @@ class MineMap(
         }
 
         private fun createNear(map: MutableMap<Point, MapTile>, mine: Point, mapSize: MapSize) {
-            val adjacentPoints = mine.getAdjacentPoint(mapSize)
+            val adjacentPoints = mine.getAdjacentPoints(mapSize)
             for (adj in adjacentPoints) {
                 val nearInfo = map[adj]
                 if (nearInfo is MapTile.Blank) map[adj] = nearInfo + 1

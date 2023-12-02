@@ -6,5 +6,7 @@ sealed class MapTile {
         operator fun plus(number: Int): Blank {
             return Blank(this.nearCount + number)
         }
+
+        val isNoMineNear = nearCount == 0
     }
 }

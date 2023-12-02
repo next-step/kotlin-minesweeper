@@ -7,7 +7,7 @@ data class MineMapInfo(val mapSize: MapSize, private val mineCount: MineCount) {
     val columnNumber = mapSize.column.count
     val mineNumber = mineCount.count
 
-    private val totalNumber = rowNumber * columnNumber
+    val totalNumber = rowNumber * columnNumber
 
     init {
         require(mineNumber <= totalNumber) {
