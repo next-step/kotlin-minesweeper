@@ -13,7 +13,7 @@ class MineMapTest {
     )
 
     @Test
-    fun `minePositions와 emptyPositions이 주어질 때 MineMap을 생성할 수 있다`() {
+    fun `Position(key)와 Cell(value)로 구쉉된 map을 받으면 MineMap을 생성할 수 있다`() {
         // given, when
         val mineMap = MineMap(mapValues)
 

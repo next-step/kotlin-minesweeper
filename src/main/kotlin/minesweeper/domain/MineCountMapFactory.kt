@@ -1,11 +1,14 @@
 package minesweeper.domain
 
-object MineCountMapFactory : MineMapFactory {
-    override fun create(minePositions: Positions, emptyPositions: Positions): MineMap {
-        val allPositions = minePositions + emptyPositions
-        val cells = allPositions.getValues().associateWith {
-            createCell(it, minePositions)
-        }
+class MineCountMapFactory(
+    private val positionGenerator: PositionGenerator
+): MineMapFactory {
+    override fun create(): MineMap {
+        val minePositions = positionGenerator.generateMinePositions()
+        val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
+        val cells = (minePositions + emptyPositions)
+            .getValues()
+            .associateWith { createCell(it, minePositions) }
         return MineMap(cells)
     }
 
@@ -14,8 +17,7 @@ object MineCountMapFactory : MineMapFactory {
         return if (minePositions.contains(position)) {
             Mine
         } else {
-            val mineCount = aroundPositions
-                .count { minePositions.contains(it) }
+            val mineCount = aroundPositions.count { minePositions.contains(it) }
             Empty(mineCount)
         }
     }
