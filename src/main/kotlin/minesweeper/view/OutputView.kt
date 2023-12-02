@@ -27,4 +27,12 @@ class OutputView(
     private fun renderingPoint(board: Board, coordinate: Coordinate): String {
         return board.points.symbol(coordinate, renderingStrategy)
     }
+
+    fun gameStart() {
+        println("지뢰찾기 게임 시작")
+    }
+
+    fun printGameResult() {
+        println("Lose Game.")
+    }
 }
