@@ -28,7 +28,11 @@ class MineGenerationRuleTest {
 
     @Test
     fun `지뢰의 위치를 직접 좌표로 지정해서 생성`() {
-        val mineCoordinates = listOf(0 to 0, 0 to 1, 1 to 0)
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(0, 1),
+            Coordinate(1, 0)
+        )
         val numOfMine = mineCoordinates.size
         val rule = TestMineGenerationRule(mineCoordinates)
         val rawBoard = rule.generate(BoardMetadata(4, 5, numOfMine))

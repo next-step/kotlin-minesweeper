@@ -21,7 +21,14 @@ class BoardTest {
 
     @Test
     fun `게임판은 좌표로 셀에 접근할 수 있다`() {
-        val mineCoordinates = listOf(0 to 0, 0 to 1, 1 to 0, 5 to 5, 7 to 9)
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(0, 1),
+            Coordinate(1, 0),
+            Coordinate(5, 5),
+            Coordinate(7, 9)
+        )
+
         val numOfMine = mineCoordinates.size
         val board = Board(
             BoardMetadata(10, 10, numOfMine),
@@ -29,7 +36,7 @@ class BoardTest {
         )
 
         mineCoordinates.forEach() {
-            board.at(it.first, it.second).type shouldBe CellType.MINE
+            board.at(it.row, it.col).type shouldBe CellType.MINE
         }
         board.at(2, 2).type shouldBe CellType.EMPTY
         board.at(9, 9).type shouldBe CellType.EMPTY
@@ -70,7 +77,13 @@ class BoardTest {
      */
     @Test
     fun `게임판은 지뢰를 생성한 뒤, 주변 지뢰 개수를 계산하여 갖고 있다`() {
-        val mineCoordinates = listOf(0 to 0, 1 to 2, 2 to 4, 3 to 0, 3 to 1)
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
         val numOfMine = mineCoordinates.size
         val board = Board(
             BoardMetadata(5, 5, numOfMine),
@@ -90,7 +103,7 @@ class BoardTest {
         }
 
         mineCoordinates.forEach() {
-            board.at(it.first, it.second).type shouldBe CellType.MINE
+            board.at(it.row, it.col).type shouldBe CellType.MINE
         }
         board.at(0, 0).aroundMineCount shouldBe 0
         board.at(0, 1).aroundMineCount shouldBe 2
