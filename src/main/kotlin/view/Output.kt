@@ -11,3 +11,10 @@ fun printBoard(cells: List<List<Cell>>) {
         row.joinToString(" ") { it.toStr() }.let(::println)
     }
 }
+
+fun printResult(foundAll: Boolean) {
+    when (foundAll) {
+        true -> println("You Win.")
+        false -> println("Lose Game.")
+    }
+}

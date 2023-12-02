@@ -7,6 +7,7 @@ import view.inputMineNum
 import view.inputOpenPosition
 import view.inputWidth
 import view.printBoard
+import view.printResult
 import view.printStartMessage
 
 fun main() {
@@ -26,10 +27,14 @@ fun main() {
     printStartMessage()
 
     var isFinished = field.isFinished()
+    var boom = false
     while (!isFinished) {
         val (x, y) = inputOpenPosition()
-        isFinished = !field.clickCell(x, y) || field.isFinished()
+        boom = !field.clickCell(x, y)
+        isFinished = boom || field.isFinished()
 
         printBoard(field.cells)
     }
+
+    printResult(!boom)
 }
