@@ -1,5 +1,6 @@
 package minesweeper.view.render.impl
 
+import minesweeper.model.point.Attribute
 import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
 import minesweeper.view.render.MineRenderingStrategy
@@ -12,7 +13,7 @@ object AttributeRenderingStrategy : MineRenderingStrategy {
         TileType.NONE to "C",
     )
 
-    override fun symbol(tileType: TileType, coordinate: Coordinate): String {
-        return requireNotNull(symbolLookup[tileType]) { "attribute=[$tileType] 를 표시할 방법이 정의되지 않았습니다" }
+    override fun symbol(attribute: Attribute, coordinate: Coordinate): String {
+        return requireNotNull(symbolLookup[attribute.tileType]) { "attribute=[$attribute.tileType] 를 표시할 방법이 정의되지 않았습니다" }
     }
 }
