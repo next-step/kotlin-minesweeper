@@ -4,6 +4,7 @@ import domain.Field
 import domain.RandomPositionSelector
 import view.inputHeight
 import view.inputMineNum
+import view.inputOpenPosition
 import view.inputWidth
 import view.printBoard
 import view.printStartMessage
@@ -23,5 +24,10 @@ fun main() {
     field.setHints()
 
     printStartMessage()
-    printBoard(field.cells)
+
+    var gameFinished = false
+    while (!gameFinished) {
+        val (x, y) = inputOpenPosition()
+        printBoard(field.cells)
+    }
 }

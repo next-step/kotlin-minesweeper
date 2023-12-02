@@ -17,3 +17,12 @@ fun inputMineNum(): Int {
 
     return inputToInt(readln())
 }
+
+fun inputOpenPosition(): Pair<Int, Int> {
+    println("open: ")
+
+    val input = readln()
+    val (x, y) = tokenizeInts(input)
+
+    return Pair(x, y)
+}

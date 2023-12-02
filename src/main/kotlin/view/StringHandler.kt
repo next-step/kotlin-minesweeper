@@ -4,6 +4,10 @@ import domain.Cell
 
 const val MINE_SYMBOL = "X"
 
+fun tokenizeInts(input: String): List<Int> {
+    return input.split(",").map { inputToInt(it.trim()) }
+}
+
 fun inputToInt(input: String): Int {
     require(input.isNotBlank()) { "빈 값이 입력되었습니다." }
 
