@@ -4,22 +4,26 @@ import minesweeper.domain.rule.MineGenerationRule
 
 class Board(private val metadata: BoardMetadata, rule: MineGenerationRule) {
     private val rows: Map<Coordinate, Cell>
+    private val countsOfAroundMines: MutableMap<Coordinate, Int> = mutableMapOf()
 
     init {
         rows = rule.generate(metadata)
-        countAllAroundMine()
     }
 
     fun at(row: Int, col: Int): Cell {
         return rows[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 
-    private fun countAllAroundMine() {
+    fun countOf(row: Int, col: Int): Int {
+        return countsOfAroundMines[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
+    }
+
+    fun countAllAroundMine() {
         (0 until metadata.width).flatMap { row ->
             (0 until metadata.height)
                 .filter { col -> at(row, col).type != CellType.MINE }
                 .map { col ->
-                    at(row, col).aroundMineCount = countAroundMine(row, col)
+                    this.countsOfAroundMines[Coordinate(row, col)] = countAroundMine(row, col)
                 }
         }
     }

@@ -89,6 +89,7 @@ class BoardTest {
             BoardMetadata(5, 5, numOfMine),
             TestMineGenerationRule(mineCoordinates)
         )
+        board.countAllAroundMine()
 
         for (row in 0 until 5) {
             for (col in 0 until 5) {
@@ -105,30 +106,25 @@ class BoardTest {
         mineCoordinates.forEach() {
             board.at(it.row, it.col).type shouldBe CellType.MINE
         }
-        board.at(0, 0).aroundMineCount shouldBe 0
-        board.at(0, 1).aroundMineCount shouldBe 2
-        board.at(0, 2).aroundMineCount shouldBe 1
-        board.at(0, 3).aroundMineCount shouldBe 1
-        board.at(0, 4).aroundMineCount shouldBe 0
-        board.at(1, 0).aroundMineCount shouldBe 1
-        board.at(1, 1).aroundMineCount shouldBe 2
-        board.at(1, 2).aroundMineCount shouldBe 0
-        board.at(1, 3).aroundMineCount shouldBe 2
-        board.at(1, 4).aroundMineCount shouldBe 1
-        board.at(2, 0).aroundMineCount shouldBe 2
-        board.at(2, 1).aroundMineCount shouldBe 3
-        board.at(2, 2).aroundMineCount shouldBe 2
-        board.at(2, 3).aroundMineCount shouldBe 2
-        board.at(2, 4).aroundMineCount shouldBe 0
-        board.at(3, 0).aroundMineCount shouldBe 0
-        board.at(3, 1).aroundMineCount shouldBe 0
-        board.at(3, 2).aroundMineCount shouldBe 1
-        board.at(3, 3).aroundMineCount shouldBe 1
-        board.at(3, 4).aroundMineCount shouldBe 1
-        board.at(4, 0).aroundMineCount shouldBe 2
-        board.at(4, 1).aroundMineCount shouldBe 2
-        board.at(4, 2).aroundMineCount shouldBe 1
-        board.at(4, 3).aroundMineCount shouldBe 0
-        board.at(4, 4).aroundMineCount shouldBe 0
+        board.countOf(0, 1) shouldBe 2
+        board.countOf(0, 2) shouldBe 1
+        board.countOf(0, 3) shouldBe 1
+        board.countOf(0, 4) shouldBe 0
+        board.countOf(1, 0) shouldBe 1
+        board.countOf(1, 1) shouldBe 2
+        board.countOf(1, 3) shouldBe 2
+        board.countOf(1, 4) shouldBe 1
+        board.countOf(2, 0) shouldBe 2
+        board.countOf(2, 1) shouldBe 3
+        board.countOf(2, 2) shouldBe 2
+        board.countOf(2, 3) shouldBe 2
+        board.countOf(3, 2) shouldBe 1
+        board.countOf(3, 3) shouldBe 1
+        board.countOf(3, 4) shouldBe 1
+        board.countOf(4, 0) shouldBe 2
+        board.countOf(4, 1) shouldBe 2
+        board.countOf(4, 2) shouldBe 1
+        board.countOf(4, 3) shouldBe 0
+        board.countOf(4, 4) shouldBe 0
     }
 }

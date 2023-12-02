@@ -12,7 +12,7 @@ object ConsoleOutput {
                 val currentCell = board.at(row, col)
                 val mark = when (currentCell.type) {
                     CellType.MINE -> "*"
-                    CellType.EMPTY -> currentCell.aroundMineCount.toString()
+                    CellType.EMPTY -> board.countOf(row, col).toString()
                 }
                 print("$mark ")
             }

@@ -12,6 +12,7 @@ fun main() {
     val numOfMine = ConsoleInput.inputNumOfMine()
 
     val board = Board(BoardMetadata(boardHeight, boardWidth, numOfMine), RandomMineGenerationRule())
+    board.countAllAroundMine()
 
     ConsoleOutput.printBoard(boardHeight, boardWidth, board)
 }
