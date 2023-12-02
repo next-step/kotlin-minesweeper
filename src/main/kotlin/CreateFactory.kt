@@ -1,5 +1,5 @@
 object CreateFactory {
-    fun createMineMap(width: Int, height: Int): MineMap {
-        return MineMap(MutableList(height) { MutableList(width) { None } })
+    fun createBoard(width: Int, height: Int): Board {
+        return Board(MutableList(height) { MutableList(width) { None } })
     }
 }

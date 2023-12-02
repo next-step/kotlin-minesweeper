@@ -10,7 +10,7 @@ class CreateFactoryTest {
         val width = 3
 
         // when :
-        val mineMap = CreateFactory.createMineMap(width, height)
+        val mineMap = CreateFactory.createBoard(width, height)
 
         // then :
         val actual = mineMap.board.all { cells -> cells.contains(None) }

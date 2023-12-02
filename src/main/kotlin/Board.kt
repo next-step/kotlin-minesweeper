@@ -1,4 +1,4 @@
-class MineMap(val board: MutableList<MutableList<Cell>>) {
+class Board(val board: MutableList<MutableList<Cell>>) {
 
     init {
         validate()
