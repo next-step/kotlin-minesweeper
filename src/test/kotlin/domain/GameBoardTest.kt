@@ -26,7 +26,7 @@ class GameBoardTest {
         val height = 10
         val width = 10
         val mineCount = 10
-        gameBoard.initializeBoard(height, width, mineCount)
+        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
 
         assertEquals(mineCount, gameBoard.countMines())
     }
@@ -36,7 +36,7 @@ class GameBoardTest {
     fun `forEachCell 메서드는 모든 셀을 순회한다`() {
         val height = 10
         val width = 10
-        gameBoard.initializeBoard(height, width, 10)
+        gameBoard.setupBoardAndPlaceMines(height, width, 10)
         var cellCount = 0
 
         gameBoard.forEachCell { _, _ -> cellCount++ }
@@ -50,7 +50,7 @@ class GameBoardTest {
         val height = 5
         val width = 5
         val mineCount = 3
-        gameBoard.initializeBoard(height, width, mineCount)
+        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
 
         var identifiedMineCount = 0
         gameBoard.forEachCell { _, cellStatus ->

@@ -16,7 +16,7 @@ class MinesweeperGame(
         val mineCount = inputView.readMineCount()
 
         val gameBoard = GameBoard(mineManager)
-        gameBoard.initializeBoard(height, width, mineCount)
+        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
         outputView.displayBoard(gameBoard)
     }
 }

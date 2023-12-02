@@ -7,7 +7,7 @@ class GameBoard(private val mineManager: MineManager) {
     var width: Int = 0
     private var height: Int = 0
 
-    fun initializeBoard(height: Int, width: Int, mineCount: Int) {
+    fun setupBoardAndPlaceMines(height: Int, width: Int, mineCount: Int) {
         this.height = height
         this.width = width
         board = Board(height, width, mineManager)
