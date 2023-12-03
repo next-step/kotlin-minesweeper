@@ -4,17 +4,26 @@ import domain.enums.CellType
 
 class CellInfo(
     cellType: CellType = CellType.NOT_MINE,
-    val neighborMineCount: NeighborMineCount = NeighborMineCount(0)
+    neighborMineCount: NeighborMineCount = NeighborMineCount(0)
 ) {
     var cellType: CellType = cellType
         private set
 
+    var neighborMineCount: NeighborMineCount = neighborMineCount
+        private set
+
     fun installMine() { cellType = CellType.MINE }
 
-    fun isMine(): Boolean = cellType == CellType.MINE
+    private fun isMine(): Boolean = cellType == CellType.MINE
 
-    fun createCellInfo(boardSettings: BoardSettings, board: List<CellList>, point: Point): CellInfo {
-        return if (cellType == CellType.MINE) { this }
-        else { CellInfo(neighborMineCount = neighborMineCount.calculateNeighborMineCount(point, boardSettings, board)) }
+    fun findNeighborMineCount(boardSettings: BoardSettings, board: List<CellList>, point: Point) {
+        if (cellType == CellType.NOT_MINE) { neighborMineCount = NeighborMineCount(calculateNeighborMineCount(point, boardSettings, board)) }
+    }
+
+    private fun calculateNeighborMineCount(point: Point, boardSettings: BoardSettings, board: List<CellList>): Int {
+        return point.getNeighborPoints()
+            .filter { it.isValid(boardSettings) }
+            .map { board[it.row].cells[it.col] }
+            .count { it.cellInfo.isMine() }
     }
 }

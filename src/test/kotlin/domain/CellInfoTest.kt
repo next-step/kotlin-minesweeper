@@ -21,8 +21,8 @@ class CellInfoTest {
     @Test
     fun `지뢰를 가진 Cell 에서는 지뢰가 반환되어야 한다`() {
         val cellInfo = CellInfo(CellType.MINE)
-        val result = cellInfo.createCellInfo(boardSettings, board, Point(0, 0))
-        assertEquals(CellType.MINE, result.cellType)
+        cellInfo.findNeighborMineCount(boardSettings, board, Point(0, 0))
+        assertEquals(CellType.MINE, cellInfo.cellType)
     }
 
     @Test
@@ -33,8 +33,20 @@ class CellInfoTest {
         board[0].cells[2].installMine()
         board[1].cells[0].installMine()
 
-        val result = cellInfo.createCellInfo(boardSettings, board, Point(1, 1))
-        assertEquals(CellType.NOT_MINE, result.cellType)
-        assertEquals(4, result.neighborMineCount.count)
+        cellInfo.findNeighborMineCount(boardSettings, board, Point(1, 1))
+        assertEquals(CellType.NOT_MINE, cellInfo.cellType)
+        assertEquals(4, cellInfo.neighborMineCount.count)
+    }
+
+    @Test
+    fun `3 * 3 게임에서 (0,0), (0,1), (0,2), (1,0) 에 지뢰를 설치한 후 (1,1) 주위에는 4개의 지뢰가 존재한다`() {
+        val cellInfo = CellInfo(CellType.NOT_MINE)
+        board[0].cells[0].installMine()
+        board[0].cells[1].installMine()
+        board[0].cells[2].installMine()
+        board[1].cells[0].installMine()
+
+        cellInfo.findNeighborMineCount(boardSettings, board, Point(1, 1))
+        assertEquals(4, cellInfo.neighborMineCount.count)
     }
 }
