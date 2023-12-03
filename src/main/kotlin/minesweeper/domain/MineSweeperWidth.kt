@@ -1,13 +1,16 @@
 package minesweeper.domain
 
+import minesweeper.domain.mine.MineShape
+
 class MineSweeperWidth(
     private val widthList: List<String>,
 ) : List<String> by widthList {
 
     companion object {
-        fun newInstance(widthSize: Int, value: String): MineSweeperWidth {
+
+        fun newInstance(widthSize: Int, mineShape: MineShape): MineSweeperWidth {
             return (1..widthSize).map {
-                value
+                mineShape.shape
             }.toMineSweeperWidth()
         }
     }

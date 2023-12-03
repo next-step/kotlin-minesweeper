@@ -3,28 +3,22 @@ package minesweeper
 import minesweeper.domain.MineSweeperBoard
 import minesweeper.domain.MineSweeperWidth
 import minesweeper.domain.board.size.MineSweeperBoardSize
+import minesweeper.domain.mine.Mine
+import minesweeper.domain.mine.MineShape
 
 class MineSweeper(
     private val board: MineSweeperBoardSize,
-    private val mineCount: Int
+    private val mine: Mine,
 ) {
-    init {
-        require(mineCount > 0) { INVALID_VALUE }
-    }
 
     fun createBoard(): MineSweeperBoard {
-        val notContainedMineCount = board.getBoardFullSize() - mineCount
-        val notContainedMineList = MineSweeperWidth.newInstance(widthSize = notContainedMineCount, value = NOT_MINE)
-        val mineList = MineSweeperWidth.newInstance(widthSize = mineCount, value = MINE)
+        val notContainedMineCount = board.getBoardFullSize() - mine.mineCount
+        val notContainedMineList =
+            MineSweeperWidth.newInstance(widthSize = notContainedMineCount, mineShape = MineShape.SHAPE)
+        val mineList = MineSweeperWidth.newInstance(widthSize = mine.mineCount, mineShape = MineShape.MINE)
 
         val mineSweeperList = (notContainedMineList + mineList).shuffled()
 
         return MineSweeperBoard.newInstance(board = board, mineSweeperList = mineSweeperList)
-    }
-
-    companion object {
-        private const val INVALID_VALUE = "잘못된 값을 입력하셨습니다."
-        private const val NOT_MINE = "C"
-        private const val MINE = "*"
     }
 }

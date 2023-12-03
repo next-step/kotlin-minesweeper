@@ -1,10 +1,10 @@
-package minesweeper.ui
+package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import minesweeper.domain.board.size.MineSweeperBoardSize
 
-class MineBoardTest : StringSpec({
+class MineSweeperBoardSizeTest : StringSpec({
     "width 가 1보다 작을 경우 에러가 발생한다." {
         shouldThrow<IllegalArgumentException> {
             MineSweeperBoardSize(width = 0, height = 1)
