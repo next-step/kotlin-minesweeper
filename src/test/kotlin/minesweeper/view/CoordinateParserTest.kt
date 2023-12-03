@@ -12,5 +12,4 @@ class CoordinateParserTest : StringSpec({
         val parse = CoordinateParser.parse("1,2")
         parse shouldBe Coordinate(Vertical(1), Horizontal(2))
     }
-
 })

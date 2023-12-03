@@ -4,6 +4,8 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.model.board.toBoardLimit
+import minesweeper.model.point.Attribute
+import minesweeper.model.point.Coordinate
 
 class EvenlyStrategyTest : StringSpec({
 
@@ -38,3 +40,7 @@ class EvenlyStrategyTest : StringSpec({
         }
     }
 })
+
+private fun Map<Coordinate, Attribute>.countOfMine(): Int {
+    return this.values.count { it == Attribute.MINE }
+}

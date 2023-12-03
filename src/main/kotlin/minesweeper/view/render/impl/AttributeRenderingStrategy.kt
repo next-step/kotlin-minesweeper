@@ -1,19 +1,19 @@
 package minesweeper.view.render.impl
 
+import minesweeper.model.board.Board
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
-import minesweeper.model.point.TileType
 import minesweeper.view.render.MineRenderingStrategy
 
 object AttributeRenderingStrategy : MineRenderingStrategy {
 
-    private val symbolLookup: Map<TileType, String> = mapOf(
-        TileType.MINE to "*",
-        TileType.FLAG to "F",
-        TileType.NONE to "C",
+    private val symbolLookup: Map<Attribute, String> = mapOf(
+        Attribute.MINE to "*",
+        Attribute.NONE to "C",
     )
 
-    override fun symbol(attribute: Attribute, coordinate: Coordinate): String {
-        return requireNotNull(symbolLookup[attribute.tileType]) { "attribute=[$attribute.tileType] 를 표시할 방법이 정의되지 않았습니다" }
+    override fun symbolOf(board: Board, coordinate: Coordinate): String {
+        val tileType = board.attribute(coordinate)
+        return requireNotNull(symbolLookup[tileType]) { "attribute=[$tileType] 를 표시할 방법이 정의되지 않았습니다" }
     }
 }

@@ -12,7 +12,7 @@ fun main() {
     val mapWidth: Int = InputView.mapWidth()
     val minesCount: Int = InputView.countOfMines()
     val board = Board(minesCount, (mapHeight to mapWidth).toBoardLimit())
-    val outputView = OutputView(AdjacentMineCountRenderingStrategy(board))
+    val outputView = OutputView(AdjacentMineCountRenderingStrategy)
     val game = MineSweeperGame(InputView, outputView)
     game.start(board)
 }
