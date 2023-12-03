@@ -8,7 +8,7 @@ class MineSweeperWidthTest : StringSpec({
     "생성한 MineSweeperWidth의 Shape는 기본적으로 MineSweeperShape.SHAPE 이다." {
         val notMineSweeperWidth = MineSweeperWidth.newInstance(4)
         notMineSweeperWidth.forEach { shape ->
-            shape shouldBe MineSweeperShape.SHAPE.shape
+            shape shouldBe MineSweeperShape.NUMBER.shape
         }
     }
 
