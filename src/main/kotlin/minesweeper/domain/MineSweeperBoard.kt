@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 import minesweeper.domain.board.size.MineSweeperBoardSize
+import minesweeper.domain.mine.MineCheckStrategy
 import minesweeper.domain.mine.MineSweeperShape
 
 class MineSweeperBoard(
@@ -16,24 +17,14 @@ class MineSweeperBoard(
         height: MineSweeperWidth,
         heightIndex: Int
     ): MineSweeperWidth = List(height.size) { widthIndex ->
-        var count = 0
         if (MineSweeperShape.isMine(mineSweeperBoard[widthIndex][heightIndex])) return@List mineSweeperBoard[widthIndex][heightIndex]
-        if (valueIsMine(widthIndex = widthIndex - 1, heightIndex = heightIndex - 1)) count += 1
-        if (valueIsMine(widthIndex = widthIndex, heightIndex = heightIndex - 1)) count += 1
-        if (valueIsMine(widthIndex = widthIndex + 1, heightIndex = heightIndex - 1)) count += 1
-        if (valueIsMine(widthIndex = widthIndex - 1, heightIndex = heightIndex)) count += 1
-        if (valueIsMine(widthIndex = widthIndex + 1, heightIndex = heightIndex)) count += 1
-        if (valueIsMine(widthIndex = widthIndex - 1, heightIndex = heightIndex + 1)) count += 1
-        if (valueIsMine(widthIndex = widthIndex, heightIndex = heightIndex + 1)) count += 1
-        if (valueIsMine(widthIndex = widthIndex + 1, heightIndex = heightIndex + 1)) count += 1
-        count.toString()
+        val resultCount = MineCheckStrategy.mineMatchCount(
+            mineSweeperBoard = this,
+            widthIndex = widthIndex,
+            heightIndex = heightIndex
+        )
+        resultCount.toString()
     }.toMineSweeperWidth()
-
-    private fun valueIsMine(widthIndex: Int, heightIndex: Int): Boolean {
-        return runCatching {
-            MineSweeperShape.isMine(mineSweeperBoard[widthIndex][heightIndex])
-        }.getOrNull() ?: false
-    }
 
     companion object {
         fun newInstance(boardSize: MineSweeperBoardSize, mineSweeperList: MineSweeperWidth): MineSweeperBoard {
