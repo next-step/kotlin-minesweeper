@@ -7,12 +7,11 @@ class MineCountMapFactory(
         val minePositions = positionGenerator.generateMinePositions()
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
         val cells = (minePositions + emptyPositions)
-            .getValues()
             .associateWith { createCell(it, minePositions) }
         return MineMap(cells)
     }
 
-    private fun createCell(position: Position, minePositions: Positions): Cell {
+    private fun createCell(position: Position, minePositions: Set<Position>): Cell {
         val aroundPositions = position.aroundPositions()
         return if (minePositions.contains(position)) {
             Mine()

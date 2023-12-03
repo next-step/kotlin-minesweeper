@@ -1,12 +1,10 @@
 package minesweeper.domain
 
 object RandomPositionSelector : PositionSelector {
-    override fun select(positions: Positions, selectNum: Int): Positions {
+    override fun select(positions: Set<Position>, selectNum: Int): Set<Position> {
         return positions
-            .getValues()
             .shuffled()
             .take(selectNum)
             .toSet()
-            .toPositions()
     }
 }

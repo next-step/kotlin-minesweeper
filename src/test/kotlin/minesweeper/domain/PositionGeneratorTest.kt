@@ -19,11 +19,11 @@ class PositionGeneratorTest {
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
 
         assertSoftly { // then
-            assertThat(minePositions.getValues())
+            assertThat(minePositions)
                 .containsExactly(
                     Position(1, 1), Position(1, 2), Position(1, 3), Position(1, 4), Position(1, 5)
                 )
-            assertThat(emptyPositions.getValues())
+            assertThat(emptyPositions)
                 .containsExactly(
                     Position(2, 1), Position(2, 2), Position(2, 3), Position(2, 4), Position(2, 5),
                     Position(3, 1), Position(3, 2), Position(3, 3), Position(3, 4), Position(3, 5),

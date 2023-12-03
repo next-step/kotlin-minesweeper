@@ -1,16 +1,13 @@
 package minesweeper.domain.support
 
+import minesweeper.domain.Position
 import minesweeper.domain.PositionSelector
-import minesweeper.domain.Positions
-import minesweeper.domain.toPositions
 
 object FixedPositionSelector : PositionSelector {
-    override fun select(positions: Positions, selectNum: Int): Positions {
-        val values = positions.getValues()
-        return values
+    override fun select(positions: Set<Position>, selectNum: Int): Set<Position> {
+        return positions
             .sortedWith(compareBy({ it.y }, { it.x }))
             .take(selectNum)
             .toSet()
-            .toPositions()
     }
 }
