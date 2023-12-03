@@ -12,7 +12,7 @@ class MineSweeper(
         require(mineCount > 0) { INVALID_VALUE }
     }
 
-    fun createBoard(): List<MineSweeperWidth> {
+    fun createBoard(): MineSweeperBoard {
         val notContainedMineCount = board.getBoardFullSize() - mineCount
         val notContainedMineList = MineSweeperWidth.newInstance(widthSize = notContainedMineCount, value = NOT_MINE)
         val mineList = MineSweeperWidth.newInstance(widthSize = mineCount, value = MINE)

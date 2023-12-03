@@ -4,8 +4,6 @@ class MineSweeperWidth(
     private val widthList: List<String>,
 ) : List<String> by widthList {
 
-    fun getWidthList(): List<String> = widthList
-
     companion object {
         fun newInstance(widthSize: Int, value: String): MineSweeperWidth {
             return (1..widthSize).map {

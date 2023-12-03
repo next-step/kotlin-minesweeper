@@ -1,6 +1,6 @@
 package minesweeper.ui
 
-import minesweeper.domain.MineSweeperWidth
+import minesweeper.domain.MineSweeperBoard
 
 object OutputView {
     fun enterHeight() {
@@ -19,7 +19,7 @@ object OutputView {
         println("지뢰찾기 게임 시작")
     }
 
-    fun mineSweeperInitializePrinter(mineSweeperInitializer: List<MineSweeperWidth>) {
+    fun mineSweeperInitializePrinter(mineSweeperInitializer: MineSweeperBoard) {
         mineSweeperInitializer.forEach {
             println(it.joinToString())
         }
