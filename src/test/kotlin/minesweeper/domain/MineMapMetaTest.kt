@@ -1,11 +1,12 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.assertThrows
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class MineMapMetaTest {
+
     @ParameterizedTest
     @CsvSource(
         "0 0 0",
@@ -17,7 +18,7 @@ class MineMapMetaTest {
         // given
         val properties = input.split(" ").map { it.toInt() }
 
-        assertThrows<IllegalArgumentException> { // then
+        assertThatIllegalArgumentException().isThrownBy { // then
             MineMapMeta( // when
                 height = properties[0],
                 width = properties[1],
@@ -36,7 +37,7 @@ class MineMapMetaTest {
         // given
         val properties = input.split(" ").map { it.toInt() }
 
-        assertThrows<IllegalArgumentException> { // then
+        assertThatIllegalArgumentException().isThrownBy { // then
             MineMapMeta( // when
                 height = properties[0],
                 width = properties[1],
@@ -64,6 +65,6 @@ class MineMapMetaTest {
         val cellCount = mineMapMeta.getCellCount()
 
         // then
-        assertEquals(expected, cellCount)
+        assertThat(cellCount).isEqualTo(expected)
     }
 }

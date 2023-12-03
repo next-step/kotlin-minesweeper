@@ -1,16 +1,17 @@
 package minesweeper.view
 
+import minesweeper.domain.MineMapMeta
+
 object InputView {
-    fun getHeight(): Int {
-        return getNumber("높이를 입력하세요.")
-    }
-
-    fun getWidth(): Int {
-        return getNumber("너비를 입력하세요.")
-    }
-
-    fun getMineCount(): Int {
-        return getNumber("지뢰는 몇 개인가요?")
+    fun readMineMapMeta(): MineMapMeta {
+        val height = getNumber("높이를 입력하세요.")
+        val width = getNumber("너비를 입력하세요.")
+        val mineCount = getNumber("지뢰는 몇 개인가요?")
+        return MineMapMeta(
+            height = height,
+            width = width,
+            mineCount = mineCount
+        )
     }
 
     private fun getNumber(consoleMsg: String): Int {

@@ -1,59 +1,45 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class MineMapTest {
-    @Test
-    fun `위치 정보를 전달해 MineMap에 지뢰를 심는다`() {
-        // given
-        val mineMap = MineMap()
+    private val mapValues = mapOf(
+        Position(1, 1) to Mine,
+        Position(1, 2) to Empty(),
+        Position(2, 1) to Empty(),
+        Position(2, 2) to Mine
+    )
 
-        // when
-        mineMap.plantCell(Position(1, 1), Cell(CellState.MINE))
+    @Test
+    fun `Position(key)와 Cell(value)로 구쉉된 map을 받으면 MineMap을 생성할 수 있다`() {
+        // given, when
+        val mineMap = MineMap(mapValues)
 
         // then
-        assertEquals(1, mineMap.size)
-        assertEquals(CellState.MINE, mineMap.values[Position(1, 1)]?.state)
+        assertThat(mineMap.size).isEqualTo(4)
     }
 
     @Test
-    fun `위치 정보를 전달해 MineMap에 빈 상태를 심는다`() {
-        // given
-        val mineMap = MineMap()
+    fun `주어진 위치 정보에 놓인 Cell 객체를 가져올 수 있다`() {
+        // given, when
+        val mineMap = MineMap(mapValues)
 
         // when
-        mineMap.plantCell(Position(1, 1), Cell(CellState.EMPTY))
-        mineMap.plantCell(Position(2, 2), Cell(CellState.EMPTY))
+        val cell = mineMap.getCell(Position(1, 1))
 
         // then
-        assertEquals(2, mineMap.size)
-        assertEquals(CellState.EMPTY, mineMap.values[Position(1, 1)]?.state)
-        assertEquals(CellState.EMPTY, mineMap.values[Position(2, 2)]?.state)
-    }
-
-    @Test
-    fun `주어진 위치 정보에 놓인 Cell 객체를 가져온다`() {
-        // given
-        val mineMap = MineMap()
-        val position = Position(1, 1)
-        mineMap.plantCell(position, Cell(CellState.EMPTY))
-
-        // when
-        val cell = mineMap.getCell(position)
-
-        // then
-        assertEquals(CellState.EMPTY, cell.state)
+        assertThat(cell).isEqualTo(Mine)
     }
 
     @Test
     fun `MineMap에 없는 위치 정보를 통해 Cell 객체를 가져온다면 IllegalArgumentException이 발생한다`() {
-        // given
-        val mineMap = MineMap()
+        // given, when
+        val mineMap = MineMap(mapValues)
 
-        assertThrows<IllegalArgumentException> { // then
-            mineMap.getCell(Position(1, 1)) // when
-        }
+        assertThatIllegalArgumentException().isThrownBy { // then
+            mineMap.getCell(Position(3, 3)) // when
+        }.withMessage("해당 위치에 셀이 없습니다")
     }
 }

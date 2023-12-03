@@ -1,5 +1,5 @@
 package minesweeper.domain
 
 interface PositionSelector {
-    fun select(mineMapMeta: MineMapMeta): Position
+    fun select(positions: Positions, selectNum: Int): Positions
 }

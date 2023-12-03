@@ -1,39 +1,35 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import io.kotest.assertions.assertSoftly
+import minesweeper.domain.support.FixedPositionSelector
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PositionGeneratorTest {
-    @Test
-    fun `지뢰 메타 정보(지뢰 수, 지뢰맵 크기)가 주어질 때 mineCount 만큼의 지뢰 위치 정보 Set을 생성하고 반환한다`() {
-        // given
-        val mineMapMeta = MineMapMeta(10, 10, 10)
-        val positionGenerator = PositionGenerator(mineMapMeta)
+    private val mineMapMeta = MineMapMeta(5, 5, 5)
+    private val positionGenerator = PositionGenerator(
+        mineMapMeta = mineMapMeta,
+        positionSelector = FixedPositionSelector
+    )
 
-        // when
+    @Test
+    fun `지뢰 위치와 지뢰가 아닌 위치를 생성한다`() {
+        // given, when
         val minePositions = positionGenerator.generateMinePositions()
-
-        // then
-        assertEquals(mineMapMeta.mineCount, minePositions.size)
-        assertEquals(true, minePositions.all { it.x in 1..10 && it.y in 1..10 })
-    }
-
-    @Test
-    fun `지뢰 메타 정보와 지뢰 위치 Set이 주어질 때 빈칸의 위치 정보 Set을 반환한다`() {
-        // given
-        val mineMapMeta = MineMapMeta(10, 10, 10)
-        val minePositions = setOf(
-            Position(1, 1),
-            Position(5, 5),
-            Position(10, 10)
-        ).toPositions()
-        val positionGenerator = PositionGenerator(mineMapMeta)
-
-        // when
         val emptyPositions = positionGenerator.generateEmptyPositions(minePositions)
 
-        // then
-        assertEquals(mineMapMeta.getCellCount() - minePositions.size, emptyPositions.size)
-        assertEquals(true, emptyPositions.all { it.x in 1..10 && it.y in 1..10 })
+        assertSoftly { // then
+            assertThat(minePositions.getValues())
+                .containsExactly(
+                    Position(1, 1), Position(1, 2), Position(1, 3), Position(1, 4), Position(1, 5)
+                )
+            assertThat(emptyPositions.getValues())
+                .containsExactly(
+                    Position(2, 1), Position(2, 2), Position(2, 3), Position(2, 4), Position(2, 5),
+                    Position(3, 1), Position(3, 2), Position(3, 3), Position(3, 4), Position(3, 5),
+                    Position(4, 1), Position(4, 2), Position(4, 3), Position(4, 4), Position(4, 5),
+                    Position(5, 1), Position(5, 2), Position(5, 3), Position(5, 4), Position(5, 5)
+                )
+        }
     }
 }

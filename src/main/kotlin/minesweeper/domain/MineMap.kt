@@ -1,18 +1,12 @@
 package minesweeper.domain
 
 class MineMap(
-    private val _values: MutableMap<Position, Cell> = mutableMapOf()
+    private val values: Map<Position, Cell>
 ) {
-    val values: Map<Position, Cell>
-        get() = _values
     val size: Int
-        get() = _values.keys.size
-
-    fun plantCell(position: Position, cell: Cell) {
-        _values[position] = cell
-    }
+        get() = values.keys.size
 
     fun getCell(position: Position): Cell {
-        return _values[position] ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다")
+        return values[position] ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다")
     }
 }
