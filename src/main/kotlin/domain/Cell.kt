@@ -1,7 +1,7 @@
 package domain
 
 class Cell(
-    private val point: Point = Point(0, 0),
+    val point: Point = Point(0, 0),
     val cellInfo: CellInfo = CellInfo(),
 ) {
     fun installMine() = cellInfo.installMine()
@@ -13,4 +13,8 @@ class Cell(
     fun createEmptyCell(row: Int, col: Int): Cell {
         return Cell(Point(row, col), CellInfo())
     }
+
+    fun isNotMine(): Boolean = cellInfo.isNotMine()
+
+    fun openCell() = cellInfo.openCell()
 }

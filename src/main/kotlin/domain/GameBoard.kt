@@ -2,9 +2,32 @@ package domain
 
 import domain.strategy.CreatePointStrategy
 
-class GameBoard private constructor(val board: List<CellList> = emptyList()) {
+class GameBoard private constructor(
+    val board: List<CellList> = emptyList(),
+    val gameResult: GameResult = GameResult()
+) {
 
-    companion object{
+    fun isContinued(): Boolean = gameResult.isContinued()
+
+    fun openCells(point: Point) {
+        openOwnCell(point)
+        openNeighborCells(point)
+        gameResult.checkGameStatus(point, board)
+    }
+
+    private fun openOwnCell(point: Point) {
+        board[point.row].cells[point.col].openCell()
+    }
+
+    private fun openNeighborCells(point: Point) {
+        point.getNeighborPoints()
+            .filter { it.isValid(board.size, board[0].cells.size) }
+            .map { board[it.row].cells[it.col] }
+            .filter { it.isNotMine() && !it.cellInfo.isOpened }
+            .forEach { it.openCell() }
+    }
+
+    companion object {
         fun createGameBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy): GameBoard {
             val board = createEmptyBoard(boardSettings)
             installMines(boardSettings, board, createPointStrategy)
