@@ -16,7 +16,7 @@ class NeighborPositionsTest {
 
         val expectedNeighborPositions = setOf(
             Position(1, 1), Position(2, 1), Position(3, 1),
-            Position(1, 2), /* Center Position Excluded */ Position(3, 2),
+            Position(1, 2), Position(3, 2),
             Position(1, 3), Position(2, 3), Position(3, 3)
         )
 
