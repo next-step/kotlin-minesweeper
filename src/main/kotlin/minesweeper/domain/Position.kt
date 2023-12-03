@@ -11,8 +11,7 @@ data class Position(
             colRange.map { col ->
                 Position(row, col)
             }
-        }.filterNot { it == this }
-            .toSet()
+        }.filterNot { it == this }.toSet()
     }
     companion object {
         const val START_INDEX = 1

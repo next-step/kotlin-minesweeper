@@ -6,6 +6,11 @@ import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
 class MineMapTest {
+    /*
+    *       *(closed) C(closed) C(closed)
+    *       C(closed) *(closed) *(closed)
+    *       C(closed) C(closed) C(closed)
+    */
     private val mapValues = mapOf(
         Position(1, 1) to Mine(),
         Position(1, 2) to Empty(),
@@ -37,6 +42,11 @@ class MineMapTest {
         val isEmptyCellClicked = mineMap.isEmptyCellClicked(position)
 
         // then
+        /*
+        *       *(opened) C(clicked) C(opened)
+        *       C(opened) *(closed ) *(opened)
+        *       C(closed) C(closed ) C(closed)
+        */
         assertSoftly {
             assertThat(isEmptyCellClicked).isTrue()
             assertThat(mineMap.getCell(Position(1, 1)).openState).isEqualTo(OpenState.OPENED)
@@ -55,13 +65,13 @@ class MineMapTest {
     fun `지뢰가 심어진 cell을 클릭하면 isEmptyCellClicked 함수는 false를 반환한다`() {
         // given
         val mineMap = MineMap(mapValues)
-        val position = Position(1, 2)
+        val position = Position(1, 1)
 
         // when
         val isEmptyCellClicked = mineMap.isEmptyCellClicked(position)
 
         // then
-        assertThat(isEmptyCellClicked).isTrue()
+        assertThat(isEmptyCellClicked).isFalse()
     }
 
     @Test

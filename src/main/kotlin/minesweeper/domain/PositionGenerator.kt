@@ -7,11 +7,9 @@ class PositionGenerator(
     private val allPositions = generateAllPositions()
 
     private fun generateAllPositions(): Set<Position> {
-        val allPositions = (Position.START_INDEX..mineMapMeta.height)
+        return (Position.START_INDEX..mineMapMeta.height)
             .flatMap { y -> (Position.START_INDEX..mineMapMeta.width).map { x -> Position(y, x) } }
             .toSet()
-        require(allPositions.size == mineMapMeta.getCellCount()) { "모든 위치를 생성하지 못했습니다" }
-        return allPositions
     }
 
     fun generateMinePositions(): Set<Position> {
