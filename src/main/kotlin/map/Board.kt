@@ -1,29 +1,20 @@
+package map
+
 class Board(val board: MutableList<MutableList<Cell>>) {
 
     init {
         validate()
     }
 
-    private fun validate() {
-        validateEmpty()
-        validateLineSizes()
+    fun getBoardMaxValue(): Int {
+        val width = board.first().size
+        val height = board.size
+        return width * height - 1
     }
 
-    private fun validateLineSizes() {
-        val line = board.first()
-        val referenceSize = line.size
-        val isAllLineSizeEqual = board.all { it.size == referenceSize }
-
-        require(isAllLineSizeEqual) { ERR_MSG_LINE_SIZE_DIFFERS }
-    }
-
-    private fun validateEmpty() {
-        require(board.isNotEmpty()) { ERR_MSG_EMPTY_LIST }
-    }
-
-    fun settingMine(number: Int) {
-        val rowIndex = getSelectRowIndex(number)
-        val columnIndex = getSelectColumIndex(number)
+    fun settingMine(position: Int) {
+        val rowIndex = getSelectRowIndex(position)
+        val columnIndex = getSelectColumIndex(position)
 
         setMine(rowIndex, columnIndex)
     }
@@ -43,6 +34,23 @@ class Board(val board: MutableList<MutableList<Cell>>) {
     private fun getSelectRowIndex(number: Int): Int {
         val height = board.size
         return number / height - INDEX_OFFSET
+    }
+
+    private fun validate() {
+        validateEmpty()
+        validateLineSizes()
+    }
+
+    private fun validateLineSizes() {
+        val line = board.first()
+        val referenceSize = line.size
+        val isAllLineSizeEqual = board.all { it.size == referenceSize }
+
+        require(isAllLineSizeEqual) { ERR_MSG_LINE_SIZE_DIFFERS }
+    }
+
+    private fun validateEmpty() {
+        require(board.isNotEmpty()) { ERR_MSG_EMPTY_LIST }
     }
 
     companion object {
