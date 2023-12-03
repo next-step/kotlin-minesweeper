@@ -6,26 +6,23 @@ class PositionGenerator(
 ) {
     private val allPositions = generateAllPositions()
 
-    private fun generateAllPositions(): Positions {
-        val allPositions = (1..mineMapMeta.height)
-            .flatMap { y -> (1..mineMapMeta.width).map { x -> Position(y, x) } }
+    private fun generateAllPositions(): Set<Position> {
+        return (Position.START_INDEX..mineMapMeta.height)
+            .flatMap { y -> (Position.START_INDEX..mineMapMeta.width).map { x -> Position(y, x) } }
             .toSet()
-            .toPositions()
-        require(allPositions.size == mineMapMeta.getCellCount()) { "모든 위치를 생성하지 못했습니다" }
-        return allPositions
     }
 
-    fun generateMinePositions(): Positions {
+    fun generateMinePositions(): Set<Position> {
         val minePositions = positionSelector.select(allPositions, mineMapMeta.mineCount)
         require(minePositions.size == mineMapMeta.mineCount) { "지뢰의 개수가 맞지 않습니다." }
         return minePositions
     }
 
     fun generateEmptyPositions(
-        minePositions: Positions
-    ): Positions {
+        minePositions: Set<Position>
+    ): Set<Position> {
         val emptyPositions = allPositions - minePositions
-        require(!emptyPositions.containSamePosition(minePositions)) { "지뢰와 빈 공간은 겹칠 수 없습니다." }
+        require(emptyPositions.intersect(minePositions).isEmpty()) { "지뢰와 빈 공간은 겹칠 수 없습니다." }
         return emptyPositions
     }
 }

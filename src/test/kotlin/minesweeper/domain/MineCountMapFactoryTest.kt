@@ -20,11 +20,16 @@ class MineCountMapFactoryTest {
         val mineMap = mineCountMapFactory.create()
 
         // then
+        /*
+        *        * * *
+        *        2 3 2
+        *        0 0 0
+        */
         assertSoftly {
             assertThat(mineMap.size).isEqualTo(9)
-            assertThat(mineMap.getCell(Position(1, 1))).usingRecursiveComparison().isEqualTo(Mine)
-            assertThat(mineMap.getCell(Position(1, 2))).usingRecursiveComparison().isEqualTo(Mine)
-            assertThat(mineMap.getCell(Position(1, 3))).usingRecursiveComparison().isEqualTo(Mine)
+            assertThat(mineMap.getCell(Position(1, 1))).usingRecursiveComparison().isEqualTo(Mine())
+            assertThat(mineMap.getCell(Position(1, 2))).usingRecursiveComparison().isEqualTo(Mine())
+            assertThat(mineMap.getCell(Position(1, 3))).usingRecursiveComparison().isEqualTo(Mine())
             assertThat(mineMap.getCell(Position(2, 1))).usingRecursiveComparison().isEqualTo(Empty(2))
             assertThat(mineMap.getCell(Position(2, 2))).usingRecursiveComparison().isEqualTo(Empty(3))
             assertThat(mineMap.getCell(Position(2, 3))).usingRecursiveComparison().isEqualTo(Empty(2))
