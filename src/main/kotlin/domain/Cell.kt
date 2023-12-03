@@ -1,8 +1,8 @@
 package domain
 
 class Cell(
-    private val point: Point,
-    val cellInfo: CellInfo,
+    private val point: Point = Point(0, 0),
+    val cellInfo: CellInfo = CellInfo(),
 ) {
     fun installMine() = cellInfo.installMine()
 
@@ -10,9 +10,7 @@ class Cell(
         cellInfo.findNeighborMineCount(boardSettings, board, point)
     }
 
-    companion object {
-        fun createEmptyCell(row: Int, col: Int): Cell {
-            return Cell(Point(row, col), CellInfo())
-        }
+    fun createEmptyCell(row: Int, col: Int): Cell {
+        return Cell(Point(row, col), CellInfo())
     }
 }

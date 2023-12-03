@@ -14,7 +14,7 @@ class CellInfoTest {
     fun setUp() {
         boardSettings = BoardSettings(row = 3, col = 3, mineCount = 1)
         board = (0 until boardSettings.row).map { row ->
-            CellList.createEmptyRow(row, boardSettings.col)
+            CellList().createEmptyRow(row, boardSettings.col)
         }.toMutableList()
     }
 
