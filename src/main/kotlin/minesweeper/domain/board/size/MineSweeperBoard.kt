@@ -1,8 +1,8 @@
 package minesweeper.domain.board.size
 
 data class MineSweeperBoard(
-    val height: Int,
     val width: Int,
+    val height: Int,
 ) {
     init {
         require(width > 0) { INVALID_VALUE }
