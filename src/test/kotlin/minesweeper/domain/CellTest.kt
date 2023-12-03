@@ -8,12 +8,10 @@ class CellTest {
 
     @Test
     fun `Cell은 지뢰와 빈 cell 클래스로 이루어져있다`() {
-        val mineCell = MineCell()
+        val mineCell = MineCell
         mineCell.shouldBeInstanceOf<MineCell>()
-        mineCell.type shouldBe CellType.MINE
 
-        val emptyCell = EmptyCell()
+        val emptyCell = EmptyCell
         emptyCell.shouldBeInstanceOf<EmptyCell>()
-        emptyCell.type shouldBe CellType.EMPTY
     }
 }

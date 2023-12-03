@@ -1,7 +1,6 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
-import minesweeper.domain.CellType
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MineCell
 
