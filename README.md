@@ -10,4 +10,6 @@
 ## 질문사항
 - main이 비대해진 것 같은데, mineSweeperList, mineSweeperBoard, mineSweeper 등을 main에서 생성, 주입해주는 건 별로인가?
 - 결과를 생성하는 책임이 MineSweeperBoard에 있다고 생각하여 위와 같이 만들었는데, 리뷰어님도 그렇게 보시는지?
-- 객체지향 생활수칙을 지켜 resultMineSweeperWidth의 코드라인수를 줄이고 싶은데, 좋은 방법이 생각나지 않는데 좋은 방법이 있을지?
+- 객체지향 생활수칙을 지켜 resultMineSweeperWidth의 코드라인수를 줄이고 싶은데, 좋은 방법이 생각나지 않는데 좋은 방법이 있을지? 
+-> 바꾼 코드가 나쁘지 않은지? (MineCheckStrategy 로 리팩토링했습니다 - aca848e91425677f3135241c685c42168a0401f6)
+
