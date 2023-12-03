@@ -41,12 +41,12 @@ class MineCreatorTest : FunSpec({
 
         context("지뢰찾기 지도의 너비보다 지뢰가 많으면 에러 발생") {
             withData(
-                listOf<CreateMineTestData>(
+                listOf(
                     CreateMineTestData(
-                        MineSweeperSize(2, 2), 2
+                        MineSweeperSize(2, 2), 10
                     ),
                     CreateMineTestData(
-                        MineSweeperSize(2, 3), 2
+                        MineSweeperSize(2, 3), 10
                     ),
                 )
             ) { (mineSweeperSize, countOfMine) ->
