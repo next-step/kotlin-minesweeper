@@ -1,6 +1,8 @@
 package minesweeper.view
 
 import minesweeper.domain.MineSweeper
+import minesweeper.domain.cell.MineCell
+import minesweeper.domain.cell.SafeCell
 
 class ResultView {
     fun showMineSweeper(mineSweeper: MineSweeper) {
@@ -9,8 +11,11 @@ class ResultView {
         mineSweeper.mineMap.values.forEach { row ->
             println(
                 row.joinToString(" ") { cell ->
-                    if (cell.isMine) "C"
-                    else "*"
+                    when (cell) {
+                        is MineCell -> "*"
+                        is SafeCell -> "${cell.countOfAdjacentMine}"
+                        else -> ""
+                    }
                 }
             )
         }
