@@ -7,6 +7,9 @@ import map.None
 
 object OutputView {
 
+    private const val IMG_MINE = "*"
+    private const val IMG_NONE = "C"
+
     fun drawBoard(board: Board) {
         board.board.forEach {
             drawLine(it)
@@ -23,8 +26,8 @@ object OutputView {
 
     private fun drawCell(cell: Cell) {
         when (cell) {
-            is None -> print("C")
-            is Mine -> print("*")
+            is None -> print(IMG_NONE)
+            is Mine -> print(IMG_MINE)
         }
     }
 }

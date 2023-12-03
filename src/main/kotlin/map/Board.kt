@@ -9,7 +9,7 @@ class Board(val board: MutableList<MutableList<Cell>>) {
     fun getBoardMaxValue(): Int {
         val width = board.first().size
         val height = board.size
-        return width * height - 1
+        return width * height - INDEX_OFFSET
     }
 
     fun settingMine(position: Int) {
