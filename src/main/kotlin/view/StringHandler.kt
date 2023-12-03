@@ -19,7 +19,7 @@ fun inputToInt(input: String): Int {
 }
 
 fun Cell.toStr(): String {
-    if (!isOpened) return CLOSED_SYMBOL
+    if (isClosed()) return CLOSED_SYMBOL
     if (isMine) return MINE_SYMBOL
 
     return this.hint?.toString() ?: throw IllegalStateException("null 값에 대한 String 변환이 요청되었습니다")

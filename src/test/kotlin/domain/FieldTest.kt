@@ -83,16 +83,16 @@ class FieldTest {
     }
 
     @Test
-    fun `지뢰가 없어 모든 칸이 open된 경우 게임 종료`() {
+    fun `못찾은 지뢰가 남아있는지 확인`() {
         val field = Field(3, 3)
         field.setHints()
         field.clickCell(0, 0)
 
-        assertThat(field.isFinished()).isTrue()
+        assertThat(field.mineRemains()).isFalse()
     }
 
     @Test
-    fun `모든 칸이 지뢰인 경우 게임 종료`() {
+    fun `모든 칸이 지뢰인 경우 모두 찾은것으로 간주`() {
         val field = Field(3, 3)
         val mines = (0..2).flatMap { y ->
             (0..2).map { x ->
@@ -104,7 +104,7 @@ class FieldTest {
             field.setMine(TestSelector(mines))
         }
 
-        assertThat(field.isFinished()).isTrue()
+        assertThat(field.mineRemains()).isFalse()
     }
 
     @Test
@@ -122,10 +122,10 @@ class FieldTest {
         field.setHints()
 
         assertAll(
-            { assertThat(field.isFinished()).isFalse() },
+            { assertThat(field.mineRemains()).isTrue() },
             {
                 field.clickCell(0, 0)
-                assertThat(field.isFinished()).isTrue()
+                assertThat(field.mineRemains()).isFalse()
             },
         )
     }

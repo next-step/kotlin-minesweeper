@@ -62,11 +62,11 @@ class Field(val width: Int, val height: Int) {
         }
     }
 
-    fun isFinished(): Boolean {
+    fun mineRemains(): Boolean {
         val opened = cells.flatten().count { it.isOpened }
         val mine = cells.flatten().count { it.isMine }
         val size = width * height
 
-        return (size - opened == mine)
+        return (size - opened != mine)
     }
 }

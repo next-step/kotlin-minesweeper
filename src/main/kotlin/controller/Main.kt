@@ -26,15 +26,12 @@ fun main() {
 
     printStartMessage()
 
-    var isFinished = field.isFinished()
-    var boom = false
-    while (!isFinished) {
+    var stillAlive = true
+    while (field.mineRemains() && stillAlive) {
         val (x, y) = inputOpenPosition()
-        boom = !field.clickCell(x, y)
-        isFinished = boom || field.isFinished()
-
+        stillAlive = field.clickCell(x, y)
         printBoard(field.cells)
     }
 
-    printResult(!boom)
+    printResult(stillAlive)
 }
