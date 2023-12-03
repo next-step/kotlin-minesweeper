@@ -13,4 +13,12 @@ object InputView {
             throw IllegalArgumentException(ErrorMessage.EXPECT_NUMBER_MESSAGE.message)
         }
     }
+
+    fun inputPoint(): String {
+        try {
+            return readln()
+        } catch (e: NullPointerException) {
+            throw IllegalArgumentException(ErrorMessage.EMPTY_INPUT_MESSAGE.message)
+        }
+    }
 }

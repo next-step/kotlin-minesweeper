@@ -2,6 +2,7 @@ package controller
 
 import domain.GameBoard
 import domain.BoardSettings
+import domain.Point
 import domain.strategyImpl.RandomPointFactory
 import dto.GameBoardDto
 import view.InputView
@@ -27,5 +28,10 @@ private fun gameSetUp(): GameBoard {
 
 private fun gameStart(gameBoard: GameBoardDto) {
     OutputView.printMineGameStart()
+    OutputView.printOpen()
+    val inputPoint = InputView.inputPoint()
+    val point = Point.parsePoint(inputPoint)
+
+
     OutputView.printGameBoard(gameBoard)
 }
