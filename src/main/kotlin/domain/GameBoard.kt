@@ -6,11 +6,11 @@ class GameBoard private constructor(val board: List<CellList>) {
 
     companion object {
         fun createBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy): GameBoard {
-            val emptyBoard = createEmptyBoard(boardSettings)
-            val board = installMines(boardSettings, emptyBoard, createPointStrategy)
-            val gameBoard = createNeighborMinesCount(boardSettings, board)
+            val board = createEmptyBoard(boardSettings)
+            installMines(boardSettings, board, createPointStrategy)
+            createNeighborMinesCount(boardSettings, board)
 
-            return GameBoard(gameBoard)
+            return GameBoard(board)
         }
 
         private fun createEmptyBoard(boardSettings: BoardSettings): MutableList<CellList> {
@@ -19,16 +19,14 @@ class GameBoard private constructor(val board: List<CellList>) {
             }.toMutableList()
         }
 
-        private fun installMines(boardSettings: BoardSettings, board: MutableList<CellList>, createPointStrategy: CreatePointStrategy): List<CellList> {
+        private fun installMines(boardSettings: BoardSettings, board: MutableList<CellList>, createPointStrategy: CreatePointStrategy) {
             createPointStrategy.createMinePoints(boardSettings).forEach {
-                val (row, col) = it / boardSettings.col to it % boardSettings.col
-                board[row].cells[col].installMine()
+                board[it.row].cells[it.col].installMine()
             }
-            return board
         }
 
-        private fun createNeighborMinesCount(boardSettings: BoardSettings, board: List<CellList>): List<CellList> {
-            return board.map { it.createCellList(boardSettings, board) }
+        private fun createNeighborMinesCount(boardSettings: BoardSettings, board: List<CellList>) {
+            board.map { it.findCellListByNeighborMineCount(boardSettings, board) }
         }
     }
 }

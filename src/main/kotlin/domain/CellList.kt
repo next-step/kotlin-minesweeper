@@ -1,8 +1,8 @@
 package domain
 
 class CellList(val cells: List<Cell>) {
-    fun createCellList(boardSettings: BoardSettings, board: List<CellList>): CellList {
-        return CellList(cells.map { it.createCell(boardSettings, board) })
+    fun findCellListByNeighborMineCount(boardSettings: BoardSettings, board: List<CellList>) {
+        cells.map { it.findCellByNeighborMineCount(boardSettings, board) }
     }
 
     companion object {
