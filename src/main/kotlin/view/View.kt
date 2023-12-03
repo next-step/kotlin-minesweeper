@@ -22,7 +22,7 @@ object View {
 
     fun inputOpenSpot(): Point {
         print("Open: ")
-        return Point(
+        return Point.fromUserInput(
             readln()
                 .split(",")
                 .map { it.trim().toInt() }
