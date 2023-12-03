@@ -10,7 +10,7 @@ fun main() {
 
     val board = CreateFactory.createBoard(width = width, height = height)
     val mineSearch = MineSearch(board, RandomLogic())
-    mineSearch.settingMines(5)
+    mineSearch.settingMines(mineCnt)
 
     OutputView.drawBoard(mineSearch.board)
 }

@@ -33,7 +33,10 @@ class Board(val board: MutableList<MutableList<Cell>>) {
 
     private fun getSelectRowIndex(number: Int): Int {
         val height = board.size
-        return number / height - INDEX_OFFSET
+        return when (val columnIndex = number / height) {
+            0 -> height - INDEX_OFFSET
+            else -> columnIndex - INDEX_OFFSET
+        }
     }
 
     private fun validate() {
