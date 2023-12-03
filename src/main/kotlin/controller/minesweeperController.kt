@@ -22,8 +22,7 @@ private fun gameSetUp(): GameBoard {
     val mineCount = InputView.inputNumber()
     val boardSettings = BoardSettings(height, width, mineCount)
 
-    val gameBoard = GameBoard()
-    return gameBoard.from(boardSettings, RandomPointFactory())
+    return GameBoard.createGameBoard(boardSettings, RandomPointFactory())
 }
 
 private fun gameStart(gameBoard: GameBoardDto) {
