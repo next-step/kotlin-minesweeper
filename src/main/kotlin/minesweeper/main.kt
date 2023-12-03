@@ -11,11 +11,11 @@ fun main() {
     val width = InputView.inputMineSweeperGameValue()
     OutputView.enterMineCount()
     val mineCount = InputView.inputMineSweeperGameValue()
-    val mineSweeperBoard = MineSweeperBoardSize(width = width, height = height)
+    val mineSweeperBoardSize = MineSweeperBoardSize(width = width, height = height)
 
-    val mineSweeper = MineSweeper(board = mineSweeperBoard, mineCount = mineCount)
+    val mineSweeper = MineSweeper(board = mineSweeperBoardSize, mineCount = mineCount)
     OutputView.startMineSweeper()
 
-    val mineSweeperInitializer = mineSweeper.initialize()
-    OutputView.mineSweeperInitializePrinter(mineSweeperInitializer)
+    val mineSweeperBoard = mineSweeper.createBoard()
+    OutputView.mineSweeperInitializePrinter(mineSweeperBoard)
 }
