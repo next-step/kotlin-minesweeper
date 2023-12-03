@@ -3,6 +3,8 @@ package minesweeper.domain
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import minesweeper.domain.rule.RandomMineGenerationRule
 import minesweeper.domain.rule.TestMineGenerationRule
 import org.junit.jupiter.api.Test
@@ -21,7 +23,14 @@ class BoardTest {
 
     @Test
     fun `게임판은 좌표로 셀에 접근할 수 있다`() {
-        val mineCoordinates = listOf(0 to 0, 0 to 1, 1 to 0, 5 to 5, 7 to 9)
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(0, 1),
+            Coordinate(1, 0),
+            Coordinate(5, 5),
+            Coordinate(7, 9)
+        )
+
         val numOfMine = mineCoordinates.size
         val board = Board(
             BoardMetadata(10, 10, numOfMine),
@@ -29,10 +38,10 @@ class BoardTest {
         )
 
         mineCoordinates.forEach() {
-            board.at(it.first, it.second) shouldBe Cell.MINE
+            board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
         }
-        board.at(2, 2) shouldBe Cell.EMPTY
-        board.at(9, 9) shouldBe Cell.EMPTY
+        board.at(2, 2).shouldBeInstanceOf<EmptyCell>()
+        board.at(9, 9).shouldBeInstanceOf<EmptyCell>()
     }
 
     @ParameterizedTest
@@ -59,5 +68,53 @@ class BoardTest {
                 Arguments.of(15 to 5),
             )
         }
+    }
+
+    /*
+    * 2 1 1 0
+    1 2 * 2 1
+    2 3 2 2 *
+    * * 1 1 1
+    2 2 1 0 0
+     */
+    @Test
+    fun `게임판은 지뢰를 생성한 뒤, 주변 지뢰 개수를 계산하여 갖고 있다`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+        board.countAllAroundMine()
+
+        mineCoordinates.forEach() {
+            board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
+        }
+        board.countOf(0, 1) shouldBe 2
+        board.countOf(0, 2) shouldBe 1
+        board.countOf(0, 3) shouldBe 1
+        board.countOf(0, 4) shouldBe 0
+        board.countOf(1, 0) shouldBe 1
+        board.countOf(1, 1) shouldBe 2
+        board.countOf(1, 3) shouldBe 2
+        board.countOf(1, 4) shouldBe 1
+        board.countOf(2, 0) shouldBe 2
+        board.countOf(2, 1) shouldBe 3
+        board.countOf(2, 2) shouldBe 2
+        board.countOf(2, 3) shouldBe 2
+        board.countOf(3, 2) shouldBe 1
+        board.countOf(3, 3) shouldBe 1
+        board.countOf(3, 4) shouldBe 1
+        board.countOf(4, 0) shouldBe 2
+        board.countOf(4, 1) shouldBe 2
+        board.countOf(4, 2) shouldBe 1
+        board.countOf(4, 3) shouldBe 0
+        board.countOf(4, 4) shouldBe 0
     }
 }
