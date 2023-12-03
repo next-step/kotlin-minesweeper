@@ -15,7 +15,7 @@ class MineCountMapFactory(
     private fun createCell(position: Position, minePositions: Positions): Cell {
         val aroundPositions = position.aroundPositions()
         return if (minePositions.contains(position)) {
-            Mine
+            Mine()
         } else {
             val mineCount = aroundPositions.count { minePositions.contains(it) }
             Empty(mineCount)
