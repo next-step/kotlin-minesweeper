@@ -2,7 +2,6 @@ package minesweeper.app
 
 import minesweeper.model.board.Board
 import minesweeper.model.point.Coordinate
-import minesweeper.model.point.TileType
 import minesweeper.view.CoordinateParser
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
@@ -25,7 +24,7 @@ class MineSweeperGame(
         do {
             val coordinate: Coordinate = inputView.openCoordinate(CoordinateParser)
             outputView.printMineMap(board)
-        } while (TileType.MINE != board.tryOpen(coordinate))
+        } while (GameStatus.ALIVE != board.tryOpen(coordinate))
     }
 
     private fun finalize() {
