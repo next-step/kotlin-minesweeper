@@ -1,3 +1,5 @@
+package minesweeper
+
 class MineSweeper(
     private val width: Int,
     private val height: Int,

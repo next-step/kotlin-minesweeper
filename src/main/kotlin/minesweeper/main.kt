@@ -1,3 +1,8 @@
+package minesweeper
+
+import minesweeper.ui.InputView
+import minesweeper.ui.OutputView
+
 fun main() {
     OutputView.enterHeight()
     val height = InputView.inputMineSweeperGameValue()

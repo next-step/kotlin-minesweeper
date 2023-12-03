@@ -1,3 +1,5 @@
+package minesweeper.ui
+
 object OutputView {
     fun enterHeight() {
         println("높이를 입력하세요.")

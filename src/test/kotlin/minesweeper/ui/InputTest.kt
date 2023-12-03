@@ -1,5 +1,8 @@
+package minesweeper.ui
+
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import minesweeper.MineSweeper
 
 class InputTest : StringSpec({
     "width 가 1보다 작을 경우" {
