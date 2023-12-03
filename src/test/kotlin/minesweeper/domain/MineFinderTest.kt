@@ -18,6 +18,6 @@ class MineFinderTest : BehaviorSpec({
 })
 
 fun createMineFinder(): CellFinder {
-    val initPositions = FixedPositionGenerator(Size(10), Size(10)).init()
+    val initPositions = FixedPositionGenerator(Size(10), Size(10)).generateInit()
     return CellFinder(initPositions)
 }

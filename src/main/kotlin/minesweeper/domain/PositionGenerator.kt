@@ -5,7 +5,7 @@ abstract class PositionGenerator(
     protected val width: Size,
 ) {
 
-    fun init(): List<Position> {
+    fun generateInit(): List<Position> {
         return height.getNumbers()
             .flatMap { rowNum ->
                 width.getRows(rowNum)

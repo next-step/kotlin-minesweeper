@@ -12,7 +12,7 @@ fun main() {
     val count = InputView.inputSize(InputType.COUNT)
 
     val positionGenerator = RandomPositionGenerator(height, width)
-    val initPosition = positionGenerator.init()
+    val initPosition = positionGenerator.generateInit()
     val minePositions = positionGenerator.generate(count)
     val cellFinder = CellFinder(initPosition)
     cellFinder.convert(minePositions)
