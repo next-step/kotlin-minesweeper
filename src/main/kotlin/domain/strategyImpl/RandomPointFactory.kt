@@ -4,7 +4,7 @@ import domain.BoardSettings
 import domain.Point
 import domain.strategy.CreatePointStrategy
 
-class RandomPointFactory: CreatePointStrategy {
+class RandomPointFactory : CreatePointStrategy {
     override fun createMinePoints(boardSettings: BoardSettings): List<Point> {
         val minePoints = mutableListOf<Point>()
         while (minePoints.size < boardSettings.mineCount) {

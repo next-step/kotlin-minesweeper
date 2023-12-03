@@ -2,7 +2,7 @@ package domain
 
 import domain.strategy.CreatePointStrategy
 
-class GameBoard (val board: List<CellList> = emptyList()) {
+class GameBoard(val board: List<CellList> = emptyList()) {
 
     fun from(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy): GameBoard {
         val board = createEmptyBoard(boardSettings)
@@ -27,5 +27,4 @@ class GameBoard (val board: List<CellList> = emptyList()) {
     private fun createNeighborMinesCount(boardSettings: BoardSettings, board: List<CellList>) {
         board.map { it.findCellListByNeighborMineCount(boardSettings, board) }
     }
-
 }
