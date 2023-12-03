@@ -13,7 +13,7 @@ fun main() {
     val positionGenerator = RandomPositionGenerator(height, width)
     val initPosition = positionGenerator.init()
     val minePositions = positionGenerator.generate(count)
-    val cellFinder = CellFinder.from(initPosition)
+    val cellFinder = CellFinder(initPosition)
     cellFinder.convert(minePositions)
 
     ResultView.printMines(height, width, cellFinder)
