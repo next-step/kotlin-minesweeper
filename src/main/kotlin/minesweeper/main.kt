@@ -4,6 +4,7 @@ import minesweeper.domain.MineSweeper
 import minesweeper.domain.MineSweeperWidth
 import minesweeper.domain.board.size.MineSweeperBoardSize
 import minesweeper.domain.mine.Mine
+import minesweeper.domain.toMineSweeperWidth
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
 
@@ -24,7 +25,7 @@ fun main() {
     val notContainedMineList = MineSweeperWidth.newInstance(widthSize = notContainedMineCount)
     val mineList = MineSweeperWidth.newInstance(widthSize = mine.mineCount, mineSweeperShape = mine.mineShape)
 
-    val mineSweeperList = (notContainedMineList + mineList).shuffled()
+    val mineSweeperList = (notContainedMineList + mineList).shuffled().toMineSweeperWidth()
 
     val mineSweeperBoard = mineSweeper.createBoard(mineSweeperList)
     OutputView.mineSweeperInitializePrinter(mineSweeperBoard)
