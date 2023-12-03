@@ -26,7 +26,8 @@ fun main() {
 
     val mineSweeperList = (notContainedMineList + mineList).shuffled().toMineSweeperWidth()
     val mineSweeperBoard = MineSweeperBoard.newInstance(boardSize = mineSweeperBoardSize, mineSweeperList = mineSweeperList)
-    val mineSweeper = MineSweeper(board = mineSweeperBoardSize)
+    val mineSweeper = MineSweeper(mineSweeperBoard)
+    val result = mineSweeper.doMineSweeper()
 
-    OutputView.mineSweeperInitializePrinter(mineSweeperBoard)
+    OutputView.mineSweeperInitializePrinter(result)
 }

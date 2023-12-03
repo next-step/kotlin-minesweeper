@@ -24,4 +24,18 @@ class MineSweeperBoardTest : StringSpec({
             mineSweeperBoardWidth.size shouldBe width
         }
     }
+
+    "지뢰찾기 결과가 잘 출력된다." {
+        val boardSize = MineSweeperBoardSize(width = 3, height = 3)
+        val initialList =
+            listOf("*", "0", "0", "0", "*", "0", "0", "0", "*")
+        val expectedList =
+            listOf("*", "2", "1", "2", "*", "2", "1", "2", "*")
+        val board =
+            MineSweeperBoard.newInstance(boardSize = boardSize, mineSweeperList = initialList.toMineSweeperWidth())
+        val mineSweeper = MineSweeper(board)
+        val resultMineSweeper = mineSweeper.doMineSweeper()
+
+        resultMineSweeper.flatten() shouldBe expectedList
+    }
 })
