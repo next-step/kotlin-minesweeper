@@ -1,6 +1,5 @@
 package minesweeper.domain
 
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 

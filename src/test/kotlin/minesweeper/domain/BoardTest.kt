@@ -2,9 +2,9 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 import minesweeper.domain.rule.RandomMineGenerationRule
 import minesweeper.domain.rule.TestMineGenerationRule
 import org.junit.jupiter.api.Test
@@ -116,5 +116,169 @@ class BoardTest {
         board.countOf(4, 2) shouldBe 1
         board.countOf(4, 3) shouldBe 0
         board.countOf(4, 4) shouldBe 0
+    }
+
+    @Test
+    fun `지뢰가 아닌 좌표를 isOpen 메서드에 입력하면 true 반환`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        board.canOpen(Coordinate(0, 1)) shouldBe true
+        board.canOpen(Coordinate(0, 2)) shouldBe true
+        board.canOpen(Coordinate(1, 0)) shouldBe true
+        board.canOpen(Coordinate(1, 1)) shouldBe true
+        board.canOpen(Coordinate(2, 2)) shouldBe true
+        board.canOpen(Coordinate(2, 3)) shouldBe true
+        board.canOpen(Coordinate(3, 3)) shouldBe true
+        board.canOpen(Coordinate(3, 4)) shouldBe true
+        board.canOpen(Coordinate(4, 3)) shouldBe true
+        board.canOpen(Coordinate(4, 4)) shouldBe true
+    }
+
+    @Test
+    fun `지뢰인 좌표를 isOpen 메서드에 입력하면 false 반환`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        board.canOpen(Coordinate(0, 0)) shouldBe false
+        board.canOpen(Coordinate(1, 2)) shouldBe false
+        board.canOpen(Coordinate(2, 4)) shouldBe false
+        board.canOpen(Coordinate(3, 0)) shouldBe false
+        board.canOpen(Coordinate(3, 1)) shouldBe false
+    }
+
+
+    @Test
+    fun `주변 지뢰가 0개인 좌표를 입력하여 open 메서드를 호출하면 해당 좌표 주변의 지뢰가 아니고 숫자가 0보다 큰 주변 모든 좌표를 반환한다`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(4, 4))
+
+        openedCoordinates.size shouldBe 6
+        openedCoordinates shouldContainAll listOf(
+            Coordinate(3, 2),
+            Coordinate(3, 3),
+            Coordinate(3, 4),
+            Coordinate(4, 2),
+            Coordinate(4, 3),
+            Coordinate(4, 4)
+        )
+    }
+
+    @Test
+    fun `주변 지뢰가 0개보다 큰 좌표를 입력하여 open 메서드를 호출하면 해당 좌표만 반환한다`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 1))
+
+        openedCoordinates.size shouldBe 1
+        openedCoordinates shouldContainAll listOf(Coordinate(0, 1))
+    }
+
+    @Test
+    fun `지뢰인 좌표를 입력하여 open 메서드를 호출하면 빈 리스트를 반환한다`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 0))
+
+        openedCoordinates.size shouldBe 0
+    }
+
+    @Test
+    fun `지뢰를 제외하고 전체가 open되지 않았다면 isAllOpened는 false 반환`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        board.isAllOpened() shouldBe false
+    }
+
+    @Test
+    fun `지뢰를 제외하고 전체가 open되었다면 isAllOpened는 true 반환`() {
+        val mineCoordinates = listOf(
+            Coordinate(0, 0),
+            Coordinate(1, 2),
+            Coordinate(2, 4),
+            Coordinate(3, 0),
+            Coordinate(3, 1)
+        )
+        val numOfMine = mineCoordinates.size
+        val board = Board(
+            BoardMetadata(5, 5, numOfMine),
+            TestMineGenerationRule(mineCoordinates)
+        )
+
+        for (row in 0 until 5) {
+            for (col in 0 until 5) {
+                if (mineCoordinates.contains(Coordinate(row, col))) {
+                    continue
+                }
+                board.open(Coordinate(row, col))
+            }
+        }
+
+        board.isAllOpened() shouldBe true
     }
 }
