@@ -1,11 +1,11 @@
 package minesweeper.domain
 
-class CellFinder(private val map: Map<Position, Cell>) {
-    constructor(initPositions: List<Position>) : this(initPositions.associateWith { Cell(it) })
+class CellFinder(private val map: MutableMap<Position, Cell>) {
+    constructor(initPositions: List<Position>) : this(initPositions.associateWith { Cell(it) }.toMutableMap())
 
     fun convert(minePosition: List<Position>) {
         minePosition.forEach {
-            map[it]?.isMine = true
+            map[it] = Cell(it, true)
         }
     }
 
@@ -15,7 +15,7 @@ class CellFinder(private val map: Map<Position, Cell>) {
 
     companion object {
         fun from(initPosition: List<Position>): CellFinder {
-            return CellFinder(initPosition.associateWith { Cell(it) })
+            return CellFinder(initPosition.associateWith { Cell(it) }.toMutableMap())
         }
     }
 }

@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class Cell(
+data class Cell(
     val position: Position,
-    var isMine: Boolean = false,
+    val isMine: Boolean = false,
 )
