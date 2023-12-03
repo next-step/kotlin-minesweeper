@@ -18,23 +18,57 @@ class Board(
         }
     }
 
-    fun forEachCell(onEachCell: (Position, CellStatus) -> Unit) {
+    fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
         cells.forEach { cell ->
-            onEachCell(cell.position, if (cell.isMine()) CellStatus.MINE else CellStatus.EMPTY)
+            onEachCell(cell.position, cell.status)
         }
     }
+
+    fun countMines(): Int = cells.count { it.isMine() }
 
     private fun calculateAdjacentMines(position: Position): Int {
         return mineManager.mineCounter.countMinesAround(this, position, height, width)
     }
 
-    fun placeMineAt(position: Position) {
-        findCell(position).placeMine()
+    private fun placeMineAt(position: Position) {
+        findCell(position)?.placeMine()
     }
 
-    fun hasMineAt(position: Position): Boolean = findCell(position).isMine()
+    fun hasMineAt(position: Position): Boolean = findCell(position)?.isMine() ?: false
 
-    fun countMines(): Int = cells.count { it.isMine() }
+    private fun findCell(position: Position): Cell? = cells.firstOrNull { it.position == position }
 
-    private fun findCell(position: Position): Cell = cells.first { it.position == position }
+    fun openCell(position: Position) {
+        val cell = findCell(position) ?: return
+        if (!cell.isMine()) {
+            openCellRecursive(cell)
+        }
+    }
+
+    private fun openCellRecursive(cell: Cell) {
+        if (shouldNotOpenCell(cell)) return
+
+        cell.status = CellStatus.OPEN
+        if (cell.adjacentMines == 0) {
+            openAdjacentCells(cell)
+        }
+    }
+
+    private fun shouldNotOpenCell(cell: Cell): Boolean {
+        return cell.status == CellStatus.OPEN || cell.status == CellStatus.MINE
+    }
+
+    private fun openAdjacentCells(cell: Cell) {
+        determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
+            val adjacentCell = findCell(adjacentPosition)
+            if (adjacentCell != null && adjacentCell.status == CellStatus.EMPTY) {
+                openCellRecursive(adjacentCell)
+            }
+        }
+    }
+
+    private fun determineAdjacentPositions(center: Position): List<Position> {
+        val neighborPositions = NeighborPositions(center, height, width)
+        return neighborPositions.positions
+    }
 }

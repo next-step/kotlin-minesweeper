@@ -3,7 +3,7 @@ package domain
 import enum.CellStatus
 
 class GameBoard(private val mineManager: MineManager) {
-    private lateinit var board: Board
+    private var board: Board = Board(0, 0, mineManager)
     var width: Int = 0
     private var height: Int = 0
 
@@ -18,10 +18,14 @@ class GameBoard(private val mineManager: MineManager) {
     fun countMines(): Int = board.countMines()
 
     fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
-        board.forEachCell(onEachCell)
+        board.processEachCell(onEachCell)
     }
 
     fun countMinesAround(position: Position): Int {
         return mineManager.mineCounter.countMinesAround(board, position, height, width)
+    }
+
+    fun openCell(position: Position) {
+        board.openCell(position)
     }
 }
