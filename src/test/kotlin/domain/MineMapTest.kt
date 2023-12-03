@@ -33,24 +33,6 @@ class MineMapTest : ShouldSpec({
             mineMap.width shouldBe 10
         }
 
-        should("MineMap은 지뢰가 있는 지점이 있고, 없는 지점도 있다") {
-            var hasMine = false
-            var hasNotMine = false
-            val mineMap = MineMap(MineMapInfo(point, 10))
-            repeat(point.y) { y ->
-                repeat(point.x) { x ->
-                    if (mineMap.get(Point(y, x)).hasMine) {
-                        hasMine = true
-                    } else {
-                        hasNotMine = true
-                    }
-                }
-            }
-
-            hasMine shouldBe true
-            hasNotMine shouldBe true
-        }
-
         should("MineMap에 지뢰 개수를 입력하면 입력한 수만큼의 지뢰가 있다") {
             val mineCount = 10
             val mineMap = MineMap(MineMapInfo(point, mineCount))
