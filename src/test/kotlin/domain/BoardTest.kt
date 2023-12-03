@@ -1,5 +1,6 @@
 package domain
 
+import enum.CellStatus
 import inteface.RandomMinePlacementStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -47,5 +48,41 @@ class BoardTest {
         board.placeMines(minePositions)
 
         assertEquals(minePositions.size, board.countMines())
+    }
+
+    @Test
+    @DisplayName("지뢰가 없는 인접한 칸을 열면 해당 칸들이 정확하게 열린다")
+    fun `지뢰가 없는 인접한 칸을 정확히 연다`() {
+        val safePosition = Position(0, 0)
+        val minePosition = Position(1, 1)
+        board.placeMines(listOf(minePosition))
+        board.openCell(safePosition)
+
+        val openedCells = mutableListOf<Position>()
+        board.processEachCell { position, cellStatus ->
+            if (cellStatus == CellStatus.OPEN) {
+                openedCells.add(position)
+            }
+        }
+
+        assertTrue(openedCells.contains(Position(0, 0)))
+        assertFalse(openedCells.contains(Position(0, 1)))
+        assertFalse(openedCells.contains(Position(1, 0)))
+    }
+
+    @Test
+    @DisplayName("지뢰를 선택하면 해당 셀의 상태가 변경되지 않는다")
+    fun `지뢰를 선택하면 해당 셀의 상태가 변경되지 않는다`() {
+        val minePosition = Position(1, 1)
+        board.placeMines(listOf(minePosition))
+        board.openCell(minePosition)
+
+        var mineCellStatus: CellStatus? = null
+        board.processEachCell { position, cellStatus ->
+            if (position == minePosition) {
+                mineCellStatus = cellStatus
+            }
+        }
+        assertEquals(CellStatus.MINE, mineCellStatus)
     }
 }
