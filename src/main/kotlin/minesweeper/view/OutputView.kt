@@ -25,13 +25,13 @@ object OutputView {
     }
 
     fun printMineMap(mineMapMeta: MineMapMeta, mineMap: MineMap) {
-        for (row in 1 until mineMapMeta.height + 1) {
+        for (row in Position.START_INDEX until mineMapMeta.height + 1) {
             printRowCells(mineMapMeta, mineMap, row)
         }
         println()
     }
     private fun printRowCells(mineMapMeta: MineMapMeta, mineMap: MineMap, row: Int) {
-        for (col in 1 until mineMapMeta.width + 1) {
+        for (col in Position.START_INDEX until mineMapMeta.width + 1) {
             val cell = mineMap.getCell(Position(row, col))
             if (cell.openState == OpenState.OPENED) printOpenedCell(cell)
             if (cell.openState == OpenState.CLOSED) printClosedCell()
