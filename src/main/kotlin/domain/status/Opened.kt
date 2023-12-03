@@ -1,46 +1,46 @@
 package domain.status
 
-sealed class Opened : SpotStatus {
+sealed interface Opened : SpotStatus {
 
-    object Mine : Opened() {
+    object Mine : Opened {
         override fun getSymbol(): String = "*"
 
         override fun mineTrapped(): Boolean = true
     }
 
-    object Zero : Opened() {
+    object Zero : Opened {
         override fun getSymbol(): String = "0"
     }
 
-    object One : Opened() {
+    object One : Opened {
         override fun getSymbol(): String = "1"
     }
 
-    object Two : Opened() {
+    object Two : Opened {
         override fun getSymbol(): String = "2"
     }
 
-    object Three : Opened() {
+    object Three : Opened {
         override fun getSymbol(): String = "3"
     }
 
-    object Four : Opened() {
+    object Four : Opened {
         override fun getSymbol(): String = "4"
     }
 
-    object Five : Opened() {
+    object Five : Opened {
         override fun getSymbol(): String = "5"
     }
 
-    object Six : Opened() {
+    object Six : Opened {
         override fun getSymbol(): String = "6"
     }
 
-    object Seven : Opened() {
+    object Seven : Opened {
         override fun getSymbol(): String = "7"
     }
 
-    object Eight : Opened() {
+    object Eight : Opened {
         override fun getSymbol(): String = "8"
     }
 
