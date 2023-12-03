@@ -1,8 +1,8 @@
 package minesweeper.app
 
 import minesweeper.model.board.Board
-import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
+import minesweeper.model.point.TileType
 import minesweeper.view.CoordinateParser
 import minesweeper.view.InputView
 import minesweeper.view.OutputView

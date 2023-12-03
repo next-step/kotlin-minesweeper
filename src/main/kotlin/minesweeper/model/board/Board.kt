@@ -1,11 +1,11 @@
 package minesweeper.model.board
 
 import minesweeper.model.board.impl.EvenlyStrategy
-import minesweeper.model.point.TileType
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import minesweeper.model.point.Delta.Companion.deltas
 import minesweeper.model.point.Points
+import minesweeper.model.point.TileType
 
 class Board(
     val points: Points,
