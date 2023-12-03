@@ -1,6 +1,6 @@
 package minesweeper
 
-import minesweeper.domain.MineFinder
+import minesweeper.domain.CellFinder
 import minesweeper.domain.RandomPositionGenerator
 import minesweeper.ui.InputView
 import minesweeper.ui.ResultView
@@ -13,8 +13,8 @@ fun main() {
     val positionGenerator = RandomPositionGenerator(height, width)
     val initPosition = positionGenerator.init()
     val minePositions = positionGenerator.generate(count)
-    val mineFinder = MineFinder.from(initPosition)
-    mineFinder.convert(minePositions)
+    val cellFinder = CellFinder.from(initPosition)
+    cellFinder.convert(minePositions)
 
-    ResultView.printMines(height, width, mineFinder)
+    ResultView.printMines(height, width, cellFinder)
 }
