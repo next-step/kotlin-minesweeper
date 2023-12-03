@@ -1,5 +1,6 @@
 package minesweeper
 
+import minesweeper.domain.board.size.MineSweeperBoard
 import minesweeper.ui.InputView
 import minesweeper.ui.OutputView
 
@@ -10,7 +11,9 @@ fun main() {
     val width = InputView.inputMineSweeperGameValue()
     OutputView.enterMineCount()
     val mineCount = InputView.inputMineSweeperGameValue()
-    val mineSweeper = MineSweeper(width = width, height = height, mineCount = mineCount)
+    val mineSweeperBoard = MineSweeperBoard(width = width, height = height)
+
+    val mineSweeper = MineSweeper(board = mineSweeperBoard, mineCount = mineCount)
     OutputView.startMineSweeper()
 
     val mineSweeperInitializer = mineSweeper.initialize()

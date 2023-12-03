@@ -1,18 +1,17 @@
 package minesweeper
 
+import minesweeper.domain.board.size.MineSweeperBoard
+
 class MineSweeper(
-    private val width: Int,
-    private val height: Int,
+    private val board: MineSweeperBoard,
     private val mineCount: Int
 ) {
     init {
-        require(width > 0) { INVALID_VALUE }
-        require(height > 0)
-        require(mineCount > 0)
+        require(mineCount > 0) { INVALID_VALUE }
     }
 
     fun initialize(): List<List<String>> {
-        val initialList = (1..(height * width - mineCount)).map {
+        val initialList = (1..(board.getBoardFullSize() - mineCount)).map {
             "C"
         }
         val mineList = (1..mineCount).map {
@@ -23,9 +22,9 @@ class MineSweeper(
     }
 
     private fun getResultList(initialList: List<String>): List<List<String>> {
-        return (0 until height).map { height ->
-            val line = height * width
-            initialList.slice(line until line + width)
+        return (0 until board.width).map { height ->
+            val line = height * board.width
+            initialList.slice(line until line + board.width)
         }
     }
 
