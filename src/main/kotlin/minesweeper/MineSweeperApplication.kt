@@ -11,10 +11,8 @@ fun main() {
     val width = InputView.inputSize(InputType.WIDTH)
     val count = InputView.inputSize(InputType.COUNT)
 
-    val positionGenerator = RandomPositionGenerator(height, width)
-    val initPosition = positionGenerator.generateInit()
-    val minePositions = positionGenerator.generate(count)
-    val cellFinder = CellFinder(initPosition)
+    val minePositions = RandomPositionGenerator(height, width).generate(count)
+    val cellFinder = CellFinder.init(height, width)
     cellFinder.convert(minePositions)
 
     ResultView.printMines(height, width, cellFinder)
