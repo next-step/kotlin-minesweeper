@@ -18,7 +18,7 @@ class MineSweeperBoardTest : StringSpec({
 
     "MineSweeperBoard는 입력한 width, height 개수만큼 생성된다." {
         // height width 개수
-        val mineSweeperBoard = MineSweeperBoard.newInstance(board = boardSize, mineSweeperList = mineWidth)
+        val mineSweeperBoard = MineSweeperBoard.newInstance(boardSize = boardSize, mineSweeperList = mineWidth)
         mineSweeperBoard.size shouldBe height
         mineSweeperBoard.forEach { mineSweeperBoardWidth ->
             mineSweeperBoardWidth.size shouldBe width
