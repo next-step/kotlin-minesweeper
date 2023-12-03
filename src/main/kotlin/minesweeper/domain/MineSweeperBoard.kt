@@ -7,8 +7,8 @@ class MineSweeperBoard(
 ) : List<MineSweeperWidth> by mineSweeperWidths {
     companion object {
         fun newInstance(board: MineSweeperBoardSize, mineSweeperList: List<String>): MineSweeperBoard {
-            return (0 until board.height).map { height ->
-                val line = height * board.width
+            return List(board.height) {
+                val line = it * board.width
                 mineSweeperList.slice(line until line + board.width).toMineSweeperWidth()
             }.toMineSweeperBoard()
         }
