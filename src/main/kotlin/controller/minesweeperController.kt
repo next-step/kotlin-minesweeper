@@ -5,13 +5,14 @@ import domain.BoardSettings
 import domain.Point
 import domain.strategyImpl.RandomPointFactory
 import dto.GameBoardDto
+import dto.GameResultDto
 import view.InputView
 import view.OutputView
 
 fun main() {
     val gameBoard = gameSetUp()
-    val gameBoardDto = GameBoardDto(gameBoard)
-    gameStart(gameBoardDto)
+    val gameResult = gameStart(gameBoard)
+    OutputView.printGameResult(gameResult)
 }
 
 private fun gameSetUp(): GameBoard {
@@ -26,12 +27,24 @@ private fun gameSetUp(): GameBoard {
     return GameBoard.createGameBoard(boardSettings, RandomPointFactory())
 }
 
-private fun gameStart(gameBoard: GameBoardDto) {
+private fun gameStart(gameBoard: GameBoard): GameResultDto {
     OutputView.printMineGameStart()
+    while (gameBoard.isContinued()) {
+        openCells(gameBoard)
+        printGameBoard(gameBoard)
+    }
+
+    return GameResultDto(gameBoard)
+}
+
+private fun printGameBoard(gameBoard: GameBoard) {
+    val gameBoardDto = GameBoardDto(gameBoard)
+    OutputView.printGameBoard(gameBoardDto)
+}
+
+private fun openCells(gameBoard: GameBoard) {
     OutputView.printOpen()
     val inputPoint = InputView.inputPoint()
     val point = Point.parsePoint(inputPoint)
-
-
-    OutputView.printGameBoard(gameBoard)
+    gameBoard.openCells(point)
 }
