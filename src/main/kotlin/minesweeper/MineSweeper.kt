@@ -1,9 +1,9 @@
 package minesweeper
 
-import minesweeper.domain.board.size.MineSweeperBoard
+import minesweeper.domain.board.size.MineSweeperBoardSize
 
 class MineSweeper(
-    private val board: MineSweeperBoard,
+    private val board: MineSweeperBoardSize,
     private val mineCount: Int
 ) {
     init {

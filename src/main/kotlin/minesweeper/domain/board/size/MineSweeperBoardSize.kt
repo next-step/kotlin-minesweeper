@@ -1,6 +1,6 @@
 package minesweeper.domain.board.size
 
-data class MineSweeperBoard(
+data class MineSweeperBoardSize(
     val width: Int,
     val height: Int,
 ) {
