@@ -1,13 +1,16 @@
 package controller
 
-import domain.BoardSettings
 import domain.GameBoard
+import domain.BoardSettings
+import domain.strategyImpl.RandomPointFactory
+import dto.GameBoardDto
 import view.InputView
 import view.OutputView
 
 fun main() {
     val gameBoard = gameSetUp()
-    gameStart(gameBoard)
+    val gameBoardDto = GameBoardDto(gameBoard)
+    gameStart(gameBoardDto)
 }
 
 private fun gameSetUp(): GameBoard {
@@ -19,10 +22,11 @@ private fun gameSetUp(): GameBoard {
     val mineCount = InputView.inputNumber()
     val boardSettings = BoardSettings(height, width, mineCount)
 
-    return GameBoard.createGameBoard(boardSettings)
+    val gameBoard = GameBoard()
+    return gameBoard.from(boardSettings, RandomPointFactory())
 }
 
-private fun gameStart(gameBoard: GameBoard) {
+private fun gameStart(gameBoard: GameBoardDto) {
     OutputView.printMineGameStart()
     OutputView.printGameBoard(gameBoard)
 }

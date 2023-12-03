@@ -2,10 +2,10 @@ package domain
 
 import error.ErrorMessage
 
-class BoardSettings(val height: Int, val width: Int, val mineCount: Int) {
+data class BoardSettings(val row: Int, val col: Int, val mineCount: Int) {
     init {
-        require(height > 0) { ErrorMessage.EXPECT_POSITIVE_NUMBER_HEIGHT.message }
-        require(width > 0) { ErrorMessage.EXPECT_POSITIVE_NUMBER_WIDTH.message }
-        require(height * width > mineCount) { ErrorMessage.EXPECT_MINE_COUNT_LESS_THAN_BOARD_SIZE.message }
+        require(row > 0) { ErrorMessage.EXPECT_POSITIVE_NUMBER_HEIGHT.message }
+        require(col > 0) { ErrorMessage.EXPECT_POSITIVE_NUMBER_WIDTH.message }
+        require(row * col > mineCount) { ErrorMessage.EXPECT_MINE_COUNT_LESS_THAN_BOARD_SIZE.message }
     }
 }
