@@ -78,47 +78,6 @@ class BoardTest {
     2 2 1 0 0
      */
     @Test
-    fun `게임판은 지뢰를 생성한 뒤, 주변 지뢰 개수를 계산하여 갖고 있다`() {
-        val mineCoordinates = listOf(
-            Coordinate(0, 0),
-            Coordinate(1, 2),
-            Coordinate(2, 4),
-            Coordinate(3, 0),
-            Coordinate(3, 1)
-        )
-        val numOfMine = mineCoordinates.size
-        val board = Board(
-            BoardMetadata(5, 5, numOfMine),
-            TestMineGenerationRule(mineCoordinates)
-        )
-        board.countAllAroundMine()
-
-        mineCoordinates.forEach() {
-            board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
-        }
-        board.countOf(0, 1) shouldBe 2
-        board.countOf(0, 2) shouldBe 1
-        board.countOf(0, 3) shouldBe 1
-        board.countOf(0, 4) shouldBe 0
-        board.countOf(1, 0) shouldBe 1
-        board.countOf(1, 1) shouldBe 2
-        board.countOf(1, 3) shouldBe 2
-        board.countOf(1, 4) shouldBe 1
-        board.countOf(2, 0) shouldBe 2
-        board.countOf(2, 1) shouldBe 3
-        board.countOf(2, 2) shouldBe 2
-        board.countOf(2, 3) shouldBe 2
-        board.countOf(3, 2) shouldBe 1
-        board.countOf(3, 3) shouldBe 1
-        board.countOf(3, 4) shouldBe 1
-        board.countOf(4, 0) shouldBe 2
-        board.countOf(4, 1) shouldBe 2
-        board.countOf(4, 2) shouldBe 1
-        board.countOf(4, 3) shouldBe 0
-        board.countOf(4, 4) shouldBe 0
-    }
-
-    @Test
     fun `지뢰가 아닌 좌표를 isOpen 메서드에 입력하면 true 반환`() {
         val mineCoordinates = listOf(
             Coordinate(0, 0),
@@ -182,8 +141,9 @@ class BoardTest {
             BoardMetadata(5, 5, numOfMine),
             TestMineGenerationRule(mineCoordinates)
         )
+        val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(4, 4))
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(4, 4), countingBoard)
 
         openedCoordinates.size shouldBe 6
         openedCoordinates shouldContainAll listOf(
@@ -210,8 +170,9 @@ class BoardTest {
             BoardMetadata(5, 5, numOfMine),
             TestMineGenerationRule(mineCoordinates)
         )
+        val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 1))
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 1), countingBoard)
 
         openedCoordinates.size shouldBe 1
         openedCoordinates shouldContainAll listOf(Coordinate(0, 1))
@@ -231,8 +192,9 @@ class BoardTest {
             BoardMetadata(5, 5, numOfMine),
             TestMineGenerationRule(mineCoordinates)
         )
+        val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 0))
+        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 0), countingBoard)
 
         openedCoordinates.size shouldBe 0
     }
@@ -269,13 +231,14 @@ class BoardTest {
             BoardMetadata(5, 5, numOfMine),
             TestMineGenerationRule(mineCoordinates)
         )
+        val countingBoard = CountingBoard(board)
 
         for (row in 0 until 5) {
             for (col in 0 until 5) {
                 if (mineCoordinates.contains(Coordinate(row, col))) {
                     continue
                 }
-                board.open(Coordinate(row, col))
+                board.open(Coordinate(row, col), countingBoard)
             }
         }
 

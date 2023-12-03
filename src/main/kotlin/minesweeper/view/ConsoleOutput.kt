@@ -1,9 +1,6 @@
 package minesweeper.view
 
-import minesweeper.domain.Board
-import minesweeper.domain.Coordinate
-import minesweeper.domain.EmptyCell
-import minesweeper.domain.MineCell
+import minesweeper.domain.*
 
 object ConsoleOutput {
     fun startGame() {
@@ -14,11 +11,11 @@ object ConsoleOutput {
         println("Lose Game.")
     }
 
-    fun printOpenedBoard(height: Int, width: Int, openedCoordinate: Set<Coordinate>, board: Board) {
+    fun printOpenedBoard(height: Int, width: Int, openedCoordinate: Set<Coordinate>, countingBoard: CountingBoard) {
         for (row in 0 until height) {
             for (col in 0 until width) {
                 if (openedCoordinate.contains(Coordinate(row, col))) {
-                    print("${board.countOf(row, col)} ")
+                    print("${countingBoard.countOf(row, col)} ")
                     continue
                 }
                 print("C ")
@@ -27,7 +24,7 @@ object ConsoleOutput {
         }
     }
 
-    fun winGame(height: Int, width: Int, board: Board) {
+    fun winGame(height: Int, width: Int, board: Board, countingBoard: CountingBoard) {
         println("Win Game!!")
 
         for (row in 0 until height) {
@@ -35,7 +32,7 @@ object ConsoleOutput {
                 val currentCell = board.at(row, col)
                 val mark = when (currentCell) {
                     is MineCell -> "*"
-                    is EmptyCell -> board.countOf(row, col).toString()
+                    is EmptyCell -> countingBoard.countOf(row, col).toString()
                 }
                 print("$mark ")
             }
