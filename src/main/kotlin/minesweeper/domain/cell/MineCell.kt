@@ -1,3 +1,3 @@
 package minesweeper.domain.cell
 
-class MineCell : Cell()
+object MineCell : Cell()

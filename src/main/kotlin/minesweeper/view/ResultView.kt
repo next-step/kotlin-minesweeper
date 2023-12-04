@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.MineSweeper
+import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCell
 import minesweeper.domain.cell.SafeCell
 
@@ -10,12 +11,16 @@ class ResultView {
         println(mineSweeper.getHeight())
         (0 until mineSweeper.getHeight()).forEach {
             println(
-                mineSweeper.getRow(it).joinToString(" ") { cell ->
-                    when (cell) {
-                        is MineCell -> "*"
-                        is SafeCell -> "${cell.countOfAdjacentMine}"
+                mineSweeper.getRow(it).joinToString(" ",
+                    transform = fun(cell: Cell): CharSequence {
+                        if (cell.isClosed) return "C"
+
+                        return when (cell) {
+                            is MineCell -> "*"
+                            is SafeCell -> "${cell.countOfAdjacentMine}"
+                        }
                     }
-                }
+                )
             )
         }
     }

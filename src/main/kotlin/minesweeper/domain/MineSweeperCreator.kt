@@ -14,7 +14,7 @@ class MineSweeperCreator(
         }
             .associateWith { position ->
                 if (minePosition.contains(position)) {
-                    MineCell()
+                    MineCell
                 } else {
                     SafeCell(countAdjacentMine(position))
                 }
