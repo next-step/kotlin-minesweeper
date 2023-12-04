@@ -32,26 +32,26 @@ class CountingBoardTest {
         mineCoordinates.forEach {
             board.at(it.row, it.col).shouldBeInstanceOf<MineCell>()
         }
-        countingBoard.countOf(0, 1) shouldBe 2
-        countingBoard.countOf(0, 2) shouldBe 1
-        countingBoard.countOf(0, 3) shouldBe 1
-        countingBoard.countOf(0, 4) shouldBe 0
-        countingBoard.countOf(1, 0) shouldBe 1
-        countingBoard.countOf(1, 1) shouldBe 2
-        countingBoard.countOf(1, 3) shouldBe 2
-        countingBoard.countOf(1, 4) shouldBe 1
-        countingBoard.countOf(2, 0) shouldBe 2
-        countingBoard.countOf(2, 1) shouldBe 3
-        countingBoard.countOf(2, 2) shouldBe 2
-        countingBoard.countOf(2, 3) shouldBe 2
-        countingBoard.countOf(3, 2) shouldBe 1
-        countingBoard.countOf(3, 3) shouldBe 1
-        countingBoard.countOf(3, 4) shouldBe 1
-        countingBoard.countOf(4, 0) shouldBe 2
-        countingBoard.countOf(4, 1) shouldBe 2
-        countingBoard.countOf(4, 2) shouldBe 1
-        countingBoard.countOf(4, 3) shouldBe 0
-        countingBoard.countOf(4, 4) shouldBe 0
+        countingBoard.countAroundMine(0, 1) shouldBe 2
+        countingBoard.countAroundMine(0, 2) shouldBe 1
+        countingBoard.countAroundMine(0, 3) shouldBe 1
+        countingBoard.countAroundMine(0, 4) shouldBe 0
+        countingBoard.countAroundMine(1, 0) shouldBe 1
+        countingBoard.countAroundMine(1, 1) shouldBe 2
+        countingBoard.countAroundMine(1, 3) shouldBe 2
+        countingBoard.countAroundMine(1, 4) shouldBe 1
+        countingBoard.countAroundMine(2, 0) shouldBe 2
+        countingBoard.countAroundMine(2, 1) shouldBe 3
+        countingBoard.countAroundMine(2, 2) shouldBe 2
+        countingBoard.countAroundMine(2, 3) shouldBe 2
+        countingBoard.countAroundMine(3, 2) shouldBe 1
+        countingBoard.countAroundMine(3, 3) shouldBe 1
+        countingBoard.countAroundMine(3, 4) shouldBe 1
+        countingBoard.countAroundMine(4, 0) shouldBe 2
+        countingBoard.countAroundMine(4, 1) shouldBe 2
+        countingBoard.countAroundMine(4, 2) shouldBe 1
+        countingBoard.countAroundMine(4, 3) shouldBe 0
+        countingBoard.countAroundMine(4, 4) shouldBe 0
     }
 
 }

@@ -20,8 +20,8 @@ fun main() {
     val openedCoordinate = mutableSetOf<Coordinate>()
     while (board.isAllOpened().not()) {
         val openCoordinate = ConsoleInput.inputOpenCoordinate()
-        val isOpened = board.canOpen(openCoordinate)
-        if (isOpened.not()) {
+        val canOpen = board.canOpen(openCoordinate)
+        if (canOpen.not()) {
             ConsoleOutput.loseGame()
             return
         }

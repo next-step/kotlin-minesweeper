@@ -7,7 +7,7 @@ class CountingBoard(private val board: Board) {
         countAllAroundMine()
     }
 
-    fun countOf(row: Int, col: Int): Int {
+    fun countAroundMine(row: Int, col: Int): Int {
         return countsOfAroundMines[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 

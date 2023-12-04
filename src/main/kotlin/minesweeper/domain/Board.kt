@@ -25,7 +25,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
             return emptyList()
         }
 
-        if (countingBoard.countOf(coordinate.row, coordinate.col) > 0) {
+        if (countingBoard.countAroundMine(coordinate.row, coordinate.col) > 0) {
             currentCell.open()
             return listOf(coordinate)
         }
@@ -46,7 +46,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
             val currentCoordinate = queue.poll()
             at(currentCoordinate.row, currentCoordinate.col).open()
             results.add(currentCoordinate)
-            if (countingBoard.countOf(currentCoordinate.row, currentCoordinate.col) > 0) continue
+            if (countingBoard.countAroundMine(currentCoordinate.row, currentCoordinate.col) > 0) continue
 
             visitAround(currentCoordinate, queue)
         }

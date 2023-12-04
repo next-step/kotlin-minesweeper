@@ -15,7 +15,7 @@ object ConsoleOutput {
         for (row in 0 until height) {
             for (col in 0 until width) {
                 if (openedCoordinate.contains(Coordinate(row, col))) {
-                    print("${countingBoard.countOf(row, col)} ")
+                    print("${countingBoard.countAroundMine(row, col)} ")
                     continue
                 }
                 print("C ")
@@ -32,7 +32,7 @@ object ConsoleOutput {
                 val currentCell = board.at(row, col)
                 val mark = when (currentCell) {
                     is MineCell -> "*"
-                    is EmptyCell -> countingBoard.countOf(row, col).toString()
+                    is EmptyCell -> countingBoard.countAroundMine(row, col).toString()
                 }
                 print("$mark ")
             }
