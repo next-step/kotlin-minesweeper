@@ -17,15 +17,13 @@ class FieldBuilder(
     private val minePicker: PositionPicker,
 ) {
     private val allPositions by lazy { size.allPositionsOfRowAndColumns }
-    private var minePositions: Set<Position>? = null
+    private lateinit var minePositions: Set<Position>
     fun installMines(count: MineCount) {
         minePositions = minePicker.pick(allPositions, count.value)
     }
 
-    fun build(): Field {
-        val minePositions = minePositions ?: throw IllegalStateException("지뢰가 설치되지 않았습니다")
-        return Field(createCells(minePositions))
-    }
+    fun build(): Field =
+        Field(createCells(minePositions))
 
     private fun createCells(minePositions: Set<Position>): Set<Cell> =
         allPositions.map { Cell(it, it.determineMark(minePositions)) }.toSet()
