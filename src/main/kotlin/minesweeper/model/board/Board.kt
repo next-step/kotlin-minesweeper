@@ -96,4 +96,12 @@ class Board(
     fun minesCount(): Int {
         return mines.values.count { it == Attribute.MINE }
     }
+
+    fun isGroundAttribute(coordinate: Coordinate): Boolean {
+        return this.attribute(coordinate) == Attribute.NONE
+    }
+
+    fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
+        return this.adjacentMineCount(coordinate) == 0
+    }
 }

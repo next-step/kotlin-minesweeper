@@ -1,6 +1,5 @@
 package minesweeper.model.board
 
-import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import java.util.LinkedList
@@ -10,7 +9,7 @@ class Bfs(
     private val board: Board,
 ) {
     fun traversal(coordinate: Coordinate): Set<Coordinate> {
-        val visited: Array<Array<Boolean>> = board.limit.toVisited()
+        val visited = Visited()
         val result: MutableSet<Coordinate> = mutableSetOf()
         val queue: Queue<Coordinate> = LinkedList()
         queue.add(coordinate)
@@ -18,11 +17,11 @@ class Bfs(
         while (queue.isNotEmpty()) {
             val current = queue.poll()
             result.add(current)
-            visited[current.verticalValue()][current.horizontalValue()] = true
-            for (d: Delta in Delta.deltas) {
-                if (current.movePossible(d, board.limit)) {
-                    val next = current.moveTo(d)
-                    if ((board.attribute(next) == Attribute.NONE) && (visited[next.verticalValue()][next.horizontalValue()] == false)) {
+            visited.markVisited(current)
+            for (delta: Delta in Delta.deltas) {
+                if (current.movePossible(delta, board.limit)) {
+                    val next = current.moveTo(delta)
+                    if (board.isGroundAttribute(next) && visited.isVisited(next) && board.isAdjacentMineCountZero(next)) {
                         queue.add(next)
                     }
                 }
