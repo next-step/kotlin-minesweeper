@@ -8,17 +8,18 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.RandomPositionPicker
 import minesweeper.domain.cell.CellMark
 import minesweeper.domain.field
-import minesweeper.domain.field.FieldSize
 import minesweeper.domain.field.Height
 import minesweeper.domain.field.Width
 
 class FieldBuilderTest : DescribeSpec({
     describe("field 생성") {
         context("높이(6)와 너비(4), 지뢰 개수(3)가 주어지면") {
-            val size = FieldSize(Height(6), Width(4))
+            val height = Height(6)
+            val width = Width(4)
             val count = MineCount(3)
 
-            val result = field(size, RandomPositionPicker()) {
+            val result = field(RandomPositionPicker()) {
+                size(height, width)
                 installMines(count)
             }
 
@@ -39,12 +40,22 @@ class FieldBuilderTest : DescribeSpec({
             }
         }
 
-        context("지뢰 개수가 주어지지 않으면") {
-            val size = FieldSize(Height(6), Width(4))
-
+        context("필드 사이즈가 주어지지 않으면") {
             it("필드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
-                    field(size, RandomPositionPicker()) {}
+                    field(RandomPositionPicker()) {
+                        installMines(MineCount(6))
+                    }
+                }
+            }
+        }
+
+        context("지뢰 개수가 주어지지 않으면") {
+            it("필드 생성에 실패한다") {
+                shouldThrowExactly<UninitializedPropertyAccessException> {
+                    field(RandomPositionPicker()) {
+                        size(Height(6), Width(4))
+                    }
                 }
             }
         }

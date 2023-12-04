@@ -4,7 +4,6 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.RandomPositionPicker
 import minesweeper.domain.field
 import minesweeper.domain.field.Field
-import minesweeper.domain.field.FieldSize
 import minesweeper.domain.field.Height
 import minesweeper.domain.field.Width
 import minesweeper.view.FieldView
@@ -14,22 +13,18 @@ import minesweeper.view.OutputView
 object MinesweeperController {
 
     fun start() {
-        val field = field(requestSize(), RandomPositionPicker()) {
-            installMines(requestMineCount())
+        val field = field(RandomPositionPicker()) {
+            size(height, width)
+            installMines(mineCount)
         }
-        responseField(field)
+        showField(field)
     }
 
-    private fun requestSize(): FieldSize {
-        val height = InputView.height.let(::Height)
-        val width = InputView.width.let(::Width)
-        return FieldSize(height, width)
-    }
+    private val height: Height = InputView.height.let(::Height)
+    private val width: Width = InputView.width.let(::Width)
+    private val mineCount: MineCount = InputView.mineCount.let(::MineCount)
 
-    private fun requestMineCount(): MineCount =
-        InputView.mineCount.let(::MineCount)
-
-    private fun responseField(field: Field) {
+    private fun showField(field: Field) {
         OutputView.drawField(FieldView.from(field))
     }
 }
