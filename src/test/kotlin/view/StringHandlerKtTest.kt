@@ -25,20 +25,26 @@ class StringHandlerKtTest {
     }
 
     @Test
-    fun `지뢰 cell을 알맞은 문자로 변환한다`() {
-        val cell = Cell(isMine = true)
+    fun `닫힌 cell을 알맞은 문자로 변환한다`() {
+        val cell = Cell()
+        assertThat(cell.toStr()).isEqualTo(CLOSED_SYMBOL)
+    }
+
+    @Test
+    fun `열린 지뢰 cell을 알맞은 문자로 변환한다`() {
+        val cell = Cell(isMine = true, isOpened = true)
         assertThat(cell.toStr()).isEqualTo(MINE_SYMBOL)
     }
 
     @Test
-    fun `비 지뢰 cell을 힌트에 해당하는 문자로 변환한다`() {
-        val cell = Cell(isMine = false, hint = 8)
+    fun `열린 비 지뢰 cell을 힌트에 해당하는 문자로 변환한다`() {
+        val cell = Cell(isMine = false, hint = 8, isOpened = true)
         assertThat(cell.toStr()).isEqualTo(cell.hint?.toString())
     }
 
     @Test
-    fun `지뢰가 아니면서 힌트가 null인 cell을 문자로 변환할 경우 예외를 던진다`() {
-        val cell = Cell(isMine = false, hint = null)
+    fun `열려있고 지뢰가 아니면서 힌트가 null인 cell을 문자로 변환할 경우 예외를 던진다`() {
+        val cell = Cell(isMine = false, hint = null, isOpened = true)
         assertThatThrownBy { cell.toStr() }
             .isInstanceOf(IllegalStateException::class.java)
             .hasMessage("null 값에 대한 String 변환이 요청되었습니다")

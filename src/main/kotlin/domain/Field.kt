@@ -41,4 +41,32 @@ class Field(val width: Int, val height: Int) {
     private fun cellOf(position: Position): Cell {
         return cells[position.y][position.x]
     }
+
+    fun clickCell(x: Int, y: Int): Boolean {
+        val cell = cellOf(Position(x, y))
+        if (cell.isOpened) return true
+
+        recursiveOpen(Position(x, y))
+        return !cell.isMine
+    }
+
+    private fun recursiveOpen(position: Position) {
+        val cell = cellOf(position)
+        if (cell.isOpened) return
+
+        cell.open()
+        if (cell.hint != 0 || cell.isMine) return
+
+        position.getArounds(width = width, height = height).forEach {
+            recursiveOpen(it)
+        }
+    }
+
+    fun mineRemains(): Boolean {
+        val opened = cells.flatten().count { it.isOpened }
+        val mine = cells.flatten().count { it.isMine }
+        val size = width * height
+
+        return (size - opened != mine)
+    }
 }

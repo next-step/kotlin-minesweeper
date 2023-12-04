@@ -57,4 +57,76 @@ class FieldTest {
             { assertThat(field.cells[2][2].hint).isEqualTo(2) },
         )
     }
+
+    /**
+     * 0 0 0
+     * 0 1 1
+     * 0 1 C
+     */
+    @Test
+    fun `선택한 좌표로부터 힌트가 0이 아닌 셀을 만날때 까지 인접 셀을 연쇄적으로 오픈한다`() {
+        val field = Field(3, 3)
+        val mine = mutableListOf(Position(2, 2))
+
+        field.setMine(TestSelector(mine))
+        field.setHints()
+        field.clickCell(0, 0)
+
+        assertAll(
+            { assertThat(field.cells[0][0].isOpened).isTrue() },
+            { assertThat(field.cells[0][2].isOpened).isTrue() },
+            { assertThat(field.cells[1][0].isOpened).isTrue() },
+            { assertThat(field.cells[2][0].isOpened).isTrue() },
+            { assertThat(field.cells[2][1].isOpened).isTrue() },
+            { assertThat(field.cells[2][2].isOpened).isFalse() },
+        )
+    }
+
+    @Test
+    fun `못찾은 지뢰가 남아있는지 확인`() {
+        val field = Field(3, 3)
+        field.setHints()
+        field.clickCell(0, 0)
+
+        assertThat(field.mineRemains()).isFalse()
+    }
+
+    @Test
+    fun `모든 칸이 지뢰인 경우 모두 찾은것으로 간주`() {
+        val field = Field(3, 3)
+        val mines = (0..2).flatMap { y ->
+            (0..2).map { x ->
+                Position(x, y)
+            }
+        }.toMutableList()
+
+        repeat(mines.size) {
+            field.setMine(TestSelector(mines))
+        }
+
+        assertThat(field.mineRemains()).isFalse()
+    }
+
+    @Test
+    fun `지뢰를 제외한 모든 칸이 오픈된 경우 게임 종료`() {
+        val field = Field(2, 2)
+        val mines = mutableListOf(
+            Position(1, 0),
+            Position(1, 1),
+            Position(0, 1),
+        )
+
+        repeat(mines.size) {
+            field.setMine(TestSelector(mines))
+        }
+        field.setHints()
+
+        assertAll(
+            { assertThat(field.mineRemains()).isTrue() },
+            {
+                field.clickCell(0, 0)
+                assertThat(field.mineRemains()).isFalse()
+            },
+        )
+    }
 }
