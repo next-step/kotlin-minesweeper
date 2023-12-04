@@ -1,21 +1,14 @@
 package domain
 
-import domain.field.MineMapInfo
-import domain.field.Spot
-import domain.map.ArrayMap
-import domain.status.MineStatus
-
 object RandomMineMap {
 
-    fun newMap(mapInfo: MineMapInfo): ArrayMap {
-        val shuffledFlattenMap = flattenMineMap(mapInfo).shuffled()
-        return ArrayMap(shuffledFlattenMap.chunked(mapInfo.point.x))
-    }
+    fun newRandomMineMap(point: Point, mineCount: Int): ArrayMap =
+        ArrayMap(randomFlattenMap(point, mineCount).chunked(point.x))
 
-    private fun flattenMineMap(mapInfo: MineMapInfo): List<Spot> =
-        initializeList(mapInfo.mineCount, MineStatus.MINED) +
-            initializeList(mapInfo.point.y * mapInfo.point.x - mapInfo.mineCount, MineStatus.EMPTY)
+    private fun initialList(size: Int, isMine: Boolean): List<Spot> =
+        List(size) { Spot(isMine) }
 
-    private fun initializeList(size: Int, initValue: MineStatus): List<Spot> =
-        List(size) { Spot(initValue) }
+    private fun randomFlattenMap(point: Point, mineCount: Int): List<Spot> =
+        (initialList(mineCount, true) + initialList(point.getArea() - mineCount, false))
+            .shuffled()
 }

@@ -1,5 +1,5 @@
-import controller.MinesweeperController
+import controller.MineMapController
 
 fun main() {
-    MinesweeperController().run()
+    MineMapController().run()
 }
