@@ -1,4 +1,4 @@
-package domain.field
+package domain.board
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
@@ -6,19 +6,19 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.MineCount
 import minesweeper.domain.RandomPositionPicker
+import minesweeper.domain.board
+import minesweeper.domain.board.Height
+import minesweeper.domain.board.Width
 import minesweeper.domain.cell.CellMark
-import minesweeper.domain.field
-import minesweeper.domain.field.Height
-import minesweeper.domain.field.Width
 
-class FieldBuilderTest : DescribeSpec({
-    describe("field 생성") {
+class BoardBuilderTest : DescribeSpec({
+    describe("보드 생성") {
         context("높이(6)와 너비(4), 지뢰 개수(3)가 주어지면") {
             val height = Height(6)
             val width = Width(4)
             val count = MineCount(3)
 
-            val result = field(RandomPositionPicker()) {
+            val result = board(RandomPositionPicker()) {
                 size(height, width)
                 mineCount(count)
             }
@@ -40,10 +40,10 @@ class FieldBuilderTest : DescribeSpec({
             }
         }
 
-        context("필드 사이즈가 주어지지 않으면") {
-            it("필드 생성에 실패한다") {
+        context("보드 사이즈가 주어지지 않으면") {
+            it("보드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
-                    field(RandomPositionPicker()) {
+                    board(RandomPositionPicker()) {
                         mineCount(MineCount(6))
                     }
                 }
@@ -51,9 +51,9 @@ class FieldBuilderTest : DescribeSpec({
         }
 
         context("지뢰 개수가 주어지지 않으면") {
-            it("필드 생성에 실패한다") {
+            it("보드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
-                    field(RandomPositionPicker()) {
+                    board(RandomPositionPicker()) {
                         size(Height(6), Width(4))
                     }
                 }

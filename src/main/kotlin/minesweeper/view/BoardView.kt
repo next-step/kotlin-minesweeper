@@ -1,15 +1,15 @@
 package minesweeper.view
 
+import minesweeper.domain.board.Board
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.CellMark
-import minesweeper.domain.field.Field
 
-object FieldView {
+object BoardView {
     private const val MINE_SYMBOL = "*"
     private const val EMPTY_SYMBOL = "C"
 
-    fun from(field: Field): List<String> {
-        val sortedCells = sortCells(field.cells)
+    fun from(board: Board): List<String> {
+        val sortedCells = sortCells(board.cells)
         val cellsByRow = sortedCells.groupBy { it.position.row }
         return cellsByRow.map { rowToString(it.value) }
     }

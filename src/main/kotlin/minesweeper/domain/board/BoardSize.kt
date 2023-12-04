@@ -1,8 +1,8 @@
-package minesweeper.domain.field
+package minesweeper.domain.board
 
 import minesweeper.domain.cell.Position
 
-data class FieldSize(
+data class BoardSize(
     val height: Height,
     val width: Width,
 ) {
