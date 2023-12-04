@@ -18,7 +18,7 @@ class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
                 2 to 2,
                 3 to 3,
             ).deployPoints(limit),
-            vision = VisionCoveredStrategy.coordinates(limit),
+            vision = VisionCoveredStrategy.coordinates(limit).toMutableSet(),
             limit = limit,
         )
         val symbol = ExploringDefaultClosedAreaRenderingStrategy.symbolOf(
