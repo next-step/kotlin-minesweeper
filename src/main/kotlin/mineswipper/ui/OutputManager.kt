@@ -4,6 +4,7 @@ import mineswipper.domain.map.Field
 import mineswipper.domain.map.Mine
 import mineswipper.domain.map.NormalPedal
 import mineswipper.domain.map.Pedal
+import mineswipper.domain.map.Pedals
 
 class OutputManager {
     fun printField(field: Field) {
@@ -12,8 +13,8 @@ class OutputManager {
         }
     }
 
-    private fun printWidth(pedals: List<Pedal>) {
-        val pedal = pedals.joinToString(" ") {
+    private fun printWidth(pedals: Pedals) {
+        val pedal = pedals.value.joinToString(" ") {
             when (it) {
                 is NormalPedal -> NORMAL_PEDAL
                 is Mine -> MINE_PEDAL
