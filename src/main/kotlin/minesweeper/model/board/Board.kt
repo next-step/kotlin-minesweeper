@@ -5,11 +5,12 @@ import minesweeper.model.board.impl.EvenlyStrategy
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
+import minesweeper.model.vison.impl.VisionCoveredStrategy
 import minesweeper.view.render.MineRenderingStrategy
 
 class Board(
     private val mines: Map<Coordinate, Attribute>,
-    private val covered: Set<Coordinate> = emptySet(),
+    private val coveredVision: Set<Coordinate> = emptySet(),
     val limit: BoardLimit,
 ) {
 
@@ -18,7 +19,8 @@ class Board(
         limit: BoardLimit,
     ) : this(
         mines = EvenlyStrategy(mineCount).deployPoints(limit),
-        limit = limit
+        coveredVision = VisionCoveredStrategy.coordinates(limit),
+        limit = limit,
     )
 
     // constructor(points: Map<Coordinate, Attribute>, visionStrategy: VisionStrategy) : this(points, visionStrategy.toData())
@@ -54,7 +56,7 @@ class Board(
     }
 
     fun isCovered(coordinate: Coordinate): Boolean {
-        return this.covered.contains(coordinate)
+        return this.coveredVision.contains(coordinate)
     }
 
     fun tryOpen(coordinate: Coordinate): GameStatus {
