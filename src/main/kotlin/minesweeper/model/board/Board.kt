@@ -10,7 +10,7 @@ import minesweeper.view.render.MineRenderingStrategy
 
 class Board(
     private val mines: Map<Coordinate, Attribute>,
-    private val vision: Set<Coordinate> = emptySet(),
+    private val vision: MutableSet<Coordinate> = mutableSetOf(),
     val limit: BoardLimit,
 ) {
 
@@ -19,11 +19,9 @@ class Board(
         limit: BoardLimit,
     ) : this(
         mines = EvenlyStrategy(mineCount).deployPoints(limit),
-        vision = VisionCoveredStrategy.coordinates(limit),
+        vision = VisionCoveredStrategy.coordinates(limit).toMutableSet(),
         limit = limit,
     )
-
-    // constructor(points: Map<Coordinate, Attribute>, visionStrategy: VisionStrategy) : this(points, visionStrategy.toData())
 
     fun adjacentMineCount(coordinate: Coordinate): Int {
         return this.adjacentPointTraversal(coordinate)
@@ -72,12 +70,13 @@ class Board(
     }
 
     private fun discoveredAdjacentGround(coordinate: Coordinate) {
-        val coordinates: Set<Coordinate> = adjacentGroupCoordinates(coordinate)
+        val coordinates: Set<Coordinate> = adjacentGroundCoordinates(coordinate)
         discoverCoordinates(coordinates)
     }
 
-    private fun adjacentGroupCoordinates(coordinate: Coordinate): Set<Coordinate> {
-        TODO()
+    private fun adjacentGroundCoordinates(coordinate: Coordinate): Set<Coordinate> {
+        val bfs = Bfs(this)
+        return bfs.traversal(coordinate)
     }
 
     private fun discoveredAllMines() {
@@ -85,11 +84,10 @@ class Board(
     }
 
     private fun discoverCoordinates(coordinates: Set<Coordinate>) {
-        vision.minus(coordinates)
+        vision.removeAll(coordinates)
     }
 
     private fun isWin(): Boolean {
-        // require(mines.keys.size <= coveredVision.size) { "" }
         return mines.keys.size == vision.size
     }
 
