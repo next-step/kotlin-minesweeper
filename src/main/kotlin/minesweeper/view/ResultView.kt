@@ -7,14 +7,13 @@ import minesweeper.domain.cell.SafeCell
 class ResultView {
     fun showMineSweeper(mineSweeper: MineSweeper) {
         println("지뢰찾기 게임 시작")
-
-        mineSweeper.mineMap.values.forEach { row ->
+        println(mineSweeper.getHeight())
+        (0 until mineSweeper.getHeight()).forEach {
             println(
-                row.joinToString(" ") { cell ->
+                mineSweeper.getRow(it).joinToString(" ") { cell ->
                     when (cell) {
                         is MineCell -> "*"
                         is SafeCell -> "${cell.countOfAdjacentMine}"
-                        else -> ""
                     }
                 }
             )

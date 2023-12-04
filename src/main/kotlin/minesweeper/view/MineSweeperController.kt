@@ -2,6 +2,7 @@ package minesweeper.view
 
 import minesweeper.domain.MineCreator
 import minesweeper.domain.MineSweeper
+import minesweeper.domain.MineSweeperCreator
 import minesweeper.domain.MineSweeperSize
 
 class MineSweeperController(
@@ -17,8 +18,10 @@ class MineSweeperController(
         val minePosition = MineCreator.create(mineSweeperSize, countOfMine)
 
         val mineSweeper = MineSweeper(
-            mineSweeperSize = mineSweeperSize,
-            minePosition = minePosition
+            MineSweeperCreator(
+                mineSweeperSize = mineSweeperSize,
+                minePosition = minePosition
+            ).createMineSweeperMap()
         )
 
         resultView.showMineSweeper(mineSweeper = mineSweeper)

@@ -1,31 +1,17 @@
 package minesweeper.domain
 
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.MineCell
-import minesweeper.domain.cell.SafeCell
 
 class MineSweeper(
-    val mineSweeperSize: MineSweeperSize,
-    val minePosition: List<Int>
+    private val mineSweeperMap: Map<Position, Cell>
 ) {
-    val mineMap: Map<Int, List<Cell>> = (0 until mineSweeperSize.height).associateWith { y ->
-        (0 until mineSweeperSize.width).map { x ->
-            if (minePosition.contains(y * mineSweeperSize.height + x)) {
-                MineCell()
-            } else {
-                SafeCell(countAdjacentMine(x, y))
-            }
-        }
+    fun getRow(index: Int): List<Cell> {
+        require(index < getHeight()) { "Wrong index!" }
+        return mineSweeperMap.filter { (key, _) -> key.y == index }
+            .toSortedMap { prev, next -> prev.x.compareTo(next.x) }.values.toList()
     }
 
-    private fun countAdjacentMine(x: Int, y: Int): Int {
-        return Direction.eightWays.count { (dx, dy) ->
-            val newX = x + dx
-            val newY = y + dy
-
-            (0 until mineSweeperSize.width).contains(newX) &&
-                (0 until mineSweeperSize.height).contains(newY) &&
-                minePosition.contains(newX + newY * mineSweeperSize.height)
-        }
+    fun getHeight(): Int = mineSweeperMap.keys.count { (_, y) ->
+        y == 0
     }
 }
