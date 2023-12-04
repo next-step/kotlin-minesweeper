@@ -5,27 +5,23 @@ import domain.Position
 import enum.CellStatus
 
 class OutputView {
-    fun displayBoard(board: GameBoard) {
-        board.processEachCell { position, cellStatus ->
-            printCell(board, position, cellStatus)
-            if (position.x == board.width - 1) println()
+    fun displayBoard(gameBoard: GameBoard) {
+        gameBoard.processEachCell { position, cellStatus ->
+            printCell(gameBoard, position, cellStatus)
+            if (position.x == gameBoard.width - 1) println()
         }
     }
 
-    private fun printCell(board: GameBoard, position: Position, cellStatus: CellStatus) {
-        val displayChar = getDisplayChar(board, position, cellStatus)
+    private fun printCell(gameBoard: GameBoard, position: Position, cellStatus: CellStatus) {
+        val displayChar = when (cellStatus) {
+            CellStatus.OPEN -> gameBoard.countMinesAround(position).toString()
+            CellStatus.CLOSED -> "C"
+            CellStatus.MINE -> "*"
+        }
         print("$displayChar ")
     }
 
-    private fun getDisplayChar(board: GameBoard, position: Position, cellStatus: CellStatus): String {
-        return when {
-            cellStatus == CellStatus.MINE -> "*"
-            else -> getMineCountDisplay(board, position)
-        }
-    }
-
-    private fun getMineCountDisplay(board: GameBoard, position: Position): String {
-        val mineCount = board.countMinesAround(position)
-        return if (mineCount > 0) mineCount.toString() else "0"
+    fun displayGameOverMessage() {
+        println("Lose Game.")
     }
 }

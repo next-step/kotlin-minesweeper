@@ -3,19 +3,25 @@ package domain
 import enum.CellStatus
 
 class Board(
-    private val height: Int,
-    private val width: Int,
+    val height: Int,
+    val width: Int,
     private val mineManager: MineManager
 ) {
-    private val cells: List<Cell> = List(height * width) { index ->
+    val cells: List<Cell> = List(height * width) { index ->
         Cell(Position(index % width, index / width))
     }
 
-    fun placeMines(minePositions: List<Position>) {
+    fun placeMines(mineCount: Int) {
+        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
         minePositions.forEach { placeMineAt(it) }
-        cells.forEach { cell ->
-            cell.adjacentMines = calculateAdjacentMines(cell.position)
-        }
+    }
+
+    fun initializeCells() {
+        cells.forEach { it.status = CellStatus.CLOSED }
+    }
+
+    fun isMinePresentAt(position: Position): Boolean {
+        return hasMineAt(position)
     }
 
     fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
@@ -24,25 +30,16 @@ class Board(
         }
     }
 
-    fun countMines(): Int = cells.count { it.isMine() }
-
-    private fun calculateAdjacentMines(position: Position): Int {
-        return mineManager.mineCounter.countMinesAround(this, position, height, width)
+    fun countMinesAround(position: Position): Int {
+        return mineManager.mineCounter.countMinesAround(this, position)
     }
 
-    private fun placeMineAt(position: Position) {
-        findCell(position)?.placeMine()
-    }
+    fun openCell(position: Position): Boolean {
+        val cell = findCell(position) ?: return false
+        if (cell.isMine()) return true
 
-    fun hasMineAt(position: Position): Boolean = findCell(position)?.isMine() ?: false
-
-    private fun findCell(position: Position): Cell? = cells.firstOrNull { it.position == position }
-
-    fun openCell(position: Position) {
-        val cell = findCell(position) ?: return
-        if (!cell.isMine()) {
-            openCellRecursive(cell)
-        }
+        openCellRecursive(cell)
+        return false
     }
 
     private fun openCellRecursive(cell: Cell) {
@@ -61,10 +58,22 @@ class Board(
     private fun openAdjacentCells(cell: Cell) {
         determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
             val adjacentCell = findCell(adjacentPosition)
-            if (adjacentCell != null && adjacentCell.status == CellStatus.EMPTY) {
+            if (adjacentCell != null && adjacentCell.status == CellStatus.CLOSED) {
                 openCellRecursive(adjacentCell)
             }
         }
+    }
+
+    fun placeMineAt(position: Position) {
+        findCell(position)?.placeMine()
+    }
+
+    fun hasMineAt(position: Position): Boolean {
+        return findCell(position)?.isMine() ?: false
+    }
+
+    private fun findCell(position: Position): Cell? {
+        return cells.firstOrNull { it.position == position }
     }
 
     private fun determineAdjacentPositions(center: Position): List<Position> {

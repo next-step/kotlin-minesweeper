@@ -17,4 +17,12 @@ class InputView {
         println("지뢰는 몇 개인가요?")
         return readlnOrNull()?.toIntOrNull() ?: GameSettings.DEFAULT_MINE_COUNT
     }
+
+    fun readCellCoordinates(): Pair<Int, Int> {
+        print("open: ")
+        val input = readln().split(",")
+        val x = input[0].trim().toInt() - 1
+        val y = input[1].trim().toInt() - 1
+        return Pair(x, y)
+    }
 }

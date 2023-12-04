@@ -5,5 +5,5 @@ import inteface.MinePlacementStrategy
 
 class MineManager(
     val minePlacementStrategy: MinePlacementStrategy,
-    val mineCounter: MineCounter
+    val mineCounter: MineCounter,
 )
