@@ -12,7 +12,7 @@ class GameBoard(private val mineManager: MineManager) {
         this.height = height
         this.width = width
         board = Board(height, width, mineManager)
-        board.initializeCells()
+        board.closeAllCells()
         board.placeMines(mineCount)
     }
 

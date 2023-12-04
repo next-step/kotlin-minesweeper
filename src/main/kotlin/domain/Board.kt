@@ -16,7 +16,7 @@ class Board(
         minePositions.forEach { placeMineAt(it) }
     }
 
-    fun initializeCells() {
+    fun closeAllCells() {
         cells.forEach { it.status = CellStatus.CLOSED }
     }
 
