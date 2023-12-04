@@ -11,7 +11,7 @@ import minesweeper.view.FieldView
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 
-object Minesweeper {
+object MinesweeperController {
 
     fun start() {
         val field = field(requestSize(), RandomPositionPicker()) {
