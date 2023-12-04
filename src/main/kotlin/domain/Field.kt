@@ -2,6 +2,8 @@ package domain
 
 class Field(val width: Int, val height: Int) {
     val cells: List<List<Cell>>
+    var status: Status
+
     init {
         validateSize(width)
         validateSize(height)
@@ -9,6 +11,8 @@ class Field(val width: Int, val height: Int) {
         cells = (0 until height).map {
             (0 until width).map { Cell() }
         }
+
+        status = Waiting()
     }
 
     private fun validateSize(len: Int) {
@@ -16,6 +20,8 @@ class Field(val width: Int, val height: Int) {
     }
 
     fun setMine(selector: PositionSelector) {
+        check(status is Waiting)
+
         var position = selector.selectPosition()
         while (cellOf(position).isMine) {
             position = selector.selectPosition()
@@ -24,7 +30,12 @@ class Field(val width: Int, val height: Int) {
         cellOf(position).isMine = true
     }
 
-    fun setHints() = recursiveSetHint(Position(0, 0))
+    fun setHints() {
+        check(status is Waiting)
+
+        recursiveSetHint(Position(0, 0))
+        status = status.next()
+    }
 
     private fun recursiveSetHint(position: Position) {
         val cell = cellOf(position)
@@ -42,12 +53,18 @@ class Field(val width: Int, val height: Int) {
         return cells[position.y][position.x]
     }
 
-    fun clickCell(x: Int, y: Int): Boolean {
+    fun clickCell(x: Int, y: Int) {
+        check(status is Running)
+
         val cell = cellOf(Position(x, y))
-        if (cell.isOpened) return true
+        if (cell.isOpened) return
 
         recursiveOpen(Position(x, y))
-        return !cell.isMine
+
+        if (cell.isMine) {
+            (status as Running).stillAlive = false
+            return
+        }
     }
 
     private fun recursiveOpen(position: Position) {
@@ -62,11 +79,32 @@ class Field(val width: Int, val height: Int) {
         }
     }
 
-    fun mineRemains(): Boolean {
+    private fun checkRunningStatus() {
+        if (!(status as Running).stillAlive) {
+            status = status.next()
+            return
+        }
+
         val opened = cells.flatten().count { it.isOpened }
         val mine = cells.flatten().count { it.isMine }
         val size = width * height
 
-        return (size - opened != mine)
+        if (size - opened == mine) {
+            (status as Running).stillAlive = true
+            status = status.next()
+        }
+    }
+
+    fun isFinished(): Boolean {
+        check(status is Running || status is Finished)
+
+        checkRunningStatus()
+        return status is Finished
+    }
+
+    fun userWins(): Boolean {
+        check(status is Finished)
+
+        return status is FoundAll
     }
 }
