@@ -12,10 +12,10 @@ class RandomMineGenerationRule : MineGenerationRule {
         val mineCoordinates = coordinates.shuffled().take(metadata.numOfMine)
         return coordinates.associateWith {
             if (mineCoordinates.contains(it)) {
-                return@associateWith MineCell()
+                return@associateWith MineCell
             }
 
-            EmptyCell()
+            EmptyCell
         }
     }
 }

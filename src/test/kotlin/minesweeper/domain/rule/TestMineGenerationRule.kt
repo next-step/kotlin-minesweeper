@@ -12,10 +12,10 @@ class TestMineGenerationRule(private val mineCoordinates: List<Coordinate>) : Mi
         }
         return coordinates.associateWith {
             if (mineCoordinates.contains(it)) {
-                return@associateWith MineCell()
+                return@associateWith MineCell
             }
 
-            EmptyCell()
+            EmptyCell
         }
     }
 }

@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.domain.Coordinate
+
 object ConsoleInput {
     fun inputBoardHeight(): Int {
         println("높이를 입력하세요.")
@@ -28,5 +30,13 @@ object ConsoleInput {
         } while (input.isBlank())
 
         return input
+    }
+
+    fun inputOpenCoordinate(): Coordinate {
+        print("open: ")
+
+        val input = inputNotEmptyString()
+
+        return input.split(",").let { Coordinate(it[0].toInt() - 1, it[1].toInt() - 1) }
     }
 }
