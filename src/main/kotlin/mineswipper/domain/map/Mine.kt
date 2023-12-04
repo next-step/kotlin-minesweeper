@@ -1,4 +1,3 @@
 package mineswipper.domain.map
 
-class Mine: Pedal {
-}
+class Mine : Pedal

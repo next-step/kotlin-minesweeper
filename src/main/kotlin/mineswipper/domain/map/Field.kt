@@ -4,7 +4,7 @@ class Field(
     private val size: Size,
     positions: List<Position>
 ) {
-    constructor(width: Int, height: Int, positions: List<Position>): this(Size(width, height), positions)
+    constructor(width: Int, height: Int, positions: List<Position>) : this(Size(width, height), positions)
 
     val field: Map<Int, List<Pedal>>
 
