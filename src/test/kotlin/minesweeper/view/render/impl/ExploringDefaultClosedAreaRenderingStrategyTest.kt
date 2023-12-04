@@ -5,6 +5,7 @@ import minesweeper.model.board.Board
 import minesweeper.model.board.impl.SpecifiedCoordinatesStrategy
 import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.CoordinateFixture.toCoordinate
+import minesweeper.model.vison.impl.VisionCoveredStrategy
 
 class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
 
@@ -17,6 +18,7 @@ class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
                 2 to 2,
                 3 to 3,
             ).deployPoints(limit),
+            vision = VisionCoveredStrategy.coordinates(limit),
             limit = limit,
         )
         val symbol = ExploringDefaultClosedAreaRenderingStrategy.symbolOf(
