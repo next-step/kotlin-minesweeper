@@ -17,11 +17,16 @@ class Field(
     private fun pedalSetting(x: Int, positions: List<Position>): Pedals {
         val pedalList = (0 until size.width).map { y ->
             val position = Position(x, y)
-            when (positions.contains(position)) {
-                true -> Mine()
-                false -> NormalPedal()
-            }
+            createPedal(positions, position)
         }
         return Pedals(pedalList)
+    }
+
+    private fun createPedal(
+        positions: List<Position>,
+        position: Position
+    ) = when (positions.contains(position)) {
+        true -> Mine()
+        false -> NormalPedal()
     }
 }
