@@ -28,7 +28,12 @@ class GameBoardTest {
         val mineCount = 10
         gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
 
-        assertEquals(mineCount, gameBoard.countMines())
+        var identifiedMineCount = 0
+        gameBoard.processEachCell { _, cellStatus ->
+            if (cellStatus == CellStatus.MINE) identifiedMineCount++
+        }
+
+        assertEquals(mineCount, identifiedMineCount)
     }
 
     @Test

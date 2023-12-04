@@ -1,5 +1,6 @@
 package domain
 
+import enum.CellStatus
 import inteface.RandomMinePlacementStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -27,12 +28,22 @@ class MineManagerTest {
     @DisplayName("지뢰 배치 전략과 카운터가 올바르게 작동하는지 확인한다")
     fun `지뢰 배치와 카운트 검증`() {
         val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
-        board.placeMines(minePositions)
+
+        minePositions.forEach { position ->
+            board.placeMineAt(position)
+        }
 
         minePositions.forEach { position ->
             assertTrue(board.hasMineAt(position))
         }
 
-        assertEquals(mineCount, board.countMines())
+        var actualMineCount = 0
+        board.processEachCell { _, cellStatus ->
+            if (cellStatus == CellStatus.MINE) {
+                actualMineCount++
+            }
+        }
+
+        assertEquals(mineCount, actualMineCount)
     }
 }

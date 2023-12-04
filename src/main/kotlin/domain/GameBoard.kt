@@ -3,29 +3,36 @@ package domain
 import enum.CellStatus
 
 class GameBoard(private val mineManager: MineManager) {
-    private var board: Board = Board(0, 0, mineManager)
+    private lateinit var board: Board
     var width: Int = 0
     private var height: Int = 0
+    var isGameOver = false
 
     fun setupBoardAndPlaceMines(height: Int, width: Int, mineCount: Int) {
         this.height = height
         this.width = width
         board = Board(height, width, mineManager)
-        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
-        board.placeMines(minePositions)
+        board.initializeCells()
+        board.placeMines(mineCount)
     }
 
-    fun countMines(): Int = board.countMines()
+    fun countMinesAround(position: Position): Int {
+        return board.countMinesAround(position)
+    }
 
     fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
         board.processEachCell(onEachCell)
     }
 
-    fun countMinesAround(position: Position): Int {
-        return mineManager.mineCounter.countMinesAround(board, position, height, width)
-    }
+    fun openCell(position: Position): Boolean {
+        if (isGameOver) return false
 
-    fun openCell(position: Position) {
-        board.openCell(position)
+        val cellOpened = board.openCell(position)
+        if (cellOpened && board.hasMineAt(position)) {
+            isGameOver = true
+            return true
+        }
+
+        return false
     }
 }
