@@ -10,6 +10,14 @@ data class BoardLimit(
     fun area(): Int {
         return this.verticalLimit.value * this.horizontalLimit.value
     }
+
+    fun verticalRange(): IntRange {
+        return this.verticalLimit.range()
+    }
+
+    fun horizontalRange(): IntRange {
+        return this.horizontalLimit.range()
+    }
 }
 
 fun Pair<Int, Int>.toBoardLimit(): BoardLimit {

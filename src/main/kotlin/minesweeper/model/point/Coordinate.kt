@@ -30,9 +30,17 @@ data class Coordinate(
             limit = boardLimit.verticalLimit
         )
 
+    fun insideLimit(boardLimit: BoardLimit): Boolean {
+        return boardLimit.verticalLimit.value >= this.vertical.value
+    }
+
     companion object {
         fun of(vertical: Int, horizontal: Int): Coordinate {
             return Coordinate(Vertical(vertical), Horizontal(horizontal))
         }
     }
+}
+
+fun Pair<Int, Int>.toCoordinate(): Coordinate {
+    return Coordinate(Vertical(this.first), Horizontal(this.second))
 }
