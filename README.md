@@ -56,25 +56,25 @@ C C C C C C C C C C
   - [x] 너비를 입력 받는다
   - [x] 지뢰 개수를 입력 받는다
 - FieldBuilder
-  - [x] FieldSize와 PositionPicker를 받아, 지뢰가 설치되면 Field를 생성
+  - [x] PositionPicker를 받아, Field 크기를 정의하고, 지뢰가 설치되면 Field를 생성한다
   - [x] 필드생성시 모든 행과 열에 대한 셀을 생성한다
     - (높이에 대한 행의 값(0..(높이-1)) * 너비에 대한 열의 값(0..(너비-1)))
-  - [x] 요청된 지뢰 개수만큼 랜덤한 위치에 지뢰 생성
-    - [x] MineCount: 지뢰 개수는 1이상
+  - [x] 요청된 지뢰 개수만큼 랜덤한 위치에 지뢰 생성한다
+    - [x] MineCount: 지뢰 개수는 1이상이어야 한다
 - FieldSize
-  - [x] 높이와 너비를 프로퍼티로 가지고, 모든 행 * 열에 대한 Position 생성 
-- Minesweeper
+  - [x] 높이와 너비를 프로퍼티로 가지고, 모든 행 * 열에 대한 Position을 생성한다
+- MinesweeperController
   - [x] Height: InputView 로부터 입력 받아 높이를 생성한다
     - 높이는 1이상 이어야 한다 
   - [x] Width: InputView 로부터 입력 받아 너비를 생성한다
     - 너비는 1이상 이어야 한다
-  - [x] InputView 로부터 지뢰 개수를 입력 받아 지뢰 개수를 생성한다
+  - [x] MineCount: InputView 로부터 지뢰 개수를 입력 받아 지뢰 개수를 생성한다
 - Field
-  - [x] 셀을 갖고 관리 
+  - [x] 셀을 갖고 관리한다
 - Cell
-  - [x] 셀을 열과 행에 대한 정보를 가진다
-  - [x] 셀 생성시에는 지뢰가 없다 
-  - Position 
-    - [x] 열과 행에 대한 정보를 가진다 
-- OuputView
+  - [x] 셀을 열과 행에 대한 위치 정보, Position을 가진다
+    - Position
+      - [x] 열과 행에 대한 정보를 가진다
+  - [x] 셀 생성시 지뢰가 없다
+- OutputView
     - [x] 지뢰를 포함한 보드 결과를 출력한다
