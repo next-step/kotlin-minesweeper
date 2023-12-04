@@ -28,4 +28,8 @@ data class Size(val value: Int) {
     operator fun rem(other: Size): Size {
         return Size(value % other.value + 1)
     }
+
+    operator fun plus(x: Size): Size {
+        return Size(value + x.value)
+    }
 }

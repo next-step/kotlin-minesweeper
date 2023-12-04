@@ -7,7 +7,6 @@ import minesweeper.domain.Size
 object ResultView {
 
     private const val mine_symbol = "*"
-    private const val none_mine_symbol = "C"
 
     fun printMines(height: Size, width: Size, cellFinder: CellFinder) {
         println()
@@ -19,10 +18,10 @@ object ResultView {
     private fun printRow(rowNum: Size, width: Size, cellFinder: CellFinder) {
         width.getNumbers()
             .forEach {
-                val cell = cellFinder.find(Position(rowNum, it))
+                val cell = cellFinder.find(Position(rowNum, it)) ?: throw RuntimeException("출력 도중 알 수 없는 에러가 발생했습니다.")
                 when (cell.isMine) {
                     true -> print("$mine_symbol ")
-                    false -> print("$none_mine_symbol ")
+                    false -> print("${cellFinder.getAroundMinesCount(cell)} ")
                 }
             }
         println()
