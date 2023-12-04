@@ -5,15 +5,12 @@ object MineCreator {
         mineSweeperSize: MineSweeperSize,
         countOfMine: Int
     ): List<Int> {
-
         require(mineSweeperSize.getArea() >= countOfMine) {
             "Mines are too many!"
         }
 
-        return MutableList(mineSweeperSize.getArea()) { it }
-            .also {
-                it.shuffle()
-            }.slice(0 until countOfMine)
+        return (0 until mineSweeperSize.getArea()).shuffled()
+            .slice(0 until countOfMine)
             .toList()
     }
 }
