@@ -18,12 +18,6 @@ data class BoardLimit(
     fun horizontalRange(): IntRange {
         return this.horizontalLimit.range()
     }
-
-    fun toVisited(): Array<Array<Boolean>> {
-        return Array(horizontalLimit.value + 1) {
-            Array(verticalLimit.value + 1) { false }
-        }
-    }
 }
 
 fun Pair<Int, Int>.toBoardLimit(): BoardLimit {

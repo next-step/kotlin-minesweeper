@@ -24,7 +24,7 @@ class Bfs(
                     if (whenZero(next, visited)) {
                         queue.add(next)
                     }
-                    if (whenNumber(next, visited)) {
+                    if (whenNumber(next)) {
                         result.add(next)
                     }
                 }
@@ -33,12 +33,11 @@ class Bfs(
         return result
     }
 
-    private fun whenNumber(next: Coordinate, visited: Visited): Boolean {
+    private fun whenNumber(next: Coordinate): Boolean {
         return board.isGroundAttribute(next)
     }
 
     private fun whenZero(next: Coordinate, visited: Visited): Boolean {
-        return board.isGroundAttribute(next)  && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
+        return board.isGroundAttribute(next) && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
     }
-
 }

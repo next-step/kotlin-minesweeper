@@ -34,14 +34,6 @@ data class Coordinate(
         return boardLimit.verticalLimit.value >= this.vertical.value
     }
 
-    fun verticalValue(): Int {
-        return this.vertical.value
-    }
-
-    fun horizontalValue(): Int {
-        return horizontal.value
-    }
-
     companion object {
         fun of(vertical: Int, horizontal: Int): Coordinate {
             return Coordinate(Vertical(vertical), Horizontal(horizontal))

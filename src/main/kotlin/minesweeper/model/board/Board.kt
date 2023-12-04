@@ -45,7 +45,6 @@ class Board(
     }
 
     fun symbol(coordinate: Coordinate, strategy: MineRenderingStrategy): String {
-        val attribute = mines[coordinate] ?: Attribute.NONE
         return strategy.symbolOf(this, coordinate)
     }
 
