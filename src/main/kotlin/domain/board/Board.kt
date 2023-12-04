@@ -1,11 +1,13 @@
 package domain.board
 
 import domain.location.Location
+import domain.setting.Height
 import domain.setting.MineCount
 import domain.setting.Size
+import domain.setting.Width
 
 @JvmInline
-value class Board private constructor(private val value: List<List<Cell>>) {
+value class Board private constructor(val value: List<List<Cell>>) {
     companion object {
         fun create(size: Size, mineCount: MineCount): Board {
             val mineLocations = Location.generateMineLocations(size, mineCount)
@@ -14,6 +16,8 @@ value class Board private constructor(private val value: List<List<Cell>>) {
                 .build()
                 .let(::Board)
         }
+
+        fun create(height: Height, width: Width, mineCount: MineCount): Board = create(Size(height, width), mineCount)
     }
 }
 
