@@ -5,7 +5,6 @@ import java.util.*
 
 class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
     private val rows: Map<Coordinate, Cell>
-    private val openedCoordinates = mutableSetOf<Coordinate>()
 
     init {
         rows = rule.generate(metadata)
@@ -27,7 +26,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         }
 
         if (countingBoard.countOf(coordinate.row, coordinate.col) > 0) {
-            openedCoordinates.add(coordinate)
+            currentCell.open()
             return listOf(coordinate)
         }
 
@@ -35,7 +34,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
     }
 
     fun isAllOpened(): Boolean {
-        return rows.filter { it.value is EmptyCell }.all { openedCoordinates.contains(it.key) }
+        return rows.filter { it.value is EmptyCell }.all { it.value.isOpened }
     }
 
     private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard): List<Coordinate> {
@@ -45,7 +44,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
 
         while (queue.isNotEmpty()) {
             val currentCoordinate = queue.poll()
-            openedCoordinates.add(currentCoordinate)
+            at(currentCoordinate.row, currentCoordinate.col).open()
             results.add(currentCoordinate)
             if (countingBoard.countOf(currentCoordinate.row, currentCoordinate.col) > 0) continue
 
@@ -62,8 +61,11 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         for (aroundCoordinate in AROUND_COORDINATES) {
             val nextCoordinate = currentCoordinate + aroundCoordinate
             if (nextCoordinate.isOutOfBound(MIN_HEIGHT, metadata.height, MIN_WIDTH, metadata.width)) continue
-            if (openedCoordinates.contains(nextCoordinate)) continue
-            if (at(nextCoordinate.row, nextCoordinate.col) is MineCell) continue
+
+            val nextCell = at(nextCoordinate.row, nextCoordinate.col)
+            if (nextCell.isOpened) continue
+            if (nextCell is MineCell) continue
+
             queue.offer(nextCoordinate)
         }
     }
