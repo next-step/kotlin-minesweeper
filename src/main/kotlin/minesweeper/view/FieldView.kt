@@ -17,7 +17,7 @@ object FieldView {
     private fun sortCells(cells: Set<Cell>): List<Cell> =
         cells.toList()
             .sortedWith(
-                compareByDescending<Cell> { it.position.row }
+                compareBy<Cell> { it.position.row }
                     .thenBy { it.position.column }
             )
 
