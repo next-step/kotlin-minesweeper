@@ -60,8 +60,21 @@ class Board(
     }
 
     fun tryOpen(coordinate: Coordinate): GameStatus {
-        TODO("Not yet implemented")
+        if (isMineDeployed(coordinate)) {
+            return GameStatus.LOSE
+        }
+        if (isWin()) {
+            return GameStatus.WIN
+        }
+        return GameStatus.ALIVE
     }
+
+    private fun isWin(): Boolean {
+        // require(mines.keys.size <= coveredVision.size) { "" }
+        return mines.keys.size == coveredVision.size
+    }
+
+    private fun isMineDeployed(coordinate: Coordinate) = mines.keys.contains(coordinate)
 
     fun minesCount(): Int {
         return mines.values.count { it == Attribute.MINE }

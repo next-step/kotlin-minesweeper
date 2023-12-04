@@ -24,7 +24,7 @@ class MineSweeperGame(
         do {
             val coordinate: Coordinate = inputView.openCoordinate(CoordinateParser)
             outputView.printMineMap(board)
-        } while (GameStatus.ALIVE != board.tryOpen(coordinate))
+        } while (GameStatus.ALIVE == board.tryOpen(coordinate))
     }
 
     private fun finalize() {
