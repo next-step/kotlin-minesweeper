@@ -21,6 +21,6 @@ class SpecifiedCoordinatesStrategy(
     )
 
     override fun deployPoints(boardLimit: BoardLimit): Map<Coordinate, Attribute> {
-        TODO("Not yet implemented")
+        return coordinates.filter { it.insideLimit(boardLimit) }.associateWith { Attribute.MINE }
     }
 }
