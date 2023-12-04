@@ -143,7 +143,8 @@ class BoardTest {
         )
         val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(4, 4), countingBoard)
+        board.open(Coordinate(4, 4), countingBoard)
+        val openedCoordinates: Set<Coordinate> = board.openedCoordinates()
 
         openedCoordinates.size shouldBe 6
         openedCoordinates shouldContainAll listOf(
@@ -172,7 +173,8 @@ class BoardTest {
         )
         val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 1), countingBoard)
+        board.open(Coordinate(0, 1), countingBoard)
+        val openedCoordinates: Set<Coordinate> = board.openedCoordinates()
 
         openedCoordinates.size shouldBe 1
         openedCoordinates shouldContainAll listOf(Coordinate(0, 1))
@@ -194,7 +196,8 @@ class BoardTest {
         )
         val countingBoard = CountingBoard(board)
 
-        val openedCoordinates: List<Coordinate> = board.open(Coordinate(0, 0), countingBoard)
+        board.open(Coordinate(0, 0), countingBoard)
+        val openedCoordinates: Set<Coordinate> = board.openedCoordinates()
 
         openedCoordinates.size shouldBe 0
     }

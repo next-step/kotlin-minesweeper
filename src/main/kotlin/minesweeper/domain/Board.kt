@@ -5,6 +5,7 @@ import java.util.*
 
 class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
     private val rows: Map<Coordinate, Cell>
+    private val openedCoordinates = mutableSetOf<Coordinate>()
 
     init {
         rows = rule.generate(metadata)
@@ -14,20 +15,24 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         return rows[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 
+    fun openedCoordinates(): Set<Coordinate> {
+        return openedCoordinates.toSet()
+    }
+
     fun canOpen(coordinate: Coordinate): Boolean {
         val currentCell = at(coordinate.row, coordinate.col)
         return currentCell is EmptyCell
     }
 
-    fun open(coordinate: Coordinate, countingBoard: CountingBoard): List<Coordinate> {
+    fun open(coordinate: Coordinate, countingBoard: CountingBoard) {
         val currentCell = at(coordinate.row, coordinate.col)
         if (currentCell is MineCell) {
-            return emptyList()
+            return
         }
 
         if (countingBoard.countAroundMine(coordinate.row, coordinate.col) > 0) {
             currentCell.open()
-            return listOf(coordinate)
+            openedCoordinates.add(coordinate)
         }
 
         return openAllAround(coordinate, countingBoard)
@@ -37,21 +42,18 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         return rows.filter { it.value is EmptyCell }.all { it.value.isOpened }
     }
 
-    private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard): List<Coordinate> {
-        val results = mutableListOf<Coordinate>()
+    private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard) {
         val queue: Queue<Coordinate> = LinkedList()
         queue.offer(coordinate)
 
         while (queue.isNotEmpty()) {
             val currentCoordinate = queue.poll()
             at(currentCoordinate.row, currentCoordinate.col).open()
-            results.add(currentCoordinate)
+            openedCoordinates.add(currentCoordinate)
             if (countingBoard.countAroundMine(currentCoordinate.row, currentCoordinate.col) > 0) continue
 
             visitAround(currentCoordinate, queue)
         }
-
-        return results
     }
 
     private fun visitAround(
