@@ -24,7 +24,7 @@ class FieldBuilder(
         size = FieldSize(height, width)
     }
 
-    fun installMines(count: MineCount) {
+    fun mineCount(count: MineCount) {
         minePositions = minePicker.pick(allPositions, count.value)
     }
 

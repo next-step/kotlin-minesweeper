@@ -15,7 +15,7 @@ object MinesweeperController {
     fun start() {
         val field = field(RandomPositionPicker()) {
             size(height, width)
-            installMines(mineCount)
+            mineCount(mineCount)
         }
         showField(field)
     }

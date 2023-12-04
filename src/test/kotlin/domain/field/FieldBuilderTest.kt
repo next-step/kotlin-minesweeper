@@ -20,7 +20,7 @@ class FieldBuilderTest : DescribeSpec({
 
             val result = field(RandomPositionPicker()) {
                 size(height, width)
-                installMines(count)
+                mineCount(count)
             }
 
             it("셀의 총 개수는 높이(6) 과 너비(4)의 곱(24)과 같다") {
@@ -44,7 +44,7 @@ class FieldBuilderTest : DescribeSpec({
             it("필드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
                     field(RandomPositionPicker()) {
-                        installMines(MineCount(6))
+                        mineCount(MineCount(6))
                     }
                 }
             }
