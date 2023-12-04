@@ -21,12 +21,24 @@ class Bfs(
             for (delta: Delta in Delta.deltas) {
                 if (current.movePossible(delta, board.limit)) {
                     val next = current.moveTo(delta)
-                    if (board.isGroundAttribute(next) && visited.isVisited(next) && board.isAdjacentMineCountZero(next)) {
+                    if (whenZero(next, visited)) {
                         queue.add(next)
+                    }
+                    if (whenNumber(next, visited)) {
+                        result.add(next)
                     }
                 }
             }
         }
         return result
     }
+
+    private fun whenNumber(next: Coordinate, visited: Visited): Boolean {
+        return board.isGroundAttribute(next)
+    }
+
+    private fun whenZero(next: Coordinate, visited: Visited): Boolean {
+        return board.isGroundAttribute(next)  && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
+    }
+
 }
