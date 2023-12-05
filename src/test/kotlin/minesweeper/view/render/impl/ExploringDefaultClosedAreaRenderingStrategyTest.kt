@@ -19,7 +19,7 @@ class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3,
-            ).deployPoints(limit).toMines(),
+            ).deployPoints(limit).toMines(limit),
             vision = VisionCoveredStrategy.coordinates(limit).toVision(),
             limit = limit,
         )

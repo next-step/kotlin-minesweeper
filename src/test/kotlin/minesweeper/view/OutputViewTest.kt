@@ -18,7 +18,7 @@ class OutputViewTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit).toMines(),
+            ).deployPoints(limit).toMines(limit),
             limit = limit,
         )
         OutputView().renderingBoard(board) shouldBe """
@@ -37,7 +37,7 @@ class OutputViewTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit).toMines(),
+            ).deployPoints(limit).toMines(limit),
             limit = limit,
         )
         OutputView(AdjacentMineCountRenderingStrategy).renderingBoard(board) shouldBe """

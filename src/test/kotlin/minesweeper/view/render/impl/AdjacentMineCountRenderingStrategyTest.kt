@@ -18,7 +18,7 @@ class AdjacentMineCountRenderingStrategyTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit).toMines(),
+            ).deployPoints(limit).toMines(limit),
             limit = limit
         )
         val actual = AdjacentMineCountRenderingStrategy.symbolOf(board, (0 to 1).toCoordinate())
