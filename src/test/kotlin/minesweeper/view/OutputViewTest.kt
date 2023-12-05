@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.model.board.Board
 import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
 import minesweeper.model.board.toBoardLimit
+import minesweeper.model.board.toMines
 import minesweeper.view.render.impl.AdjacentMineCountRenderingStrategy
 
 class OutputViewTest : StringSpec({
@@ -17,7 +18,7 @@ class OutputViewTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit),
+            ).deployPoints(limit).toMines(),
             limit = limit,
         )
         OutputView().renderingBoard(board) shouldBe """
@@ -36,7 +37,7 @@ class OutputViewTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit),
+            ).deployPoints(limit).toMines(),
             limit = limit,
         )
         OutputView(AdjacentMineCountRenderingStrategy).renderingBoard(board) shouldBe """

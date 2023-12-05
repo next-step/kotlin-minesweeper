@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.model.board.Board
 import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
 import minesweeper.model.board.toBoardLimit
+import minesweeper.model.board.toMines
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class AdjacentMineCountRenderingStrategyTest : StringSpec({
@@ -17,7 +18,7 @@ class AdjacentMineCountRenderingStrategyTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3
-            ).deployPoints(limit),
+            ).deployPoints(limit).toMines(),
             limit = limit
         )
         val actual = AdjacentMineCountRenderingStrategy.symbolOf(board, (0 to 1).toCoordinate())

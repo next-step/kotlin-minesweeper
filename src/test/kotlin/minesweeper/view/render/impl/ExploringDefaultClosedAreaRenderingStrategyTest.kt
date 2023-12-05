@@ -4,6 +4,8 @@ import io.kotest.core.spec.style.StringSpec
 import minesweeper.model.board.Board
 import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
 import minesweeper.model.board.toBoardLimit
+import minesweeper.model.board.toMines
+import minesweeper.model.board.toVision
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 import minesweeper.model.vison.impl.VisionCoveredStrategy
 
@@ -17,8 +19,8 @@ class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
                 1 to 1,
                 2 to 2,
                 3 to 3,
-            ).deployPoints(limit),
-            vision = VisionCoveredStrategy.coordinates(limit).toMutableSet(),
+            ).deployPoints(limit).toMines(),
+            vision = VisionCoveredStrategy.coordinates(limit).toVision(),
             limit = limit,
         )
         val symbol = ExploringDefaultClosedAreaRenderingStrategy.symbolOf(
