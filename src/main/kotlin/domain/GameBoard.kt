@@ -47,11 +47,15 @@ class GameBoard private constructor(
     }
 
     private fun openNeighborCells(point: Point) {
-        point.getNeighborPoints()
+        val validNeighborCells = point.getValidNeighborCells(board)
+        validNeighborCells.filter { it.isNotMine() && !it.cellInfo.isOpened }
+            .forEach { it.openCell() }
+    }
+
+    private fun Point.getValidNeighborCells(board: List<CellList>): List<Cell> {
+        return getNeighborPoints()
             .filter { it.isValid(board.size, board[0].cells.size) }
             .map { board[it.row].cells[it.col] }
-            .filter { it.isNotMine() && !it.cellInfo.isOpened }
-            .forEach { it.openCell() }
     }
 
     companion object {
