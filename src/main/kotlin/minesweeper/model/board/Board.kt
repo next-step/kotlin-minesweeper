@@ -2,6 +2,7 @@ package minesweeper.model.board
 
 import minesweeper.app.GameStatus
 import minesweeper.model.board.minedeploy.impl.EvenlyStrategy
+import minesweeper.model.board.traversal.Bfs
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta

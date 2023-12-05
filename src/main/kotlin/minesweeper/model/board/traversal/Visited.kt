@@ -1,4 +1,4 @@
-package minesweeper.model.board
+package minesweeper.model.board.traversal
 
 import minesweeper.model.point.Coordinate
 

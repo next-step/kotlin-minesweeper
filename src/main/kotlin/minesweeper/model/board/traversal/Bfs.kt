@@ -1,5 +1,6 @@
-package minesweeper.model.board
+package minesweeper.model.board.traversal
 
+import minesweeper.model.board.Board
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import java.util.LinkedList
