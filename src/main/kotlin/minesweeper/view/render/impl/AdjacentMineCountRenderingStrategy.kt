@@ -7,9 +7,9 @@ import minesweeper.view.render.MineRenderingStrategy
 
 object AdjacentMineCountRenderingStrategy : MineRenderingStrategy {
     override fun symbolOf(board: Board, coordinate: Coordinate): String {
-        return when (board.attribute(coordinate)) {
+        return when (board.mines.attribute(coordinate)) {
             Attribute.MINE -> "*"
-            Attribute.GROUND -> board.adjacentMineCount(coordinate).toString()
+            Attribute.GROUND -> board.mines.adjacentMineCount(coordinate).toString()
         }
     }
 }

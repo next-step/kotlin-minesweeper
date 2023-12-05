@@ -13,7 +13,7 @@ object AttributeRenderingStrategy : MineRenderingStrategy {
     )
 
     override fun symbolOf(board: Board, coordinate: Coordinate): String {
-        val tileType = board.attribute(coordinate)
+        val tileType = board.mines.attribute(coordinate)
         return requireNotNull(symbolLookup[tileType]) { "attribute=[$tileType] 를 표시할 방법이 정의되지 않았습니다" }
     }
 }
