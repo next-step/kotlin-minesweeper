@@ -82,7 +82,7 @@ class Board(
     private fun isMineDeployed(coordinate: Coordinate): Boolean =
         this.attribute(coordinate) == Attribute.MINE
 
-    fun isGroundAttribute(coordinate: Coordinate): Boolean =
+    fun isGround(coordinate: Coordinate): Boolean =
         this.attribute(coordinate) == Attribute.GROUND
 
     fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean =

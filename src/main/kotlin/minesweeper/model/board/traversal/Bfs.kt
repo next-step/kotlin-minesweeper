@@ -35,10 +35,10 @@ class Bfs(
     }
 
     private fun whenNumber(next: Coordinate): Boolean {
-        return board.isGroundAttribute(next)
+        return board.isGround(next)
     }
 
     private fun whenZero(next: Coordinate, visited: Visited): Boolean {
-        return board.isGroundAttribute(next) && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
+        return board.isGround(next) && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
     }
 }
