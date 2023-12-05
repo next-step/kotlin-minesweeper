@@ -1,15 +1,19 @@
-package minesweeper.model.board.traversal
+package minesweeper.model.board.traversal.impl
 
-import minesweeper.model.board.Board
+import minesweeper.model.board.BoardLimit
+import minesweeper.model.board.Mines
+import minesweeper.model.board.traversal.SearchEngine
+import minesweeper.model.board.traversal.Visited
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import java.util.LinkedList
 import java.util.Queue
 
-class Bfs(
-    private val board: Board,
-) {
-    fun traversal(coordinate: Coordinate): Set<Coordinate> {
+class SearchBfs(
+    private val limit: BoardLimit,
+    private val mines: Mines,
+) : SearchEngine {
+    override fun traversal(coordinate: Coordinate): Set<Coordinate> {
         val visited = Visited()
         val result: MutableSet<Coordinate> = mutableSetOf()
         val queue: Queue<Coordinate> = LinkedList()
@@ -20,7 +24,7 @@ class Bfs(
             result.add(current)
             visited.markVisited(current)
             for (delta: Delta in Delta.deltas) {
-                if (current.movePossible(delta, board.limit)) {
+                if (current.movePossible(delta, limit)) {
                     val next = current.moveTo(delta)
                     if (whenZero(next, visited)) {
                         queue.add(next)
@@ -35,10 +39,10 @@ class Bfs(
     }
 
     private fun whenNumber(next: Coordinate): Boolean {
-        return board.isGround(next)
+        return mines.isGround(next)
     }
 
     private fun whenZero(next: Coordinate, visited: Visited): Boolean {
-        return board.isGround(next) && board.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
+        return mines.isGround(next) && mines.isAdjacentMineCountZero(next) && visited.isNotVisited(next)
     }
 }
