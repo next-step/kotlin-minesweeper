@@ -5,17 +5,16 @@ import enum.GameState
 
 class GameBoard(private val mineManager: MineManager) {
     private lateinit var board: Board
-    var width: Int = 0
-    private var height: Int = 0
     private var gameStatus: GameState = GameState.IN_PROGRESS
     val isGameOver: Boolean
         get() = gameStatus != GameState.IN_PROGRESS
 
+    fun boardWith(): Int {
+        return board.width
+    }
+
     fun setupBoard(height: Int, width: Int) {
-        this.height = height
-        this.width = width
-        board = Board(height, width, mineManager)
-        board.closeAllCells()
+        board = Board.create(height, width, mineManager)
     }
 
     fun placeMines(mineCount: Int, firstMove: Position) {

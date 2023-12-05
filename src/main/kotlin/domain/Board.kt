@@ -80,4 +80,12 @@ class Board(
     private fun determineAdjacentPositions(center: Position): List<Position> {
         return NeighborPositions(center, height, width).positions
     }
+
+    companion object {
+        fun create(height: Int, width: Int, mineManager: MineManager): Board {
+            val board = Board(height, width, mineManager)
+            board.closeAllCells()
+            return board
+        }
+    }
 }

@@ -6,9 +6,10 @@ import enum.CellStatus
 
 class OutputView {
     fun displayBoard(gameBoard: GameBoard) {
+        val width = gameBoard.boardWith()
         gameBoard.processEachCell { position, cellStatus ->
             printCell(gameBoard, position, cellStatus)
-            if (position.x == gameBoard.width - 1) println()
+            if (position.x == width - 1) println()
         }
     }
 
