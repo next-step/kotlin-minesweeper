@@ -7,7 +7,6 @@ import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
 import minesweeper.model.point.Delta
 import minesweeper.model.vison.impl.VisionCoveredStrategy
-import minesweeper.view.render.MineRenderingStrategy
 
 class Board(
     private val mines: Map<Coordinate, Attribute>,
@@ -39,10 +38,6 @@ class Board(
             delta = delta,
             limit = limit
         )
-    }
-
-    fun symbol(coordinate: Coordinate, strategy: MineRenderingStrategy): String {
-        return strategy.symbolOf(this, coordinate)
     }
 
     fun attribute(coordinate: Coordinate): Attribute {

@@ -25,7 +25,7 @@ class OutputView(
     }
 
     private fun renderingPoint(board: Board, coordinate: Coordinate): String {
-        return board.symbol(coordinate, renderingStrategy)
+        return renderingStrategy.symbolOf(board, coordinate)
     }
 
     fun gameStart() {
