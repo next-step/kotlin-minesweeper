@@ -7,13 +7,12 @@ import minesweeper.domain.cell.SafeCell
 
 class ResultView {
     fun showMineSweeper(mineSweeper: MineSweeper) {
-        println("지뢰찾기 게임 시작")
-        println(mineSweeper.getHeight())
         (0 until mineSweeper.getHeight()).forEach {
             println(
-                mineSweeper.getRow(it).joinToString(" ",
+                mineSweeper.getRow(it).joinToString(
+                    " ",
                     transform = fun(cell: Cell): CharSequence {
-                        if (cell.isClosed) return "C"
+                        if (!cell.isOpened) return "C"
 
                         return when (cell) {
                             is MineCell -> "*"
@@ -23,5 +22,17 @@ class ResultView {
                 )
             )
         }
+    }
+
+    fun showGameStart() {
+        println("\n지뢰찾기 게임 시작")
+    }
+
+    fun showWinGame() {
+        println("Win Game.")
+    }
+
+    fun showLoseGame() {
+        println("Lose Game.")
     }
 }
