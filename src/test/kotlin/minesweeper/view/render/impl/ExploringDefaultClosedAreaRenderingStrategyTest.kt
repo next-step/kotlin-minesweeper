@@ -2,7 +2,7 @@ package minesweeper.view.render.impl
 
 import io.kotest.core.spec.style.StringSpec
 import minesweeper.model.board.Board
-import minesweeper.model.board.impl.SpecifiedCoordinatesStrategy
+import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
 import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 import minesweeper.model.vison.impl.VisionCoveredStrategy

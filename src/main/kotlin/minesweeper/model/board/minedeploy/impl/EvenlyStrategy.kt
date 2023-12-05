@@ -1,7 +1,7 @@
-package minesweeper.model.board.impl
+package minesweeper.model.board.minedeploy.impl
 
 import minesweeper.model.board.BoardLimit
-import minesweeper.model.board.MineDeployStrategy
+import minesweeper.model.board.minedeploy.MineDeployStrategy
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
 

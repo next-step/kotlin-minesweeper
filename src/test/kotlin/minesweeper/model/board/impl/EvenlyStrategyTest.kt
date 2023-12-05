@@ -3,6 +3,7 @@ package minesweeper.model.board.impl
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.model.board.minedeploy.impl.EvenlyStrategy
 import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
