@@ -24,7 +24,7 @@ private fun gameSetUp(): GameBoard {
     val mineCount = InputView.inputNumber()
     val boardSettings = BoardSettings(height, width, mineCount)
 
-    return GameBoard.createGameBoard(boardSettings)
+    return GameBoard.of(boardSettings)
 }
 
 private fun gameStart(gameBoard: GameBoard): GameResultDto {

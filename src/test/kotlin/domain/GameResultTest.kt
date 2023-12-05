@@ -13,7 +13,7 @@ class GameResultTest {
     @BeforeEach
     fun setUp() {
         val boardSettings = BoardSettings(row = 3, col = 3, mineCount = 0)
-        gameBoard = GameBoard.createGameBoard(boardSettings)
+        gameBoard = GameBoard.of(boardSettings)
     }
 
     @Test

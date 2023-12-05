@@ -4,9 +4,35 @@ import domain.strategy.CreatePointStrategy
 import domain.strategyImpl.RandomPointFactory
 
 class GameBoard private constructor(
-    val board: List<CellList> = emptyList(),
-    val gameResult: GameResult = GameResult()
+    board: List<CellList> = emptyList(),
+    val gameResult: GameResult = GameResult(),
+    val boardSettings: BoardSettings,
+    val createPointStrategy: CreatePointStrategy
 ) {
+    var board: List<CellList> = board
+        private set
+
+    init {
+        createEmptyBoard(boardSettings)
+        installMines(boardSettings)
+        createNeighborMinesCount(boardSettings)
+    }
+
+    private fun createEmptyBoard(boardSettings: BoardSettings) {
+        board =  (0 until boardSettings.row).map { row ->
+            CellList().createEmptyRow(row, boardSettings.col)
+        }.toList()
+    }
+
+    private fun installMines(boardSettings: BoardSettings) {
+        createPointStrategy.createMinePoints(boardSettings).forEach {
+            board[it.row].cells[it.col].installMine()
+        }
+    }
+
+    private fun createNeighborMinesCount(boardSettings: BoardSettings) {
+        board.map { it.findCellListByNeighborMineCount(boardSettings, board) }
+    }
 
     fun isContinued(): Boolean = gameResult.isContinued()
 
@@ -29,28 +55,12 @@ class GameBoard private constructor(
     }
 
     companion object {
-        fun createGameBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy = RandomPointFactory()): GameBoard {
-            val board = createEmptyBoard(boardSettings)
-            installMines(boardSettings, board, createPointStrategy)
-            createNeighborMinesCount(boardSettings, board)
-
-            return GameBoard(board)
-        }
-
-        private fun createEmptyBoard(boardSettings: BoardSettings): MutableList<CellList> {
-            return (0 until boardSettings.row).map { row ->
-                CellList().createEmptyRow(row, boardSettings.col)
-            }.toMutableList()
-        }
-
-        private fun installMines(boardSettings: BoardSettings, board: MutableList<CellList>, createPointStrategy: CreatePointStrategy) {
-            createPointStrategy.createMinePoints(boardSettings).forEach {
-                board[it.row].cells[it.col].installMine()
-            }
-        }
-
-        private fun createNeighborMinesCount(boardSettings: BoardSettings, board: List<CellList>) {
-            board.map { it.findCellListByNeighborMineCount(boardSettings, board) }
-        }
+        fun of(
+            boardSettings: BoardSettings,
+            createPointStrategy: CreatePointStrategy = RandomPointFactory()
+        ): GameBoard = GameBoard(
+            boardSettings = boardSettings,
+            createPointStrategy = createPointStrategy
+        )
     }
 }
