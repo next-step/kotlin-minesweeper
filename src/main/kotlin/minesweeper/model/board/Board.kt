@@ -15,6 +15,9 @@ class Board(
     val limit: BoardLimit,
 ) {
 
+    val minesCount: Int
+        get() = mines.values.count { it == Attribute.MINE }
+
     constructor(
         mineCount: Int,
         limit: BoardLimit,
@@ -93,13 +96,9 @@ class Board(
 
     private fun isMineDeployed(coordinate: Coordinate) = mines.keys.contains(coordinate)
 
-    fun minesCount(): Int {
-        return mines.values.count { it == Attribute.MINE }
-    }
-
     fun isGroundAttribute(coordinate: Coordinate): Boolean {
         return this.attribute(coordinate) == Attribute.GROUND
-    }
+    }//읽기전용 프로퍼티
 
     fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
         return this.adjacentMineCount(coordinate) == 0
