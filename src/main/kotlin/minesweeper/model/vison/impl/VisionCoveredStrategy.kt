@@ -7,12 +7,10 @@ import minesweeper.model.vison.VisionStrategy
 
 object VisionCoveredStrategy : VisionStrategy {
     override fun coordinates(boardLimit: BoardLimit): Set<Coordinate> {
-        val set = mutableSetOf<Coordinate>()
-        boardLimit.verticalRange().forEach { v ->
-            boardLimit.horizontalRange().forEach { h ->
-                set.add((v to h).toCoordinate())
+        return boardLimit.verticalRange().flatMap { vertical ->
+            boardLimit.horizontalRange().map { horizontal ->
+                (vertical to horizontal).toCoordinate()
             }
-        }
-        return set
+        }.toSet()
     }
 }
