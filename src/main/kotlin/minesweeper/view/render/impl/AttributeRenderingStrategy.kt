@@ -9,7 +9,7 @@ object AttributeRenderingStrategy : MineRenderingStrategy {
 
     private val symbolLookup: Map<Attribute, String> = mapOf(
         Attribute.MINE to "*",
-        Attribute.NONE to "C",
+        Attribute.GROUND to "C",
     )
 
     override fun symbolOf(board: Board, coordinate: Coordinate): String {

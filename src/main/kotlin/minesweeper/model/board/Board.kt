@@ -49,7 +49,7 @@ class Board(
     }
 
     fun attribute(coordinate: Coordinate): Attribute {
-        return mines[coordinate] ?: Attribute.NONE
+        return mines[coordinate] ?: Attribute.GROUND
     }
 
     fun isCovered(coordinate: Coordinate): Boolean {
@@ -97,7 +97,7 @@ class Board(
     }
 
     fun isGroundAttribute(coordinate: Coordinate): Boolean {
-        return this.attribute(coordinate) == Attribute.NONE
+        return this.attribute(coordinate) == Attribute.GROUND
     }
 
     fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
