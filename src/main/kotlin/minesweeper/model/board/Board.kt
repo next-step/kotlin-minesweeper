@@ -9,20 +9,22 @@ import minesweeper.model.point.Delta
 import minesweeper.model.vison.impl.VisionCoveredStrategy
 
 class Board(
-    private val mines: Map<Coordinate, Attribute>,
-    private val vision: MutableSet<Coordinate> = mutableSetOf(),
+    private val mines: Mines,
+    private val vision: Vision = Vision(emptySet()),
     val limit: BoardLimit,
 ) {
+    private val isWin: Boolean
+        get() = mines.count == vision.coveredCount
 
     val minesCount: Int
-        get() = mines.values.count { it == Attribute.MINE }
+        get() = mines.count
 
     constructor(
         mineCount: Int,
         limit: BoardLimit,
     ) : this(
-        mines = EvenlyStrategy(mineCount).deployPoints(limit),
-        vision = VisionCoveredStrategy.coordinates(limit).toMutableSet(),
+        mines = Mines(EvenlyStrategy(mineCount).deployPoints(limit)),
+        vision = Vision(VisionCoveredStrategy.coordinates(limit)),
         limit = limit,
     )
 
@@ -41,11 +43,14 @@ class Board(
     }
 
     fun attribute(coordinate: Coordinate): Attribute {
-        return mines[coordinate] ?: Attribute.GROUND
+        return when (mines.isDeployedCoordinate(coordinate)) {
+            true -> Attribute.MINE
+            false -> Attribute.GROUND
+        }
     }
 
     fun isCovered(coordinate: Coordinate): Boolean {
-        return this.vision.contains(coordinate)
+        return vision.isCovered(coordinate)
     }
 
     fun tryOpen(coordinate: Coordinate): GameStatus {
@@ -53,7 +58,7 @@ class Board(
             discoveredAllMines()
             return GameStatus.LOSE
         }
-        if (isWin()) {
+        if (isWin) {
             return GameStatus.WIN
         }
         discoveredAdjacentGround(coordinate)
@@ -62,7 +67,7 @@ class Board(
 
     private fun discoveredAdjacentGround(coordinate: Coordinate) {
         val coordinates: Set<Coordinate> = adjacentGroundCoordinates(coordinate)
-        discoverCoordinates(coordinates)
+        vision.exposeAll(coordinates)
     }
 
     private fun adjacentGroundCoordinates(coordinate: Coordinate): Set<Coordinate> {
@@ -71,23 +76,15 @@ class Board(
     }
 
     private fun discoveredAllMines() {
-        discoverCoordinates(mines.keys)
+        vision.exposeAll(mines.coordinates)
     }
 
-    private fun discoverCoordinates(coordinates: Set<Coordinate>) {
-        vision.removeAll(coordinates)
-    }
+    private fun isMineDeployed(coordinate: Coordinate): Boolean =
+        this.attribute(coordinate) == Attribute.MINE
 
-    private val isWin: Boolean
-        get() = mines.keys.size == vision.size
+    fun isGroundAttribute(coordinate: Coordinate): Boolean =
+        this.attribute(coordinate) == Attribute.GROUND
 
-    private fun isMineDeployed(coordinate: Coordinate) = mines.keys.contains(coordinate)
-
-    fun isGroundAttribute(coordinate: Coordinate): Boolean {
-        return this.attribute(coordinate) == Attribute.GROUND
-    } // 읽기전용 프로퍼티
-
-    fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
-        return this.adjacentMineCount(coordinate) == 0
-    }
+    fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean =
+        this.adjacentMineCount(coordinate) == 0
 }
