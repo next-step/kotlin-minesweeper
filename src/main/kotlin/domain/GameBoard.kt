@@ -1,6 +1,7 @@
 package domain
 
 import domain.strategy.CreatePointStrategy
+import domain.strategyImpl.RandomPointFactory
 
 class GameBoard private constructor(
     val board: List<CellList> = emptyList(),
@@ -28,7 +29,7 @@ class GameBoard private constructor(
     }
 
     companion object {
-        fun createGameBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy): GameBoard {
+        fun createGameBoard(boardSettings: BoardSettings, createPointStrategy: CreatePointStrategy = RandomPointFactory()): GameBoard {
             val board = createEmptyBoard(boardSettings)
             installMines(boardSettings, board, createPointStrategy)
             createNeighborMinesCount(boardSettings, board)

@@ -15,7 +15,7 @@ class GameBoardTest {
     @BeforeEach
     fun setUp() {
         val boardSettings = BoardSettings(row = 10, col = 3, mineCount = 0)
-        gameBoard = GameBoard.createGameBoard(boardSettings, RandomPointFactory())
+        gameBoard = GameBoard.createGameBoard(boardSettings)
     }
 
     @Test
@@ -27,7 +27,7 @@ class GameBoardTest {
     @Test
     fun `mineCount 의 갯수 만큼 지뢰가 만들어진다`() {
         val boardSettings = BoardSettings(row = 10, col = 3, mineCount = 4)
-        val gameBoard = GameBoard.createGameBoard(boardSettings, RandomPointFactory())
+        val gameBoard = GameBoard.createGameBoard(boardSettings)
 
         var mineCount = 0
         gameBoard.board.forEach { row ->
