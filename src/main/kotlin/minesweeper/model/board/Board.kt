@@ -28,17 +28,10 @@ class Board(
     )
 
     fun adjacentMineCount(coordinate: Coordinate): Int {
-        return this.adjacentPointTraversal(coordinate)
-            .asSequence()
-            .map { this.attribute(it) }
-            .count { it.isMine() }
-    }
-
-    private fun adjacentPointTraversal(coordinate: Coordinate): List<Coordinate> {
         return Delta.deltas.asSequence()
             .filter { delta -> inRange(coordinate, delta) }
-            .map { coordinate.moveTo(it) }
-            .toList()
+            .map { this.attribute(coordinate.moveTo(it)) }
+            .count { it.isMine() }
     }
 
     private fun inRange(coordinate: Coordinate, delta: Delta): Boolean {
@@ -98,7 +91,7 @@ class Board(
 
     fun isGroundAttribute(coordinate: Coordinate): Boolean {
         return this.attribute(coordinate) == Attribute.GROUND
-    }//읽기전용 프로퍼티
+    } // 읽기전용 프로퍼티
 
     fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
         return this.adjacentMineCount(coordinate) == 0
