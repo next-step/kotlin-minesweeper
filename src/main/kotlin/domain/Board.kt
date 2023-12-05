@@ -36,10 +36,9 @@ class Board(
     }
 
     fun openCell(position: Position): Boolean {
-        return findCell(position)?.let { openCell(it) } ?: false
-    }
+        val cell = findCell(position)
+            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다: $position")
 
-    private fun openCell(cell: Cell): Boolean {
         if (cell.isMine) {
             return true
         }

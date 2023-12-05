@@ -40,7 +40,9 @@ class GameBoard(private val mineManager: MineManager) {
     }
 
     private fun openCellCommonLogic(position: Position, checkMine: Boolean): Boolean {
-        val cell = board.findCell(position) ?: return false
+        val cell = board.findCell(position)
+            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다: $position")
+
         if (checkMine && cell.isMine) {
             gameStatus = GameState.LOST
             return false
