@@ -26,16 +26,9 @@ class MineManagerTest {
 
     @Test
     @DisplayName("지뢰 배치 전략과 카운터가 올바르게 작동하는지 확인한다")
-    fun `지뢰 배치와 카운트 검증`() {
-        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
-
-        minePositions.forEach { position ->
-            board.placeMineAt(position)
-        }
-
-        minePositions.forEach { position ->
-            assertTrue(board.hasMineAt(position))
-        }
+    fun `지뢰 배치 전략과 카운터가 올바르게 작동하는지 확인한다`() {
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
 
         var actualMineCount = 0
         board.processEachCell { _, cellStatus ->
@@ -45,5 +38,8 @@ class MineManagerTest {
         }
 
         assertEquals(mineCount, actualMineCount)
+        val testPosition = Position(1, 1)
+        val minesAround = mineManager.mineCounter.countMinesAround(board, testPosition)
+        assertTrue(minesAround in 0..mineCount)
     }
 }

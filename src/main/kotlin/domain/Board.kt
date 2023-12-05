@@ -11,17 +11,22 @@ class Board(
         Cell(Position(index % width, index / width))
     }
 
-    fun placeMines(mineCount: Int) {
-        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount)
+    fun placeMines(mineCount: Int, firstMove: Position) {
+        val excludedPositions = NeighborPositions(firstMove, height, width).positions + firstMove
+        val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount, excludedPositions)
         minePositions.forEach { placeMineAt(it) }
+        setAdjacentMineCounts()
+    }
+
+    private fun setAdjacentMineCounts() {
+        cells.forEach { cell ->
+            val count = mineManager.mineCounter.countMinesAround(this, cell.position)
+            cell.setAdjacentMines(count)
+        }
     }
 
     fun closeAllCells() {
-        cells.forEach { it.status = CellStatus.CLOSED }
-    }
-
-    fun isMinePresentAt(position: Position): Boolean {
-        return hasMineAt(position)
+        cells.forEach(Cell::close)
     }
 
     fun processEachCell(onEachCell: (Position, CellStatus) -> Unit) {
@@ -30,54 +35,50 @@ class Board(
         }
     }
 
-    fun countMinesAround(position: Position): Int {
-        return mineManager.mineCounter.countMinesAround(this, position)
+    fun openCell(position: Position): Boolean {
+        return findCell(position)?.let { openCell(it) } ?: false
     }
 
-    fun openCell(position: Position): Boolean {
-        val cell = findCell(position) ?: return false
-        if (cell.isMine()) return true
-
-        openCellRecursive(cell)
+    private fun openCell(cell: Cell): Boolean {
+        if (cell.isMine) {
+            return true
+        }
+        openCellAndAdjacentIfRequired(cell)
         return false
     }
 
-    private fun openCellRecursive(cell: Cell) {
-        if (shouldNotOpenCell(cell)) return
-
-        cell.status = CellStatus.OPEN
-        if (cell.adjacentMines == 0) {
-            openAdjacentCells(cell)
-        }
-    }
-
-    private fun shouldNotOpenCell(cell: Cell): Boolean {
-        return cell.status == CellStatus.OPEN || cell.status == CellStatus.MINE
-    }
-
-    private fun openAdjacentCells(cell: Cell) {
-        determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
-            val adjacentCell = findCell(adjacentPosition)
-            if (adjacentCell != null && adjacentCell.status == CellStatus.CLOSED) {
-                openCellRecursive(adjacentCell)
+    private fun openCellAndAdjacentIfRequired(cell: Cell) {
+        if (cell.shouldOpen) {
+            cell.open()
+            if (cell.isAdjacentMinesZero) {
+                openAdjacentCells(cell)
             }
         }
     }
 
-    fun placeMineAt(position: Position) {
+    private fun openAdjacentCells(cell: Cell) {
+        determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
+            findCell(adjacentPosition)?.let { adjacentCell ->
+                openCellAndAdjacentIfRequired(adjacentCell)
+            }
+        }
+    }
+
+    private fun placeMineAt(position: Position) {
         findCell(position)?.placeMine()
     }
 
-    fun hasMineAt(position: Position): Boolean {
-        return findCell(position)?.isMine() ?: false
+    fun isWinConditionMet(): Boolean {
+        val nonMineCells = cells.count { !it.isMine }
+        val openCells = cells.count { it.isOpen }
+        return nonMineCells == openCells
     }
 
-    private fun findCell(position: Position): Cell? {
+    fun findCell(position: Position): Cell? {
         return cells.firstOrNull { it.position == position }
     }
 
     private fun determineAdjacentPositions(center: Position): List<Position> {
-        val neighborPositions = NeighborPositions(center, height, width)
-        return neighborPositions.positions
+        return NeighborPositions(center, height, width).positions
     }
 }

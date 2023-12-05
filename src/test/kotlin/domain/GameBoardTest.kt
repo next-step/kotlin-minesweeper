@@ -22,11 +22,13 @@ class GameBoardTest {
 
     @Test
     @DisplayName("게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다")
-    fun `게임 보드는 지정된 수의 지뢰를 랜덤하게 배치한다`() {
+    fun `지정된 수의 지뢰를 랜덤하게 배치한다`() {
         val height = 10
         val width = 10
         val mineCount = 10
-        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
+        gameBoard.setupBoard(height, width)
+        val firstMove = Position(0, 0)
+        gameBoard.placeMines(mineCount, firstMove)
 
         var identifiedMineCount = 0
         gameBoard.processEachCell { _, cellStatus ->
@@ -41,7 +43,8 @@ class GameBoardTest {
     fun `forEachCell 메서드는 모든 셀을 순회한다`() {
         val height = 10
         val width = 10
-        gameBoard.setupBoardAndPlaceMines(height, width, 10)
+        gameBoard.setupBoard(height, width)
+        gameBoard.placeMines(10, Position(0, 0))
         var cellCount = 0
 
         gameBoard.processEachCell { _, _ -> cellCount++ }
@@ -55,7 +58,8 @@ class GameBoardTest {
         val height = 5
         val width = 5
         val mineCount = 3
-        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
+        gameBoard.setupBoard(height, width)
+        gameBoard.placeMines(mineCount, Position(0, 0))
 
         var identifiedMineCount = 0
         gameBoard.processEachCell { _, cellStatus ->

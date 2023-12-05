@@ -17,20 +17,33 @@ class MinesweeperGame(
         val mineCount = inputView.readMineCount()
 
         val gameBoard = GameBoard(mineManager)
-        gameBoard.setupBoardAndPlaceMines(height, width, mineCount)
+        gameBoard.setupBoard(height, width)
 
         println("지뢰찾기 게임 시작")
 
-        do {
-            val (x, y) = inputView.readCellCoordinates()
-            val mineHit = gameBoard.openCell(Position(x, y))
+        val firstMove = inputView.readCellCoordinates()
+        gameBoard.placeMines(mineCount, firstMove)
+        handleFirstMove(firstMove, gameBoard)
 
-            if (mineHit) {
-                outputView.displayGameOverMessage()
-                break
-            }
+        while (!gameBoard.isGameOver) {
+            val nextMove = inputView.readCellCoordinates()
+            handleMove(nextMove, gameBoard)
+        }
+    }
 
-            outputView.displayBoard(gameBoard)
-        } while (!gameBoard.isGameOver)
+    private fun handleFirstMove(move: Position, gameBoard: GameBoard) {
+        gameBoard.openCellWithoutMineCheck(move)
+        outputView.displayBoard(gameBoard)
+    }
+
+    private fun handleMove(move: Position, gameBoard: GameBoard) {
+        val mineHit = gameBoard.openCell(move)
+
+        if (mineHit) {
+            outputView.displayGameOverMessage()
+            return
+        }
+
+        outputView.displayBoard(gameBoard)
     }
 }

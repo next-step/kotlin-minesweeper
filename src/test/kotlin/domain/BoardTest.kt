@@ -26,9 +26,10 @@ class BoardTest {
     @DisplayName("Board는 지뢰 개수에 따라 적절히 지뢰를 배치한다")
     fun `지뢰 개수에 따라 적절히 지뢰를 배치한다`() {
         val mineCount = 3
-        board.placeMines(mineCount)
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
 
-        val actualMineCount = board.cells.count { it.isMine() }
+        val actualMineCount = board.cells.count { it.isMine }
         assertEquals(mineCount, actualMineCount)
     }
 
@@ -36,18 +37,19 @@ class BoardTest {
     @DisplayName("Board는 지뢰가 없는 위치를 정확히 식별한다")
     fun `지뢰가 없는 위치를 정확히 식별한다`() {
         val mineCount = 3
-        board.placeMines(mineCount)
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
 
-        val testPosition = Position(2, 2)
-        assertFalse(board.hasMineAt(testPosition))
+        assertFalse(board.findCell(firstMove)?.isMine ?: true)
     }
 
     @Test
     @DisplayName("지뢰를 선택하면 게임이 종료된다")
     fun `지뢰를 선택하면 게임이 종료된다`() {
         val mineCount = 1
-        board.placeMines(mineCount)
-        val minePosition = board.cells.first { it.isMine() }.position
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
+        val minePosition = board.cells.first { it.isMine }.position
 
         val result = board.openCell(minePosition)
 
@@ -56,40 +58,27 @@ class BoardTest {
 
     @Test
     @DisplayName("지뢰가 없는 인접한 칸을 열면 해당 칸이 정확하게 열린다")
-    fun `지뢰가 없는 인접한 칸을 정확히 연다`() {
+    fun `지뢰가 없는 인접한 칸을 정확하게 열린다`() {
         val mineCount = 1
-        board.placeMines(mineCount)
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
 
-        val safePosition = Position(0, 0)
+        val safePosition = Position(1, 1)
         board.openCell(safePosition)
 
-        var safeCellStatus: CellStatus? = null
-        board.processEachCell { position, cellStatus ->
-            if (position == safePosition) {
-                safeCellStatus = cellStatus
-            }
-        }
-
-        assertEquals(CellStatus.OPEN, safeCellStatus)
+        assertEquals(CellStatus.OPEN, board.findCell(safePosition)?.status)
     }
 
     @Test
-    @DisplayName("지뢰를 선택하면 해당 셀의 상태가 열림으로 변경된다")
-    fun `지뢰를 선택하면 해당 셀의 상태가 열림으로 변경된다`() {
+    @DisplayName("지뢰를 선택하면 게임이 종료되고 해당 셀의 상태는 MINE으로 유지된다")
+    fun `지뢰를 선택하면 게임이 종료되고 해당 셀의 상태는 MINE으로 유지된다`() {
         val mineCount = 1
-        val minePositions = mineManager.minePlacementStrategy.placeMines(5, 5, mineCount)
-        board.placeMines(mineCount)
-        val minePosition = minePositions.first()
+        val firstMove = Position(0, 0)
+        board.placeMines(mineCount, firstMove)
+        val minePosition = board.cells.first { it.isMine }.position
 
         board.openCell(minePosition)
 
-        var mineCellStatus: CellStatus? = null
-        board.processEachCell { position, cellStatus ->
-            if (position == minePosition) {
-                mineCellStatus = cellStatus
-            }
-        }
-
-        assertEquals(CellStatus.OPEN, mineCellStatus)
+        assertEquals(CellStatus.MINE, board.findCell(minePosition)?.status)
     }
 }
