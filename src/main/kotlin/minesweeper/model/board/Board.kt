@@ -78,9 +78,8 @@ class Board(
         vision.removeAll(coordinates)
     }
 
-    private fun isWin(): Boolean {
-        return mines.keys.size == vision.size
-    }
+    private val isWin: Boolean
+        get() = mines.keys.size == vision.size
 
     private fun isMineDeployed(coordinate: Coordinate) = mines.keys.contains(coordinate)
 
