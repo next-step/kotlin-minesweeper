@@ -1,44 +1,19 @@
 import map.Board
-import map.Cell
+import map.MapInfo
 import map.Mine
-import map.None
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BoardTest {
     @Test
-    fun `,행의 사이즈가 동일하지 않은 파라미터로 마인 맵이 생성 되었을 때, 예외를 던진다`() {
-        // given :
+    fun `0부터 순차적으로 지뢰를 만드는 로직 포함할 때, 지뢰 개수 만큼 순차적으로 지뢰를 만든다`() {
+        val mapInfo = MapInfo(5, 5, 4)
+        val board = Board(mapInfo, FakeMineRandomLogic())
+        val boardCell = board.board
 
-        // when : 행의 사이즈가 동일하지 않은 파라미터로 마인 맵이 생성 되었을 때
-        val actual = runCatching { Board(mutableListOf(mutableListOf(None, None, None), mutableListOf(None, None))) }.exceptionOrNull()
-
-        // then : 예외를 던진다.
-        assertThat(actual).isInstanceOf(IllegalArgumentException::class.java)
-    }
-
-    @Test
-    fun `리스트가 비어져있고, 마인 맵이 생성될 때, 예외를 던진다`() {
-        // given : 빈 리스트 생성
-        val emptyList: MutableList<MutableList<Cell>> = mutableListOf()
-
-        // when : 마인 맵 생성
-        val actual = runCatching { Board(emptyList) }.exceptionOrNull()
-
-        // then : 예외를 던진다.
-        assertThat(actual).isInstanceOf(IllegalArgumentException::class.java)
-    }
-
-    @Test
-    fun `마인 맵이 생성되고, 지정된 곳에 지뢰를 생성할때, 해당 위치는 지뢰가 된다`() {
-        // given : 마인 맵이 생성된다.
-        val mineMap = CreateFactory.createBoard(5, 5)
-
-        // when : 지정된 위치에 지뢰 세팅을 요청한다.
-        mineMap.settingMine(15)
-        val actual = mineMap.board[2][4]
-
-        // then : 해당 위치는 지뢰로 변경된다.
-        assertThat(actual).isInstanceOf(Mine::class.java)
+        assertThat(boardCell[0][0]).isInstanceOf(Mine::class.java)
+        assertThat(boardCell[0][1]).isInstanceOf(Mine::class.java)
+        assertThat(boardCell[0][2]).isInstanceOf(Mine::class.java)
+        assertThat(boardCell[0][3]).isInstanceOf(Mine::class.java)
     }
 }

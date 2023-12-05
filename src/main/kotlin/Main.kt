@@ -1,4 +1,6 @@
-import ramdom.RandomLogic
+import map.Board
+import map.MapInfo
+import ramdom.MineRandomLogic
 import view.InputView
 import view.OutputView
 
@@ -6,10 +8,8 @@ fun main() {
     val height = InputView.inputHeight()
     val width = InputView.inputWidth()
     val mineCnt = InputView.inputMineCnt()
+    val mapInfo = MapInfo(height, width, mineCnt)
 
-    val board = CreateFactory.createBoard(width = width, height = height)
-    val mineSearch = MineSearch(board, RandomLogic())
-    mineSearch.settingMines(mineCnt)
-
-    OutputView.drawBoard(mineSearch.board)
+    val board = Board(mapInfo, MineRandomLogic())
+    OutputView.drawBoard(board)
 }
