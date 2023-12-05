@@ -31,7 +31,7 @@ class Board(
         return this.adjacentPointTraversal(coordinate)
             .asSequence()
             .map { this.attribute(it) }
-            .count { it == Attribute.MINE }
+            .count { it.isMine() }
     }
 
     private fun adjacentPointTraversal(coordinate: Coordinate): List<Coordinate> {
