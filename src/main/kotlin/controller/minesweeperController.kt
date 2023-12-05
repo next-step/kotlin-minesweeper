@@ -2,15 +2,17 @@ package controller
 
 import domain.GameBoard
 import domain.BoardSettings
-import domain.strategyImpl.RandomPointFactory
+import domain.Point
+import domain.enums.GameStatus
 import dto.GameBoardDto
+import dto.GameResultDto
 import view.InputView
 import view.OutputView
 
 fun main() {
     val gameBoard = gameSetUp()
-    val gameBoardDto = GameBoardDto(gameBoard)
-    gameStart(gameBoardDto)
+    val gameResult = gameStart(gameBoard)
+    OutputView.printGameResult(gameResult)
 }
 
 private fun gameSetUp(): GameBoard {
@@ -22,11 +24,30 @@ private fun gameSetUp(): GameBoard {
     val mineCount = InputView.inputNumber()
     val boardSettings = BoardSettings(height, width, mineCount)
 
-    val gameBoard = GameBoard()
-    return gameBoard.from(boardSettings, RandomPointFactory())
+    return GameBoard.of(boardSettings)
 }
 
-private fun gameStart(gameBoard: GameBoardDto) {
+private fun gameStart(gameBoard: GameBoard): GameResultDto {
     OutputView.printMineGameStart()
-    OutputView.printGameBoard(gameBoard)
+    while (true) {
+        val point = openCells(gameBoard)
+        if (gameBoard.getGameStatus(point) != GameStatus.PLAYING) { break }
+        printGameBoard(gameBoard)
+    }
+
+    return GameResultDto(gameBoard)
+}
+
+private fun printGameBoard(gameBoard: GameBoard) {
+    val gameBoardDto = GameBoardDto(gameBoard)
+    OutputView.printGameBoard(gameBoardDto)
+}
+
+private fun openCells(gameBoard: GameBoard): Point {
+    OutputView.printOpen()
+    val inputPoint = InputView.inputPoint()
+    val point = Point.parsePoint(inputPoint)
+    gameBoard.openCells(point)
+
+    return point
 }
