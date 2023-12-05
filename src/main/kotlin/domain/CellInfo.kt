@@ -2,25 +2,21 @@ package domain
 
 import domain.enums.CellType
 
-class CellInfo(
-    cellType: CellType = CellType.NOT_MINE,
-    neighborMineCount: NeighborMineCount = NeighborMineCount(0),
-    isOpened: Boolean = false
-) {
-    var cellType: CellType = cellType
+class CellInfo {
+    var cellType: CellType = CellType.NOT_MINE
         private set
 
-    var neighborMineCount: NeighborMineCount = neighborMineCount
+    var neighborMineCount: NeighborMineCount = NeighborMineCount(0)
         private set
 
-    var isOpened: Boolean = isOpened
+    var isOpened: Boolean = false
         private set
 
     fun installMine() { cellType = CellType.MINE }
 
     fun isMine(): Boolean = cellType == CellType.MINE
 
-    fun findNeighborMineCount(boardSettings: BoardSettings, board: List<CellList>, point: Point) {
+    fun getNeighborMineCount(boardSettings: BoardSettings, board: List<CellList>, point: Point) {
         if (cellType == CellType.NOT_MINE) { neighborMineCount = NeighborMineCount(calculateNeighborMineCount(point, boardSettings, board)) }
     }
 

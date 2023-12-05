@@ -7,7 +7,7 @@ class Cell(
     fun installMine() = cellInfo.installMine()
 
     fun findCellByNeighborMineCount(boardSettings: BoardSettings, board: List<CellList>) {
-        cellInfo.findNeighborMineCount(boardSettings, board, point)
+        cellInfo.getNeighborMineCount(boardSettings, board, point)
     }
 
     fun createEmptyCell(row: Int, col: Int): Cell {

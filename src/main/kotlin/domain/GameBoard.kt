@@ -54,6 +54,11 @@ class GameBoard private constructor(
             .forEach { it.openCell() }
     }
 
+//    디미터 법칙을 위반하고 있습니다. 이정도는 직접 접근해도 무방하겠지만
+//    GameBoard 및 CellList를 별도로 정의한 김에 각각의 책임을 나누고 메서드 네이밍으로 의도를 명확히 드러내면 어떨까요?
+//    그리고 체이닝이 길어지면서 메서드의 가독성이 다소 떨어지게 되었는데요.
+//    List<Cell>에 대해서도 확장함수 등으로 getNotOpenedAndNotMine, openCells 같은 메서드를 제공해도 가독성이 올라갈 것 같네요.
+
     companion object {
         fun of(
             boardSettings: BoardSettings,
