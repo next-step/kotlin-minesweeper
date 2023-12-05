@@ -1,7 +1,6 @@
 package domain
 
 import domain.enums.GameStatus
-import domain.strategyImpl.RandomPointFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,8 +20,8 @@ class GameResultTest {
         gameBoard.board[1].cells[1].installMine()
 
         val gameResult = GameResult(GameStatus.PLAYING)
-        gameResult.checkGameStatus(Point(1, 1), gameBoard.board)
-        assertEquals(GameStatus.LOSE, gameResult.gameStatus)
+        val gameStatus = gameResult.getGameStatus(Point(1, 1), gameBoard.board)
+        assertEquals(GameStatus.LOSE, gameStatus)
     }
 
     @Test
@@ -31,8 +30,8 @@ class GameResultTest {
         gameBoard.board[2].cells[2].openCell()
         val gameResult = GameResult(GameStatus.PLAYING)
 
-        gameResult.checkGameStatus(Point(2, 2), gameBoard.board)
-        assertEquals(GameStatus.WIN, gameResult.gameStatus)
+        val gameStatus = gameResult.getGameStatus(Point(2, 2), gameBoard.board)
+        assertEquals(GameStatus.WIN, gameStatus)
     }
 
     private fun installMines() {

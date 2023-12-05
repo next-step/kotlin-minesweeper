@@ -2,29 +2,18 @@ package domain
 
 import domain.enums.GameStatus
 
-class GameResult(gameStatus: GameStatus = GameStatus.PLAYING) {
+class GameResult(val gameStatus: GameStatus = GameStatus.PLAYING) {
 
-    var gameStatus: GameStatus = gameStatus
-        private set
+    fun getGameStatus(point: Point, board: List<CellList>): GameStatus {
+        if (isGameLose(point, board)) { return GameStatus.LOSE }
+        if (isGameWin(board)) { return GameStatus.WIN }
 
-    fun isContinued(): Boolean {
-        return gameStatus == GameStatus.PLAYING
+        return GameStatus.PLAYING
     }
 
-    fun checkGameStatus(point: Point, board: List<CellList>) {
-        checkGameLose(point, board)
-        checkGameWin(board)
+    private fun isGameWin(board: List<CellList>): Boolean {
+        return board.all { it.cells.all { cell -> cell.cellInfo.isOpened || cell.cellInfo.isMine() } }
     }
 
-    private fun checkGameLose(point: Point, board: List<CellList>) {
-        if (board[point.row].cells[point.col].cellInfo.isMine()) {
-            gameStatus = GameStatus.LOSE
-        }
-    }
-
-    private fun checkGameWin(board: List<CellList>) {
-        if (board.all { it.cells.all { cell -> cell.cellInfo.isOpened || cell.cellInfo.isMine() } }) {
-            gameStatus = GameStatus.WIN
-        }
-    }
+    private fun isGameLose(point: Point, board: List<CellList>): Boolean = board[point.row].cells[point.col].cellInfo.isMine()
 }

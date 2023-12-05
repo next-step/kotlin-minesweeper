@@ -1,5 +1,6 @@
 package domain
 
+import domain.enums.GameStatus
 import domain.strategy.CreatePointStrategy
 import domain.strategyImpl.RandomPointFactory
 
@@ -19,7 +20,7 @@ class GameBoard private constructor(
     }
 
     private fun createEmptyBoard(boardSettings: BoardSettings) {
-        board =  (0 until boardSettings.row).map { row ->
+        board = (0 until boardSettings.row).map { row ->
             CellList().createEmptyRow(row, boardSettings.col)
         }.toList()
     }
@@ -34,12 +35,9 @@ class GameBoard private constructor(
         board.map { it.findCellListByNeighborMineCount(boardSettings, board) }
     }
 
-    fun isContinued(): Boolean = gameResult.isContinued()
-
     fun openCells(point: Point) {
         openOwnCell(point)
         openNeighborCells(point)
-        gameResult.checkGameStatus(point, board)
     }
 
     private fun openOwnCell(point: Point) {
@@ -56,6 +54,10 @@ class GameBoard private constructor(
         return getNeighborPoints()
             .filter { it.isValid(board.size, board[0].cells.size) }
             .map { board[it.row].cells[it.col] }
+    }
+
+    fun getGameStatus(point: Point): GameStatus {
+        return gameResult.getGameStatus(point, board)
     }
 
     companion object {

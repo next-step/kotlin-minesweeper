@@ -1,7 +1,6 @@
 package domain
 
 import domain.enums.CellType
-import domain.strategyImpl.RandomPointFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

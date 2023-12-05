@@ -3,7 +3,7 @@ package controller
 import domain.GameBoard
 import domain.BoardSettings
 import domain.Point
-import domain.strategyImpl.RandomPointFactory
+import domain.enums.GameStatus
 import dto.GameBoardDto
 import dto.GameResultDto
 import view.InputView
@@ -29,8 +29,9 @@ private fun gameSetUp(): GameBoard {
 
 private fun gameStart(gameBoard: GameBoard): GameResultDto {
     OutputView.printMineGameStart()
-    while (gameBoard.isContinued()) {
-        openCells(gameBoard)
+    while (true) {
+        val point = openCells(gameBoard)
+        if (gameBoard.getGameStatus(point) != GameStatus.PLAYING) { break }
         printGameBoard(gameBoard)
     }
 
@@ -42,9 +43,11 @@ private fun printGameBoard(gameBoard: GameBoard) {
     OutputView.printGameBoard(gameBoardDto)
 }
 
-private fun openCells(gameBoard: GameBoard) {
+private fun openCells(gameBoard: GameBoard): Point {
     OutputView.printOpen()
     val inputPoint = InputView.inputPoint()
     val point = Point.parsePoint(inputPoint)
     gameBoard.openCells(point)
+
+    return point
 }
