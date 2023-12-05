@@ -23,7 +23,7 @@ class MineSweeperGame(
         do {
             val status = board.tryOpen(inputView.openCoordinate(CoordinateParser))
             outputView.printMineMap(board)
-        } while (GameStatus.ALIVE == status)
+        } while (GameStatus.RUNNING == status)
     }
 
     private fun finalize() {

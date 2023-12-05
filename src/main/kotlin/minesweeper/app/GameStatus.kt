@@ -1,7 +1,7 @@
 package minesweeper.app
 
 enum class GameStatus {
-    ALIVE,
+    RUNNING,
     LOSE,
     WIN,
 }

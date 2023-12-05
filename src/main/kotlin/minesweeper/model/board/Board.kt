@@ -66,7 +66,7 @@ class Board(
             return GameStatus.WIN
         }
         discoveredAdjacentGround(coordinate)
-        return GameStatus.ALIVE
+        return GameStatus.RUNNING
     }
 
     private fun discoveredAdjacentGround(coordinate: Coordinate) {
