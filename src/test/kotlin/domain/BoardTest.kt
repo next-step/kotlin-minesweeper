@@ -4,6 +4,7 @@ import enum.CellStatus
 import inteface.RandomMinePlacementStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -67,6 +68,13 @@ class BoardTest {
         board.openCell(safePosition)
 
         assertEquals(CellStatus.OPEN, board.findCell(safePosition)?.status)
+
+        NeighborPositions(safePosition, board.height, board.width).positions.forEach { adjacentPosition ->
+            when {
+                board.findCell(adjacentPosition)?.isMine == false -> assertEquals(CellStatus.OPEN, board.findCell(adjacentPosition)?.status)
+                else -> assertNotEquals(CellStatus.OPEN, board.findCell(adjacentPosition)?.status)
+            }
+        }
     }
 
     @Test
