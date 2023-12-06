@@ -1,8 +1,10 @@
 package domain.board
 
 import Positions
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.board.Positions
 import minesweeper.domain.cell.Position
 
 class PositionsTest : DescribeSpec({
@@ -101,6 +103,74 @@ class PositionsTest : DescribeSpec({
                     Position(3, 2) to 0,
                     Position(3, 3) to 0,
                 )
+            }
+        }
+    }
+
+    describe("isMinePicked") {
+        context("지뢰가 선정되었다면") {
+            val positions = Positions(
+                setOf(
+                    Position(0, 0),
+                    Position(0, 1),
+                    Position(1, 0),
+                    Position(1, 1),
+                )
+            )
+            positions.pickMines(setOf(Position(0, 0)))
+
+            it("true") {
+                positions.isMinePicked shouldBe true
+            }
+        }
+
+        context("지뢰가 선정되지 않았다면") {
+            val positions = Positions(
+                setOf(
+                    Position(0, 0),
+                    Position(0, 1),
+                    Position(1, 0),
+                    Position(1, 1),
+                )
+            )
+
+            it("false") {
+                positions.isMinePicked shouldBe false
+            }
+        }
+    }
+
+    describe("pickMines") {
+        context("지뢰를 선정하면") {
+            val positions = Positions(row = 2, column = 2)
+            val minePosition = Position(0, 0)
+            positions.pickMines(setOf(minePosition))
+
+            it("지뢰 위치 저장") {
+                positions.minePositions shouldBe setOf(minePosition)
+            }
+        }
+
+        context("지뢰가 이미 선정되었다면") {
+            val positions = Positions(row = 2, column = 2)
+            val minePosition = Position(0, 0)
+            positions.pickMines(setOf(minePosition))
+
+            it("지뢰 위치 저장 실패") {
+                shouldThrowExactly<IllegalStateException> {
+                    positions.pickMines(setOf(minePosition))
+                }
+            }
+        }
+
+        context("지뢰가 전체 위치를 벗어나면") {
+            val positions = Positions(row = 2, column = 2)
+            val minePosition = Position(3, 3)
+
+            it("지뢰 위치 저장 실패") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    positions.pickMines(setOf(minePosition))
+                }
             }
         }
     }

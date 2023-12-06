@@ -8,5 +8,7 @@ fun Positions(row: Int, column: Int, minePositions: Set<Position>? = null): Posi
         }
     }.toSet()
     minePositions?.forEach { require(it in allPositions) }
-    return Positions(allPositions = allPositions, minePositions = minePositions ?: emptySet())
+    val positions = Positions(value = allPositions)
+    minePositions?.run { positions.pickMines(this) }
+    return positions
 }

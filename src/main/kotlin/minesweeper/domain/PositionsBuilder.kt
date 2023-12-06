@@ -11,16 +11,19 @@ fun positions(
 class PositionsBuilder(
     private val minePicker: PositionPicker,
 ) {
-    private lateinit var allPositions: Set<Position>
-    private lateinit var minePositions: Set<Position>
+    private lateinit var positions: Positions
 
     fun allPositions(positions: Set<Position>) {
-        allPositions = positions
+        this.positions = Positions(positions)
     }
 
     fun mineCount(count: MineCount) {
-        minePositions = minePicker.pick(allPositions, count.value)
+        val minePositions = minePicker.pick(positions.value, count.value)
+        positions.pickMines(minePositions)
     }
 
-    fun build(): Positions = Positions(allPositions, minePositions)
+    fun build(): Positions {
+        check(positions.isMinePicked) { "지뢰가 선정되지 않았습니다" }
+        return positions
+    }
 }

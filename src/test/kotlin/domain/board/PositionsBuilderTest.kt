@@ -8,6 +8,7 @@ import minesweeper.domain.MineCount
 import minesweeper.domain.RandomPositionPicker
 import minesweeper.domain.cell.Position
 import minesweeper.domain.positions
+import java.lang.IllegalStateException
 
 class PositionsBuilderTest : DescribeSpec({
     describe("위치 생성") {
@@ -27,8 +28,8 @@ class PositionsBuilderTest : DescribeSpec({
             }
 
             it("전체 위치는 주어진 position와 같다") {
-                result.allPositions.size shouldBe 4
-                result.allPositions shouldBe positions
+                result.value.size shouldBe 4
+                result.value shouldBe positions
             }
 
             it("지뢰 개수는 입력 받은 지뢰 개수(3)와 같다") {
@@ -52,7 +53,7 @@ class PositionsBuilderTest : DescribeSpec({
 
         context("지뢰 개수가 주어지지 않으면") {
             it("위치 생성에 실패한다") {
-                shouldThrowExactly<UninitializedPropertyAccessException> {
+                shouldThrowExactly<IllegalStateException> {
                     positions(RandomPositionPicker()) {
                         allPositions(positions)
                     }

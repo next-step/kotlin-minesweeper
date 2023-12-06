@@ -14,7 +14,7 @@ class MineBoardTest : DescribeSpec({
             val mineBoard = MineBoard.from(positions)
 
             it("보드의 위치는 주어진 위치 (4 * 4)") {
-                mineBoard.cells.map { it.position } shouldBe positions.allPositions
+                mineBoard.cells.map { it.position } shouldBe positions.value
             }
 
             it("셀 마크는 지뢰(1,1) : Mine / 지뢰 인접 : (0,0), (0,1), (0,2), (1,0), (1, 2), (2, 0), (2, 1), (2, 2) : ONE / 나머지: ZERO") {
