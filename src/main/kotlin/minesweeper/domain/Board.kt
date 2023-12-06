@@ -64,9 +64,12 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
             val nextCoordinate = currentCoordinate + aroundCoordinate
             if (nextCoordinate.isOutOfBound(MIN_HEIGHT, metadata.height, MIN_WIDTH, metadata.width)) continue
 
-            val nextCell = at(nextCoordinate.row, nextCoordinate.col)
-            if (nextCell.isOpened) continue
-            if (nextCell is MineCell) continue
+            when (val nextCell = at(nextCoordinate.row, nextCoordinate.col)) {
+                is MineCell -> continue
+                is EmptyCell -> {
+                    if (nextCell.isOpened) continue
+                }
+            }
 
             queue.offer(nextCoordinate)
         }
