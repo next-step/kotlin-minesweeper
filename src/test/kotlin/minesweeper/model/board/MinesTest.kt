@@ -13,7 +13,7 @@ class MinesTest : StringSpec({
     }
 
     "주변 8개 지점에 매설된 지뢰의 숫자를 반환 해야 한다" {
-        //adjacentMineCount
+        // adjacentMineCount
         TODO()
     }
 })

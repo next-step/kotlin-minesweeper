@@ -18,5 +18,4 @@ class VisionTest : StringSpec({
     "특정지점이 노출 되어있는경우 노출되어있음을 반환 하여야 한다" {
         TODO()
     }
-
 })

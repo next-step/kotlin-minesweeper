@@ -36,7 +36,7 @@ class BoardTest : StringSpec({
     }
 
     "지뢰가 매설된 지역을 tryOpen 하면 LOSE 를 반환해야 한다" {
-        //tryOpen
+        // tryOpen
         TODO()
     }
 })
