@@ -1,7 +1,7 @@
 package minesweeper.model.board
 
 import minesweeper.app.GameStatus
-import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
+import minesweeper.model.board.minedeploy.impl.EvenlyStrategy
 import minesweeper.model.board.traversal.SearchEngine
 import minesweeper.model.board.traversal.impl.SearchBfs
 import minesweeper.model.point.Attribute
@@ -23,15 +23,7 @@ class Board(
         mineCount: Int,
         limit: BoardLimit,
     ) : this(
-        mines = Mines(
-            SpecifiedCoordinatesStrategy(
-                0 to 0,
-                1 to 1,
-                2 to 2,
-                3 to 3
-            ).deployPoints(limit),
-            limit
-        ),
+        mines = Mines(EvenlyStrategy(mineCount).deployPoints(limit), limit),
         vision = Vision(VisionCoveredStrategy.coordinates(limit)),
         limit = limit,
     )
