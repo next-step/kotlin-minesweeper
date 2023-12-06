@@ -39,7 +39,7 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
     }
 
     fun isAllOpened(): Boolean {
-        return rows.filter { it.value is EmptyCell }.all { it.value.isOpened }
+        return rows.values.filterIsInstance<EmptyCell>().all { it.isOpened }
     }
 
     private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard) {

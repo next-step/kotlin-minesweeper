@@ -3,6 +3,7 @@ package minesweeper.domain
 sealed class Cell {
     var isOpened: Boolean = false
         protected set
+
     abstract fun open()
 }
 
