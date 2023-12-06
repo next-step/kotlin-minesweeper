@@ -14,7 +14,7 @@ value class Vertical(
     }
 
     fun movePossible(delta: Int, limit: Vertical): Boolean {
-        return (delta + value) in 0..limit.value
+        return (delta + value) in 0 until limit.value
     }
 
     fun range(): IntRange {

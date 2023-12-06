@@ -14,7 +14,7 @@ value class Horizontal(
     }
 
     fun movePossible(delta: Int, limit: Horizontal): Boolean {
-        return (this.value + delta) in 0..limit.value
+        return (this.value + delta) in 0 until limit.value
     }
 
     fun range(): IntRange {

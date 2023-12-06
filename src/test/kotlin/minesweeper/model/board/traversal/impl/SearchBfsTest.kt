@@ -13,7 +13,8 @@ class SearchBfsTest : StringSpec({
     "탐색한다" {
         val limit = (4 to 4).toBoardLimit()
         val searchBfs = SearchBfs(
-            limit, SpecifiedCoordinatesStrategy(
+            limit,
+            SpecifiedCoordinatesStrategy(
                 0 to 0,
                 1 to 1,
                 2 to 2,
@@ -21,31 +22,32 @@ class SearchBfsTest : StringSpec({
             ).deployPoints(limit).toMines(limit)
         )
         val actual = searchBfs.traversal((3 to 0).toCoordinate())
+        println(actual)
 
-        //assert
-        actual shouldHaveSize 5
+        // assert
+        actual shouldHaveSize 4
         actual shouldContainAll setOf(
             (3 to 0).toCoordinate(),
             (3 to 1).toCoordinate(),
-            (3 to 2).toCoordinate(),
             (2 to 0).toCoordinate(),
             (2 to 1).toCoordinate(),
         )
 
-        //comment
+        // comment
         val describeTest = """
             테스트코드 설명
             
             [기호] 
             - X : 탐색으로 도달하지 못하는 영역
             - * : 지뢰가 매설된 지역 (역시 동일하게 탐색으로 도달하지 못함)
-            - O : 탐색으로 도달하는 지역
+            - O : 탐색으로 도달하는 지역 중 0 으로 표시되어야 하는 지점(주변 8칸 안에 지뢰 없음)
+            - N : 탐색으로 도달하는 지역 중 숫자 (1~N) 로 표시되어야 하는 지점
             
             [그림]
             * X X X
-            O * X X
-            O O * X
-            O O O *
+            X * X X
+            N N * X
+            O M X *
                      
             [탐색으로 도달해야하는 좌표]
             Coordinate(vertical=Vertical(value=3), horizontal=Horizontal(value=0)) 
@@ -68,7 +70,7 @@ class SearchBfsTest : StringSpec({
             C C C C
             C C C C
             1 2 C C
-            0 1 2 C
+            0 1 C C
             
         """.trimIndent()
         print(describeTest)
