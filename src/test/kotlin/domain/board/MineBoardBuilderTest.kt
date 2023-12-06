@@ -6,19 +6,19 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.MineCount
 import minesweeper.domain.RandomPositionPicker
-import minesweeper.domain.board
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.Width
 import minesweeper.domain.cell.CellMark
+import minesweeper.domain.mineBoard
 
-class BoardBuilderTest : DescribeSpec({
+class MineBoardBuilderTest : DescribeSpec({
     describe("보드 생성") {
         context("높이(6)와 너비(4), 지뢰 개수(3)가 주어지면") {
             val height = Height(6)
             val width = Width(4)
             val count = MineCount(3)
 
-            val result = board(RandomPositionPicker()) {
+            val result = mineBoard(RandomPositionPicker()) {
                 size(height, width)
                 mineCount(count)
             }
@@ -43,7 +43,7 @@ class BoardBuilderTest : DescribeSpec({
         context("보드 사이즈가 주어지지 않으면") {
             it("보드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
-                    board(RandomPositionPicker()) {
+                    mineBoard(RandomPositionPicker()) {
                         mineCount(MineCount(6))
                     }
                 }
@@ -53,7 +53,7 @@ class BoardBuilderTest : DescribeSpec({
         context("지뢰 개수가 주어지지 않으면") {
             it("보드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
-                    board(RandomPositionPicker()) {
+                    mineBoard(RandomPositionPicker()) {
                         size(Height(6), Width(4))
                     }
                 }
