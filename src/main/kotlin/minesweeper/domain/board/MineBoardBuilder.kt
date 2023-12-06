@@ -8,11 +8,11 @@ fun mineBoard(
 class MineBoardBuilder(
     private val minePicker: PositionPicker,
 ) {
-    private lateinit var size: BoardSize
+    private lateinit var size: MineBoardSize
     private lateinit var mineCount: MineCount
 
     fun size(height: Height, width: Width) {
-        size = BoardSize(height, width)
+        size = MineBoardSize(height, width)
     }
 
     fun mineCount(count: MineCount) {

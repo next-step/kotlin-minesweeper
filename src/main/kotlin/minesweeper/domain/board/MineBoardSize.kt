@@ -2,7 +2,7 @@ package minesweeper.domain.board
 
 import minesweeper.domain.cell.Position
 
-data class BoardSize(
+data class MineBoardSize(
     val height: Height,
     val width: Width,
 ) {
