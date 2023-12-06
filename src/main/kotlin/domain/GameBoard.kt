@@ -9,9 +9,8 @@ class GameBoard(private val mineManager: MineManager) {
     val isGameOver: Boolean
         get() = gameStatus != GameState.IN_PROGRESS
 
-    fun boardWith(): Int {
-        return board.width
-    }
+    val boardWidth: Int
+        get() = board.width
 
     fun setupBoard(height: Int, width: Int) {
         board = Board.create(height, width, mineManager)
