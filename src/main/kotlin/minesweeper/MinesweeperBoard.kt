@@ -9,24 +9,24 @@ class MinesweeperBoard(
     private val playerBoard: RenderedGameBoard = renderStrategy(boardDimensions, INIT_CELL)
     private val visitedBoard: RenderedGameBoard = renderStrategy(boardDimensions, INIT_CELL)
 
-    fun openCell(pos: Position): CellOpenStatus {
-        if (isMinePosition(pos)) {
+    fun openCell(position: Position): CellOpenStatus {
+        if (isMinePosition(position)) {
             return CellOpenStatus.FAIL
         }
 
-        val posQueue = ArrayDeque<Position>().apply {
-            this.add(pos)
+        val positionQueue = ArrayDeque<Position>().apply {
+            this.add(position)
         }
 
-        while(!posQueue.isEmpty()) {
-            val now = posQueue.removeFirst()
+        while(!positionQueue.isEmpty()) {
+            val now = positionQueue.removeFirst()
             playerBoard[now.y][now.x] = adminBoard[now.y][now.x]
             visitedBoard[now.y][now.x] = VISITED_CELL
             val nearPositions = boardDimensions.getNearPositions(now)
             nearPositions.forEach {
                 if (!isMinePosition(it)) {
                     if (adminBoard[it.y][it.x] == NUMBER_INIT_CELL && visitedBoard[it.y][it.x] != VISITED_CELL) {
-                        posQueue.add(it)
+                        positionQueue.add(it)
                     }
                     playerBoard[it.y][it.x] = adminBoard[it.y][it.x]
                 }

@@ -26,8 +26,8 @@ data class BoardDimensions(
         height > pos.y && pos.y >= 0 && width > pos.x && pos.x >= 0
 
     private fun validateInputSize(input: String, splitted: List<String>) {
-        if(splitted.size != INPUT_SIZE) {
-            throw IllegalArgumentException(INPUT_ERROR_MESSAGE.format(input))
+        require(splitted.size == INPUT_SIZE) {
+            INPUT_ERROR_MESSAGE.format(input)
         }
     }
 
