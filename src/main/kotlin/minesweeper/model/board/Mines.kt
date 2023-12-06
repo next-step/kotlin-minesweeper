@@ -15,17 +15,9 @@ class Mines(
     val coordinates: Set<Coordinate>
         get() = deployedCoordinate.keys
 
-    fun isDeployedCoordinate(coordinate: Coordinate): Boolean {
+    private fun isDeployedCoordinate(coordinate: Coordinate): Boolean {
         return deployedCoordinate.containsKey(coordinate)
     }
-
-//    fun isGround(coordinate: Coordinate): Boolean {
-//        TODO("Not yet implemented")
-//    }
-//
-//    fun isAdjacentMineCountZero(coordinate: Coordinate): Boolean {
-//        TODO("Not yet implemented")
-//    }
 
     fun attribute(coordinate: Coordinate): Attribute {
         return when (this.isDeployedCoordinate(coordinate)) {
