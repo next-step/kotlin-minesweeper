@@ -4,11 +4,10 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.MineCount
-import minesweeper.domain.RandomPositionPicker
+import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.RandomPositionPicker
+import minesweeper.domain.board.positions
 import minesweeper.domain.cell.Position
-import minesweeper.domain.positions
-import java.lang.IllegalStateException
 
 class PositionsBuilderTest : DescribeSpec({
     describe("위치 생성") {

@@ -1,6 +1,5 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
-import minesweeper.domain.board.Positions
 import minesweeper.domain.cell.Position
 
 fun positions(

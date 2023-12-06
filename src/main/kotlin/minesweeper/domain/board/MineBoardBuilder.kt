@@ -1,10 +1,4 @@
-package minesweeper.domain
-
-import minesweeper.domain.board.BoardSize
-import minesweeper.domain.board.Height
-import minesweeper.domain.board.MineBoard
-import minesweeper.domain.board.Positions
-import minesweeper.domain.board.Width
+package minesweeper.domain.board
 
 fun mineBoard(
     minePicker: PositionPicker,

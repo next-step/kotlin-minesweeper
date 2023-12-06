@@ -6,7 +6,6 @@ import minesweeper.domain.cell.CellMark
 
 object BoardView {
     private const val MINE_SYMBOL = "*"
-    private const val EMPTY_SYMBOL = "C"
 
     fun from(board: MineBoard): List<String> {
         val sortedCells = sortCells(board.cells)
@@ -26,6 +25,6 @@ object BoardView {
 
     private fun CellMark.symbol() = when (this) {
         CellMark.MINE -> MINE_SYMBOL
-        else -> EMPTY_SYMBOL
+        else -> this.adjacentMineCount.toString()
     }
 }

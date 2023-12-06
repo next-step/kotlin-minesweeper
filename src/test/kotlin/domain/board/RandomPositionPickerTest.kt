@@ -1,8 +1,8 @@
-package domain
+package domain.board
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.RandomPositionPicker
+import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.cell.Position
 
 class RandomPositionPickerTest : StringSpec({

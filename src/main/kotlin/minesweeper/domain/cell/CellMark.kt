@@ -1,20 +1,20 @@
 package minesweeper.domain.cell
 
-enum class CellMark {
-    MINE, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, EMPTY;
+enum class CellMark(val adjacentMineCount: Int?) {
+    MINE(null),
+    ZERO(0),
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
     companion object {
-        fun from(mineCount: Int) = when (mineCount) {
-            0 -> ZERO
-            1 -> ONE
-            2 -> TWO
-            3 -> THREE
-            4 -> FOUR
-            5 -> FIVE
-            6 -> SIX
-            7 -> SEVEN
-            8 -> EIGHT
-            else -> throw IllegalArgumentException("주변 지뢰 개수는 0부터 8까지만 가능합니다")
-        }
+        fun from(mineCount: Int): CellMark =
+            entries.firstOrNull { it.adjacentMineCount == mineCount }
+                ?: throw IllegalArgumentException("주변 지뢰 개수는 0부터 8까지만 가능합니다")
     }
 }

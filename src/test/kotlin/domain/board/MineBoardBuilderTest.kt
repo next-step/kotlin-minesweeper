@@ -4,12 +4,12 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.MineCount
-import minesweeper.domain.RandomPositionPicker
 import minesweeper.domain.board.Height
+import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.board.Width
+import minesweeper.domain.board.mineBoard
 import minesweeper.domain.cell.CellMark
-import minesweeper.domain.mineBoard
 
 class MineBoardBuilderTest : DescribeSpec({
     describe("보드 생성") {
