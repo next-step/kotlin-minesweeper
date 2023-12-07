@@ -29,7 +29,7 @@ class MineSweeperController(
 
         while (true) {
             val openPosition = inputView.getPosition()
-            val mineSweeperState = mineSweeper.openCell(openPosition)
+            val mineSweeperState = mineSweeper.tryOpenCell(openPosition)
 
             if (mineSweeperState == MineSweeperState.CONTINUE) {
                 resultView.showMineSweeper(mineSweeper = mineSweeper)

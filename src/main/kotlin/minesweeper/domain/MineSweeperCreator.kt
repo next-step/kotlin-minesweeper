@@ -22,13 +22,10 @@ class MineSweeperCreator(
     }
 
     private fun countAdjacentMine(position: Position): Int {
-        return Direction.eightWays.count { (dx, dy) ->
-            val newX = position.x + dx
-            val newY = position.y + dy
-
-            (0 until mineSweeperSize.width).contains(newX) &&
-                (0 until mineSweeperSize.height).contains(newY) &&
-                minePosition.contains(Position(newX, newY))
+        return position.around().count {
+            (0 until mineSweeperSize.width).contains(it.x) &&
+                (0 until mineSweeperSize.height).contains(it.y) &&
+                minePosition.contains(it)
         }
     }
 }

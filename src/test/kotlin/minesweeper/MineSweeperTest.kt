@@ -10,15 +10,14 @@ import minesweeper.domain.cell.SafeCell
 
 class MineSweeperTest : FunSpec({
     test("MineCell을 열면 게임 패배") {
-            val mineSweeper = MineSweeper(
-                mapOf(
-                    Position(0, 0) to MineCell(),
-                    Position(1, 0) to SafeCell(1),
-                )
+        val mineSweeper = MineSweeper(
+            mapOf(
+                Position(0, 0) to MineCell(),
+                Position(1, 0) to SafeCell(1),
             )
+        )
 
-            mineSweeper.openCell(Position(0, 0)) shouldBe MineSweeperState.LOSE
-
+        mineSweeper.tryOpenCell(Position(0, 0)) shouldBe MineSweeperState.LOSE
     }
 
     test("모든 SafeCell을 열면 승리") {
@@ -29,7 +28,7 @@ class MineSweeperTest : FunSpec({
             )
         )
 
-        mineSweeper.openCell(Position(1, 0)) shouldBe MineSweeperState.WIN
+        mineSweeper.tryOpenCell(Position(1, 0)) shouldBe MineSweeperState.WIN
         mineSweeper.getRow(0)[1].isOpened shouldBe true
     }
 })

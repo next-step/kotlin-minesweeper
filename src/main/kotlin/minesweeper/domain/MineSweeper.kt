@@ -23,13 +23,14 @@ class MineSweeper(
             .toSortedMap { prev, next -> prev.x.compareTo(next.x) }.values.toList()
     }
 
-    fun openCell(position: Position): MineSweeperState {
+    fun tryOpenCell(position: Position): MineSweeperState {
         val targetCell = getCell(position)
 
         if (targetCell is MineCell) {
             return MineSweeperState.LOSE
         }
 
+        openCell(position)
         openAdjacentCell(position)
 
         if (countOfMine() == countOfClosed()) {
@@ -43,18 +44,21 @@ class MineSweeper(
 
     private fun countOfClosed() = mineSweeperMap.values.count { !it.isOpened }
 
-    private fun openAdjacentCell(position: Position) {
+    private fun openCell(position: Position) {
         val targetCell = getCell(position)
         targetCell.open()
+    }
+
+    private fun openAdjacentCell(position: Position) {
+        val targetCell = getCell(position)
 
         if (targetCell is SafeCell && targetCell.countOfAdjacentMine == 0) {
-            Direction.eightWays.map { (dx, dy) ->
-                Position(position.x + dx, position.y + dy)
-            }.forEach { it ->
-                if (isValidPosition(it) && !getCell(it).isOpened) {
-                    openAdjacentCell(it)
+            position.around()
+                .forEach { it ->
+                    if (isValidPosition(it) && !getCell(it).isOpened) {
+                        openAdjacentCell(it)
+                    }
                 }
-            }
         }
     }
 
