@@ -1,5 +1,5 @@
 package enum
 
 enum class CellStatus {
-    MINE, EMPTY
+    MINE, OPEN, CLOSED
 }

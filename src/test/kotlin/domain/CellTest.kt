@@ -14,7 +14,7 @@ class CellTest {
 
         cell.placeMine()
 
-        assertTrue(cell.isMine())
+        assertTrue(cell.isMine)
     }
 
     @Test
@@ -22,6 +22,35 @@ class CellTest {
     fun `비지뢰 상태를 올바르게 처리한다`() {
         val cell = Cell(Position(0, 0))
 
-        assertFalse(cell.isMine())
+        assertFalse(cell.isMine)
+    }
+
+    @Test
+    @DisplayName("Cell은 상태를 OPEN으로 올바르게 변경한다")
+    fun `상태를 OPEN으로 올바르게 변경한다`() {
+        val cell = Cell(Position(0, 0))
+
+        cell.open()
+
+        assertTrue(cell.isOpen)
+    }
+
+    @Test
+    @DisplayName("Cell은 상태를 CLOSED로 올바르게 변경한다")
+    fun `상태를 CLOSED로 올바르게 변경한다`() {
+        val cell = Cell(Position(0, 0))
+        cell.open()
+
+        cell.close()
+
+        assertFalse(cell.isOpen)
+    }
+
+    @Test
+    @DisplayName("Cell은 인접한 지뢰가 없을 때 올바르게 처리한다")
+    fun `인접한 지뢰가 없을 때 올바르게 처리한다`() {
+        val cell = Cell(Position(0, 0))
+
+        assertTrue(cell.isAdjacentMinesZero)
     }
 }

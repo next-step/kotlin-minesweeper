@@ -2,6 +2,7 @@ package controller
 
 import domain.GameBoard
 import domain.MineManager
+import domain.Position
 import view.InputView
 import view.OutputView
 
@@ -16,7 +17,36 @@ class MinesweeperGame(
         val mineCount = inputView.readMineCount()
 
         val gameBoard = GameBoard(mineManager)
-        gameBoard.initializeBoard(height, width, mineCount)
+        gameBoard.setupBoard(height, width)
+
+        println("지뢰찾기 게임 시작")
+
+        val firstMove = inputView.readCellCoordinates()
+        gameBoard.placeMines(mineCount, firstMove)
+        handleFirstMove(firstMove, gameBoard)
+
+        while (!gameBoard.isGameOver) {
+            val nextMove = inputView.readCellCoordinates()
+            if (!handleMove(nextMove, gameBoard)) {
+                break
+            }
+        }
+    }
+
+    private fun handleFirstMove(move: Position, gameBoard: GameBoard) {
+        gameBoard.openCellWithoutMineCheck(move)
         outputView.displayBoard(gameBoard)
+    }
+
+    private fun handleMove(move: Position, gameBoard: GameBoard): Boolean {
+        val mineHit = gameBoard.openCell(move)
+
+        if (mineHit) {
+            outputView.displayGameOverMessage()
+            return false
+        }
+
+        outputView.displayBoard(gameBoard)
+        return true
     }
 }

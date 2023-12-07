@@ -1,6 +1,7 @@
 package view
 
 import domain.GameSettings
+import domain.Position
 
 class InputView {
     fun readHeight(): Int {
@@ -16,5 +17,13 @@ class InputView {
     fun readMineCount(): Int {
         println("지뢰는 몇 개인가요?")
         return readlnOrNull()?.toIntOrNull() ?: GameSettings.DEFAULT_MINE_COUNT
+    }
+
+    fun readCellCoordinates(): Position {
+        print("open: ")
+        val input = readln().split(",")
+        val x = input[0].trim().toInt() - 1
+        val y = input[1].trim().toInt() - 1
+        return Position(x, y)
     }
 }
