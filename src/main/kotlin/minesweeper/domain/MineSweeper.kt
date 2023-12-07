@@ -31,7 +31,6 @@ class MineSweeper(
         }
 
         openCell(position)
-        openAdjacentCell(position)
 
         if (countOfMine() == countOfClosed()) {
             return MineSweeperState.WIN
@@ -47,18 +46,15 @@ class MineSweeper(
     private fun openCell(position: Position) {
         val targetCell = getCell(position)
         targetCell.open()
-    }
-
-    private fun openAdjacentCell(position: Position) {
-        val targetCell = getCell(position)
 
         if (targetCell is SafeCell && targetCell.countOfAdjacentMine == 0) {
-            position.around()
-                .forEach { it ->
-                    if (isValidPosition(it) && !getCell(it).isOpened) {
-                        openAdjacentCell(it)
-                    }
+            Direction.eightWays.map { (dx, dy) ->
+                Position(position.x + dx, position.y + dy)
+            }.forEach { it ->
+                if (isValidPosition(it) && !getCell(it).isOpened) {
+                    openCell(it)
                 }
+            }
         }
     }
 
