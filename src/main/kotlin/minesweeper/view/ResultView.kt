@@ -7,7 +7,7 @@ import minesweeper.domain.cell.SafeCell
 
 class ResultView {
     fun showMineSweeper(mineSweeper: MineSweeper) {
-        (0 until mineSweeper.getHeight()).forEach {
+        (0 until mineSweeper.height).forEach {
             println(
                 mineSweeper.getRow(it).joinToString(
                     " ",

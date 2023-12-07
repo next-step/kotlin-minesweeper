@@ -7,8 +7,18 @@ import minesweeper.domain.cell.SafeCell
 class MineSweeper(
     private val mineSweeperMap: Map<Position, Cell>
 ) {
+    private val width: Int
+        get() = mineSweeperMap.keys.count { (x, _) ->
+            x == 0
+        }
+
+    val height: Int
+        get() = mineSweeperMap.keys.count { (_, y) ->
+            y == 0
+        }
+
     fun getRow(index: Int): List<Cell> {
-        require(index < getHeight()) { "Wrong index!" }
+        require(index < height) { "Wrong index!" }
         return mineSweeperMap.filter { (key, _) -> key.y == index }
             .toSortedMap { prev, next -> prev.x.compareTo(next.x) }.values.toList()
     }
@@ -49,23 +59,10 @@ class MineSweeper(
     }
 
     private fun isValidPosition(position: Position): Boolean {
-        return (0 until getWidth()).contains(position.x) &&
-            (0 until getHeight()).contains(position.y)
+        return (0 until width).contains(position.x) &&
+            (0 until height).contains(position.y)
     }
 
-    private fun getCell(position: Position): Cell {
-        val targetCell = mineSweeperMap[position]
-        require(targetCell != null) { "Wrong position!" }
-        return targetCell
-    }
-
-
-
-    private fun getWidth(): Int = mineSweeperMap.keys.count { (x, _) ->
-        x == 0
-    }
-
-    fun getHeight(): Int = mineSweeperMap.keys.count { (_, y) ->
-        y == 0
-    }
+    private fun getCell(position: Position): Cell =
+        mineSweeperMap[position] ?: throw IllegalArgumentException("Wrong position!")
 }
