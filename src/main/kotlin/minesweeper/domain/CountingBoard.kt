@@ -7,7 +7,7 @@ class CountingBoard(private val board: Board) {
         countAllAroundMine()
     }
 
-    fun countOf(row: Int, col: Int): Int {
+    fun countAroundMine(row: Int, col: Int): Int {
         return countsOfAroundMines[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 
@@ -25,12 +25,12 @@ class CountingBoard(private val board: Board) {
 
     private fun countAroundMine(coordinate: Coordinate): Int {
         var mineCount = 0
+        val maxHeight = board.metadata.height
+        val maxWidth = board.metadata.width
+
         for (aroundCoordinate in Board.AROUND_COORDINATES) {
             val nextCoordinate = coordinate + aroundCoordinate
-            if (nextCoordinate.isOutOfBound(
-                    Board.MIN_HEIGHT, board.metadata.height, Board.MIN_WIDTH, board.metadata.width
-                )
-            ) {
+            if (nextCoordinate.isOutOfBound(Board.MIN_HEIGHT, maxHeight, Board.MIN_WIDTH, maxWidth)) {
                 continue
             }
             if (board.at(nextCoordinate.row, nextCoordinate.col) is MineCell) {

@@ -15,44 +15,45 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         return rows[Coordinate(row, col)] ?: throw IllegalArgumentException("존재하지 않는 좌표입니다.")
     }
 
+    fun openedCoordinates(): Set<Coordinate> {
+        return openedCoordinates.toSet()
+    }
+
     fun canOpen(coordinate: Coordinate): Boolean {
         val currentCell = at(coordinate.row, coordinate.col)
         return currentCell is EmptyCell
     }
 
-    fun open(coordinate: Coordinate, countingBoard: CountingBoard): List<Coordinate> {
+    fun open(coordinate: Coordinate, countingBoard: CountingBoard) {
         val currentCell = at(coordinate.row, coordinate.col)
         if (currentCell is MineCell) {
-            return emptyList()
+            return
         }
 
-        if (countingBoard.countOf(coordinate.row, coordinate.col) > 0) {
+        if (countingBoard.countAroundMine(coordinate.row, coordinate.col) > 0) {
+            currentCell.open()
             openedCoordinates.add(coordinate)
-            return listOf(coordinate)
         }
 
         return openAllAround(coordinate, countingBoard)
     }
 
     fun isAllOpened(): Boolean {
-        return rows.filter { it.value is EmptyCell }.all { openedCoordinates.contains(it.key) }
+        return rows.values.filterIsInstance<EmptyCell>().all { it.isOpened }
     }
 
-    private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard): List<Coordinate> {
-        val results = mutableListOf<Coordinate>()
+    private fun openAllAround(coordinate: Coordinate, countingBoard: CountingBoard) {
         val queue: Queue<Coordinate> = LinkedList()
         queue.offer(coordinate)
 
         while (queue.isNotEmpty()) {
             val currentCoordinate = queue.poll()
+            at(currentCoordinate.row, currentCoordinate.col).open()
             openedCoordinates.add(currentCoordinate)
-            results.add(currentCoordinate)
-            if (countingBoard.countOf(currentCoordinate.row, currentCoordinate.col) > 0) continue
+            if (countingBoard.countAroundMine(currentCoordinate.row, currentCoordinate.col) > 0) continue
 
             visitAround(currentCoordinate, queue)
         }
-
-        return results
     }
 
     private fun visitAround(
@@ -62,8 +63,14 @@ class Board(val metadata: BoardMetadata, rule: MineGenerationRule) {
         for (aroundCoordinate in AROUND_COORDINATES) {
             val nextCoordinate = currentCoordinate + aroundCoordinate
             if (nextCoordinate.isOutOfBound(MIN_HEIGHT, metadata.height, MIN_WIDTH, metadata.width)) continue
-            if (openedCoordinates.contains(nextCoordinate)) continue
-            if (at(nextCoordinate.row, nextCoordinate.col) is MineCell) continue
+
+            when (val nextCell = at(nextCoordinate.row, nextCoordinate.col)) {
+                is MineCell -> continue
+                is EmptyCell -> {
+                    if (nextCell.isOpened) continue
+                }
+            }
+
             queue.offer(nextCoordinate)
         }
     }

@@ -2,7 +2,6 @@ package minesweeper.controller
 
 import minesweeper.domain.Board
 import minesweeper.domain.BoardMetadata
-import minesweeper.domain.Coordinate
 import minesweeper.domain.CountingBoard
 import minesweeper.domain.rule.RandomMineGenerationRule
 import minesweeper.view.ConsoleInput
@@ -17,17 +16,16 @@ fun main() {
     val countingBoard = CountingBoard(board)
 
     ConsoleOutput.startGame()
-    val openedCoordinate = mutableSetOf<Coordinate>()
     while (board.isAllOpened().not()) {
         val openCoordinate = ConsoleInput.inputOpenCoordinate()
-        val isOpened = board.canOpen(openCoordinate)
-        if (isOpened.not()) {
+        val canOpen = board.canOpen(openCoordinate)
+        if (canOpen.not()) {
             ConsoleOutput.loseGame()
             return
         }
 
-        openedCoordinate.addAll(board.open(openCoordinate, countingBoard))
-        ConsoleOutput.printOpenedBoard(boardHeight, boardWidth, openedCoordinate.toSet(), countingBoard)
+        board.open(openCoordinate, countingBoard)
+        ConsoleOutput.printOpenedBoard(boardHeight, boardWidth, board.openedCoordinates(), countingBoard)
     }
     ConsoleOutput.winGame(boardHeight, boardWidth, board, countingBoard)
 }
