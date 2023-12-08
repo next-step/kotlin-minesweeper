@@ -28,7 +28,7 @@ class MineManagerTest {
     @DisplayName("지뢰 배치 전략과 카운터가 올바르게 작동하는지 확인한다")
     fun `지뢰 배치 전략과 카운터가 올바르게 작동하는지 확인한다`() {
         val firstMove = Position(0, 0)
-        board.placeMines(mineCount, firstMove)
+        board.firstSafeCell(mineCount, firstMove)
 
         var actualMineCount = 0
         board.processEachCell { _, cellStatus ->

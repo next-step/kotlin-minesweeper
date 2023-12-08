@@ -11,7 +11,7 @@ class Board(
         Cell(Position(index % width, index / width))
     }
 
-    fun placeMines(mineCount: Int, firstMove: Position) {
+    fun firstSafeCell(mineCount: Int, firstMove: Position) {
         val excludedPositions = NeighborPositions(firstMove, height, width).positions + firstMove
         val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount, excludedPositions)
         minePositions.forEach { placeMineAt(it) }
