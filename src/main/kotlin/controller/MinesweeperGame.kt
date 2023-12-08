@@ -3,6 +3,7 @@ package controller
 import domain.GameBoard
 import domain.MineManager
 import domain.Position
+import enum.GameState
 import view.InputView
 import view.OutputView
 
@@ -34,14 +35,14 @@ class MinesweeperGame(
     }
 
     private fun handleFirstMove(move: Position, gameBoard: GameBoard) {
-        gameBoard.openCellWithoutMineCheck(move)
+        gameBoard.openCell(move)
         outputView.displayBoard(gameBoard)
     }
 
     private fun handleMove(move: Position, gameBoard: GameBoard): Boolean {
-        val mineHit = gameBoard.openCell(move)
+        gameBoard.openCell(move)
 
-        if (mineHit) {
+        if (gameBoard.gameStatus == GameState.LOST) {
             outputView.displayGameOverMessage()
             return false
         }

@@ -5,7 +5,7 @@ import enum.GameState
 
 class GameBoard(private val mineManager: MineManager) {
     private lateinit var board: Board
-    private var gameStatus: GameState = GameState.IN_PROGRESS
+    var gameStatus: GameState = GameState.IN_PROGRESS
     val isGameOver: Boolean
         get() = gameStatus != GameState.IN_PROGRESS
 
@@ -28,29 +28,33 @@ class GameBoard(private val mineManager: MineManager) {
         board.processEachCell(onEachCell)
     }
 
-    fun openCell(position: Position): Boolean {
-        if (gameStatus != GameState.IN_PROGRESS) return false
-        return openCellCommonLogic(position, checkMine = true)
-    }
+    fun openCell(position: Position) {
+        if (gameStatus != GameState.IN_PROGRESS || !isCellValid(position)) return
 
-    fun openCellWithoutMineCheck(position: Position) {
-        openCellCommonLogic(position, checkMine = false)
-    }
-
-    private fun openCellCommonLogic(position: Position, checkMine: Boolean): Boolean {
-        val cell = board.findCell(position)
-            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다: $position")
-
-        if (checkMine && cell.isMine) {
+        if (isMineCell(position)) {
             gameStatus = GameState.LOST
-            return false
+            return
         }
 
-        cell.open()
+        openSafeCell(position)
+        checkWinCondition()
+    }
+
+    private fun isCellValid(position: Position): Boolean {
+        return board.findCell(position) != null
+    }
+
+    private fun isMineCell(position: Position): Boolean {
+        return board.findCell(position)?.isMine ?: false
+    }
+
+    private fun openSafeCell(position: Position) {
+        board.findCell(position)?.open()
+    }
+
+    private fun checkWinCondition() {
         if (board.isWinConditionMet()) {
             gameStatus = GameState.WON
         }
-
-        return true
     }
 }
