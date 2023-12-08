@@ -1,7 +1,6 @@
 package domain
 
 import enum.CellStatus
-import enum.GameState
 
 class Board(
     val height: Int,
@@ -36,15 +35,13 @@ class Board(
         }
     }
 
-    fun openCell(position: Position): GameState {
+    fun openCell(position: Position): Boolean {
         val cell = findCell(position)
         if (cell.isMine) {
-            cell.status = CellStatus.MINE
-            return GameState.LOST
+            return true
         }
-
         openCellRecursively(listOf(position))
-        return if (isWinConditionMet()) GameState.WON else GameState.IN_PROGRESS
+        return false
     }
 
     private tailrec fun openCellRecursively(positionsToOpen: List<Position>) {

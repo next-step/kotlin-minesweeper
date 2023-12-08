@@ -1,11 +1,11 @@
 package domain
 
 import enum.CellStatus
-import enum.GameState
 import inteface.RandomMinePlacementStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -41,7 +41,7 @@ class BoardTest {
         val firstMove = Position(0, 0)
         board.placeMines(mineCount, firstMove)
 
-        assertFalse(board.findCell(firstMove)?.isMine ?: true)
+        assertFalse(board.findCell(firstMove).isMine)
     }
 
     @Test
@@ -52,9 +52,9 @@ class BoardTest {
         board.placeMines(mineCount, firstMove)
         val minePosition = board.cells.first { it.isMine }.position
 
-        val gameState = board.openCell(minePosition)
+        val isMineOpened = board.openCell(minePosition)
 
-        assertEquals(GameState.LOST, gameState)
+        assertTrue(isMineOpened)
     }
 
     @Test
@@ -67,12 +67,13 @@ class BoardTest {
         val safePosition = Position(1, 1)
         board.openCell(safePosition)
 
-        assertEquals(CellStatus.OPEN, board.findCell(safePosition)?.status)
+        assertEquals(CellStatus.OPEN, board.findCell(safePosition).status)
 
         NeighborPositions(safePosition, board.height, board.width).positions.forEach { adjacentPosition ->
+            val cellStatus = board.findCell(adjacentPosition).status
             when {
-                board.findCell(adjacentPosition)?.isMine == false -> assertEquals(CellStatus.OPEN, board.findCell(adjacentPosition)?.status)
-                else -> assertNotEquals(CellStatus.OPEN, board.findCell(adjacentPosition)?.status)
+                !board.findCell(adjacentPosition).isMine -> assertEquals(CellStatus.OPEN, cellStatus, "Failed at position: $adjacentPosition")
+                else -> assertNotEquals(CellStatus.OPEN, cellStatus, "Failed at position: $adjacentPosition")
             }
         }
     }
@@ -87,6 +88,6 @@ class BoardTest {
 
         board.openCell(minePosition)
 
-        assertEquals(CellStatus.MINE, board.findCell(minePosition)?.status)
+        assertEquals(CellStatus.MINE, board.findCell(minePosition).status)
     }
 }

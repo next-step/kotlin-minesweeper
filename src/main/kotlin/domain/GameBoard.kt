@@ -31,21 +31,13 @@ class GameBoard(private val mineManager: MineManager) {
     fun openCell(position: Position) {
         if (gameStatus != GameState.IN_PROGRESS) return
 
-        val cell = board.findCell(position)
-        if (cell.isMine) {
+        val isMine = board.openCell(position)
+        if (isMine) {
             gameStatus = GameState.LOST
             return
         }
 
-        openSafeCell(position)
         checkWinCondition()
-    }
-
-    private fun openSafeCell(position: Position) {
-        val cell = board.findCell(position)
-        if (cell.shouldOpen) {
-            cell.open()
-        }
     }
 
     private fun checkWinCondition() {
