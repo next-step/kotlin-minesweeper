@@ -37,7 +37,7 @@ class Board(
     }
 
     fun openCell(position: Position): GameState {
-        val cell = findCell(position) ?: return GameState.IN_PROGRESS
+        val cell = findCell(position)
         if (cell.isMine) {
             cell.status = CellStatus.MINE
             return GameState.LOST
@@ -52,14 +52,14 @@ class Board(
 
         val nextPositionsToOpen = mutableListOf<Position>()
         for (position in positionsToOpen) {
-            val cell = findCell(position) ?: continue
+            val cell = findCell(position)
             if (!cell.shouldOpen) continue
 
             cell.status = CellStatus.OPEN
             if (cell.isAdjacentMinesZero) {
                 nextPositionsToOpen.addAll(
                     determineAdjacentPositions(position).filter { adjPos ->
-                        findCell(adjPos)?.shouldOpen == true
+                        findCell(adjPos).shouldOpen
                     }
                 )
             }
@@ -68,7 +68,7 @@ class Board(
     }
 
     private fun placeMineAt(position: Position) {
-        findCell(position)?.placeMine()
+        findCell(position).placeMine()
     }
 
     fun isWinConditionMet(): Boolean {

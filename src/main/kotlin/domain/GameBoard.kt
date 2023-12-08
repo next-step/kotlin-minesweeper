@@ -29,9 +29,10 @@ class GameBoard(private val mineManager: MineManager) {
     }
 
     fun openCell(position: Position) {
-        if (gameStatus != GameState.IN_PROGRESS || !isCellValid(position)) return
+        if (gameStatus != GameState.IN_PROGRESS) return
 
-        if (isMineCell(position)) {
+        val cell = board.findCell(position)
+        if (cell.isMine) {
             gameStatus = GameState.LOST
             return
         }
@@ -40,16 +41,11 @@ class GameBoard(private val mineManager: MineManager) {
         checkWinCondition()
     }
 
-    private fun isCellValid(position: Position): Boolean {
-        return board.findCell(position) != null
-    }
-
-    private fun isMineCell(position: Position): Boolean {
-        return board.findCell(position)?.isMine ?: false
-    }
-
     private fun openSafeCell(position: Position) {
-        board.findCell(position)?.open()
+        val cell = board.findCell(position)
+        if (cell.shouldOpen) {
+            cell.open()
+        }
     }
 
     private fun checkWinCondition() {
