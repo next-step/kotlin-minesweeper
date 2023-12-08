@@ -17,7 +17,7 @@ class GameBoard(private val mineManager: MineManager) {
     }
 
     fun placeMines(mineCount: Int, firstMove: Position) {
-        board.firstSafeCell(mineCount, firstMove)
+        board.placeMines(mineCount, firstMove)
     }
 
     fun countMinesAround(position: Position): Int {

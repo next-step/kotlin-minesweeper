@@ -1,6 +1,7 @@
 package domain
 
 import enum.CellStatus
+import enum.GameState
 
 class Board(
     val height: Int,
@@ -11,7 +12,7 @@ class Board(
         Cell(Position(index % width, index / width))
     }
 
-    fun firstSafeCell(mineCount: Int, firstMove: Position) {
+    fun placeMines(mineCount: Int, firstMove: Position) {
         val excludedPositions = NeighborPositions(firstMove, height, width).positions + firstMove
         val minePositions = mineManager.minePlacementStrategy.placeMines(height, width, mineCount, excludedPositions)
         minePositions.forEach { placeMineAt(it) }
@@ -35,32 +36,35 @@ class Board(
         }
     }
 
-    fun openCell(position: Position): Boolean {
-        val cell = findCell(position)
-            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다: $position")
-
+    fun openCell(position: Position): GameState {
+        val cell = findCell(position) ?: return GameState.IN_PROGRESS
         if (cell.isMine) {
-            return true
+            cell.status = CellStatus.MINE
+            return GameState.LOST
         }
-        openCellAndAdjacentIfRequired(cell)
-        return false
+
+        openCellRecursively(setOf(position))
+        return if (isWinConditionMet()) GameState.WON else GameState.IN_PROGRESS
     }
 
-    private fun openCellAndAdjacentIfRequired(cell: Cell) {
-        if (cell.shouldOpen) {
-            cell.open()
+    private tailrec fun openCellRecursively(positionsToOpen: Set<Position>) {
+        if (positionsToOpen.isEmpty()) return
+
+        val nextPositionsToOpen = mutableSetOf<Position>()
+        for (position in positionsToOpen) {
+            val cell = findCell(position) ?: continue
+            if (!cell.shouldOpen) continue
+
+            cell.status = CellStatus.OPEN
             if (cell.isAdjacentMinesZero) {
-                openAdjacentCells(cell)
+                nextPositionsToOpen.addAll(
+                    determineAdjacentPositions(position).filter { adjPos ->
+                        findCell(adjPos)?.shouldOpen == true
+                    }
+                )
             }
         }
-    }
-
-    private fun openAdjacentCells(cell: Cell) {
-        determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
-            findCell(adjacentPosition)?.let { adjacentCell ->
-                openCellAndAdjacentIfRequired(adjacentCell)
-            }
-        }
+        openCellRecursively(nextPositionsToOpen)
     }
 
     private fun placeMineAt(position: Position) {
