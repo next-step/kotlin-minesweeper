@@ -10,8 +10,8 @@ class EvenlyStrategy(
 ) : MineDeployStrategy {
 
     override fun deployPoints(boardLimit: BoardLimit): Map<Coordinate, Attribute> {
-        requireMineCountLimit(boardLimit.area(), countOfMines)
-        val coordinateAttributeMap = (0 until boardLimit.area())
+        requireMineCountLimit(boardLimit.area, countOfMines)
+        val coordinateAttributeMap = (0 until boardLimit.area)
             .asSequence()
             .shuffled()
             .take(countOfMines)
