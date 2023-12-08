@@ -2,30 +2,30 @@ package mineswipper.domain.map
 
 class Field(
     private val size: Size,
-    positions: List<Position>
+    minePositions: List<Position>
 ) {
     val field: Map<Int, Pedals>
 
     init {
         val initField: MutableMap<Int, Pedals> = mutableMapOf()
         repeat(size.height) { x ->
-            initField[x] = pedalSetting(x, positions)
+            initField[x] = pedalSetting(x, minePositions)
         }
         field = initField.toMap()
     }
 
-    private fun pedalSetting(x: Int, positions: List<Position>): Pedals {
+    private fun pedalSetting(x: Int, minePositions: List<Position>): Pedals {
         val pedalList = (0 until size.width).map { y ->
             val position = Position(x, y)
-            createPedal(positions, position)
+            createPedal(minePositions, position)
         }
         return Pedals(pedalList)
     }
 
     private fun createPedal(
-        positions: List<Position>,
+        minePositions: List<Position>,
         position: Position
-    ) = when (positions.contains(position)) {
+    ): Pedal = when (minePositions.contains(position)) {
         true -> Mine()
         false -> NormalPedal()
     }
