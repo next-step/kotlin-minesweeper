@@ -25,7 +25,7 @@ class Field(
     private fun createPedal(
         positions: List<Position>,
         position: Position
-    ): Pedal = when (positions.contains(position)) {
+    ) = when (positions.contains(position)) {
         true -> Mine()
         false -> NormalPedal()
     }
