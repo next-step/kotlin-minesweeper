@@ -7,9 +7,8 @@ data class BoardLimit(
     val verticalLimit: Vertical,
     val horizontalLimit: Horizontal,
 ) {
-    fun area(): Int {
-        return this.verticalLimit.value * this.horizontalLimit.value
-    }
+    val area: Int
+        get() = this.verticalLimit.value * this.horizontalLimit.value
 
     fun verticalRange(): IntRange {
         return this.verticalLimit.range()
