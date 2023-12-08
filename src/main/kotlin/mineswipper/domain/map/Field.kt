@@ -1,8 +1,7 @@
 package mineswipper.domain.map
 
 class Field(
-    private val size: Size,
-    minePositions: List<Position>
+    private val size: Size, minePositions: List<Position>
 ) {
     val field: Map<Int, Pedals>
 
@@ -23,10 +22,9 @@ class Field(
     }
 
     private fun createPedal(
-        minePositions: List<Position>,
-        position: Position
-    ): Pedal = when (minePositions.contains(position)) {
-        true -> Mine()
-        false -> NormalPedal()
+        minePositions: List<Position>, position: Position
+    ): Pedal {
+        if (minePositions.contains(position)) return Mine()
+        return NormalPedal()
     }
 }
