@@ -43,14 +43,14 @@ class Board(
             return GameState.LOST
         }
 
-        openCellRecursively(setOf(position))
+        openCellRecursively(listOf(position))
         return if (isWinConditionMet()) GameState.WON else GameState.IN_PROGRESS
     }
 
-    private tailrec fun openCellRecursively(positionsToOpen: Set<Position>) {
+    private tailrec fun openCellRecursively(positionsToOpen: List<Position>) {
         if (positionsToOpen.isEmpty()) return
 
-        val nextPositionsToOpen = mutableSetOf<Position>()
+        val nextPositionsToOpen = mutableListOf<Position>()
         for (position in positionsToOpen) {
             val cell = findCell(position) ?: continue
             if (!cell.shouldOpen) continue
