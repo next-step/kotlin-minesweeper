@@ -77,8 +77,9 @@ class Board(
         return nonMineCells == openCells
     }
 
-    fun findCell(position: Position): Cell? {
+    fun findCell(position: Position): Cell {
         return cells.firstOrNull { it.position == position }
+            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다.: $position")
     }
 
     private fun determineAdjacentPositions(center: Position): List<Position> {
