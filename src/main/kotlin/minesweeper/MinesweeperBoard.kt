@@ -1,10 +1,10 @@
-package minesweeper.mine
+package minesweeper
 
-import minesweeper.CellOpenStatus
 import minesweeper.board.GameBoardRenderStrategy
 import minesweeper.position.Position
 import minesweeper.board.RenderedGameBoard
 import minesweeper.board.BoardDimensions
+import minesweeper.mine.Mines
 
 class MinesweeperBoard(
     renderStrategy: GameBoardRenderStrategy,
@@ -28,7 +28,7 @@ class MinesweeperBoard(
             val now = positionQueue.removeFirst()
             playerBoard[now.y][now.x] = adminBoard[now.y][now.x]
             visitedBoard[now.y][now.x] = VISITED_CELL
-            val nearPositions = boardDimensions.getNearPositions(now)
+            val nearPositions = now.nearPositions(boardDimensions)
             nearPositions.forEach {
                 if (!isMinePosition(it)) {
                     if (adminBoard[it.y][it.x] == NUMBER_INIT_CELL && visitedBoard[it.y][it.x] != VISITED_CELL) {
@@ -48,7 +48,7 @@ class MinesweeperBoard(
         val board = gameBoard.board
         mines.mines.forEach { mine ->
             board[mine.y][mine.x] = GameBoardRenderStrategy.MINE
-            boardDimensions.getNearPositions(mine)
+            mine.nearPositions(boardDimensions)
                 .forEach { if (board[it.y][it.x] != GameBoardRenderStrategy.MINE) board[it.y][it.x]++ }
         }
         return gameBoard

@@ -4,7 +4,7 @@ import minesweeper.board.GameBoardRenderStrategy
 import minesweeper.board.Height
 import minesweeper.mine.MineCount
 import minesweeper.mine.MineGenerator
-import minesweeper.mine.MinesweeperBoard
+import minesweeper.MinesweeperBoard
 import minesweeper.position.Position
 import minesweeper.position.RandomPosition
 import minesweeper.board.RenderedGameBoard

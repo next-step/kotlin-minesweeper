@@ -19,13 +19,6 @@ data class BoardDimensions(
             }
         }
 
-    fun getNearPositions(position: Position): List<Position> =
-        NEAR_POSITIONS.map { it + position }
-            .filter { isNotOutOfRange(it) }
-
-    private fun isNotOutOfRange(pos: Position) =
-        height > pos.y && pos.y >= 0 && width > pos.x && pos.x >= 0
-
     private fun validateInputSize(input: String, splitted: List<String>) {
         require(splitted.size == INPUT_SIZE) {
             INPUT_ERROR_MESSAGE.format(input)
@@ -45,15 +38,5 @@ data class BoardDimensions(
         private const val DELIMITER = ", "
         private const val INPUT_ERROR_MESSAGE = "두 개의 정수를 입력하여 주세요. 입력한 내용:%s"
         private const val SIZE_OVER_MESSAGE = "게임판 사이즈: [높이 %d, 너비 %d], 입력한 사이즈: [높이 %d, 너비 %d]"
-        private val NEAR_POSITIONS = arrayOf(
-            Position(0 , -1),
-            Position(1 , -1),
-            Position(1 , 0),
-            Position(1 , 1),
-            Position(0 , 1),
-            Position(-1 , 1),
-            Position(-1 , 0),
-            Position(-1 , -1)
-        )
     }
 }
