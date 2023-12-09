@@ -8,6 +8,10 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
 
     init {
         mineBoard = createBoard(mapInfo)
+        settingBoard(mapInfo)
+    }
+
+    private fun settingBoard(mapInfo: MapInfo) {
         settingMines(mapInfo.mineCnt)
         settingOpen(mapInfo)
     }
