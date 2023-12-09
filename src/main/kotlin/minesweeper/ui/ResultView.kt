@@ -18,10 +18,10 @@ object ResultView {
     private fun printRow(rowNum: Size, width: Size, cellFinder: CellFinder) {
         width.getNumbers()
             .forEach {
-                val cell = cellFinder.find(Position(rowNum, it)) ?: throw RuntimeException("출력 도중 알 수 없는 에러가 발생했습니다.")
-                when (cell.isMine) {
+                val position = Position(rowNum, it)
+                when (cellFinder.isMine(position)) {
                     true -> print("$mine_symbol ")
-                    false -> print("${cellFinder.getAroundMinesCount(cell)} ")
+                    false -> print("${cellFinder.getAroundMinesCount(position)} ")
                 }
             }
         println()

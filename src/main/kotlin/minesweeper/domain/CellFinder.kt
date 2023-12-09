@@ -13,13 +13,17 @@ class CellFinder(private val map: MutableMap<Position, Cell>) {
         return map[position]
     }
 
-    fun getAroundMinesCount(cell: Cell): Int {
-        val position = cell.position
+    fun getAroundMinesCount(position: Position): Int {
         return position.getAround()
             .mapNotNull { find(it) }
             .count {
                 it.isMine
             }
+    }
+
+    fun isMine(position: Position): Boolean {
+        val cell = find(position) ?: throw IllegalArgumentException("주어진 위치를 찾을 수 없습니다.")
+        return cell.isMine
     }
 
     companion object {
