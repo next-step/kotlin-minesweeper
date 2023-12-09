@@ -4,6 +4,7 @@ import map.Board
 import map.Cell
 import map.Mine
 import map.None
+import map.Open
 
 object OutputView {
 
@@ -28,6 +29,7 @@ object OutputView {
         when (cell) {
             is None -> print(IMG_NONE)
             is Mine -> print(IMG_MINE)
+            is Open -> print(cell.mineCnt)
         }
     }
 }
