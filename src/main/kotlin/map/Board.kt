@@ -9,6 +9,7 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     init {
         mineBoard = createBoard(mapInfo)
         settingMines(mapInfo.mineCnt)
+        settingOpen(mapInfo)
     }
 
     private fun createBoard(mapInfo: MapInfo): MutableList<MutableList<Cell>> {
@@ -21,7 +22,7 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
         val maxValue = getBoardMaxValue()
         val positions = randomLogic.createRandomNumList(count, maxValue)
 
-        positions.forEach {position ->
+        positions.forEach { position ->
             val rowIndex = linearIndexToRowIndex(position)
             val columnIndex = linearIndexToColumIndex(position)
             setMine(rowIndex, columnIndex)
@@ -39,9 +40,8 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
         return height * width - INDEX_OFFSET
     }
 
-    // 지뢰 로직 버그
     private fun linearIndexToColumIndex(number: Int): Int {
-        if (number == 0) return 0
+        if (number == INDEX_ZERO) return INDEX_ZERO
         val height = mapInfo.height
 
         return number % height
@@ -50,12 +50,69 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     private fun linearIndexToRowIndex(number: Int): Int {
         val width = mapInfo.width
         return when (val columnIndex = number / width) {
-            0 -> 0
+            INDEX_ZERO -> INDEX_ZERO
             else -> columnIndex
         }
     }
 
+    private fun settingOpen(mapInfo: MapInfo) {
+        for (x in INDEX_ZERO until mapInfo.height) {
+            setOpenRow(mapInfo, x)
+        }
+    }
+
+    private fun setOpenRow(mapInfo: MapInfo, x: Int) {
+        for (y in INDEX_ZERO until mapInfo.width) {
+            setOpen(x, y)
+        }
+    }
+
+    private fun setOpen(x: Int, y: Int) {
+        val cell = mineBoard[x][y]
+        if (cell is None) {
+            val mineCnt = getMineCnt(cell)
+            mineBoard[x][y] = Open(mineCnt)
+        }
+    }
+
+    private fun getMineCnt(cell: None): Int {
+        val addIndexList = PERIPHERAL_INDEX_LIST
+        val cellX = cell.x
+        val cellY = cell.y
+        var mineCnt = 0
+
+        for (addIndex in addIndexList) {
+            val newX = cellX + addIndex.first
+            val newY = cellY + addIndex.second
+
+            mineCnt = increaseMineCnt(mineCnt, newX, newY)
+        }
+
+        return mineCnt
+    }
+
+    private fun increaseMineCnt(mineCnt: Int, newX: Int, newY: Int): Int {
+        if (!checkIndex(newX, newY)) return mineCnt
+
+        return if (mineBoard[newX][newY] is Mine) mineCnt + 1 else mineCnt
+    }
+
+    private fun checkIndex(newX: Int, newY: Int): Boolean {
+        return newX >= INDEX_ZERO && newX < mapInfo.width && newY >= INDEX_ZERO && newY < mapInfo.height
+    }
+
     companion object {
         private const val INDEX_OFFSET = 1
+        private const val INDEX_ZERO = 0
+        private val PERIPHERAL_INDEX_LIST = listOf(
+            Pair(-1, -1),
+            Pair(-1, 0),
+            Pair(-1, 1),
+            Pair(0, -1),
+            Pair(0, 1),
+            Pair(1, -1),
+            Pair(1, 0),
+            Pair(1, 1),
+        )
     }
 }
