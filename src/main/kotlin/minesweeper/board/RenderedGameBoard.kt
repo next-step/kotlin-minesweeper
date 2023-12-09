@@ -9,4 +9,8 @@ value class RenderedGameBoard(
         board.joinToString(rowDelimiter) { it.joinToString(colDelimiter) }
 
     operator fun get(row: Int) = board[row]
+
+    companion object {
+        const val INIT_CELL = 'C'
+    }
 }
