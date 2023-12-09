@@ -47,4 +47,21 @@ class CellFinderTest : BehaviorSpec({
             }
         }
     }
+
+    Given("찾고 싶은 위치가 주어질 때") {
+        val cellFinder = CellFinder.init(Size(10), Size(10))
+        val minePositions = listOf(Position(1, 2), Position(1, 3))
+        cellFinder.convert(minePositions)
+        When("find 함수를 호출하면") {
+            Then("해당 위치의 Cell을 반환한다.") {
+                forAll(
+                    row(Position(1, 2)),
+                    row(Position(1, 3)),
+                    row(Position(2, 2)),
+                ) { position ->
+                    cellFinder.find(position)?.position shouldBe position
+                }
+            }
+        }
+    }
 })
