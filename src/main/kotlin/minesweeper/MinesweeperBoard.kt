@@ -10,29 +10,38 @@ class MinesweeperBoard(
 ) {
     private val positionsQueue: ArrayDeque<Position> = ArrayDeque()
 
-    fun openCell(position: Position): CellOpenStatus {
+    fun openCell(position: Position): PlayStatus {
         if (admin.isMinePosition(position)) {
-            return CellOpenStatus.FAIL
+            return PlayStatus.LOSE
+        } else if (player.isVisited(position)) {
+            return PlayStatus.OPEN
         }
 
         positionsQueue.add(position)
+        player.findCell()
+        player.visit(position)
 
-        while(!positionsQueue.isEmpty()) {
+        while (!positionsQueue.isEmpty()) {
             val now = positionsQueue.removeFirst()
             player.setCell(now, admin.getCell(now))
-            player.visit(now)
-            addAndSetPositions(now.nearPositions(boardDimensions))
+            if (admin.hasNotMineAround(now)) {
+                addAndSetPositions(now.nearPositions(boardDimensions))
+            }
         }
-        return CellOpenStatus.SUCCESS
+
+        return if (player.isFindAllCell()) PlayStatus.WIN
+        else PlayStatus.OPEN
     }
 
     private fun addAndSetPositions(positions: List<Position>) {
         positions.forEach {
-            if(!admin.isMinePosition(it)) {
+            if (!player.isVisited(it)) {
+                player.visit(it)
+                player.findCell()
                 player.setCell(it, admin.getCell(it))
-            }
-            if (admin.isCleanCell(it) && !player.isVisited(it)) {
-                positionsQueue.add(it)
+                if (admin.hasNotMineAround(it)) {
+                    positionsQueue.add(it)
+                }
             }
         }
     }

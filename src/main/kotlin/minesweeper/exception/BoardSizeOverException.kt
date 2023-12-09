@@ -1,3 +1,3 @@
 package minesweeper.exception
 
-class BoardSizeOverException(message: String): Exception(message)
+class BoardSizeOverException(message: String) : Exception(message)

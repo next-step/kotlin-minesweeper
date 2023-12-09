@@ -2,6 +2,7 @@ package minesweeper
 
 import minesweeper.board.BoardDimensions
 import minesweeper.board.GameBoardRenderStrategy
+import minesweeper.board.Number
 import minesweeper.board.RenderedGameBoard
 import minesweeper.mine.Mines
 import minesweeper.position.Position
@@ -13,7 +14,7 @@ class AdminBoard(
         renderStrategy: GameBoardRenderStrategy,
         boardDimensions: BoardDimensions,
         mines: Mines
-    ): this(
+    ) : this(
         renderStrategy(boardDimensions, NUMBER_INIT_CELL)
             .apply { mines.mineMarking(this, boardDimensions) }
     )
@@ -21,7 +22,7 @@ class AdminBoard(
     fun isMinePosition(position: Position): Boolean =
         this.board[position.y][position.x] == GameBoardRenderStrategy.MINE
 
-    fun isCleanCell(position: Position): Boolean =
+    fun hasNotMineAround(position: Position): Boolean =
         this.board[position.y][position.x] == NUMBER_INIT_CELL
 
     fun getCell(position: Position) = board[position.y][position.x]
@@ -33,14 +34,17 @@ class AdminBoard(
 
 class PlayerBoard(
     private val board: RenderedGameBoard,
-    private val visitedBoard: RenderedGameBoard
+    private val visitedBoard: RenderedGameBoard,
+    private var cellCount: Number
 ) {
     constructor(
         renderStrategy: GameBoardRenderStrategy,
-        boardDimensions: BoardDimensions
-    ): this(
+        boardDimensions: BoardDimensions,
+        cellCount: Int
+    ) : this(
         renderStrategy(boardDimensions, RenderedGameBoard.INIT_CELL),
-        renderStrategy(boardDimensions, RenderedGameBoard.INIT_CELL)
+        renderStrategy(boardDimensions, RenderedGameBoard.INIT_CELL),
+        Number(cellCount)
     )
 
     fun boardRender() = board.joinToString()
@@ -56,7 +60,14 @@ class PlayerBoard(
         board[position.y][position.x] = cell
     }
 
+    fun findCell() {
+        this.cellCount = this.cellCount.decrease()
+    }
+
+    fun isFindAllCell() = this.cellCount == ZERO
+
     companion object {
         private const val VISITED_CELL = 'T'
+        private val ZERO = Number(0)
     }
 }

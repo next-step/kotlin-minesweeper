@@ -1,16 +1,14 @@
 import minesweeper.AdminBoard
-import minesweeper.board.BoardDimensions
-import minesweeper.CellOpenStatus
-import minesweeper.board.GameBoardRenderStrategy
-import minesweeper.board.Height
-import minesweeper.mine.MineCount
-import minesweeper.mine.MineGenerator
 import minesweeper.MinesweeperBoard
+import minesweeper.PlayStatus
 import minesweeper.PlayerBoard
+import minesweeper.board.BoardDimensions
+import minesweeper.board.GameBoardRenderStrategy
+import minesweeper.board.Number
 import minesweeper.board.RenderedGameBoard
+import minesweeper.mine.MineGenerator
 import minesweeper.position.Position
 import minesweeper.position.RandomPosition
-import minesweeper.board.Width
 import view.Input
 import view.Output
 
@@ -20,41 +18,42 @@ fun main() {
     }
 
     Output.printHeightMessage()
-    val height: Height = Height(Input.getLine())
+    val number: Number = Number(Input.getLine())
 
     Output.printWidthMessage()
-    val width: Width = Width(Input.getLine())
+    val width: Number = Number(Input.getLine())
 
     Output.printMinesMessage()
-    val mineCount: MineCount = MineCount(Input.getLine())
+    val mineCount: Number = Number(Input.getLine())
 
-    val dimensions = BoardDimensions(height, width)
+    val dimensions = BoardDimensions(number, width)
 
     val mines = MineGenerator(mineCount, RandomPosition(dimensions)).generate()
     val admin = AdminBoard(defaultGameBoardRender, dimensions, mines)
-    val player = PlayerBoard(defaultGameBoardRender, dimensions)
+    val player = PlayerBoard(defaultGameBoardRender, dimensions, (number * width) - mineCount)
 
     val minesweeperBoard = MinesweeperBoard(admin, player, dimensions)
 
     Output.printStartMessage()
-    do {
-        Output.printCellMessage()
-        val result = dimensions.stringToPosition(Input.getLine())
-        play(minesweeperBoard, result)
-    } while (result.isSuccess)
+    minesweeperGameStart(dimensions, minesweeperBoard)
 }
 
-private fun play(board: MinesweeperBoard, result: Result<Position>) {
-    result.onSuccess {
-        printOpenCellResult(board, board.openCell(it))
-    }.onFailure {
-        Output.printAny(it.message)
+tailrec fun minesweeperGameStart(dimensions: BoardDimensions, minesweeperBoard: MinesweeperBoard) {
+    val position = convertToPosition(dimensions)
+    when (play(minesweeperBoard, position)) {
+        PlayStatus.OPEN -> {
+            Output.printAny(minesweeperBoard.playerBoardRender())
+            minesweeperGameStart(dimensions, minesweeperBoard)
+        }
+        PlayStatus.LOSE -> Output.printLoseGame()
+        PlayStatus.WIN -> Output.printWinGame()
     }
 }
 
-private fun printOpenCellResult(board: MinesweeperBoard, openCell: CellOpenStatus) {
-    when (openCell) {
-        CellOpenStatus.SUCCESS -> Output.printAny(board.playerBoardRender())
-        CellOpenStatus.FAIL -> Output.printLoseGame()
-    }
+private tailrec fun convertToPosition(dimensions: BoardDimensions): Position {
+    Output.printCellMessage()
+    return dimensions.stringToPosition(Input.getLine()) ?: convertToPosition(dimensions)
 }
+
+private fun play(board: MinesweeperBoard, position: Position): PlayStatus =
+    board.openCell(position)

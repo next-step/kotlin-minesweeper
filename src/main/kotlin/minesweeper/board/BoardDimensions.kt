@@ -4,11 +4,11 @@ import minesweeper.exception.BoardSizeOverException
 import minesweeper.position.Position
 
 data class BoardDimensions(
-    val height: Height,
-    val width: Width
+    val height: Number,
+    val width: Number
 ) {
 
-    fun stringToPosition(input: String): Result<Position> =
+    fun stringToPosition(input: String): Position? =
         runCatching {
             input.split(DELIMITER).let {
                 validateInputSize(input, it)
@@ -17,7 +17,7 @@ data class BoardDimensions(
                 validateSize(row, col)
                 Position(row - 1, col - 1)
             }
-        }
+        }.getOrNull()
 
     private fun validateInputSize(input: String, splitted: List<String>) {
         require(splitted.size == INPUT_SIZE) {
@@ -26,7 +26,7 @@ data class BoardDimensions(
     }
 
     private fun validateSize(row: Int, col: Int) {
-        if(this.height < row || this.width < col || row <= 0 || col <= 0) {
+        if (this.height < row || this.width < col || row <= 0 || col <= 0) {
             throw BoardSizeOverException(SIZE_OVER_MESSAGE.format(height.value, width.value, row, col))
         }
     }

@@ -8,6 +8,7 @@ object Output {
     private const val OUTPUT_START_MINESWEEPER = "지뢰찾기 게임 시작"
     private const val OPEN = "open: "
     private const val LOSE_GAME = "Lose Game."
+    private const val WIN_GAME = "Win Game."
 
     fun printHeightMessage() {
         println(INPUT_HEIGHT)
@@ -35,5 +36,9 @@ object Output {
 
     fun printLoseGame() {
         println(LOSE_GAME)
+    }
+
+    fun printWinGame() {
+        println(WIN_GAME)
     }
 }
