@@ -7,7 +7,6 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     val board: MutableList<MutableList<Cell>>
 
     init {
-        validateMapInfo(mapInfo)
         board = createBoard(mapInfo)
         settingMines(mapInfo.mineCnt)
     }
@@ -60,16 +59,7 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
         }
     }
 
-    private fun validateMapInfo(mapInfo: MapInfo) {
-        val height = mapInfo.height
-        val width = mapInfo.width
-        val mineCnt = mapInfo.mineCnt
-        require(height * width >= mineCnt) { ERR_MSG_MINE_OVERFLOW }
-    }
-
     companion object {
-        private const val ERR_MSG_MINE_OVERFLOW = "보드의 크기보다 지뢰가 더 많습니다."
         private const val INDEX_OFFSET = 1
-        private const val INDEX_ZERO = 0
     }
 }
