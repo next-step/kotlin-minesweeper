@@ -4,10 +4,10 @@ import ramdom.RandomInterface
 
 class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterface) {
 
-    val board: MutableList<MutableList<Cell>>
+    val mineBoard: MutableList<MutableList<Cell>>
 
     init {
-        board = createBoard(mapInfo)
+        mineBoard = createBoard(mapInfo)
         settingMines(mapInfo.mineCnt)
     }
 
@@ -33,7 +33,7 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     }
 
     private fun setMine(rowIndex: Int, columnIndex: Int) {
-        board[rowIndex][columnIndex] = Mine
+        mineBoard[rowIndex][columnIndex] = Mine
     }
 
     private fun getBoardMaxValue(): Int {

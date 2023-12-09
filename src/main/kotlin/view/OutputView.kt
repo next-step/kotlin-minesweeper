@@ -11,7 +11,7 @@ object OutputView {
     private const val IMG_NONE = "C"
 
     fun drawBoard(board: Board) {
-        board.board.forEach {
+        board.mineBoard.forEach {
             drawLine(it)
             println("")
         }
