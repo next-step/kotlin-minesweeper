@@ -14,22 +14,18 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     private fun createBoard(mapInfo: MapInfo): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
-        return MutableList(height) { MutableList(width) { None } }
+        return MutableList(height) { x -> MutableList(width) { y -> None(x, y) } }
     }
 
     private fun settingMines(count: Int) {
         val maxValue = getBoardMaxValue()
-
         val positions = randomLogic.createRandomNumList(count, maxValue)
 
-        positions.forEach { settingMine(it) }
-    }
-
-    private fun settingMine(position: Int) {
-        val rowIndex = getSelectRowIndex(position)
-        val columnIndex = getSelectColumIndex(position)
-
-        setMine(rowIndex, columnIndex)
+        positions.forEach {position ->
+            val rowIndex = linearIndexToRowIndex(position)
+            val columnIndex = linearIndexToColumIndex(position)
+            setMine(rowIndex, columnIndex)
+        }
     }
 
     private fun setMine(rowIndex: Int, columnIndex: Int) {
@@ -44,14 +40,14 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     }
 
     // 지뢰 로직 버그
-    private fun getSelectColumIndex(number: Int): Int {
+    private fun linearIndexToColumIndex(number: Int): Int {
         if (number == 0) return 0
         val height = mapInfo.height
 
         return number % height
     }
 
-    private fun getSelectRowIndex(number: Int): Int {
+    private fun linearIndexToRowIndex(number: Int): Int {
         val width = mapInfo.width
         return when (val columnIndex = number / width) {
             0 -> 0
