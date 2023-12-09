@@ -1,10 +1,11 @@
-package minesweeper
+package minesweeper.board
 
 @JvmInline
-value class MineCount(
-    private val value: Int
+value class Width(
+    val value: Int
 ) {
     constructor(input: String) : this(input.toInt())
 
+    operator fun minus(other: Int) = value - other
     operator fun compareTo(other: Int) = this.value - other
 }

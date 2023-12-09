@@ -1,6 +1,7 @@
-package minesweeper
+package minesweeper.board
 
-import exception.BoardSizeOverException
+import minesweeper.exception.BoardSizeOverException
+import minesweeper.position.Position
 
 data class BoardDimensions(
     val height: Height,

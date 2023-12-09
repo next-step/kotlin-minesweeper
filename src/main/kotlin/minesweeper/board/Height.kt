@@ -1,7 +1,7 @@
-package minesweeper
+package minesweeper.board
 
 @JvmInline
-value class Width(
+value class Height(
     val value: Int
 ) {
     constructor(input: String) : this(input.toInt())

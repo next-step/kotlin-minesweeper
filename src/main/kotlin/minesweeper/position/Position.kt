@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.position
 
 data class Position(
     val y: Int,

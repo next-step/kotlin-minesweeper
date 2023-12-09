@@ -1,4 +1,4 @@
-package minesweeper
+package minesweeper.board
 
 @JvmInline
 value class RenderedGameBoard(

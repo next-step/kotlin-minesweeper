@@ -1,4 +1,7 @@
-package minesweeper
+package minesweeper.mine
+
+import minesweeper.position.Position
+import minesweeper.position.PositionGenerateStrategy
 
 class MineGenerator(
     private val mineCount: MineCount,

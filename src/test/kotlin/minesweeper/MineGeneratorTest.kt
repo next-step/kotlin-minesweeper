@@ -2,6 +2,11 @@ package minesweeper
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.mine.MineCount
+import minesweeper.mine.MineGenerator
+import minesweeper.mine.Mines
+import minesweeper.position.Position
+import minesweeper.position.PositionGenerateStrategy
 
 class MineGeneratorTest : BehaviorSpec({
 

@@ -1,4 +1,10 @@
-package minesweeper
+package minesweeper.mine
+
+import minesweeper.CellOpenStatus
+import minesweeper.board.GameBoardRenderStrategy
+import minesweeper.position.Position
+import minesweeper.board.RenderedGameBoard
+import minesweeper.board.BoardDimensions
 
 class MinesweeperBoard(
     renderStrategy: GameBoardRenderStrategy,

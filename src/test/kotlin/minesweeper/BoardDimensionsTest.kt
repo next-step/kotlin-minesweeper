@@ -1,11 +1,12 @@
 package minesweeper
 
-import exception.BoardSizeOverException
+import minesweeper.exception.BoardSizeOverException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.lang.IndexOutOfBoundsException
+import minesweeper.board.BoardDimensions
+import minesweeper.board.Height
+import minesweeper.board.Width
 
 class BoardDimensionsTest : BehaviorSpec({
 

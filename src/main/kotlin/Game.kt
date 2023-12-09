@@ -1,14 +1,14 @@
-import minesweeper.BoardDimensions
+import minesweeper.board.BoardDimensions
 import minesweeper.CellOpenStatus
-import minesweeper.GameBoardRenderStrategy
-import minesweeper.Height
-import minesweeper.MineCount
-import minesweeper.MineGenerator
-import minesweeper.MinesweeperBoard
-import minesweeper.Position
-import minesweeper.RandomPosition
-import minesweeper.RenderedGameBoard
-import minesweeper.Width
+import minesweeper.board.GameBoardRenderStrategy
+import minesweeper.board.Height
+import minesweeper.mine.MineCount
+import minesweeper.mine.MineGenerator
+import minesweeper.mine.MinesweeperBoard
+import minesweeper.position.Position
+import minesweeper.position.RandomPosition
+import minesweeper.board.RenderedGameBoard
+import minesweeper.board.Width
 import view.Input
 import view.Output
 

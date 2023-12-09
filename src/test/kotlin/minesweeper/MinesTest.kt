@@ -1,7 +1,10 @@
 package minesweeper
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.shouldBe
+import minesweeper.board.BoardDimensions
+import minesweeper.board.Height
+import minesweeper.board.Width
+import minesweeper.position.Position
 
 class MinesTest: BehaviorSpec({
 

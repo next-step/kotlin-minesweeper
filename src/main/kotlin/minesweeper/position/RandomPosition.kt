@@ -1,4 +1,6 @@
-package minesweeper
+package minesweeper.position
+
+import minesweeper.board.BoardDimensions
 
 class RandomPosition(
     dimensions: BoardDimensions
