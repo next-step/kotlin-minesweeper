@@ -1,14 +1,14 @@
 package view
 
-import minesweeper.MinesweeperBoard
-
 object Output {
 
     private const val INPUT_HEIGHT = "높이를 입력하세요."
     private const val INPUT_WIDTH = "너비를 입력하세요."
     private const val INPUT_MINES = "지뢰는 몇 개인가요?"
     private const val OUTPUT_START_MINESWEEPER = "지뢰찾기 게임 시작"
-    private const val MINE: String = "*"
+    private const val OPEN = "open: "
+    private const val LOSE_GAME = "Lose Game."
+    private const val WIN_GAME = "Win Game."
 
     fun printHeightMessage() {
         println(INPUT_HEIGHT)
@@ -26,10 +26,19 @@ object Output {
         println(OUTPUT_START_MINESWEEPER)
     }
 
-    fun printBoard(board: Array<Array<String>>) {
-        val result = board.joinToString("\n") {
-            it.joinToString(" ")
-        }
-        println(result)
+    fun printCellMessage() {
+        print(OPEN)
+    }
+
+    fun printAny(any: Any?) {
+        println(any)
+    }
+
+    fun printLoseGame() {
+        println(LOSE_GAME)
+    }
+
+    fun printWinGame() {
+        println(WIN_GAME)
     }
 }
