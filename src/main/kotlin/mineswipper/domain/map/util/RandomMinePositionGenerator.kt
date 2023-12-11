@@ -1,10 +1,11 @@
 package mineswipper.domain.map.util
 
 import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Positions
 import mineswipper.domain.map.position.Size
 
 class RandomMinePositionGenerator : MinePositionStrategy {
-    override fun createMinePosition(size: Size, mineAmount: Int): List<Position> {
+    override fun createMinePosition(size: Size, mineAmount: Int): Positions {
         val positions = mutableSetOf<Position>()
 
         while (positions.size < mineAmount) {
@@ -13,6 +14,6 @@ class RandomMinePositionGenerator : MinePositionStrategy {
             positions.add(Position(x, y))
         }
 
-        return positions.toList()
+        return Positions(positions.toList())
     }
 }

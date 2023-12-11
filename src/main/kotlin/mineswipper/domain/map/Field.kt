@@ -1,12 +1,13 @@
 package mineswipper.domain.map
 
 import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Positions
 import mineswipper.domain.map.position.Row
 import mineswipper.domain.map.position.Size
 
 class Field(
     private val size: Size,
-    minePositions: List<Position>
+    minePositions: Positions
 ) {
     val field: Map<Row, Pedals>
 
@@ -18,7 +19,7 @@ class Field(
         field = initField.toMap()
     }
 
-    private fun pedalSetting(x: Int, minePositions: List<Position>): Pedals {
+    private fun pedalSetting(x: Int, minePositions: Positions): Pedals {
         val pedalList = (0 until size.width).map { y ->
             val position = Position(x, y)
             createPedal(minePositions, position)
@@ -27,7 +28,7 @@ class Field(
     }
 
     private fun createPedal(
-        minePositions: List<Position>, position: Position
+        minePositions: Positions, position: Position
     ): Pedal {
         if (minePositions.contains(position)) return Mine()
         return NormalPedal()
