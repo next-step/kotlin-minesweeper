@@ -8,6 +8,7 @@ data class GameMap(
         require(_gameMap.first().isNotEmpty()) { "invalid game map width" }
         require(_gameMap.flatten().any { cell -> cell.isMine }) { "game map should have at least 1 mine cell" }
     }
+    fun cellAt(r: Int, c: Int) = _gameMap[r][c]
 
     fun mineCount() = _gameMap.flatten().count { cell -> cell.isMine }
 

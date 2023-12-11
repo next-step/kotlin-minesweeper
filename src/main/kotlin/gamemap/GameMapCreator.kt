@@ -1,11 +1,17 @@
 package gamemap
 
-class GameMapCreator {
-    fun create(width: Int, height: Int, mineCount: Int): GameMap {
+class GameMapCreator(
+    private val width: Int,
+    private val height: Int,
+    private val mineCount: Int,
+) {
+    init {
         require(width > 0) { "invalid game map width" }
         require(height > 0) { "invalid game map height" }
         require(mineCount > 0) { "game map should have at least 1 mine cell" }
         require(width * height > mineCount) { "mine count cannot be larger than game map size" }
+    }
+    fun create(): GameMap {
 
         val initialCellParameters = MutableList(height) {
             MutableList(width) {
@@ -24,21 +30,24 @@ class GameMapCreator {
 
         val initialGameMapScaffold = List(height) { row ->
             List(width) { col ->
-                Cell(
-                    isMine = initialCellParameters[row][col].first,
-                    adjacentMineCount = initialCellParameters
-                        .filterIndexed { rowIdx, _ -> rowIdx in Integer.max(row - 1, 0)..Integer.min(
+                val isMine = initialCellParameters[row][col].first
+                val adjacentMineCount = initialCellParameters
+                    .filterIndexed { rowIdx, _ ->
+                        rowIdx in Integer.max(row - 1, 0)..Integer.min(
                             row + 1,
                             height - 1
                         )
-                        }
-                        .map { it.slice(Integer.max(col - 1, 0)..Integer.min(col + 1, width - 1)) }
-                        .flatten()
-                        .count { it.first }
+                    }
+                    .map { it.slice(Integer.max(col - 1, 0)..Integer.min(col + 1, width - 1)) }
+                    .flatten()
+                    .count { it.first }
+                    .minus(if (isMine) 1 else 0)
+                Cell(
+                    isMine = isMine,
+                    adjacentMineCount = adjacentMineCount
                 )
             }
         }
-
 
         return GameMap(initialGameMapScaffold)
     }

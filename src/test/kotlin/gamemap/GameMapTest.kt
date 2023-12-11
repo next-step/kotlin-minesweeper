@@ -31,5 +31,4 @@ class GameMapTest : BehaviorSpec({
             }
         }
     }
-
 })
