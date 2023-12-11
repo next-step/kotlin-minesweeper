@@ -1,14 +1,15 @@
 package mineswipper.domain.map
 
 class Field(
-    private val size: Size, minePositions: List<Position>
+    private val size: Size,
+    minePositions: List<Position>
 ) {
-    val field: Map<Int, Pedals>
+    val field: Map<Row, Pedals>
 
     init {
-        val initField: MutableMap<Int, Pedals> = mutableMapOf()
+        val initField: MutableMap<Row, Pedals> = mutableMapOf()
         repeat(size.height) { x ->
-            initField[x] = pedalSetting(x, minePositions)
+            initField[Row(x)] = pedalSetting(x, minePositions)
         }
         field = initField.toMap()
     }
