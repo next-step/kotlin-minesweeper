@@ -1,6 +1,6 @@
 package mineswipper.domain.map
 
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import mineswipper.domain.map.position.Position
 import mineswipper.domain.map.position.Positions
 import mineswipper.domain.map.position.Size
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class FieldTest {
 
     @Test
-    fun `일반 발판은 주변에 지뢰 갯수를 표시한다`() {
+    fun `필드에는 지뢰 발판이 있다`() {
         val size = Size(2, 2)
         val mine = 2
         val field = Field(
@@ -18,9 +18,7 @@ class FieldTest {
             MineMarkTestStrategy().createMinePosition(size, mine)
         )
 
-        val pedal = field.findPedal(Position(0, 0))
-
-        pedal.mark?.value shouldBe "2"
+        field.findPedal(Position(1, 0)).shouldBeInstanceOf<Mine>()
     }
 }
 

@@ -6,7 +6,7 @@ import mineswipper.domain.map.position.Row
 import mineswipper.domain.map.position.Size
 
 class Field(
-    private val size: Size,
+    val size: Size,
     minePositions: Positions
 ) {
     val field: Map<Row, Pedals>
@@ -17,8 +17,6 @@ class Field(
             initField[Row(x)] = pedalSetting(x, minePositions)
         }
         field = initField.toMap()
-
-        markGeneration()
     }
 
     private fun pedalSetting(x: Int, minePositions: Positions): Pedals {
@@ -30,27 +28,11 @@ class Field(
     }
 
     private fun createPedal(
-        minePositions: Positions, position: Position
+        minePositions: Positions,
+        position: Position
     ): Pedal {
         if (minePositions.contains(position)) return Mine()
         return NormalPedal()
-    }
-
-    private fun markGeneration(position: Position = Position(0, 0)) {
-        val pedal = findPedal(position)
-        if (pedal.mark != null) return
-
-        val aroundPositions = position.getAroundPositions(size)
-        val count = aroundPositions.positions.count {
-            val findPedal = findPedal(it)
-            findPedal is Mine
-        }
-
-        pedal.mark = Mark(count.toString())
-
-        aroundPositions.positions.forEach {
-            markGeneration(it)
-        }
     }
 
     fun findPedal(position: Position): Pedal {

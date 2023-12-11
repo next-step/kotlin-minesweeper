@@ -2,6 +2,7 @@ package mineswipper
 
 import mineswipper.domain.map.Field
 import mineswipper.domain.map.position.Size
+import mineswipper.domain.map.util.MarkGenerator
 import mineswipper.domain.map.util.PositionFactory
 import mineswipper.domain.map.util.RandomMinePositionGenerator
 import mineswipper.ui.InputManager
@@ -21,6 +22,8 @@ class MineGame(
             size,
             positionFactory.generateMinePositions(size, mine)
         )
+
+        MarkGenerator.markGeneration(field)
 
         outputManager.printStartGame()
         outputManager.printField(field)
