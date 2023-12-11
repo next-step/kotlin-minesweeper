@@ -53,7 +53,7 @@ class Field(
         }
     }
 
-    private fun findPedal(position: Position): Pedal {
+    fun findPedal(position: Position): Pedal {
         val pedals = field[position.toRow()]
         require(pedals != null) { }
 
