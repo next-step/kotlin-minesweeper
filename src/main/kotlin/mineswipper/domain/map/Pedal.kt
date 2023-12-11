@@ -1,3 +1,5 @@
 package mineswipper.domain.map
 
-sealed interface Pedal
+sealed interface Pedal {
+    var mark: Mark?
+}

@@ -1,9 +1,6 @@
 package mineswipper.domain.map
 
-class Mine : Pedal {
-    val mark: Mark
-
-    init {
-        mark = Mark("*")
-    }
+class Mine(
+    override var mark: Mark? = Mark("*")
+) : Pedal {
 }

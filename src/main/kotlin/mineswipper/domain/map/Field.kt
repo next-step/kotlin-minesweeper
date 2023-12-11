@@ -17,6 +17,8 @@ class Field(
             initField[Row(x)] = pedalSetting(x, minePositions)
         }
         field = initField.toMap()
+
+        markGeneration()
     }
 
     private fun pedalSetting(x: Int, minePositions: Positions): Pedals {
@@ -32,5 +34,30 @@ class Field(
     ): Pedal {
         if (minePositions.contains(position)) return Mine()
         return NormalPedal()
+    }
+
+    private fun markGeneration(position: Position = Position(0, 0)) {
+        val pedal = findPedal(position)
+        if (pedal.mark != null) return
+
+        val aroundPositions = position.getAroundPositions(size)
+        val count = aroundPositions.positions.count {
+            val findPedal = findPedal(it)
+            findPedal is Mine
+        }
+
+        pedal.mark = Mark(count.toString())
+
+        aroundPositions.positions.forEach {
+            markGeneration(it)
+        }
+    }
+
+    private fun findPedal(position: Position): Pedal {
+        val pedals = field[position.toRow()]
+        require(pedals != null) { }
+
+        val pedal = pedals.get(position.x)
+        return pedal
     }
 }

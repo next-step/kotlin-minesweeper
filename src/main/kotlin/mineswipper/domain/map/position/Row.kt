@@ -1,3 +1,4 @@
 package mineswipper.domain.map.position
 
-data class Row(val value: Int)
+@JvmInline
+value class Row(val value: Int)
