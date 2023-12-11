@@ -37,9 +37,13 @@ class Field(
 
     fun findPedal(position: Position): Pedal {
         val pedals = field[position.toRow()]
-        require(pedals != null) { }
+        require(pedals != null) { VALID_MESSAGE }
 
         val pedal = pedals.get(position.x)
         return pedal
+    }
+
+    companion object {
+        private const val VALID_MESSAGE: String = "오류가 발생했습니다."
     }
 }
