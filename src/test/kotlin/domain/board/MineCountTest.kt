@@ -1,9 +1,9 @@
-package domain
+package domain.board
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.MineCount
+import minesweeper.domain.board.MineCount
 
 class MineCountTest : StringSpec({
     "0보다 큰 정수로 지뢰 수 생성" {

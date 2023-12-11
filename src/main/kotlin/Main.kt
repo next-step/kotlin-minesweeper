@@ -1,5 +1,5 @@
-import minesweeper.Minesweeper
+import minesweeper.MinesweeperController
 
 fun main() {
-    Minesweeper.start()
+    MinesweeperController.start()
 }

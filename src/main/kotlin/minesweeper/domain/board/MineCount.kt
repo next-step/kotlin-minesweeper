@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.board
 
 data class MineCount(
     val value: Int
