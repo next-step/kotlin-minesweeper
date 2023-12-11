@@ -2,47 +2,51 @@ package minesweeper
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.MineSweeper
-import minesweeper.domain.MineSweeperSize
+import minesweeper.domain.MineSweeperState
+import minesweeper.domain.Position
+import minesweeper.domain.cell.MineCell
 import minesweeper.domain.cell.SafeCell
 
 class MineSweeperTest : FunSpec({
-    context("abcd") {
-        test("case1") {
-            val mineSweeper = MineSweeper(
-                MineSweeperSize(width = 2, height = 2),
-                listOf(0, 1, 2)
+    test("MineCell을 열면 게임 패배") {
+        val mineSweeper = MineSweeper(
+            mapOf(
+                Position(0, 0) to MineCell(),
+                Position(1, 0) to SafeCell(1),
             )
+        )
 
-            val actual = mineSweeper.mineMap.getOrDefault(1, emptyList())[1]
+        mineSweeper.tryOpenCell(Position(0, 0)) shouldBe MineSweeperState.LOSE
+    }
 
-            actual.shouldBeTypeOf<SafeCell>()
-            actual.countOfAdjacentMine shouldBe 3
-        }
-
-        test("case2") {
-            val mineSweeper = MineSweeper(
-                MineSweeperSize(width = 3, height = 3),
-                listOf(0, 1, 2, 3, 5, 6, 7, 8)
+    test("모든 SafeCell을 열면 승리") {
+        val mineSweeper = MineSweeper(
+            mapOf(
+                Position(0, 0) to MineCell(),
+                Position(1, 0) to SafeCell(1),
             )
+        )
 
-            val actual = mineSweeper.mineMap.getOrDefault(1, emptyList())[1]
+        mineSweeper.tryOpenCell(Position(1, 0)) shouldBe MineSweeperState.WIN
+        mineSweeper.getRow(0)[1].isOpened shouldBe true
+    }
 
-            actual.shouldBeTypeOf<SafeCell>()
-            actual.countOfAdjacentMine shouldBe 8
-        }
-
-        test("case3") {
-            val mineSweeper = MineSweeper(
-                MineSweeperSize(width = 3, height = 3),
-                listOf(0, 1, 2, 4, 6, 7, 8)
+    test("주변에 지뢰가 없는 Cell을 열면 모든 인접한 SafeCell이 열림") {
+        val mineSweeper = MineSweeper(
+            mapOf(
+                Position(0, 0) to MineCell(),
+                Position(1, 0) to SafeCell(1),
+                Position(2, 0) to SafeCell(0),
+                Position(0, 1) to SafeCell(1),
+                Position(1, 1) to SafeCell(1),
+                Position(2, 1) to SafeCell(0),
+                Position(0, 2) to SafeCell(1),
+                Position(1, 2) to SafeCell(0),
+                Position(2, 2) to SafeCell(0),
             )
+        )
 
-            val actual = mineSweeper.mineMap.getOrDefault(1, emptyList())[0]
-
-            actual.shouldBeTypeOf<SafeCell>()
-            actual.countOfAdjacentMine shouldBe 5
-        }
+        mineSweeper.tryOpenCell(Position(2, 2)) shouldBe MineSweeperState.WIN
     }
 })

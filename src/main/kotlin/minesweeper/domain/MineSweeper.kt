@@ -5,27 +5,64 @@ import minesweeper.domain.cell.MineCell
 import minesweeper.domain.cell.SafeCell
 
 class MineSweeper(
-    val mineSweeperSize: MineSweeperSize,
-    val minePosition: List<Int>
+    private val mineSweeperMap: Map<Position, Cell>
 ) {
-    val mineMap: Map<Int, List<Cell>> = (0 until mineSweeperSize.height).associateWith { y ->
-        (0 until mineSweeperSize.width).map { x ->
-            if (minePosition.contains(y * mineSweeperSize.height + x)) {
-                MineCell()
-            } else {
-                SafeCell(countAdjacentMine(x, y))
+    private val width: Int
+        get() = mineSweeperMap.keys.count { (x, _) ->
+            x == 0
+        }
+
+    val height: Int
+        get() = mineSweeperMap.keys.count { (_, y) ->
+            y == 0
+        }
+
+    fun getRow(index: Int): List<Cell> {
+        require(index < height) { "Wrong index!" }
+        return mineSweeperMap.filter { (key, _) -> key.y == index }
+            .toSortedMap { prev, next -> prev.x.compareTo(next.x) }.values.toList()
+    }
+
+    fun tryOpenCell(position: Position): MineSweeperState {
+        val targetCell = getCell(position)
+
+        if (targetCell is MineCell) {
+            return MineSweeperState.LOSE
+        }
+
+        openCell(position)
+
+        if (countOfMine() == countOfClosed()) {
+            return MineSweeperState.WIN
+        }
+
+        return MineSweeperState.CONTINUE
+    }
+
+    private fun countOfMine() = mineSweeperMap.values.count { it is MineCell }
+
+    private fun countOfClosed() = mineSweeperMap.values.count { !it.isOpened }
+
+    private fun openCell(position: Position) {
+        val targetCell = getCell(position)
+        targetCell.open()
+
+        if (targetCell is SafeCell && targetCell.countOfAdjacentMine == 0) {
+            Direction.eightWays.map { (dx, dy) ->
+                Position(position.x + dx, position.y + dy)
+            }.forEach { it ->
+                if (isValidPosition(it) && !getCell(it).isOpened) {
+                    openCell(it)
+                }
             }
         }
     }
 
-    private fun countAdjacentMine(x: Int, y: Int): Int {
-        return Direction.eightWays.count { (dx, dy) ->
-            val newX = x + dx
-            val newY = y + dy
-
-            (0 until mineSweeperSize.width).contains(newX) &&
-                (0 until mineSweeperSize.height).contains(newY) &&
-                minePosition.contains(newX + newY * mineSweeperSize.height)
-        }
+    private fun isValidPosition(position: Position): Boolean {
+        return (0 until width).contains(position.x) &&
+            (0 until height).contains(position.y)
     }
+
+    private fun getCell(position: Position): Cell =
+        mineSweeperMap[position] ?: throw IllegalArgumentException("Wrong position!")
 }

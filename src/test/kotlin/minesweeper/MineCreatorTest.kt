@@ -33,7 +33,8 @@ class MineCreatorTest : FunSpec({
             )
 
             mineList.forAll {
-                it shouldBeInRange (0 until mineSweeperSize.getArea())
+                it.x shouldBeInRange (0 until mineSweeperSize.width)
+                it.y shouldBeInRange (0 until mineSweeperSize.height)
             }
             mineList.shouldBeUnique()
             mineList.count() shouldBe countOfMine
