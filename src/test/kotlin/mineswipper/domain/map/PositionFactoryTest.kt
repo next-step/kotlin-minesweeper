@@ -2,6 +2,8 @@ package mineswipper.domain.map
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Size
 import mineswipper.domain.map.util.MinePositionStrategy
 import mineswipper.domain.map.util.PositionFactory
 import org.junit.jupiter.api.Test

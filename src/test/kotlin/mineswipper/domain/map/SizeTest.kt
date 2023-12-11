@@ -1,6 +1,7 @@
 package mineswipper.domain.map
 
 import io.kotest.matchers.shouldBe
+import mineswipper.domain.map.position.Size
 import org.junit.jupiter.api.Test
 
 class SizeTest {

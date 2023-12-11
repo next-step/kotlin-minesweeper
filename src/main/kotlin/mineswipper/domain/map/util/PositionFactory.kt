@@ -1,7 +1,7 @@
 package mineswipper.domain.map.util
 
-import mineswipper.domain.map.Position
-import mineswipper.domain.map.Size
+import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Size
 
 class PositionFactory(
     private val minePositionStrategy: MinePositionStrategy

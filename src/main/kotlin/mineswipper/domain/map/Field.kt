@@ -1,5 +1,9 @@
 package mineswipper.domain.map
 
+import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Row
+import mineswipper.domain.map.position.Size
+
 class Field(
     private val size: Size,
     minePositions: List<Position>
