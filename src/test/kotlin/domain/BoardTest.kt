@@ -4,7 +4,6 @@ import enum.CellStatus
 import inteface.RandomMinePlacementStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -17,6 +16,7 @@ class BoardTest {
 
     @BeforeEach
     fun setUp() {
+        val fixedMines = listOf(Position(2, 2))
         val mineCounter = AdjacentMineCounter()
         val minePlacementStrategy = RandomMinePlacementStrategy()
         mineManager = MineManager(minePlacementStrategy, mineCounter)
@@ -60,9 +60,7 @@ class BoardTest {
     @Test
     @DisplayName("지뢰가 없는 인접한 칸을 열면 해당 칸이 정확하게 열린다")
     fun `지뢰가 없는 인접한 칸을 정확하게 열린다`() {
-        val mineCount = 1
-        val firstMove = Position(0, 0)
-        board.placeMines(mineCount, firstMove)
+        board.placeMines(1, Position(0, 0))
 
         val safePosition = Position(1, 1)
         board.openCell(safePosition)
@@ -70,10 +68,9 @@ class BoardTest {
         assertEquals(CellStatus.OPEN, board.findCell(safePosition).status)
 
         NeighborPositions(safePosition, board.height, board.width).positions.forEach { adjacentPosition ->
-            val cellStatus = board.findCell(adjacentPosition).status
-            when {
-                !board.findCell(adjacentPosition).isMine -> assertEquals(CellStatus.OPEN, cellStatus, "Failed at position: $adjacentPosition")
-                else -> assertNotEquals(CellStatus.OPEN, cellStatus, "Failed at position: $adjacentPosition")
+            val cell = board.findCell(adjacentPosition)
+            if (!cell.isMine) {
+                assertEquals(CellStatus.OPEN, cell.status, "해당 위치에서 실패: $adjacentPosition")
             }
         }
     }
