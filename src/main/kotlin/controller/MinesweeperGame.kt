@@ -28,9 +28,7 @@ class MinesweeperGame(
 
         while (!gameBoard.isGameOver) {
             val nextMove = inputView.readCellCoordinates()
-            if (!handleMove(nextMove, gameBoard)) {
-                break
-            }
+            handleMove(nextMove, gameBoard)
         }
     }
 
