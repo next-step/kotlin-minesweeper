@@ -34,7 +34,7 @@ class GameMapCreator(
     private fun randomPosition(width: Int, height: Int): MinePosition =
         MinePosition(row = (0 until height).random(), col = (0 until width).random())
 
-    data class MinePosition(
+    private data class MinePosition(
         val row: Int,
         val col: Int,
     ) {
