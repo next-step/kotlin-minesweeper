@@ -80,14 +80,14 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     }
 
     private fun getMineCnt(cell: None): Int {
-        val addIndexList = PERIPHERAL_INDEX_LIST
+
         val cellX = cell.x
         val cellY = cell.y
         var mineCnt = 0
 
-        for (addIndex in addIndexList) {
-            val newX = cellX + addIndex.first
-            val newY = cellY + addIndex.second
+        for (addIndex in RelativeDirection.values()) {
+            val newX = cellX + addIndex.x
+            val newY = cellY + addIndex.y
 
             mineCnt = increaseMineCnt(mineCnt, newX, newY)
         }
@@ -97,7 +97,6 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
 
     private fun increaseMineCnt(mineCnt: Int, newX: Int, newY: Int): Int {
         if (!checkIndex(newX, newY)) return mineCnt
-
         return if (mineBoard[newX][newY] is Mine) mineCnt + 1 else mineCnt
     }
 
@@ -108,15 +107,5 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     companion object {
         private const val INDEX_OFFSET = 1
         private const val INDEX_ZERO = 0
-        private val PERIPHERAL_INDEX_LIST = listOf(
-            Pair(-1, -1),
-            Pair(-1, 0),
-            Pair(-1, 1),
-            Pair(0, -1),
-            Pair(0, 1),
-            Pair(1, -1),
-            Pair(1, 0),
-            Pair(1, 1),
-        )
     }
 }
