@@ -36,7 +36,7 @@ class CellTest : BehaviorSpec({
             then("should be able to open") {
                 val cell = Cell()
                 cell.open()
-                cell.state shouldBe CellState.Open
+                cell.isOpen() shouldBe true
             }
         }
 

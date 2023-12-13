@@ -3,14 +3,17 @@ package gamemap
 data class Cell(
     val isMine: Boolean = false,
     val adjacentMineCount: Int = 0,
-    var state: CellState = CellState.Close
+    private var state: CellState = CellState.Close
 ) {
     init {
         require(adjacentMineCount in 0..8) { "adjacent mine count should be in 0..8 $adjacentMineCount of $this" }
     }
 
     fun open() {
-        check(state != CellState.Open) { "cannot open a open cell $this" }
-        state = CellState.Open
+        state = state.open()
     }
+
+    fun isOpen() = state == CellState.Open
+
+    fun isClose() = state == CellState.Close
 }

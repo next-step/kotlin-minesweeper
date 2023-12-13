@@ -1,7 +1,6 @@
 package view
 
 import gamemap.Cell
-import gamemap.CellState
 import gamemap.GameMap
 
 class ResultView {
@@ -24,7 +23,7 @@ class ResultView {
         println()
     }
 
-    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else if (state == CellState.Close) CLOSE_DISPLAY_CHARACTER else adjacentMineCount
+    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else if (isClose()) CLOSE_DISPLAY_CHARACTER else adjacentMineCount
 
     companion object {
         private const val MINE_INDICATOR = "*"
