@@ -1,5 +1,6 @@
 package view
 
+import gamemap.Cell
 import gamemap.GameMap
 
 class ResultView {
@@ -16,13 +17,16 @@ class ResultView {
     private fun printGameMapRow(gameMap: GameMap, r: Int) {
         repeat(gameMap.width) { c ->
             val cell = gameMap.cellAt(r, c)
-            val displayValue = if (cell.isMine) MINE_INDICATOR else cell.displayValue
+            val displayValue = cell.displayValue()
             print("$displayValue ")
         }
         println()
     }
 
+    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else adjacentMineCount
+
     companion object {
         private const val MINE_INDICATOR = "*"
+        const val CLOSE_DISPLAY_CHARACTER = "C"
     }
 }

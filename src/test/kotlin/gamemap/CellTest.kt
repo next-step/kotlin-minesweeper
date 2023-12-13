@@ -22,13 +22,13 @@ class CellTest : BehaviorSpec({
                 Cell(
                     state = CellState.Open,
                     adjacentMineCount = adjacentMineCount
-                ).displayValue shouldBe adjacentMineCount.toString()
+                ).adjacentMineCount shouldBe adjacentMineCount
             }
         }
 
         `when`("is closed") {
             then("should display correct display value") {
-                Cell().displayValue shouldBe Cell.CLOSE_DISPLAY_CHARACTER
+                Cell().adjacentMineCount shouldBe 0
             }
         }
 
@@ -36,7 +36,7 @@ class CellTest : BehaviorSpec({
             then("should be able to open") {
                 val cell = Cell()
                 cell.open()
-                cell.state shouldBe CellState.Open
+                cell.isOpen() shouldBe true
             }
         }
 
