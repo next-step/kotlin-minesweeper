@@ -22,13 +22,13 @@ class CellTest : BehaviorSpec({
                 Cell(
                     state = CellState.Open,
                     adjacentMineCount = adjacentMineCount
-                ).displayValue shouldBe adjacentMineCount.toString()
+                ).adjacentMineCount shouldBe adjacentMineCount
             }
         }
 
         `when`("is closed") {
             then("should display correct display value") {
-                Cell().displayValue shouldBe "0"
+                Cell().adjacentMineCount shouldBe 0
             }
         }
 
