@@ -9,14 +9,10 @@ data class Cell(
         require(adjacentMineCount in 0..8) { "adjacent mine count should be in 0..8 $adjacentMineCount of $this" }
     }
 
-    val displayValue = if (state == CellState.Close) CLOSE_DISPLAY_CHARACTER else adjacentMineCount.toString()
+    val displayValue = adjacentMineCount.toString()
 
     fun open() {
         check(state != CellState.Open) { "cannot open a open cell $this" }
         state = CellState.Open
-    }
-
-    companion object {
-        const val CLOSE_DISPLAY_CHARACTER = "C"
     }
 }

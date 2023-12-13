@@ -28,7 +28,7 @@ class CellTest : BehaviorSpec({
 
         `when`("is closed") {
             then("should display correct display value") {
-                Cell().displayValue shouldBe Cell.CLOSE_DISPLAY_CHARACTER
+                Cell().displayValue shouldBe "0"
             }
         }
 
