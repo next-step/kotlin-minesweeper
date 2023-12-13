@@ -48,13 +48,13 @@ class GameMapCreatorTest : BehaviorSpec({
 
         `when`("valid mine count provided") {
             then("should create game map with exact mine count") {
-                GameMapCreator(width = 2, height = 2, mineCount = 2).create().mineCount() shouldBe 2
+                GameMapCreator(width = 2, height = 2, mineCount = 2).create().mineCount shouldBe 2
             }
         }
 
         `when`("valid large mine count provided") {
             then("should create game map with exact mine count") {
-                GameMapCreator(width = 5, height = 6, mineCount = 23).create().mineCount() shouldBe 23
+                GameMapCreator(width = 5, height = 6, mineCount = 23).create().mineCount shouldBe 23
             }
         }
     }

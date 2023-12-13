@@ -10,7 +10,7 @@ data class GameMap(
     }
     fun cellAt(r: Int, c: Int) = gameMap[r][c]
 
-    fun mineCount() = gameMap.flatten().count { cell -> cell.isMine }
+    val mineCount = gameMap.flatten().count { cell -> cell.isMine }
 
     val width = gameMap.first().size
 
