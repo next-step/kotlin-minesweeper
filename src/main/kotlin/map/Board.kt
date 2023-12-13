@@ -7,16 +7,16 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     val mineBoard: MutableList<MutableList<Cell>>
 
     init {
-        mineBoard = createBoard(mapInfo)
-        settingBoard(mapInfo)
+        mineBoard = createBoard()
+        settingBoard()
     }
 
-    private fun settingBoard(mapInfo: MapInfo) {
+    private fun settingBoard() {
         settingMines(mapInfo.mineCnt)
-        settingOpen(mapInfo)
+        settingMineCntInfo(mapInfo)
     }
 
-    private fun createBoard(mapInfo: MapInfo): MutableList<MutableList<Cell>> {
+    private fun createBoard(): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
         return MutableList(height) { x -> MutableList(width) { y -> None(x, y) } }
@@ -59,23 +59,23 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
         }
     }
 
-    private fun settingOpen(mapInfo: MapInfo) {
+    private fun settingMineCntInfo(mapInfo: MapInfo) {
         for (x in INDEX_ZERO until mapInfo.height) {
-            setOpenRow(mapInfo, x)
+            setMineCntInfoRow(mapInfo, x)
         }
     }
 
-    private fun setOpenRow(mapInfo: MapInfo, x: Int) {
+    private fun setMineCntInfoRow(mapInfo: MapInfo, x: Int) {
         for (y in INDEX_ZERO until mapInfo.width) {
-            setOpen(x, y)
+            setMineCntInfo(x, y)
         }
     }
 
-    private fun setOpen(x: Int, y: Int) {
+    private fun setMineCntInfo(x: Int, y: Int) {
         val cell = mineBoard[x][y]
         if (cell is None) {
             val mineCnt = getMineCnt(cell)
-            mineBoard[x][y] = Open(mineCnt)
+            cell.mineCnt = mineCnt
         }
     }
 

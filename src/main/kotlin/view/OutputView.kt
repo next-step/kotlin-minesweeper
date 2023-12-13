@@ -4,7 +4,6 @@ import map.Board
 import map.Cell
 import map.Mine
 import map.None
-import map.Open
 
 object OutputView {
 
@@ -27,9 +26,8 @@ object OutputView {
 
     private fun drawCell(cell: Cell) {
         when (cell) {
-            is None -> print(IMG_NONE)
+            is None -> print(cell.mineCnt)
             is Mine -> print(IMG_MINE)
-            is Open -> print(cell.mineCnt)
         }
     }
 }

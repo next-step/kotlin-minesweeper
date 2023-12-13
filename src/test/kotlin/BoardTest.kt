@@ -1,7 +1,7 @@
 import map.Board
 import map.MapInfo
 import map.Mine
-import map.Open
+import map.None
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -28,7 +28,7 @@ class BoardTest {
         val board = Board(mapInfo, FakeMineRandomLogic())
 
         // then : 지뢰가 아닌 셀은 주변 지뢰의 개수 정보를 가지고 있다.
-        val actual = (board.mineBoard[1][0] as Open).mineCnt
+        val actual = (board.mineBoard[1][0] as None).mineCnt
         assertThat(actual).isEqualTo(2)
     }
 }
