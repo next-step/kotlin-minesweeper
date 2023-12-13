@@ -1,6 +1,6 @@
 package gamemap
 
-data class Cell(
+data class Cell internal constructor(
     val isMine: Boolean = false,
     val adjacentMineCount: Int = 0,
     private var state: CellState = CellState.Close
