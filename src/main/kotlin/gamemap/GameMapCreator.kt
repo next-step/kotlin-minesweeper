@@ -13,38 +13,17 @@ class GameMapCreator(
     }
     fun create(): GameMap {
 
-        val initialCellParameters = MutableList(height) {
-            MutableList(width) {
-                Pair(false, 0)
-            }
-        }
+        val minePositions = mutableSetOf<MinePosition>()
 
-        while (initialCellParameters.flatten().count { it.first } != mineCount) {
-            val randomPosition = randomPosition(width, height)
-            val row = randomPosition.second
-            val col = randomPosition.first
-            val cell = initialCellParameters[row][col]
-
-            initialCellParameters[row][col] = cell.copy(first = true)
+        while (minePositions.size != mineCount) {
+            minePositions.add(randomPosition(width, height))
         }
 
         val initialGameMapScaffold = List(height) { row ->
             List(width) { col ->
-                val isMine = initialCellParameters[row][col].first
-                val adjacentMineCount = initialCellParameters
-                    .filterIndexed { rowIdx, _ ->
-                        rowIdx in Integer.max(row - 1, 0)..Integer.min(
-                            row + 1,
-                            height - 1
-                        )
-                    }
-                    .map { it.slice(Integer.max(col - 1, 0)..Integer.min(col + 1, width - 1)) }
-                    .flatten()
-                    .count { it.first }
-                    .minus(if (isMine) 1 else 0)
                 Cell(
-                    isMine = isMine,
-                    adjacentMineCount = adjacentMineCount
+                    isMine = MinePosition(row = row, col = col) in minePositions,
+                    adjacentMineCount = minePositions.count { it.isAdjacentTo(cellRowIdx = row, cellColIdx = col) }
                 )
             }
         }
@@ -52,6 +31,17 @@ class GameMapCreator(
         return GameMap(initialGameMapScaffold)
     }
 
-    private fun randomPosition(width: Int, height: Int): Pair<Int, Int> =
-        Pair((0 until width).random(), (0 until height).random())
+    private fun randomPosition(width: Int, height: Int): MinePosition =
+        MinePosition(row = (0 until height).random(), col = (0 until width).random())
+
+    data class MinePosition(
+        val row: Int,
+        val col: Int,
+    ) {
+        fun isAdjacentTo(cellRowIdx: Int, cellColIdx: Int): Boolean {
+            return row in cellRowIdx - 1..cellRowIdx + 1 && col in cellColIdx - 1..cellColIdx + 1 && !isAtPosition(cellRowIdx, cellColIdx)
+        }
+
+        private fun isAtPosition(cellRowIdx: Int, cellColIdx: Int) = row == cellRowIdx && col == cellColIdx
+    }
 }
