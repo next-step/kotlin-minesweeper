@@ -23,7 +23,7 @@ class ResultView {
         println()
     }
 
-    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else if (isClose()) CLOSE_DISPLAY_CHARACTER else adjacentMineCount
+    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else adjacentMineCount
 
     companion object {
         private const val MINE_INDICATOR = "*"
