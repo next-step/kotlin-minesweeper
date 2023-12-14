@@ -43,6 +43,6 @@ class Field(
     }
 
     companion object {
-        private const val VALID_MESSAGE: String = "오류가 발생했습니다."
+        private const val VALID_MESSAGE: String = "해당 위치에 값이 존재하지 않습니다."
     }
 }
