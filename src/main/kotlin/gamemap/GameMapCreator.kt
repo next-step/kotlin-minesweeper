@@ -47,13 +47,13 @@ class GameMapCreator(
     }
 
     private class MinePositions(
-        private val _mineSet: MutableSet<MinePosition>
+        private val mineSet: MutableSet<MinePosition>
     ) {
-        fun countAdjacentTo(cellRowIdx: Int, cellColIdx: Int) = _mineSet.count {
+        fun countAdjacentTo(cellRowIdx: Int, cellColIdx: Int) = mineSet.count {
             it.isAdjacentTo(cellRowIdx = cellRowIdx, cellColIdx = cellColIdx)
         }
 
-        operator fun contains(minePosition: MinePosition): Boolean = _mineSet.contains(minePosition)
+        operator fun contains(minePosition: MinePosition): Boolean = mineSet.contains(minePosition)
 
         companion object {
             fun ofSize(size: Int, creator: () -> MinePosition): MinePositions {
