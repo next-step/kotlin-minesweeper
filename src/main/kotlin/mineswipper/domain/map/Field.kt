@@ -31,8 +31,7 @@ class Field(
         minePositions: Positions,
         position: Position
     ): Pedal {
-        if (minePositions.contains(position)) return Mine()
-        return NormalPedal()
+        return if (minePositions.contains(position)) Mine() else NormalPedal()
     }
 
     fun findPedal(position: Position): Pedal {
