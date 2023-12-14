@@ -1,5 +1,7 @@
 package game.minesweeper.ui
 
+import game.minesweeper.domain.GameBoard
+
 object Input {
     private const val HEIGHT_PROMPT = "높이를 입력하세요."
     private const val WIDTH_PROMPT = "너비를 입력하세요."
@@ -41,4 +43,14 @@ object Input {
     }
 }
 
-object Output
+object Output {
+    private const val GAME_START_PROMPT = "지뢰찾기 게임 시작"
+
+    fun printStartGamePrompt() {
+        println(GAME_START_PROMPT)
+    }
+
+    fun printGameResult(gameBoard: GameBoard) {
+        println(gameBoard)
+    }
+}
