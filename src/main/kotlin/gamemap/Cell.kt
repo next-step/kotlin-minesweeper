@@ -13,7 +13,7 @@ data class Cell internal constructor(
         state = state.open()
     }
 
-    fun isOpen() = state == CellState.Open
+    fun isOpen() = state.isOpen()
 
-    fun isClose() = state == CellState.Close
+    fun isClose() = state.isClose()
 }
