@@ -2,6 +2,9 @@ package minesweeper.model.board
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.app.GameStatus
+import minesweeper.model.board.minedeploy.impl.SpecifiedCoordinatesStrategy
+import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class BoardTest : StringSpec({
 
@@ -36,7 +39,17 @@ class BoardTest : StringSpec({
     }
 
     "지뢰가 매설된 지역을 tryOpen 하면 LOSE 를 반환해야 한다" {
-        // tryOpen
-        TODO()
+        val limit = (4 to 4).toBoardLimit()
+        val board = Board(
+            mines = SpecifiedCoordinatesStrategy(
+                1 to 1,
+            ).deployPoints(limit).toMines(limit),
+            limit = limit
+        )
+        val actualStatus1 = board.tryOpen((0 to 1).toCoordinate())
+        val actualStatus2 = board.tryOpen((1 to 1).toCoordinate())
+
+        actualStatus1 shouldBe GameStatus.RUNNING
+        actualStatus2 shouldBe GameStatus.LOSE
     }
 })
