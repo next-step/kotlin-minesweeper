@@ -1,5 +1,7 @@
 import minesweeper.MinesweeperController
+import minesweeper.view.InputView
 
 fun main() {
-    MinesweeperController.start()
+    val inputProvider = InputView()
+    MinesweeperController(inputProvider).start()
 }
