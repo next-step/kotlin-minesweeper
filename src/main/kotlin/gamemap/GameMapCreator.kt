@@ -49,12 +49,6 @@ class GameMapCreator(
     private class MinePositions(
         private val _mineSet: MutableSet<MinePosition>
     ) {
-        val size get() = _mineSet.size
-
-        fun add(minePosition: MinePosition) {
-            _mineSet.add(minePosition)
-        }
-
         fun countAdjacentTo(cellRowIdx: Int, cellColIdx: Int) = _mineSet.count {
             it.isAdjacentTo(cellRowIdx = cellRowIdx, cellColIdx = cellColIdx)
         }
