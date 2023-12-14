@@ -33,7 +33,7 @@ class CoordinateTest : StringSpec({
     }
 
     "범위 내 위치로 + 방향의 이동이 가능 해야 한다" {
-        val coordinate = (3 to 3).toCoordinate()
+        val coordinate = (1 to 1).toCoordinate()
 
         coordinate.movePossible(
             delta = Delta(2, 2),
