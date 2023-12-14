@@ -7,10 +7,11 @@ value class Pedals(
     fun get(index: Int): Pedal {
         val result = value.getOrNull(index)
         require(result != null) { ERROR_MESSAGE }
-        return value[index]
+        return result
     }
 
     companion object {
-        private const val ERROR_MESSAGE: String = "값이 존재하지 않습니다."
+        private const val ERROR_MESSAGE: String = "해당 인덱스에 값이 존재하지 않습니다."
     }
 }
+
