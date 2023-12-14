@@ -18,6 +18,6 @@ value class Horizontal(
     }
 
     fun range(): IntRange {
-        return 0..value
+        return 0 until value
     }
 }

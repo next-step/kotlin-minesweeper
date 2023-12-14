@@ -18,6 +18,6 @@ value class Vertical(
     }
 
     fun range(): IntRange {
-        return 0..this.value
+        return 0 until this.value
     }
 }
