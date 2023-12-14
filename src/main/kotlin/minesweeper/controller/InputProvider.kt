@@ -6,4 +6,6 @@ interface InputProvider {
     fun width(): Int
 
     fun mineCount(): Int
+
+    fun openPosition(): InputPosition
 }

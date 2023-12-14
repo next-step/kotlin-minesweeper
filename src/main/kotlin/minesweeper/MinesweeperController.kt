@@ -13,7 +13,6 @@ import minesweeper.view.OutputView
 class MinesweeperController(
     private val inputProvider: InputProvider,
 ) {
-
     fun start() {
         val height = inputProvider.height().let(::Height)
         val width = inputProvider.width().let(::Width)
