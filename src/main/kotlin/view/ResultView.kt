@@ -23,7 +23,14 @@ class ResultView {
         println()
     }
 
-    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else adjacentMineCount
+    fun printGameOver(isWin: Boolean) {
+        if (isWin)
+            println("Game win")
+        else
+            println("Game lose")
+    }
+
+    private fun Cell.displayValue() = if (isClose()) CLOSE_DISPLAY_CHARACTER else if (isMine) MINE_INDICATOR else adjacentMineCount
 
     companion object {
         private const val MINE_INDICATOR = "*"

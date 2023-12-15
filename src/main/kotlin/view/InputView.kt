@@ -12,4 +12,10 @@ class InputView {
     fun getMineCount(): Int {
         return println("지뢰 갯수를 입력하세요.").run { readln().trim().toInt() }
     }
+
+    fun getCommand(): Pair<Int, Int> {
+        print("open: ")
+        val input = readln().trim().split(",")
+        return Pair(input[0].toInt() - 1, input[1].toInt() - 1)
+    }
 }
