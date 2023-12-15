@@ -1,23 +1,21 @@
 package gamemap
 
 class GameMapCreator(
-    private val width: Int,
-    private val height: Int,
+    private val mapSizeParams: MapSizeParams,
     private val mineCount: Int,
 ) {
     init {
-        require(width > 0) { "invalid game map width" }
-        require(height > 0) { "invalid game map height" }
         require(mineCount > 0) { "game map should have at least 1 mine cell" }
-        require(width * height > mineCount) { "mine count cannot be larger than game map size" }
+        require(mapSizeParams.size > mineCount) { "mine count cannot be greater than or equal to game map size" }
     }
 
     fun create(): GameMap {
+        val minePositions = MinePositions.ofSize(mineCount) {
+            MinePosition.ofRandom(mapSizeParams.width, mapSizeParams.height)
+        }
 
-        val minePositions = MinePositions.ofSize(mineCount) { MinePosition.ofRandom(width, height) }
-
-        val initialGameMapScaffold = List(height) { row ->
-            List(width) { col ->
+        val initialGameMapScaffold = List(mapSizeParams.height) { row ->
+            List(mapSizeParams.width) { col ->
                 Cell(
                     isMine = MinePosition(row = row, col = col) in minePositions,
                     adjacentMineCount = minePositions.countAdjacentTo(cellRowIdx = row, cellColIdx = col)
@@ -26,6 +24,18 @@ class GameMapCreator(
         }
 
         return GameMap(initialGameMapScaffold)
+    }
+
+    data class MapSizeParams(
+        val width: Int,
+        val height: Int,
+    ) {
+        init {
+            require(width > 0) { "invalid game map width" }
+            require(height > 0) { "invalid game map height" }
+        }
+
+        val size = width * height
     }
 
     private data class MinePosition(

@@ -41,8 +41,7 @@ class MineSweeper(
         val mineCount = inputView.getMineCount()
 
         return GameMapCreator(
-            width = width,
-            height = height,
+            mapSizeParams = GameMapCreator.MapSizeParams(width = width, height = height),
             mineCount = mineCount,
         )
     }
