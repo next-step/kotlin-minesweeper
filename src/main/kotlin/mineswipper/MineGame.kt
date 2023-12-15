@@ -1,8 +1,7 @@
 package mineswipper
 
-import mineswipper.domain.map.Field
 import mineswipper.domain.map.position.Size
-import mineswipper.domain.map.util.MarkGenerator
+import mineswipper.domain.map.util.FieldFactory
 import mineswipper.domain.map.util.PositionFactory
 import mineswipper.domain.map.util.RandomMinePositionGenerator
 import mineswipper.ui.InputManager
@@ -18,10 +17,7 @@ class MineGame(
         val width = inputManager.inputWidth()
         val size = Size(width, height)
         val mine = inputManager.inputMine()
-        val field = Field(
-            size,
-            positionFactory.generateMinePositions(size, mine)
-        )
+        val field = FieldFactory(size).createField(positionFactory.generateMinePositions(size, mine))
 
         outputManager.printStartGame()
         outputManager.printField(field)

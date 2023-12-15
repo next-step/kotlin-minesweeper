@@ -10,7 +10,7 @@ object MarkGenerator {
         val pedal = field.findPedal(position)
         if (pedal.mark != null) return pedal.mark!!
 
-        val aroundPositions = position.getAroundPositions(field.size)
+        val aroundPositions = position.getAroundPositions(field.getSize())
         val count = aroundPositions.positions.count {
             val findPedal = field.findPedal(it)
             findPedal is Mine
