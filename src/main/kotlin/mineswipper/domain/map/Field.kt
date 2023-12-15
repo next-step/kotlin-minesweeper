@@ -38,8 +38,7 @@ class Field(
         val pedals = field[position.toRow()]
         require(pedals != null) { VALID_MESSAGE }
 
-        val pedal = pedals.get(position.x)
-        return pedal
+        return pedals.get(position.x)
     }
 
     companion object {
