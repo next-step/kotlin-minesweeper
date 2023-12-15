@@ -17,8 +17,6 @@ data class Position(
     private fun isValid(width: Int, height: Int): Boolean {
         return x in 0 until width && y in 0 until height
     }
-
-
 }
 
 fun List<Position>.toPositions(): Positions = Positions(this)
