@@ -1,5 +1,6 @@
 package view
 
+import GameState
 import gamemap.Cell
 import gamemap.GameMap
 

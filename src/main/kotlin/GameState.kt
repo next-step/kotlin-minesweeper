@@ -1,5 +1,3 @@
-package view
-
 sealed class GameState {
     fun play(): Playing {
         check(this is Playable)

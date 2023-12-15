@@ -1,6 +1,5 @@
 import gamemap.GameMapCreator
 import gamemap.OpenCommandResult
-import view.GameState
 import view.InputView
 import view.ResultView
 
