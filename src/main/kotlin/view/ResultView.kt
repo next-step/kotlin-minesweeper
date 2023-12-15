@@ -23,14 +23,16 @@ class ResultView {
         println()
     }
 
-    fun printGameOver(isWin: Boolean) {
-        if (isWin)
-            println("Game win")
-        else
-            println("Game lose")
+    fun printGameOver(gameState: GameState) {
+        require(gameState is GameState.GameOver)
+        when (gameState) {
+            GameState.Win -> println("Game Over: You win!")
+            GameState.Lose -> println("Game Over: You lose")
+        }
     }
 
-    private fun Cell.displayValue() = if (isClose()) CLOSE_DISPLAY_CHARACTER else if (isMine) MINE_INDICATOR else adjacentMineCount
+    private fun Cell.displayValue() =
+        if (isClose()) CLOSE_DISPLAY_CHARACTER else if (isMine) MINE_INDICATOR else adjacentMineCount
 
     companion object {
         private const val MINE_INDICATOR = "*"

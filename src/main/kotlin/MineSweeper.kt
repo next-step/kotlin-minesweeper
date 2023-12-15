@@ -1,5 +1,5 @@
 import gamemap.GameMapCreator
-import gamemap.OpenResult
+import gamemap.OpenCommandResult
 import view.GameState
 import view.InputView
 import view.ResultView
@@ -8,28 +8,31 @@ class MineSweeper(
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
-    private var gameState = GameState.Initial
+    private var gameState: GameState = GameState.Initial
     fun run() {
         val gameMapCreator = initGameMapCreator()
         val gameMap = gameMapCreator.create()
 
         resultView.printGameStart()
         resultView.printGameMap(gameMap)
-        gameState = GameState.Playing
+        gameState = gameState.play()
 
-        while (gameState == GameState.Playing) {
+        while (gameState.isPlaying()) {
             val (row, col) = inputView.getCommand()
-            val openResult = gameMap.open(row, col)
+            val openResult = gameMap.openCellAt(row, col)
             resultView.printGameMap(gameMap)
-            if (openResult == OpenResult.Fail) {
-                gameState = GameState.Lose
-            }
-            if (openResult == OpenResult.Complete) {
-                gameState = GameState.Win
-            }
+            gameState = openResult.getGameState()
         }
 
-        resultView.printGameOver(gameState == GameState.Win)
+        resultView.printGameOver(gameState)
+    }
+
+    private fun OpenCommandResult.getGameState(): GameState {
+        return when (this) {
+            OpenCommandResult.Fail -> GameState.Lose
+            OpenCommandResult.Complete -> GameState.Win
+            OpenCommandResult.Success -> GameState.Playing
+        }
     }
 
     private fun initGameMapCreator(): GameMapCreator {
