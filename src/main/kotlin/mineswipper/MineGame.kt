@@ -23,8 +23,6 @@ class MineGame(
             positionFactory.generateMinePositions(size, mine)
         )
 
-        MarkGenerator.markGeneration(field)
-
         outputManager.printStartGame()
         outputManager.printField(field)
     }

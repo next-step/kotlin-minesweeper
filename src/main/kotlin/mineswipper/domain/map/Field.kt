@@ -4,6 +4,7 @@ import mineswipper.domain.map.position.Position
 import mineswipper.domain.map.position.Positions
 import mineswipper.domain.map.position.Row
 import mineswipper.domain.map.position.Size
+import mineswipper.domain.map.util.MarkGenerator
 
 class Field(
     val size: Size,
@@ -17,6 +18,8 @@ class Field(
             initField[Row(x)] = pedalSetting(x, minePositions)
         }
         field = initField.toMap()
+
+        MarkGenerator.markGeneration(this)
     }
 
     private fun pedalSetting(x: Int, minePositions: Positions): Pedals {
