@@ -37,34 +37,35 @@ class Board(
 
     fun openCell(position: Position): Boolean {
         val cell = findCell(position)
-            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다: $position")
-
         if (cell.isMine) {
             return true
         }
-        openCellAndAdjacentIfRequired(cell)
+        openCellRecursively(listOf(position))
         return false
     }
 
-    private fun openCellAndAdjacentIfRequired(cell: Cell) {
-        if (cell.shouldOpen) {
-            cell.open()
-            if (cell.isAdjacentMinesZero) {
-                openAdjacentCells(cell)
-            }
-        }
-    }
+    private tailrec fun openCellRecursively(positionsToOpen: List<Position>) {
+        if (positionsToOpen.isEmpty()) return
 
-    private fun openAdjacentCells(cell: Cell) {
-        determineAdjacentPositions(cell.position).forEach { adjacentPosition ->
-            findCell(adjacentPosition)?.let { adjacentCell ->
-                openCellAndAdjacentIfRequired(adjacentCell)
+        val nextPositionsToOpen = mutableListOf<Position>()
+        for (position in positionsToOpen) {
+            val cell = findCell(position)
+            if (!cell.shouldOpen) continue
+
+            cell.status = CellStatus.OPEN
+            if (cell.isAdjacentMinesZero) {
+                nextPositionsToOpen.addAll(
+                    determineAdjacentPositions(position).filter { adjPos ->
+                        findCell(adjPos).shouldOpen
+                    }
+                )
             }
         }
+        openCellRecursively(nextPositionsToOpen)
     }
 
     private fun placeMineAt(position: Position) {
-        findCell(position)?.placeMine()
+        findCell(position).placeMine()
     }
 
     fun isWinConditionMet(): Boolean {
@@ -73,8 +74,9 @@ class Board(
         return nonMineCells == openCells
     }
 
-    fun findCell(position: Position): Cell? {
+    fun findCell(position: Position): Cell {
         return cells.firstOrNull { it.position == position }
+            ?: throw IllegalArgumentException("해당 위치에 셀이 없습니다.: $position")
     }
 
     private fun determineAdjacentPositions(center: Position): List<Position> {
