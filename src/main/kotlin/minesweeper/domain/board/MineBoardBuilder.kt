@@ -1,5 +1,7 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Cell
+
 fun mineBoard(
     minePicker: PositionPicker,
     block: MineBoardBuilder.() -> Unit
@@ -19,13 +21,16 @@ class MineBoardBuilder(
         mineCount = count
     }
 
+    fun build(): MineBoard = MineBoard(cells())
+
+    private fun cells(): Set<Cell> =
+        cells {
+            positions(positions())
+        }
+
     private fun positions(): Positions =
         positions(minePicker) {
             allPositions(size.allPositionsOfRowAndColumns)
             mineCount(mineCount)
         }
-
-    fun build(): MineBoard {
-        return MineBoard.from(positions())
-    }
 }
