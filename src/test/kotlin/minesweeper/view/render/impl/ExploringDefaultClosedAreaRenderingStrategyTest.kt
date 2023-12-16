@@ -7,7 +7,7 @@ import minesweeper.model.board.toBoardLimit
 import minesweeper.model.board.toMines
 import minesweeper.model.board.toVision
 import minesweeper.model.point.CoordinateFixture.toCoordinate
-import minesweeper.model.vison.impl.VisionCoveredStrategy
+import minesweeper.model.vison.impl.VisionTotalCoveringStrategy
 
 class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
 
@@ -20,7 +20,7 @@ class ExploringDefaultClosedAreaRenderingStrategyTest : StringSpec({
                 2 to 2,
                 3 to 3,
             ).deployPoints(limit).toMines(limit),
-            vision = VisionCoveredStrategy.coordinates(limit).toVision(),
+            vision = VisionTotalCoveringStrategy.coordinates(limit).toVision(),
             limit = limit,
         )
         val symbol = ExploringDefaultClosedAreaRenderingStrategy.symbolOf(

@@ -6,7 +6,7 @@ import minesweeper.model.board.traversal.SearchEngine
 import minesweeper.model.board.traversal.impl.SearchBfs
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
-import minesweeper.model.vison.impl.VisionCoveredStrategy
+import minesweeper.model.vison.impl.VisionTotalCoveringStrategy
 
 class Board(
     val mines: Mines,
@@ -24,7 +24,7 @@ class Board(
         limit: BoardLimit,
     ) : this(
         mines = Mines(EvenlyStrategy(mineCount).deployPoints(limit), limit),
-        vision = Vision(VisionCoveredStrategy.coordinates(limit)),
+        vision = Vision(VisionTotalCoveringStrategy.coordinates(limit)),
         limit = limit,
     )
 
