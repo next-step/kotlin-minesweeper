@@ -1,10 +1,11 @@
-package view
+package minesweeper.view
 
 object Output {
 
     private const val INPUT_HEIGHT = "높이를 입력하세요."
     private const val INPUT_WIDTH = "너비를 입력하세요."
     private const val INPUT_MINES = "지뢰는 몇 개인가요?"
+    private const val INPUT_ONLY_DIGIT = "정수만 입력하여 주세요."
     private const val OUTPUT_START_MINESWEEPER = "지뢰찾기 게임 시작"
     private const val OPEN = "open: "
     private const val LOSE_GAME = "Lose Game."
@@ -20,6 +21,10 @@ object Output {
 
     fun printMinesMessage() {
         println(INPUT_MINES)
+    }
+
+    fun printInputOnlyDigit() {
+        println(INPUT_ONLY_DIGIT)
     }
 
     fun printStartMessage() {

@@ -1,59 +1,29 @@
-import minesweeper.AdminBoard
-import minesweeper.MinesweeperBoard
-import minesweeper.PlayStatus
-import minesweeper.PlayerBoard
-import minesweeper.board.BoardDimensions
-import minesweeper.board.GameBoardRenderStrategy
-import minesweeper.board.Number
-import minesweeper.board.RenderedGameBoard
-import minesweeper.mine.MineGenerator
-import minesweeper.position.Position
-import minesweeper.position.RandomPosition
-import view.Input
-import view.Output
+import minesweeper.Element
+import minesweeper.view.Input
+import minesweeper.view.Output
 
 fun main() {
-    val defaultGameBoardRender = GameBoardRenderStrategy { boardDimensions, default ->
-        RenderedGameBoard(Array(boardDimensions.height.value) { Array(boardDimensions.width.value) { default } })
-    }
-
     Output.printHeightMessage()
-    val number: Number = Number(Input.getLine())
+    val number: Element = convertStringToElement(Output::printInputOnlyDigit)
 
     Output.printWidthMessage()
-    val width: Number = Number(Input.getLine())
+    val width: Element = convertStringToElement(Output::printInputOnlyDigit)
 
     Output.printMinesMessage()
-    val mineCount: Number = Number(Input.getLine())
+    val mineCount: Element = convertStringToElement(Output::printInputOnlyDigit)
 
-    val dimensions = BoardDimensions(number, width)
 
-    val mines = MineGenerator(mineCount, RandomPosition(dimensions)).generate()
-    val admin = AdminBoard(defaultGameBoardRender, dimensions, mines)
-    val player = PlayerBoard(defaultGameBoardRender, dimensions, (number * width) - mineCount)
-
-    val minesweeperBoard = MinesweeperBoard(admin, player, dimensions)
-
-    Output.printStartMessage()
-    minesweeperGameStart(dimensions, minesweeperBoard)
 }
 
-tailrec fun minesweeperGameStart(dimensions: BoardDimensions, minesweeperBoard: MinesweeperBoard) {
-    val position = convertToPosition(dimensions)
-    when (play(minesweeperBoard, position)) {
-        PlayStatus.OPEN -> {
-            Output.printAny(minesweeperBoard.playerBoardRender())
-            minesweeperGameStart(dimensions, minesweeperBoard)
+private tailrec fun convertStringToElement(exceptionCallback: () -> Unit): Element {
+    val line = Input.getLine()
+    return when (line.isOnlyDigit()) {
+        true -> Element(line.toInt())
+        false -> {
+            exceptionCallback.invoke()
+            convertStringToElement(exceptionCallback)
         }
-        PlayStatus.LOSE -> Output.printLoseGame()
-        PlayStatus.WIN -> Output.printWinGame()
     }
 }
 
-private tailrec fun convertToPosition(dimensions: BoardDimensions): Position {
-    Output.printCellMessage()
-    return dimensions.stringToPosition(Input.getLine()) ?: convertToPosition(dimensions)
-}
-
-private fun play(board: MinesweeperBoard, position: Position): PlayStatus =
-    board.openCell(position)
+private fun String.isOnlyDigit(): Boolean = this.all { it.isDigit() }
