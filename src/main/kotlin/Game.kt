@@ -1,4 +1,4 @@
-import minesweeper.Element
+import minesweeper.board.Element
 import minesweeper.view.Input
 import minesweeper.view.Output
 
