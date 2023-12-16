@@ -6,8 +6,7 @@ import minesweeper.model.board.toBoardLimit
 
 class VisionCoveredStrategyTest : StringSpec({
 
-    // TODO
-    "확인이 필요하다 // 테스트한다" {
+    "VisionTotalCoveringStrategy 는 모든 Point 를 덮어야 한다" {
         val limit = (4 to 4).toBoardLimit()
         val actual = VisionTotalCoveringStrategy.coordinates(limit)
 
