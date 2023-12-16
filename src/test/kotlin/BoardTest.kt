@@ -12,7 +12,8 @@ class BoardTest {
 
         // when : 0부터 순차적으로 지뢰를 만드는 로직 포함하는 보드를 생성한다.
         val mapInfo = MapInfo(5, 5, 4)
-        val board = Board(mapInfo, FakeMineRandomLogic())
+        Board.randomLogic = FakeMineRandomLogic()
+        val board = Board(mapInfo)
         val boardCell = board.mineBoard
 
         // then : 지뢰의 수 만큼 순차적으로 지뢰가 생성된다.
@@ -25,7 +26,8 @@ class BoardTest {
 
         // when : 보드가 생성된다.
         val mapInfo = MapInfo(5, 5, 4)
-        val board = Board(mapInfo, FakeMineRandomLogic())
+        Board.randomLogic = FakeMineRandomLogic()
+        val board = Board(mapInfo)
 
         // then : 지뢰가 아닌 셀은 주변 지뢰의 개수 정보를 가지고 있다.
         val actual = (board.mineBoard[1][0] as None).mineCnt

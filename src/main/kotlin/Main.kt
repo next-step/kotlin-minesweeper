@@ -1,6 +1,5 @@
 import map.Board
 import map.MapInfo
-import ramdom.MineRandomLogic
 import view.InputView
 import view.OutputView
 
@@ -10,6 +9,6 @@ fun main() {
     val mineCnt = InputView.inputMineCnt()
     val mapInfo = MapInfo(height, width, mineCnt)
 
-    val board = Board(mapInfo, MineRandomLogic())
+    val board = Board(mapInfo)
     OutputView.drawBoard(board)
 }

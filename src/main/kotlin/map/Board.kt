@@ -1,8 +1,9 @@
 package map
 
+import ramdom.MineRandomLogic
 import ramdom.RandomInterface
 
-class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterface) {
+class Board(private val mapInfo: MapInfo) {
 
     val mineBoard: MutableList<MutableList<Cell>>
 
@@ -107,5 +108,6 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
     companion object {
         private const val INDEX_OFFSET = 1
         private const val INDEX_ZERO = 0
+        var randomLogic: RandomInterface = MineRandomLogic()
     }
 }
