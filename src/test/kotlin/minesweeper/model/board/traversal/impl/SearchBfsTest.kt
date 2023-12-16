@@ -10,7 +10,7 @@ import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class SearchBfsTest : StringSpec({
 
-    "탐색한다" {
+    "지뢰찾기 게임의 규칙에 맞는 범위의 좌표들이 탐색 되어야 한다" {
         val limit = (4 to 4).toBoardLimit()
         val searchBfs = SearchBfs(
             limit,
