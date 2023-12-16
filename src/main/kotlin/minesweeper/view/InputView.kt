@@ -1,5 +1,7 @@
 package minesweeper.view
 
+import minesweeper.model.point.Coordinate
+
 object InputView {
 
     fun mapHeight(): Int {
@@ -15,5 +17,10 @@ object InputView {
     fun countOfMines(): Int {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
+    }
+
+    fun openCoordinate(parser: CoordinateParser): Coordinate {
+        print("open : ")
+        return parser.parse(readln())
     }
 }

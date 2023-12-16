@@ -1,51 +1,63 @@
 package minesweeper.model.board
 
-import minesweeper.model.board.impl.EvenlyStrategy
+import minesweeper.app.GameStatus
+import minesweeper.model.board.minedeploy.impl.EvenlyStrategy
+import minesweeper.model.board.traversal.SearchEngine
+import minesweeper.model.board.traversal.impl.SearchBfs
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
-import minesweeper.model.point.Delta
-import minesweeper.model.point.Delta.Companion.deltas
-import minesweeper.model.point.Points
+import minesweeper.model.vison.impl.VisionTotalCoveringStrategy
 
 class Board(
-    val points: Points,
-    val verticalSize: Int,
-    val horizontalSize: Int,
+    val mines: Mines,
+    private val vision: Vision = Vision(emptySet()),
+    val limit: BoardLimit,
 ) {
+    private val isWin: Boolean
+        get() = mines.count == vision.coveredCount
+
+    val minesCount: Int
+        get() = mines.count
 
     constructor(
         mineCount: Int,
-        verticalSize: Int,
-        horizontalSize: Int,
+        limit: BoardLimit,
     ) : this(
-        points = EvenlyStrategy(mineCount).deployPoints(verticalSize, horizontalSize),
-        verticalSize = verticalSize,
-        horizontalSize = horizontalSize
+        mines = Mines(EvenlyStrategy(mineCount).deployPoints(limit), limit),
+        vision = Vision(VisionTotalCoveringStrategy.coordinates(limit)),
+        limit = limit,
     )
 
-    fun minesCount(): Int {
-        return points.countOfMine()
+    fun isCovered(coordinate: Coordinate): Boolean {
+        return vision.isCovered(coordinate)
     }
 
-    fun adjacentMineCount(coordinate: Coordinate): Int {
-        return this.adjacentPointTraversal(coordinate)
-            .asSequence()
-            .map { points.attribute(it) }
-            .count { it == Attribute.MINE }
+    fun tryOpen(coordinate: Coordinate): GameStatus {
+        if (isMineDeployed(coordinate)) {
+            discoveredAllMines()
+            return GameStatus.LOSE
+        }
+        if (isWin) {
+            return GameStatus.WIN
+        }
+        discoveredAdjacentGround(coordinate)
+        return GameStatus.RUNNING
     }
 
-    private fun adjacentPointTraversal(coordinate: Coordinate): List<Coordinate> {
-        return deltas.asSequence()
-            .filter { delta -> inRange(coordinate, delta) }
-            .map { coordinate.moveTo(it) }
-            .toList()
+    private fun discoveredAdjacentGround(coordinate: Coordinate) {
+        val coordinates: Set<Coordinate> = adjacentGroundCoordinates(coordinate)
+        vision.exposeAll(coordinates)
     }
 
-    private fun inRange(coordinate: Coordinate, delta: Delta): Boolean {
-        return coordinate.movePossible(
-            delta = delta,
-            verticalLimit = verticalSize,
-            horizontalLimit = horizontalSize
-        )
+    private fun adjacentGroundCoordinates(coordinate: Coordinate): Set<Coordinate> {
+        val searchEngine: SearchEngine = SearchBfs(this.limit, this.mines)
+        return searchEngine.traversal(coordinate)
     }
+
+    private fun discoveredAllMines() {
+        vision.exposeAll(mines.coordinates)
+    }
+
+    private fun isMineDeployed(coordinate: Coordinate): Boolean =
+        mines.attribute(coordinate) == Attribute.MINE
 }

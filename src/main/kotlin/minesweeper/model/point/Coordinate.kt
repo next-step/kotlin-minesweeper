@@ -1,5 +1,7 @@
 package minesweeper.model.point
 
+import minesweeper.model.board.BoardLimit
+
 data class Coordinate(
     private val vertical: Vertical,
     private val horizontal: Horizontal,
@@ -11,8 +13,25 @@ data class Coordinate(
         )
     }
 
-    fun movePossible(delta: Delta, verticalLimit: Int, horizontalLimit: Int): Boolean {
-        return vertical.movePossible(delta.verticalDelta, verticalLimit) && horizontal.movePossible(delta.horizontalDelta, horizontalLimit)
+    fun movePossible(delta: Delta, limit: BoardLimit): Boolean {
+        return movePossibleVertical(delta, limit) &&
+            movePossibleHorizontal(delta, limit)
+    }
+
+    private fun movePossibleHorizontal(delta: Delta, boardLimit: BoardLimit) =
+        horizontal.movePossible(
+            delta = delta.horizontalDelta,
+            limit = boardLimit.horizontalLimit
+        )
+
+    private fun movePossibleVertical(delta: Delta, boardLimit: BoardLimit) =
+        vertical.movePossible(
+            delta = delta.verticalDelta,
+            limit = boardLimit.verticalLimit
+        )
+
+    fun insideLimit(boardLimit: BoardLimit): Boolean {
+        return boardLimit.verticalLimit.value >= this.vertical.value
     }
 
     companion object {
@@ -20,4 +39,8 @@ data class Coordinate(
             return Coordinate(Vertical(vertical), Horizontal(horizontal))
         }
     }
+}
+
+fun Pair<Int, Int>.toCoordinate(): Coordinate {
+    return Coordinate(Vertical(this.first), Horizontal(this.second))
 }

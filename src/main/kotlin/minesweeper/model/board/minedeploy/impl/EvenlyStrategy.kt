@@ -1,25 +1,24 @@
-package minesweeper.model.board.impl
+package minesweeper.model.board.minedeploy.impl
 
-import minesweeper.model.board.MineDeployStrategy
+import minesweeper.model.board.BoardLimit
+import minesweeper.model.board.minedeploy.MineDeployStrategy
 import minesweeper.model.point.Attribute
 import minesweeper.model.point.Coordinate
-import minesweeper.model.point.Points
 
 class EvenlyStrategy(
     private val countOfMines: Int,
 ) : MineDeployStrategy {
 
-    override fun deployPoints(verticalLimit: Int, horizontalLimit: Int): Points {
-
-        requireMineCountLimit(verticalLimit * horizontalLimit, countOfMines)
-        val coordinateAttributeMap = (0 until (verticalLimit * horizontalLimit))
+    override fun deployPoints(boardLimit: BoardLimit): Map<Coordinate, Attribute> {
+        requireMineCountLimit(boardLimit.area, countOfMines)
+        val coordinateAttributeMap = (0 until boardLimit.area)
             .asSequence()
             .shuffled()
             .take(countOfMines)
-            .map { coordinateOrderOf(it, verticalLimit, horizontalLimit) to Attribute.MINE }
+            .map { coordinateOrderOf(it, boardLimit) to Attribute.MINE }
             .toMap()
         requireMineCountDeployed(coordinateAttributeMap.keys.size, countOfMines)
-        return Points(coordinateAttributeMap)
+        return coordinateAttributeMap
     }
 
     private fun requireMineCountDeployed(countOfMinesActual: Int, countOfMinesExpect: Int) {
@@ -30,10 +29,10 @@ class EvenlyStrategy(
         require(limitMineCounts >= countOfMines) { "요청된 $countOfMines 개의 지뢰는 생성할 수 없습니다. 지뢰의 최대 생성 가능 수는 $limitMineCounts 개 입니다. " }
     }
 
-    private fun coordinateOrderOf(order: Int, verticalLimit: Int, horizontalLimit: Int): Coordinate {
+    private fun coordinateOrderOf(order: Int, boardLimit: BoardLimit): Coordinate {
         return Coordinate.of(
-            vertical = order / verticalLimit,
-            horizontal = order % horizontalLimit
+            vertical = order / boardLimit.verticalLimit.value,
+            horizontal = order % boardLimit.horizontalLimit.value
         )
     }
 }

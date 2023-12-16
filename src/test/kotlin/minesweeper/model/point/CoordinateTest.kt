@@ -2,6 +2,7 @@ package minesweeper.model.point
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.model.board.toBoardLimit
 import minesweeper.model.point.CoordinateFixture.toCoordinate
 
 class CoordinateTest : StringSpec({
@@ -18,8 +19,7 @@ class CoordinateTest : StringSpec({
 
         coordinate.movePossible(
             delta = Delta(3, 3),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe false
     }
 
@@ -28,24 +28,25 @@ class CoordinateTest : StringSpec({
 
         coordinate.movePossible(
             delta = Delta(-4, -3),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe false
     }
 
-    "범위 내 위치로 이동이 가능 해야 한다" {
-        val coordinate = (3 to 3).toCoordinate()
+    "범위 내 위치로 + 방향의 이동이 가능 해야 한다" {
+        val coordinate = (1 to 1).toCoordinate()
 
         coordinate.movePossible(
             delta = Delta(2, 2),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe true
+    }
+
+    "범위 내 위치로 - 방향의 이동이 가능 해야 한다" {
+        val coordinate = (3 to 3).toCoordinate()
 
         coordinate.movePossible(
             delta = Delta(-2, -2),
-            verticalLimit = 5,
-            horizontalLimit = 5
+            limit = (5 to 5).toBoardLimit(),
         ) shouldBe true
     }
 })
