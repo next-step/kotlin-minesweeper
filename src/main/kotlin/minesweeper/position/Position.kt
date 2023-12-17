@@ -6,14 +6,12 @@ data class Position(
     val col: Int,
     val row: Int
 ) {
+    constructor(col: String, row: String): this(col.toInt(), row.toInt())
     operator fun plus(other: Position) = Position(this.row + other.row, this.col + other.col)
 
     fun nearPositions(boardElement: BoardElement): List<Position> =
         NEAR_POSITIONS.map { this + it }
-            .filter { it.isNotOutOfRange(boardElement) }
-
-    private fun isNotOutOfRange(boardElement: BoardElement) =
-        boardElement.height > this.row && this.row >= 0 && boardElement.width > this.col && this.col >= 0
+            .filter { !boardElement.isOutOfRange(it) }
 
     companion object {
         private val NEAR_POSITIONS = arrayOf(

@@ -3,7 +3,7 @@ package minesweeper.board.render
 import minesweeper.board.Board
 import minesweeper.board.BoardElement
 import minesweeper.board.GameBoard
-import minesweeper.board.MinesweeperBoard
+import minesweeper.board.MinesweeperGameBoard
 import minesweeper.cell.Cell
 import minesweeper.cell.CellType
 import minesweeper.position.Position
@@ -20,7 +20,7 @@ class MinesweeperBoardRender(
         }
         val gameBoard = Board(board)
         mineMarking(gameBoard, boardElement)
-        return MinesweeperBoard(gameBoard)
+        return MinesweeperGameBoard(gameBoard)
     }
 
     private fun makeCell(col: Int, row: Int, value: Char): Cell {

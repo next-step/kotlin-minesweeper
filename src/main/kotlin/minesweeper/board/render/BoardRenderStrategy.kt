@@ -4,7 +4,6 @@ import minesweeper.board.Board
 import minesweeper.board.BoardElement
 import minesweeper.board.DefaultGameBoard
 import minesweeper.board.GameBoard
-import minesweeper.board.MinesweeperBoard
 import minesweeper.cell.Cell
 import minesweeper.cell.CellType
 import minesweeper.position.Position
