@@ -3,8 +3,10 @@ package domain.board
 import Positions
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.board.cells
-import minesweeper.domain.cell.CellMark
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.MineCount
 import minesweeper.domain.cell.Position
 
 class CellsBuilderTest : DescribeSpec({
@@ -32,10 +34,16 @@ class CellsBuilderTest : DescribeSpec({
                     Position(2, 2),
                 )
 
-                cells.filter { it.position == Position(1, 1) }.forEach { it.mark shouldBe CellMark.MINE }
-                cells.filter { it.position in adjacentPositions }.forEach { it.mark shouldBe CellMark.ONE }
+                cells.filter { it.position == Position(1, 1) }.forEach { it.shouldBeTypeOf<Cell.Mine>() }
+                cells.filter { it.position in adjacentPositions }.forEach {
+                    it.shouldBeTypeOf<Cell.Clear>()
+                    it.mineCount shouldBe MineCount.ONE
+                }
                 cells.filter { it.position !in adjacentPositions && it.position != Position(1, 1) }
-                    .forEach { it.mark shouldBe CellMark.ZERO }
+                    .forEach {
+                        it.shouldBeTypeOf<Cell.Clear>()
+                        it.mineCount shouldBe MineCount.ZERO
+                    }
             }
         }
     }

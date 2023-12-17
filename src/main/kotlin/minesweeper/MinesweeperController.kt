@@ -3,7 +3,7 @@ package minesweeper
 import minesweeper.controller.InputProvider
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineBoard
-import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.MineTotal
 import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.board.Width
 import minesweeper.domain.board.mineBoard
@@ -16,7 +16,7 @@ class MinesweeperController(
     fun start() {
         val height = inputProvider.height().let(::Height)
         val width = inputProvider.width().let(::Width)
-        val mineCount = inputProvider.mineCount().let(::MineCount)
+        val mineCount = inputProvider.mineCount().let(::MineTotal)
 
         val board = mineBoard(RandomPositionPicker()) {
             size(height, width)

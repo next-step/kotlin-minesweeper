@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.MineTotal
 import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.board.positions
 import minesweeper.domain.cell.Position
@@ -18,12 +18,12 @@ class PositionsBuilderTest : DescribeSpec({
             Position(1, 1),
         )
 
-        context("전체 positions와 지뢰 개수(2개)이 주어지면") {
-            val count = MineCount(3)
+        context("전체 positions와 전체 지뢰 개수(2개)이 주어지면") {
+            val count = MineTotal(3)
 
             val result = positions(RandomPositionPicker()) {
                 allPositions(positions)
-                mineCount(count)
+                mineTotal(count)
             }
 
             it("전체 위치는 주어진 position와 같다") {
@@ -44,7 +44,7 @@ class PositionsBuilderTest : DescribeSpec({
             it("위치 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
                     positions(RandomPositionPicker()) {
-                        mineCount(MineCount(6))
+                        mineTotal(MineTotal(6))
                     }
                 }
             }

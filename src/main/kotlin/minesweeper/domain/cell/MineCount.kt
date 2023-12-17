@@ -1,7 +1,6 @@
 package minesweeper.domain.cell
 
-enum class CellMark(val adjacentMineCount: Int?) {
-    MINE(null),
+enum class MineCount(val value: Int) {
     ZERO(0),
     ONE(1),
     TWO(2),
@@ -13,8 +12,8 @@ enum class CellMark(val adjacentMineCount: Int?) {
     EIGHT(8);
 
     companion object {
-        fun from(mineCount: Int): CellMark =
-            entries.firstOrNull { it.adjacentMineCount == mineCount }
+        fun from(mineCount: Int): MineCount =
+            entries.firstOrNull { it.value == mineCount }
                 ?: throw IllegalArgumentException("주변 지뢰 개수는 0부터 8까지만 가능합니다")
     }
 }

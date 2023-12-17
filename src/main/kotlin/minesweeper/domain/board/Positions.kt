@@ -8,7 +8,7 @@ data class Positions(
     lateinit var minePositions: Set<Position>
         private set
 
-    val adjacentMineCountByPosition: Map<Position, Int> by lazy {
+    val mineCountByPosition: Map<Position, Int> by lazy {
         val adjacentMineCountByPosition = minePositions
             .flatMap { it.adjacentPositions }
             .groupBy { it }

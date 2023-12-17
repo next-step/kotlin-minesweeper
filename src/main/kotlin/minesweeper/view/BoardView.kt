@@ -2,7 +2,6 @@ package minesweeper.view
 
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.CellMark
 
 object BoardView {
     private const val MINE_SYMBOL = "*"
@@ -21,10 +20,10 @@ object BoardView {
             )
 
     private fun rowToString(cells: List<Cell>): String =
-        cells.joinToString(" ") { cell -> cell.mark.symbol() }
+        cells.joinToString(" ") { cell -> cell.symbol() }
 
-    private fun CellMark.symbol() = when (this) {
-        CellMark.MINE -> MINE_SYMBOL
-        else -> this.adjacentMineCount.toString()
+    private fun Cell.symbol() = when (this) {
+        is Cell.Mine -> MINE_SYMBOL
+        is Cell.Clear -> this.mineCount.value.toString()
     }
 }

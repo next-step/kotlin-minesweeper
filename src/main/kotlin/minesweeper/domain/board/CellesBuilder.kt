@@ -1,7 +1,7 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.CellMark
+import minesweeper.domain.cell.MineCount
 
 fun cells(
     block: CellsBuilder.() -> Unit
@@ -15,10 +15,10 @@ class CellsBuilder() {
     }
 
     fun build(): Set<Cell> {
-        val adjacentMineCountByPositions = positions.adjacentMineCountByPosition
-        val cells = adjacentMineCountByPositions.map { (position, mineCount) ->
-            if (positions.isMine(position)) Cell(position, CellMark.MINE)
-            else Cell(position, CellMark.from(mineCount))
+        val mineCountByPositions = positions.mineCountByPosition
+        val cells = mineCountByPositions.map { (position, mineCount) ->
+            if (positions.isMine(position)) Cell.Mine(position)
+            else Cell.Clear(position, MineCount.from(mineCount))
         }.toSet()
         return cells
     }

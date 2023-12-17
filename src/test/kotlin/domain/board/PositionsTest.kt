@@ -48,7 +48,7 @@ class PositionsTest : DescribeSpec({
             )
 
             it("인접한 지뢰의 수를 반환") {
-                val result = positions.adjacentMineCountByPosition
+                val result = positions.mineCountByPosition
 
                 result shouldBe mapOf(
                     Position(0, 0) to 1,
@@ -81,7 +81,7 @@ class PositionsTest : DescribeSpec({
             )
 
             it("인접한 지뢰의 수를 반환") {
-                val result = positions.adjacentMineCountByPosition
+                val result = positions.mineCountByPosition
 
                 result shouldBe mapOf(
                     Position(0, 0) to 1,

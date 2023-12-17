@@ -1,6 +1,6 @@
 package minesweeper.domain.board
 
-data class MineCount(
+data class MineTotal(
     val value: Int
 ) {
     init {
