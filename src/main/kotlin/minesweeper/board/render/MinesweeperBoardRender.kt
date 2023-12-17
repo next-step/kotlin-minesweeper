@@ -1,6 +1,5 @@
 package minesweeper.board.render
 
-import minesweeper.board.Board
 import minesweeper.board.BoardElement
 import minesweeper.board.GameBoard
 import minesweeper.board.MinesweeperGameBoard
@@ -13,14 +12,14 @@ class MinesweeperBoardRender(
 ): BoardRenderStrategy {
 
     override fun invoke(boardElement: BoardElement, value: Char): GameBoard {
-        val board = List(boardElement.height) { row ->
-            List(boardElement.width) { col ->
+        val board = List(boardElement.width) { col ->
+            List(boardElement.height) { row ->
                 makeCell(col, row, value)
             }
         }
-        val gameBoard = Board(board)
-        mineMarking(gameBoard, boardElement)
-        return MinesweeperGameBoard(gameBoard)
+
+        mineMarking(board, boardElement)
+        return MinesweeperGameBoard(board)
     }
 
     private fun makeCell(col: Int, row: Int, value: Char): Cell {
@@ -29,10 +28,10 @@ class MinesweeperBoardRender(
         return Cell(position, type, value)
     }
 
-    private fun mineMarking(board: Board, boardElement: BoardElement) {
+    private fun mineMarking(board: List<List<Cell>>, boardElement: BoardElement) {
         mines.forEach { mine ->
             mine.nearPositions(boardElement)
-                .forEach { if (!board[it.row][it.col].isMine()) board[it.row][it.col].increaseValue() }
+                .forEach { if (!board[it.col][it.row].isMine()) board[it.col][it.row].increaseValue() }
         }
     }
 }

@@ -6,8 +6,8 @@ data class Position(
     val col: Int,
     val row: Int
 ) {
-    constructor(col: String, row: String): this(col.toInt(), row.toInt())
-    operator fun plus(other: Position) = Position(this.row + other.row, this.col + other.col)
+    constructor(col: String, row: String): this(col.toInt() - 1, row.toInt() - 1)
+    operator fun plus(other: Position) = Position(this.col + other.col, this.row + other.row)
 
     fun nearPositions(boardElement: BoardElement): List<Position> =
         NEAR_POSITIONS.map { this + it }

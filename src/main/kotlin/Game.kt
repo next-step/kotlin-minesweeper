@@ -1,6 +1,8 @@
+import minesweeper.MinesweeperGame
+import minesweeper.PlayStatus
 import minesweeper.board.BoardElement
+import minesweeper.board.render.DefaultBoardRender
 import minesweeper.board.render.MinesweeperBoardRender
-import minesweeper.board.render.defaultBoardRender
 import minesweeper.position.Position
 import minesweeper.position.RandomPosition
 import minesweeper.view.Input
@@ -29,16 +31,25 @@ fun main() {
     val boardElement = BoardElement(height, width)
     val mines = RandomPosition(boardElement).generate(mineCount)
 
-    val defaultGameBoard = defaultBoardRender(boardElement, INIT_CELL)
+    val defaultGameBoard = DefaultBoardRender(mines)(boardElement, INIT_CELL)
     val minesweeperGameBoard = MinesweeperBoardRender(mines)(boardElement, INIT_CELL_NUMBER)
 
+    val minesweeperGame = MinesweeperGame(defaultGameBoard, minesweeperGameBoard, boardElement)
+
     Output.printStartMessage()
-    gameStart(boardElement)
+    gameStart(minesweeperGame, boardElement)
 }
 
-private fun gameStart(boardElement: BoardElement) {
+private fun gameStart(minesweeperGame: MinesweeperGame, boardElement: BoardElement) {
     val position = convertStringToPosition(boardElement)
-
+    when (minesweeperGame.play(position)) {
+        PlayStatus.OPEN -> {
+            Output.printAny(minesweeperGame.render())
+            gameStart(minesweeperGame, boardElement)
+        }
+        PlayStatus.WIN -> Output.printWinGame()
+        PlayStatus.LOSE -> Output.printLoseGame()
+    }
 }
 
 private tailrec fun convertStringToPosition(

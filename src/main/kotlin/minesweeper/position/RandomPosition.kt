@@ -10,7 +10,7 @@ class RandomPosition(
     private val colRange = IntRange(0, element.width - 1)
 
     override fun generate(): Position =
-        Position(rowRange.random(), colRange.random())
+        Position(colRange.random(), rowRange.random())
 
     fun generate(count: Int): Set<Position> = loopGenerate(count, mutableSetOf())
 
