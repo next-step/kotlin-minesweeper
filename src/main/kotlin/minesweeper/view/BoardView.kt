@@ -7,7 +7,7 @@ object BoardView {
     private const val MINE_SYMBOL = "*"
 
     fun from(board: MineBoard): List<String> {
-        val sortedCells = sortCells(board.cells)
+        val sortedCells = sortCells(board.cells.values.toSet())
         val cellsByRow = sortedCells.groupBy { it.position.row }
         return cellsByRow.map { rowToString(it.value) }
     }

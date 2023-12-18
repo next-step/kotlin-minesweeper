@@ -19,7 +19,7 @@ class CellsBuilderTest : DescribeSpec({
             }
 
             it("모든 셀의 위치는 주어진 위치 (4 * 4)") {
-                cells.map { it.position } shouldBe positions.value
+                cells.keys shouldBe positions.value
             }
 
             it("셀 마크는 지뢰(1,1) : Mine / 지뢰 인접 : (0,0), (0,1), (0,2), (1,0), (1, 2), (2, 0), (2, 1), (2, 2) : ONE / 나머지: ZERO") {
@@ -34,16 +34,28 @@ class CellsBuilderTest : DescribeSpec({
                     Position(2, 2),
                 )
 
-                cells.filter { it.position == Position(1, 1) }.forEach { it.shouldBeTypeOf<Cell.Mine>() }
-                cells.filter { it.position in adjacentPositions }.forEach {
-                    it.shouldBeTypeOf<Cell.Clear>()
-                    it.mineCount shouldBe MineCount.ONE
+                val zeroPositions = setOf(
+                    Position(0, 3),
+                    Position(1, 3),
+                    Position(2, 3),
+                    Position(3, 0),
+                    Position(3, 1),
+                    Position(3, 2),
+                    Position(3, 3),
+                )
+
+                cells[Position(1, 1)].shouldBeTypeOf<Cell.Mine>()
+                adjacentPositions.forEach { position ->
+                    val cell = cells[position]
+                    cell.shouldBeTypeOf<Cell.Clear>()
+                    cell.mineCount shouldBe MineCount.ONE
                 }
-                cells.filter { it.position !in adjacentPositions && it.position != Position(1, 1) }
-                    .forEach {
-                        it.shouldBeTypeOf<Cell.Clear>()
-                        it.mineCount shouldBe MineCount.ZERO
-                    }
+
+                zeroPositions.forEach { position ->
+                    val cell = cells[position]
+                    cell.shouldBeTypeOf<Cell.Clear>()
+                    cell.mineCount shouldBe MineCount.ZERO
+                }
             }
         }
     }
