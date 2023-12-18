@@ -1,6 +1,6 @@
-package minesweeper.domain.model
+package minesweeper.domain.model.cell
 
-enum class Cell {
+enum class CellState {
     NONE,
     MINE;
 
