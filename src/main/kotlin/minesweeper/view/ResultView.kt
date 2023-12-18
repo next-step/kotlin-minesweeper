@@ -1,12 +1,12 @@
 package minesweeper.view
 
 import minesweeper.domain.model.Board
-import minesweeper.domain.model.Cell
+import minesweeper.domain.model.cell.Cell
 
 object ResultView {
     fun drawBoard(board: Board) {
-        board.forEach { cells ->
-            drawCells(cells)
+        board.forEach { rowCells ->
+            drawCells(rowCells)
             println()
         }
     }
@@ -20,6 +20,6 @@ object ResultView {
             print("*")
             return
         }
-        print("C")
+        print("${cell.getCountOfMinesNearby()}")
     }
 }

@@ -12,7 +12,7 @@ value class Width private constructor(private val value: Int) {
     fun toInt(): Int = value
 
     companion object {
-        private const val MIN_WIDTH = 1
+        private const val MIN_WIDTH = 2
         private const val MAX_WIDTH = 1000
 
         fun from(width: Int): Width = Width(width)
