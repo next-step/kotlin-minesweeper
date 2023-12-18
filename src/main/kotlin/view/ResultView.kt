@@ -1,5 +1,6 @@
 package view
 
+import GameState
 import gamemap.Cell
 import gamemap.GameMap
 
@@ -23,7 +24,16 @@ class ResultView {
         println()
     }
 
-    private fun Cell.displayValue() = if (isMine) MINE_INDICATOR else adjacentMineCount
+    fun printGameOver(gameState: GameState) {
+        require(gameState is GameState.GameOver)
+        when (gameState) {
+            GameState.Win -> println("Game Over: You win!")
+            GameState.Lose -> println("Game Over: You lose")
+        }
+    }
+
+    private fun Cell.displayValue() =
+        if (isClose()) CLOSE_DISPLAY_CHARACTER else if (isMine) MINE_INDICATOR else adjacentMineCount
 
     companion object {
         private const val MINE_INDICATOR = "*"

@@ -10,7 +10,10 @@ class GameMapCreatorTest : BehaviorSpec({
         `when`("invalid width") {
             then("should throw exception") {
                 shouldThrow<IllegalArgumentException> {
-                    GameMapCreator(width = 0, height = 12, mineCount = 1)
+                    GameMapCreator(
+                        mapSizeParams = GameMapCreator.MapSizeParams(width = 0, height = 12),
+                        mineCount = 1,
+                    )
                 }.message.shouldContain("invalid game map width")
             }
         }
@@ -18,7 +21,10 @@ class GameMapCreatorTest : BehaviorSpec({
         `when`("invalid height") {
             then("should throw exception") {
                 shouldThrow<IllegalArgumentException> {
-                    GameMapCreator(width = 10, height = 0, mineCount = 1)
+                    GameMapCreator(
+                        mapSizeParams = GameMapCreator.MapSizeParams(width = 10, height = 0),
+                        mineCount = 1,
+                    )
                 }.message.shouldContain("invalid game map height")
             }
         }
@@ -26,7 +32,10 @@ class GameMapCreatorTest : BehaviorSpec({
         `when`("mine count 0 or less") {
             then("should throw exception") {
                 shouldThrow<IllegalArgumentException> {
-                    GameMapCreator(width = 2, height = 2, mineCount = 0)
+                    GameMapCreator(
+                        mapSizeParams = GameMapCreator.MapSizeParams(width = 2, height = 2),
+                        mineCount = 0,
+                    )
                 }.message.shouldContain("game map should have at least 1 mine cell")
             }
         }
@@ -34,27 +43,42 @@ class GameMapCreatorTest : BehaviorSpec({
         `when`("invalid mine count") {
             then("should throw exception") {
                 shouldThrow<IllegalArgumentException> {
-                    GameMapCreator(width = 2, height = 2, mineCount = 5)
-                }.message.shouldContain("mine count cannot be larger than game map size")
+                    GameMapCreator(
+                        mapSizeParams = GameMapCreator.MapSizeParams(width = 2, height = 2),
+                        mineCount = 5,
+                    )
+                }.message.shouldContain("mine count cannot be greater than or equal to game map size")
             }
         }
 
         `when`("valid size provided") {
             then("should create game map with exact size") {
-                GameMapCreator(width = 2, height = 3, mineCount = 2).create().width shouldBe 2
-                GameMapCreator(width = 2, height = 3, mineCount = 2).create().height shouldBe 3
+                GameMapCreator(
+                    mapSizeParams = GameMapCreator.MapSizeParams(width = 2, height = 3),
+                    mineCount = 2,
+                ).create().width shouldBe 2
+                GameMapCreator(
+                    mapSizeParams = GameMapCreator.MapSizeParams(width = 2, height = 3),
+                    mineCount = 2,
+                ).create().height shouldBe 3
             }
         }
 
         `when`("valid mine count provided") {
             then("should create game map with exact mine count") {
-                GameMapCreator(width = 2, height = 2, mineCount = 2).create().mineCount shouldBe 2
+                GameMapCreator(
+                    mapSizeParams = GameMapCreator.MapSizeParams(width = 2, height = 2),
+                    mineCount = 2,
+                ).create().mineCount shouldBe 2
             }
         }
 
         `when`("valid large mine count provided") {
             then("should create game map with exact mine count") {
-                GameMapCreator(width = 5, height = 6, mineCount = 23).create().mineCount shouldBe 23
+                GameMapCreator(
+                    mapSizeParams = GameMapCreator.MapSizeParams(width = 5, height = 6),
+                    mineCount = 23,
+                ).create().mineCount shouldBe 23
             }
         }
     }
