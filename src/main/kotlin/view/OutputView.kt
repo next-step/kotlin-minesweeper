@@ -11,7 +11,7 @@ object OutputView {
     private const val IMG_NONE = "C"
 
     fun drawBoard(board: Board) {
-        board.board.forEach {
+        board.mineBoard.forEach {
             drawLine(it)
             println("")
         }
@@ -26,7 +26,7 @@ object OutputView {
 
     private fun drawCell(cell: Cell) {
         when (cell) {
-            is None -> print(IMG_NONE)
+            is None -> print(cell.mineCnt)
             is Mine -> print(IMG_MINE)
         }
     }

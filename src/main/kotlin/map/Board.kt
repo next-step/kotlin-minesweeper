@@ -1,40 +1,41 @@
 package map
 
+import ramdom.MineRandomLogic
 import ramdom.RandomInterface
 
-class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterface) {
+class Board(private val mapInfo: MapInfo) {
 
-    val board: MutableList<MutableList<Cell>>
+    val mineBoard: MutableList<MutableList<Cell>>
 
     init {
-        validateMapInfo(mapInfo)
-        board = createBoard(mapInfo)
-        settingMines(mapInfo.mineCnt)
+        mineBoard = createBoard()
+        settingBoard()
     }
 
-    private fun createBoard(mapInfo: MapInfo): MutableList<MutableList<Cell>> {
+    private fun settingBoard() {
+        settingMines(mapInfo.mineCnt)
+        settingMineCntInfo(mapInfo)
+    }
+
+    private fun createBoard(): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
-        return MutableList(height) { MutableList(width) { None } }
+        return MutableList(height) { x -> MutableList(width) { y -> None(x, y) } }
     }
 
     private fun settingMines(count: Int) {
         val maxValue = getBoardMaxValue()
-
         val positions = randomLogic.createRandomNumList(count, maxValue)
 
-        positions.forEach { settingMine(it) }
-    }
-
-    private fun settingMine(position: Int) {
-        val rowIndex = getSelectRowIndex(position)
-        val columnIndex = getSelectColumIndex(position)
-
-        setMine(rowIndex, columnIndex)
+        positions.forEach { position ->
+            val rowIndex = linearIndexToRowIndex(position)
+            val columnIndex = linearIndexToColumIndex(position)
+            setMine(rowIndex, columnIndex)
+        }
     }
 
     private fun setMine(rowIndex: Int, columnIndex: Int) {
-        board[rowIndex][columnIndex] = Mine
+        mineBoard[rowIndex][columnIndex] = Mine
     }
 
     private fun getBoardMaxValue(): Int {
@@ -44,32 +45,69 @@ class Board(private val mapInfo: MapInfo, private val randomLogic: RandomInterfa
         return height * width - INDEX_OFFSET
     }
 
-    // 지뢰 로직 버그
-    private fun getSelectColumIndex(number: Int): Int {
-        if (number == 0) return 0
+    private fun linearIndexToColumIndex(number: Int): Int {
+        if (number == INDEX_ZERO) return INDEX_ZERO
         val height = mapInfo.height
 
         return number % height
     }
 
-    private fun getSelectRowIndex(number: Int): Int {
+    private fun linearIndexToRowIndex(number: Int): Int {
         val width = mapInfo.width
         return when (val columnIndex = number / width) {
-            0 -> 0
+            INDEX_ZERO -> INDEX_ZERO
             else -> columnIndex
         }
     }
 
-    private fun validateMapInfo(mapInfo: MapInfo) {
-        val height = mapInfo.height
-        val width = mapInfo.width
-        val mineCnt = mapInfo.mineCnt
-        require(height * width >= mineCnt) { ERR_MSG_MINE_OVERFLOW }
+    private fun settingMineCntInfo(mapInfo: MapInfo) {
+        for (x in INDEX_ZERO until mapInfo.height) {
+            setMineCntInfoRow(mapInfo, x)
+        }
+    }
+
+    private fun setMineCntInfoRow(mapInfo: MapInfo, x: Int) {
+        for (y in INDEX_ZERO until mapInfo.width) {
+            setMineCntInfo(x, y)
+        }
+    }
+
+    private fun setMineCntInfo(x: Int, y: Int) {
+        val cell = mineBoard[x][y]
+        if (cell is None) {
+            val mineCnt = getMineCnt(cell)
+            cell.mineCnt = mineCnt
+        }
+    }
+
+    private fun getMineCnt(cell: None): Int {
+
+        val cellX = cell.x
+        val cellY = cell.y
+        var mineCnt = 0
+
+        for (addIndex in RelativeDirection.values()) {
+            val newX = cellX + addIndex.x
+            val newY = cellY + addIndex.y
+
+            mineCnt = increaseMineCnt(mineCnt, newX, newY)
+        }
+
+        return mineCnt
+    }
+
+    private fun increaseMineCnt(mineCnt: Int, newX: Int, newY: Int): Int {
+        if (!checkIndex(newX, newY)) return mineCnt
+        return if (mineBoard[newX][newY] is Mine) mineCnt + 1 else mineCnt
+    }
+
+    private fun checkIndex(newX: Int, newY: Int): Boolean {
+        return newX >= INDEX_ZERO && newX < mapInfo.width && newY >= INDEX_ZERO && newY < mapInfo.height
     }
 
     companion object {
-        private const val ERR_MSG_MINE_OVERFLOW = "보드의 크기보다 지뢰가 더 많습니다."
         private const val INDEX_OFFSET = 1
         private const val INDEX_ZERO = 0
+        var randomLogic: RandomInterface = MineRandomLogic()
     }
 }
