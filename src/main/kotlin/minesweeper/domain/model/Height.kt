@@ -12,7 +12,7 @@ value class Height private constructor(private val value: Int) {
     fun toInt(): Int = value
 
     companion object {
-        private const val MIN_HEIGHT = 1
+        private const val MIN_HEIGHT = 2
         private const val MAX_HEIGHT = 1000
 
         fun from(height: Int): Height = Height(height)

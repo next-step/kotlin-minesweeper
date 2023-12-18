@@ -14,7 +14,9 @@ class Board private constructor(
 
     companion object {
         fun create(width: Width, height: Height, mineCount: MineCount): Board {
-            val cells = List(width.toInt() * height.toInt()) { index -> Cell.create(index < mineCount.toInt()) }
+            val mineCells = List(mineCount.toInt()) { Cell.MINE }
+            val noneCells = List((width.toInt() * height.toInt()) - mineCount.toInt()) { Cell.NONE }
+            val cells = (mineCells + noneCells)
                 .shuffled()
                 .chunked(width.toInt())
 
