@@ -1,14 +1,14 @@
 package map
 
 sealed class Cell : CellFunc
-class None(private val x: Int, private val y: Int, var mineCnt: Int = 0) : Cell() {
+class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
 
     override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
         val aroundPosition = mutableListOf<Position>()
         val maxPosition = Position(maxWidth, maxHeight)
 
         for (addIndex in RelativeDirection.values()) {
-            val newPosition = Position(x + addIndex.x, y + addIndex.y)
+            val newPosition = Position(position.x + addIndex.x, position.y + addIndex.y)
             if (checkIndex(newPosition, maxPosition)) aroundPosition.add(newPosition)
         }
         return aroundPosition

@@ -20,7 +20,7 @@ class Board(private val mapInfo: MapInfo) {
     private fun createBoard(): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
-        return MutableList(height) { x -> MutableList(width) { y -> None(x, y) } }
+        return MutableList(height) { x -> MutableList(width) { y -> None(Position(x, y)) } }
     }
 
     private fun settingMines(count: Int) {
