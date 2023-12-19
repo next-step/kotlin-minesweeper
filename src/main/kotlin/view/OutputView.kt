@@ -5,12 +5,12 @@ import map.Cell
 import map.Mine
 import map.None
 
-object OutputView {
+object OutputView: OutputViewInterface {
 
     private const val IMG_MINE = "*"
     private const val IMG_NONE = "C"
 
-    fun drawBoard(board: Board) {
+    override fun drawBoard(board: Board) {
         board.mineBoard.forEach {
             drawLine(it)
             println("")

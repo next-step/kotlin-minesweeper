@@ -12,6 +12,10 @@ class Board(private val mapInfo: MapInfo) {
         settingBoard()
     }
 
+    fun open(position: Position) {
+        mineBoard[position.x][position.y].openCell()
+    }
+
     private fun settingBoard() {
         settingMines(mapInfo.mineCnt)
         settingMineCntInfo(mapInfo)
@@ -35,7 +39,7 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun setMine(rowIndex: Int, columnIndex: Int) {
-        mineBoard[rowIndex][columnIndex] = Mine
+        mineBoard[rowIndex][columnIndex] = Mine()
     }
 
     private fun getBoardMaxValue(): Int {

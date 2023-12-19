@@ -2,6 +2,10 @@ package map
 
 sealed class Cell(private var isOpen: Boolean = false) : CellFunc {
 
+    override fun openCell() {
+        isOpen = true
+    }
+
     override fun isOpen() = isOpen
 }
 
@@ -20,7 +24,10 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
     }
 
     private fun checkIndex(newPosition: Position, maxPosition: Position): Boolean {
-        return newPosition.x >= INDEX_ZERO && newPosition.x < maxPosition.x && newPosition.y >= INDEX_ZERO && newPosition.y < maxPosition.y
+        return newPosition.x >= INDEX_ZERO
+            && newPosition.x < maxPosition.x
+            && newPosition.y >= INDEX_ZERO
+            && newPosition.y < maxPosition.y
     }
 
     companion object {
@@ -28,7 +35,7 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
     }
 }
 
-object Mine : Cell() {
+class Mine : Cell() {
 
     override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
         return emptyList()
@@ -37,6 +44,8 @@ object Mine : Cell() {
 
 interface CellFunc {
     fun searchAround(maxWidth: Int, maxHeight: Int): List<Position>
+
+    fun openCell()
 
     fun isOpen(): Boolean
 }
