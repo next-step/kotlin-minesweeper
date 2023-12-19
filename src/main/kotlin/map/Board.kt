@@ -83,7 +83,7 @@ class Board(private val mapInfo: MapInfo) {
     private fun getMineCnt(cell: None): Int {
         var mineCnt = 0
 
-        for (around in cell.searchAround()) {
+        for (around in cell.searchAround(mapInfo.width, mapInfo.height)) {
             mineCnt = increaseMineCnt(mineCnt, around.x, around.y)
         }
 
@@ -91,12 +91,7 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun increaseMineCnt(mineCnt: Int, newX: Int, newY: Int): Int {
-        if (!checkIndex(newX, newY)) return mineCnt
         return if (mineBoard[newX][newY] is Mine) mineCnt + 1 else mineCnt
-    }
-
-    private fun checkIndex(newX: Int, newY: Int): Boolean {
-        return newX >= INDEX_ZERO && newX < mapInfo.width && newY >= INDEX_ZERO && newY < mapInfo.height
     }
 
     companion object {
