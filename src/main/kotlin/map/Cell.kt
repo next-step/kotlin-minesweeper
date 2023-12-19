@@ -1,6 +1,10 @@
 package map
 
-sealed class Cell : CellFunc
+sealed class Cell(private var isOpen: Boolean = false) : CellFunc {
+
+    override fun isOpen() = isOpen
+}
+
 class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
 
     override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
@@ -11,6 +15,7 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
             val newPosition = Position(position.x + addIndex.x, position.y + addIndex.y)
             if (checkIndex(newPosition, maxPosition)) aroundPosition.add(newPosition)
         }
+
         return aroundPosition
     }
 
@@ -24,6 +29,7 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
 }
 
 object Mine : Cell() {
+
     override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
         return emptyList()
     }
@@ -31,4 +37,6 @@ object Mine : Cell() {
 
 interface CellFunc {
     fun searchAround(maxWidth: Int, maxHeight: Int): List<Position>
+
+    fun isOpen(): Boolean
 }

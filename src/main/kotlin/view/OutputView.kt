@@ -25,9 +25,28 @@ object OutputView {
     }
 
     private fun drawCell(cell: Cell) {
+        if (isCloseCell(cell)) return
+
+        printCell(cell)
+    }
+
+    private fun printCell(cell: Cell) {
         when (cell) {
-            is None -> print(cell.mineCnt)
-            is Mine -> print(IMG_MINE)
+            is None -> {
+                print(cell.mineCnt)
+            }
+
+            is Mine -> {
+                print(IMG_MINE)
+            }
         }
+    }
+
+    private fun isCloseCell(cell: Cell): Boolean {
+        if (!cell.isOpen()) {
+            print(IMG_NONE)
+            return true
+        }
+        return false
     }
 }
