@@ -81,16 +81,10 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun getMineCnt(cell: None): Int {
-
-        val cellX = cell.x
-        val cellY = cell.y
         var mineCnt = 0
 
-        for (addIndex in RelativeDirection.values()) {
-            val newX = cellX + addIndex.x
-            val newY = cellY + addIndex.y
-
-            mineCnt = increaseMineCnt(mineCnt, newX, newY)
+        for (around in cell.searchAround()) {
+            mineCnt = increaseMineCnt(mineCnt, around.x, around.y)
         }
 
         return mineCnt
