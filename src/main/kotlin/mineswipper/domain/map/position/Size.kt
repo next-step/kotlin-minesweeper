@@ -1,4 +1,4 @@
-package mineswipper.domain.map
+package mineswipper.domain.map.position
 
 data class Size(
     val width: Int,

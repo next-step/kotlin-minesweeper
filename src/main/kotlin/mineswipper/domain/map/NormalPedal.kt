@@ -1,3 +1,5 @@
 package mineswipper.domain.map
 
-class NormalPedal : Pedal
+class NormalPedal(
+    override var mark: Mark? = null
+) : Pedal

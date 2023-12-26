@@ -1,3 +1,5 @@
 package mineswipper.domain.map
 
-class Mine : Pedal
+class Mine(
+    override var mark: Mark? = Mark("*")
+) : Pedal

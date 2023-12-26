@@ -1,32 +1,28 @@
 package mineswipper.domain.map
 
+import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Row
+import mineswipper.domain.map.position.Size
+
 class Field(
-    private val size: Size,
-    positions: List<Position>
+    val field: Map<Row, Pedals>
 ) {
-    val field: Map<Int, Pedals>
+    fun findPedal(position: Position): Pedal {
+        val pedals = field[position.toRow()]
+        require(pedals != null) { VALID_MESSAGE }
 
-    init {
-        val initField: MutableMap<Int, Pedals> = mutableMapOf()
-        repeat(size.height) { x ->
-            initField[x] = pedalSetting(x, positions)
-        }
-        field = initField.toMap()
+        return pedals.get(position.x)
     }
 
-    private fun pedalSetting(x: Int, positions: List<Position>): Pedals {
-        val pedalList = (0 until size.width).map { y ->
-            val position = Position(x, y)
-            createPedal(positions, position)
-        }
-        return Pedals(pedalList)
+    fun getSize(): Size {
+        val pedals = field[Row(FIRST_ROW_FOR_SIZE)]
+        require(pedals != null) { VALID_MESSAGE }
+
+        return Size(field.size, pedals.value.size)
     }
 
-    private fun createPedal(
-        positions: List<Position>,
-        position: Position
-    ) = when (positions.contains(position)) {
-        true -> Mine()
-        false -> NormalPedal()
+    companion object {
+        private const val VALID_MESSAGE: String = "해당 위치에 값이 존재하지 않습니다."
+        private const val FIRST_ROW_FOR_SIZE: Int = 0
     }
 }

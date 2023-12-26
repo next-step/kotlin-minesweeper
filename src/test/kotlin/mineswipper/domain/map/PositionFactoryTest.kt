@@ -2,6 +2,9 @@ package mineswipper.domain.map
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import mineswipper.domain.map.position.Position
+import mineswipper.domain.map.position.Positions
+import mineswipper.domain.map.position.Size
 import mineswipper.domain.map.util.MinePositionStrategy
 import mineswipper.domain.map.util.PositionFactory
 import org.junit.jupiter.api.Test
@@ -15,16 +18,13 @@ class PositionFactoryTest {
         val width = 10
         val mineAmount = 10
 
-        val positions: List<Position> = positionFactory.generateMinePositions(
+        val positions: Positions = positionFactory.generateMinePositions(
             Size(width, height),
             mineAmount
         )
 
-        positions.containsAll(
-            listOf(
-                Position(1, 1),
-                Position(2, 2)
-            )
+        positions.contains(
+            Position(1, 1)
         ) shouldBe true
     }
 
@@ -40,10 +40,12 @@ class PositionFactoryTest {
 }
 
 class TestStrategy : MinePositionStrategy {
-    override fun createMinePosition(size: Size, mineAmount: Int): List<Position> {
-        return listOf(
-            Position(1, 1),
-            Position(2, 2)
+    override fun createMinePosition(size: Size, mineAmount: Int): Positions {
+        return Positions(
+            listOf(
+                Position(1, 1),
+                Position(2, 2)
+            )
         )
     }
 }

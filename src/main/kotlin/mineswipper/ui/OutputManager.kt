@@ -16,7 +16,7 @@ class OutputManager {
     private fun printWidth(pedals: Pedals) {
         val pedal = pedals.value.joinToString(" ") {
             when (it) {
-                is NormalPedal -> NORMAL_PEDAL
+                is NormalPedal -> it.mark?.value ?: "0"
                 is Mine -> MINE_PEDAL
             }
         }
@@ -29,7 +29,6 @@ class OutputManager {
     }
 
     companion object {
-        private const val NORMAL_PEDAL: String = "c"
         private const val MINE_PEDAL: String = "*"
         private const val START_GAME: String = "지뢰찾기 게임 시작"
     }
