@@ -19,12 +19,52 @@ class Board(private val mapInfo: MapInfo) {
     fun getAroundPosition(position: Position): List<Position> {
         val aroundPosition = mutableListOf<Position>()
         val searchingPosition = mineBoard[position.y][position.x].searchAround(mapInfo.height, mapInfo.width)
-            .filter { mineBoard[it.y][it.x] is None && !mineBoard[it.y][it.x].isOpen() }
+            .filter { closeNoneCell(it) }
 
         aroundPosition.addAll(searchingPosition)
 
         return aroundPosition
     }
+
+    fun validatePosition(position: Position): Boolean {
+        // 1. 보드를 넘어가는 셀.
+        if (!validateIndex(position)) {
+            return false
+        }
+
+        // 2. 이미 오픈된 셀
+        if (validateOpen(position)) {
+            return false
+        }
+
+        return true
+    }
+
+    fun isMine(position: Position): Boolean {
+        return mineBoard[position.y][position.x] is Mine
+    }
+
+    fun getMineCnt(): Int {
+        return mapInfo.mineCnt
+    }
+
+    fun getCloseCellCnt(): Int {
+        return mineBoard.sumOf { it.count { cell -> !cell.isOpen() } }
+    }
+
+    private fun validateOpen(position: Position): Boolean {
+        return mineBoard[position.y][position.x].isOpen()
+    }
+
+    private fun validateIndex(position: Position): Boolean {
+        return position.y >= INDEX_ZERO &&
+            position.y < mapInfo.height &&
+            position.x >= INDEX_ZERO &&
+            position.x < mapInfo.width
+    }
+
+    private fun closeNoneCell(position: Position) =
+        mineBoard[position.y][position.x] is None && !mineBoard[position.y][position.x].isOpen()
 
     private fun settingBoard() {
         settingMines(mapInfo.mineCnt)
@@ -42,14 +82,14 @@ class Board(private val mapInfo: MapInfo) {
         val positions = randomLogic.createRandomNumList(count, maxValue)
 
         positions.forEach { position ->
-            val rowIndex = linearIndexToRowIndex(position)
-            val columnIndex = linearIndexToColumIndex(position)
-            setMine(rowIndex, columnIndex)
+            val y = linearIndexToRowIndex(position)
+            val x = linearIndexToColumIndex(position)
+            setMine(y, x)
         }
     }
 
-    private fun setMine(rowIndex: Int, columnIndex: Int) {
-        mineBoard[rowIndex][columnIndex] = Mine()
+    private fun setMine(y: Int, x: Int) {
+        mineBoard[y][x] = Mine()
     }
 
     private fun getBoardMaxValue(): Int {

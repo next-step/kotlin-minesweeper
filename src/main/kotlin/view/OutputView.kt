@@ -9,12 +9,22 @@ object OutputView : OutputViewInterface {
 
     private const val IMG_MINE = "*"
     private const val IMG_NONE = "C"
+    private const val TEXT_GAME_CLEAR = "Clear Game."
+    private const val TEXT_GAME_OVER = "Lose Game."
 
     override fun drawBoard(board: Board) {
         board.mineBoard.forEach {
             drawLine(it)
             println("")
         }
+    }
+
+    override fun printGameClear() {
+        println(TEXT_GAME_CLEAR)
+    }
+
+    override fun printGameOver() {
+        println(TEXT_GAME_OVER)
     }
 
     private fun drawLine(line: MutableList<Cell>) {

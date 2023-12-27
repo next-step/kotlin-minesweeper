@@ -13,16 +13,37 @@ class MinesWeeperGame(
 
     fun startGame() {
         while (true) {
-            // input
             val positionStr: String = inputView.inputSelect()
 
-            aroundOpenWithNotMine(positionStr.toPosition())
+            val position = positionStr.toPosition()
+            if (!board.validatePosition(position)) {
+                continue
+            }
 
-            // 주변 지뢰 탐색.
+            aroundOpenWithNotMine(position)
 
-            // output
+            if (isLose(position)) break
+
             outputView.drawBoard(board)
+
+            if (isWin()) break
         }
+    }
+
+    private fun isWin(): Boolean {
+        if (board.getMineCnt() == board.getCloseCellCnt()) {
+            outputView.printGameClear()
+            return true
+        }
+        return false
+    }
+
+    private fun isLose(position: Position): Boolean {
+        if (board.isMine(position)) {
+            outputView.printGameOver()
+            return true
+        }
+        return false
     }
 
     private fun aroundOpenWithNotMine(position: Position) {
