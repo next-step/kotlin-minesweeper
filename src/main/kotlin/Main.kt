@@ -1,6 +1,5 @@
 import map.Board
 import map.MapInfo
-import ramdom.RandomInterface
 import view.InputView
 import view.OutputView
 

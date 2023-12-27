@@ -5,7 +5,7 @@ import map.Cell
 import map.Mine
 import map.None
 
-object OutputView: OutputViewInterface {
+object OutputView : OutputViewInterface {
 
     private const val IMG_MINE = "*"
     private const val IMG_NONE = "C"

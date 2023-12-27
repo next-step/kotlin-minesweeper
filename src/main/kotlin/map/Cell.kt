@@ -11,12 +11,12 @@ sealed class Cell(private var isOpen: Boolean = false) : CellFunc {
 
 class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
 
-    override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
+    override fun searchAround(maxHeight: Int, maxWidth: Int): List<Position> {
         val aroundPosition = mutableListOf<Position>()
-        val maxPosition = Position(maxWidth, maxHeight)
+        val maxPosition = Position(maxHeight, maxWidth)
 
         for (addIndex in RelativeDirection.values()) {
-            val newPosition = Position(position.x + addIndex.x, position.y + addIndex.y)
+            val newPosition = Position(position.y + addIndex.x, position.x + addIndex.y)
             if (checkIndex(newPosition, maxPosition)) aroundPosition.add(newPosition)
         }
 
@@ -24,10 +24,10 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
     }
 
     private fun checkIndex(newPosition: Position, maxPosition: Position): Boolean {
-        return newPosition.x >= INDEX_ZERO
-            && newPosition.x < maxPosition.x
-            && newPosition.y >= INDEX_ZERO
-            && newPosition.y < maxPosition.y
+        return newPosition.y >= INDEX_ZERO &&
+            newPosition.y < maxPosition.y &&
+            newPosition.x >= INDEX_ZERO &&
+            newPosition.x < maxPosition.x
     }
 
     companion object {
@@ -37,13 +37,13 @@ class None(private val position: Position, var mineCnt: Int = 0) : Cell() {
 
 class Mine : Cell() {
 
-    override fun searchAround(maxWidth: Int, maxHeight: Int): List<Position> {
+    override fun searchAround(maxHeight: Int, maxWidth: Int): List<Position> {
         return emptyList()
     }
 }
 
 interface CellFunc {
-    fun searchAround(maxWidth: Int, maxHeight: Int): List<Position>
+    fun searchAround(maxHeight: Int, maxWidth: Int): List<Position>
 
     fun openCell()
 

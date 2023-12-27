@@ -13,7 +13,17 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     fun open(position: Position) {
-        mineBoard[position.x][position.y].openCell()
+        mineBoard[position.y][position.x].openCell()
+    }
+
+    fun getAroundPosition(position: Position): List<Position> {
+        val aroundPosition = mutableListOf<Position>()
+        val searchingPosition = mineBoard[position.y][position.x].searchAround(mapInfo.height, mapInfo.width)
+            .filter { mineBoard[it.y][it.x] is None && !mineBoard[it.y][it.x].isOpen() }
+
+        aroundPosition.addAll(searchingPosition)
+
+        return aroundPosition
     }
 
     private fun settingBoard() {
@@ -24,7 +34,7 @@ class Board(private val mapInfo: MapInfo) {
     private fun createBoard(): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
-        return MutableList(height) { x -> MutableList(width) { y -> None(Position(x, y)) } }
+        return MutableList(height) { y -> MutableList(width) { x -> None(Position(y, x)) } }
     }
 
     private fun settingMines(count: Int) {
@@ -65,19 +75,19 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun settingMineCntInfo(mapInfo: MapInfo) {
-        for (x in INDEX_ZERO until mapInfo.height) {
-            setMineCntInfoRow(mapInfo, x)
+        for (y in INDEX_ZERO until mapInfo.height) {
+            setMineCntInfoRow(mapInfo, y)
         }
     }
 
-    private fun setMineCntInfoRow(mapInfo: MapInfo, x: Int) {
-        for (y in INDEX_ZERO until mapInfo.width) {
-            setMineCntInfo(x, y)
+    private fun setMineCntInfoRow(mapInfo: MapInfo, y: Int) {
+        for (x in INDEX_ZERO until mapInfo.width) {
+            setMineCntInfo(y, x)
         }
     }
 
-    private fun setMineCntInfo(x: Int, y: Int) {
-        val cell = mineBoard[x][y]
+    private fun setMineCntInfo(y: Int, x: Int) {
+        val cell = mineBoard[y][x]
         if (cell is None) {
             val mineCnt = getMineCnt(cell)
             cell.mineCnt = mineCnt
@@ -87,8 +97,8 @@ class Board(private val mapInfo: MapInfo) {
     private fun getMineCnt(cell: None): Int {
         var mineCnt = 0
 
-        for (around in cell.searchAround(mapInfo.width, mapInfo.height)) {
-            mineCnt = increaseMineCnt(mineCnt, around.x, around.y)
+        for (around in cell.searchAround(mapInfo.height, mapInfo.width)) {
+            mineCnt = increaseMineCnt(mineCnt, around.y, around.x)
         }
 
         return mineCnt
