@@ -7,8 +7,10 @@ fun main() {
     val height = InputView.inputHeight()
     val width = InputView.inputWidth()
     val mineCnt = InputView.inputMineCnt()
-    val mapInfo = MapInfo(height, width, mineCnt)
 
-    val board = Board(mapInfo)
-    OutputView.drawBoard(board)
+    val mapInfo = MapInfo(height, width, mineCnt)
+    val game = MinesWeeperGame(Board(mapInfo), InputView, OutputView)
+
+    game.startGame()
+    // OutputView.drawBoard(board)
 }

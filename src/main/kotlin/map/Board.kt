@@ -12,6 +12,60 @@ class Board(private val mapInfo: MapInfo) {
         settingBoard()
     }
 
+    fun open(position: Position) {
+        mineBoard[position.y][position.x].openCell()
+    }
+
+    fun getAroundPosition(position: Position): List<Position> {
+        val aroundPosition = mutableListOf<Position>()
+        val searchingPosition = mineBoard[position.y][position.x].searchAround(mapInfo.height, mapInfo.width)
+            .filter { closeNoneCell(it) }
+
+        aroundPosition.addAll(searchingPosition)
+
+        return aroundPosition
+    }
+
+    fun validatePosition(position: Position): Boolean {
+        // 1. 보드를 넘어가는 셀.
+        if (!validateIndex(position)) {
+            return false
+        }
+
+        // 2. 이미 오픈된 셀
+        if (validateOpen(position)) {
+            return false
+        }
+
+        return true
+    }
+
+    fun isMine(position: Position): Boolean {
+        return mineBoard[position.y][position.x] is Mine
+    }
+
+    fun getMineCnt(): Int {
+        return mapInfo.mineCnt
+    }
+
+    fun getCloseCellCnt(): Int {
+        return mineBoard.sumOf { it.count { cell -> !cell.isOpen() } }
+    }
+
+    private fun validateOpen(position: Position): Boolean {
+        return mineBoard[position.y][position.x].isOpen()
+    }
+
+    private fun validateIndex(position: Position): Boolean {
+        return position.y >= INDEX_ZERO &&
+            position.y < mapInfo.height &&
+            position.x >= INDEX_ZERO &&
+            position.x < mapInfo.width
+    }
+
+    private fun closeNoneCell(position: Position) =
+        mineBoard[position.y][position.x] is None && !mineBoard[position.y][position.x].isOpen()
+
     private fun settingBoard() {
         settingMines(mapInfo.mineCnt)
         settingMineCntInfo(mapInfo)
@@ -20,7 +74,7 @@ class Board(private val mapInfo: MapInfo) {
     private fun createBoard(): MutableList<MutableList<Cell>> {
         val height = mapInfo.height
         val width = mapInfo.width
-        return MutableList(height) { x -> MutableList(width) { y -> None(x, y) } }
+        return MutableList(height) { y -> MutableList(width) { x -> None(Position(y, x)) } }
     }
 
     private fun settingMines(count: Int) {
@@ -28,14 +82,14 @@ class Board(private val mapInfo: MapInfo) {
         val positions = randomLogic.createRandomNumList(count, maxValue)
 
         positions.forEach { position ->
-            val rowIndex = linearIndexToRowIndex(position)
-            val columnIndex = linearIndexToColumIndex(position)
-            setMine(rowIndex, columnIndex)
+            val y = linearIndexToRowIndex(position)
+            val x = linearIndexToColumIndex(position)
+            setMine(y, x)
         }
     }
 
-    private fun setMine(rowIndex: Int, columnIndex: Int) {
-        mineBoard[rowIndex][columnIndex] = Mine
+    private fun setMine(y: Int, x: Int) {
+        mineBoard[y][x] = Mine()
     }
 
     private fun getBoardMaxValue(): Int {
@@ -61,19 +115,19 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun settingMineCntInfo(mapInfo: MapInfo) {
-        for (x in INDEX_ZERO until mapInfo.height) {
-            setMineCntInfoRow(mapInfo, x)
+        for (y in INDEX_ZERO until mapInfo.height) {
+            setMineCntInfoRow(mapInfo, y)
         }
     }
 
-    private fun setMineCntInfoRow(mapInfo: MapInfo, x: Int) {
-        for (y in INDEX_ZERO until mapInfo.width) {
-            setMineCntInfo(x, y)
+    private fun setMineCntInfoRow(mapInfo: MapInfo, y: Int) {
+        for (x in INDEX_ZERO until mapInfo.width) {
+            setMineCntInfo(y, x)
         }
     }
 
-    private fun setMineCntInfo(x: Int, y: Int) {
-        val cell = mineBoard[x][y]
+    private fun setMineCntInfo(y: Int, x: Int) {
+        val cell = mineBoard[y][x]
         if (cell is None) {
             val mineCnt = getMineCnt(cell)
             cell.mineCnt = mineCnt
@@ -81,28 +135,17 @@ class Board(private val mapInfo: MapInfo) {
     }
 
     private fun getMineCnt(cell: None): Int {
-
-        val cellX = cell.x
-        val cellY = cell.y
         var mineCnt = 0
 
-        for (addIndex in RelativeDirection.values()) {
-            val newX = cellX + addIndex.x
-            val newY = cellY + addIndex.y
-
-            mineCnt = increaseMineCnt(mineCnt, newX, newY)
+        for (around in cell.searchAround(mapInfo.height, mapInfo.width)) {
+            mineCnt = increaseMineCnt(mineCnt, around.y, around.x)
         }
 
         return mineCnt
     }
 
     private fun increaseMineCnt(mineCnt: Int, newX: Int, newY: Int): Int {
-        if (!checkIndex(newX, newY)) return mineCnt
         return if (mineBoard[newX][newY] is Mine) mineCnt + 1 else mineCnt
-    }
-
-    private fun checkIndex(newX: Int, newY: Int): Boolean {
-        return newX >= INDEX_ZERO && newX < mapInfo.width && newY >= INDEX_ZERO && newY < mapInfo.height
     }
 
     companion object {

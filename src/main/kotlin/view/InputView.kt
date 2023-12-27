@@ -1,11 +1,12 @@
 package view
 
-object InputView {
+object InputView : InputViewInterface {
     private const val ERR_MSG_INVALID_NUMERIC_FORMAT = "입력된 값의 포맷이 숫자가 압니다."
     private const val ERR_MSG_MINIMUM_SIZE = "최소 1 이상을 입력 해야 합니다."
     private const val TEXT_INPUT_HEIGHT = "높이를 입력하세요."
     private const val TEXT_INPUT_WEIGHT = "너비를 입력하세요."
     private const val TEXT_INPUT_MINE = "지뢰는 몇 개 인가요?"
+    private const val TEXT_SELECT_CELL = "오픈할 위치를 입력해 주세요 : "
 
     fun inputHeight(): Int {
         println(TEXT_INPUT_HEIGHT)
@@ -28,6 +29,13 @@ object InputView {
         return inputData.toInt()
     }
 
+    override fun inputSelect(): String {
+        println(TEXT_SELECT_CELL)
+        val inputData = readln()
+        validateInputPosition(inputData)
+        return inputData
+    }
+
     private fun validateInputData(inputData: String) {
         validateNumericFormat(inputData)
         validateMinimumValue(inputData.toInt())
@@ -39,5 +47,23 @@ object InputView {
 
     private fun validateMinimumValue(inputData: Int) {
         require(inputData > 0) { ERR_MSG_MINIMUM_SIZE }
+    }
+
+    private fun validateInputPosition(inputData: String) {
+        // position x,y
+        validateSplitSize(inputData)
+        splitWithComma(inputData).map { validateNumericFormat(it) }
+    }
+
+    private fun validateSplitSize(inputData: String) {
+        val positionList = splitWithComma(inputData)
+        require(positionList.size == 2)
+    }
+
+    private fun splitWithComma(input: String): List<String> {
+
+        return input.split(',')
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
     }
 }
