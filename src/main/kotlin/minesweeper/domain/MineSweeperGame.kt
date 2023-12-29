@@ -2,7 +2,7 @@ package minesweeper.domain
 
 class MineSweeperGame(
     private val cellFinder: CellFinder,
-    private val openPositions: MutableList<Position> = mutableListOf(),
+    private val openPositions: MutableSet<Position> = mutableSetOf(),
 ) {
 
     fun open(position: Position) {
