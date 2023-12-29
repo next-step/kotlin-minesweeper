@@ -11,6 +11,9 @@ class MineSweeperGame(
         }
 
         openPositions.add(position)
+        if (getAroundMinesCount(position) != 0) {
+            return
+        }
         position.getAdjacent()
             .filter { !isOpen(it) && !isMine(it) }
             .forEach { open(it) }
