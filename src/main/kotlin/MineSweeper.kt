@@ -2,9 +2,9 @@ class MineSweeper(
     private val width: Int,
     private val height: Int,
     mineSize: Int,
-    generateMinePositions: (Int) -> List<Position>
+    minePositionGenerator: MinePositionGenerator
 ) {
-    private val minePositions = generateMinePositions(mineSize)
+    private val minePositions = minePositionGenerator.generate(mineSize)
 
     fun cells(): Map<Position, Status> {
         return Position.createInRange(width, height)
