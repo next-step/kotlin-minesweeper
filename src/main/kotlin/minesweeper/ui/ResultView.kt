@@ -1,29 +1,46 @@
 package minesweeper.ui
 
-import minesweeper.domain.CellFinder
+import minesweeper.domain.HeightAndWidth
+import minesweeper.domain.MineSweeperGame
 import minesweeper.domain.Position
 import minesweeper.domain.Size
 
 object ResultView {
 
-    private const val mine_symbol = "*"
+    private const val mine_symbol = "C"
 
-    fun printMines(height: Size, width: Size, cellFinder: CellFinder) {
+    fun printMines(mineSweeperGame: MineSweeperGame, heightAndWidth: HeightAndWidth) {
+        heightAndWidth.height
+            .getNumbers()
+            .forEach { printRow(it, heightAndWidth.width, mineSweeperGame) }
         println()
-        println("지뢰찾기 게임 시작")
-        height.getNumbers()
-            .forEach { printRow(it, width, cellFinder) }
     }
 
-    private fun printRow(rowNum: Size, width: Size, cellFinder: CellFinder) {
+    private fun printRow(rowNum: Size, width: Size, mineSweeperGame: MineSweeperGame) {
         width.getNumbers()
             .forEach {
-                val cell = cellFinder.find(Position(rowNum, it)) ?: throw RuntimeException("출력 도중 알 수 없는 에러가 발생했습니다.")
-                when (cell.isMine) {
-                    true -> print("$mine_symbol ")
-                    false -> print("${cellFinder.getAroundMinesCount(cell)} ")
-                }
+                val position = Position(rowNum, it)
+                printEachPosition(mineSweeperGame, position)
             }
         println()
+    }
+
+    private fun printEachPosition(mineSweeperGame: MineSweeperGame, position: Position) {
+        when (mineSweeperGame.isOpen(position)) {
+            true -> print("${mineSweeperGame.getAroundMinesCount(position)} ")
+            false -> print("$mine_symbol ")
+        }
+    }
+
+    fun printGameStartMessage() {
+        println("지뢰찾기 게임 시작")
+    }
+
+    fun printLoseGameMessage() {
+        println("Lose Game.")
+    }
+
+    fun printWinGameMessage() {
+        println("Win Game.")
     }
 }

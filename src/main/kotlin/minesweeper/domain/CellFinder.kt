@@ -3,10 +3,6 @@ package minesweeper.domain
 class CellFinder(private val map: MutableMap<Position, Cell>) {
     private constructor(initPositions: List<Position>) : this(initPositions.associateWith { Cell(it) }.toMutableMap())
 
-    private val list = listOf(
-        Position(-1, -1), Position(-1, 0), Position(-1, 1), Position(0, -1), Position(0, 1), Position(1, -1), Position(1, 0), Position(1, 1)
-    )
-
     fun convert(minePosition: List<Position>) {
         minePosition.forEach {
             map[it] = Cell(it, true)
@@ -17,12 +13,21 @@ class CellFinder(private val map: MutableMap<Position, Cell>) {
         return map[position]
     }
 
-    fun getAroundMinesCount(cell: Cell): Int {
-        val position = cell.position
-        return list.mapNotNull {
-            val nextPosition = position + it
-            find(nextPosition)
-        }.count { it.isMine }
+    fun getAroundMinesCount(position: Position): Int {
+        return position.getAround()
+            .mapNotNull { find(it) }
+            .count {
+                it.isMine
+            }
+    }
+
+    fun isMine(position: Position): Boolean {
+        val cell = find(position) ?: throw IllegalArgumentException("주어진 위치를 찾을 수 없습니다.")
+        return cell.isMine
+    }
+
+    fun size(): Int {
+        return map.size
     }
 
     companion object {

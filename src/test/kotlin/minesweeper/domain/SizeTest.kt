@@ -71,4 +71,14 @@ class SizeTest : BehaviorSpec({
             }
         }
     }
+
+    Given("더하려는 다른 사이즈가 주어지면") {
+        val other = Size(1)
+        When("사이즈는") {
+            val actual = Size(2) + other
+            Then("더한 값 원소로 갖는 사이즈를 반환한다.") {
+                actual shouldBe Size(3)
+            }
+        }
+    }
 })
