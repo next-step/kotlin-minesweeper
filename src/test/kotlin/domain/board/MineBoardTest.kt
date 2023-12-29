@@ -93,7 +93,7 @@ class MineBoardTest : DescribeSpec({
             Cell(1, 0, MineCount.ONE, isOpened = false),
             Cell(1, 1, MineCount.ONE, isOpened = false),
         )
-        context("열린 셀일 경우 경우") {
+        context("열린 셀인 경우") {
             val position = Position(0, 1)
 
             it("true가 반환된다") {
@@ -103,7 +103,7 @@ class MineBoardTest : DescribeSpec({
             }
         }
 
-        context("열리지 않은 셀일 경우") {
+        context("열리지 않은 셀인 경우") {
             val position = Position(1, 0)
 
             it("false가 반환된다") {
@@ -130,6 +130,39 @@ class MineBoardTest : DescribeSpec({
                 shouldThrow<IllegalStateException> {
                     board.isOpened(position)
                 }
+            }
+        }
+    }
+
+    describe("isAllOpened()") {
+
+        context("모든 셀이 열린 경우") {
+            val board = MineBoard(
+                Mine(0, 0),
+                Cell(0, 1, MineCount.ONE, isOpened = true),
+                Cell(1, 0, MineCount.ONE, isOpened = true),
+                Cell(1, 1, MineCount.ONE, isOpened = true),
+            )
+
+            it("true가 반환된다") {
+                val result = board.isAllOpened()
+
+                result shouldBe true
+            }
+        }
+
+        context("열리지 않은 셀이 있는 경우") {
+            val board = MineBoard(
+                Mine(0, 0),
+                Cell(0, 1, MineCount.ONE, isOpened = true),
+                Cell(1, 0, MineCount.ONE, isOpened = true),
+                Cell(1, 1, MineCount.ONE, isOpened = false),
+            )
+
+            it("false 반환된다") {
+                val result = board.isAllOpened()
+
+                result shouldBe false
             }
         }
     }

@@ -22,6 +22,9 @@ data class MineBoard(
         return cell.isOpened()
     }
 
+    fun isAllOpened(): Boolean =
+        cells.values.none { it is Cell.Clear && it.isOpened().not() }
+
     private fun getCell(position: Position): Cell = cells[position]
         ?: throw IllegalArgumentException("보드에 정의된 위치가 아닙니다")
 }
