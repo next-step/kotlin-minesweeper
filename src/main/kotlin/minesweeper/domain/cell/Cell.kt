@@ -9,12 +9,12 @@ sealed interface Cell {
 
     data class Clear(
         override val position: Position,
-        val mineCount: MineCount,
-        private var isOpened: Boolean = false,
+        val mineCount: MineCount = MineCount.ZERO,
+        private var isOpened: Boolean = false
     ) : Cell {
-
-        fun open() {
+        fun open(): Cell {
             isOpened = true
+            return this
         }
 
         fun isOpened(): Boolean = isOpened
