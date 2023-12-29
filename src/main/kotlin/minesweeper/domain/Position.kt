@@ -24,7 +24,14 @@ data class Position(val x: Point, val y: Point) {
         }
     }
 
+    fun getAdjacent(): List<Position> {
+        return adjacentPositions.map {
+            this + it
+        }
+    }
+
     companion object {
         private val aroundPositions = listOf(leftUp, up, rightUp, left, right, leftDown, down, rightDown)
+        private val adjacentPositions = listOf(up, left, right, down)
     }
 }

@@ -1,8 +1,5 @@
 package minesweeper.domain
 
-private val x = arrayOf(-1, 0, 0, 1)
-private val y = arrayOf(0, -1, 1, 0)
-
 class MineSweeperGame(
     private val cellFinder: CellFinder,
     private val openPositions: MutableList<Position> = mutableListOf(),
@@ -14,12 +11,9 @@ class MineSweeperGame(
         }
 
         openPositions.add(position)
-        for (i in 0 until 4) {
-            val nextPosition = position + Position(x[i], y[i])
-            if (!isOpen(nextPosition) && !isMine(nextPosition)) {
-                open(nextPosition)
-            }
-        }
+        position.getAdjacent()
+            .filter { !isOpen(it) && !isMine(it) }
+            .forEach { open(it) }
     }
 
     fun isOpen(position: Position): Boolean {
@@ -37,10 +31,8 @@ class MineSweeperGame(
     }
 
     fun isFinished(mineCount: Size): Boolean {
-        for (openPosition in openPositions) {
-            if (isMine(openPosition)) {
-                return true
-            }
+        if (isLose()) {
+            return true
         }
 
         return cellFinder.size() == openPositions.size + mineCount.value
@@ -52,5 +44,9 @@ class MineSweeperGame(
 
     fun isWin(mineCount: Size): Boolean {
         return cellFinder.size() == openPositions.size + mineCount.value
+    }
+
+    private fun isLose(): Boolean {
+        return openPositions.any { isMine(it) }
     }
 }
