@@ -53,4 +53,33 @@ class MineSweeperGameTest : BehaviorSpec({
             }
         }
     }
+
+    Given("지뢰 개수가 주어지면") {
+        val height = Size(10)
+        val width = Size(10)
+        val mineCount = Size(10)
+
+        val minePositions = FixedPositionGenerator(height, width).generate(mineCount)
+        val cellFinder = CellFinder.init(height, width)
+        cellFinder.convert(minePositions)
+
+        When("지뢰찾기게임은") {
+            val mineSweeperGame = MineSweeperGame(cellFinder)
+            val actual = mineSweeperGame.isWin(mineCount)
+            Then("게임에서 이겼는지 여부를 반환한다.") {
+                actual shouldBe false
+            }
+        }
+
+        When("지뢰찾기게임은") {
+            val mineSweeperGame = MineSweeperGame(cellFinder)
+            mineSweeperGame.open(Position(1, 1))
+            mineSweeperGame.open(Position(2, 2))
+            mineSweeperGame.open(Position(10, 10))
+            val actual = mineSweeperGame.isWin(mineCount)
+            Then("게임에서 이겼는지 여부를 반환한다.") {
+                actual shouldBe true
+            }
+        }
+    }
 })
