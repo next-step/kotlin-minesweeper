@@ -26,6 +26,10 @@ class CellFinder(private val map: MutableMap<Position, Cell>) {
         return cell.isMine
     }
 
+    fun size(): Int {
+        return map.size
+    }
+
     companion object {
         fun init(height: Size, width: Size): CellFinder {
             return CellFinder(

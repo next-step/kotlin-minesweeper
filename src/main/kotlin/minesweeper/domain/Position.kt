@@ -10,6 +10,7 @@ private val down = Position(1, 0)
 private val rightDown = Position(1, 1)
 
 data class Position(val x: Point, val y: Point) {
+    constructor(x: String, y: String) : this(Point(x.toInt()), Point(y.toInt()))
     constructor(x: Int, y: Int) : this(Point(x), Point(y))
     constructor(x: Size, y: Size) : this(Point(x.value), Point(y.value))
 

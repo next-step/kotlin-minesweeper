@@ -1,5 +1,6 @@
 package minesweeper.ui
 
+import minesweeper.domain.Position
 import minesweeper.domain.Size
 
 object InputView {
@@ -24,6 +25,16 @@ object InputView {
         return result.getOrElse { e ->
             println(e.message)
             inputSize(inputType)
+        }
+    }
+
+    fun inputOpenPosition(): Position {
+        print("open: ")
+        return try {
+            val inputPosition = readln().split(", ")
+            Position(inputPosition[0], inputPosition[1])
+        } catch (e: RuntimeException) {
+            inputOpenPosition()
         }
     }
 }
