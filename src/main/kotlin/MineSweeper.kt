@@ -1,6 +1,6 @@
 class MineSweeper(
-    private val width: Int,
-    private val height: Int,
+    val width: Int,
+    val height: Int,
     mineSize: Int,
     minePositionGenerator: MinePositionGenerator
 ) {
