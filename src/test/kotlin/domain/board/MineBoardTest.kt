@@ -47,4 +47,42 @@ class MineBoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("isMine()") {
+        val board = MineBoard(
+            Mine(0, 0),
+            Cell(0, 1, MineCount.ONE),
+            Cell(1, 0, MineCount.ONE),
+            Cell(1, 1, MineCount.ONE),
+        )
+        context("지뢰일 경우") {
+            val position = Position(0, 0)
+
+            it("true가 반환된다") {
+                val result = board.isMine(position)
+
+                result shouldBe true
+            }
+        }
+
+        context("지뢰가 아닐 경우") {
+            val position = Position(0, 1)
+
+            it("false가 반환된다") {
+                val result = board.isMine(position)
+
+                result shouldBe false
+            }
+        }
+
+        context("보드 내의 위치가 아닐 경우") {
+            val position = Position(0, 2)
+
+            it("IllegalArgumentException이 발생한다") {
+                shouldThrow<IllegalArgumentException> {
+                    board.isMine(position)
+                }
+            }
+        }
+    }
 })
