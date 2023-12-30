@@ -18,3 +18,23 @@ data class MineBoardSize(
     private infix fun Width.createPositionForColumnsInRow(row: Int): List<Position> =
         this.columnRange.map { Position(row = row, column = it) }
 }
+
+data class Height(
+    val value: Int
+) {
+    init {
+        require(value > 0) { "높이는 0보다 커야 합니다" }
+    }
+
+    val rowRange: IntRange = 0 until value
+}
+
+data class Width(
+    val value: Int
+) {
+    init {
+        require(value > 0) { "너비는 0보다 커야 합니다" }
+    }
+
+    val columnRange: IntRange = 0 until value
+}

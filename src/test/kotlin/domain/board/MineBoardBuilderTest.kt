@@ -20,7 +20,7 @@ class MineBoardBuilderTest : DescribeSpec({
             val count = MineTotal(3)
 
             val result = mineBoard(RandomPositionPicker()) {
-                size(height, width)
+                size(width * height)
                 mineCount(count)
             }
 
@@ -55,7 +55,7 @@ class MineBoardBuilderTest : DescribeSpec({
             it("보드 생성에 실패한다") {
                 shouldThrowExactly<UninitializedPropertyAccessException> {
                     mineBoard(RandomPositionPicker()) {
-                        size(Height(6), Width(4))
+                        size(Width(4) * Height(6))
                     }
                 }
             }

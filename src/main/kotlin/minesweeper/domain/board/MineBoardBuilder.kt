@@ -14,9 +14,11 @@ class MineBoardBuilder(
     private lateinit var size: MineBoardSize
     private lateinit var mineCount: MineTotal
 
-    fun size(height: Height, width: Width) {
-        size = MineBoardSize(height, width)
+    fun size(size: MineBoardSize) {
+        this.size = size
     }
+
+    operator fun Width.times(height: Height): MineBoardSize = MineBoardSize(height, this)
 
     fun mineCount(count: MineTotal) {
         mineCount = count

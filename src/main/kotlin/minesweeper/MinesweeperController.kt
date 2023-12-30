@@ -27,7 +27,7 @@ class MinesweeperController(
         val mineCount = inputProvider.mineCount().let(::MineTotal)
 
         return mineBoard(RandomPositionPicker()) {
-            size(height, width)
+            size(width * height)
             mineCount(mineCount)
         }
     }
