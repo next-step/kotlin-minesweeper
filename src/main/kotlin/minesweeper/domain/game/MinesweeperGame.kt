@@ -32,9 +32,12 @@ data class MinesweeperGame(
         val cell = board.open(position)
 
         if (cell.isZeroMineCount()) {
-            position.adjacentPositions.forEach { adjacentPosition ->
-                if (board.isValidPosition(adjacentPosition)) doOpen(adjacentPosition)
-            }
+            openAdjacentPositions(cell.position)
         }
+    }
+
+    private fun openAdjacentPositions(position: Position) {
+        val adjacentPositions = position.adjacentPositions.filter { board.isValidPosition(it) }
+        adjacentPositions.forEach { doOpen(it) }
     }
 }

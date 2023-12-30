@@ -1,9 +1,11 @@
 package minesweeper.domain.board
 
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.cells
 import minesweeper.domain.position.Position
 import minesweeper.domain.position.PositionPicker
 import minesweeper.domain.position.Positions
+import minesweeper.domain.position.positions
 
 fun mineBoard(
     minePicker: PositionPicker,
@@ -26,16 +28,16 @@ class MineBoardBuilder(
         mineCount = count
     }
 
-    fun build(): MineBoard = MineBoard(cells())
+    fun build(): MineBoard = MineBoard(createCells())
 
-    private fun cells(): Map<Position, Cell> =
-        minesweeper.domain.cell.cells {
-            positions(positions())
+    private fun createCells(): Map<Position, Cell> =
+        cells {
+            positions(createPositions())
         }
 
-    private fun positions(): Positions =
-        minesweeper.domain.position.positions(minePicker) {
-            allPositions(size.allPositionsOfRowAndColumns)
+    private fun createPositions(): Positions =
+        positions(minePicker) {
+            allPositions(size.allPositions)
             mineTotal(mineCount)
         }
 }

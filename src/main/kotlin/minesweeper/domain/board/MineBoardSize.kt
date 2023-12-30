@@ -6,7 +6,7 @@ data class MineBoardSize(
     val height: Height,
     val width: Width,
 ) {
-    val allPositionsOfRowAndColumns: Set<Position> by lazy {
+    val allPositions: Set<Position> by lazy {
         createAllPositions(height, width)
     }
 

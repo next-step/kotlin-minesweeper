@@ -1,7 +1,5 @@
 package minesweeper.domain.position
 
-import minesweeper.domain.cell.Move
-
 data class Position(
     val row: Int,
     val column: Int,
@@ -12,27 +10,22 @@ data class Position(
     }
 
     val adjacentPositions: Set<Position>
-        get() = movesToAdjacentPositions.mapNotNull { this.moveOrNull(it) }.toSet()
-
-    private fun moveOrNull(move: Move): Position? {
-        val row = this.row - move.row
-        val column = this.column - move.column
-        if (row < MIN_ROW || column < MIN_COLUMN) return null
-        return Position(row, column)
-    }
+        get() = setOfNotNull(
+            createIfValid(row - 1, column - 1),
+            createIfValid(row - 1, column),
+            createIfValid(row - 1, column + 1),
+            createIfValid(row, column - 1),
+            createIfValid(row, column + 1),
+            createIfValid(row + 1, column - 1),
+            createIfValid(row + 1, column),
+            createIfValid(row + 1, column + 1),
+        )
 
     companion object {
         private const val MIN_ROW = 0
         private const val MIN_COLUMN = 0
-        private val movesToAdjacentPositions = listOf(
-            Move(-1, -1),
-            Move(-1, 0),
-            Move(-1, 1),
-            Move(0, -1),
-            Move(0, 1),
-            Move(1, -1),
-            Move(1, 0),
-            Move(1, 1),
-        )
+
+        private fun createIfValid(row: Int, column: Int): Position? =
+            takeIf { row >= MIN_ROW && column >= MIN_COLUMN }?.let { Position(row, column) }
     }
 }

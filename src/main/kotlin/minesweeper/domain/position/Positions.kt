@@ -9,6 +9,7 @@ data class Positions(
     val mineCountByPosition: Map<Position, Int> by lazy {
         val adjacentMineCountByPosition = minePositions
             .flatMap { it.adjacentPositions }
+            .filter { it in value }
             .groupBy { it }
             .mapValues { it.value.size }
 
