@@ -35,7 +35,7 @@ object Output {
         print(OPEN)
     }
 
-    fun printAny(any: Any?) {
+    fun printAny(any: Any) {
         println(any)
     }
 

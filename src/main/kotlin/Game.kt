@@ -4,6 +4,7 @@ import minesweeper.board.PlayingGameBoard
 import minesweeper.board.render.DefaultBoardRender
 import minesweeper.board.render.MinesweeperBoardRender
 import minesweeper.position.RandomPosition
+import minesweeper.view.DefaultView
 import minesweeper.view.Input
 import minesweeper.view.Output
 
@@ -23,7 +24,7 @@ fun main() {
     val mines = RandomPosition(boardElement).generate(mineCount)
 
     val playingGameBoard = PlayingGameBoard(DefaultBoardRender(mines)(boardElement), MinesweeperBoardRender(mines)(boardElement))
-    val minesweeperGame = MinesweeperGame(playingGameBoard, boardElement)
+    val minesweeperGame = MinesweeperGame(playingGameBoard, boardElement, DefaultView())
 
     Output.printStartMessage()
     minesweeperGame.gameStart()
