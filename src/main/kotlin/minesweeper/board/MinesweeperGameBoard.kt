@@ -8,7 +8,7 @@ data class MinesweeperGameBoard(
 ): GameBoard() {
 
     override fun visit(position: Position) {
-        // no op
+        throw UnsupportedOperationException()
     }
 
     override fun isExistMinePosition(positions: List<Position>): Boolean =
