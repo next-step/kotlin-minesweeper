@@ -4,7 +4,7 @@ import minesweeper.domain.board.MineBoard
 import minesweeper.domain.cell.Cell
 
 object BoardView {
-    private const val MINE_SYMBOL = "*"
+    private const val UNOPENED_SYMBOL = "C"
 
     fun from(board: MineBoard): List<String> {
         val sortedCells = sortCells(board.cells.values.toSet())
@@ -23,7 +23,7 @@ object BoardView {
         cells.joinToString(" ") { cell -> cell.symbol() }
 
     private fun Cell.symbol() = when (this) {
-        is Cell.Mine -> MINE_SYMBOL
-        is Cell.Clear -> this.mineCount.value.toString()
+        is Cell.Mine -> UNOPENED_SYMBOL
+        is Cell.Clear -> if (this.isOpened()) this.mineCount.value.toString() else UNOPENED_SYMBOL
     }
 }

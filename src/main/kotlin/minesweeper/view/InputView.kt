@@ -4,7 +4,7 @@ import minesweeper.controller.InputPosition
 import minesweeper.controller.InputProvider
 
 class InputView() : InputProvider {
-
+    private var gameStarted: Boolean = false
     override fun height(): Int {
         println(HEIGHT_REQUEST_MESSAGE)
         return readIntInput()
@@ -23,6 +23,12 @@ class InputView() : InputProvider {
     }
 
     override fun openPosition(): InputPosition {
+        println()
+        if (gameStarted.not()) {
+            println(GAME_START)
+            gameStarted = true
+        }
+
         print("open : ")
         return readInput()
             .split(", ")
@@ -43,5 +49,6 @@ class InputView() : InputProvider {
         private const val HEIGHT_REQUEST_MESSAGE = "높이를 입력하세요."
         private const val WIDTH_REQUEST_MESSAGE = "너비를 입력하세요."
         private const val MINE_COUNT_REQUEST_MESSAGE = "지뢰는 몇 개인가요?"
+        private const val GAME_START = "지뢰찾기 게임 시작"
     }
 }

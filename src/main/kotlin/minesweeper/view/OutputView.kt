@@ -1,11 +1,26 @@
 package minesweeper.view
 
-object OutputView {
-    private const val GAME_START = "지뢰찾기 게임 시작"
+import minesweeper.controller.OutputConsumer
+import minesweeper.domain.board.MineBoard
+import minesweeper.domain.game.GameResult
 
-    fun drawBoard(fieldView: List<String>) {
-        println()
-        println(GAME_START)
-        fieldView.forEach { println(it) }
+class OutputView : OutputConsumer {
+    override fun showBoard(board: MineBoard) {
+        BoardView.from(board).forEach {
+            println(it)
+        }
+    }
+
+    override fun showGameResult(result: GameResult) {
+        val message = when (result) {
+            GameResult.WIN -> WIN_RESULT
+            GameResult.LOSS -> LOSE_RESULT
+        }
+        println(message)
+    }
+
+    companion object {
+        private const val WIN_RESULT = "WIN GAME"
+        private const val LOSE_RESULT = "LOSE GAME"
     }
 }

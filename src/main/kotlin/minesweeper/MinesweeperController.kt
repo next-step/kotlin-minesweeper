@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.controller.InputProvider
+import minesweeper.controller.OutputConsumer
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.board.MineTotal
@@ -9,11 +10,10 @@ import minesweeper.domain.board.Width
 import minesweeper.domain.board.mineBoard
 import minesweeper.domain.cell.Position
 import minesweeper.domain.game.MinesweeperGame
-import minesweeper.view.BoardView
-import minesweeper.view.OutputView
 
 class MinesweeperController(
     private val inputProvider: InputProvider,
+    private val outputProvider: OutputConsumer,
 ) {
     fun start() {
         val board = createBoard()
@@ -45,11 +45,13 @@ class MinesweeperController(
     private fun runGame(game: MinesweeperGame) {
         while (game.isEnd().not()) {
             game.run()
-            showBoard(game.board)
+            showGame(game)
         }
     }
 
-    private fun showBoard(board: MineBoard) {
-        OutputView.drawBoard(BoardView.from(board))
+    private fun showGame(game: MinesweeperGame) {
+        val result = game.result
+        if (result != null) outputProvider.showGameResult(result)
+        else outputProvider.showBoard(game.board)
     }
 }
