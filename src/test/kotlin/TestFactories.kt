@@ -1,8 +1,8 @@
 import minesweeper.domain.board.MineBoard
-import minesweeper.domain.board.Positions
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCount
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 
 fun Positions(row: Int, column: Int, minePositions: Set<Position>? = null): Positions {
     val allPositions = (0 until row).flatMap { row ->

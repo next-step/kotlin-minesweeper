@@ -1,7 +1,7 @@
 package minesweeper.domain.game
 
 import minesweeper.domain.board.MineBoard
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 data class MinesweeperGame(
     val board: MineBoard,

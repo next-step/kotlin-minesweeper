@@ -1,11 +1,11 @@
-package domain.board
+package domain.position
 
 import Positions
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.board.Positions
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 
 class PositionsTest : DescribeSpec({
     describe("isMine") {

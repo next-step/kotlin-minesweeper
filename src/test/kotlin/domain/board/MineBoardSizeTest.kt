@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineBoardSize
 import minesweeper.domain.board.Width
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 class MineBoardSizeTest : DescribeSpec({
     describe("allPositionsOfRowAndColumns") {

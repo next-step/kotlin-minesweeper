@@ -1,6 +1,6 @@
 package minesweeper.domain.board
 
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 data class MineBoardSize(
     val height: Height,

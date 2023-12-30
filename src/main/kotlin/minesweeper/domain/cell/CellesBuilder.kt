@@ -1,7 +1,7 @@
-package minesweeper.domain.board
+package minesweeper.domain.cell
 
-import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 
 fun cells(
     block: CellsBuilder.() -> Unit

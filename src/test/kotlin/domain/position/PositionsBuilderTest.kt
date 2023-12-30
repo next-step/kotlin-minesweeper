@@ -1,13 +1,13 @@
-package domain.board
+package domain.position
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.board.MineTotal
-import minesweeper.domain.board.RandomPositionPicker
-import minesweeper.domain.board.positions
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.RandomPositionPicker
+import minesweeper.domain.position.positions
 
 class PositionsBuilderTest : DescribeSpec({
     describe("위치 생성") {

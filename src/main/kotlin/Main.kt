@@ -1,4 +1,4 @@
-import minesweeper.MinesweeperController
+import minesweeper.controller.MinesweeperController
 import minesweeper.view.InputView
 import minesweeper.view.OutputView
 

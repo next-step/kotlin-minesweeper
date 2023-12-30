@@ -1,13 +1,13 @@
-package domain.board
+package domain.cell
 
 import Positions
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import minesweeper.domain.board.cells
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCount
-import minesweeper.domain.cell.Position
+import minesweeper.domain.cell.cells
+import minesweeper.domain.position.Position
 
 class CellsBuilderTest : DescribeSpec({
     describe("셀들 생성") {

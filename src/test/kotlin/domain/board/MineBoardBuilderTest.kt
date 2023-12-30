@@ -6,11 +6,11 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineTotal
-import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.board.Width
 import minesweeper.domain.board.mineBoard
 import minesweeper.domain.cell.Cell
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.RandomPositionPicker
 
 class MineBoardBuilderTest : DescribeSpec({
     describe("보드 생성") {

@@ -8,7 +8,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.MineCount
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 class MineBoardTest : DescribeSpec({
     describe("open()") {

@@ -8,9 +8,9 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.cell.MineCount
-import minesweeper.domain.cell.Position
 import minesweeper.domain.game.GameResult
 import minesweeper.domain.game.MinesweeperGame
+import minesweeper.domain.position.Position
 
 class MinesweeperGameTest : DescribeSpec({
     describe("run()") {

@@ -1,4 +1,6 @@
-package minesweeper.domain.cell
+package minesweeper.domain.position
+
+import minesweeper.domain.cell.Move
 
 data class Position(
     val row: Int,

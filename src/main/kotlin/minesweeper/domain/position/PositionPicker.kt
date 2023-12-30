@@ -1,6 +1,4 @@
-package minesweeper.domain.board
-
-import minesweeper.domain.cell.Position
+package minesweeper.domain.position
 
 interface PositionPicker {
     fun pick(allPositions: Set<Position>, count: Int): Set<Position>

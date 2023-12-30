@@ -1,6 +1,6 @@
-package minesweeper.domain.board
+package minesweeper.domain.position
 
-import minesweeper.domain.cell.Position
+import minesweeper.domain.board.MineTotal
 
 fun positions(
     minePicker: PositionPicker,

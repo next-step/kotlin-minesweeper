@@ -1,6 +1,4 @@
-package minesweeper.domain.board
-
-import minesweeper.domain.cell.Position
+package minesweeper.domain.position
 
 data class Positions(
     val value: Set<Position>,

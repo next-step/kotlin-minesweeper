@@ -1,15 +1,13 @@
-package minesweeper
+package minesweeper.controller
 
-import minesweeper.controller.InputProvider
-import minesweeper.controller.OutputConsumer
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineBoard
 import minesweeper.domain.board.MineTotal
-import minesweeper.domain.board.RandomPositionPicker
 import minesweeper.domain.board.Width
 import minesweeper.domain.board.mineBoard
-import minesweeper.domain.cell.Position
 import minesweeper.domain.game.MinesweeperGame
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.RandomPositionPicker
 
 class MinesweeperController(
     private val inputProvider: InputProvider,

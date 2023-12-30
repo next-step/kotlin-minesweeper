@@ -1,9 +1,9 @@
-package domain.board
+package domain.position
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.board.RandomPositionPicker
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.RandomPositionPicker
 
 class RandomPositionPickerTest : StringSpec({
     "주어진 위치 목록에서 주어진 개수만큼 랜덤하게 각기 다른 위치를 뽑는다" {

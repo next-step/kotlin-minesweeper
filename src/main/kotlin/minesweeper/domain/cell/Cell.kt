@@ -1,5 +1,7 @@
 package minesweeper.domain.cell
 
+import minesweeper.domain.position.Position
+
 sealed interface Cell {
     val position: Position
     val adjacentPositions: Set<Position>
