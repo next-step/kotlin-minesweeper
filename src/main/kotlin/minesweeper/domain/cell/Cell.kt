@@ -25,4 +25,11 @@ sealed interface Cell {
 
         fun isZeroMineCount(): Boolean = mineCount == MineCount.ZERO
     }
+
+    companion object {
+        fun ofClear(position: Position, mineCount: Int): Clear =
+            Clear(position, MineCount.from(mineCount))
+
+        fun ofMine(position: Position): Mine = Mine(position)
+    }
 }
