@@ -1,7 +1,7 @@
 package minesweeper
 
 import minesweeper.board.BoardElement
-import minesweeper.board.GameBoard
+import minesweeper.board.PlayingGameBoard
 import minesweeper.position.Position
 import minesweeper.view.Input
 import minesweeper.view.Output
@@ -9,52 +9,15 @@ import java.lang.NumberFormatException
 import java.lang.RuntimeException
 
 class MinesweeperGame (
-    private val defaultGameBoard: GameBoard,
-    private val minesweeperGameBoard: GameBoard,
+    private val playingGameBoard: PlayingGameBoard,
     private val boardElement: BoardElement
 ) {
-    private val positionQueue = ArrayDeque<Position>()
-
-    private fun openCell(position: Position): PlayStatus {
-        if (minesweeperGameBoard.isMine(position)) {
-            return PlayStatus.LOSE
-        }
-        else if (defaultGameBoard.isVisited(position)) {
-            return PlayStatus.OPEN
-        }
-
-        positionQueue.add(position)
-        defaultGameBoard.visit(position)
-
-        while (positionQueue.isNotEmpty()) {
-            val now = positionQueue.removeFirst()
-            defaultGameBoard.changeCellValue(now, minesweeperGameBoard.getCell(now))
-            val nearPositions = now.nearPositions(boardElement)
-            if (!minesweeperGameBoard.isExistMinePosition(nearPositions)) {
-                openNearCell(nearPositions)
-            }
-        }
-
-        return if(defaultGameBoard.areAllCellsOpened()) PlayStatus.WIN else PlayStatus.OPEN
-    }
-
-    private fun render() = defaultGameBoard.render()
-
-    private fun openNearCell(positions: List<Position>) {
-        positions.forEach {
-            if (!defaultGameBoard.isVisited(it)) {
-                defaultGameBoard.visit(it)
-                defaultGameBoard.changeCellValue(it, minesweeperGameBoard.getCell(it))
-                positionQueue.add(it)
-            }
-        }
-    }
 
     tailrec fun gameStart() {
         val position = convertStringToPosition(boardElement)
-        when (this.openCell(position)) {
+        when (this.playingGameBoard.openCell(position, boardElement)) {
             PlayStatus.OPEN -> {
-                Output.printAny(this.render())
+                Output.printAny(this.playingGameBoard.render())
                 gameStart()
             }
             PlayStatus.WIN -> Output.printWinGame()
@@ -71,15 +34,12 @@ class MinesweeperGame (
     }
 
     private fun toPosition(split: List<String>, boardElement: BoardElement): Position? {
-        try {
+        return try {
             require(split.size == INPUT_SIZE)
             val position = Position(split[COL], split[ROW])
-            if (boardElement.isOutOfRange(position)) {
-                return null
-            }
-            return position
+            if (boardElement.isOutOfRange(position)) null else position
         } catch (e: RuntimeException) {
-            return when(e) {
+            when(e) {
                 is IllegalArgumentException, is NumberFormatException -> null
                 else -> throw e
             }

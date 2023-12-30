@@ -1,5 +1,6 @@
 import minesweeper.MinesweeperGame
 import minesweeper.board.BoardElement
+import minesweeper.board.PlayingGameBoard
 import minesweeper.board.render.DefaultBoardRender
 import minesweeper.board.render.MinesweeperBoardRender
 import minesweeper.position.RandomPosition
@@ -21,10 +22,8 @@ fun main() {
     val boardElement = BoardElement(height, width)
     val mines = RandomPosition(boardElement).generate(mineCount)
 
-    val defaultGameBoard = DefaultBoardRender(mines)(boardElement)
-    val minesweeperGameBoard = MinesweeperBoardRender(mines)(boardElement)
-
-    val minesweeperGame = MinesweeperGame(defaultGameBoard, minesweeperGameBoard, boardElement)
+    val playingGameBoard = PlayingGameBoard(DefaultBoardRender(mines)(boardElement), MinesweeperBoardRender(mines)(boardElement))
+    val minesweeperGame = MinesweeperGame(playingGameBoard, boardElement)
 
     Output.printStartMessage()
     minesweeperGame.gameStart()
