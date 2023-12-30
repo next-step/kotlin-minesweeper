@@ -11,10 +11,10 @@ class MinesweeperBoardRender(
     private val mines: Set<Position>
 ): BoardRenderStrategy {
 
-    override fun invoke(boardElement: BoardElement, value: Char): GameBoard {
+    override fun invoke(boardElement: BoardElement): GameBoard {
         val board = List(boardElement.width) { col ->
             List(boardElement.height) { row ->
-                makeCell(col, row, value)
+                makeCell(col, row, INIT_CELL_NUMBER)
             }
         }
 
@@ -33,5 +33,9 @@ class MinesweeperBoardRender(
             mine.nearPositions(boardElement)
                 .forEach { if (!board[it.col][it.row].isMine()) board[it.col][it.row].increaseValue() }
         }
+    }
+
+    companion object {
+        private const val INIT_CELL_NUMBER = '0'
     }
 }

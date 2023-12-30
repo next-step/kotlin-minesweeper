@@ -12,10 +12,7 @@ import java.lang.NumberFormatException
 private const val ROW = 0
 private const val COL = 1
 private const val INPUT_SIZE = 2
-private const val INIT_CELL = 'C'
-private const val INIT_CELL_NUMBER = '0'
 private const val INPUT_POSITION_DELIMITER = ", "
-
 fun main() {
     val inputValidates = listOf(::isOnlyNumber, ::isPositiveNumber)
 
@@ -31,8 +28,8 @@ fun main() {
     val boardElement = BoardElement(height, width)
     val mines = RandomPosition(boardElement).generate(mineCount)
 
-    val defaultGameBoard = DefaultBoardRender(mines)(boardElement, INIT_CELL)
-    val minesweeperGameBoard = MinesweeperBoardRender(mines)(boardElement, INIT_CELL_NUMBER)
+    val defaultGameBoard = DefaultBoardRender(mines)(boardElement)
+    val minesweeperGameBoard = MinesweeperBoardRender(mines)(boardElement)
 
     val minesweeperGame = MinesweeperGame(defaultGameBoard, minesweeperGameBoard, boardElement)
 
