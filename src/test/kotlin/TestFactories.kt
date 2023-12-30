@@ -18,5 +18,7 @@ fun Positions(row: Int, column: Int, minePositions: Set<Position>? = null): Posi
 fun MineBoard(vararg cells: Cell): MineBoard =
     MineBoard(cells.associateBy { it.position })
 
-fun Cell(row: Int, column: Int, mineCount: MineCount = MineCount.ZERO): Cell.Clear = Cell.Clear(Position(row, column), mineCount)
+fun Cell(row: Int, column: Int, mineCount: MineCount = MineCount.ZERO, isOpened: Boolean = false): Cell.Clear =
+    Cell.Clear(Position(row, column), mineCount, isOpened)
+
 fun Mine(row: Int, column: Int): Cell.Mine = Cell.Mine(Position(row, column))
