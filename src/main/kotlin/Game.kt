@@ -1,18 +1,11 @@
 import minesweeper.MinesweeperGame
-import minesweeper.PlayStatus
 import minesweeper.board.BoardElement
 import minesweeper.board.render.DefaultBoardRender
 import minesweeper.board.render.MinesweeperBoardRender
-import minesweeper.position.Position
 import minesweeper.position.RandomPosition
 import minesweeper.view.Input
 import minesweeper.view.Output
-import java.lang.NumberFormatException
 
-private const val ROW = 0
-private const val COL = 1
-private const val INPUT_SIZE = 2
-private const val INPUT_POSITION_DELIMITER = ", "
 fun main() {
     val inputValidates = listOf(::isOnlyNumber, ::isPositiveNumber)
 
@@ -34,42 +27,7 @@ fun main() {
     val minesweeperGame = MinesweeperGame(defaultGameBoard, minesweeperGameBoard, boardElement)
 
     Output.printStartMessage()
-    gameStart(minesweeperGame, boardElement)
-}
-
-private fun gameStart(minesweeperGame: MinesweeperGame, boardElement: BoardElement) {
-    val position = convertStringToPosition(boardElement)
-    when (minesweeperGame.play(position)) {
-        PlayStatus.OPEN -> {
-            Output.printAny(minesweeperGame.render())
-            gameStart(minesweeperGame, boardElement)
-        }
-        PlayStatus.WIN -> Output.printWinGame()
-        PlayStatus.LOSE -> Output.printLoseGame()
-    }
-}
-
-private tailrec fun convertStringToPosition(
-    boardElement: BoardElement
-): Position {
-    Output.printCellMessage()
-    return toPosition(Input.getLine().split(INPUT_POSITION_DELIMITER), boardElement)
-        ?: convertStringToPosition(boardElement)
-}
-
-private fun toPosition(split: List<String>, boardElement: BoardElement): Position? {
-    if (split.size != INPUT_SIZE) {
-        return null
-    }
-    try {
-        val position = Position(split[COL], split[ROW])
-        if (boardElement.isOutOfRange(position)) {
-            return null
-        }
-        return position
-    } catch (e: NumberFormatException) {
-        return null
-    }
+    minesweeperGame.gameStart()
 }
 
 private tailrec fun convertStringToInt(
@@ -77,13 +35,11 @@ private tailrec fun convertStringToInt(
     predicates: List<(String) -> Boolean>
 ): Int {
     val line = Input.getLine()
-    return when (predicates.all { it.invoke(line) }) {
-        true -> line.toInt()
-        false -> {
+    return if (predicates.all { it.invoke(line) }) line.toInt()
+        else {
             exceptionCallback()
             convertStringToInt(exceptionCallback, predicates)
         }
-    }
 }
 
 private fun isOnlyNumber(line: String): Boolean = line.all { it.isDigit() }
