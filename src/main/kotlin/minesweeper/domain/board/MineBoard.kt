@@ -6,7 +6,6 @@ import minesweeper.domain.cell.Position
 data class MineBoard(
     val cells: Map<Position, Cell>,
 ) {
-
     fun open(position: Position): Cell.Clear {
         val cell = getCell(position)
         check(cell is Cell.Clear)
@@ -21,6 +20,9 @@ data class MineBoard(
         check(cell is Cell.Clear)
         return cell.isOpened()
     }
+
+    fun isValidPosition(position: Position): Boolean =
+        cells[position] != null
 
     fun isAllOpened(): Boolean =
         cells.values.none { it is Cell.Clear && it.isOpened().not() }

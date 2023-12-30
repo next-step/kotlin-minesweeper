@@ -166,4 +166,29 @@ class MineBoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("isValidPosition()") {
+        val board = MineBoard(
+            Mine(0, 0),
+            Cell(0, 1, MineCount.ONE),
+            Cell(1, 0, MineCount.ONE),
+            Cell(1, 1, MineCount.ONE),
+        )
+        context("보드 내의 위치인 경우") {
+            it("true가 반환된다") {
+                val result = board.isValidPosition(Position(0, 1))
+
+                result shouldBe true
+            }
+        }
+
+        context("보드 내의 위치가 아닌 경우") {
+
+            it("false 반환된다") {
+                val result = board.isValidPosition(Position(0, 2))
+
+                result shouldBe false
+            }
+        }
+    }
 })
