@@ -3,13 +3,13 @@ package domain.board
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.board.MineCount
+import minesweeper.domain.board.MineTotal
 
-class MineCountTest : StringSpec({
+class MineTotalTest : StringSpec({
     "0보다 큰 정수로 지뢰 수 생성" {
         val count = 3
 
-        val result = MineCount(count)
+        val result = MineTotal(count)
 
         result.value shouldBe count
     }
@@ -18,7 +18,7 @@ class MineCountTest : StringSpec({
         val count = 0
 
         shouldThrowExactly<IllegalArgumentException> {
-            MineCount(count)
+            MineTotal(count)
         }
     }
 })

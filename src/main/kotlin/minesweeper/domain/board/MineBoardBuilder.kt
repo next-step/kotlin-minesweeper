@@ -1,5 +1,12 @@
 package minesweeper.domain.board
 
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.cells
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.PositionPicker
+import minesweeper.domain.position.Positions
+import minesweeper.domain.position.positions
+
 fun mineBoard(
     minePicker: PositionPicker,
     block: MineBoardBuilder.() -> Unit
@@ -9,23 +16,28 @@ class MineBoardBuilder(
     private val minePicker: PositionPicker,
 ) {
     private lateinit var size: MineBoardSize
-    private lateinit var mineCount: MineCount
+    private lateinit var mineCount: MineTotal
 
-    fun size(height: Height, width: Width) {
-        size = MineBoardSize(height, width)
+    fun size(size: MineBoardSize) {
+        this.size = size
     }
 
-    fun mineCount(count: MineCount) {
+    operator fun Width.times(height: Height): MineBoardSize = MineBoardSize(height, this)
+
+    fun mineCount(count: MineTotal) {
         mineCount = count
     }
 
-    private fun positions(): Positions =
-        positions(minePicker) {
-            allPositions(size.allPositionsOfRowAndColumns)
-            mineCount(mineCount)
+    fun build(): MineBoard = MineBoard(createCells())
+
+    private fun createCells(): Map<Position, Cell> =
+        cells {
+            positions(createPositions())
         }
 
-    fun build(): MineBoard {
-        return MineBoard.from(positions())
-    }
+    private fun createPositions(): Positions =
+        positions(minePicker) {
+            allPositions(size.allPositions)
+            mineTotal(mineCount)
+        }
 }

@@ -1,6 +1,6 @@
-package minesweeper.domain.board
+package minesweeper.domain.position
 
-import minesweeper.domain.cell.Position
+import minesweeper.domain.board.MineTotal
 
 fun positions(
     minePicker: PositionPicker,
@@ -16,8 +16,8 @@ class PositionsBuilder(
         this.positions = Positions(positions)
     }
 
-    fun mineCount(count: MineCount) {
-        val minePositions = minePicker.pick(positions.value, count.value)
+    fun mineTotal(total: MineTotal) {
+        val minePositions = minePicker.pick(positions.value, total.value)
         positions.pickMines(minePositions)
     }
 

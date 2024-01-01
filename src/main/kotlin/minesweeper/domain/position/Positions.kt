@@ -1,6 +1,4 @@
-package minesweeper.domain.board
-
-import minesweeper.domain.cell.Position
+package minesweeper.domain.position
 
 data class Positions(
     val value: Set<Position>,
@@ -8,9 +6,10 @@ data class Positions(
     lateinit var minePositions: Set<Position>
         private set
 
-    val adjacentMineCountByPosition: Map<Position, Int> by lazy {
+    val mineCountByPosition: Map<Position, Int> by lazy {
         val adjacentMineCountByPosition = minePositions
             .flatMap { it.adjacentPositions }
+            .filter { it in value }
             .groupBy { it }
             .mapValues { it.value.size }
 

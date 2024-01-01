@@ -1,5 +1,8 @@
-import minesweeper.domain.board.Positions
-import minesweeper.domain.cell.Position
+import minesweeper.domain.board.MineBoard
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.MineCount
+import minesweeper.domain.position.Position
+import minesweeper.domain.position.Positions
 
 fun Positions(row: Int, column: Int, minePositions: Set<Position>? = null): Positions {
     val allPositions = (0 until row).flatMap { row ->
@@ -7,8 +10,15 @@ fun Positions(row: Int, column: Int, minePositions: Set<Position>? = null): Posi
             Position(row, column)
         }
     }.toSet()
-    minePositions?.forEach { require(it in allPositions) }
     val positions = Positions(value = allPositions)
     minePositions?.run { positions.pickMines(this) }
     return positions
 }
+
+fun MineBoard(vararg cells: Cell): MineBoard =
+    MineBoard(cells.associateBy { it.position })
+
+fun Cell(row: Int, column: Int, mineCount: MineCount = MineCount.ZERO, isOpened: Boolean = false): Cell.Clear =
+    Cell.Clear(Position(row, column), mineCount, isOpened)
+
+fun Mine(row: Int, column: Int): Cell.Mine = Cell.Mine(Position(row, column))

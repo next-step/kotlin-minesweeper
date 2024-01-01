@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.domain.board.Height
 import minesweeper.domain.board.MineBoardSize
 import minesweeper.domain.board.Width
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 class MineBoardSizeTest : DescribeSpec({
     describe("allPositionsOfRowAndColumns") {
@@ -13,7 +13,7 @@ class MineBoardSizeTest : DescribeSpec({
             val size = MineBoardSize(Height(3), Width(2))
 
             it("행(0..2)과 열(0..1)에 대한 Position 생성") {
-                val positions = size.allPositionsOfRowAndColumns
+                val positions = size.allPositions
 
                 val expect = setOf(
                     Position(0, 0), Position(0, 1),

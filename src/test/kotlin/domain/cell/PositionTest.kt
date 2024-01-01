@@ -3,7 +3,7 @@ package domain.cell
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.cell.Position
+import minesweeper.domain.position.Position
 
 class PositionTest : DescribeSpec({
 
