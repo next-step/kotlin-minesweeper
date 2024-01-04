@@ -1,19 +1,18 @@
 package minesweeper.position
 
-import minesweeper.board.BoardDimensions
+import minesweeper.board.BoardElement
 
 data class Position(
-    val y: Int,
-    val x: Int
+    val col: Int,
+    val row: Int
 ) {
-    operator fun plus(other: Position) = Position(this.y + other.y, this.x + other.x)
+    constructor(col: String, row: String): this(col.toInt() - 1, row.toInt() - 1)
+    operator fun plus(other: Position) = Position(this.col + other.col, this.row + other.row)
 
-    fun nearPositions(boardDimensions: BoardDimensions): List<Position> =
+    fun nearPositions(boardElement: BoardElement): List<Position> =
         NEAR_POSITIONS.map { this + it }
-            .filter { it.isNotOutOfRange(boardDimensions) }
+            .filter { !boardElement.isOutOfRange(it) }
 
-    private fun isNotOutOfRange(boardDimensions: BoardDimensions) =
-        boardDimensions.height > this.y && this.y >= 0 && boardDimensions.width > this.x && this.x >= 0
     companion object {
         private val NEAR_POSITIONS = arrayOf(
             Position(0, -1),

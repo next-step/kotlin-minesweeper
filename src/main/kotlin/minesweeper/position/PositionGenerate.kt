@@ -1,5 +1,5 @@
 package minesweeper.position
 
-fun interface PositionGenerateStrategy {
+fun interface PositionGenerate {
     fun generate(): Position
 }

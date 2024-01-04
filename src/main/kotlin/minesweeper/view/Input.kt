@@ -1,4 +1,4 @@
-package view
+package minesweeper.view
 
 object Input {
 

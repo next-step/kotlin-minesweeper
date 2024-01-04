@@ -1,14 +1,22 @@
 package minesweeper.position
 
-import minesweeper.board.BoardDimensions
+import minesweeper.board.BoardElement
 
 class RandomPosition(
-    dimensions: BoardDimensions
-) : PositionGenerateStrategy {
+    element: BoardElement
+) : PositionGenerate {
 
-    private val rowRange = IntRange(0, dimensions.height - 1)
-    private val colRange = IntRange(0, dimensions.width - 1)
+    private val rowRange = IntRange(0, element.height - 1)
+    private val colRange = IntRange(0, element.width - 1)
 
     override fun generate(): Position =
-        Position(rowRange.random(), colRange.random())
+        Position(colRange.random(), rowRange.random())
+
+    fun generate(count: Int): Set<Position> = loopGenerate(count, mutableSetOf())
+
+    private tailrec fun loopGenerate(count: Int, set: MutableSet<Position>): MutableSet<Position> =
+        when (set.size < count) {
+            true -> loopGenerate(count, set.apply { set.add(generate()) })
+            false -> set
+        }
 }
