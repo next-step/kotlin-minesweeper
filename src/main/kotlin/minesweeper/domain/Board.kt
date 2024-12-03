@@ -4,7 +4,7 @@ class Board(
     height: Int,
     width: Int,
 ) {
-    private val points: Array<IntArray>
+    val points: Array<IntArray>
 
     init {
         require(height > ZERO && width > ZERO) { BOARD_INIT_VALUE_EXCEPTION }

@@ -18,4 +18,16 @@ class BoardTest : StringSpec({
             shouldThrow<IllegalArgumentException> { Board(height, width) }
         }
     }
+
+    "보드의 높이 * 너비를 가진 정수 배열을 생성한다." {
+        listOf(
+            1 to 1,
+            5 to 30,
+            10 to 10
+        ).forEach { (height, width) ->
+            val board = Board(height, width)
+            board.points.size shouldBe height
+            board.points[0].size shouldBe width
+        }
+    }
 })
