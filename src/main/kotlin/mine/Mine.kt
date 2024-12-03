@@ -1,7 +1,9 @@
-package cell
+package mine
 
-data object Cell : Element {
-    private const val DEFAULT = 'C'
+import cell.Element
+
+data object Mine : Element {
+    private const val DEFAULT = '*'
     private const val VALUE: Char = DEFAULT
 
     override val value: Char

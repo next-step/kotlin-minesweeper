@@ -1,3 +1,5 @@
 package cell
 
-interface Element
+interface Element {
+    val value: Char
+}

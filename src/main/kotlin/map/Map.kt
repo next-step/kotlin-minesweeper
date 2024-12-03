@@ -1,10 +1,16 @@
 package map
 
 import cell.Cell
+import mine.Mine
 
 class Map(
     val grid: Grid,
 ) {
+    fun placeMine(point: Point) {
+        val (x, y) = point.point
+        grid.place(x = x, y = y, element = Mine)
+    }
+
     companion object {
         fun create(
             height: Height,
