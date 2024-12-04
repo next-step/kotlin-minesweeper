@@ -10,12 +10,12 @@ class Board(
     width: Int,
     mines: Mines,
 ) {
-    val points: Array<List<Point>>
+    val points: List<List<Point>>
 
     init {
         require(height > ZERO && width > ZERO) { BOARD_INIT_VALUE_EXCEPTION }
         points =
-            Array(height) { row ->
+            List(height) { row ->
                 List(width) { col -> classifyPoint(row, col, mines) }
             }
     }
