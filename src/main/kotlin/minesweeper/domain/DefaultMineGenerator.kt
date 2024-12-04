@@ -8,10 +8,10 @@ class DefaultMineGenerator : MineGenerator {
         width: Int,
         count: Int,
     ): List<Mine> {
-        val allPoints =
+        val points =
             (0 until height).flatMap { row ->
                 (0 until width).map { col -> Mine(row, col) }
             }
-        return allPoints.shuffled().take(count)
+        return points.shuffled().take(count)
     }
 }
