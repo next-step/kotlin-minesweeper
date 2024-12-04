@@ -1,6 +1,8 @@
 package mine
 
+import map.Height
 import map.Point
+import map.Width
 
 class MinePoints(
     val points: List<Point>,
@@ -9,13 +11,13 @@ class MinePoints(
 
     companion object {
         fun create(
-            heightSize: Int,
-            widthSize: Int,
+            height: Height,
+            width: Width,
         ): MinePoints {
             val minePoints =
-                (0 until heightSize)
+                (0 until height.size)
                     .flatMap { row ->
-                        (0 until widthSize)
+                        (0 until width.size)
                             .map { col ->
                                 Point(row to col, Mine)
                             }
