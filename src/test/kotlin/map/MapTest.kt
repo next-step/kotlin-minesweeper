@@ -35,12 +35,15 @@ class MapTest {
         val widthSize = point.second.size
         val map = generateTestMap(heightSize, widthSize)
 
-        val minePoint = 0 to 0
-        map.placeMine(point = Point(point = minePoint))
+        val minePoints = listOf(Point(point = 0 to 0))
 
-        map.grid.points shouldHaveSize heightSize
-        map.grid.points.forEach { it shouldHaveSize widthSize }
-        map.grid.points[minePoint.first][minePoint.second].element shouldBe Mine
+        map.placeMine(minePoints = minePoints)
+
+        for (minePoint in minePoints) {
+            map.grid.points shouldHaveSize heightSize
+            map.grid.points.forEach { it shouldHaveSize widthSize }
+            map.grid.points[minePoint.point.first][minePoint.point.second].element shouldBe Mine
+        }
     }
 
     private fun generateTestMap(
@@ -54,7 +57,7 @@ class MapTest {
             listOf(
                 Pair(Height(size = 3), Width(size = 4)),
                 Pair(Height(size = 5), Width(size = 5)),
-                Pair(Height(size = 1), Width(size = 1)),
+                Pair(Height(size = 2), Width(size = 2)),
             )
     }
 }

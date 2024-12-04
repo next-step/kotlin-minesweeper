@@ -6,7 +6,11 @@ import mine.Mine
 class Map(
     val grid: Grid,
 ) {
-    fun placeMine(point: Point) {
+    fun placeMine(minePoints: List<Point>) {
+        minePoints.forEach { placeMineAtPoint(it) }
+    }
+
+    private fun placeMineAtPoint(point: Point) {
         val (x, y) = point.point
         grid.place(x = x, y = y, element = Mine)
     }

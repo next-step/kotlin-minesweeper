@@ -19,7 +19,7 @@ class MineSweeperConsole {
 
         ResultView.gameStart()
         val minePoints = MinePoints.create(height = height, width = width).take(mineCount)
-        minePoints.forEach { map.placeMine(it) }
+        map.placeMine(minePoints)
 
         ResultView.printMap(map.grid)
     }
