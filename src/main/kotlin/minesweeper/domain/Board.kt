@@ -14,9 +14,10 @@ class Board(
 
     init {
         require(height > ZERO && width > ZERO) { BOARD_INIT_VALUE_EXCEPTION }
-        points = Array(height) { row ->
-            List(width) { col -> classifyPoint(row, col, mines)}
-        }
+        points =
+            Array(height) { row ->
+                List(width) { col -> classifyPoint(row, col, mines) }
+            }
     }
 
     private fun classifyPoint(
