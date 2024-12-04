@@ -1,6 +1,9 @@
 package mine
 
-import map.*
+import map.Height
+import map.Point
+import map.Width
+import map.toIndex
 
 class MinePoints(
     val points: List<Point>,
