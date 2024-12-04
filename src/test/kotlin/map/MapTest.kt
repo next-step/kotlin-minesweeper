@@ -1,7 +1,8 @@
 package map
 
 import cell.Cell
-import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.data.row
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import mine.Mine
@@ -20,37 +21,35 @@ class MapTest {
         map.grid.points.rows shouldHaveSize heightSize
         map.grid.points.rows
             .forEach { it.columns shouldHaveSize widthSize }
+    }
 
-        for (rowIndex in 0 until heightSize) {
-            val expectedRow =
-                List(widthSize) { colIndex ->
-                    Point(point = Pair(rowIndex.toIndex(), colIndex.toIndex()), element = Cell)
-                }
-            map.grid.points.rows[rowIndex]
-                .columns shouldContainExactly expectedRow
-        }
+    @ParameterizedTest
+    @MethodSource("mapSizes")
+    fun `모든 초기 요소가 Cell인지 테스트한다`(point: Pair<Height, Width>) {
+        val heightSize = point.first.size
+        val widthSize = point.second.size
+        val map = generateTestMap(heightSize, widthSize)
+
+        map.grid.points.rows
+            .flatMap { it.columns }
+            .forAll { it.element shouldBe Cell }
     }
 
     @ParameterizedTest
     @MethodSource("mapSizes")
     fun `폭탄 설치 기능을 테스트한다`(point: Pair<Height, Width>) {
-        val heightSize = point.first.size
-        val widthSize = point.second.size
-        val map = generateTestMap(heightSize, widthSize)
+        val map = generateTestMap(point.first.size, point.second.size)
 
-        val mineIndex = Index(0)
-        val minePoints = MinePoints(points = listOf(Point(point = mineIndex to mineIndex)))
+        val rowIndex = Index(0)
+        val columnIndex = Index(0)
+        val minePoints = MinePoints(points = listOf(Point(point = rowIndex to columnIndex)))
 
         map.placeMine(minePoints = minePoints)
 
-        for (minePoint in minePoints.points) {
-            map.grid.points.rows shouldHaveSize heightSize
-            map.grid.points.rows
-                .forEach { it.columns shouldHaveSize widthSize }
-            map.grid.points.rows[minePoint.point.first.value]
-                .columns[minePoint.point.second.value]
-                .element shouldBe Mine
-        }
+        map.grid.points.rows
+            .flatMap { it.columns }
+            .filter { it.point.first == rowIndex && it.point.second == columnIndex }
+            .forAll { it.element shouldBe Mine }
     }
 
     private fun generateTestMap(
