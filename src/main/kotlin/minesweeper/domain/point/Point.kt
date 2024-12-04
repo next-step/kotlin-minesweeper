@@ -1,11 +1,11 @@
-package minesweeper.domain
+package minesweeper.domain.point
 
-class Point(
-    val r : Int,
-    val c : Int,
+sealed class Point(
+    private val row: Int,
+    private val col: Int,
 ) {
     init {
-        require(r >= ZERO && c >= ZERO) { POINT_NEGATIVE_VALUE_EXCEPTION_MESSAGE }
+        require(row >= ZERO && col >= ZERO) { POINT_NEGATIVE_VALUE_EXCEPTION_MESSAGE }
     }
 
     companion object {
