@@ -8,8 +8,8 @@ object ResultView {
     }
 
     fun printMap(grid: Grid) {
-        grid.points.forEach { rows ->
-            rows.forEach { print(it.element.value + " ") }
+        grid.points.rows.forEach { rows ->
+            rows.columns.forEach { print(it.element.value + " ") }
             println()
         }
     }

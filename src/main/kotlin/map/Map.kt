@@ -1,6 +1,5 @@
 package map
 
-import cell.Cell
 import mine.Mine
 
 class Map(
@@ -11,23 +10,14 @@ class Map(
     }
 
     private fun placeMineAtPoint(point: Point) {
-        val (x, y) = point.point
-        grid.place(x = x, y = y, element = Mine)
+        val (rowIndex, columnsIndex) = point.point
+        grid.place(rowIndex = rowIndex, columnIndex = columnsIndex, element = Mine)
     }
 
     companion object {
         fun create(
             height: Height,
             width: Width,
-        ): Map {
-            val points =
-                List(size = height.size) { row ->
-                    MutableList(size = width.size) { col ->
-                        Point(Pair(row, col), Cell)
-                    }
-                }
-
-            return Map(grid = Grid(points = points))
-        }
+        ): Map = Map(grid = Grid(points = Rows.ready(height, width)))
     }
 }

@@ -3,13 +3,13 @@ package map
 import cell.Element
 
 class Grid(
-    val points: List<MutableList<Point>>,
+    val points: Rows,
 ) {
     fun place(
-        x: Int,
-        y: Int,
+        rowIndex: Int,
+        columnIndex: Int,
         element: Element,
     ) {
-        points[x][y] = Point(Pair(x, y), element)
+        points.rows[rowIndex].columns[columnIndex] = Point(Pair(rowIndex, columnIndex), element)
     }
 }
