@@ -23,7 +23,7 @@ class MapTest {
         for (rowIndex in 0 until heightSize) {
             val expectedRow =
                 List(widthSize) { colIndex ->
-                    Point(point = Pair(rowIndex, colIndex), element = Cell)
+                    Point(point = Pair(rowIndex.toIndex(), colIndex.toIndex()), element = Cell)
                 }
             map.grid.points.rows[rowIndex]
                 .columns shouldContainExactly expectedRow
@@ -37,7 +37,8 @@ class MapTest {
         val widthSize = point.second.size
         val map = generateTestMap(heightSize, widthSize)
 
-        val minePoints = listOf(Point(point = 0 to 0))
+        val mineIndex = Index(0)
+        val minePoints = listOf(Point(point = mineIndex to mineIndex))
 
         map.placeMine(minePoints = minePoints)
 
@@ -45,8 +46,8 @@ class MapTest {
             map.grid.points.rows shouldHaveSize heightSize
             map.grid.points.rows
                 .forEach { it.columns shouldHaveSize widthSize }
-            map.grid.points.rows[minePoint.point.first]
-                .columns[minePoint.point.second]
+            map.grid.points.rows[minePoint.point.first.value]
+                .columns[minePoint.point.second.value]
                 .element shouldBe Mine
         }
     }

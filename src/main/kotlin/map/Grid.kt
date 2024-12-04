@@ -6,10 +6,10 @@ class Grid(
     val points: Rows,
 ) {
     fun place(
-        rowIndex: Int,
-        columnIndex: Int,
+        rowIndex: Index,
+        columnIndex: Index,
         element: Element,
     ) {
-        points.rows[rowIndex].columns[columnIndex] = Point(Pair(rowIndex, columnIndex), element)
+        points.rows[rowIndex.value].columns[columnIndex.value] = Point(Pair(rowIndex, columnIndex), element)
     }
 }

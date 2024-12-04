@@ -1,8 +1,6 @@
 package mine
 
-import map.Height
-import map.Point
-import map.Width
+import map.*
 
 class MinePoints(
     val points: List<Point>,
@@ -19,7 +17,7 @@ class MinePoints(
                     .flatMap { row ->
                         (0 until width.size)
                             .map { col ->
-                                Point(row to col, Mine)
+                                Point(row.toIndex() to col.toIndex(), Mine)
                             }
                     }.shuffled()
 

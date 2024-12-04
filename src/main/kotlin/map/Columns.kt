@@ -8,7 +8,7 @@ class Columns(
     companion object {
         fun ready(
             width: Width,
-            rowIndex: Int,
-        ): Columns = Columns(columns = MutableList(size = width.size) { index -> Point(Pair(rowIndex, index), Cell) })
+            rowIndex: Index,
+        ): Columns = Columns(columns = MutableList(size = width.size) { Point(Pair(rowIndex, it.toIndex()), Cell) })
     }
 }
