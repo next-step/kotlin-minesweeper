@@ -1,7 +1,6 @@
 package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -13,7 +12,7 @@ class BoardTest : StringSpec({
             1 to 0,
             -1 to 1,
             1 to -1,
-            -1 to -1
+            -1 to -1,
         ).forEach { (height, width) ->
             shouldThrow<IllegalArgumentException> { Board(height, width) }
         }
@@ -23,7 +22,7 @@ class BoardTest : StringSpec({
         listOf(
             1 to 1,
             5 to 30,
-            10 to 10
+            10 to 10,
         ).forEach { (height, width) ->
             val board = Board(height, width)
             board.points.size shouldBe height

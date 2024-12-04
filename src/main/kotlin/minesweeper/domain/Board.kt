@@ -8,7 +8,7 @@ class Board(
 
     init {
         require(height > ZERO && width > ZERO) { BOARD_INIT_VALUE_EXCEPTION }
-        points = Array(height,{IntArray(width)})
+        points = Array(height, { IntArray(width) })
     }
 
     companion object {

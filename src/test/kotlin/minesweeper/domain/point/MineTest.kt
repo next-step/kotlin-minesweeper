@@ -8,10 +8,9 @@ class MineTest : StringSpec({
         listOf(
             -1 to 1,
             1 to -1,
-            -1 to -1
+            -1 to -1,
         ).forEach { (row, col) ->
             shouldThrow<IllegalArgumentException> { Mine(row, col) }
         }
     }
-
 })

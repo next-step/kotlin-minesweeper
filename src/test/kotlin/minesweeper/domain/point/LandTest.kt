@@ -8,7 +8,7 @@ class LandTest : StringSpec({
         listOf(
             -1 to 1,
             1 to -1,
-            -1 to -1
+            -1 to -1,
         ).forEach { (row, col) ->
             shouldThrow<IllegalArgumentException> { Land(row, col) }
         }
