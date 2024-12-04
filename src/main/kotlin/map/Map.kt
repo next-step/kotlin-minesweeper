@@ -1,12 +1,15 @@
 package map
 
+import cell.Cell
+import cell.Element
 import mine.Mine
+import mine.MinePoints
 
 class Map(
     val grid: Grid,
 ) {
-    fun placeMine(minePoints: List<Point>) {
-        minePoints.forEach { placeMineAtPoint(it) }
+    fun placeMine(minePoints: MinePoints) {
+        minePoints.points.forEach { placeMineAtPoint(it) }
     }
 
     private fun placeMineAtPoint(point: Point) {
@@ -18,6 +21,7 @@ class Map(
         fun create(
             height: Height,
             width: Width,
-        ): Map = Map(grid = Grid(points = Rows.ready(height, width)))
+            element: Element = Cell,
+        ): Map = Map(grid = Grid(points = Rows.ready(height = height, width = width, element = element)))
     }
 }

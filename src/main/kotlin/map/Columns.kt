@@ -1,6 +1,7 @@
 package map
 
 import cell.Cell
+import cell.Element
 
 class Columns(
     val columns: MutableList<Point>,
@@ -9,6 +10,7 @@ class Columns(
         fun ready(
             width: Width,
             rowIndex: Index,
-        ): Columns = Columns(columns = MutableList(size = width.size) { Point(Pair(rowIndex, it.toIndex()), Cell) })
+            element: Element = Cell,
+        ): Columns = Columns(columns = MutableList(size = width.size) { Point(Pair(rowIndex, it.toIndex()), element) })
     }
 }

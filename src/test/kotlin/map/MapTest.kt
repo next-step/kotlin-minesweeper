@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import mine.Mine
+import mine.MinePoints
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -38,11 +39,11 @@ class MapTest {
         val map = generateTestMap(heightSize, widthSize)
 
         val mineIndex = Index(0)
-        val minePoints = listOf(Point(point = mineIndex to mineIndex))
+        val minePoints = MinePoints(points = listOf(Point(point = mineIndex to mineIndex)))
 
         map.placeMine(minePoints = minePoints)
 
-        for (minePoint in minePoints) {
+        for (minePoint in minePoints.points) {
             map.grid.points.rows shouldHaveSize heightSize
             map.grid.points.rows
                 .forEach { it.columns shouldHaveSize widthSize }

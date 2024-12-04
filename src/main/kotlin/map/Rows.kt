@@ -1,5 +1,8 @@
 package map
 
+import cell.Cell
+import cell.Element
+
 class Rows(
     val rows: List<Columns>,
 ) {
@@ -7,6 +10,7 @@ class Rows(
         fun ready(
             height: Height,
             width: Width,
-        ): Rows = Rows(rows = List(height.size) { Columns.ready(width = width, rowIndex = it.toIndex()) })
+            element: Element = Cell,
+        ): Rows = Rows(rows = List(height.size) { Columns.ready(width = width, rowIndex = it.toIndex(), element = element) })
     }
 }

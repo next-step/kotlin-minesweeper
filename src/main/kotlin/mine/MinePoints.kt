@@ -1,30 +1,22 @@
 package mine
 
 import map.Height
+import map.Map
 import map.Point
 import map.Width
-import map.toIndex
 
 class MinePoints(
     val points: List<Point>,
 ) {
-    fun take(mineCount: MineCount): List<Point> = points.take(mineCount.count)
-
     companion object {
         fun create(
             height: Height,
             width: Width,
-        ): MinePoints {
-            val minePoints =
-                (0 until height.size)
-                    .flatMap { row ->
-                        (0 until width.size)
-                            .map { col ->
-                                Point(row.toIndex() to col.toIndex(), Mine)
-                            }
-                    }.shuffled()
-
-            return MinePoints(points = minePoints)
-        }
+            mineCount: MineCount,
+        ): MinePoints =
+            MinePoints(Map.create(height = height, width = width, element = Mine)
+                .grid
+                .shuffle(mineCount),
+            )
     }
 }
