@@ -6,6 +6,16 @@ import cell.Element
 class Rows(
     val rows: List<Columns>,
 ) {
+    val rowSize: Int
+        get() {
+            return rows.size
+        }
+
+    val columnSize: Int
+        get() {
+            return rows[0].columns.size
+        }
+
     companion object {
         fun ready(
             height: Height,
