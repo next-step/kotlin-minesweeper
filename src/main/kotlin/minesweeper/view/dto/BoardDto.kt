@@ -7,7 +7,7 @@ data class BoardDto(val board: List<List<PointDto>>) {
     companion object {
         fun from(board: Board): BoardDto {
             return BoardDto(
-                board.points.map { rows -> rows.map { point -> PointDto(isMine = point is Mine) } },
+                board.grid.map { points -> points.cols.map { point -> PointDto(isMine = point is Mine) } },
             )
         }
     }
