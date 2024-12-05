@@ -39,6 +39,17 @@ class BoardTest {
         }
     }
 
+    @Test
+    fun `지뢰찾기 보드에 지뢰 개수가 전체 칸의 개수보다 크면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Board(
+                rows = 3,
+                columns = 3,
+                mineCount = 10,
+            )
+        }
+    }
+
     @ValueSource(ints = [1, 2, 3, 4, 5])
     @ParameterizedTest
     fun `지뢰찾기 보드를 생성하면 지뢰가 심어진다`(mineCount: Int) {
@@ -48,7 +59,7 @@ class BoardTest {
             mineCount = mineCount,
         )
 
-        val expected = board.board.sumOf { row -> row.count {it.isMine } }
+        val expected = board.countMines()
         mineCount shouldBe expected
     }
 }
