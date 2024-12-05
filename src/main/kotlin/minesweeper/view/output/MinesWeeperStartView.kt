@@ -9,7 +9,7 @@ object MinesWeeperStartView {
     fun print(dto: BoardDto) {
         println("지뢰찾기 게임 시작")
         dto.board.forEach { rows ->
-            println(rows.joinToString(" ") { if (it.isMine) MINE_SIGNATURE else LAND_SIGNATURE })
+            println(rows.joinToString(" ") { isMine -> if (isMine) MINE_SIGNATURE else LAND_SIGNATURE })
         }
     }
 }

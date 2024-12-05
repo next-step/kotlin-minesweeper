@@ -40,8 +40,8 @@ class BoardTest : StringSpec({
                     Width(width),
                     Mines(Height(height), Width(width), MineCount(0), DefaultMineGenerator()),
                 )
-            board.grid.size shouldBe height
-            board.grid[0].cols.size shouldBe width
+            board.points.size shouldBe height
+            board.points[0].cols.size shouldBe width
         }
     }
 })

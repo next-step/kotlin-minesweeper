@@ -10,7 +10,7 @@ class Board(
     width: Width,
     mines: Mines,
 ) {
-    val grid: List<Points> =
+    val points: List<Points> =
         List(height.value) { row ->
             Points(List(width.value) { col -> classifyPoint(row, col, mines) })
         }
