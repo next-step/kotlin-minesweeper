@@ -6,19 +6,14 @@ import minesweeper.domain.point.Mines
 import minesweeper.domain.point.Point
 
 class Board(
-    height: Int,
-    width: Int,
+    height: Height,
+    width: Width,
     mines: Mines,
 ) {
-    val points: List<List<Point>>
-
-    init {
-        require(height > ZERO && width > ZERO) { BOARD_INIT_VALUE_EXCEPTION }
-        points =
-            List(height) { row ->
-                List(width) { col -> classifyPoint(row, col, mines) }
-            }
-    }
+    val points: List<List<Point>> =
+        List(height.value) { row ->
+            List(width.value) { col -> classifyPoint(row, col, mines) }
+        }
 
     private fun classifyPoint(
         row: Int,
@@ -31,10 +26,5 @@ class Board(
         }
 
         return Land(row, col)
-    }
-
-    companion object {
-        private const val ZERO = 0
-        private const val BOARD_INIT_VALUE_EXCEPTION = "보드의 높이, 너비는 양수 값이어야 합니다."
     }
 }

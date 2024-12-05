@@ -4,8 +4,8 @@ import minesweeper.domain.point.Mine
 
 interface MineGenerator {
     fun generate(
-        height: Int,
-        width: Int,
-        count: Int,
+        height: Height,
+        width: Width,
+        count: MineCount,
     ): List<Mine>
 }
