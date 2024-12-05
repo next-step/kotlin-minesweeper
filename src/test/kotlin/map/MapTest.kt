@@ -62,7 +62,7 @@ class MapTest {
             listOf(
                 Pair(Height(size = 3), Width(size = 4)),
                 Pair(Height(size = 5), Width(size = 5)),
-                Pair(Height(size = 2), Width(size = 2)),
+                Pair(Height(size = 2), Width(size = 3)),
             )
     }
 }
