@@ -19,7 +19,7 @@ class MapTest {
 
         map.grid.points.rows shouldHaveSize heightSize
         map.grid.points.rows
-            .forEach { it.columns shouldHaveSize widthSize }
+            .forAll { it.columns shouldHaveSize widthSize }
     }
 
     @ParameterizedTest
