@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
+import minesweeper.domain.Cell
 
 class ResultView {
     companion object {
@@ -11,9 +12,9 @@ class ResultView {
             }
         }
 
-        private fun printRow(row: Array<Boolean>) {
+        private fun printRow(row: Array<Cell>) {
             for (cell in row) {
-                print(if (cell) "X " else ". ")
+                print(if (cell.isMine) "X " else ". ")
             }
         }
     }

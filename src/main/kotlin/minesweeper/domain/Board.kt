@@ -6,13 +6,13 @@ class Board(
     private val mineCount: Int,
 ) {
 
-    val board: Array<Array<Boolean>>
+    val board: Array<Array<Cell>>
 
     init {
         require(rows > 0) { "행은 1 이상이어야 합니다." }
         require(columns > 0) { "열은 1 이상이어야 합니다." }
         require(mineCount > 0) { "지뢰 개수는 1 이상이어야 합니다." }
-        board = Array(rows) { Array(columns) { false } }
+        board = Array(rows) { Array(columns) { Cell(isMine = false) } }
         placeMine()
     }
 
@@ -23,8 +23,8 @@ class Board(
             do {
                 row = (0 until rows).random()
                 col = (0 until columns).random()
-            } while (this.board[row][col])
-            this.board[row][col] = true
+            } while (this.board[row][col].isMine)
+            this.board[row][col].isMine = true
         }
     }
 }

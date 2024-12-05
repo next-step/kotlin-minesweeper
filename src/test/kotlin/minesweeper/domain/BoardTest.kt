@@ -48,7 +48,7 @@ class BoardTest {
             mineCount = mineCount,
         )
 
-        val expected = board.board.sumOf { row -> row.count { it } }
+        val expected = board.board.sumOf { row -> row.count {it.isMine } }
         mineCount shouldBe expected
     }
 }
