@@ -1,7 +1,6 @@
 package map
 
 import cell.Cell
-import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
