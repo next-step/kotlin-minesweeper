@@ -1,5 +1,8 @@
 package minesweeper.domain
 
-class Cell(
-    var isMine: Boolean = false,
-)
+
+sealed class Cell
+
+class Mine : Cell()
+
+class Land : Cell()
