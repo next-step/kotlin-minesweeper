@@ -17,27 +17,25 @@ class Board(
         placeMine()
     }
 
+    private fun placeMine() {
+        val minePlaces = generateMinePlaces()
+        for (minePlace in minePlaces) {
+            val row = minePlace / columns
+            val col = minePlace % columns
+            board[row].getCell(col).isMine = true
+        }
+    }
+
+    private fun generateMinePlaces(): List<Int> {
+        return (0..rows * columns).shuffled()
+            .take(mineCount)
+    }
+
     fun display(): String {
         return board.joinToString("\n") { it.display() }
     }
 
-    fun getCell(row: Int, col: Int): Cell {
-        return board[row].getCell(col)
-    }
-
     fun countMines(): Int {
-        return board.sumBy { row -> row.countMines() }
-    }
-
-    private fun placeMine() {
-        repeat(mineCount) {
-            var row: Int
-            var col: Int
-            do {
-                row = (0 until rows).random()
-                col = (0 until columns).random()
-            } while (getCell(row, col).isMine)
-            getCell(row, col).isMine = true
-        }
+        return board.sumOf { row -> row.countMines() }
     }
 }
