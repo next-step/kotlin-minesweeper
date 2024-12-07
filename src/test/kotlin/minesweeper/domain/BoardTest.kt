@@ -44,4 +44,32 @@ class BoardTest : StringSpec({
             board.points[0].cols.size shouldBe width
         }
     }
+
+    "isMine()은 특정 좌표가 지뢰라면 true 를 반환한다." {
+        val width = 2
+        val height = 2
+        val mines = listOf(Pair(1, 0), Pair(0, 0))
+        val board =
+            Board(
+                Height(height),
+                Width(width),
+                Mines(Height(height), Width(width), MineCount(0), FakeMineGenerator(mines)),
+            )
+
+        mines.forEach { board.isMine(row = it.first, col = it.second) shouldBe true }
+    }
+
+    "countAroundMines() 특정 좌표 주변에 있는 지뢰의 개수를 반환할 수 있다." {
+        val width = 3
+        val height = 3
+        val mines = listOf(Pair(1, 0), Pair(0, 0))
+        val board =
+            Board(
+                Height(height),
+                Width(width),
+                Mines(Height(height), Width(width), MineCount(0), FakeMineGenerator(mines)),
+            )
+
+        board.countAroundMines(1, 1) shouldBe 2
+    }
 })
