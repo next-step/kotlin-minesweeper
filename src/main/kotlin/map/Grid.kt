@@ -12,7 +12,7 @@ class Grid(
         element: Element,
     ) {
         require(rowIndex.value <= points.rows.size) { "폭탄 설치 행의 위치는 ${points.rowSize}보다 작아야합니다." }
-        require(columnIndex.value <= points.rows.size) { "폭탄 설치 행의 위치는 ${points.rows[0].columns.size}보다 작아야합니다." }
+        require(columnIndex.value <= points.rows.size) { "폭탄 설치 행의 위치는 ${points.columnSize}보다 작아야합니다." }
         points.rows[rowIndex.value].columns[columnIndex.value] = Point(Pair(rowIndex, columnIndex), element)
     }
 
