@@ -6,6 +6,8 @@ sealed class Point(
     private val row: Int,
     private val col: Int,
 ) {
+    abstract fun isMine(): Boolean
+
     init {
         require(row >= ZERO && col >= ZERO) { POINT_NEGATIVE_VALUE_EXCEPTION_MESSAGE }
     }
