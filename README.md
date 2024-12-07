@@ -21,6 +21,5 @@
   - [x] Mine, Mines는 현재 어떠한 역할을 하는지 명확히 되지 않아서 Cells로 통신하도록 변경
   - [ ] Minesweeper가 height, width, mineCount의 상태를 가지도록 변경
   - [ ] range 생성을 Minesweeper가 하는 책임으로 변경 
-- [ ] 화면에 필요한 정보를 도메인 모델이 가지지 않도록 한다
-  - [ ] Cell#toString에 `return if (isMine) {"*"} else {"C"}를 외부로 분리`
-  - 
+- [x] 화면에 필요한 정보를 도메인 모델이 가지지 않도록 한다
+  - [x] Cell#toString에 `return if (isMine) {"*"} else {"C"}를 외부로 분리`
