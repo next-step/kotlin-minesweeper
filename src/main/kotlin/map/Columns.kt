@@ -10,7 +10,7 @@ class Columns(
         fun ready(
             width: Width,
             rowIndex: Index,
-            element: Element = Cell,
+            element: Element = Cell.ready(),
         ): Columns = Columns(columns = MutableList(size = width.size) { Point(Pair(rowIndex, it.toIndex()), element) })
     }
 }

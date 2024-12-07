@@ -31,7 +31,7 @@ class MapTest {
 
         map.grid.points.rows
             .flatMap { it.columns }
-            .forAll { it.element shouldBe Cell }
+            .forAll { it.element shouldBe Cell.ready() }
     }
 
     @ParameterizedTest
@@ -48,7 +48,7 @@ class MapTest {
         map.grid.points.rows
             .flatMap { it.columns }
             .filter { it.point.first == rowIndex && it.point.second == columnIndex }
-            .forAll { it.element shouldBe Mine }
+            .forAll { it.element shouldBe Mine.ready() }
     }
 
     private fun generateTestMap(

@@ -5,5 +5,5 @@ import cell.Element
 
 data class Point(
     val point: Pair<Index, Index>,
-    val element: Element = Cell,
+    val element: Element = Cell.ready(),
 )

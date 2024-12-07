@@ -14,7 +14,7 @@ class MinePoints(
             width: Width,
             mineCount: MineCount,
         ): MinePoints =
-            MinePoints(Map.create(height = height, width = width, element = Mine)
+            MinePoints(Map.create(height = height, width = width, element = Mine.ready())
                 .grid
                 .shuffle(mineCount),
             )

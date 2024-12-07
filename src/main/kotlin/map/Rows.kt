@@ -20,7 +20,7 @@ class Rows(
         fun ready(
             height: Height,
             width: Width,
-            element: Element = Cell,
+            element: Element = Cell.ready(),
         ): Rows = Rows(rows = List(height.size) { Columns.ready(width = width, rowIndex = it.toIndex(), element = element) })
     }
 }
