@@ -10,17 +10,16 @@ object Minesweeper {
         return Cells.generate(START_RANGE..height, START_RANGE..width)
     }
 
-    fun chooseMinePosition(
+    fun chooseMineCells(
         height: Int,
         width: Int,
         mine: Int,
-    ): Mines {
-        val minePositions = List(mine) {
+    ): List<Cell> {
+        return List(mine) {
             Cell(
                 Height((START_RANGE..height).random()),
                 Width((START_RANGE..width).random()),
             )
         }
-        return Mines(Cells(minePositions))
     }
 }
