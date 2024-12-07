@@ -1,9 +1,12 @@
 package minesweeper
 
+import minesweeper.converter.BoardConverter
 import minesweeper.domain.Board
 import minesweeper.domain.DefaultMineGenerator
+import minesweeper.domain.Height
+import minesweeper.domain.MineCount
+import minesweeper.domain.Width
 import minesweeper.domain.point.Mines
-import minesweeper.view.dto.BoardDto
 import minesweeper.view.input.MinesWeeperSettingView
 import minesweeper.view.output.MinesWeeperStartView
 
@@ -12,18 +15,19 @@ fun main() {
 
     val mines =
         Mines(
-            height = setting.height,
-            width = setting.width,
-            count = setting.minesCount,
+            height = Height(setting.height),
+            width = Width(setting.width),
+            count = MineCount(setting.minesCount),
             DefaultMineGenerator(),
         )
 
     val board =
         Board(
-            height = setting.height,
-            width = setting.width,
+            height = Height(setting.height),
+            width = Width(setting.width),
             mines = mines,
         )
 
-    MinesWeeperStartView.print(BoardDto.from(board))
+    val model = BoardConverter.toModel(setting, board)
+    MinesWeeperStartView.print(model)
 }
