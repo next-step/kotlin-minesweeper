@@ -7,12 +7,12 @@ object InputView {
     }
 
     fun getWidth(): Int {
-        println("너비를 입력하세요.")
+        println("\n너비를 입력하세요.")
         return readln().toInt()
     }
 
     fun getMineCount(): Int {
-        println("지뢰는 몇 개인가요?")
+        println("\n지뢰는 몇 개인가요?")
         return readln().toInt()
     }
 }
