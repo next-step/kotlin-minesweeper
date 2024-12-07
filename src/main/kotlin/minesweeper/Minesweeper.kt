@@ -1,24 +1,33 @@
 package minesweeper
 
-object Minesweeper {
-    private const val START_RANGE = 1
+data class Minesweeper(
+    val height: Height,
+    val width: Width,
+    val cells: Cells,
+) {
+    private val heightRange: IntRange = 1..height.value
+    private val widthRange: IntRange = 1..width.value
 
-    fun setUp(
-        height: Int,
-        width: Int,
-    ): Cells {
-        return Cells.generate(START_RANGE..height, START_RANGE..width)
-    }
-
-    fun chooseMineCells(
-        height: Int,
-        width: Int,
-        mine: Int,
-    ): List<Cell> {
+    fun chooseMineCells(mine: Int): List<Cell> {
         return List(mine) {
             Cell(
-                Height((START_RANGE..height).random()),
-                Width((START_RANGE..width).random()),
+                Height(heightRange.random()),
+                Width(widthRange.random()),
+            )
+        }
+    }
+
+    companion object {
+        private const val START_RANGE = 1
+
+        fun setUp(
+            height: Int,
+            width: Int,
+        ): Minesweeper {
+            return Minesweeper(
+                Height(height),
+                Width(width),
+                Cells.generate(START_RANGE..height, START_RANGE..width),
             )
         }
     }

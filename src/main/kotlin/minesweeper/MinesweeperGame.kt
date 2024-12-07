@@ -5,8 +5,10 @@ fun main() {
     val width = InputView.getWidth()
     val mineCount = InputView.getMineCount()
 
-    val cells = Minesweeper.setUp(height, width)
-    val mineCells = Minesweeper.chooseMineCells(height, width, mineCount)
+    val minesweeper = Minesweeper.setUp(height, width)
+    val cells = minesweeper.cells
+
+    val mineCells = minesweeper.chooseMineCells(mineCount)
     val cellsWithMines = cells.placeMines(mineCells)
 
     OutputView.printStartMessage()

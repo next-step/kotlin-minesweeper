@@ -19,7 +19,8 @@
 - [x] 지뢰를 랜덤하게 배치한다. (RANDOM(row, column) -> 'Cell'이라는 개념적인 모델로 관리)
 - [ ] 코드를 리팩터링한다.
   - [x] Mine, Mines는 현재 어떠한 역할을 하는지 명확히 되지 않아서 Cells로 통신하도록 변경
-  - [ ] Minesweeper가 height, width, mineCount의 상태를 가지도록 변경
-  - [ ] range 생성을 Minesweeper가 하는 책임으로 변경 
+  - [x] Minesweeper가 height, width, mineCount의 상태를 가지도록 변경
+  - [x] range 생성을 Minesweeper가 하는 책임으로 변경 
+  - [ ] Cells#placeMines를 O(n)으로 변경
 - [x] 화면에 필요한 정보를 도메인 모델이 가지지 않도록 한다
   - [x] Cell#toString에 `return if (isMine) {"*"} else {"C"}를 외부로 분리`
