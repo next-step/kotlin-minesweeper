@@ -2,7 +2,7 @@ package minesweeper
 
 data class Height(val value: Int) {
     init {
-        require(value > ZERO) { "높이는 1이상 이어야 합니다. input = $value" }
+        require(value > ZERO) { "높이는 1이상이어야 합니다. input = $value" }
     }
 
     companion object {
