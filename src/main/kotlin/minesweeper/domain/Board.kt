@@ -4,6 +4,7 @@ class Board(
     private val height: Int,
     private val width: Int,
     private val mineCount: Int,
+    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy()
 ) {
 
     private val _board: MutableList<MutableList<Cell>>
@@ -26,12 +27,17 @@ class Board(
 
 
     private fun placeMine() {
-        val minePlaces = generateMinePlaces()
-        for (minePlace in minePlaces) {
-            val row = minePlace / width
-            val col = minePlace % width
+        val minePlaces = minePlacementStrategy.placeMines(height, width, mineCount)
+        minePlaces.forEach {
+            val (row, col) = placeToCoordinates(it)
             _board[row][col] = Mine()
         }
+    }
+
+    private fun placeToCoordinates(place: Int): Pair<Int, Int> {
+        val row = place / width
+        val col = place % width
+        return row to col
     }
 
     private fun countAdjacentMines() {
