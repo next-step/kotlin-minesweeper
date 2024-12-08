@@ -19,7 +19,7 @@ class ResultView {
         }
 
         private fun printCell(row: Row) {
-            for (cell in row.getRow()) {
+            for (cell in row.cells) {
                 print("${if (cell is Mine) "X" else "."} ")
             }
         }
