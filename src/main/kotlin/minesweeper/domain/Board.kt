@@ -15,7 +15,7 @@ class Board(
         validateInput()
         _board = MutableList(height) { MutableList(width) { Land() } }
         placeMine()
-        countAdjacentMines()
+        countAdjacentMineCountOfBoard()
     }
 
     private fun validateInput() {
@@ -40,11 +40,15 @@ class Board(
         return row to col
     }
 
-    private fun countAdjacentMines() {
+    private fun countAdjacentMineCountOfBoard() {
         for (row in 0 until height) {
-            for (col in 0 until width) {
-                updateAdjacentMineCountOfCell(row, col)
-            }
+            updateAdjacentMineCountOfLine(row)
+        }
+    }
+
+    private fun updateAdjacentMineCountOfLine(row: Int) {
+        for (col in 0 until width) {
+            updateAdjacentMineCountOfCell(row, col)
         }
     }
 
