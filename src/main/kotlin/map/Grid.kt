@@ -11,11 +11,20 @@ class Grid(
         columnIndex: Index?,
         element: Element,
     ) {
-        // TODO validation 메서드 추출
-        require(rowIndex != null && columnIndex != null) { "폭탄 설치 위치가 존재하지 않습니다. "}
-        require(rowIndex.value <= points.rows.size) { "폭탄 설치 행의 위치는 ${points.rowSize}보다 작아야합니다." }
-        require(columnIndex.value <= points.rows.size) { "폭탄 설치 행의 위치는 ${points.columnSize}보다 작아야합니다." }
-        points.rows[rowIndex.value].columns[columnIndex.value] = Point(Pair(rowIndex, columnIndex), element)
+        val (validatedRowIndex, validatedColumnIndex) = ensureValidPosition(rowIndex, columnIndex)
+        points.rows[validatedRowIndex.value].columns[validatedColumnIndex.value] =
+            Point(Pair(validatedRowIndex, validatedColumnIndex), element)
+    }
+
+    private fun ensureValidPosition(
+        rowIndex: Index?,
+        columnIndex: Index?,
+    ): Pair<Index, Index> {
+        require(rowIndex != null && columnIndex != null) { "폭탄 설치 위치가 존재하지 않습니다." }
+        require(rowIndex.value < points.rowSize) { "폭탄 설치 행의 위치는 ${points.rowSize}보다 작아야 합니다." }
+        require(columnIndex.value < points.columnSize) { "폭탄 설치 열의 위치는 ${points.columnSize}보다 작아야 합니다." }
+
+        return Pair(rowIndex, columnIndex)
     }
 
     fun shuffle(mineCount: MineCount): List<Point> =
