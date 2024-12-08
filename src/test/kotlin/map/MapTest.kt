@@ -1,7 +1,6 @@
 package map
 
 import cell.Cell
-import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -20,7 +19,7 @@ class MapTest {
 
         map.grid.points.rows shouldHaveSize heightSize
         map.grid.points.rows
-            .forEach { it.columns shouldHaveSize widthSize }
+            .forAll { it.columns shouldHaveSize widthSize }
     }
 
     @ParameterizedTest
@@ -32,16 +31,18 @@ class MapTest {
 
         map.grid.points.rows
             .flatMap { it.columns }
-            .forAll { it.element shouldBe Cell }
+            .forAll { it.element shouldBe Cell.ready() }
     }
 
     @ParameterizedTest
     @MethodSource("mapSizes")
     fun `폭탄 설치 기능을 테스트한다`(point: Pair<Height, Width>) {
-        val map = generateTestMap(point.first.size, point.second.size)
+        val heightSize = point.first.size
+        val widthSize = point.second.size
+        val map = generateTestMap(heightSize, widthSize)
 
-        val rowIndex = Index(0)
-        val columnIndex = Index(0)
+        val rowIndex = Index(0, heightSize)
+        val columnIndex = Index(0, widthSize)
         val minePoints = MinePoints(points = listOf(Point(point = rowIndex to columnIndex)))
 
         map.placeMine(minePoints = minePoints)
@@ -49,7 +50,7 @@ class MapTest {
         map.grid.points.rows
             .flatMap { it.columns }
             .filter { it.point.first == rowIndex && it.point.second == columnIndex }
-            .forAll { it.element shouldBe Mine }
+            .forAll { it.element shouldBe Mine.ready() }
     }
 
     private fun generateTestMap(
@@ -63,7 +64,7 @@ class MapTest {
             listOf(
                 Pair(Height(size = 3), Width(size = 4)),
                 Pair(Height(size = 5), Width(size = 5)),
-                Pair(Height(size = 2), Width(size = 2)),
+                Pair(Height(size = 2), Width(size = 3)),
             )
     }
 }

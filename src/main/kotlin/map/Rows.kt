@@ -16,11 +16,23 @@ class Rows(
             return rows[0].columns.size
         }
 
+    fun updateMineCounts(): Rows = Rows(rows.map { it.updateMineCounts(rows = this) })
+
     companion object {
         fun ready(
             height: Height,
             width: Width,
-            element: Element = Cell,
-        ): Rows = Rows(rows = List(height.size) { Columns.ready(width = width, rowIndex = it.toIndex(), element = element) })
+            element: Element = Cell.ready(),
+        ): Rows =
+            Rows(
+                rows =
+                    List(height.size) {
+                        Columns.ready(
+                            width = width,
+                            rowIndex = Index.create(value = it, maxSize = height.size),
+                            element = element,
+                        )
+                    },
+            )
     }
 }

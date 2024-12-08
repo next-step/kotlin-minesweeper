@@ -14,14 +14,16 @@ class Map(
 
     private fun placeMineAtPoint(point: Point) {
         val (rowIndex, columnsIndex) = point.point
-        grid.place(rowIndex = rowIndex, columnIndex = columnsIndex, element = Mine)
+        grid.place(rowIndex = rowIndex, columnIndex = columnsIndex, element = Mine.ready())
     }
+
+    fun updateMineCountByCell(): Map = Map(grid = Grid(grid.points.updateMineCounts()))
 
     companion object {
         fun create(
             height: Height,
             width: Width,
-            element: Element = Cell,
+            element: Element = Cell.ready(),
         ): Map = Map(grid = Grid(points = Rows.ready(height = height, width = width, element = element)))
     }
 }

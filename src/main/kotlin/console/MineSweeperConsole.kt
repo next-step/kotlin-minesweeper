@@ -13,13 +13,15 @@ class MineSweeperConsole {
         val height = Height(size = InputView.inputHeight() ?: DEFAULT)
         val width = Width(size = InputView.inputWidth() ?: DEFAULT)
 
-        val map = Map.create(height = height, width = width)
+        var map = Map.create(height = height, width = width)
 
         val mineCount = MineCount(count = InputView.inputMineCount() ?: DEFAULT)
 
         ResultView.gameStart()
         val minePoints = MinePoints.create(height = height, width = width, mineCount = mineCount)
         map.placeMine(minePoints)
+
+        map = map.updateMineCountByCell()
 
         ResultView.printMap(map.grid)
     }

@@ -2,10 +2,12 @@ package map
 
 data class Index(
     val value: Int,
+    val maxSize: Int,
 ) {
-    init {
-        require(value >= 0) { "인덱스는 음수일 수 없습니다." }
+    companion object {
+        fun create(
+            value: Int,
+            maxSize: Int,
+        ): Index? = if (value in 0 until maxSize) Index(value, maxSize) else null
     }
 }
-
-fun Int.toIndex() = Index(this)

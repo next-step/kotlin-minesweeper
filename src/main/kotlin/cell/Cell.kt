@@ -1,9 +1,13 @@
 package cell
 
-data object Cell : Element {
-    private const val DEFAULT = 'C'
-    private const val VALUE: Char = DEFAULT
+data class Cell(
+    override val value: String = DEFAULT,
+) : Element {
+    override fun updateValue(newValue: String): Element = Cell(value = newValue)
 
-    override val value: Char
-        get() = VALUE
+    companion object {
+        private const val DEFAULT = "C"
+
+        fun ready() = Cell(DEFAULT)
+    }
 }
