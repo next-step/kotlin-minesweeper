@@ -6,6 +6,13 @@ import cell.Element
 class Columns(
     val columns: MutableList<Point>,
 ) {
+    fun updateMineCounts(rows: Rows): Columns =
+        Columns(
+            columns
+                .map { it.updateMineCounts(rows = rows) }
+                .toMutableList(),
+        )
+
     companion object {
         fun ready(
             width: Width,

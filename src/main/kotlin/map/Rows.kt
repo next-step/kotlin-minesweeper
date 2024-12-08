@@ -2,7 +2,6 @@ package map
 
 import cell.Cell
 import cell.Element
-import map.move.Position
 
 class Rows(
     val rows: List<Columns>,
@@ -17,17 +16,7 @@ class Rows(
             return rows[0].columns.size
         }
 
-    fun isContainMine(position: Position): Boolean {
-        if (position.row == null || position.column == null) {
-            return false
-        }
-
-        return rows
-            .getOrNull(position.row.value)
-            ?.columns
-            ?.getOrNull(position.column.value)
-            ?.isMine() ?: false
-    }
+    fun updateMineCounts(): Rows = Rows(rows.map { it.updateMineCounts(rows = this) })
 
     companion object {
         fun ready(

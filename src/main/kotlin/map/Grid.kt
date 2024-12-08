@@ -1,7 +1,6 @@
 package map
 
 import cell.Element
-import map.move.Position
 import mine.MineCount
 
 class Grid(
@@ -24,6 +23,4 @@ class Grid(
             .flatMap { it.columns }
             .shuffled()
             .take(mineCount.count)
-
-    fun isMine(position: Position): Boolean = points.isContainMine(position = position)
 }
