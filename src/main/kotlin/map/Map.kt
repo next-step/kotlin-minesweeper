@@ -2,6 +2,8 @@ package map
 
 import cell.Cell
 import cell.Element
+import map.move.Direction
+import map.move.Position
 import mine.Mine
 import mine.MinePoints
 
@@ -21,13 +23,24 @@ class Map(
         val updatedRows = Rows(rows = grid.points.rows
             .map { columns ->
                 Columns(columns.columns.map { point: Point ->
-                    // TODO 주위의 지뢰 개수를 세는 로직을 넣는다.
-                    val adjacentMineCount = '1'
-                    point.update(adjacentMineCount)
+                    val adjacentMineCount = countAdjacentMines(p = point, rowSize = grid.points.rowSize, columnSize = grid.points.columnSize)
+                    point.update(adjacentMineCount.toString())
                 }.toMutableList())
             })
 
         return Map(grid = Grid(updatedRows))
+    }
+
+    private fun countAdjacentMines(
+        p: Point,
+        rowSize: Int,
+        columnSize: Int,
+    ): Int {
+        val position = Position(row = p.rowIndex, column = p.columnIndex)
+        return Direction.entries.count { direction ->
+            val head = position.move(direction = direction, rowSize = rowSize, columnSize = columnSize)
+            grid.isMine(position = head)
+        }
     }
 
     companion object {

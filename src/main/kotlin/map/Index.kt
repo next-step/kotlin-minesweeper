@@ -11,5 +11,3 @@ data class Index(
         ): Index? = if (value in 0 until maxSize) Index(value, maxSize) else null
     }
 }
-
-// fun Int.toIndex() = Index(this)

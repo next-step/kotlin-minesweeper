@@ -13,7 +13,16 @@ class Columns(
             element: Element = Cell.ready(),
         ): Columns =
             Columns(
-                columns = MutableList(size = width.size) { Point(Pair(rowIndex, Index.create(value = it, maxSize = width.size)), element) },
+                columns =
+                    MutableList(size = width.size) {
+                        Point(
+                            Pair(
+                                rowIndex,
+                                Index.create(value = it, maxSize = width.size),
+                            ),
+                            element,
+                        )
+                    },
             )
     }
 }

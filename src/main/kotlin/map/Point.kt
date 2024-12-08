@@ -2,6 +2,7 @@ package map
 
 import cell.Cell
 import cell.Element
+import mine.Mine
 
 data class Point(
     val point: Pair<Index?, Index?>,
@@ -17,9 +18,11 @@ data class Point(
             return point.second
         }
 
-    fun update(newElementValue: Char): Point =
+    fun update(element: String): Point =
         Point(
             point = this.point,
-            element = element.updateValue(newValue = newElementValue),
+            element = this.element.updateValue(newValue = element),
         )
+
+    fun isMine(): Boolean = element is Mine
 }
