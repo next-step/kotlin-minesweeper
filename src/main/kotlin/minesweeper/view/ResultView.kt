@@ -1,6 +1,7 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
+import minesweeper.domain.Land
 import minesweeper.domain.Mine
 import minesweeper.domain.Row
 
@@ -20,7 +21,7 @@ class ResultView {
 
         private fun printCell(row: Row) {
             for (cell in row.cells) {
-                print("${if (cell is Mine) "X" else "."} ")
+                print("${if (cell is Mine) "X" else "${(cell as Land).adjacentMines}"} ")
             }
         }
     }
