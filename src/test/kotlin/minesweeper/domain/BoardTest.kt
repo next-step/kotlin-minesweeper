@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.point.Mines
 
@@ -45,7 +46,7 @@ class BoardTest : StringSpec({
         }
     }
 
-    "isMine()은 특정 좌표가 지뢰라면 true 를 반환한다." {
+    "보드는 특정 좌표가 지뢰인지 땅인지 판별할 수 있다." {
         val width = 2
         val height = 2
         val mines = listOf(Pair(1, 0), Pair(0, 0))
@@ -56,7 +57,7 @@ class BoardTest : StringSpec({
                 Mines(Height(height), Width(width), MineCount(0), FakeMineGenerator(mines)),
             )
 
-        mines.forEach { board.isMine(row = it.first, col = it.second) shouldBe true }
+        mines.forAll { board.isMine(row = it.first, col = it.second) shouldBe true }
     }
 
     "countAroundMines() 특정 좌표 주변에 있는 지뢰의 개수를 반환할 수 있다." {

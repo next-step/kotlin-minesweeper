@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import minesweeper.common.ZERO
 import minesweeper.domain.point.Land
 import minesweeper.domain.point.Mine
 import minesweeper.domain.point.Mines
@@ -31,7 +32,15 @@ class Board(
     fun isMine(
         row: Int,
         col: Int,
-    ): Boolean = points[row].cols[col].isMine()
+    ): Boolean {
+        check(isInBoard(row, col)) { BOARD_OUT_OF_RANGE_EXCEPTION }
+        return points[row].cols[col].isMine()
+    }
+
+    private fun isInBoard(
+        row: Int,
+        col: Int,
+    ): Boolean = row >= ZERO && col >= ZERO  && row <points.size && col < points[0].cols.size
 
     fun countAroundMines(
         currentRow: Int,
@@ -46,6 +55,7 @@ class Board(
     }
 
     companion object {
+        private const val BOARD_OUT_OF_RANGE_EXCEPTION = "보드내에 있는 좌표가 아닙니다"
         private val UP_LEFT = -1 to -1
         private val UP = -1 to 0
         private val UP_RIGHT = -1 to 1
