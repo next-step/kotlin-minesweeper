@@ -1,7 +1,7 @@
 package cell
 
 interface Element {
-    val value: Char
+    val value: String
 
-    fun updateValue(newValue: Char): Element = this
+    fun updateValue(newValue: String): Element = this
 }
