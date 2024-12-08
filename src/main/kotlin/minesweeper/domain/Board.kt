@@ -6,11 +6,13 @@ class Board(
     private val mineCount: Int,
 ) {
 
-    val board: List<Row>
+    private val _board: MutableList<MutableList<Cell>>
+
+    val board get() = _board.map { it.toList() }
 
     init {
         validateInput()
-        board = List(height) { Row(width) }
+        _board = MutableList(height) { MutableList(width) { Land() } }
         placeMine()
         countAdjacentMines()
     }
@@ -28,7 +30,7 @@ class Board(
         for (minePlace in minePlaces) {
             val row = minePlace / width
             val col = minePlace % width
-            board[row].setMine(col)
+            _board[row][col] = Mine()
         }
     }
 
@@ -41,7 +43,7 @@ class Board(
     }
 
     private fun updateAdjacentMineCountOfCell(row: Int, col: Int) {
-        val currentCell = board[row].cells[col]
+        val currentCell = _board[row][col]
         if (currentCell is Land) {
             val adjacentMines = getAdjacentCells(row, col)
             currentCell.updateAdjacentMines(adjacentMines)
@@ -57,13 +59,15 @@ class Board(
                 if (outOfBound(newRow, newCol)) {
                     continue
                 }
-                adjacentCells.add(board[newRow].cells[newCol])
+                adjacentCells.add(_board[newRow][newCol])
             }
         }
         return adjacentCells
     }
 
-    private fun outOfBound(newRow: Int, newCol: Int) = newRow < 0 || newRow >= height || newCol < 0 || newCol >= width
+    private fun outOfBound(row: Int, col: Int): Boolean {
+        return row !in 0 until height || col !in 0 until width
+    }
 
     private fun generateMinePlaces(): List<Int> {
         return (0 until height * width).shuffled()
@@ -71,6 +75,6 @@ class Board(
     }
 
     fun countMines(): Int {
-        return board.sumOf { row -> row.countMines() }
+        return _board.sumOf { line -> line.count { it is Mine } }
     }
 }
