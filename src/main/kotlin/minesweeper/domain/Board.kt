@@ -46,16 +46,15 @@ class Board(
     }
 
     companion object {
-        private val direction =
-            listOf(
-                -1 to -1,
-                -1 to 0,
-                -1 to 1,
-                0 to -1,
-                0 to 1,
-                1 to -1,
-                1 to 0,
-                1 to 1,
-            )
+        private val UP_LEFT = -1 to -1
+        private val UP = -1 to 0
+        private val UP_RIGHT = -1 to 1
+        private val LEFT = 0 to -1
+        private val RIGHT = 0 to 1
+        private val DOWN_LEFT = 1 to -1
+        private val DOWN = 1 to 0
+        private val DOWN_RIGHT = 1 to 1
+
+        private val direction = listOf(UP_LEFT, UP, UP_RIGHT, LEFT, RIGHT, DOWN_LEFT, DOWN, DOWN_RIGHT)
     }
 }
