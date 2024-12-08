@@ -1,8 +1,8 @@
 package minesweeper.domain
 
 class Board(
-    private val rows: Int,
-    private val columns: Int,
+    private val height: Int,
+    private val width: Int,
     private val mineCount: Int,
 ) {
 
@@ -10,31 +10,31 @@ class Board(
 
     init {
         validateInput()
-        board = List(rows) { Row(columns) }
+        board = List(height) { Row(width) }
         placeMine()
         countAdjacentMines()
     }
 
     private fun validateInput() {
-        require(rows > 0) { "행은 1 이상이어야 합니다." }
-        require(columns > 0) { "열은 1 이상이어야 합니다." }
+        require(height > 0) { "행은 1 이상이어야 합니다." }
+        require(width > 0) { "열은 1 이상이어야 합니다." }
         require(mineCount > 0) { "지뢰 개수는 1 이상이어야 합니다." }
-        require(rows * columns > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
+        require(height * width > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
     }
 
 
     private fun placeMine() {
         val minePlaces = generateMinePlaces()
         for (minePlace in minePlaces) {
-            val row = minePlace / columns
-            val col = minePlace % columns
+            val row = minePlace / width
+            val col = minePlace % width
             board[row].setMine(col)
         }
     }
 
     private fun countAdjacentMines() {
-        for (row in 0 until rows) {
-            for (col in 0 until columns) {
+        for (row in 0 until height) {
+            for (col in 0 until width) {
                 updateAdjacentMineCountOfCell(row, col)
             }
         }
@@ -63,10 +63,10 @@ class Board(
         return adjacentCells
     }
 
-    private fun outOfBound(newRow: Int, newCol: Int) = newRow < 0 || newRow >= rows || newCol < 0 || newCol >= columns
+    private fun outOfBound(newRow: Int, newCol: Int) = newRow < 0 || newRow >= height || newCol < 0 || newCol >= width
 
     private fun generateMinePlaces(): List<Int> {
-        return (0 until rows * columns).shuffled()
+        return (0 until height * width).shuffled()
             .take(mineCount)
     }
 

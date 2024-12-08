@@ -14,8 +14,8 @@ class BoardTest {
     fun `지뢰찾기 보드 생성이 정상적으로 된다`() {
         assertDoesNotThrow {
             Board(
-                rows = 3,
-                columns = 3,
+                height = 3,
+                width = 3,
                 mineCount = 2,
             )
         }
@@ -32,8 +32,8 @@ class BoardTest {
     fun `지뢰찾기 보드에 0 이하의 값이 들어오면 예외가 발생한다`(rows: Int, columns: Int, mineCount: Int) {
         assertThrows<IllegalArgumentException> {
             Board(
-                rows = rows,
-                columns = columns,
+                height = rows,
+                width = columns,
                 mineCount = mineCount,
             )
         }
@@ -43,8 +43,8 @@ class BoardTest {
     fun `지뢰찾기 보드에 지뢰 개수가 전체 칸의 개수보다 크면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Board(
-                rows = 3,
-                columns = 3,
+                height = 3,
+                width = 3,
                 mineCount = 10,
             )
         }
@@ -54,8 +54,8 @@ class BoardTest {
     @ParameterizedTest
     fun `지뢰찾기 보드를 생성하면 지뢰가 심어진다`(mineCount: Int) {
         val board = Board(
-            rows = 5,
-            columns = 5,
+            height = 5,
+            width = 5,
             mineCount = mineCount,
         )
 
