@@ -4,7 +4,7 @@ class Board(
     private val height: Int,
     private val width: Int,
     private val mineCount: Int,
-    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy()
+    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
 ) {
 
     private val _board: MutableList<MutableList<Cell>>
@@ -24,7 +24,6 @@ class Board(
         require(mineCount > 0) { "지뢰 개수는 1 이상이어야 합니다." }
         require(height * width > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
     }
-
 
     private fun placeMine() {
         val minePlaces = minePlacementStrategy.placeMines(height, width, mineCount)
