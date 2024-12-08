@@ -9,8 +9,11 @@ class Columns(
     companion object {
         fun ready(
             width: Width,
-            rowIndex: Index,
+            rowIndex: Index?,
             element: Element = Cell.ready(),
-        ): Columns = Columns(columns = MutableList(size = width.size) { Point(Pair(rowIndex, it.toIndex()), element) })
+        ): Columns =
+            Columns(
+                columns = MutableList(size = width.size) { Point(Pair(rowIndex, Index.create(value = it, maxSize = width.size)), element) },
+            )
     }
 }

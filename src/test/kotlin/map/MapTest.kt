@@ -37,10 +37,12 @@ class MapTest {
     @ParameterizedTest
     @MethodSource("mapSizes")
     fun `폭탄 설치 기능을 테스트한다`(point: Pair<Height, Width>) {
-        val map = generateTestMap(point.first.size, point.second.size)
+        val heightSize = point.first.size
+        val widthSize = point.second.size
+        val map = generateTestMap(heightSize, widthSize)
 
-        val rowIndex = Index(0)
-        val columnIndex = Index(0)
+        val rowIndex = Index(0, heightSize)
+        val columnIndex = Index(0, widthSize)
         val minePoints = MinePoints(points = listOf(Point(point = rowIndex to columnIndex)))
 
         map.placeMine(minePoints = minePoints)
