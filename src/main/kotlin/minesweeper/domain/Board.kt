@@ -22,7 +22,7 @@ class Board(
         mines: Mines,
     ): Point {
         val mine = Mine(row, col)
-        if (mine in mines.placedMines) {
+        if (mine in mines) {
             return mine
         }
 

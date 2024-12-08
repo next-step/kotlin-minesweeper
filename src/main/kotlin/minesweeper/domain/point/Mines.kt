@@ -11,7 +11,9 @@ class Mines(
     count: MineCount,
     mineGenerator: MineGenerator,
 ) {
-    val placedMines: List<Mine> = mineGenerator.generate(height, width, count)
+    operator fun contains(mine: Mine): Boolean = placedMines.contains(mine)
+
+    private val placedMines: List<Mine> = mineGenerator.generate(height, width, count)
 
     init {
         require(count <= width.value * height.value) { MINE_COUNT_OVER_EXCEPTION }
