@@ -11,7 +11,7 @@ class Board(
     width: Width,
     mines: Mines,
 ) {
-    val points: List<Points> =
+    private val points: List<Points> =
         List(height.value) { row ->
             Points(List(width.value) { col -> classifyPoint(row, col, mines) })
         }
@@ -29,6 +29,39 @@ class Board(
         return Land(row, col)
     }
 
+    fun open(pointInput: Pair<Int, Int>): List<Land> {
+        val openedLands = mutableListOf<Land>()
+
+        openedLands.add(Land(pointInput.first, pointInput.second))
+
+        direction.filter { (directionRow, directionCol) ->
+            val nextRow = pointInput.first + directionRow
+            val nextCol = pointInput.second + directionCol
+
+            isInBoard(nextRow, nextCol) && !isMine(nextRow, nextCol)
+        }.forEach { (directionRow, directionCol) ->
+            val nextRow = pointInput.first + directionRow
+            val nextCol = pointInput.second + directionCol
+
+            openedLands.add(Land(nextRow, nextCol))
+        }
+
+        return openedLands
+    }
+
+    fun countAroundMines(
+        currentRow: Int,
+        currentCol: Int,
+    ): Int =
+        direction.count { (directionRow, directionCol) ->
+            val nextRow = currentRow + directionRow
+            val nextCol = currentCol + directionCol
+
+            isInBoard(nextRow, nextCol) && isMine(nextRow, nextCol)
+        }
+
+    fun existUnopenedLand(openedLands: Set<Land>): Boolean = points.any { rows -> containAllPoints(rows, openedLands) }
+
     fun isMine(
         row: Int,
         col: Int,
@@ -37,22 +70,15 @@ class Board(
         return points[row].cols[col].isMine()
     }
 
+    private fun containAllPoints(
+        row: Points,
+        openedLands: Set<Land>,
+    ): Boolean = row.cols.any { point -> !point.isMine() && !openedLands.contains(point) }
+
     private fun isInBoard(
         row: Int,
         col: Int,
-    ): Boolean = row >= ZERO && col >= ZERO  && row <points.size && col < points[0].cols.size
-
-    fun countAroundMines(
-        currentRow: Int,
-        currentCol: Int,
-    ): Int {
-        return direction.count { (directionRow, directionCol) ->
-            val nextRow = currentRow + directionRow
-            val nextCol = currentCol + directionCol
-
-            nextRow in points.indices && nextCol in points[0].cols.indices && points[nextRow].cols[nextCol].isMine()
-        }
-    }
+    ): Boolean = row >= ZERO && col >= ZERO && row < points.size && col < points[0].cols.size
 
     companion object {
         private const val BOARD_OUT_OF_RANGE_EXCEPTION = "보드내에 있는 좌표가 아닙니다"
