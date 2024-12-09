@@ -1,5 +1,6 @@
 package minesweeper.domain
 
+import minesweeper.Direction
 import minesweeper.common.ZERO
 import minesweeper.domain.point.Land
 import minesweeper.domain.point.Mine
@@ -11,7 +12,7 @@ class Board(
     width: Width,
     mines: Mines,
 ) {
-    private val points: List<Points> =
+    val points: List<Points> =
         List(height.value) { row ->
             Points(List(width.value) { col -> classifyPoint(row, col, mines) })
         }
@@ -26,41 +27,26 @@ class Board(
             return mine
         }
 
-        return Land(row, col)
+        return Land(row, col, mines)
     }
 
-    fun open(pointInput: Pair<Int, Int>): List<Land> {
-        val openedLands = mutableListOf<Land>()
-
-        openedLands.add(Land(pointInput.first, pointInput.second))
-
-        direction.filter { (directionRow, directionCol) ->
-            val nextRow = pointInput.first + directionRow
-            val nextCol = pointInput.second + directionCol
-
-            isInBoard(nextRow, nextCol) && !isMine(nextRow, nextCol)
-        }.forEach { (directionRow, directionCol) ->
-            val nextRow = pointInput.first + directionRow
-            val nextCol = pointInput.second + directionCol
-
-            openedLands.add(Land(nextRow, nextCol))
+    fun open(
+        row: Int,
+        col: Int,
+    ) {
+        Direction.entries.map { direction ->
+            row + direction.dy to col + direction.dx
+        }.filter { (nextRow, nextCol) ->
+            isInBoard(
+                nextRow,
+                nextCol,
+            ) && points[nextRow].cols[nextCol] is Land && !(points[nextRow].cols[nextCol] as Land).isOpened()
+        }.forEach { (nextRow, nextCol) ->
+            (points[nextRow].cols[nextCol] as Land).apply { open() }
         }
-
-        return openedLands
     }
 
-    fun countAroundMines(
-        currentRow: Int,
-        currentCol: Int,
-    ): Int =
-        direction.count { (directionRow, directionCol) ->
-            val nextRow = currentRow + directionRow
-            val nextCol = currentCol + directionCol
-
-            isInBoard(nextRow, nextCol) && isMine(nextRow, nextCol)
-        }
-
-    fun existUnopenedLand(openedLands: Set<Land>): Boolean = points.any { rows -> containAllPoints(rows, openedLands) }
+    fun existUnopenedLand(): Boolean = points.any { row -> row.cols.any { point -> point is Land && !point.isOpened() } }
 
     fun isMine(
         row: Int,
@@ -70,11 +56,6 @@ class Board(
         return points[row].cols[col].isMine()
     }
 
-    private fun containAllPoints(
-        row: Points,
-        openedLands: Set<Land>,
-    ): Boolean = row.cols.any { point -> !point.isMine() && !openedLands.contains(point) }
-
     private fun isInBoard(
         row: Int,
         col: Int,
@@ -82,15 +63,5 @@ class Board(
 
     companion object {
         private const val BOARD_OUT_OF_RANGE_EXCEPTION = "보드내에 있는 좌표가 아닙니다"
-        private val UP_LEFT = -1 to -1
-        private val UP = -1 to 0
-        private val UP_RIGHT = -1 to 1
-        private val LEFT = 0 to -1
-        private val RIGHT = 0 to 1
-        private val DOWN_LEFT = 1 to -1
-        private val DOWN = 1 to 0
-        private val DOWN_RIGHT = 1 to 1
-
-        private val direction = listOf(UP_LEFT, UP, UP_RIGHT, LEFT, RIGHT, DOWN_LEFT, DOWN, DOWN_RIGHT)
     }
 }

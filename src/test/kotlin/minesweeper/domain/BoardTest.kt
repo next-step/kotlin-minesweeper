@@ -7,7 +7,6 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.point.Land
 import minesweeper.domain.point.Mines
 import minesweeper.fixture.boardFixture
 
@@ -77,17 +76,26 @@ class BoardTest : BehaviorSpec({
             }
         }
 
-        Then("지뢰가 아닌 특정 좌표의 지뢰의 개수를 알 수 있다.") {
-            board.countAroundMines(1, 1) shouldBe 2
+        When("일부 땅을 공개하면") {
+            forAll(
+                row(0, 1),
+            ) { row, col ->
+                board.open(row, col)
+            }
+            Then("지뢰를 제외하고 더 공개할 땅이 있다.") {
+                board.existUnopenedLand() shouldBe true
+            }
         }
 
-        When("공개된 땅 좌표 목록이 있을 때") {
-            val openedLands1 = mutableSetOf(Land(1, 1))
-            val allOpened = mutableSetOf(Land(1, 1), Land(0, 1))
-
-            then("지뢰를 제외하고 더 공개할 땅이 있는지 검증할 수 있다.") {
-                board.existUnopenedLand(openedLands1) shouldBe true
-                board.existUnopenedLand(allOpened) shouldBe false
+        When("모든 땅을 공개하면") {
+            forAll(
+                row(0, 1),
+                row(1, 1),
+            ) { row, col ->
+                board.open(row, col)
+            }
+            Then("지뢰를 제외하고 더 공개할 땅이 없다.") {
+                board.existUnopenedLand() shouldBe false
             }
         }
     }

@@ -6,7 +6,6 @@ import minesweeper.domain.DefaultMineGenerator
 import minesweeper.domain.Height
 import minesweeper.domain.MineCount
 import minesweeper.domain.Width
-import minesweeper.domain.point.Land
 import minesweeper.domain.point.Mines
 import minesweeper.view.input.MinesWeeperSettingView
 import minesweeper.view.input.PointSelectView
@@ -34,22 +33,17 @@ fun main() {
 
     MinesWeeperStartView.print()
 
-    val openedLands = mutableSetOf<Land>()
-
-    if (!board.existUnopenedLand(openedLands)) {
+    if (!board.existUnopenedLand()) {
         ResultView.print(isWin = true)
         return
     }
 
-    while (processOpen(board, openedLands)) {
-        BoardView.print(BoardConverter.toModel(setting, board, openedLands))
+    while (processOpen(board)) {
+        BoardView.print(BoardConverter.toModel(setting, board))
     }
 }
 
-private fun processOpen(
-    board: Board,
-    openedLands: MutableSet<Land>,
-): Boolean {
+private fun processOpen(board: Board): Boolean {
     val point = PointSelectView.parsePoint()
 
     if (board.isMine(row = point.first, col = point.second)) {
@@ -57,9 +51,9 @@ private fun processOpen(
         return false
     }
 
-    openedLands.addAll(board.open(point))
+    board.open(point.first, point.second)
 
-    if (!board.existUnopenedLand(openedLands)) {
+    if (!board.existUnopenedLand()) {
         ResultView.print(isWin = true)
         return false
     }
