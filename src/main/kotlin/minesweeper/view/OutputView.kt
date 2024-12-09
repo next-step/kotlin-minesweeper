@@ -13,9 +13,13 @@ class OutputView {
         for (y in 0 until mineField.height.value) {
             for (x in 0 until mineField.width.value) {
                 val cell = mineField.findCell(Coordinate(x, y))
-                print(if (cell is Cell.Mine) "* " else "- ")
+                print(if (cell is Cell.Mine) MINE_VIEW else EMPTY_VIEW)
             }
             println()
         }
+    }
+    companion object{
+        private const val MINE_VIEW = "*"
+        private const val EMPTY_VIEW = "- "
     }
 }
