@@ -6,7 +6,7 @@ class MineSweeperGame(
     val mineList: Set<Mine> = setOf(),
 ) {
     companion object {
-        fun makeMap(
+        fun makeGame(
             width: Int,
             height: Int,
             numberOfMine: Int,
