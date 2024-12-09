@@ -1,6 +1,7 @@
 package map
 
-class Height(
+@JvmInline
+value class Height(
     val size: Int,
 ) {
     init {

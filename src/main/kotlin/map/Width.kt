@@ -1,6 +1,7 @@
 package map
 
-class Width(
+@JvmInline
+value class Width(
     val size: Int,
 ) {
     init {
