@@ -25,8 +25,8 @@ class Cells private constructor(
             height: Height,
             width: Width,
         ): List<Coordinate> {
-            return (0 until height.value).flatMap { y ->
-                (0 until width.value).map { x -> Coordinate(x, y) }
+            return List(height.value * width.value) {
+                Coordinate(it % width.value, it / width.value)
             }
         }
 
