@@ -1,11 +1,16 @@
 package mine
 
 import cell.Element
+import cell.status.CellStatus
+import cell.status.MineCell
 
-data object Mine : Element {
-    private const val DEFAULT = '*'
-    private const val VALUE: Char = DEFAULT
+data class Mine(
+    override val value: String = DEFAULT,
+    override val status: CellStatus = MineCell,
+) : Element {
+    companion object {
+        const val DEFAULT = "*"
 
-    override val value: Char
-        get() = VALUE
+        fun ready() = Mine(DEFAULT)
+    }
 }

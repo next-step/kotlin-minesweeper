@@ -1,9 +1,18 @@
 package cell
 
-data object Cell : Element {
-    private const val DEFAULT = 'C'
-    private const val VALUE: Char = DEFAULT
+import cell.status.CellStatus
+import cell.status.EmptyCell
 
-    override val value: Char
-        get() = VALUE
+data class Cell(
+    override val value: String? = null,
+    override val status: CellStatus = EmptyCell,
+) : Element {
+    override fun updateValue(
+        newValue: String,
+        newStatus: CellStatus
+    ): Element = Cell(value = newValue, status = newStatus)
+
+    companion object {
+        fun ready() = Cell()
+    }
 }

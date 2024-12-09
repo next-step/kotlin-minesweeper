@@ -1,5 +1,13 @@
 package cell
 
+import cell.status.CellStatus
+
 interface Element {
-    val value: Char
+    val value: String?
+    val status: CellStatus
+
+    fun updateValue(
+        newValue: String,
+        newStatus: CellStatus,
+    ): Element = this
 }

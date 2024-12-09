@@ -21,7 +21,7 @@ class MineSweeperConsole {
         val minePoints = MinePoints.create(height = height, width = width, mineCount = mineCount)
         map.placeMine(minePoints)
 
-        ResultView.printMap(map.grid)
+        ResultView.printMap(map.updateMineCountByCell())
     }
 
     companion object {
