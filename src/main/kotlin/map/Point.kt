@@ -2,8 +2,6 @@ package map
 
 import cell.Cell
 import cell.Element
-import map.move.Direction
-import map.move.Position
 import mine.Mine
 
 data class Point(
@@ -20,42 +18,13 @@ data class Point(
             return point.second
         }
 
-    fun updateMineCounts(rows: Rows): Point {
-        val adjacentMineCount = countAdjacentMines(rows)
-        return this.update(adjacentMineCount.toString())
-    }
+    fun updateWithAdjacentMineCount(countMines: (rowIndex: Index?, columnIndex: Index?) -> Int): Point =
+        update(countMines(rowIndex, columnIndex))
 
-    private fun countAdjacentMines(rows: Rows): Int {
-        if (rowIndex == null || columnIndex == null) {
-            return 0
-        }
-
-        val position = Position(row = rowIndex, column = columnIndex)
-        return Direction.entries.count { isMineInDirection(direction = it, position = position, rows = rows) }
-    }
-
-    private fun isMineInDirection(
-        direction: Direction,
-        position: Position,
-        rows: Rows,
-    ): Boolean {
-        val head = position.move(direction = direction, rowSize = rows.rowSize, columnSize = rows.columnSize)
-
-        if (head.row == null || head.column == null) {
-            return false
-        }
-
-        return rows.rows
-            .getOrNull(head.row.value)
-            ?.columns
-            ?.getOrNull(head.column.value)
-            ?.isMine() ?: false
-    }
-
-    private fun update(element: String): Point =
+    private fun update(element: Int): Point =
         Point(
             point = this.point,
-            element = this.element.updateValue(newValue = element),
+            element = this.element.updateValue(newValue = element.toString()),
         )
 
     fun isMine(): Boolean = element is Mine

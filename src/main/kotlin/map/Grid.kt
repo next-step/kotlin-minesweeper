@@ -2,9 +2,11 @@ package map
 
 import cell.Element
 import mine.MineCount
+import minecount.strategy.MineCountStrategy
 
 class Grid(
     val points: Rows,
+    private val mineCountStrategy: MineCountStrategy
 ) {
     fun place(
         rowIndex: Index?,
@@ -14,6 +16,13 @@ class Grid(
         val (validatedRowIndex, validatedColumnIndex) = ensureValidPosition(rowIndex, columnIndex)
         points.rows[validatedRowIndex.value].columns[validatedColumnIndex.value] =
             Point(Pair(validatedRowIndex, validatedColumnIndex), element)
+    }
+
+    fun updateMineCountByCell(): Grid {
+        val updateRows =
+            points.updateMineCount { rowIndex, columnIndex -> mineCountStrategy.calculate(rowIndex, columnIndex) }
+
+        return Grid(points = updateRows, mineCountStrategy = mineCountStrategy)
     }
 
     private fun ensureValidPosition(

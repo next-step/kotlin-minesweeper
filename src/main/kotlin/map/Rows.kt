@@ -16,7 +16,10 @@ class Rows(
             return rows[0].columns.size
         }
 
-    fun updateMineCounts(): Rows = Rows(rows.map { it.updateMineCounts(rows = this) })
+    fun updateMineCount(countMines: (Index?, Index?) -> Int): Rows {
+        val updatedRows = rows.map { it.updatePoints(countMines) }
+        return Rows(updatedRows)
+    }
 
     companion object {
         fun ready(
