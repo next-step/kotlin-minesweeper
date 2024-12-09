@@ -1,5 +1,5 @@
 package minesweeper.view.model
 
-typealias PointViewModels = List<PointViewModel>
+import minesweeper.common.PointViewModels
 
 data class BoardViewModel(val board: List<PointViewModels>)

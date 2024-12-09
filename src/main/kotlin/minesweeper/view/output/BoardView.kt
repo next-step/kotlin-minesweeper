@@ -1,7 +1,7 @@
 package minesweeper.view.output
 
+import minesweeper.common.PointViewModels
 import minesweeper.view.model.BoardViewModel
-import minesweeper.view.model.PointViewModels
 
 object BoardView {
     private const val POINT_SIGNATURE = "C"

@@ -1,5 +1,6 @@
 package minesweeper.converter
 
+import minesweeper.common.Row
 import minesweeper.common.ZERO
 import minesweeper.config.MinesWeeperSetting
 import minesweeper.domain.Board
@@ -20,7 +21,7 @@ object BoardConverter {
     private fun convertRow(
         setting: MinesWeeperSetting,
         board: Board,
-        row: Int,
+        row: Row,
     ) = List(setting.width) { col ->
         when (val point = board.points[row].cols[col]) {
             is Mine -> PointViewModel(aroundMineCount = ZERO, isOpened = false)

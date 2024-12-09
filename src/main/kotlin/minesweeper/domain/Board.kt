@@ -1,6 +1,8 @@
 package minesweeper.domain
 
 import minesweeper.Direction
+import minesweeper.common.Col
+import minesweeper.common.Row
 import minesweeper.common.ZERO
 import minesweeper.domain.point.Land
 import minesweeper.domain.point.Mine
@@ -18,8 +20,8 @@ class Board(
         }
 
     private fun classifyPoint(
-        row: Int,
-        col: Int,
+        row: Row,
+        col: Col,
         mines: Mines,
     ): Point {
         val mine = Mine(row, col)
@@ -31,8 +33,8 @@ class Board(
     }
 
     fun open(
-        row: Int,
-        col: Int,
+        row: Row,
+        col: Col,
     ) {
         Direction.entries.map { direction ->
             row + direction.dy to col + direction.dx
@@ -49,16 +51,16 @@ class Board(
     fun existUnopenedLand(): Boolean = points.any { row -> row.cols.any { point -> point is Land && !point.isOpened() } }
 
     fun isMine(
-        row: Int,
-        col: Int,
+        row: Row,
+        col: Col,
     ): Boolean {
         check(isInBoard(row, col)) { BOARD_OUT_OF_RANGE_EXCEPTION }
         return points[row].cols[col].isMine()
     }
 
     private fun isInBoard(
-        row: Int,
-        col: Int,
+        row: Row,
+        col: Col,
     ): Boolean = row >= ZERO && col >= ZERO && row < points.size && col < points[0].cols.size
 
     companion object {
