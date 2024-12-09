@@ -54,4 +54,54 @@ class CellsTest : BehaviorSpec({
             }
         }
     }
+    Given("셀 컬렉션에서 특정 좌표를 검색할 때") {
+        val fixMineCoordinates =
+            object : MineGenerator {
+                override fun generate(
+                    allCoordinates: List<Coordinate>,
+                    mineCount: MineCount,
+                ): Set<Coordinate> {
+                    return setOf(
+                        Coordinate(0, 0),
+                        Coordinate(1, 1),
+                    )
+                }
+            }
+
+        val height = Height(2)
+        val width = Width(2)
+        val mineCount = MineCount(1)
+
+        val cells = Cells.generate(height, width, mineCount, fixMineCoordinates)
+
+        When("해당 좌표에 셀이 존재하면") {
+            Then("올바른 셀을 반환해야 한다") {
+                val coordinate = Coordinate(1, 0)
+                val cell = cells.findCell(coordinate)
+
+                cell shouldBe Cell.Empty(coordinate)
+            }
+        }
+
+        When("해당 좌표에 지뢰 셀이 존재하면") {
+            Then("지뢰 셀을 반환해야 한다") {
+                val coordinate = Coordinate(0, 0)
+                val cell = cells.findCell(coordinate)
+
+                cell shouldBe Cell.Mine(coordinate)
+            }
+        }
+
+        When("해당 좌표에 셀이 존재하지 않으면") {
+            Then("예외를 발생시킨다") {
+                val invalidCoordinate = Coordinate(2, 2)
+
+                val exception =
+                    shouldThrow<IllegalArgumentException> {
+                        cells.findCell(invalidCoordinate)
+                    }
+                exception.message shouldBe "셀을 찾을 수 없습니다: $invalidCoordinate"
+            }
+        }
+    }
 })

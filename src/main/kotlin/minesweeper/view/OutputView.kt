@@ -18,7 +18,8 @@ class OutputView {
             println()
         }
     }
-    companion object{
+
+    companion object {
         private const val MINE_VIEW = "*"
         private const val EMPTY_VIEW = "- "
     }

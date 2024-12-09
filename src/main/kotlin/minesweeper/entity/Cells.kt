@@ -13,9 +13,10 @@ class Cells private constructor(
             height: Height,
             width: Width,
             mineCount: MineCount,
+            generator: MineGenerator = RandomMineGenerator(),
         ): Cells {
             val allCoordinates = generateCoordinates(height, width)
-            val mineCoordinates = selectRandomCoordinates(allCoordinates, mineCount)
+            val mineCoordinates = generator.generate(allCoordinates, mineCount)
             val cells = createCells(allCoordinates, mineCoordinates)
             return Cells(cells)
         }
@@ -27,21 +28,6 @@ class Cells private constructor(
             return (0 until height.value).flatMap { y ->
                 (0 until width.value).map { x -> Coordinate(x, y) }
             }
-        }
-
-        private fun selectRandomCoordinates(
-            allCoordinates: List<Coordinate>,
-            mineCount: MineCount,
-        ): Set<Coordinate> {
-            validateMineCount(mineCount, allCoordinates.size)
-            return allCoordinates.shuffled().take(mineCount.value).toSet()
-        }
-
-        private fun validateMineCount(
-            mineCount: MineCount,
-            totalCells: Int,
-        ) {
-            require(mineCount.value <= totalCells) { "지뢰 개수는 전체 셀 수를 초과할 수 없습니다." }
         }
 
         private fun createCells(
