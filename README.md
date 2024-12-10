@@ -20,7 +20,7 @@
 
 ### BoardLine
 
-- [ ] Cell들을 가지고 있다(너비)
+- [x] Cell들을 가지고 있다(너비)
 
 ### BoardLines
 
