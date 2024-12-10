@@ -61,16 +61,16 @@ class Board(
 
     private fun getAdjacentCells(row: Int, col: Int): List<Cell> {
         val adjacentCells = mutableListOf<Cell>()
-        for (i in -1..1) {
-            for (j in -1..1) {
-                val newRow = row + i
-                val newCol = col + j
-                if (outOfBound(newRow, newCol)) {
-                    continue
-                }
-                adjacentCells.add(_board[newRow][newCol])
+
+        for (direction in Direction.entries) {
+            val newRow = row + direction.dx
+            val newCol = col + direction.dy
+            if (outOfBound(newRow, newCol)) {
+                continue
             }
+            adjacentCells.add(_board[newRow][newCol])
         }
+
         return adjacentCells
     }
 
