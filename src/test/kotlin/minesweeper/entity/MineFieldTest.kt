@@ -92,4 +92,24 @@ class MineFieldTest : BehaviorSpec({
             }
         }
     }
+    Given("MineField가 초기화된 상태에서") {
+        val cells =
+            Cells(
+                listOf(
+                    Cell.Mine(Coordinate(0, 0)),
+                    Cell.Empty(Coordinate(1, 0)),
+                    Cell.Empty(Coordinate(0, 1)),
+                    Cell.Empty(Coordinate(1, 1)),
+                ),
+            )
+        val mineField = MineField(Height(2), Width(2), cells)
+
+        When("countAroundMines를 호출하면") {
+            Then("주변 지뢰의 개수가 올바르게 계산되어야 한다") {
+                mineField.countAroundMines(Coordinate(1, 1)) shouldBe 1
+                mineField.countAroundMines(Coordinate(1, 0)) shouldBe 1
+                mineField.countAroundMines(Coordinate(0, 0)) shouldBe 0
+            }
+        }
+    }
 })

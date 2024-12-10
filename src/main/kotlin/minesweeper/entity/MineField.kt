@@ -17,4 +17,10 @@ class MineField(
     fun findCell(coordinate: Coordinate): Cell {
         return _cells.findCell(coordinate)
     }
+
+    fun countAroundMines(coordinate: Coordinate): Int {
+        return coordinate.adjacentCoordinates()
+            .filter { it.isWithinBounds(width.value, height.value) }
+            .count { _cells.findCell(it) is Cell.Mine }
+    }
 }
