@@ -9,20 +9,22 @@ class MineFieldConverter {
         return List(mineField.height.value) { y ->
             List(mineField.width.value) { x ->
                 val cell = mineField.findCell(Coordinate(x, y))
-                convertCellToView(cell)
+                convertCellToView(cell, mineField)
             }
         }
     }
 
-    private fun convertCellToView(cell: Cell): Char {
+    private fun convertCellToView(
+        cell: Cell,
+        mineField: MineField,
+    ): Char {
         return when (cell) {
             is Cell.Mine -> MINE_VIEW
-            is Cell.Empty -> EMPTY_VIEW
+            is Cell.Empty -> mineField.countAroundMines(cell.coordinate).digitToChar()
         }
     }
 
     companion object {
         const val MINE_VIEW = '*'
-        const val EMPTY_VIEW = 'o'
     }
 }
