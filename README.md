@@ -16,7 +16,7 @@
 
 ### Cell
 
-- [ ] Island, Mine 두개로 구분된다
+- [x] Island, Mine 두개로 구분된다
 
 ### BoardLine
 
