@@ -13,24 +13,9 @@ class MineFieldFactory(
         val allCoordinates = generateCoordinates(height, width)
         val mineCoordinates = mineGenerator.generate(allCoordinates, mineCount)
 
-        val cells = createCells(allCoordinates, mineCoordinates)
+        val cells = Cells.create(allCoordinates, mineCoordinates)
 
         return MineField(height, width, cells)
-    }
-
-    private fun createCells(
-        allCoordinates: List<Coordinate>,
-        mineCoordinates: Set<Coordinate>,
-    ): Cells {
-        return Cells(
-            allCoordinates.map { coordinate ->
-                if (coordinate in mineCoordinates) {
-                    Cell.Mine(coordinate)
-                } else {
-                    Cell.Empty(coordinate)
-                }
-            },
-        )
     }
 
     private fun validateInputs(
