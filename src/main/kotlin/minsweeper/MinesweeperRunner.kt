@@ -1,13 +1,19 @@
 package minsweeper
 
+import minsweeper.domain.Board
 import minsweeper.view.InputView
+import minsweeper.view.ResultView
 
 class MinesweeperRunner {
 
     fun run() {
-        InputView.showAndGetHeight()
-        InputView.showAndGetWidth()
-        InputView.showAndGetMineCount()
+        val board = Board(
+            InputView.showAndGetHeight(),
+            InputView.showAndGetWidth(),
+            InputView.showAndGetMineCount(),
+        )
+
+        ResultView.printBoard(board.boardLines)
     }
 
 }
