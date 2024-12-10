@@ -1,8 +1,9 @@
 package minesweeper.view
 
 import minesweeper.domain.Board
+import minesweeper.domain.Cell
+import minesweeper.domain.Land
 import minesweeper.domain.Mine
-import minesweeper.domain.Row
 
 class ResultView {
     companion object {
@@ -18,9 +19,9 @@ class ResultView {
             }
         }
 
-        private fun printCell(row: Row) {
-            for (cell in row.getRow()) {
-                print("${if (cell is Mine) "X" else "."} ")
+        private fun printCell(row: List<Cell>) {
+            for (cell in row) {
+                print("${if (cell is Mine) "X" else "${(cell as Land).adjacentMines}"} ")
             }
         }
     }

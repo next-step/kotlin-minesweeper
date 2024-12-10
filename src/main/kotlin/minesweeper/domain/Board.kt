@@ -1,41 +1,89 @@
 package minesweeper.domain
 
 class Board(
-    private val rows: Int,
-    private val columns: Int,
+    private val height: Int,
+    private val width: Int,
     private val mineCount: Int,
+    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
 ) {
 
-    val board: List<Row>
+    private val _board: MutableList<MutableList<Cell>>
+
+    val board get() = _board.map { it.toList() }
 
     init {
         validateInput()
-        board = List(rows) { Row(columns) }
+        _board = MutableList(height) { MutableList(width) { Land() } }
         placeMine()
+        countAdjacentMineCountOfBoard()
     }
 
     private fun validateInput() {
-        require(rows > 0) { "행은 1 이상이어야 합니다." }
-        require(columns > 0) { "열은 1 이상이어야 합니다." }
+        require(height > 0) { "행은 1 이상이어야 합니다." }
+        require(width > 0) { "열은 1 이상이어야 합니다." }
         require(mineCount > 0) { "지뢰 개수는 1 이상이어야 합니다." }
-        require(rows * columns > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
+        require(height * width > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
     }
 
     private fun placeMine() {
-        val minePlaces = generateMinePlaces()
-        for (minePlace in minePlaces) {
-            val row = minePlace / columns
-            val col = minePlace % columns
-            board[row].setMine(col)
+        val minePlaces = minePlacementStrategy.placeMines(height, width, mineCount)
+        minePlaces.forEach {
+            val (row, col) = placeToCoordinates(it)
+            _board[row][col] = Mine()
         }
     }
 
+    private fun placeToCoordinates(place: Int): Pair<Int, Int> {
+        val row = place / width
+        val col = place % width
+        return row to col
+    }
+
+    private fun countAdjacentMineCountOfBoard() {
+        for (row in 0 until height) {
+            updateAdjacentMineCountOfLine(row)
+        }
+    }
+
+    private fun updateAdjacentMineCountOfLine(row: Int) {
+        for (col in 0 until width) {
+            updateAdjacentMineCountOfCell(row, col)
+        }
+    }
+
+    private fun updateAdjacentMineCountOfCell(row: Int, col: Int) {
+        val currentCell = _board[row][col]
+        if (currentCell is Land) {
+            val adjacentMines = getAdjacentCells(row, col)
+            currentCell.updateAdjacentMines(adjacentMines)
+        }
+    }
+
+    private fun getAdjacentCells(row: Int, col: Int): List<Cell> {
+        val adjacentCells = mutableListOf<Cell>()
+
+        for (direction in Direction.entries) {
+            val newRow = row + direction.dx
+            val newCol = col + direction.dy
+            if (outOfBound(newRow, newCol)) {
+                continue
+            }
+            adjacentCells.add(_board[newRow][newCol])
+        }
+
+        return adjacentCells
+    }
+
+    private fun outOfBound(row: Int, col: Int): Boolean {
+        return row !in 0 until height || col !in 0 until width
+    }
+
     private fun generateMinePlaces(): List<Int> {
-        return (0 until rows * columns).shuffled()
+        return (0 until height * width).shuffled()
             .take(mineCount)
     }
 
     fun countMines(): Int {
-        return board.sumOf { row -> row.countMines() }
+        return _board.sumOf { line -> line.count { it is Mine } }
     }
 }
