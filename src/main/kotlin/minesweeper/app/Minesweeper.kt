@@ -1,6 +1,6 @@
 package minesweeper.app
 
-import minesweeper.entity.Cell
+import minesweeper.converter.MineFieldConverter
 import minesweeper.entity.MineField
 import minesweeper.entity.MineFieldFactory
 import minesweeper.entity.RandomMineGenerator
@@ -10,6 +10,7 @@ import minesweeper.view.OutputView
 class Minesweeper {
     private val inputView = InputView()
     private val outputView = OutputView()
+    private val mineFieldConverter = MineFieldConverter()
 
     fun setUp(): MineField {
         val height = inputView.inputHeight()
@@ -21,22 +22,7 @@ class Minesweeper {
 
     fun gameStart(mineField: MineField) {
         outputView.printGameStart()
-        outputView.printMineField(mapToViewData(mineField))
-    }
-
-    private fun mapToViewData(mineField: MineField): List<List<Char>> {
-        val result = MutableList(mineField.height.value) { MutableList(mineField.width.value) { EMPTY_VIEW } }
-
-        for (cell in mineField.cells) {
-            val (x, y) = cell.coordinate
-            result[y][x] = if (cell is Cell.Mine) MINE_VIEW else EMPTY_VIEW
-        }
-
-        return result
-    }
-
-    companion object {
-        const val MINE_VIEW = '*'
-        const val EMPTY_VIEW = 'o'
+        val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
+        outputView.printMineField(mineFieldViewData)
     }
 }
