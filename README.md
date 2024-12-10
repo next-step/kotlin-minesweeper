@@ -24,5 +24,5 @@
 
 ### BoardLines
 
-- [ ] BoardLine들을 가지고 있다(높이)
+- [x] BoardLine들을 가지고 있다(높이)
 
