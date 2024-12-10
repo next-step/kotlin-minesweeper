@@ -1,13 +1,11 @@
 package minesweeper.entity
 
-sealed class Cell {
-    abstract val coordinate: Coordinate
-
+sealed class Cell(val coordinate: Coordinate) {
     fun matches(coordinate: Coordinate): Boolean {
         return this.coordinate == coordinate
     }
 
-    data class Mine(override val coordinate: Coordinate) : Cell()
+    class Mine(coordinate: Coordinate) : Cell(coordinate)
 
-    data class Empty(override val coordinate: Coordinate) : Cell()
+    class Empty(coordinate: Coordinate) : Cell(coordinate)
 }

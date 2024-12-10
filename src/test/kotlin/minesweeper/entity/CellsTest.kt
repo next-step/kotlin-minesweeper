@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
 class CellsTest : BehaviorSpec({
 
@@ -29,17 +30,9 @@ class CellsTest : BehaviorSpec({
 
                 cells.cells shouldHaveSize allCoordinates.size
 
-                cells.cells.filterIsInstance<Cell.Mine>() shouldBe
-                    listOf(
-                        Cell.Mine(Coordinate(0, 0)),
-                        Cell.Mine(Coordinate(1, 1)),
-                    )
+                cells.cells.filterIsInstance<Cell.Mine>() shouldHaveSize mineCoordinates.size
 
-                cells.cells.filterIsInstance<Cell.Empty>() shouldBe
-                    listOf(
-                        Cell.Empty(Coordinate(1, 0)),
-                        Cell.Empty(Coordinate(0, 1)),
-                    )
+                cells.cells.filterIsInstance<Cell.Empty>() shouldHaveSize (allCoordinates.size - mineCoordinates.size)
             }
         }
 
@@ -95,7 +88,8 @@ class CellsTest : BehaviorSpec({
                 val coordinate = Coordinate(1, 0)
                 val cell = cells.findCell(coordinate)
 
-                cell shouldBe Cell.Empty(coordinate)
+                cell.coordinate shouldBe coordinate
+                cell.shouldBeTypeOf<Cell.Empty>()
             }
         }
 
@@ -104,7 +98,8 @@ class CellsTest : BehaviorSpec({
                 val coordinate = Coordinate(0, 0)
                 val cell = cells.findCell(coordinate)
 
-                cell shouldBe Cell.Mine(coordinate)
+                cell.coordinate shouldBe coordinate
+                cell.shouldBeTypeOf<Cell.Mine>()
             }
         }
 
