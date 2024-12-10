@@ -25,8 +25,8 @@ class Field(val lines: List<FieldLine>) {
             val minePositions = selectMinePosition(mineCount, totalSpots)
 
             return (0 until totalSpots).map { spotCount ->
-                val height = FieldHeight(spotCount / fieldInfo.getWidth())
-                val width = FieldWidth(spotCount % fieldInfo.getWidth())
+                val height = FieldHeight((spotCount / fieldInfo.getWidth()) + 1)
+                val width = FieldWidth((spotCount % fieldInfo.getWidth()) + 1)
                 (if (spotCount in minePositions) ::MineSpot else ::SafeSpot)(height, width)
             }
         }
