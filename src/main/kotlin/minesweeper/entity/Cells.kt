@@ -1,6 +1,7 @@
 package minesweeper.entity
 
-class Cells private constructor(
+@JvmInline
+value class Cells(
     val cells: List<Cell>,
 ) {
     fun findCell(coordinate: Coordinate): Cell {
@@ -9,38 +10,24 @@ class Cells private constructor(
     }
 
     companion object {
-        fun generate(
-            height: Height,
-            width: Width,
-            mineCount: MineCount,
-            generator: MineGenerator = RandomMineGenerator(),
-        ): Cells {
-            val allCoordinates = generateCoordinates(height, width)
-            val mineCoordinates = generator.generate(allCoordinates, mineCount)
-            val cells = createCells(allCoordinates, mineCoordinates)
-            return Cells(cells)
-        }
-
-        private fun generateCoordinates(
-            height: Height,
-            width: Width,
-        ): List<Coordinate> {
-            return List(height.value * width.value) {
-                Coordinate(it % width.value, it / width.value)
-            }
-        }
-
-        private fun createCells(
+        fun create(
             allCoordinates: List<Coordinate>,
             mineCoordinates: Set<Coordinate>,
-        ): List<Cell> {
-            return allCoordinates.map { coordinate ->
-                if (coordinate in mineCoordinates) {
-                    Cell.Mine(coordinate)
-                } else {
-                    Cell.Empty(coordinate)
-                }
+        ): Cells {
+            val invalidCoordinates = mineCoordinates - allCoordinates.toSet()
+            require(invalidCoordinates.isEmpty()) {
+                "지뢰 좌표가 보드 범위를 벗어났습니다"
             }
+
+            val cells =
+                allCoordinates.map { coordinate ->
+                    if (coordinate in mineCoordinates) {
+                        Cell.Mine(coordinate)
+                    } else {
+                        Cell.Empty(coordinate)
+                    }
+                }
+            return Cells(cells)
         }
     }
 }
