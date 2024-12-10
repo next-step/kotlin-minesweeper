@@ -20,7 +20,7 @@ class OutputView {
     }
 
     companion object {
-        private const val MINE_VIEW = "*"
-        private const val EMPTY_VIEW = "- "
+        private const val MINE_VIEW = "* "
+        private const val EMPTY_VIEW = "o "
     }
 }
