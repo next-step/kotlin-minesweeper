@@ -5,12 +5,10 @@ sealed class Cell
 class Mine : Cell()
 
 class Land : Cell() {
-    private var _adjacentMines = 0
-
-    val adjacentMines: Int
-        get() = _adjacentMines
+    var adjacentMines = 0
+        private set
 
     fun updateAdjacentMines(adjacentCells: List<Cell>) {
-        _adjacentMines = adjacentCells.count { it is Mine }
+        this.adjacentMines = adjacentCells.count { it is Mine }
     }
 }
