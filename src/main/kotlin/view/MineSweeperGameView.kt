@@ -1,33 +1,34 @@
 package view
 
+import domain.MineMap
 import domain.MineSweeperGame
 
 object MineSweeperGameView {
     fun drawMineSweeperMap(mineSweeperGame: MineSweeperGame) {
         println("지뢰찾기 게임 시작")
-        val map = mineSweeperGame.mines.associate { Pair(Pair(it.x, it.y), true) }
+        val map = mineSweeperGame.getMineMap()
         for (i in 0 until mineSweeperGame.getWidth()) {
             drawOneLine(i, mineSweeperGame.getHeight(), map)
         }
     }
 
     private fun drawOneLine(
-        width: Int,
+        x: Int,
         height: Int,
-        map: Map<Pair<Int, Int>, Boolean>,
+        map: MineMap,
     ) {
         for (i in 0 until height) {
-            decideShape(width, i, map)
+            decideShape(x, i, map)
         }
         println()
     }
 
     private fun decideShape(
-        width: Int,
-        height: Int,
-        map: Map<Pair<Int, Int>, Boolean>,
+        x: Int,
+        y: Int,
+        map: MineMap,
     ) {
-        if (map.getOrDefault(Pair(width, height), false)) {
+        if (map.isMine(x, y)) {
             print("* ")
             return
         }

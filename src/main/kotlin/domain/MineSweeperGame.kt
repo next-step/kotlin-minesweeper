@@ -2,7 +2,7 @@ package domain
 
 class MineSweeperGame(
     private val mineShape: MineShape,
-    val mines: Set<Mine> = setOf(),
+    val mines: MineSet = MineSet(setOf()),
 ) {
     fun getWidth(): Int {
         return mineShape.width
@@ -12,14 +12,18 @@ class MineSweeperGame(
         return mineShape.height
     }
 
+    fun getMineMap(): MineMap {
+        return mines.getMineMap()
+    }
+
     companion object {
         fun makeGame(
             width: Int,
             height: Int,
             numberOfMine: Int,
-            mineGenerator: MineGenerator = RandomMineGenerator(),
+            minesGenerator: MinesGenerator = RandomMinesGenerator(),
         ): MineSweeperGame {
-            val mines = mineGenerator.getMine(width, height, numberOfMine)
+            val mines = minesGenerator.getMines(width, height, numberOfMine)
             return MineSweeperGame(MineShape(width, height), mines)
         }
     }

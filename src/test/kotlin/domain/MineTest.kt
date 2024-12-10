@@ -7,7 +7,7 @@ class MineTest {
     @Test
     fun `지뢰는 x좌표 y좌표를 가진다`() {
         val mine = Mine(2, 1)
-        assertThat(mine.x).isEqualTo(2)
-        assertThat(mine.y).isEqualTo(1)
+        assertThat(mine.getXPosition()).isEqualTo(2)
+        assertThat(mine.getYPosition()).isEqualTo(1)
     }
 }
