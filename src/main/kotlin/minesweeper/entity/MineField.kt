@@ -23,4 +23,9 @@ class MineField(
             .filter { it.isWithinBounds(width, height) }
             .count { _cells.findCell(it) is Cell.Mine }
     }
+
+    fun open(coordinate: Coordinate) {
+        val cell = findCell(coordinate)
+        cell.open()
+    }
 }

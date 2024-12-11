@@ -107,5 +107,12 @@ class MineFieldTest : BehaviorSpec({
                 mineField.countAroundMines(Coordinate(0, 0)) shouldBe 0
             }
         }
+        When("셀을 열면") {
+            mineField.open(Coordinate(1, 1))
+
+            Then("해당 셀이 열리고 상태가 변경되어야 한다") {
+                mineField.findCell(Coordinate(1, 1)).isRevealed shouldBe true
+            }
+        }
     }
 })
