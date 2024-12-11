@@ -3,7 +3,7 @@ import io.kotest.matchers.shouldBe
 
 class RowTest : BehaviorSpec({
     given("Row 는") {
-        val cells = List(3) { BasicCell() }
+        val cells = List(3) { BasicCell(row = 1, column = (it + 1)) }
         val sut = Row(cells)
 
         `when`("display()를 하면") {
