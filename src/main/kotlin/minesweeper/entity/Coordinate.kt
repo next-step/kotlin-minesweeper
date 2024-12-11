@@ -34,10 +34,10 @@ data class Coordinate(val x: Int, val y: Int) {
     }
 
     fun isWithinBounds(
-        width: Int,
-        height: Int,
+        width: Width,
+        height: Height,
     ): Boolean {
-        return x in 0 until width && y in 0 until height
+        return x in 0 until width.value && y in 0 until height.value
     }
 
     companion object {
