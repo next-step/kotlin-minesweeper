@@ -6,7 +6,7 @@ import minecount.strategy.MineCountStrategy
 
 class Grid(
     val points: Rows,
-    private val mineCountStrategy: MineCountStrategy
+    private val mineCountStrategy: MineCountStrategy,
 ) {
     fun place(
         rowIndex: Index?,
@@ -41,4 +41,14 @@ class Grid(
             .flatMap { it.columns }
             .shuffled()
             .take(mineCount.count)
+
+    fun open(
+        rowIndex: Index,
+        columnIndex: Index,
+    ): Grid? {
+        return Grid(
+            points = points.open(rowsIndex = rowIndex, columnIndex = columnIndex) ?: return null,
+            mineCountStrategy = mineCountStrategy,
+        )
+    }
 }

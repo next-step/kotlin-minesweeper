@@ -14,6 +14,14 @@ class Columns(
         return Columns(updatedPoints)
     }
 
+    fun open(columnIndex: Index): Columns? =
+        Columns(
+            columns
+                .mapIndexed { index, column ->
+                    if (index != columnIndex.value) column else column.open() ?: return null
+                }.toMutableList(),
+        )
+
     companion object {
         fun ready(
             width: Width,

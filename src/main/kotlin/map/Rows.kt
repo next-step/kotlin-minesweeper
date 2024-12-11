@@ -21,6 +21,17 @@ class Rows(
         return Rows(updatedRows)
     }
 
+    fun open(
+        rowsIndex: Index,
+        columnIndex: Index,
+    ): Rows? =
+        Rows(
+            rows
+                .mapIndexed { index, row ->
+                    if (index != rowsIndex.value) row else row.open(columnIndex = columnIndex) ?: return null
+                },
+        )
+
     companion object {
         fun ready(
             height: Height,
