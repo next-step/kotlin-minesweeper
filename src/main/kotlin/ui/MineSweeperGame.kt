@@ -1,25 +1,21 @@
 package ui
 
 import GameBoard
+import ui.ConsoleInput.inputColumnLength
+import ui.ConsoleInput.inputCountOfLandmine
+import ui.ConsoleInput.inputRowLength
+import ui.ConsoleOutput.announceGameStarted
+import ui.ConsoleOutput.displayCurrentGameBoard
 
 fun main() {
-    println("높이를 입력하세요.")
-    val rowLength = readln().toInt()
-    println()
+    val rowLength = inputRowLength()
 
-    println("너비를 입력하세요.")
-    val columnLength = readln().toInt()
-    println()
+    val columnLength = inputColumnLength()
 
-    println("지뢰는 몇 개인가요?")
-    val countOfLandmine = readln().toInt()
-    println()
+    val countOfLandmine = inputCountOfLandmine()
 
-    println("지뢰찾기 게임 시작")
     val gameBoard = GameBoard.of(rowLength = rowLength, columnLength = columnLength).plantMines(countOfLandmine)
 
-    val rows = gameBoard.rows()
-    for (row in rows) {
-        println(row.display())
-    }
+    announceGameStarted()
+    displayCurrentGameBoard(gameBoard.rows())
 }
