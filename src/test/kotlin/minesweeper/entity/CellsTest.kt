@@ -4,82 +4,92 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
 class CellsTest : BehaviorSpec({
 
     Given("Cells를 생성할 때") {
 
-        When("높이, 너비, 지뢰 개수를 입력받아 Cells를 생성하면") {
-            then("Cells 객체가 정상적으로 생성된다") {
-                val height = Height(5)
-                val width = Width(4)
-                val mineCount = MineCount(3)
+        When("전체 좌표와 지뢰 좌표가 주어지면") {
+            Then("지뢰와 빈 셀이 올바르게 생성된다") {
+                val allCoordinates =
+                    listOf(
+                        Coordinate(0, 0),
+                        Coordinate(1, 0),
+                        Coordinate(0, 1),
+                        Coordinate(1, 1),
+                    )
 
-                val cells = Cells.generate(height, width, mineCount)
-
-                cells.cells shouldHaveSize (height.value * width.value)
-            }
-        }
-
-        When("지뢰 개수가 전체 셀 수를 초과하면") {
-            then("예외가 발생한다") {
-                val height = Height(3)
-                val width = Width(3)
-                val mineCount = MineCount(10)
-
-                val exception =
-                    shouldThrow<IllegalArgumentException> {
-                        Cells.generate(height, width, mineCount)
-                    }
-                exception.message shouldBe "지뢰 개수는 전체 셀 수를 초과할 수 없습니다."
-            }
-        }
-    }
-
-    Given("지뢰 배치 로직") {
-
-        When("특정 지뢰 개수만큼 랜덤으로 배치하면") {
-            Then("지뢰 개수와 좌표가 올바르게 설정된다") {
-                val height = Height(4)
-                val width = Width(4)
-                val mineCount = MineCount(5)
-
-                val cells = Cells.generate(height, width, mineCount)
-                val mineCells = cells.cells.filterIsInstance<Cell.Mine>()
-
-                mineCells shouldHaveSize mineCount.value
-
-                val mineCoordinates = mineCells.map { it.coordinate }.toSet()
-                mineCoordinates shouldHaveSize mineCount.value
-            }
-        }
-    }
-    Given("셀 컬렉션에서 특정 좌표를 검색할 때") {
-        val fixMineCoordinates =
-            object : MineGenerator {
-                override fun generate(
-                    allCoordinates: List<Coordinate>,
-                    mineCount: MineCount,
-                ): Set<Coordinate> {
-                    return setOf(
+                val mineCoordinates =
+                    setOf(
                         Coordinate(0, 0),
                         Coordinate(1, 1),
                     )
-                }
+
+                val cells = Cells.create(allCoordinates, mineCoordinates)
+
+                cells.cells shouldHaveSize allCoordinates.size
+
+                cells.cells.filterIsInstance<Cell.Mine>() shouldHaveSize mineCoordinates.size
+
+                cells.cells.filterIsInstance<Cell.Empty>() shouldHaveSize (allCoordinates.size - mineCoordinates.size)
             }
+        }
 
-        val height = Height(2)
-        val width = Width(2)
-        val mineCount = MineCount(1)
+        When("지뢰 좌표가 전체 좌표에 포함되지 않는 경우") {
+            Then("예외가 발생한다") {
+                val allCoordinates =
+                    listOf(
+                        Coordinate(0, 0),
+                        Coordinate(1, 0),
+                        Coordinate(0, 1),
+                        Coordinate(1, 1),
+                    )
 
-        val cells = Cells.generate(height, width, mineCount, fixMineCoordinates)
+                val invalidMineCoordinates =
+                    setOf(
+                        Coordinate(2, 2),
+                    )
+
+                val exception =
+                    shouldThrow<IllegalArgumentException> {
+                        Cells.create(allCoordinates, invalidMineCoordinates)
+                    }
+
+                exception.message shouldBe "지뢰 좌표가 보드 범위를 벗어났습니다"
+            }
+        }
+
+        When("전체 좌표가 비어있는 경우") {
+            Then("빈 컬렉션이 생성된다") {
+                val allCoordinates = emptyList<Coordinate>()
+                val mineCoordinates = emptySet<Coordinate>()
+
+                val cells = Cells.create(allCoordinates, mineCoordinates)
+
+                cells.cells shouldHaveSize 0
+            }
+        }
+    }
+
+    Given("셀 컬렉션에서 특정 좌표를 검색할 때") {
+
+        val cellsList =
+            listOf(
+                Cell.Mine(Coordinate(0, 0)),
+                Cell.Empty(Coordinate(1, 0)),
+                Cell.Mine(Coordinate(0, 1)),
+                Cell.Empty(Coordinate(1, 1)),
+            )
+        val cells = Cells(cellsList)
 
         When("해당 좌표에 셀이 존재하면") {
             Then("올바른 셀을 반환해야 한다") {
                 val coordinate = Coordinate(1, 0)
                 val cell = cells.findCell(coordinate)
 
-                cell shouldBe Cell.Empty(coordinate)
+                cell.coordinate shouldBe coordinate
+                cell.shouldBeTypeOf<Cell.Empty>()
             }
         }
 
@@ -88,7 +98,8 @@ class CellsTest : BehaviorSpec({
                 val coordinate = Coordinate(0, 0)
                 val cell = cells.findCell(coordinate)
 
-                cell shouldBe Cell.Mine(coordinate)
+                cell.coordinate shouldBe coordinate
+                cell.shouldBeTypeOf<Cell.Mine>()
             }
         }
 

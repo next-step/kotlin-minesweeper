@@ -1,10 +1,16 @@
 package minesweeper.entity
 
-class MineField private constructor(
+class MineField(
     val height: Height,
     val width: Width,
     private val _cells: Cells,
 ) {
+    init {
+        require(cells.size == height.value * width.value) {
+            "Cells의 개수가 보드 크기와 일치하지 않습니다."
+        }
+    }
+
     val cells: List<Cell>
         get() = _cells.cells.toList()
 
@@ -12,14 +18,9 @@ class MineField private constructor(
         return _cells.findCell(coordinate)
     }
 
-    companion object {
-        fun create(
-            height: Height,
-            width: Width,
-            mineCount: MineCount,
-        ): MineField {
-            val generatedCells = Cells.generate(height, width, mineCount)
-            return MineField(height, width, generatedCells)
-        }
+    fun countAroundMines(coordinate: Coordinate): Int {
+        return coordinate.adjacentCoordinates()
+            .filter { it.isWithinBounds(width.value, height.value) }
+            .count { _cells.findCell(it) is Cell.Mine }
     }
 }
