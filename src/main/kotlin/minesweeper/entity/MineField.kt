@@ -26,6 +26,23 @@ class MineField(
 
     fun open(coordinate: Coordinate) {
         val cell = findCell(coordinate)
+        if (cell.isRevealed) return
+
         cell.open()
+        if (cell is Cell.Empty && countAroundMines(coordinate) == 0) {
+            openAdjacentEmptyCells(coordinate)
+        }
+    }
+
+    private fun openAdjacentEmptyCells(coordinate: Coordinate) {
+        coordinate.adjacentCoordinates()
+            .filter { it.isWithinBounds(width, height) && !findCell(it).isRevealed }
+            .forEach {
+                val cell = findCell(it)
+                cell.open()
+                if (cell is Cell.Empty && countAroundMines(cell.coordinate) == 0) {
+                    openAdjacentEmptyCells(cell.coordinate)
+                }
+            }
     }
 }

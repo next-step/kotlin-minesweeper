@@ -107,11 +107,70 @@ class MineFieldTest : BehaviorSpec({
                 mineField.countAroundMines(Coordinate(0, 0)) shouldBe 0
             }
         }
+    }
+    Given("지뢰 밭이 주어지면") {
+        When("지뢰가 있는 셀을 열면") {
+            val cells =
+                Cells(
+                    listOf(
+                        Cell.Mine(Coordinate(0, 0)),
+                        Cell.Empty(Coordinate(1, 0)),
+                        Cell.Empty(Coordinate(2, 0)),
+                        Cell.Empty(Coordinate(0, 1)),
+                        Cell.Empty(Coordinate(1, 1)),
+                        Cell.Empty(Coordinate(2, 1)),
+                        Cell.Empty(Coordinate(0, 2)),
+                        Cell.Empty(Coordinate(1, 2)),
+                        Cell.Mine(Coordinate(2, 2)),
+                    ).associateBy { it.coordinate },
+                )
+            val mineField = MineField(Height(3), Width(3), cells)
+            mineField.open(Coordinate(0, 0))
+
+            Then("지뢰가 있는 셀만 열리고 상태가 변경된다") {
+                mineField.findCell(Coordinate(0, 0)).isRevealed shouldBe true
+                mineField.findCell(Coordinate(1, 0)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(2, 0)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(0, 1)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(1, 1)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(2, 1)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(0, 2)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(1, 2)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(2, 2)).isRevealed shouldBe false
+            }
+        }
+
         When("셀을 열면") {
-            mineField.open(Coordinate(1, 1))
+            val cells =
+                Cells(
+                    listOf(
+                        Cell.Mine(Coordinate(0, 0)),
+                        Cell.Empty(Coordinate(1, 0)),
+                        Cell.Empty(Coordinate(2, 0)),
+                        Cell.Empty(Coordinate(0, 1)),
+                        Cell.Empty(Coordinate(1, 1)),
+                        Cell.Empty(Coordinate(2, 1)),
+                        Cell.Empty(Coordinate(0, 2)),
+                        Cell.Empty(Coordinate(1, 2)),
+                        Cell.Mine(Coordinate(2, 2)),
+                    ).associateBy { it.coordinate },
+                )
+            val mineField = MineField(Height(3), Width(3), cells)
+            mineField.open(Coordinate(2, 0))
 
             Then("해당 셀이 열리고 상태가 변경되어야 한다") {
+                mineField.findCell(Coordinate(2, 0)).isRevealed shouldBe true
+            }
+            Then("지뢰가 없는 인접한 빈 셀들이 연속적으로 열린다") {
+                mineField.findCell(Coordinate(0, 0)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(1, 0)).isRevealed shouldBe true
+                mineField.findCell(Coordinate(2, 0)).isRevealed shouldBe true
+                mineField.findCell(Coordinate(0, 1)).isRevealed shouldBe false
                 mineField.findCell(Coordinate(1, 1)).isRevealed shouldBe true
+                mineField.findCell(Coordinate(2, 1)).isRevealed shouldBe true
+                mineField.findCell(Coordinate(0, 2)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(1, 2)).isRevealed shouldBe false
+                mineField.findCell(Coordinate(2, 2)).isRevealed shouldBe false
             }
         }
     }
