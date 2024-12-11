@@ -24,7 +24,7 @@ class MineFieldFactory(
         mineCount: MineCount,
     ) {
         val totalCells = height.value * width.value
-        require(mineCount.value <= totalCells) {
+        require(mineCount.value < totalCells) {
             "지뢰 개수는 전체 셀 수를 초과할 수 없습니다. (total: $totalCells, mineCount: ${mineCount.value})"
         }
     }
