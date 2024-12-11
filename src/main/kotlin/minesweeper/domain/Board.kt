@@ -1,32 +1,26 @@
 package minesweeper.domain
 
 class Board(
-    private val height: Int,
-    private val width: Int,
-    private val mineCount: Int,
-    private val minePlacementStrategy: MinePlacementStrategy = RandomMinePlacementStrategy(),
+    private val config: BoardConfig,
 ) {
 
-    private val _board: MutableList<MutableList<Cell>>
+    private val _board: MutableList<MutableList<Cell>> = MutableList(config.height) {
+        MutableList(config.width) { Land() }
+    }
 
     val board get() = _board.map { it.toList() }
 
     init {
-        validateInput()
-        _board = MutableList(height) { MutableList(width) { Land() } }
         placeMine()
         countAdjacentMineCountOfBoard()
     }
 
-    private fun validateInput() {
-        require(height > 0) { "행은 1 이상이어야 합니다." }
-        require(width > 0) { "열은 1 이상이어야 합니다." }
-        require(mineCount > 0) { "지뢰 개수는 1 이상이어야 합니다." }
-        require(height * width > mineCount) { "지뢰 개수는 전체 칸의 개수보다 작아야 합니다." }
-    }
-
     private fun placeMine() {
-        val minePlaces = minePlacementStrategy.placeMines(height, width, mineCount)
+        val minePlaces = config.minePlacementStrategy.placeMines(
+            config.height,
+            config.width,
+            config.mineCount,
+        )
         minePlaces.forEach {
             val (row, col) = placeToCoordinates(it)
             _board[row][col] = Mine()
@@ -34,19 +28,19 @@ class Board(
     }
 
     private fun placeToCoordinates(place: Int): Pair<Int, Int> {
-        val row = place / width
-        val col = place % width
+        val row = place / config.width
+        val col = place % config.width
         return row to col
     }
 
     private fun countAdjacentMineCountOfBoard() {
-        for (row in 0 until height) {
+        for (row in 0 until config.height) {
             updateAdjacentMineCountOfLine(row)
         }
     }
 
     private fun updateAdjacentMineCountOfLine(row: Int) {
-        for (col in 0 until width) {
+        for (col in 0 until config.width) {
             updateAdjacentMineCountOfCell(row, col)
         }
     }
@@ -75,12 +69,7 @@ class Board(
     }
 
     private fun outOfBound(row: Int, col: Int): Boolean {
-        return row !in 0 until height || col !in 0 until width
-    }
-
-    private fun generateMinePlaces(): List<Int> {
-        return (0 until height * width).shuffled()
-            .take(mineCount)
+        return row !in 0 until config.height || col !in 0 until config.width
     }
 
     fun countMines(): Int {

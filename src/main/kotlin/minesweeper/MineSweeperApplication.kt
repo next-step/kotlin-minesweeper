@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.Board
+import minesweeper.domain.BoardConfig
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
@@ -10,8 +11,8 @@ class MineSweeperApplication {
         val rowSize = InputView.inputRowSize()
         val colSize = InputView.inputColumnSize()
         val mineCount = InputView.inputMineCount()
-
-        val board = Board(rowSize, colSize, mineCount)
+        val boardConfig = BoardConfig(rowSize, colSize, mineCount)
+        val board = Board(boardConfig)
 
         ResultView.printBoard(board)
     }
