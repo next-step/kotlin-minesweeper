@@ -49,4 +49,15 @@ class BoardConfigTest {
             )
         }
     }
+
+    @Test
+    fun `지뢰찾기 보드의 땅 개수를 반환한다`() {
+        val boardConfig = BoardConfig(
+            height = 3,
+            width = 3,
+            mineCount = 2,
+        )
+
+        boardConfig.getLandCount() shouldBe 7
+    }
 }

@@ -10,6 +10,8 @@ class Board(
 
     val board get() = _board.map { it.toList() }
 
+    private val boardOpener = BoardOpener(this)
+
     init {
         placeMine()
         countAdjacentMineCountOfBoard()
@@ -68,11 +70,34 @@ class Board(
         return adjacentCells
     }
 
-    private fun outOfBound(row: Int, col: Int): Boolean {
+    fun outOfBound(row: Int, col: Int): Boolean {
         return row !in 0 until config.height || col !in 0 until config.width
     }
 
     fun countMines(): Int {
         return _board.sumOf { line -> line.count { it is Mine } }
+    }
+
+    fun open(row: Int, col: Int): OpenResult {
+        val result = boardOpener.open(row, col)
+
+        if (isGameClear()) {
+            openAllCell()
+            return OpenResult.WIN
+        }
+
+        return result
+    }
+
+    private fun openAllCell() {
+        for (row in 0 until config.height) {
+            for (col in 0 until config.width) {
+                _board[row][col].open()
+            }
+        }
+    }
+
+    private fun isGameClear(): Boolean {
+        return _board.sumOf { line -> line.count { it.isOpened } } == config.getLandCount()
     }
 }
