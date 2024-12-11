@@ -1,6 +1,7 @@
 package minesweeper.app
 
 import minesweeper.converter.MineFieldConverter
+import minesweeper.entity.Cell
 import minesweeper.entity.MineField
 import minesweeper.entity.MineFieldFactory
 import minesweeper.entity.RandomMineGenerator
@@ -22,9 +23,24 @@ class Minesweeper {
 
     fun gameStart(mineField: MineField) {
         outputView.printGameStart()
-        val openCoordinate = inputView.inputCoordinate()
-        mineField.open(openCoordinate)
-        val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
-        outputView.printMineField(mineFieldViewData)
+        while (true){
+            val openCoordinate = inputView.inputCoordinate()
+            mineField.open(openCoordinate)
+            if(mineField.findCell(openCoordinate) is Cell.Mine){
+                outputView.printGameOver()
+                break
+            }
+            val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
+            outputView.printMineField(mineFieldViewData)
+            if(isGameCleared(mineField)){
+                outputView.printGameCleared()
+                break
+            }
+        }
+    }
+    private fun isGameCleared(mineField: MineField): Boolean {
+        return mineField.cells
+            .filterIsInstance<Cell.Empty>()
+            .all { it.isRevealed }
     }
 }

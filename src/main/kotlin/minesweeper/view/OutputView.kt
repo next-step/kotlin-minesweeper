@@ -10,4 +10,12 @@ class OutputView {
             println(row.joinToString(" "))
         }
     }
+
+    fun printGameOver() {
+        println("Lose Game.")
+    }
+
+    fun printGameCleared() {
+        println("Win Game.")
+    }
 }
