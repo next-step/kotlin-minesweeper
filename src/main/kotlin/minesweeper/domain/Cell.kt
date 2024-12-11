@@ -1,6 +1,12 @@
 package minesweeper.domain
 
-sealed class Cell
+sealed class Cell(
+    var isOpened: Boolean = false,
+) {
+    fun open() {
+        isOpened = true
+    }
+}
 
 class Mine : Cell()
 
