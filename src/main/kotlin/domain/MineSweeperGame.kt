@@ -1,11 +1,12 @@
 package domain
 
+import RandomMinePositionSetter
+
 class MineSweeperGame(
     val mineSweeperMap: MineSweeperMap,
     val mineCount: Int,
-    val minePositionSetter: MinePositionSetter = RandomMinePositionSetter(),
 ) {
-    fun setMinePosition() {
+    fun setMinePosition(minePositionSetter: MinePositionSetter = RandomMinePositionSetter()) {
         minePositionSetter.setPosition(mineSweeperMap)
     }
 

@@ -6,18 +6,26 @@ import org.junit.jupiter.api.Test
 class MineSweeperGameTest {
     @Test
     fun `지뢰찾기 보드, 지뢰의 갯수를 가진다`() {
-        val map = MineSweeperMap(2, 2, Array(2) { Array(2) { MineSweeperMapBlock(false) } })
+        val map =
+            MineSweeperMap(MineSweeperMapShape(3, 2), MineSweeperMapBlocks(MutableList(6) { MineSweeperMapBlock(false) }))
         val game = MineSweeperGame(map, 1)
 
-        game.mineSweeperMap.map.get(0).get(0).isMine shouldBe false
+        game.mineSweeperMap.isMine(0, 0) shouldBe false
         game.mineCount shouldBe 1
     }
 
     @Test
     fun `게임은 맵에서의 지뢰의 위치를 결정한다(중복없이)`() {
-        val map = MineSweeperMap(2, 2, Array(2) { Array(2) { MineSweeperMapBlock(false) } })
-        val game = MineSweeperGame(map, 1) { it.map.get(0).get(0).isMine = true }
-        game.setMinePosition()
-        game.mineSweeperMap.map.get(0).get(0).isMine shouldBe true
+        val map =
+            MineSweeperMap(MineSweeperMapShape(3, 2), MineSweeperMapBlocks(MutableList(6) { MineSweeperMapBlock(false) }))
+        val game = MineSweeperGame(map, 1)
+        game.setMinePosition { map.setMine(2, 1) }
+        game.mineSweeperMap.isMine(2, 1) shouldBe true
+    }
+
+    @Test
+    fun ofTest() {
+        val game = MineSweeperGame.of(5, 4, 1) { map -> map.setMine(0, 0) }
+        game.mineSweeperMap.isMine(0, 0) shouldBe true
     }
 }
