@@ -7,30 +7,15 @@ data class Coordinate(val x: Int, val y: Int) {
     }
 
     fun adjacentCoordinates(): List<Coordinate> {
-        val directions = listOf(-1, 0, 1)
-        return directions.flatMap { deltaX ->
-            getAdjacentCoordinatesForRow(deltaX, directions)
-        }
-    }
-
-    private fun getAdjacentCoordinatesForRow(
-        deltaX: Int,
-        directions: List<Int>,
-    ): List<Coordinate> {
-        return directions.mapNotNull { deltaY ->
-            when {
-                deltaX == 0 && deltaY == 0 -> null
-                else -> {
-                    val adjacentX = x + deltaX
-                    val adjacentY = y + deltaY
-                    if (adjacentX >= 0 && adjacentY >= 0) {
-                        Coordinate(adjacentX, adjacentY)
-                    } else {
-                        null
-                    }
-                }
+        return Direction.entries
+            .filter { direction ->
+                val newX = x + direction.deltaX
+                val newY = y + direction.deltaY
+                newX >= 0 && newY >= 0
             }
-        }
+            .map { direction ->
+                Coordinate(x + direction.deltaX, y + direction.deltaY)
+            }
     }
 
     fun isWithinBounds(
