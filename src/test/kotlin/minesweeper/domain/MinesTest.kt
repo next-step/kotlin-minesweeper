@@ -10,7 +10,7 @@ class MinesTest : BehaviorSpec({
             Then("생성 후 프로퍼티로 갖는다.") {
                 val mines = Mines(mineList)
 
-                mines.placedMines.size shouldBe mineList.size
+                mines.elements.size shouldBe mineList.size
             }
         }
     }
