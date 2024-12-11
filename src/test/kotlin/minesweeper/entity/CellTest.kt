@@ -28,4 +28,19 @@ class CellTest : BehaviorSpec({
             }
         }
     }
+    Given("Cell 객체를 생성한 후") {
+        val coordinate = Coordinate(2, 3)
+        val mineCell = Cell.Mine(coordinate)
+        val emptyCell = Cell.Empty(coordinate)
+
+        When("Cell을 open하면") {
+            mineCell.open()
+            emptyCell.open()
+
+            Then("해당 Cell은 open 상태여야 한다") {
+                mineCell.isRevealed shouldBe true
+                emptyCell.isRevealed shouldBe true
+            }
+        }
+    }
 })
