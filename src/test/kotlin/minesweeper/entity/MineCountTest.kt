@@ -6,10 +6,9 @@ import io.kotest.matchers.shouldBe
 
 class MineCountTest : BehaviorSpec({
     Given("MineCount 객체를 생성할 때") {
-
         When("지뢰 개수가 0보다 큰 값인 경우") {
+            val mineCount = MineCount(5)
             Then("정상적으로 객체가 생성된다") {
-                val mineCount = MineCount(5)
                 mineCount.value shouldBe 5
             }
         }

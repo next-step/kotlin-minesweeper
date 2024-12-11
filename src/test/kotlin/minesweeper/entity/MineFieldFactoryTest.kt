@@ -20,15 +20,15 @@ class MineFieldFactoryTest : BehaviorSpec({
         val fixedGenerator = FixedMineGenerator(fixedCoordinates)
 
         When("고정된 지뢰 생성기로 생성하면") {
-            Then("고정된 좌표를 포함한 MineField가 생성된다") {
-                val factory = MineFieldFactory(fixedGenerator)
-                val mineField =
-                    factory.create(
-                        height = Height(5),
-                        width = Width(5),
-                        mineCount = MineCount(3),
-                    )
+            val factory = MineFieldFactory(fixedGenerator)
+            val mineField =
+                factory.create(
+                    height = Height(5),
+                    width = Width(5),
+                    mineCount = MineCount(3),
+                )
 
+            Then("고정된 좌표를 포함한 MineField가 생성된다") {
                 val mineCells = mineField.cells.filterIsInstance<Cell.Mine>()
                 val mineCellCoordinates = mineCells.map { it.coordinate }.toSet()
 
@@ -41,8 +41,10 @@ class MineFieldFactoryTest : BehaviorSpec({
                 row(Height(3), Width(3), MineCount(10)),
                 row(Height(3), Width(3), MineCount(9)),
             ) { height, width, mineCount ->
+
                 Then("예외가 발생한다") {
                     val factory = MineFieldFactory(fixedGenerator)
+
                     val exception =
                         shouldThrow<IllegalArgumentException> {
                             factory.create(
@@ -51,6 +53,7 @@ class MineFieldFactoryTest : BehaviorSpec({
                                 mineCount = mineCount,
                             )
                         }
+
                     exception.message shouldContain "지뢰 개수는 전체 셀 수를 초과할 수 없습니다."
                 }
             }
