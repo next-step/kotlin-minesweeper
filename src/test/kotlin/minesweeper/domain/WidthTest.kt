@@ -14,7 +14,7 @@ class WidthTest : BehaviorSpec({
         }
 
         When("값이 양수면") {
-            val value = -1
+            val value = 1
             Then("예외 없이 생성된다.") {
                 shouldNotThrow<IllegalArgumentException> { Width(value) }
             }
