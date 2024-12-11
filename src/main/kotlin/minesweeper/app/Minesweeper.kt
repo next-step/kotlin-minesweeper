@@ -23,21 +23,29 @@ class Minesweeper {
 
     fun gameStart(mineField: MineField) {
         outputView.printGameStart()
-        while (true){
+        while (true) {
             val openCoordinate = inputView.inputCoordinate()
-            mineField.open(openCoordinate)
-            if(mineField.findCell(openCoordinate) is Cell.Mine){
+
+            try {
+                mineField.open(openCoordinate)
+            } catch (e: IllegalArgumentException) {
+                outputView.printInvalidCoordinate()
+                continue
+            }
+
+            if (mineField.findCell(openCoordinate) is Cell.Mine) {
                 outputView.printGameOver()
+                break
+            }
+            if (isGameCleared(mineField)) {
+                outputView.printGameCleared()
                 break
             }
             val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
             outputView.printMineField(mineFieldViewData)
-            if(isGameCleared(mineField)){
-                outputView.printGameCleared()
-                break
-            }
         }
     }
+
     private fun isGameCleared(mineField: MineField): Boolean {
         return mineField.cells
             .filterIsInstance<Cell.Empty>()

@@ -18,4 +18,8 @@ class OutputView {
     fun printGameCleared() {
         println("Win Game.")
     }
+
+    fun printInvalidCoordinate() {
+        println("유효하지 않은 좌표입니다.")
+    }
 }
