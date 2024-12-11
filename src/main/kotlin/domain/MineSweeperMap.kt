@@ -1,6 +1,6 @@
 package domain
 
-class MineMap(val map: Map<MinePosition, Boolean>) {
+class MineSweeperMap(val map: Map<MinePosition, Boolean>) {
     fun isMine(
         x: Int,
         y: Int,
