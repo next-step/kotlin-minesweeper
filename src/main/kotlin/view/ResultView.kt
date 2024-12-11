@@ -1,6 +1,8 @@
 package view
 
+import cell.showable.Show
 import map.Map
+import map.Point
 
 object ResultView {
     fun gameStart() {
@@ -9,8 +11,17 @@ object ResultView {
 
     fun printMap(map: Map) {
         map.grid.points.rows.forEach { rows ->
-            rows.columns.forEach { print(it.element.value + " ") }
+            rows.columns.forEach { print(it.value() + " ") }
             println()
         }
+    }
+
+    private fun Point.value(): String =
+        this.element.value
+            .takeIf { it != null && this.visibility is Show }
+            ?: "C"
+
+    fun printLose() {
+        println("Lose Game.")
     }
 }
