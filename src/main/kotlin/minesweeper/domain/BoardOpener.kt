@@ -32,11 +32,7 @@ class BoardOpener(
         }
     }
 
-    private fun openCell(
-        currentRow: Int,
-        currentCol: Int,
-        queue: ArrayDeque<Pair<Int, Int>>,
-    ) {
+    private fun openCell(currentRow: Int, currentCol: Int, queue: ArrayDeque<Pair<Int, Int>>) {
         val cell = cellList[currentRow][currentCol]
 
         if (cell.isOpened) {
@@ -53,7 +49,7 @@ class BoardOpener(
     private fun addAdjacentCellToQueue(
         currentRow: Int,
         currentCol: Int,
-        queue: ArrayDeque<Pair<Int, Int>>
+        queue: ArrayDeque<Pair<Int, Int>>,
     ) {
         Direction.entries.forEach { dir ->
             val newRow = currentRow + dir.dx

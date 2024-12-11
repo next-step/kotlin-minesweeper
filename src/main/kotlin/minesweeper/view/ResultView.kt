@@ -32,7 +32,7 @@ class ResultView {
                     cell is Mine -> "X "
                     cell is Land -> "${cell.adjacentMines} "
                     else -> throw IllegalArgumentException("지원하지 않는 셀 타입입니다.")
-                }
+                },
             )
         }
 
