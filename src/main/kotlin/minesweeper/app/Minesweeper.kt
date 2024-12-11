@@ -22,6 +22,8 @@ class Minesweeper {
 
     fun gameStart(mineField: MineField) {
         outputView.printGameStart()
+        val openCoordinate = inputView.inputCoordinate()
+        mineField.open(openCoordinate)
         val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
         outputView.printMineField(mineFieldViewData)
     }

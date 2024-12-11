@@ -18,13 +18,18 @@ class MineFieldConverter {
         cell: Cell,
         mineField: MineField,
     ): Char {
-        return when (cell) {
-            is Cell.Mine -> MINE_VIEW
-            is Cell.Empty -> mineField.countAroundMines(cell.coordinate).digitToChar()
+        return if (cell.isRevealed) {
+            when (cell) {
+                is Cell.Mine -> MINE_VIEW
+                is Cell.Empty -> mineField.countAroundMines(cell.coordinate).digitToChar()
+            }
+        } else {
+            HIDDEN_VIEW
         }
     }
 
     companion object {
         const val MINE_VIEW = '*'
+        const val HIDDEN_VIEW = '?'
     }
 }
