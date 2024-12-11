@@ -1,3 +1,7 @@
+package ui
+
+import GameBoard
+
 fun main() {
     println("높이를 입력하세요.")
     val rowLength = readln().toInt()
