@@ -15,4 +15,10 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
     }
+
+    fun inputOpenPosition(): Pair<Int, Int> {
+        print("open : ")
+        val split = readln().split(",")
+        return Pair(split[0].toInt() - 1, split[1].toInt() - 1)
+    }
 }

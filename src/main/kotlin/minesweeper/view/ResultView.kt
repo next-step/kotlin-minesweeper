@@ -35,5 +35,18 @@ class ResultView {
                 }
             )
         }
+
+        fun startGame() {
+            println()
+            println("지뢰찾기 게임을 시작")
+        }
+
+        fun winGame() {
+            println("지뢰찾기 게임에서 승리하셨습니다.")
+        }
+
+        fun loseGame() {
+            println("지뢰찾기 게임에서 패배하셨습니다.")
+        }
     }
 }
