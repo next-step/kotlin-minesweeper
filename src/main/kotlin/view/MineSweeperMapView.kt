@@ -14,11 +14,11 @@ object MineSweeperMapView {
         mineSweeperMap: MineSweeperMap,
         i: Int,
     ) {
-        if (mineSweeperMap.isMine(i % mineSweeperMap.getWidth(), i.div(mineSweeperMap.getWidth()))) {
-            print("* ")
-        } else {
-            print("C ")
+        when (mineSweeperMap.isMine(i % mineSweeperMap.getWidth(), i.div(mineSweeperMap.getWidth()))) {
+            true -> print("* ")
+            false -> print("C ")
         }
+
         if (i % mineSweeperMap.getWidth() == mineSweeperMap.getWidth() - 1) {
             println()
         }
