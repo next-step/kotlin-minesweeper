@@ -3,7 +3,7 @@ package minesweeper.domain
 class Land(
     mines: Mines,
     val point: Point,
-    private var isOpen: Boolean = false,
+    private var isOpened: Boolean = false,
 ) {
     val aroundMineCount: Int
 
@@ -11,8 +11,10 @@ class Land(
         aroundMineCount = countAroundMines(mines)
     }
 
+    fun isOpened(): Boolean = isOpened
+
     fun open() {
-        isOpen = true
+        isOpened = true
     }
 
     private fun countAroundMines(mines: Mines): Int = Direction.applyTo(point).count { point -> Mine(point) in mines }
