@@ -2,9 +2,14 @@ package map
 
 import cell.Cell
 import cell.Element
+import map.move.Position
 import mine.Mine
 import mine.MinePoints
 import minecount.strategy.SurroundingMines
+import open.result.OpenResult
+import open.result.OpenResult.InvalidPosition
+import open.result.OpenResult.Success
+import open.result.OpenResult.MineExploded
 
 class Map(
     val grid: Grid,
@@ -19,6 +24,17 @@ class Map(
     }
 
     fun updateMineCountByCell(): Map = Map(grid = grid.updateMineCountByCell())
+
+    fun open(position: Position): OpenResult {
+        return Success(
+            Map(
+                grid.open(
+                    rowIndex = position.row ?: return InvalidPosition,
+                    columnIndex = position.column ?: return InvalidPosition,
+                ) ?: return MineExploded,
+            ),
+        )
+    }
 
     companion object {
         fun create(
