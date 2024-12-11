@@ -1,7 +1,9 @@
 package minesweeper.app
 
 import minesweeper.converter.MineFieldConverter
+import minesweeper.entity.Action
 import minesweeper.entity.Cell
+import minesweeper.entity.Coordinate
 import minesweeper.entity.MineField
 import minesweeper.entity.MineFieldFactory
 import minesweeper.entity.RandomMineGenerator
@@ -23,6 +25,7 @@ class Minesweeper {
 
     fun gameStart(mineField: MineField) {
         outputView.printGameStart()
+
         while (true) {
             val openCoordinate = inputView.inputCoordinate()
 
@@ -33,18 +36,46 @@ class Minesweeper {
                 continue
             }
 
-            if (mineField.findCell(openCoordinate) is Cell.Mine) {
-                outputView.printGameOver()
-                break
+            val action = handlePlayerAction(mineField, openCoordinate)
+
+            when (action) {
+                Action.GAME_OVER -> {
+                    outputView.printGameOver()
+                    break
+                }
+
+                Action.GAME_CLEARED -> {
+                    outputView.printGameCleared()
+                    break
+                }
+
+                Action.CONTINUE -> {
+                    printCurrentMineField(mineField)
+                }
             }
-            if (isGameCleared(mineField)) {
-                outputView.printGameCleared()
-                break
-            }
-            val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
-            outputView.printMineField(mineFieldViewData)
         }
     }
+
+    private fun handlePlayerAction(
+        mineField: MineField,
+        coordinate: Coordinate,
+    ): Action {
+        return when {
+            isGameOver(mineField, coordinate) -> Action.GAME_OVER
+            isGameCleared(mineField) -> Action.GAME_CLEARED
+            else -> Action.CONTINUE
+        }
+    }
+
+    private fun printCurrentMineField(mineField: MineField) {
+        val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
+        outputView.printMineField(mineFieldViewData)
+    }
+
+    private fun isGameOver(
+        mineField: MineField,
+        openCoordinate: Coordinate,
+    ) = mineField.findCell(openCoordinate) is Cell.Mine
 
     private fun isGameCleared(mineField: MineField): Boolean {
         return mineField.cells
