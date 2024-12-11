@@ -21,10 +21,9 @@ value class Cells(
 
             val cells =
                 allCoordinates.map { coordinate ->
-                    if (coordinate in mineCoordinates) {
-                        Cell.Mine(coordinate)
-                    } else {
-                        Cell.Empty(coordinate)
+                    when (coordinate) {
+                        in mineCoordinates -> Cell.Mine(coordinate)
+                        else -> Cell.Empty(coordinate)
                     }
                 }
             return Cells(cells)
