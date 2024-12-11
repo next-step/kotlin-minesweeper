@@ -68,11 +68,11 @@ class CellsTest : BehaviorSpec({
     Given("셀 컬렉션에서 특정 좌표를 검색할 때") {
 
         val cellsList =
-            listOf(
-                Cell.Mine(Coordinate(0, 0)),
-                Cell.Empty(Coordinate(1, 0)),
-                Cell.Mine(Coordinate(0, 1)),
-                Cell.Empty(Coordinate(1, 1)),
+            mapOf(
+                Coordinate(0, 0) to Cell.Mine(Coordinate(0, 0)),
+                Coordinate(1, 0) to Cell.Empty(Coordinate(1, 0)),
+                Coordinate(0, 1) to Cell.Mine(Coordinate(0, 1)),
+                Coordinate(1, 1) to Cell.Empty(Coordinate(1, 1)),
             )
         val cells = Cells(cellsList)
 

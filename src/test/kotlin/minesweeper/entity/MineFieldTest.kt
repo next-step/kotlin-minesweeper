@@ -19,12 +19,12 @@ class MineFieldTest : BehaviorSpec({
                     List(height.value * width.value) { index ->
                         val x = index % width.value
                         val y = index / width.value
-                        if ((x + y) % 2 == 0) {
+                        if ((x + y) % 3 == 0) {
                             Cell.Mine(Coordinate(x, y))
                         } else {
                             Cell.Empty(Coordinate(x, y))
                         }
-                    },
+                    }.associateBy { it.coordinate },
                 )
 
             val mineField = MineField(height, width, cells)
@@ -42,7 +42,7 @@ class MineFieldTest : BehaviorSpec({
                     listOf(
                         Cell.Mine(Coordinate(0, 0)),
                         Cell.Empty(Coordinate(1, 0)),
-                    ),
+                    ).associateBy { it.coordinate },
                 )
 
             val exception =
@@ -69,7 +69,7 @@ class MineFieldTest : BehaviorSpec({
                     } else {
                         Cell.Empty(Coordinate(x, y))
                     }
-                },
+                }.associateBy { it.coordinate },
             )
         val mineField = MineField(height, width, cells)
 
@@ -96,7 +96,7 @@ class MineFieldTest : BehaviorSpec({
                     Cell.Empty(Coordinate(1, 0)),
                     Cell.Empty(Coordinate(0, 1)),
                     Cell.Empty(Coordinate(1, 1)),
-                ),
+                ).associateBy { it.coordinate },
             )
         val mineField = MineField(Height(2), Width(2), cells)
 
