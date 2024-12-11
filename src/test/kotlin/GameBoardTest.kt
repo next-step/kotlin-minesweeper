@@ -1,0 +1,57 @@
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldHaveSize
+
+class GameBoardTest : BehaviorSpec({
+    given("GameBoard 를 생성할 때") {
+        val rowLength = 10
+        val columnLength = 10
+
+        `when`("행 길이, 열 길이를 받아 grid를 만들면") {
+            val sut = GameBoard.of(rowLength, columnLength)
+
+            then("grid는 rowLength x columnLength 크기이며 모든 값이 BasicCell이다") {
+                val result: List<Row> = sut.rows()
+
+                result shouldHaveSize rowLength
+
+                result.forEach { row ->
+                    row.cells() shouldHaveSize columnLength
+                    row.cells() shouldContainAll List(columnLength) { BasicCell() }
+                }
+            }
+        }
+
+        `when`("행 길이가 1 미만이면") {
+            then("IllegalArgumentException 예외를 던진다") {
+                shouldThrow<IllegalArgumentException> {
+                    GameBoard.of(rowLength = 0, columnLength = columnLength)
+                }
+            }
+        }
+
+        `when`("열 길이가 1 미만이면") {
+            then("IllegalArgumentException 예외를 던진다") {
+                shouldThrow<IllegalArgumentException> {
+                    GameBoard.of(rowLength = rowLength, columnLength = 0)
+                }
+            }
+        }
+
+        `when`("grid를 직접 받아서 GameBoard를 만들 때 모든 행의 열 길이가 똑같지 않은 Grid를 받으면") {
+            val grid =
+                listOf(
+                    List(3) { BasicCell() },
+                    List(2) { BasicCell() },
+                    List(3) { BasicCell() },
+                )
+
+            then("IllegalArgumentException 예외를 던진다") {
+                shouldThrow<IllegalArgumentException> {
+                    GameBoard.from(grid)
+                }
+            }
+        }
+    }
+})
