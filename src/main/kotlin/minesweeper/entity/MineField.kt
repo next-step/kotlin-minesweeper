@@ -29,9 +29,16 @@ class MineField(
         if (cell.isRevealed) return
 
         cell.open()
-        if (cell is Cell.Empty && countAroundMines(coordinate) == 0) {
+        if (shouldOpenAdjacentCells(cell, coordinate)) {
             openAdjacentEmptyCells(coordinate)
         }
+    }
+
+    private fun shouldOpenAdjacentCells(
+        cell: Cell,
+        coordinate: Coordinate,
+    ): Boolean {
+        return cell is Cell.Empty && countAroundMines(coordinate) == 0
     }
 
     fun determineAction(coordinate: Coordinate): Action {
