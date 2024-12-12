@@ -14,7 +14,6 @@ class CellsTest {
             width = 4,
         )
 
-
         cells.setMine(0, 0)
         cells.setMine(1, 1)
 

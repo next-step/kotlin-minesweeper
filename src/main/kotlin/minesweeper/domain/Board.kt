@@ -6,7 +6,7 @@ class Board(
 
     private val cells: Cells = Cells(
         height = config.height,
-        width = config.width
+        width = config.width,
     )
 
     val board get() = cells.toBoard()
