@@ -3,7 +3,6 @@ package minesweeper.domain
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beInstanceOf
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CellsTest {
@@ -31,12 +30,29 @@ class CellsTest {
             width = 2,
         )
 
-        cells.getCell(0, 0).open()
+        cells.setMine(0, 0)
+
         cells.getCell(0, 1).open()
         cells.getCell(1, 0).open()
         cells.getCell(1, 1).open()
 
-        cells.isAllOpened() shouldBe true
+        cells.isAllLandOpened() shouldBe true
     }
 
+    @Test
+    fun `지뢰를 포함한 모든 셀을 연다`() {
+        val cells = Cells(
+            height = 2,
+            width = 2,
+        )
+
+        cells.setMine(0, 0)
+
+        cells.openAllCellsIncludeMines()
+
+        cells.getCell(0, 0).isOpened shouldBe true
+        cells.getCell(0, 1).isOpened shouldBe true
+        cells.getCell(1, 0).isOpened shouldBe true
+        cells.getCell(1, 1).isOpened shouldBe true
+    }
 }

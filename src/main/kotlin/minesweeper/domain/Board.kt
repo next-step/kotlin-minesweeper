@@ -87,14 +87,10 @@ class Board(
     }
 
     private fun openAllCell() {
-        for (row in 0 until config.height) {
-            for (col in 0 until config.width) {
-                cells.getCell(row, col).open()
-            }
-        }
+        cells.openAllCellsIncludeMines()
     }
 
     private fun isGameClear(): Boolean {
-        return cells.isAllOpened()
+        return cells.isAllLandOpened()
     }
 }

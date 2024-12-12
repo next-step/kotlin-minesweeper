@@ -26,9 +26,14 @@ class Cells(
             .size
     }
 
-    fun isAllOpened(): Boolean {
+    fun isAllLandOpened(): Boolean {
         return cells.flatten()
             .filterIsInstance<Land>()
             .none { !it.isOpened }
+    }
+
+    fun openAllCellsIncludeMines() {
+        cells.flatten()
+            .forEach(Cell::open)
     }
 }
