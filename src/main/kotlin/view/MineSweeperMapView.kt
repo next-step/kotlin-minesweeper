@@ -16,7 +16,7 @@ object MineSweeperMapView {
     ) {
         when (mineSweeperMap.isMine(i % mineSweeperMap.getWidth(), i.div(mineSweeperMap.getWidth()))) {
             true -> print("* ")
-            false -> print("C ")
+            false -> print("${mineSweeperMap.getMineAroundCount(i)} ")
         }
 
         if (i % mineSweeperMap.getWidth() == mineSweeperMap.getWidth() - 1) {

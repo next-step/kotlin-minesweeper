@@ -16,7 +16,36 @@ class MineSweeperMap(
         col: Int,
     ) {
         if (!isMine(row, col)) {
-            blocks.setMine(mineSweeperMapShape.width * col + row)
+            val index = mineSweeperMapShape.width * col + row
+            blocks.setMine(index)
+            increaseBlocksMineAroundCount(index)
+        }
+    }
+
+    private fun increaseBlocksMineAroundCount(index: Int) {
+        if (index % getWidth() != getWidth() - 1) {
+            blocks.increaseMineAroundCount(index + 1)
+        }
+        if (index % getWidth() != 0) {
+            blocks.increaseMineAroundCount(index + -1)
+        }
+        if (index.div(getWidth()) != getHeight() - 1) {
+            blocks.increaseMineAroundCount(index + getWidth())
+        }
+        if (index.div(getWidth()) != 0) {
+            blocks.increaseMineAroundCount(index - getWidth())
+        }
+        if (index % getWidth() != getWidth() - 1 && index.div(getWidth()) != getHeight() - 1) {
+            blocks.increaseMineAroundCount(index + getWidth() + 1)
+        }
+        if (index % getWidth() != getWidth() - 1 && index.div(getWidth()) != 0) {
+            blocks.increaseMineAroundCount(index - getWidth() + 1)
+        }
+        if (index % getWidth() != 0 && index.div(getWidth()) != getHeight() - 1) {
+            blocks.increaseMineAroundCount(index + getWidth() - 1)
+        }
+        if (index % getWidth() != 0 && index.div(getWidth()) != 0) {
+            blocks.increaseMineAroundCount(index - getWidth() - 1)
         }
     }
 
@@ -26,6 +55,10 @@ class MineSweeperMap(
 
     fun getHeight(): Int {
         return mineSweeperMapShape.height
+    }
+
+    fun getMineAroundCount(index: Int): Int {
+        return blocks.getMineAroundCount(index)
     }
 
     companion object {

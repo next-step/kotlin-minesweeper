@@ -12,4 +12,8 @@ class MineSweeperMapBlock(
     fun setMine(isMine: Boolean) {
         _isMine = isMine
     }
+
+    fun increaseMineAroundCount() {
+        _mineAroundCount++
+    }
 }
