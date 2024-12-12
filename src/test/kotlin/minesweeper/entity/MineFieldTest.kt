@@ -2,6 +2,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import minesweeper.entity.Action
 import minesweeper.entity.Cell
 import minesweeper.entity.Cells
 import minesweeper.entity.Coordinate
@@ -102,7 +103,8 @@ class MineFieldTest : BehaviorSpec({
             }
         }
     }
-    Given("지뢰 밭이 주어지면") {
+
+    Given("지뢰 밭이 주졌을 때") {
         When("지뢰가 있는 셀을 열면") {
             val cells =
                 Cells(
@@ -165,6 +167,50 @@ class MineFieldTest : BehaviorSpec({
                 mineField.findCell(Coordinate(0, 2)).isRevealed shouldBe false
                 mineField.findCell(Coordinate(1, 2)).isRevealed shouldBe false
                 mineField.findCell(Coordinate(2, 2)).isRevealed shouldBe false
+            }
+        }
+    }
+
+    Given("게임의 진행 상태를 결정해야 하는 경우") {
+
+        val cells =
+            Cells(
+                mapOf(
+                    Coordinate(0, 0) to Cell.Mine(Coordinate(0, 0)),
+                    Coordinate(1, 0) to Cell.Empty(Coordinate(1, 0)),
+                    Coordinate(0, 1) to Cell.Empty(Coordinate(0, 1)),
+                    Coordinate(1, 1) to Cell.Empty(Coordinate(1, 1)),
+                ),
+            )
+
+        When("지뢰가 포함된 셀을 열었을 때") {
+            val mineField = MineField(Height(2), Width(2), cells)
+            val result = mineField.determineAction(Coordinate(0, 0))
+
+            Then("게임이 종료된다") {
+                result shouldBe Action.GAME_OVER
+            }
+        }
+
+        When("안전한 셀 중 일부만 열렸을 때") {
+            val mineField = MineField(Height(2), Width(2), cells)
+            val result = mineField.determineAction(Coordinate(1, 1))
+
+            Then("게임이 계속 진행된다") {
+                result shouldBe Action.CONTINUE
+            }
+        }
+
+        When("모든 안전한 셀이 열렸을 때") {
+            val mineField = MineField(Height(2), Width(2), cells)
+            mineField.open(Coordinate(0, 1))
+            mineField.open(Coordinate(1, 1))
+            mineField.open(Coordinate(1, 0))
+
+            val result = mineField.determineAction(Coordinate(1, 0))
+
+            Then("게임이 클리어된다") {
+                result shouldBe Action.GAME_CLEARED
             }
         }
     }

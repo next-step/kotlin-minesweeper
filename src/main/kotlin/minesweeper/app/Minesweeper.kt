@@ -2,7 +2,6 @@ package minesweeper.app
 
 import minesweeper.converter.MineFieldConverter
 import minesweeper.entity.Action
-import minesweeper.entity.Cell
 import minesweeper.entity.Coordinate
 import minesweeper.entity.MineField
 import minesweeper.entity.MineFieldFactory
@@ -60,26 +59,11 @@ class Minesweeper {
         mineField: MineField,
         coordinate: Coordinate,
     ): Action {
-        return when {
-            isGameOver(mineField, coordinate) -> Action.GAME_OVER
-            isGameCleared(mineField) -> Action.GAME_CLEARED
-            else -> Action.CONTINUE
-        }
+        return mineField.determineAction(coordinate)
     }
 
     private fun printCurrentMineField(mineField: MineField) {
         val mineFieldViewData = mineFieldConverter.mapToViewData(mineField)
         outputView.printMineField(mineFieldViewData)
-    }
-
-    private fun isGameOver(
-        mineField: MineField,
-        openCoordinate: Coordinate,
-    ) = mineField.findCell(openCoordinate) is Cell.Mine
-
-    private fun isGameCleared(mineField: MineField): Boolean {
-        return mineField.cells
-            .filterIsInstance<Cell.Empty>()
-            .all { it.isRevealed }
     }
 }

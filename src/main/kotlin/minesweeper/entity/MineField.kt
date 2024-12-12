@@ -34,6 +34,22 @@ class MineField(
         }
     }
 
+    fun determineAction(coordinate: Coordinate): Action {
+        val cell = findCell(coordinate)
+
+        return when {
+            cell is Cell.Mine -> Action.GAME_OVER
+            isAllSafeCellsRevealed() -> Action.GAME_CLEARED
+            else -> Action.CONTINUE
+        }
+    }
+
+    private fun isAllSafeCellsRevealed(): Boolean {
+        return cells
+            .filterIsInstance<Cell.Empty>()
+            .all { it.isRevealed }
+    }
+
     private fun openAdjacentEmptyCells(coordinate: Coordinate) {
         coordinate.adjacentCoordinates()
             .filter { it.isWithinBounds(width, height) && !findCell(it).isRevealed }
