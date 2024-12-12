@@ -1,18 +1,19 @@
 package minsweeper.domain
 
-object BoardLinesGenerator {
+class BoardLinesGenerator(
+    private val minePositionsGenerator: MinePositionsGenerator = DefaultMinePositionsGenerator(),
+) {
 
-    fun generate(height: Int, width: Int, mineCount: Int): BoardLines {
-        val minePositions = createMinePositions(height, width, mineCount)
-        return BoardLines(List(height) { row ->
-            BoardLine(List(width) { col ->
-                val position = row * width + col
-                if (position in minePositions) Cell.Mine else Cell.Island
+    fun generate(boardParam: BoardParam): BoardLines {
+        val minePositions = minePositionsGenerator.generate(boardParam)
+        return BoardLines(List(boardParam.height) { row ->
+            BoardLine(List(boardParam.width) { col ->
+                val position = row * boardParam.width + col
+
+                if (position in minePositions) Cell.Mine
+                else Cell.Island
             })
         })
     }
-
-    private fun createMinePositions(height: Int, width: Int, mineCount: Int) =
-        (0 until height * width).shuffled().take(mineCount)
 
 }
