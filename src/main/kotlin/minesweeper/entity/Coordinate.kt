@@ -1,5 +1,7 @@
 package minesweeper.entity
 
+import java.nio.file.Files.move
+
 data class Coordinate(val x: Int, val y: Int) {
     init {
         require(x >= 0) { "x는 0보다 커야합니다." }
@@ -8,14 +10,18 @@ data class Coordinate(val x: Int, val y: Int) {
 
     fun adjacentCoordinates(): List<Coordinate> {
         return Direction.entries
-            .filter { direction ->
-                val newX = x + direction.deltaX
-                val newY = y + direction.deltaY
-                newX >= 0 && newY >= 0
-            }
-            .map { direction ->
-                Coordinate(x + direction.deltaX, y + direction.deltaY)
-            }
+            .filter(::canMoveInDirection)
+            .map(::move)
+    }
+
+    private fun canMoveInDirection(direction: Direction): Boolean {
+        val newX = x + direction.deltaX
+        val newY = y + direction.deltaY
+        return newX >= 0 && newY >= 0
+    }
+
+    private fun move(direction: Direction): Coordinate {
+        return Coordinate(x + direction.deltaX, y + direction.deltaY)
     }
 
     fun isWithinBounds(
