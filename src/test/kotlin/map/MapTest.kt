@@ -17,9 +17,9 @@ class MapTest {
         val widthSize = point.second.size
         val map = generateTestMap(heightSize, widthSize)
 
-        map.grid.points.rows shouldHaveSize heightSize
-        map.grid.points.rows
-            .forAll { it.columns shouldHaveSize widthSize }
+        map.grid.rows.columns shouldHaveSize heightSize
+        map.grid.rows.columns
+            .forAll { it.points shouldHaveSize widthSize }
     }
 
     @ParameterizedTest
@@ -29,8 +29,8 @@ class MapTest {
         val widthSize = point.second.size
         val map = generateTestMap(heightSize, widthSize)
 
-        map.grid.points.rows
-            .flatMap { it.columns }
+        map.grid.rows.columns
+            .flatMap { it.points }
             .forAll { it.element.status shouldBe EMPTY_CELL }
     }
 
@@ -47,8 +47,8 @@ class MapTest {
 
         map.placeMine(minePoints = minePoints)
 
-        map.grid.points.rows
-            .flatMap { it.columns }
+        map.grid.rows.columns
+            .flatMap { it.points }
             .filter { it.point.first == rowIndex && it.point.second == columnIndex }
             .forAll { it.element.status shouldBe MINE_CELL }
     }

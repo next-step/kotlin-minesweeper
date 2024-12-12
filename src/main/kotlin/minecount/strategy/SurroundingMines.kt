@@ -29,8 +29,8 @@ class SurroundingMines(
             return false
         }
 
-        return points.rows[head.row.value]
-            .columns[head.column.value]
+        return points.columns[head.row.value]
+            .points[head.column.value]
             .isMine()
     }
 }

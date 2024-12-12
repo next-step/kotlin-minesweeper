@@ -8,8 +8,8 @@ import mine.MinePoints
 import minecount.strategy.SurroundingMines
 import open.result.OpenResult
 import open.result.OpenResult.InvalidPosition
-import open.result.OpenResult.Success
 import open.result.OpenResult.MineExploded
+import open.result.OpenResult.Success
 
 class Map(
     val grid: Grid,
@@ -43,7 +43,7 @@ class Map(
             element: Element = Cell.ready(),
         ): Map {
             val rows = Rows.ready(height = height, width = width, element = element)
-            return Map(grid = Grid(points = rows, mineCountStrategy = SurroundingMines(points = rows)))
+            return Map(grid = Grid(rows = rows, mineCountStrategy = SurroundingMines(points = rows)))
         }
     }
 }

@@ -5,7 +5,7 @@ import mine.MineCount
 import minecount.strategy.MineCountStrategy
 
 class Grid(
-    val points: Rows,
+    val rows: Rows,
     private val mineCountStrategy: MineCountStrategy,
 ) {
     fun place(
@@ -14,15 +14,15 @@ class Grid(
         element: Element,
     ) {
         val (validatedRowIndex, validatedColumnIndex) = ensureValidPosition(rowIndex, columnIndex)
-        points.rows[validatedRowIndex.value].columns[validatedColumnIndex.value] =
+        rows.columns[validatedRowIndex.value].points[validatedColumnIndex.value] =
             Point(Pair(validatedRowIndex, validatedColumnIndex), element)
     }
 
     fun updateMineCountByCell(): Grid {
         val updateRows =
-            points.updateMineCount { rowIndex, columnIndex -> mineCountStrategy.calculate(rowIndex, columnIndex) }
+            rows.updateMineCount { rowIndex, columnIndex -> mineCountStrategy.calculate(rowIndex, columnIndex) }
 
-        return Grid(points = updateRows, mineCountStrategy = mineCountStrategy)
+        return Grid(rows = updateRows, mineCountStrategy = mineCountStrategy)
     }
 
     private fun ensureValidPosition(
@@ -30,15 +30,15 @@ class Grid(
         columnIndex: Index?,
     ): Pair<Index, Index> {
         require(rowIndex != null && columnIndex != null) { "폭탄 설치 위치가 존재하지 않습니다." }
-        require(rowIndex.value < points.rowSize) { "폭탄 설치 행의 위치는 ${points.rowSize}보다 작아야 합니다." }
-        require(columnIndex.value < points.columnSize) { "폭탄 설치 열의 위치는 ${points.columnSize}보다 작아야 합니다." }
+        require(rowIndex.value < rows.rowSize) { "폭탄 설치 행의 위치는 ${rows.rowSize}보다 작아야 합니다." }
+        require(columnIndex.value < rows.columnSize) { "폭탄 설치 열의 위치는 ${rows.columnSize}보다 작아야 합니다." }
 
         return Pair(rowIndex, columnIndex)
     }
 
     fun shuffle(mineCount: MineCount): List<Point> =
-        points.rows
-            .flatMap { it.columns }
+        rows.columns
+            .flatMap { it.points }
             .shuffled()
             .take(mineCount.count)
 
@@ -47,7 +47,7 @@ class Grid(
         columnIndex: Index,
     ): Grid? {
         return Grid(
-            points = points.open(rowsIndex = rowIndex, columnIndex = columnIndex) ?: return null,
+            rows = rows.open(rowsIndex = rowIndex, columnIndex = columnIndex) ?: return null,
             mineCountStrategy = mineCountStrategy,
         )
     }

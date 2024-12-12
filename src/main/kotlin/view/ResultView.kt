@@ -10,8 +10,8 @@ object ResultView {
     }
 
     fun printMap(map: Map) {
-        map.grid.points.rows.forEach { rows ->
-            rows.columns.forEach { print(it.value() + " ") }
+        map.grid.rows.columns.forEach { rows ->
+            rows.points.forEach { print(it.value() + " ") }
             println()
         }
     }
