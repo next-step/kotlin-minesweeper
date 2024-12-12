@@ -1,6 +1,7 @@
 package minesweeper.domain
 
 enum class Direction(val dy: Int, val dx: Int) {
+    NONE(0, 0),
     LEFT_UP(-1, -1),
     UP(-1, 0),
     RIGHT_UP(-1, 1),

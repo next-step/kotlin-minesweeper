@@ -16,7 +16,10 @@ import minesweeper.domain.Width
 fun landsFixture(size: Int): Lands {
     val mines =
         Mines(
-            FakeMineGenerator(emptyList()).generate(Height(1), Width(1), MineCount(1)),
+            FakeMineGenerator(emptyList()),
+            Height(1),
+            Width(1),
+            MineCount(1),
         )
     return Lands(
         (0 until size * size).map {
