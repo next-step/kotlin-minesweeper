@@ -1,4 +1,4 @@
-package minesweeper.view
+package minesweeper.view.output
 
 object StartView {
     fun print() {
