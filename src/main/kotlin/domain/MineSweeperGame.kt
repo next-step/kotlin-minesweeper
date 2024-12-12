@@ -6,6 +6,10 @@ class MineSweeperGame(
     val mineSweeperMap: MineSweeperMap,
     val mineCount: Int,
 ) {
+    init {
+        require(mineCount >= 0) { "지뢰는 음수개 일수 없음" }
+    }
+
     fun setMinePosition(minePositionSetter: MinePositionSetter = RandomMinePositionSetter()) {
         minePositionSetter.setPosition(mineSweeperMap)
     }
