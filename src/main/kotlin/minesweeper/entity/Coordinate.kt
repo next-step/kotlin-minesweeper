@@ -1,7 +1,5 @@
 package minesweeper.entity
 
-import java.nio.file.Files.move
-
 data class Coordinate(val x: Int, val y: Int) {
     init {
         require(x >= 0) { "x는 0보다 커야합니다." }
