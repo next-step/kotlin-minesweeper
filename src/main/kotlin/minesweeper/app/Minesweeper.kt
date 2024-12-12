@@ -2,7 +2,6 @@ package minesweeper.app
 
 import minesweeper.converter.MineFieldConverter
 import minesweeper.entity.Action
-import minesweeper.entity.Coordinate
 import minesweeper.entity.MineField
 import minesweeper.entity.MineFieldFactory
 import minesweeper.entity.RandomMineGenerator
@@ -35,7 +34,7 @@ class Minesweeper {
                 continue
             }
 
-            val action = handlePlayerAction(mineField, openCoordinate)
+            val action = mineField.determineAction(openCoordinate)
 
             when (action) {
                 Action.GAME_OVER -> {
@@ -53,13 +52,6 @@ class Minesweeper {
                 }
             }
         }
-    }
-
-    private fun handlePlayerAction(
-        mineField: MineField,
-        coordinate: Coordinate,
-    ): Action {
-        return mineField.determineAction(coordinate)
     }
 
     private fun printCurrentMineField(mineField: MineField) {
