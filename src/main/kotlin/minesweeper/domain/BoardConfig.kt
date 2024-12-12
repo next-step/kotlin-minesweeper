@@ -14,4 +14,8 @@ data class BoardConfig(
     }
 
     fun getLandCount() = height * width - mineCount
+
+    fun placeMines(): List<Int> {
+        return minePlacementStrategy.placeMines(height, width, mineCount)
+    }
 }

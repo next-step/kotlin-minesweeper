@@ -4,11 +4,12 @@ class Board(
     private val config: BoardConfig,
 ) {
 
-    private val _board: MutableList<MutableList<Cell>> = MutableList(config.height) {
-        MutableList(config.width) { Land() }
-    }
+    private val cells: Cells = Cells(
+        height = config.height,
+        width = config.width
+    )
 
-    val board get() = _board.map { it.toList() }
+    val board get() = cells.toBoard()
 
     private val boardOpener = BoardOpener(this)
 
@@ -18,14 +19,10 @@ class Board(
     }
 
     private fun placeMine() {
-        val minePlaces = config.minePlacementStrategy.placeMines(
-            config.height,
-            config.width,
-            config.mineCount,
-        )
+        val minePlaces = config.placeMines()
         minePlaces.forEach {
             val (row, col) = placeToCoordinates(it)
-            _board[row][col] = Mine()
+            cells.setMine(row, col)
         }
     }
 
@@ -48,7 +45,7 @@ class Board(
     }
 
     private fun updateAdjacentMineCountOfCell(row: Int, col: Int) {
-        val currentCell = _board[row][col]
+        val currentCell = cells.getCell(row, col)
         if (currentCell is Land) {
             val adjacentMines = getAdjacentCells(row, col)
             currentCell.updateAdjacentMines(adjacentMines)
@@ -64,7 +61,7 @@ class Board(
             if (outOfBound(newRow, newCol)) {
                 continue
             }
-            adjacentCells.add(_board[newRow][newCol])
+            adjacentCells.add(cells.getCell(newRow, newCol))
         }
 
         return adjacentCells
@@ -75,7 +72,7 @@ class Board(
     }
 
     fun countMines(): Int {
-        return _board.sumOf { line -> line.count { it is Mine } }
+        return cells.getMineCount()
     }
 
     fun open(row: Int, col: Int): OpenResult {
@@ -92,12 +89,12 @@ class Board(
     private fun openAllCell() {
         for (row in 0 until config.height) {
             for (col in 0 until config.width) {
-                _board[row][col].open()
+                cells.getCell(row, col).open()
             }
         }
     }
 
     private fun isGameClear(): Boolean {
-        return _board.sumOf { line -> line.count { it.isOpened } } == config.getLandCount()
+        return cells.isAllOpened()
     }
 }
