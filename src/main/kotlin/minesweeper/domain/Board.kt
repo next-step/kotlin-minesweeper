@@ -11,7 +11,7 @@ class Board(
 
     val board get() = cells.toBoard()
 
-    private val boardOpener = BoardOpener(this)
+    private val boardOpener = BoardOpener(cells)
 
     init {
         placeMine()
@@ -58,17 +58,13 @@ class Board(
         for (direction in Direction.entries) {
             val newRow = row + direction.dx
             val newCol = col + direction.dy
-            if (outOfBound(newRow, newCol)) {
+            if (cells.isOutOfBound(newRow, newCol)) {
                 continue
             }
             adjacentCells.add(cells.getCell(newRow, newCol))
         }
 
         return adjacentCells
-    }
-
-    fun outOfBound(row: Int, col: Int): Boolean {
-        return row !in 0 until config.height || col !in 0 until config.width
     }
 
     fun countMines(): Int {

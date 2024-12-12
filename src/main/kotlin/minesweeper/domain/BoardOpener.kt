@@ -1,13 +1,11 @@
 package minesweeper.domain
 
 class BoardOpener(
-    private val board: Board,
+    private val cells: Cells,
 ) {
 
-    private val cellList = board.board
-
     fun open(row: Int, col: Int): OpenResult {
-        val targetCell = cellList[row][col]
+        val targetCell = cells.getCell(row, col)
 
         if (targetCell.isOpened) {
             return OpenResult.CONTINUE
@@ -33,7 +31,7 @@ class BoardOpener(
     }
 
     private fun openCell(currentRow: Int, currentCol: Int, queue: ArrayDeque<Pair<Int, Int>>) {
-        val cell = cellList[currentRow][currentCol]
+        val cell = cells.getCell(currentRow, currentCol)
 
         if (cell.isOpened) {
             return
@@ -41,7 +39,7 @@ class BoardOpener(
 
         cell.open()
 
-        if (cell is Land && cell.adjacentMines == 0) {
+        if (cell.noAdjacentMines()) {
             addAdjacentCellToQueue(currentRow, currentCol, queue)
         }
     }
@@ -55,15 +53,11 @@ class BoardOpener(
             val newRow = currentRow + dir.dx
             val newCol = currentCol + dir.dy
 
-            if (outOfBound(newRow, newCol)) {
+            if (cells.isOutOfBound(newRow, newCol)) {
                 return@forEach
             }
 
             queue.add(newRow to newCol)
         }
-    }
-
-    private fun outOfBound(row: Int, col: Int): Boolean {
-        return board.outOfBound(row, col)
     }
 }

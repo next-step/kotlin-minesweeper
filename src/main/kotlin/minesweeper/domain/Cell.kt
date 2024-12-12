@@ -6,6 +6,10 @@ sealed class Cell(
     fun open() {
         isOpened = true
     }
+
+    fun noAdjacentMines(): Boolean {
+        return this is Land && adjacentMines == 0
+    }
 }
 
 class Mine : Cell()

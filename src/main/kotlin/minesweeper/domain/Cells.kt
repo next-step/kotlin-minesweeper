@@ -1,8 +1,8 @@
 package minesweeper.domain
 
 class Cells(
-    height: Int,
-    width: Int,
+    private val height: Int,
+    private val width: Int,
 ) {
     private val cells: MutableList<MutableList<Cell>> = MutableList(height) {
         MutableList(width) { Land() }
@@ -35,5 +35,9 @@ class Cells(
     fun openAllCellsIncludeMines() {
         cells.flatten()
             .forEach(Cell::open)
+    }
+
+    fun isOutOfBound(row: Int, col: Int): Boolean {
+        return row !in 0 until height || col !in 0 until width
     }
 }
