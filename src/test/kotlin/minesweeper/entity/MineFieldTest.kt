@@ -12,19 +12,16 @@ import minesweeper.entity.Width
 class MineFieldTest : BehaviorSpec({
     Given("MineField 객체를 생성할 때") {
         When("유효한 높이, 너비, 그리고 지뢰 데이터로 생성하면") {
-            val height = Height(5)
-            val width = Width(4)
+            val height = Height(2)
+            val width = Width(2)
             val cells =
                 Cells(
-                    List(height.value * width.value) { index ->
-                        val x = index % width.value
-                        val y = index / width.value
-                        if ((x + y) % 3 == 0) {
-                            Cell.Mine(Coordinate(x, y))
-                        } else {
-                            Cell.Empty(Coordinate(x, y))
-                        }
-                    }.associateBy { it.coordinate },
+                    mapOf(
+                        Coordinate(0, 0) to Cell.Mine(Coordinate(0, 0)),
+                        Coordinate(1, 0) to Cell.Empty(Coordinate(1, 0)),
+                        Coordinate(0, 1) to Cell.Empty(Coordinate(0, 1)),
+                        Coordinate(1, 1) to Cell.Mine(Coordinate(1, 1)),
+                    ),
                 )
 
             val mineField = MineField(height, width, cells)
@@ -57,19 +54,16 @@ class MineFieldTest : BehaviorSpec({
     }
 
     Given("MineField 내부 셀 상태를 확인할 때") {
-        val height = Height(4)
-        val width = Width(5)
+        val height = Height(2)
+        val width = Width(2)
         val cells =
             Cells(
-                List(height.value * width.value) { index ->
-                    val x = index % width.value
-                    val y = index / width.value
-                    if ((x + y) % 3 == 0) {
-                        Cell.Mine(Coordinate(x, y))
-                    } else {
-                        Cell.Empty(Coordinate(x, y))
-                    }
-                }.associateBy { it.coordinate },
+                mapOf(
+                    Coordinate(0, 0) to Cell.Mine(Coordinate(0, 0)),
+                    Coordinate(1, 0) to Cell.Empty(Coordinate(1, 0)),
+                    Coordinate(0, 1) to Cell.Empty(Coordinate(0, 1)),
+                    Coordinate(1, 1) to Cell.Mine(Coordinate(1, 1)),
+                ),
             )
         val mineField = MineField(height, width, cells)
 
