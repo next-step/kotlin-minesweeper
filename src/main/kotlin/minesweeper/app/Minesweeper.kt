@@ -47,10 +47,9 @@ class Minesweeper {
                     break
                 }
 
-                Action.CONTINUE -> {
-                    printCurrentMineField(mineField)
-                }
+                Action.CONTINUE -> Unit
             }
+            printCurrentMineField(mineField)
         }
     }
 
