@@ -12,6 +12,10 @@ value class Cells(
             ?: throw IllegalArgumentException("셀을 찾을 수 없습니다: $coordinate")
     }
 
+    fun hasRevealedMine(): Boolean {
+        return cells.any { it is Cell.Mine && it.isRevealed }
+    }
+
     companion object {
         fun create(
             allCoordinates: List<Coordinate>,

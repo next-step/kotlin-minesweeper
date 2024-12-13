@@ -110,4 +110,26 @@ class CellsTest : BehaviorSpec({
             }
         }
     }
+    Given("셀 컬렉션에서 지뢰가 열렸는지 확인할 때") {
+        val cellsList =
+            mapOf(
+                Coordinate(0, 0) to Cell.Mine(Coordinate(0, 0)),
+                Coordinate(1, 0) to Cell.Empty(Coordinate(1, 0)),
+                Coordinate(0, 1) to Cell.Mine(Coordinate(0, 1)),
+                Coordinate(1, 1) to Cell.Empty(Coordinate(1, 1)),
+            )
+        val cells = Cells(cellsList)
+        When("지뢰가 열리지 않았으면") {
+            Then("false를 반환한다") {
+                cells.hasRevealedMine() shouldBe false
+            }
+        }
+
+        When("지뢰가 열렸으면") {
+            cells.findCell(Coordinate(0, 0)).open()
+            Then("true를 반환한다") {
+                cells.hasRevealedMine() shouldBe true
+            }
+        }
+    }
 })

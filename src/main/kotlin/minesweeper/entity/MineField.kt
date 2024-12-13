@@ -52,14 +52,10 @@ class MineField(
 
     fun determineAction(): Action {
         return when {
-            containsMine() -> Action.GAME_OVER
+            _cells.hasRevealedMine() -> Action.GAME_OVER
             isAllSafeCellsRevealed() -> Action.GAME_CLEARED
             else -> Action.CONTINUE
         }
-    }
-
-    private fun containsMine(): Boolean {
-        return cells.any { it is Cell.Mine && it.isRevealed }
     }
 
     private fun isAllSafeCellsRevealed(): Boolean {
