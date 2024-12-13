@@ -25,7 +25,7 @@ class MineField(
     }
 
     fun open(coordinate: Coordinate) {
-        val cell = findCell(coordinate)
+        val cell = _cells.findCell(coordinate)
         if (cell.isRevealed) return
 
         cell.open()
@@ -42,7 +42,7 @@ class MineField(
     }
 
     fun determineAction(coordinate: Coordinate): Action {
-        val cell = findCell(coordinate)
+        val cell = _cells.findCell(coordinate)
 
         return when {
             cell is Cell.Mine -> Action.GAME_OVER
@@ -59,9 +59,9 @@ class MineField(
 
     private fun openAdjacentEmptyCells(coordinate: Coordinate) {
         coordinate.adjacentCoordinates()
-            .filter { it.isWithinBounds(width, height) && !findCell(it).isRevealed }
+            .filter { it.isWithinBounds(width, height) && !_cells.findCell(it).isRevealed }
             .forEach {
-                val cell = findCell(it)
+                val cell = _cells.findCell(it)
                 cell.open()
                 if (cell is Cell.Empty && countAroundMines(cell.coordinate) == 0) {
                     openAdjacentEmptyCells(cell.coordinate)
