@@ -9,8 +9,8 @@ class MineSweeperMapBlock(
     val mineAroundCount
         get() = _mineAroundCount
 
-    fun setMine(isMine: Boolean) {
-        _isMine = isMine
+    fun setMine() {
+        _isMine = true
     }
 
     fun increaseMineAroundCount() {

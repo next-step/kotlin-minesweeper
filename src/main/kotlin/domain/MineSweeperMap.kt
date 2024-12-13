@@ -23,29 +23,23 @@ class MineSweeperMap(
     }
 
     private fun increaseBlocksMineAroundCount(index: Int) {
-        if (index % getWidth() != getWidth() - 1) {
-            blocks.increaseMineAroundCount(index + 1)
+        val x = index % getWidth()
+        val y = index / getWidth()
+
+        Directions.entries.stream().forEach { direction ->
+            addMineCountAroundBlock(direction, x, y)
         }
-        if (index % getWidth() != 0) {
-            blocks.increaseMineAroundCount(index + -1)
-        }
-        if (index.div(getWidth()) != getHeight() - 1) {
-            blocks.increaseMineAroundCount(index + getWidth())
-        }
-        if (index.div(getWidth()) != 0) {
-            blocks.increaseMineAroundCount(index - getWidth())
-        }
-        if (index % getWidth() != getWidth() - 1 && index.div(getWidth()) != getHeight() - 1) {
-            blocks.increaseMineAroundCount(index + getWidth() + 1)
-        }
-        if (index % getWidth() != getWidth() - 1 && index.div(getWidth()) != 0) {
-            blocks.increaseMineAroundCount(index - getWidth() + 1)
-        }
-        if (index % getWidth() != 0 && index.div(getWidth()) != getHeight() - 1) {
-            blocks.increaseMineAroundCount(index + getWidth() - 1)
-        }
-        if (index % getWidth() != 0 && index.div(getWidth()) != 0) {
-            blocks.increaseMineAroundCount(index - getWidth() - 1)
+    }
+
+    private fun addMineCountAroundBlock(
+        direction: Directions,
+        x: Int,
+        y: Int,
+    ) {
+        val nx = x + direction.horizontalDirection
+        val ny = y + direction.verticalDirection
+        if (nx >= 0 && ny >= 0 && nx < getWidth() && ny < getHeight()) {
+            blocks.increaseMineAroundCount(ny * getWidth() + nx)
         }
     }
 

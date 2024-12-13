@@ -10,7 +10,7 @@ class MineSweeperMapBlocks(val _blocks: MutableList<MineSweeperMapBlock>) {
 
     fun setMine(index: Int) {
         if (!isMine(index)) {
-            _blocks[index].setMine(true)
+            _blocks[index].setMine()
         }
     }
 
