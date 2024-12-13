@@ -7,11 +7,11 @@ sealed interface Cell {
 data class MinedCell(
     override val coordinate: Coordinate,
 ) : Cell {
-    constructor(x: Int, y: Int) : this(Coordinate(x, y))
+    constructor(y: Int, x: Int) : this(Coordinate(y, x))
 }
 
 data class EmptyCell(
     override val coordinate: Coordinate,
 ) : Cell {
-    constructor(x: Int, y: Int) : this(Coordinate(x, y))
+    constructor(y: Int, x: Int) : this(Coordinate(y, x))
 }
