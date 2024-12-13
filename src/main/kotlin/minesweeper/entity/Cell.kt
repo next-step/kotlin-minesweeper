@@ -10,7 +10,13 @@ sealed class Cell(val coordinate: Coordinate) {
         }
     }
 
-    class Mine(coordinate: Coordinate) : Cell(coordinate)
+    abstract fun isSafe(): Boolean
 
-    class Empty(coordinate: Coordinate) : Cell(coordinate)
+    class Mine(coordinate: Coordinate) : Cell(coordinate) {
+        override fun isSafe(): Boolean = false
+    }
+
+    class Empty(coordinate: Coordinate) : Cell(coordinate) {
+        override fun isSafe(): Boolean = true
+    }
 }

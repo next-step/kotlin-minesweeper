@@ -16,6 +16,10 @@ class CellTest : BehaviorSpec({
                 mineCell.shouldBeInstanceOf<Cell.Mine>()
                 mineCell.coordinate shouldBe coordinate
             }
+
+            Then("해당 Cell은 안전하지 않아야 한다") {
+                mineCell.isSafe() shouldBe false
+            }
         }
 
         When("Empty 타입의 Cell을 생성하면") {
@@ -25,6 +29,10 @@ class CellTest : BehaviorSpec({
             Then("해당 Cell은 Empty 타입이어야 한다") {
                 emptyCell.shouldBeInstanceOf<Cell.Empty>()
                 emptyCell.coordinate shouldBe coordinate
+            }
+
+            Then("해당 Cell은 안전해야 한다") {
+                emptyCell.isSafe() shouldBe true
             }
         }
     }

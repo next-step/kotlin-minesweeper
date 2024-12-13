@@ -62,7 +62,7 @@ class MineField(
 
     private fun isAllSafeCellsRevealed(): Boolean {
         return cells
-            .filterIsInstance<Cell.Empty>()
+            .filter(Cell::isSafe)
             .all { it.isRevealed }
     }
 }
