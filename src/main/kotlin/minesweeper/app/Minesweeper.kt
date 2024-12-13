@@ -34,9 +34,9 @@ class Minesweeper {
                 continue
             }
 
-            val action = mineField.determineAction()
+            printCurrentMineField(mineField)
 
-            when (action) {
+            when (mineField.determineAction()) {
                 Action.GAME_OVER -> {
                     outputView.printGameOver()
                     break
@@ -49,7 +49,6 @@ class Minesweeper {
 
                 Action.CONTINUE -> Unit
             }
-            printCurrentMineField(mineField)
         }
     }
 
