@@ -30,5 +30,31 @@ class MinesTest : BehaviorSpec({
                 mines.elements.size shouldBe mineList.size
             }
         }
+
+        When("인자로 좌표를 받으면") {
+            val mineList =
+                listOf(
+                    Point(1, 0),
+                    Point(2, 0),
+                    Point(3, 0),
+                )
+
+            val size =
+                BoardSize(
+                    Height(1),
+                    Width(1),
+                )
+
+            val setting =
+                MinesWeeperSetting(
+                    size,
+                    MineCount(1),
+                )
+            val mines = Mines(FakeMineGenerator(mineList), setting)
+            val point = Point(1, 1)
+            Then("해당 좌표 주변의 지뢰개 몇 개인지 알 수 있다.") {
+                mines.countAroundMines(point) shouldBe 2
+            }
+        }
     }
 })
