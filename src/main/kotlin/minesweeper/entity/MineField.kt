@@ -50,14 +50,16 @@ class MineField(
             }
     }
 
-    fun determineAction(coordinate: Coordinate): Action {
-        val cell = _cells.findCell(coordinate)
-
+    fun determineAction(): Action {
         return when {
-            cell is Cell.Mine -> Action.GAME_OVER
+            containsMine() -> Action.GAME_OVER
             isAllSafeCellsRevealed() -> Action.GAME_CLEARED
             else -> Action.CONTINUE
         }
+    }
+
+    private fun containsMine(): Boolean {
+        return cells.any { it is Cell.Mine && it.isRevealed }
     }
 
     private fun isAllSafeCellsRevealed(): Boolean {

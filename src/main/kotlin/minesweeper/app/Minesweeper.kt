@@ -34,7 +34,7 @@ class Minesweeper {
                 continue
             }
 
-            val action = mineField.determineAction(openCoordinate)
+            val action = mineField.determineAction()
 
             when (action) {
                 Action.GAME_OVER -> {
