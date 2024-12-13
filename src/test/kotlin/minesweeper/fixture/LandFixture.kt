@@ -1,5 +1,7 @@
 package minesweeper.fixture
 
+import minesweeper.config.BoardSize
+import minesweeper.config.MinesWeeperSetting
 import minesweeper.domain.FakeMineGenerator
 import minesweeper.domain.Height
 import minesweeper.domain.Land
@@ -14,17 +16,16 @@ import minesweeper.domain.Width
  * 지뢰는 0개임
  */
 fun landsFixture(size: Int): Lands {
-    val mines =
-        Mines(
-            FakeMineGenerator(emptyList()),
-            Height(1),
-            Width(1),
-            MineCount(1),
-        )
+    val sizeSetting = BoardSize(Height(1), Width(1))
+    val setting = MinesWeeperSetting(sizeSetting, MineCount(1))
+    val mines = Mines(FakeMineGenerator(emptyList()), setting)
     return Lands(
         (0 until size * size).map {
             val point = Point(it / size, it % size)
-            Land(mines, point)
+            Land(
+                point = point,
+                aroundMineCount = mines.countAroundMines(point),
+            )
         },
     )
 }

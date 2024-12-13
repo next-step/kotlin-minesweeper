@@ -4,6 +4,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import minesweeper.config.BoardSize
+import minesweeper.config.MinesWeeperSetting
 
 class DefaultMineGeneratorTest : BehaviorSpec({
     Given("지뢰 생성기는") {
@@ -16,7 +18,9 @@ class DefaultMineGeneratorTest : BehaviorSpec({
                 )
             Then("지뢰들을 생성한다.") {
                 rows.forAll { (height, width, mineCount) ->
-                    DefaultMineGenerator().generate(height, width, mineCount).size shouldBe mineCount.count
+                    val size = BoardSize(height, width)
+                    val setting = MinesWeeperSetting(size, mineCount)
+                    DefaultMineGenerator().generate(setting).size shouldBe mineCount.count
                 }
             }
         }

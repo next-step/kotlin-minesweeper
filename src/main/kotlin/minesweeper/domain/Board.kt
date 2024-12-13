@@ -2,18 +2,34 @@ package minesweeper.domain
 
 import minesweeper.common.Col
 import minesweeper.common.Row
+import minesweeper.config.BoardSize
 
 class Board(
-    height: Height,
-    width: Width,
+    size: BoardSize,
     val mines: Mines,
 ) {
     val lands: Lands
 
     init {
         val grid =
-            List(height.value * width.value) { index -> Point(row = index / height.value, col = index % width.value) }
-        lands = Lands(grid.filter { Mine(it) !in mines }.map { point -> Land(mines, point) })
+            List(size.height.value * size.width.value) { index ->
+                Point(
+                    row = index / size.width.value,
+                    col = index % size.width.value,
+                )
+            }
+
+        val elements =
+            grid
+                .filter { Mine(it) !in mines }
+                .map { point ->
+                    Land(
+                        point = point,
+                        aroundMineCount = mines.countAroundMines(point),
+                    )
+                }
+
+        lands = Lands(elements)
     }
 
     fun canOpen(): Boolean = lands.hasUnopenedLand()

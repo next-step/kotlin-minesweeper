@@ -5,6 +5,8 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import minesweeper.config.BoardSize
+import minesweeper.config.MinesWeeperSetting
 import minesweeper.fixture.boardFixture
 
 class BoardTest : BehaviorSpec({
@@ -12,27 +14,30 @@ class BoardTest : BehaviorSpec({
         When("인자로 넘겨받은 높이, 너비, 지뢰들로") {
             val rows =
                 listOf(
-                    row(2, 2),
-                    row(4, 2),
-                    row(100, 2),
-                    row(50, 50),
+                    row(Height(2), Width(2)),
+                    row(Height(4), Width(2)),
+                    row(Height(100), Width(2)),
+                    row(Height(50), Width(50)),
                 )
             Then("지뢰들과 땅들을 프로퍼티로 갖는 인스턴스로 생성된다.") {
                 rows.forAll { (height, width) ->
-                    val mines =
-                        Mines(FakeMineGenerator(listOf(Point(0, 0))), Height(height), Width(width), MineCount(1))
+                    val size = BoardSize(height, width)
+                    val setting = MinesWeeperSetting(size, MineCount(1))
+                    val mines = Mines(DefaultMineGenerator(), setting)
                     val board = boardFixture(height, width, mines)
 
-                    board.lands.elements.size + board.mines.elements.size shouldBe height * width
+                    board.lands.elements.size + board.mines.elements.size shouldBe height.value * width.value
                 }
             }
         }
     }
 
     Given("보드는") {
+        val size = BoardSize(Height(1), Width(1))
+        val setting = MinesWeeperSetting(size, MineCount(1))
         val mines =
-            Mines(FakeMineGenerator(listOf(Point(0, 0), Point(1, 0))), Height(1), Width(1), MineCount(1))
-        val board = boardFixture(3, 3, mines)
+            Mines(FakeMineGenerator(listOf(Point(0, 0), Point(1, 0))), setting)
+        val board = boardFixture(Height(3), Width(3), mines)
         When("좌표 정보를 통해") {
             val mineRow = 0
             val mineCol = 0

@@ -1,5 +1,7 @@
 package minesweeper
 
+import minesweeper.config.BoardSize
+import minesweeper.config.MinesWeeperSetting
 import minesweeper.converter.BoardConverter
 import minesweeper.domain.Board
 import minesweeper.domain.DefaultMineGenerator
@@ -14,22 +16,11 @@ import minesweeper.view.output.ResultView
 import minesweeper.view.output.StartView
 
 fun main() {
-    val setting = SettingInputView.parse()
-
-    val mines =
-        Mines(
-            generator = DefaultMineGenerator(),
-            height = Height(setting.height),
-            width = Width(setting.width),
-            count = MineCount(setting.minesCount),
-        )
-
-    val board =
-        Board(
-            height = Height(setting.height),
-            width = Width(setting.width),
-            mines = mines,
-        )
+    val (width, height, minesCount) = SettingInputView.parse()
+    val size = BoardSize(height = Height(height), width = Width(width))
+    val setting = MinesWeeperSetting(size = size, minesCount = MineCount(minesCount))
+    val mines = Mines(generator = DefaultMineGenerator(), setting = setting)
+    val board = Board(size = size, mines = mines)
 
     StartView.print()
 
@@ -44,14 +35,14 @@ fun main() {
 }
 
 private fun processOpen(board: Board): Boolean {
-    val point = PointSelectView.parsePoint()
+    val (row, col) = PointSelectView.parsePoint()
 
-    if (board.isMine(row = point.first, col = point.second)) {
+    if (board.isMine(row = row, col = col)) {
         ResultView.print(isWin = false)
         return false
     }
 
-    board.openArea(point.first, point.second)
+    board.openArea(row, col)
 
     if (!board.canOpen()) {
         ResultView.print(isWin = true)

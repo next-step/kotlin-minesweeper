@@ -14,10 +14,13 @@ enum class Direction(val dy: Int, val dx: Int) {
 
     companion object {
         fun applyTo(point: Point): List<Point> =
-            entries.filter { direction ->
-                direction.dy + point.row >= 0 && direction.dx + point.col >= 0
-            }.map { direction ->
-                Point(row = direction.dy + point.row, col = direction.dx + point.col)
-            }
+            entries
+                .filter { direction -> direction.dy + point.row >= 0 && direction.dx + point.col >= 0 }
+                .map { direction ->
+                    Point(
+                        row = direction.dy + point.row,
+                        col = direction.dx + point.col,
+                    )
+                }
     }
 }

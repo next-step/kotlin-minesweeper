@@ -1,7 +1,8 @@
 package minesweeper.config
 
+import minesweeper.domain.MineCount
+
 data class MinesWeeperSetting(
-    val width: Int,
-    val height: Int,
-    val minesCount: Int,
+    val size: BoardSize,
+    val minesCount: MineCount,
 )

@@ -1,12 +1,17 @@
 package minesweeper.domain
 
+import minesweeper.config.MinesWeeperSetting
+
 class Mines(
     generator: MineGenerator,
-    height: Height,
-    width: Width,
-    count: MineCount,
+    setting: MinesWeeperSetting,
 ) {
-    val elements: List<Mine> = generator.generate(height, width, count)
+    val elements: List<Mine> = generator.generate(setting)
 
     operator fun contains(other: Mine): Boolean = elements.contains(other)
+
+    fun countAroundMines(point: Point): Int =
+        Direction
+            .applyTo(point)
+            .count { aroundPoint -> Mine(aroundPoint) in elements }
 }
