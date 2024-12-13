@@ -6,8 +6,12 @@ sealed interface Cell {
 
 data class MinedCell(
     override val coordinate: Coordinate,
-) : Cell
+) : Cell {
+    constructor(x: Int, y: Int) : this(Coordinate(x, y))
+}
 
 data class EmptyCell(
     override val coordinate: Coordinate,
-) : Cell
+) : Cell {
+    constructor(x: Int, y: Int) : this(Coordinate(x, y))
+}
