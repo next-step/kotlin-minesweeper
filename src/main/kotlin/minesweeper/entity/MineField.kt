@@ -35,7 +35,7 @@ class MineField(
     }
 
     private fun shouldOpenAdjacentCells(cell: Cell): Boolean {
-        return cell is Cell.Empty && countAroundMines(cell.coordinate) == 0
+        return cell.isSafe() && countAroundMines(cell.coordinate) == NO_ADJACENT_MINES
     }
 
     private fun openAdjacentEmptyCells(coordinate: Coordinate) {
@@ -64,5 +64,9 @@ class MineField(
         return cells
             .filter(Cell::isSafe)
             .all { it.isRevealed }
+    }
+
+    companion object {
+        private const val NO_ADJACENT_MINES = 0
     }
 }
