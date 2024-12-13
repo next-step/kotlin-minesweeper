@@ -21,7 +21,7 @@ class MineField(
     fun countAroundMines(coordinate: Coordinate): Int {
         return coordinate.adjacentCoordinates()
             .filter { it.isWithinBounds(width, height) }
-            .count { _cells.findCell(it) is Cell.Mine }
+            .count { !_cells.findCell(it).isSafe() }
     }
 
     fun open(coordinate: Coordinate) {
