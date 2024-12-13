@@ -1,9 +1,15 @@
 package minsweeper.domain
 
-class Board(
-    private val params: BoardParam,
-    boardLinesGenerator: BoardLinesGenerator = BoardLinesGenerator(),
-) {
-    val boardLines: BoardLines = boardLinesGenerator.generate(params)
+class Board(val boardLines: BoardLines) {
+
+    companion object {
+
+        fun of(
+            boardSize: BoardSize,
+            mineCount: Int,
+            boardLinesGenerator: BoardLinesGenerator,
+        ): Board = Board(boardLinesGenerator.generate(boardSize, mineCount))
+
+    }
 
 }

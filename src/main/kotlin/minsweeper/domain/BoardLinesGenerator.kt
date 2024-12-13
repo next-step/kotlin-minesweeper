@@ -1,34 +1,34 @@
 package minsweeper.domain
 
 class BoardLinesGenerator(
-    private val minePositionsGenerator: MinePositionsGenerator = DefaultMinePositionsGenerator(),
+    private val minePositionsGenerator: MinePositionsGenerator = RandomMinePositionsGenerator(),
 ) {
 
-    fun generate(boardParam: BoardParam): BoardLines {
-        val minePositions = minePositionsGenerator.generate(boardParam)
-        return createBoardLines(boardParam, minePositions)
-    }
+    fun generate(boardSize: BoardSize, mineCount: Int): BoardLines = createBoardLines(
+        boardSize,
+        minePositionsGenerator.generate(boardSize.area, mineCount),
+    )
 
     private fun createBoardLines(
-        boardParam: BoardParam,
+        boardSize: BoardSize,
         minePositions: List<Int>,
-    ): BoardLines = BoardLines(List(boardParam.height) { row ->
-        createBoardLine(boardParam, row, minePositions)
+    ): BoardLines = BoardLines(List(boardSize.height) { row ->
+        createBoardLine(boardSize, row, minePositions)
     })
 
     private fun createBoardLine(
-        boardParam: BoardParam,
+        boardSize: BoardSize,
         row: Int,
         minePositions: List<Int>,
-    ): BoardLine = BoardLine(List(boardParam.width) { col ->
-        createCell(row, boardParam, col, minePositions)
+    ): BoardLine = BoardLine(List(boardSize.width) { col ->
+        createCell(row, boardSize, col, minePositions)
     })
 
     private fun createCell(
         row: Int,
-        boardParam: BoardParam,
+        boardSize: BoardSize,
         col: Int,
         minePositions: List<Int>,
-    ): Cell = Cell.Mine.takeIf { row * boardParam.width + col in minePositions } ?: Cell.Island
+    ): Cell = Cell.Mine.takeIf { row * boardSize.width + col in minePositions } ?: Cell.Island
 
 }
