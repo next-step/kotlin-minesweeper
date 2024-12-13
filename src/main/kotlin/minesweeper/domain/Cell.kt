@@ -1,6 +1,18 @@
 package minesweeper.domain
 
-sealed class Cell
+sealed class Cell {
+
+    var isOpened: Boolean = false
+        private set
+
+    fun open() {
+        isOpened = true
+    }
+
+    fun noAdjacentMines(): Boolean {
+        return this is Land && adjacentMines == 0
+    }
+}
 
 class Mine : Cell()
 

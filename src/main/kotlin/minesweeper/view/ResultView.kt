@@ -21,8 +21,32 @@ class ResultView {
 
         private fun printCell(row: List<Cell>) {
             for (cell in row) {
-                print("${if (cell is Mine) "X" else "${(cell as Land).adjacentMines}"} ")
+                printCell(cell)
             }
+        }
+
+        private fun printCell(cell: Cell) {
+            print(
+                when {
+                    !cell.isOpened -> "C "
+                    cell is Mine -> "X "
+                    cell is Land -> "${cell.adjacentMines} "
+                    else -> throw IllegalArgumentException("지원하지 않는 셀 타입입니다.")
+                },
+            )
+        }
+
+        fun startGame() {
+            println()
+            println("지뢰찾기 게임을 시작")
+        }
+
+        fun winGame() {
+            println("지뢰찾기 게임에서 승리하셨습니다.")
+        }
+
+        fun loseGame() {
+            println("지뢰찾기 게임에서 패배하셨습니다.")
         }
     }
 }
