@@ -44,7 +44,7 @@ class MineField(
             .forEach {
                 val cell = _cells.findCell(it)
                 cell.open()
-                if (cell is Cell.Empty && countAroundMines(cell.coordinate) == 0) {
+                if (shouldOpenAdjacentCells(cell)) {
                     openAdjacentEmptyCells(cell.coordinate)
                 }
             }
