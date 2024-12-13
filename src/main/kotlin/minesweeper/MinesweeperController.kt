@@ -3,6 +3,7 @@ package minesweeper
 import minesweeper.application.GenerateMinesweeperCommand
 import minesweeper.application.MinesweeperService
 import minesweeper.ui.InputView
+import minesweeper.ui.ResultView
 
 class MinesweeperController(
     private val minesweeperService: MinesweeperService,
@@ -20,5 +21,6 @@ class MinesweeperController(
                     mineCount = mineCount,
                 ),
             )
+        ResultView.render(board)
     }
 }
