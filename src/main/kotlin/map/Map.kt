@@ -61,13 +61,7 @@ class Map(
         val row = position.row ?: return false
         val column = position.column ?: return false
 
-        // TODO : Rows에게 메시지를 던진다
-        return grid.rows
-            .getColumn(row)
-            ?.points
-            ?.get(column.value)
-            ?.isOpenAdjacentCell()
-            ?: return false
+        return grid.rows.isOpenAdjacent(rowIndex = row, columnIndex = column)
     }
 
     companion object {

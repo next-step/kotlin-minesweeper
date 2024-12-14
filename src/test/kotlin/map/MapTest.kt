@@ -156,12 +156,7 @@ class MapTest {
     private fun Map.getPointByIndex(
         rowIndex: Index,
         columnIndex: Index,
-    ): Point? =
-        grid
-            .rows
-            .getColumn(rowIndex)
-            ?.points
-            ?.get(columnIndex.value)
+    ): Point = grid.rows.columns[rowIndex.value].points[columnIndex.value]
 
     private fun generateGenerateTestMap(
         heightSize: Int,

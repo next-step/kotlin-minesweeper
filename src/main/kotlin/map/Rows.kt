@@ -32,7 +32,10 @@ class Rows(
                 },
         )
 
-    fun getColumn(rowIndex: Index?) = rowIndex?.let { columns[it.value] }
+    fun isOpenAdjacent(
+        rowIndex: Index,
+        columnIndex: Index,
+    ): Boolean = columns[rowIndex.value].isOpenAdjacent(columnIndex = columnIndex)
 
     companion object {
         fun ready(
