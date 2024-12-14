@@ -1,20 +1,16 @@
 package minesweeper.domain
 
-import minesweeper.domain.point.Mine
+import minesweeper.config.MinesWeeperSetting
 
 class DefaultMineGenerator : MineGenerator {
-    override fun generate(
-        height: Height,
-        width: Width,
-        count: MineCount,
-    ): List<Mine> {
-        val points =
-            List(height.value * width.value) { index ->
-                val row = index / width.value
-                val col = index % width.value
-                Mine(row, col)
+    override fun generate(setting: MinesWeeperSetting): List<Mine> {
+        val generatedMines =
+            List(setting.size.height.value * setting.size.width.value) { index ->
+                val point = Point(row = index / setting.size.width.value, col = index % setting.size.width.value)
+                Mine(point)
             }
-
-        return points.shuffled().take(count.value)
+        return generatedMines
+            .shuffled()
+            .take(setting.minesCount.count)
     }
 }

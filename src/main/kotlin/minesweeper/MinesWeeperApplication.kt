@@ -1,39 +1,30 @@
 package minesweeper
 
+import minesweeper.config.BoardSize
+import minesweeper.config.MinesWeeperSetting
 import minesweeper.converter.BoardConverter
 import minesweeper.domain.Board
 import minesweeper.domain.DefaultMineGenerator
 import minesweeper.domain.Height
 import minesweeper.domain.MineCount
+import minesweeper.domain.Mines
 import minesweeper.domain.Width
-import minesweeper.domain.point.Mines
-import minesweeper.view.input.MinesWeeperSettingView
 import minesweeper.view.input.PointSelectView
+import minesweeper.view.input.SettingInputView
 import minesweeper.view.output.BoardView
-import minesweeper.view.output.MinesWeeperStartView
 import minesweeper.view.output.ResultView
+import minesweeper.view.output.StartView
 
 fun main() {
-    val setting = MinesWeeperSettingView.parse()
+    val (width, height, minesCount) = SettingInputView.parse()
+    val size = BoardSize(height = Height(height), width = Width(width))
+    val setting = MinesWeeperSetting(size = size, minesCount = MineCount(minesCount))
+    val mines = Mines(generator = DefaultMineGenerator(), setting = setting)
+    val board = Board(size = size, mines = mines)
 
-    val mines =
-        Mines(
-            height = Height(setting.height),
-            width = Width(setting.width),
-            count = MineCount(setting.minesCount),
-            DefaultMineGenerator(),
-        )
+    StartView.print()
 
-    val board =
-        Board(
-            height = Height(setting.height),
-            width = Width(setting.width),
-            mines = mines,
-        )
-
-    MinesWeeperStartView.print()
-
-    if (!board.existUnopenedLand()) {
+    if (!board.canOpen()) {
         ResultView.print(isWin = true)
         return
     }
@@ -44,16 +35,16 @@ fun main() {
 }
 
 private fun processOpen(board: Board): Boolean {
-    val point = PointSelectView.parsePoint()
+    val (row, col) = PointSelectView.parsePoint()
 
-    if (board.isMine(row = point.first, col = point.second)) {
+    if (board.isMine(row = row, col = col)) {
         ResultView.print(isWin = false)
         return false
     }
 
-    board.open(point.first, point.second)
+    board.openArea(row, col)
 
-    if (!board.existUnopenedLand()) {
+    if (!board.canOpen()) {
         ResultView.print(isWin = true)
         return false
     }

@@ -1,9 +1,11 @@
 package minesweeper.view.input
 
-import minesweeper.config.MinesWeeperSetting
+import minesweeper.common.Height
+import minesweeper.common.MineCount
+import minesweeper.common.Width
 
-object MinesWeeperSettingView {
-    fun parse(): MinesWeeperSetting {
+object SettingInputView {
+    fun parse(): Triple<Height, Width, MineCount> {
         println("높이를 입력하세요.")
         val height = readln().toInt()
 
@@ -13,10 +15,6 @@ object MinesWeeperSettingView {
         println("지뢰는 몇 개인가요?")
         val minesCount = readln().toInt()
 
-        return MinesWeeperSetting(
-            height = height,
-            width = width,
-            minesCount = minesCount,
-        )
+        return Triple(height, width, minesCount)
     }
 }

@@ -5,10 +5,10 @@ import minesweeper.common.ZERO
 @JvmInline
 value class Height(val value: Int) {
     init {
-        require(value > ZERO) { HEIGHT_INIT_VALUE_EXCEPTION }
+        require(value > ZERO) { INVALID_HEIGHT_EXCEPTION_MESSAGE }
     }
 
     companion object {
-        private const val HEIGHT_INIT_VALUE_EXCEPTION = "높이는 양수 값이어야 합니다."
+        private const val INVALID_HEIGHT_EXCEPTION_MESSAGE = "높이는 양수여야 합니다."
     }
 }

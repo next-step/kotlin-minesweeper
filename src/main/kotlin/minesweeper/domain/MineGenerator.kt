@@ -1,11 +1,7 @@
 package minesweeper.domain
 
-import minesweeper.domain.point.Mine
+import minesweeper.config.MinesWeeperSetting
 
 interface MineGenerator {
-    fun generate(
-        height: Height,
-        width: Width,
-        count: MineCount,
-    ): List<Mine>
+    fun generate(setting: MinesWeeperSetting): List<Mine>
 }
