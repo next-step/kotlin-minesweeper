@@ -1,6 +1,7 @@
 package domain
 
 import io.kotest.matchers.shouldBe
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class MineSweeperGameTest {
@@ -27,5 +28,11 @@ class MineSweeperGameTest {
     fun ofTest() {
         val game = MineSweeperGame.of(5, 4, 1) { map -> map.setMine(0, 0) }
         game.mineSweeperMap.isMine(0, 0) shouldBe true
+    }
+
+    @Test
+    fun `지뢰는 음수개일수 없다`() {
+        assertThatThrownBy { MineSweeperGame.of(5, 5, -1) }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("지뢰는 음수개 일수 없음")
     }
 }

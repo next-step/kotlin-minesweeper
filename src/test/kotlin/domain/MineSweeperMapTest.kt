@@ -12,4 +12,22 @@ class MineSweeperMapTest {
         map.getHeight() shouldBe 2
         map.isMine(0, 0) shouldBe false
     }
+
+    @Test
+    fun `지뢰 주변 블록에 1을 더한다`() {
+        val mineSweeperMap =
+            MineSweeperMap(
+                MineSweeperMapShape(5, 5),
+                MineSweeperMapBlocks(MutableList(25) { MineSweeperMapBlock(false) }),
+            )
+        mineSweeperMap.setMine(1, 1)
+        mineSweeperMap.getMineAroundCount(0) shouldBe 1
+        mineSweeperMap.getMineAroundCount(1) shouldBe 1
+        mineSweeperMap.getMineAroundCount(2) shouldBe 1
+        mineSweeperMap.getMineAroundCount(5) shouldBe 1
+        mineSweeperMap.getMineAroundCount(7) shouldBe 1
+        mineSweeperMap.getMineAroundCount(10) shouldBe 1
+        mineSweeperMap.getMineAroundCount(11) shouldBe 1
+        mineSweeperMap.getMineAroundCount(12) shouldBe 1
+    }
 }

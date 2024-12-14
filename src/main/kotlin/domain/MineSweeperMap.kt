@@ -16,7 +16,30 @@ class MineSweeperMap(
         col: Int,
     ) {
         if (!isMine(row, col)) {
-            blocks.setMine(mineSweeperMapShape.width * col + row)
+            val index = mineSweeperMapShape.width * col + row
+            blocks.setMine(index)
+            increaseBlocksMineAroundCount(index)
+        }
+    }
+
+    private fun increaseBlocksMineAroundCount(index: Int) {
+        val x = index % getWidth()
+        val y = index / getWidth()
+
+        Directions.entries.stream().forEach { direction ->
+            addMineCountAroundBlock(direction, x, y)
+        }
+    }
+
+    private fun addMineCountAroundBlock(
+        direction: Directions,
+        x: Int,
+        y: Int,
+    ) {
+        val nx = x + direction.horizontalDirection
+        val ny = y + direction.verticalDirection
+        if (nx >= 0 && ny >= 0 && nx < getWidth() && ny < getHeight()) {
+            blocks.increaseMineAroundCount(ny * getWidth() + nx)
         }
     }
 
@@ -26,6 +49,10 @@ class MineSweeperMap(
 
     fun getHeight(): Int {
         return mineSweeperMapShape.height
+    }
+
+    fun getMineAroundCount(index: Int): Int {
+        return blocks.getMineAroundCount(index)
     }
 
     companion object {

@@ -10,7 +10,16 @@ class MineSweeperMapBlocks(val _blocks: MutableList<MineSweeperMapBlock>) {
 
     fun setMine(index: Int) {
         if (!isMine(index)) {
-            _blocks[index].isMine = true
+            _blocks[index].setMine()
         }
+    }
+
+    fun getMineAroundCount(index: Int): Int {
+        return _blocks.get(index).mineAroundCount
+    }
+
+    fun increaseMineAroundCount(index: Int) {
+        require(index in 0 until _blocks.size)
+        _blocks[index].increaseMineAroundCount()
     }
 }
