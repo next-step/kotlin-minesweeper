@@ -31,7 +31,7 @@ class MineSweeperConsole(
                 InputView.inputSearchPosition(height = height, width = width)
                     ?: Position.default(height = height, width = width)
 
-            when (val result = openCell(searchPosition = searchPosition)) {
+            when (val result = map.open(position = searchPosition)) {
                 is OpenResult.Success -> map = result.map
                 is OpenResult.InvalidPosition -> Unit
                 is OpenResult.MineExploded -> {
@@ -43,8 +43,6 @@ class MineSweeperConsole(
             ResultView.printMap(map)
         }
     }
-
-    private fun openCell(searchPosition: Position): OpenResult = map.open(searchPosition)
 
     companion object {
         private const val DEFAULT = 0

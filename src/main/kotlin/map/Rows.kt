@@ -32,7 +32,7 @@ class Rows(
                 },
         )
 
-    fun getColumn(rowsIndex: Index) = columns[rowsIndex.value]
+    fun getColumn(rowIndex: Index?) = rowIndex?.let { columns[it.value] }
 
     companion object {
         fun ready(

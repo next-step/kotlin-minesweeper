@@ -44,7 +44,11 @@ data class Point(
             else -> this
         }
 
-    fun open(): Point = this.copy(visibility = Show)
+    private fun open(): Point = this.copy(visibility = Show)
+
+    fun isOpenAdjacentCell(): Boolean = this.isNumberCell() && this.isMineCountZero() && this.visibility == Hide
+
+    private fun isMineCountZero(): Boolean = element.value?.toIntOrNull() == 0
 
     private fun isNumberCell(): Boolean = element.status is NumberCell
 

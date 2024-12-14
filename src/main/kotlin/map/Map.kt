@@ -2,6 +2,7 @@ package map
 
 import cell.Cell
 import cell.Element
+import map.move.Direction
 import map.move.Position
 import mine.Mine
 import mine.MinePoints
@@ -12,7 +13,7 @@ import open.result.OpenResult.MineExploded
 import open.result.OpenResult.Success
 
 class Map(
-    val grid: Grid,
+    var grid: Grid,
 ) {
     fun placeMine(minePoints: MinePoints) {
         minePoints.points.forEach { placeMineAtPoint(it) }
@@ -34,6 +35,39 @@ class Map(
                 ) ?: return MineExploded,
             ),
         )
+    }
+
+    fun openAdjacent(position: Position): Map {
+        val row = position.row ?: return this
+        val column = position.column ?: return this
+        val adjacentPositions =
+            Direction.entries
+                .map { position.move(direction = it, rowSize = row.maxSize, columnSize = column.maxSize) }
+                .filter { isOpenPosition(it) }
+
+        adjacentPositions.forEach {
+            grid = grid.open(
+                rowIndex = it.row ?: return@forEach,
+                columnIndex = it.column ?: return@forEach,
+            ) ?: return@forEach
+
+            openAdjacent(it)
+        }
+
+        return this
+    }
+
+    private fun isOpenPosition(position: Position): Boolean {
+        val row = position.row ?: return false
+        val column = position.column ?: return false
+
+        // TODO : Rows에게 메시지를 던진다
+        return grid.rows
+            .getColumn(row)
+            ?.points
+            ?.get(column.value)
+            ?.isOpenAdjacentCell()
+            ?: return false
     }
 
     companion object {

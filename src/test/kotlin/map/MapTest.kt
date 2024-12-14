@@ -1,5 +1,6 @@
 package map
 
+import cell.showable.Hide
 import cell.showable.Show
 import cell.status.EmptyCell
 import cell.status.MineCell
@@ -8,6 +9,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beInstanceOf
+import map.move.Direction
 import map.move.Position
 import mine.MinePoints
 import open.result.OpenResult
@@ -81,8 +83,58 @@ class MapTest {
 
         openResultMap should beInstanceOf<OpenResult.Success>()
 
-        val pointByIndex = getPointByIndex(openResultMap, openRowIndex, openColumnIndex)
+        val pointByIndex =
+            (openResultMap as? OpenResult.Success)
+                ?.map
+                ?.getPointByIndex(openRowIndex, openColumnIndex)
         pointByIndex?.visibility shouldBe Show
+    }
+
+    @Test
+    fun `오픈한 위치가 지뢰가 아니라면 주변에 인접한 숫자가 없는 칸을 모두 연다`() {
+        val mineCountedMap =
+            generateTestMap(
+                mineRowIndex = Index(value = 1, maxSize = MAX_SIZE),
+                mineColumnIndex = Index(value = 0, maxSize = MAX_SIZE),
+            )
+
+        val position = Position(row = Index(value = 1, maxSize = MAX_SIZE), column = Index(value = 1, maxSize = MAX_SIZE))
+        val adjacentPoints =
+            Direction.entries
+                .mapNotNull {
+                    position.move(
+                        direction = it,
+                        rowSize = position.row?.maxSize ?: return@mapNotNull null,
+                        columnSize = position.column?.maxSize ?: return@mapNotNull null,
+                    )
+                }.mapNotNull {
+                    mineCountedMap.getPointByIndex(
+                        rowIndex = it.row ?: return@mapNotNull null,
+                        columnIndex = it.column ?: return@mapNotNull null,
+                    )
+                }
+
+        val adjacentCellOpenedMap = mineCountedMap.openAdjacent(position = position)
+
+        adjacentPoints
+            .filter { it.isOpenAdjacentCell() }
+            .forAll {
+                adjacentCellOpenedMap
+                    .getPointByIndex(
+                        rowIndex = it.point.first ?: return@forAll,
+                        columnIndex = it.point.second ?: return@forAll,
+                    )?.visibility shouldBe Show
+            }
+
+        adjacentPoints
+            .filterNot { it.isOpenAdjacentCell() }
+            .forAll {
+                adjacentCellOpenedMap
+                    .getPointByIndex(
+                        rowIndex = it.point.first ?: return@forAll,
+                        columnIndex = it.point.second ?: return@forAll,
+                    )?.visibility shouldBe Hide
+            }
     }
 
     private fun generateTestMap(
@@ -92,22 +144,19 @@ class MapTest {
         val map = generateGenerateTestMap(heightSize = MAX_SIZE, widthSize = MAX_SIZE)
         val mineIndex = mineRowIndex to mineColumnIndex
         map.placeMine(MinePoints(points = listOf(Point(point = mineIndex))))
-        val mineCountedMap = map.updateMineCountByCell()
-        return mineCountedMap
+
+        return map.updateMineCountByCell()
     }
 
-    private fun getPointByIndex(
-        openResultMap: OpenResult,
-        openRowIndex: Index,
-        openColumnIndex: Index,
+    private fun Map.getPointByIndex(
+        rowIndex: Index,
+        columnIndex: Index,
     ): Point? =
-        (openResultMap as? OpenResult.Success)
-            ?.map
-            ?.grid
-            ?.rows
-            ?.getColumn(openRowIndex)
+        grid
+            .rows
+            .getColumn(rowIndex)
             ?.points
-            ?.get(openColumnIndex.value)
+            ?.get(columnIndex.value)
 
     private fun generateGenerateTestMap(
         heightSize: Int,
