@@ -37,12 +37,16 @@ data class Point(
             element = this.element.updateValue(newValue = element.toString(), newStatus = cellStatus),
         )
 
-    fun open(): Point? =
+    fun tryOpen(): Point? =
         when {
             element.status is MineCell -> null
-            element.status is NumberCell && visibility is Hide -> Point(point = this.point, element = this.element, visibility = Show)
+            isNumberCell() && visibility is Hide -> this.open()
             else -> this
         }
+
+    fun open(): Point = this.copy(visibility = Show)
+
+    private fun isNumberCell(): Boolean = element.status is NumberCell
 
     fun isMine(): Boolean = element is Mine
 }

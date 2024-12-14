@@ -18,7 +18,7 @@ class Columns(
         Columns(
             points
                 .mapIndexed { index, point ->
-                    if (index != columnIndex.value) point else point.open() ?: return null
+                    if (index != columnIndex.value) point else point.tryOpen() ?: return null
                 }.toMutableList(),
         )
 
