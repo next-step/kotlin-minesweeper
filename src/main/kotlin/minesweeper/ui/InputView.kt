@@ -8,16 +8,22 @@ object InputView {
 
     fun getHeight(): Int {
         println(HEIGHT_PROMPT)
-        return readln().toInt()
+        return getInt()
     }
 
     fun getWidth(): Int {
         println(NEWLINE + WIDTH_PROMPT)
-        return readln().toInt()
+        return getInt()
     }
 
     fun getMineCount(): Int {
         println(NEWLINE + MINES_PROMPT)
-        return readln().toInt()
+        return getInt()
     }
+
+    private fun getInt(): Int =
+        readln().toIntOrNull() ?: run {
+            println("숫자를 입력해주세요.")
+            getInt()
+        }
 }

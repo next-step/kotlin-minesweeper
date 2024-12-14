@@ -29,5 +29,5 @@ class RandomBoardGenerator : BoardGenerator {
     private fun toCoordinate(
         index: Int,
         width: Int,
-    ): Coordinate = Coordinate(index / width, index % width)
+    ): Coordinate = Coordinate(y = index / width, x = index % width)
 }

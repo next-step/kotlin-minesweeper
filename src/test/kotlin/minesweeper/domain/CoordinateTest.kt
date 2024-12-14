@@ -11,7 +11,17 @@ class CoordinateTest {
     }
 
     @Test
+    fun `y축 좌표는 1_000_000 이하이어야 한다`() {
+        assertThrows<IllegalArgumentException> { Coordinate(1_000_001, 1) }
+    }
+
+    @Test
     fun `x축 좌표는 0 이상이어야 한다`() {
         assertThrows<IllegalArgumentException> { Coordinate(1, -1) }
+    }
+
+    @Test
+    fun `x축 좌표는 1_000_000 이하이어야 한다`() {
+        assertThrows<IllegalArgumentException> { Coordinate(1, 1_000_001) }
     }
 }
