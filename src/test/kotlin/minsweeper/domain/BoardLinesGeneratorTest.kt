@@ -10,9 +10,12 @@ class BoardLinesGeneratorTest {
         // given
         val boardSize = BoardSize(10, 10)
         val mines = listOf(0, 12, 24, 30, 41, 57, 69)
-        val boardLinesGenerator = BoardLinesGenerator(object : MinePositionsGenerator {
-            override fun generate(size: BoardSize, mineCount: Int): List<Int> = mines
-        })
+        val boardLinesGenerator = BoardLinesGenerator(
+            object : MinePositionsGenerator {
+                override fun generate(size: BoardSize, mineCount: Int): List<Int> = mines
+            },
+            AroundMineCountJudge(),
+        )
 
         // when
         val result = boardLinesGenerator.generate(boardSize, mines.size)

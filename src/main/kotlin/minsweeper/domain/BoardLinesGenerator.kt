@@ -34,6 +34,7 @@ class BoardLinesGenerator(
         val position = row * boardSize.width + col
         return Cell.Mine.takeIf { position in minePositions } ?: Cell.Island(
             aroundMineCountJudge.judge(
+                boardSize,
                 position,
                 minePositions,
             )
