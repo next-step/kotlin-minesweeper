@@ -6,7 +6,7 @@ class BoardLinesGenerator(
 
     fun generate(boardSize: BoardSize, mineCount: Int): BoardLines = createBoardLines(
         boardSize,
-        minePositionsGenerator.generate(boardSize.area, mineCount),
+        minePositionsGenerator.generate(boardSize, mineCount),
     )
 
     private fun createBoardLines(

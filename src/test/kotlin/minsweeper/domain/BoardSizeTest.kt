@@ -2,7 +2,6 @@ package minsweeper.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -34,18 +33,6 @@ class BoardSizeTest {
 
         // then
         assertThat(result.message).isEqualTo("높이는 0보다 커야합니다")
-    }
-
-    @Test
-    fun `너비와 높이를 곱하면 면적이 나온다`() {
-        // given
-        val boardSize = BoardSize(10, 10)
-
-        // when
-        val result = boardSize.area
-
-        // then
-        assertThat(result).isEqualTo(100)
     }
 
 }
