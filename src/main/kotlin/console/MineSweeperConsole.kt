@@ -32,7 +32,9 @@ class MineSweeperConsole(
                     ?: Position.default(height = height, width = width)
 
             when (val result = map.open(position = searchPosition)) {
-                is OpenResult.Success -> map = result.map
+                is OpenResult.Success -> {
+                    map = result.map.openAdjacent(searchPosition)
+                }
                 is OpenResult.InvalidPosition -> Unit
                 is OpenResult.MineExploded -> {
                     ResultView.printLose()
