@@ -2,11 +2,18 @@ package minesweeper.entity
 
 @JvmInline
 value class Cells(
-    val cells: List<Cell>,
+    private val _cells: Map<Coordinate, Cell>,
 ) {
+    val cells: Collection<Cell>
+        get() = _cells.values
+
     fun findCell(coordinate: Coordinate): Cell {
-        return cells.find { it.matches(coordinate) }
+        return _cells[coordinate]
             ?: throw IllegalArgumentException("셀을 찾을 수 없습니다: $coordinate")
+    }
+
+    fun hasRevealedMine(): Boolean {
+        return cells.any { it is Cell.Mine && it.isRevealed }
     }
 
     companion object {
@@ -20,11 +27,10 @@ value class Cells(
             }
 
             val cells =
-                allCoordinates.map { coordinate ->
-                    if (coordinate in mineCoordinates) {
-                        Cell.Mine(coordinate)
-                    } else {
-                        Cell.Empty(coordinate)
+                allCoordinates.associateWith { coordinate ->
+                    when (coordinate) {
+                        in mineCoordinates -> Cell.Mine(coordinate)
+                        else -> Cell.Empty(coordinate)
                     }
                 }
             return Cells(cells)

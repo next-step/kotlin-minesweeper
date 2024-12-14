@@ -20,7 +20,51 @@ class MineField(
 
     fun countAroundMines(coordinate: Coordinate): Int {
         return coordinate.adjacentCoordinates()
-            .filter { it.isWithinBounds(width.value, height.value) }
-            .count { _cells.findCell(it) is Cell.Mine }
+            .filter { it.isWithinBounds(width, height) }
+            .count { !_cells.findCell(it).isSafe() }
+    }
+
+    fun open(coordinate: Coordinate) {
+        val cell = _cells.findCell(coordinate)
+        if (cell.isRevealed) return
+
+        cell.open()
+        if (shouldOpenAdjacentCells(cell)) {
+            openAdjacentEmptyCells(coordinate)
+        }
+    }
+
+    private fun shouldOpenAdjacentCells(cell: Cell): Boolean {
+        return cell.isSafe() && countAroundMines(cell.coordinate) == NO_ADJACENT_MINES
+    }
+
+    private fun openAdjacentEmptyCells(coordinate: Coordinate) {
+        coordinate.adjacentCoordinates()
+            .filter { it.isWithinBounds(width, height) && !_cells.findCell(it).isRevealed }
+            .forEach {
+                val cell = _cells.findCell(it)
+                cell.open()
+                if (shouldOpenAdjacentCells(cell)) {
+                    openAdjacentEmptyCells(cell.coordinate)
+                }
+            }
+    }
+
+    fun determineAction(): Action {
+        return when {
+            _cells.hasRevealedMine() -> Action.GAME_OVER
+            isAllSafeCellsRevealed() -> Action.GAME_CLEARED
+            else -> Action.CONTINUE
+        }
+    }
+
+    private fun isAllSafeCellsRevealed(): Boolean {
+        return cells
+            .filter(Cell::isSafe)
+            .all { it.isRevealed }
+    }
+
+    companion object {
+        private const val NO_ADJACENT_MINES = 0
     }
 }
