@@ -2,6 +2,7 @@ package minsweeper.domain
 
 class BoardLinesGenerator(
     private val minePositionsGenerator: MinePositionsGenerator = RandomMinePositionsGenerator(),
+    private val aroundMineCountJudge: AroundMineCountJudge,
 ) {
 
     fun generate(boardSize: BoardSize, mineCount: Int): BoardLines = createBoardLines(
@@ -29,6 +30,15 @@ class BoardLinesGenerator(
         boardSize: BoardSize,
         col: Int,
         minePositions: List<Int>,
-    ): Cell = Cell.Mine.takeIf { row * boardSize.width + col in minePositions } ?: Cell.Island
+    ): Cell {
+        val position = row * boardSize.width + col
+        return Cell.Mine.takeIf { position in minePositions } ?: Cell.Island(
+            aroundMineCountJudge.judge(
+                position,
+                minePositions,
+            )
+        )
+
+    }
 
 }

@@ -1,5 +1,6 @@
 package minsweeper
 
+import minsweeper.domain.AroundMineCountJudge
 import minsweeper.domain.Board
 import minsweeper.domain.BoardLinesGenerator
 import minsweeper.domain.BoardSize
@@ -18,7 +19,7 @@ class MinesweeperRunner {
         val board = Board.of(
             boardSize,
             mineCount,
-            BoardLinesGenerator(),
+            BoardLinesGenerator(aroundMineCountJudge = AroundMineCountJudge()),
         )
 
         ResultView.printBoard(board.boardLines)
