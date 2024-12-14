@@ -71,7 +71,7 @@ class MapTest {
     }
 
     @Test
-    fun `오픈한 위치가 지롸가 아니라면 해당 칸의 숫자를 노출한다`() {
+    fun `오픈한 위치가 지뢰가 아니라면 해당 칸의 숫자를 노출한다`() {
         val mineCountedMap =
             generateTestMap(
                 mineRowIndex = Index(value = 1, maxSize = MAX_SIZE),
@@ -98,43 +98,48 @@ class MapTest {
                 mineColumnIndex = Index(value = 0, maxSize = MAX_SIZE),
             )
 
-        val position = Position(row = Index(value = 1, maxSize = MAX_SIZE), column = Index(value = 1, maxSize = MAX_SIZE))
+        val openPosition = Position(row = Index(value = 1, maxSize = MAX_SIZE), column = Index(value = 1, maxSize = MAX_SIZE))
         val adjacentPoints =
             Direction.entries
-                .mapNotNull {
-                    position.move(
-                        direction = it,
-                        rowSize = position.row?.maxSize ?: return@mapNotNull null,
-                        columnSize = position.column?.maxSize ?: return@mapNotNull null,
-                    )
-                }.mapNotNull {
-                    mineCountedMap.getPointByIndex(
-                        rowIndex = it.row ?: return@mapNotNull null,
-                        columnIndex = it.column ?: return@mapNotNull null,
-                    )
-                }
+                .mapNotNull { openPosition.convertValidAdjacentPosition(direction = it) }
+                .mapNotNull { openPosition.convertToPointByIndex(map = mineCountedMap, position = it) }
 
-        val adjacentCellOpenedMap = mineCountedMap.openAdjacent(position = position)
+        val adjacentCellOpenedMap = mineCountedMap.openAdjacent(position = openPosition)
 
         adjacentPoints
-            .filter { it.isOpenAdjacentCell() }
-            .forAll {
-                adjacentCellOpenedMap
-                    .getPointByIndex(
-                        rowIndex = it.point.first ?: return@forAll,
-                        columnIndex = it.point.second ?: return@forAll,
-                    )?.visibility shouldBe Show
-            }
+            .filter(isOpenable)
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Show }
 
         adjacentPoints
-            .filterNot { it.isOpenAdjacentCell() }
-            .forAll {
-                adjacentCellOpenedMap
-                    .getPointByIndex(
-                        rowIndex = it.point.first ?: return@forAll,
-                        columnIndex = it.point.second ?: return@forAll,
-                    )?.visibility shouldBe Hide
-            }
+            .filterNot(isOpenable)
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Hide }
+    }
+
+    private val isOpenable: (Point) -> Boolean = { it.isOpenAdjacentCell() }
+
+    private fun Point.getAdjacentPoint(map: Map): Point? {
+        return map.getPointByIndex(
+            rowIndex = point.first ?: return null,
+            columnIndex = point.second ?: return null,
+        )
+    }
+
+    private fun Position.convertValidAdjacentPosition(direction: Direction): Position? {
+        return move(
+            direction = direction,
+            rowSize = row?.maxSize ?: return null,
+            columnSize = column?.maxSize ?: return null,
+        )
+    }
+
+    private fun Position.convertToPointByIndex(
+        map: Map,
+        position: Position,
+    ): Point? {
+        return map.getPointByIndex(
+            rowIndex = position.row ?: return null,
+            columnIndex = position.column ?: return null,
+        )
     }
 
     private fun generateTestMap(
