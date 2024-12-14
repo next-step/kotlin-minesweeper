@@ -32,6 +32,8 @@ class Rows(
                 },
         )
 
+    fun getColumn(rowsIndex: Index) = columns[rowsIndex.value]
+
     companion object {
         fun ready(
             height: Height,
