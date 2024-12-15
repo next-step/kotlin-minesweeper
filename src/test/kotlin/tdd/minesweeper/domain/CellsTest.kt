@@ -78,4 +78,23 @@ class CellsTest {
         cells.getCell(1, 0).isOpened() shouldBe true
         cells.getCell(3, 3).isOpened() shouldBe false
     }
+
+    @Test
+    fun `땅을 전부 열면 게임이 끝난다`() {
+        val cells = Cells(
+            height = 2,
+            width = 2,
+            mineCount = 1,
+            minePlaceStrategy = FixedMinePlaceStrategy(
+                listOf(
+                    0 to 0,
+                ),
+            ),
+        )
+
+        cells.openCellAndAdjacentCells(0, 1) shouldBe true
+        cells.openCellAndAdjacentCells(1, 0) shouldBe true
+        cells.openCellAndAdjacentCells(1, 1) shouldBe true
+        cells.isClear() shouldBe true
+    }
 }

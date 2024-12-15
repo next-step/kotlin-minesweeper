@@ -14,4 +14,12 @@ class GameBoard(
     fun openCell(row: Int, col: Int): Boolean {
         return cells.openCellAndAdjacentCells(row - 1, col - 1)
     }
+
+    fun getGrid(): List<List<Cell>> {
+        return cells.getGrid()
+    }
+
+    fun isClear(): Boolean {
+        return cells.isClear()
+    }
 }

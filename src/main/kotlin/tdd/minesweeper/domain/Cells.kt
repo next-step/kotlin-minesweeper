@@ -73,6 +73,7 @@ class Cells(
         val cell = grid[row][col]
 
         if (cell is Mine) {
+            cell.open()
             return false
         }
 
@@ -127,5 +128,14 @@ class Cells(
 
             queue.add(newRow to newCol)
         }
+    }
+
+    fun getGrid(): List<List<Cell>> {
+        return grid.map { it.toList() }
+    }
+
+    fun isClear(): Boolean {
+        return grid.flatten()
+            .all { it.isOpened() || it is Mine }
     }
 }
