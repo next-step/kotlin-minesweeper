@@ -10,7 +10,6 @@ object ResultView {
     private const val GAME_START = "지뢰찾기 게임 시작"
     private const val SPACE = " "
     private const val MINE = "*"
-    private const val CLOSED = "C"
 
     fun render(board: Board) {
         val message =
@@ -30,8 +29,8 @@ object ResultView {
                 val coordinate = Coordinate(y, x)
                 when (cells[coordinate]) {
                     is MinedCell -> MINE
-                    is EmptyCell -> CLOSED
-                    null -> error("판에서 ${coordinate}의 칸이 빠저있습니다.")
+                    is EmptyCell -> countMines(coordinate).toString()
+                    null -> error("판에 ${coordinate}의 칸이 빠저있습니다.")
                 }
             }
         }
