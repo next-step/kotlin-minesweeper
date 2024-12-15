@@ -6,10 +6,16 @@ interface PositionProvider {
 
 class DefaultPositionProvider : PositionProvider {
     override fun provide(dimensions: Dimensions, mineCount: Int): MutableMap<Position, CellType> {
-        return dimensions.allPositions()
-            .shuffled()
-            .take(mineCount)
-            .associateWith { CellType.MINE }
+        val allCells = dimensions.allPositions()
+            .associateWith { CellType.EMPTY }
             .toMutableMap()
+
+        allCells.keys.shuffled()
+            .take(mineCount)
+            .forEach { position ->
+                allCells[position] = CellType.MINE
+            }
+
+        return allCells
     }
 }
