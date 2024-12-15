@@ -16,6 +16,20 @@ value class Cells(
         return cells.any { it is Cell.Mine && it.isRevealed }
     }
 
+    fun findUnrevealedNeighbors(
+        coordinate: Coordinate,
+        width: Width,
+        height: Height,
+    ): List<Cell> {
+        return coordinate.findAdjacentCoordinates()
+            .filter { it.isWithinBounds(width, height) && isUnrevealedCell(it) }
+            .mapNotNull { _cells[it] }
+    }
+
+    private fun isUnrevealedCell(coordinate: Coordinate): Boolean {
+        return _cells[coordinate]?.isRevealed == false
+    }
+
     companion object {
         fun create(
             allCoordinates: List<Coordinate>,

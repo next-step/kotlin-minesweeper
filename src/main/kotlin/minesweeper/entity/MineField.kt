@@ -39,15 +39,13 @@ class MineField(
     }
 
     private fun openAdjacentEmptyCells(coordinate: Coordinate) {
-        coordinate.findAdjacentCoordinates()
-            .filter { it.isWithinBounds(width, height) && !_cells.findCell(it).isRevealed }
-            .forEach {
-                val cell = _cells.findCell(it)
-                cell.open()
-                if (shouldOpenAdjacentCells(cell)) {
-                    openAdjacentEmptyCells(cell.coordinate)
-                }
+        val adjacentUnrevealedCells = _cells.findUnrevealedNeighbors(coordinate, width, height)
+        adjacentUnrevealedCells.forEach {
+            it.open()
+            if (shouldOpenAdjacentCells(it)) {
+                openAdjacentEmptyCells(it.coordinate)
             }
+        }
     }
 
     fun determineAction(): Action {
