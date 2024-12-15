@@ -16,14 +16,14 @@ class DefaultLandmineFieldArchitect(
         return GameBoard.from(
             board.grid.map { gridRow ->
                 gridRow.map { cell ->
-                    plantMineIfCellIsInCandidates(candidates, cell)
+                    if (isLandmineLocation(candidates, cell.location())) landminePlanter.plant(cell.location()) else cell
                 }
             },
         )
     }
 
-    private fun plantMineIfCellIsInCandidates(
+    private fun isLandmineLocation(
         candidates: List<Location>,
-        cell: Cell,
-    ) = (candidates.find { it == cell.location() }?.let { landminePlanter.plant(it) } ?: cell)
+        location: Location,
+    ): Boolean = candidates.contains(location)
 }
