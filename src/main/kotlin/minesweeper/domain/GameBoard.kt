@@ -3,6 +3,7 @@ package minesweeper.domain
 class GameBoard private constructor(
     val grid: List<List<Cell>>,
     val area: Area,
+    val rows: Rows = Rows(grid.map { Row(it) }),
 ) {
     init {
         require(grid.all { it.size == area.width }) {
@@ -10,9 +11,9 @@ class GameBoard private constructor(
         }
     }
 
-    fun rows(): List<Row> = grid.map { Row(it) }
-
     fun totalCellSize() = area.height * area.width
+
+    fun find(location: Location): Cell = grid[location.row - 1][location.column - 1]
 
     companion object {
         fun of(

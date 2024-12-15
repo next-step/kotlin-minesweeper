@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 
 class GameBoardTest : BehaviorSpec({
     given("GameBoard 를 생성할 때") {
@@ -62,6 +63,30 @@ class GameBoardTest : BehaviorSpec({
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.from(grid)
+                }
+            }
+        }
+    }
+
+    given("GameBoard 는 ") {
+        val grid = threeByThreeGrid
+        val sut = GameBoard.from(grid)
+
+        `when`("Location 으로") {
+            val location = Location(row = 1, column = 1)
+            val result = sut.find(location)
+
+            then("해당 셀을 찾을 수 있다") {
+                result shouldBe grid[0][0]
+            }
+        }
+
+        `when`("없는 Location을 입력하면") {
+            val location = Location(row = 3, column = 4)
+
+            then("IndexOutOfBoundsException 예외를 던진다") {
+                shouldThrow<IndexOutOfBoundsException> {
+                    sut.find(location)
                 }
             }
         }
