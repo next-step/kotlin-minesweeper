@@ -55,6 +55,39 @@ class MineSweeperMap(
         return blocks.getMineAroundCount(index)
     }
 
+    fun open(
+        x: Int,
+        y: Int,
+    ) {
+        Directions.entries.forEach { direction ->
+            val nx = x + direction.horizontalDirection
+            val ny = y + direction.verticalDirection
+            recursiveOpen(nx, ny)
+        }
+    }
+
+    private fun recursiveOpen(
+        nx: Int,
+        ny: Int,
+    ) {
+        if (isValidIndex(nx, ny) && !isMine(nx, ny) && !isOpen(nx, ny)) {
+            blocks.open(ny * getWidth() + nx)
+            open(nx, ny)
+        }
+    }
+
+    private fun isValidIndex(
+        nx: Int,
+        ny: Int,
+    ) = nx >= 0 && ny >= 0 && nx < getWidth() && ny < getHeight()
+
+    fun isOpen(
+        x: Int,
+        y: Int,
+    ): Boolean {
+        return blocks.isOpen(y * getWidth() + x)
+    }
+
     companion object {
         fun getDefaultMap(
             width: Int,

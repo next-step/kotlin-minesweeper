@@ -20,7 +20,7 @@ class MineSweeperMapBlock(
         _mineAroundCount++
     }
 
-    fun setOpen() {
+    fun open() {
         _isOpen = true
     }
 }
