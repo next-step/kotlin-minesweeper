@@ -21,8 +21,7 @@ class GameBoardTest : BehaviorSpec({
                 result.forEachIndexed { rowIndex, row ->
                     row.cells() shouldHaveSize columnLength
                     row.cells().forEachIndexed { columnIndex, cell ->
-                        cell.row() shouldBe (rowIndex + 1)
-                        cell.column() shouldBe (columnIndex + 1)
+                        cell.location() shouldBe Location(rowIndex + 1, columnIndex + 1)
                     }
                 }
             }

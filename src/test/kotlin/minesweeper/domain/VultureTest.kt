@@ -15,8 +15,7 @@ class VultureTest : BehaviorSpec({
             then("같은 좌표의 Landmine 을 반환한다") {
                 result.shouldBeTypeOf<Landmine>()
 
-                result.row() shouldBe basicCell.row()
-                result.column() shouldBe basicCell.column()
+                result.location() shouldBe basicCell.location()
             }
         }
     }

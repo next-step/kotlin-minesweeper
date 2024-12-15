@@ -1,9 +1,9 @@
 package minesweeper.domain
 
-data class Landmine(private val row: Int = 0, private val column: Int = 0) : Cell {
-    override fun row(): Int = row
+data class Landmine(private val location: Location) : Cell {
+    constructor(row: Int, column: Int) : this(Location(row, column))
 
-    override fun column(): Int = column
+    override fun location(): Location = location.copy()
 
     override fun display(): String = LANDMINE_SYMBOL
 

@@ -1,9 +1,7 @@
 package minesweeper.domain
 
 interface Cell {
-    fun row(): Int
-
-    fun column(): Int
+    fun location(): Location
 
     fun display(): String
 }

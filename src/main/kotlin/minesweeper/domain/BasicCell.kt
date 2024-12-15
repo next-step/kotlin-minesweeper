@@ -1,9 +1,9 @@
 package minesweeper.domain
 
-data class BasicCell(private val row: Int, private val column: Int) : Cell {
-    override fun row(): Int = row
+data class BasicCell(private val location: Location) : Cell {
+    constructor(row: Int, column: Int) : this(Location(row, column))
 
-    override fun column(): Int = column
+    override fun location(): Location = location.copy()
 
     override fun display(): String = CLOSED_SYMBOL
 
