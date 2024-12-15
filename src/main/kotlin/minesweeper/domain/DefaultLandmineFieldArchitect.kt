@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 class DefaultLandmineFieldArchitect(
-    private val landmineLocationSelector: LandmineLocationSelector = LandmineLocationSelector(),
+    private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),
     private val vulture: Vulture = Vulture(),
 ) : LandmineFieldArchitect {
     override fun design(
@@ -11,7 +11,8 @@ class DefaultLandmineFieldArchitect(
         require(board.totalCellSize() >= countOfLandmines) {
             "보드의 총 셀 개수보다 지뢰 개수가 더 많습니다: countOfLandmines=$countOfLandmines, totalCellSize=${board.totalCellSize()}"
         }
-        val candidates = landmineLocationSelector.selectCandidates(board.grid, countOfLandmines)
+        val candidates = landmineLocationSelector.selectCandidates(board, countOfLandmines)
+
         return GameBoard.from(
             board.grid.map { gridRow ->
                 gridRow.map { cell ->
@@ -22,7 +23,7 @@ class DefaultLandmineFieldArchitect(
     }
 
     private fun plantMineIfCellIsInCandidates(
-        candidates: List<Cell>,
+        candidates: List<Location>,
         cell: Cell,
-    ) = (candidates.find { it == cell }?.let { vulture.plantMine(it) } ?: cell)
+    ) = (candidates.find { it == cell.location() }?.let { vulture.plantMine(BasicCell(it)) } ?: cell)
 }

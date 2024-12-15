@@ -1,14 +1,8 @@
 package minesweeper.domain
 
-class LandmineLocationSelector(
-    private val shuffleAlgorithm: ShuffleAlgorithm = RandomShuffleAlgorithm(),
-) {
+interface LandmineLocationSelector {
     fun selectCandidates(
-        grid: List<List<Cell>>,
-        countOfLandmine: Int,
-    ): List<Cell> {
-        val allCells = grid.flatten()
-        val shuffledCells = shuffleAlgorithm.shuffle(allCells)
-        return shuffledCells.take(countOfLandmine)
-    }
+        board: GameBoard,
+        countOfLandmines: Int,
+    ): List<Location>
 }

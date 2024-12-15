@@ -7,7 +7,7 @@ import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 
 class DefaultLandmineFieldArchitectTest : BehaviorSpec({
     given("LandmineFieldArchitect 는 ") {
-        val fixedLandmineLocationSelector = LandmineLocationSelector(FixedShuffleAlgorithm())
+        val fixedLandmineLocationSelector = DefaultLandmineLocationSelector(FixedShuffleAlgorithm())
         val sut =
             DefaultLandmineFieldArchitect(
                 landmineLocationSelector = fixedLandmineLocationSelector,
@@ -23,10 +23,10 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
 
             then("countOfLandmines 만큼 지뢰가 설치된 GameBoard를 반환한다") {
                 val candidates =
-                    fixedLandmineLocationSelector.selectCandidates(grid, countOfLandmines)
+                    fixedLandmineLocationSelector.selectCandidates(gameBoard, countOfLandmines)
 
                 candidates.forEach { candidate ->
-                    result.grid[candidate.location().row - 1][candidate.location().column - 1].shouldBeTypeOf<Landmine>()
+                    result.grid[candidate.row - 1][candidate.column - 1].shouldBeTypeOf<Landmine>()
                 }
             }
         }
