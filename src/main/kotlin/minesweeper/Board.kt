@@ -7,16 +7,8 @@ class Board(
         return cells.checkMine(position)
     }
 
-    fun draw(): List<List<CellType>> {
-        val result = mutableListOf<List<CellType>>() // 최종 결과를 담을 리스트
-        val cellSize = cells.rowSize()
-        while (cellSize > result.size) {
-            val row = cells.rowAt(result.size) ?: break
-
-            result.add(row)
-        }
-
-        return result
+    fun draw(): BoardDrawing {
+        return BoardDrawing.create(cells)
     }
 
     companion object {

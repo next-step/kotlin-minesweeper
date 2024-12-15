@@ -1,11 +1,12 @@
 package minesweeper.ui
 
+import minesweeper.BoardDrawing
 import minesweeper.CellType
 
 class ResultView {
-    fun drawBoard(draw: List<List<CellType>>) {
-        draw.forEach { row ->
-            drawRow(row)
+    fun drawBoard(draw: BoardDrawing) {
+        while (draw.hasNext()) {
+            drawRow(draw.next())
             nextLine()
         }
     }
