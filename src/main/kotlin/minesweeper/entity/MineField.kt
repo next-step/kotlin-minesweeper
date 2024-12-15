@@ -30,7 +30,7 @@ class MineField(
 
         cell.open()
         if (shouldOpenAdjacentCells(cell)) {
-            openAdjacentEmptyCells(coordinate)
+            openAdjacentEmptyCells(listOf(coordinate))
         }
     }
 
@@ -38,14 +38,15 @@ class MineField(
         return cell.isSafe() && countAroundMines(cell.coordinate) == NO_ADJACENT_MINES
     }
 
-    private fun openAdjacentEmptyCells(coordinate: Coordinate) {
-        val adjacentUnrevealedCells = _cells.findUnrevealedNeighbors(coordinate, width, height)
-        adjacentUnrevealedCells.forEach {
-            it.open()
-            if (shouldOpenAdjacentCells(it)) {
-                openAdjacentEmptyCells(it.coordinate)
+    private tailrec fun openAdjacentEmptyCells(coordinates: List<Coordinate>) {
+        if (coordinates.isEmpty()) return
+        val nextCoordinates =
+            coordinates.flatMap { coordinate ->
+                _cells.findUnrevealedNeighbors(coordinate, width, height).onEach { it.open() }
+                    .filter { shouldOpenAdjacentCells(it) }
+                    .map { it.coordinate }
             }
-        }
+        openAdjacentEmptyCells(nextCoordinates)
     }
 
     fun determineAction(): Action {
