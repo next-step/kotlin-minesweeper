@@ -8,14 +8,14 @@ class VultureTest : BehaviorSpec({
     given("Vulture 는") {
         val sut = Vulture()
 
-        `when`("BasicCell을 받아") {
-            val basicCell = BasicCell(row = 1, column = 1)
-            val result = sut.plantMine(basicCell)
+        `when`("Location을 받아") {
+            val location = Location(row = 1, column = 1)
+            val result = sut.plant(location)
 
-            then("같은 좌표의 Landmine 을 반환한다") {
+            then("해당 Location 을 가진 Landmine을 반환한다") {
                 result.shouldBeTypeOf<Landmine>()
 
-                result.location() shouldBe basicCell.location()
+                result.location() shouldBe location
             }
         }
     }

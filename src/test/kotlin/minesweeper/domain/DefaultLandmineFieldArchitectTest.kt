@@ -11,7 +11,7 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
         val sut =
             DefaultLandmineFieldArchitect(
                 landmineLocationSelector = fixedLandmineLocationSelector,
-                vulture = Vulture(),
+                landminePlanter = Vulture(),
             )
 
         val grid = threeByThreeGrid

@@ -1,5 +1,5 @@
 package minesweeper.domain
 
-class Vulture {
-    fun plantMine(cell: Cell): Landmine = Landmine(row = cell.location().row, column = cell.location().column)
+class Vulture : LandminePlanter {
+    override fun plant(location: Location): Landmine = Landmine(location)
 }

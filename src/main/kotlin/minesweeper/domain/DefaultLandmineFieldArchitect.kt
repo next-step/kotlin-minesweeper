@@ -2,7 +2,7 @@ package minesweeper.domain
 
 class DefaultLandmineFieldArchitect(
     private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),
-    private val vulture: Vulture = Vulture(),
+    private val landminePlanter: LandminePlanter = Vulture(),
 ) : LandmineFieldArchitect {
     override fun design(
         board: GameBoard,
@@ -25,5 +25,5 @@ class DefaultLandmineFieldArchitect(
     private fun plantMineIfCellIsInCandidates(
         candidates: List<Location>,
         cell: Cell,
-    ) = (candidates.find { it == cell.location() }?.let { vulture.plantMine(BasicCell(it)) } ?: cell)
+    ) = (candidates.find { it == cell.location() }?.let { landminePlanter.plant(it) } ?: cell)
 }
