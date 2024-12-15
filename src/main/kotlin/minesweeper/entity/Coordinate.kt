@@ -6,7 +6,7 @@ data class Coordinate(val x: Int, val y: Int) {
         require(y >= 0) { "y는 0보다 커야합니다." }
     }
 
-    fun adjacentCoordinates(): List<Coordinate> {
+    fun findAdjacentCoordinates(): List<Coordinate> {
         return Direction.entries
             .filter(::canMoveInDirection)
             .map(::move)

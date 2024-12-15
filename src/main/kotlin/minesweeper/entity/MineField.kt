@@ -19,7 +19,7 @@ class MineField(
     }
 
     fun countAroundMines(coordinate: Coordinate): Int {
-        return coordinate.adjacentCoordinates()
+        return coordinate.findAdjacentCoordinates()
             .filter { it.isWithinBounds(width, height) }
             .count { !_cells.findCell(it).isSafe() }
     }
@@ -39,7 +39,7 @@ class MineField(
     }
 
     private fun openAdjacentEmptyCells(coordinate: Coordinate) {
-        coordinate.adjacentCoordinates()
+        coordinate.findAdjacentCoordinates()
             .filter { it.isWithinBounds(width, height) && !_cells.findCell(it).isRevealed }
             .forEach {
                 val cell = _cells.findCell(it)
