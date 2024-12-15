@@ -5,9 +5,5 @@ data class BasicCell(private val location: Location) : Cell {
 
     override fun location(): Location = location.copy()
 
-    override fun display(): String = CLOSED_SYMBOL
-
-    companion object {
-        private const val CLOSED_SYMBOL = "■"
-    }
+    override fun symbol(): Symbol = Symbol.CLOSED
 }

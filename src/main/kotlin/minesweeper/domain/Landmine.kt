@@ -5,9 +5,5 @@ data class Landmine(private val location: Location) : Cell {
 
     override fun location(): Location = location.copy()
 
-    override fun display(): String = LANDMINE_SYMBOL
-
-    companion object {
-        private const val LANDMINE_SYMBOL = "*"
-    }
+    override fun symbol(): Symbol = Symbol.LANDMINE
 }
