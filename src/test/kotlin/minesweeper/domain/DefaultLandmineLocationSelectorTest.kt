@@ -11,7 +11,7 @@ class DefaultLandmineLocationSelectorTest : BehaviorSpec({
         `when`("board 와 countOfLandmines 를 받아") {
             val grid = threeByThreeGrid
             val board = GameBoard.from(grid)
-            val countOfLandmines = 3
+            val countOfLandmines = CountOfLandmines(3)
 
             val results = sut.selectCandidates(board, countOfLandmines)
 

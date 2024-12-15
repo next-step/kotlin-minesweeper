@@ -1,5 +1,6 @@
 package minesweeper
 
+import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.DefaultLandmineFieldArchitect
 import minesweeper.domain.GameBoard
 import minesweeper.domain.LandmineFieldArchitect
@@ -14,7 +15,7 @@ fun main() {
 
     val width = inputWidth()
 
-    val countOfLandmines = inputCountOfLandmines()
+    val countOfLandmines = CountOfLandmines(inputCountOfLandmines())
 
     val initialBoard = GameBoard.of(height = height, width = width)
     val landmineFieldArchitect: LandmineFieldArchitect = DefaultLandmineFieldArchitect()

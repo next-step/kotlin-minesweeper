@@ -6,10 +6,10 @@ class DefaultLandmineFieldArchitect(
 ) : LandmineFieldArchitect {
     override fun design(
         board: GameBoard,
-        countOfLandmines: Int,
+        countOfLandmines: CountOfLandmines,
     ): GameBoard {
-        require(board.totalCellSize() >= countOfLandmines) {
-            "보드의 총 셀 개수보다 지뢰 개수가 더 많습니다: countOfLandmines=$countOfLandmines, totalCellSize=${board.totalCellSize()}"
+        require(board.totalCellSize() >= countOfLandmines.value) {
+            "보드의 총 셀 개수보다 지뢰 개수가 더 많습니다: countOfLandmines=${countOfLandmines.value}, totalCellSize=${board.totalCellSize()}"
         }
         val candidates = landmineLocationSelector.selectCandidates(board, countOfLandmines)
 

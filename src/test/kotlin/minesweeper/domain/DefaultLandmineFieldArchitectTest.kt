@@ -18,7 +18,7 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
         val gameBoard = GameBoard.from(grid)
 
         `when`("GameBoard와 countOfLandmines 를 받아") {
-            val countOfLandmines = 3
+            val countOfLandmines = CountOfLandmines(3)
             val result = sut.design(gameBoard, countOfLandmines)
 
             then("countOfLandmines 만큼 지뢰가 설치된 GameBoard를 반환한다") {
@@ -31,7 +31,7 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
             }
         }
         `when`("GameBoard의 전체 사이즈보다 countOfLandmines의 개수가 더 많으면") {
-            val countOfLandmines = 10
+            val countOfLandmines = CountOfLandmines(10)
 
             then("IllegalArgumentException 예외를 반환한다.") {
                 shouldThrow<IllegalArgumentException> {
