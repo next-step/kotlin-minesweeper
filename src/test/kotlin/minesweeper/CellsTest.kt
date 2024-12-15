@@ -18,6 +18,5 @@ class CellsTest {
             { assertThat(cells.checkMine(Position(0, 0))).isFalse() },
             { assertThat(cells.checkMine(Position(1, 1))).isTrue() }
         )
-
     }
 }
