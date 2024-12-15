@@ -42,7 +42,7 @@ class BoardTest {
     }
 
     private fun testFixture(data: MutableMap<Position, CellType>) =
-        object : PositionProvider {
+        object : CellProvider {
             override fun provide(dimensions: Dimensions): MutableMap<Position, CellType> {
                 return data
             }

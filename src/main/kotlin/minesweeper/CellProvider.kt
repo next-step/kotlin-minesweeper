@@ -1,10 +1,10 @@
 package minesweeper
 
-interface PositionProvider {
+interface CellProvider {
     fun provide(dimensions: Dimensions): MutableMap<Position, CellType>
 }
 
-class DefaultPositionProvider : PositionProvider {
+class DefaultCellProvider : CellProvider {
     override fun provide(dimensions: Dimensions): MutableMap<Position, CellType> {
         val allCells =
             dimensions.allPositions()

@@ -14,7 +14,7 @@ class Board(
     companion object {
         fun initializeBoard(
             dimensions: Dimensions,
-            positionProvider: PositionProvider,
+            positionProvider: CellProvider,
         ): Board {
             val cells = Cells(positionProvider.provide(dimensions))
             if (cells.mineCount != dimensions.mineCount) {

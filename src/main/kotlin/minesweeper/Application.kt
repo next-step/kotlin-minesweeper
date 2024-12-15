@@ -8,7 +8,7 @@ fun main() {
     val resultView = ResultView()
 
     val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight(), inputView.readMineCount())
-    val board = Board.initializeBoard(dimensions, DefaultPositionProvider())
+    val board = Board.initializeBoard(dimensions, DefaultCellProvider())
 
     resultView.startView()
     resultView.drawBoard(board.draw())
