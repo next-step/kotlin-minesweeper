@@ -26,7 +26,7 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
                     fixedLandmineLocationSelector.selectCandidates(gameBoard, countOfLandmines)
 
                 candidates.forEach { candidate ->
-                    result.grid[candidate.row - 1][candidate.column - 1].shouldBeTypeOf<Landmine>()
+                    result.find(candidate).shouldBeTypeOf<Landmine>()
                 }
             }
         }

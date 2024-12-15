@@ -22,5 +22,5 @@ fun main() {
     val gameBoard = landmineFieldArchitect.design(initialBoard, countOfLandmines)
 
     announceGameStarted()
-    displayCurrentGameBoard(gameBoard.rows())
+    displayCurrentGameBoard(gameBoard.rows)
 }

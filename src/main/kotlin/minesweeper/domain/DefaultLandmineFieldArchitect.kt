@@ -14,8 +14,8 @@ class DefaultLandmineFieldArchitect(
         val candidates = landmineLocationSelector.selectCandidates(board, countOfLandmines)
 
         return GameBoard.from(
-            board.grid.map { gridRow ->
-                gridRow.map { cell ->
+            board.rows.map { row ->
+                row.cells().map { cell ->
                     if (isLandmineLocation(candidates, cell.location())) landminePlanter.plant(cell.location()) else cell
                 }
             },

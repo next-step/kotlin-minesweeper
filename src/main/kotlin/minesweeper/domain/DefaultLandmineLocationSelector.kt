@@ -7,8 +7,10 @@ class DefaultLandmineLocationSelector(
         board: GameBoard,
         countOfLandmines: CountOfLandmines,
     ): List<Location> {
-        val allCells = board.grid.flatten()
+        val allCells = board.rows.flatMap { it.cells() }
         val shuffledCells = shuffleAlgorithm.shuffle(allCells)
-        return shuffledCells.take(countOfLandmines.value).map { it.location() }
+        return shuffledCells
+            .take(countOfLandmines.value)
+            .map { it.location() }
     }
 }

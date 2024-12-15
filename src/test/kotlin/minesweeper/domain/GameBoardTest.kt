@@ -84,8 +84,8 @@ class GameBoardTest : BehaviorSpec({
         `when`("없는 Location을 입력하면") {
             val location = Location(row = 3, column = 4)
 
-            then("IndexOutOfBoundsException 예외를 던진다") {
-                shouldThrow<IndexOutOfBoundsException> {
+            then("IllegalArgumentException 예외를 던진다") {
+                shouldThrow<IllegalArgumentException> {
                     sut.find(location)
                 }
             }
