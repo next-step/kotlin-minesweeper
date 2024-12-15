@@ -1,6 +1,6 @@
 package minesweeper
 
-class Board(
+class Board private constructor(
     private val cells: Cells,
 ) {
     fun checkMine(position: Position): Boolean {
