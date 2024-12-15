@@ -11,7 +11,7 @@ class PositionTest {
 
         assertAll(
             { assertThat(position.x).isEqualTo(1) },
-            { assertThat(position.y).isEqualTo(2) }
+            { assertThat(position.y).isEqualTo(2) },
         )
     }
 }

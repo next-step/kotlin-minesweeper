@@ -20,7 +20,10 @@ class Board(
     }
 
     companion object {
-        fun initializeBoard(dimensions: Dimensions, positionProvider: PositionProvider): Board {
+        fun initializeBoard(
+            dimensions: Dimensions,
+            positionProvider: PositionProvider,
+        ): Board {
             val cells = Cells(positionProvider.provide(dimensions))
             if (cells.mineCount != dimensions.mineCount) {
                 throw IllegalArgumentException("지뢰 갯수가 일치하지 않습니다.")
