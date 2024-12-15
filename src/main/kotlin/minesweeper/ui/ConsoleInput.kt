@@ -3,22 +3,22 @@ package minesweeper.ui
 object ConsoleInput {
     fun inputRowLength(): Int {
         println("높이를 입력하세요.")
-        val rowLength = readln().toInt()
+        val result = readln().toInt()
         println()
-        return rowLength
+        return result
     }
 
     fun inputColumnLength(): Int {
         println("너비를 입력하세요.")
-        val columnLength = readln().toInt()
+        val result = readln().toInt()
         println()
-        return columnLength
+        return result
     }
 
-    fun inputCountOfLandmine(): Int {
+    fun inputCountOfLandmines(): Int {
         println("지뢰는 몇 개인가요?")
-        val countOfLandmine = readln().toInt()
+        val result = readln().toInt()
         println()
-        return countOfLandmine
+        return result
     }
 }

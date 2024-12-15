@@ -65,41 +65,4 @@ class GameBoardTest : BehaviorSpec({
             }
         }
     }
-
-    given("GameBoard 는") {
-        val landmineFieldArchitect =
-            LandmineFieldArchitect(
-                landmineLocationSelector = LandmineLocationSelector(FixedShuffleAlgorithm()),
-            )
-        val sut =
-            GameBoard.of(
-                rowLength = 10,
-                columnLength = 10,
-                landmineFieldArchitect = landmineFieldArchitect,
-            )
-
-        `when`("countOfMine 을 받아") {
-            val countOfMine = 10
-            val result = sut.plantMines(countOfMine)
-
-            then("게임판에 지뢰를 설치할 수 있다") {
-                val rows = result.rows()
-                rows shouldHaveSize 10
-
-                rows.first().cells().all { it is Landmine } shouldBe true
-                (1 until rows.size).forEach { rowIndex ->
-                    rows[rowIndex].cells().all { it is BasicCell } shouldBe true
-                }
-            }
-        }
-        `when`("countOfMine 이 전체 Cell의 개수보다 많으면") {
-            val countOfMine = 101
-
-            then("IllegalArgumentException 예외를 던진다") {
-                shouldThrow<IllegalArgumentException> {
-                    sut.plantMines(countOfMine)
-                }
-            }
-        }
-    }
 })

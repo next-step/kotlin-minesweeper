@@ -1,8 +1,7 @@
 package minesweeper.domain
 
 class GameBoard private constructor(
-    private val grid: List<List<Cell>>,
-    private val landmineFieldArchitect: LandmineFieldArchitect,
+    val grid: List<List<Cell>>,
 ) {
     init {
         val rowLength = rowLength()
@@ -22,15 +21,7 @@ class GameBoard private constructor(
 
     fun rows(): List<Row> = grid.map { Row(it) }
 
-    fun plantMines(countOfMine: Int): GameBoard {
-        require(countOfMine <= totalCellSize()) {
-            "지뢰 개수는 전체 셀 개수보다 많을 수 없습니다: countOfMine=$countOfMine"
-        }
-        val newGrid = landmineFieldArchitect.design(this.grid, countOfMine)
-        return GameBoard(newGrid, landmineFieldArchitect)
-    }
-
-    private fun totalCellSize() = rowLength() * columnLength()
+    fun totalCellSize() = rowLength() * columnLength()
 
     private fun rowLength() = grid.size
 
@@ -40,7 +31,6 @@ class GameBoard private constructor(
         fun of(
             rowLength: Int,
             columnLength: Int,
-            landmineFieldArchitect: LandmineFieldArchitect = LandmineFieldArchitect(),
         ): GameBoard {
             val grid =
                 List(rowLength) { row ->
@@ -48,14 +38,11 @@ class GameBoard private constructor(
                         BasicCell(row = row + 1, column = column + 1)
                     }
                 }
-            return GameBoard(grid, landmineFieldArchitect)
+            return GameBoard(grid)
         }
 
-        fun from(
-            grid: List<List<Cell>>,
-            landmineFieldArchitect: LandmineFieldArchitect = LandmineFieldArchitect(),
-        ): GameBoard {
-            return GameBoard(grid, landmineFieldArchitect)
+        fun from(grid: List<List<Cell>>): GameBoard {
+            return GameBoard(grid)
         }
     }
 }
