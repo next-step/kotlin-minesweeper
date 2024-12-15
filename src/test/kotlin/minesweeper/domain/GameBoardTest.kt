@@ -14,10 +14,12 @@ class GameBoardTest : BehaviorSpec({
             val sut = GameBoard.of(rowLength, columnLength)
 
             then("grid는 rowLength x columnLength 크기이며 모든 Cell의 좌표가 저장되어 있다") {
+                val area = sut.area
+                area shouldBe Area(height = rowLength, width = columnLength)
+
                 val result: List<Row> = sut.rows()
 
                 result shouldHaveSize rowLength
-
                 result.forEachIndexed { rowIndex, row ->
                     row.cells() shouldHaveSize columnLength
                     row.cells().forEachIndexed { columnIndex, cell ->
