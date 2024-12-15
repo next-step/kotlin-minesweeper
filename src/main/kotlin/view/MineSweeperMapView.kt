@@ -28,4 +28,9 @@ object MineSweeperMapView {
             println()
         }
     }
+
+    fun drawWinResult(mineSweeperMap: MineSweeperMap) {
+        println("Win Game")
+        drawMineSweeperMap(mineSweeperMap)
+    }
 }

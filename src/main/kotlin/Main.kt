@@ -11,16 +11,13 @@ fun main() {
     MineSweeperMapView.drawStart()
     while (!game.isWin()) {
         MineSweeperMapView.drawMineSweeperMap(game.mineSweeperMap)
-        print("open: ")
-        val split = readln().split(",")
-        require(split.size == 2) { "Invalid input" }
-        if (!game.open(split[0].toInt(), split[1].toInt())) {
+        val (x, y) = MineSweeperInputView.getOpenInput()
+        if (!game.open(x, y)) {
             break
         }
     }
     if (game.isWin()) {
-        println("Win Game")
-        MineSweeperMapView.drawMineSweeperMap(game.mineSweeperMap)
+        MineSweeperMapView.drawWinResult(game.mineSweeperMap)
     } else {
         println("Lose Game")
     }

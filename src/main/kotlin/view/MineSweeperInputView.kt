@@ -15,4 +15,11 @@ object MineSweeperInputView {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
     }
+
+    fun getOpenInput(): Pair<Int, Int> {
+        print("open: ")
+        val split = readln().split(",")
+        require(split.size == 2) { "Invalid input" }
+        return Pair(split[0].toInt(), split[1].toInt())
+    }
 }
