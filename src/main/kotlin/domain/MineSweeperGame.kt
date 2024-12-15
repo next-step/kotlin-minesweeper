@@ -17,8 +17,12 @@ class MineSweeperGame(
     fun open(
         x: Int,
         y: Int,
-    ) {
+    ): Boolean {
+        if (mineSweeperMap.isMine(x, y)) {
+            return false
+        }
         mineSweeperMap.open(x, y)
+        return true
     }
 
     fun isWin(): Boolean {

@@ -38,7 +38,7 @@ class MineSweeperMap(
     ) {
         val nx = x + direction.horizontalDirection
         val ny = y + direction.verticalDirection
-        if (nx >= 0 && ny >= 0 && nx < getWidth() && ny < getHeight()) {
+        if (isValidIndex(nx, ny) && !isMine(nx, ny)) {
             blocks.increaseMineAroundCount(ny * getWidth() + nx)
         }
     }
@@ -59,7 +59,8 @@ class MineSweeperMap(
         x: Int,
         y: Int,
     ) {
-        Directions.entries.forEach { direction ->
+        recursiveOpen(x, y)
+        Directions.entries.filter { it.openDirection }.forEach { direction ->
             val nx = x + direction.horizontalDirection
             val ny = y + direction.verticalDirection
             recursiveOpen(nx, ny)

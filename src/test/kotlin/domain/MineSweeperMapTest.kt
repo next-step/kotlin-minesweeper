@@ -21,6 +21,7 @@ class MineSweeperMapTest {
                 MineSweeperMapBlocks(MutableList(25) { MineSweeperMapBlock(false) }),
             )
         mineSweeperMap.setMine(1, 1)
+        mineSweeperMap.setMine(3, 3)
         mineSweeperMap.getMineAroundCount(0) shouldBe 1
         mineSweeperMap.getMineAroundCount(1) shouldBe 1
         mineSweeperMap.getMineAroundCount(2) shouldBe 1
