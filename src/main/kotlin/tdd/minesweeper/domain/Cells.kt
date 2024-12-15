@@ -68,4 +68,64 @@ class Cells(
             .filter { !it.isOpened() }
             .count { it is Mine }
     }
+
+    fun openCellAndAdjacentCells(row: Int, col: Int): Boolean {
+        val cell = grid[row][col]
+
+        if (cell is Mine) {
+            return false
+        }
+
+        if (cell.isOpened()) {
+            return true
+        }
+
+        bfs(row, col)
+        return true
+    }
+
+    private fun bfs(row: Int, col: Int) {
+        val queue = ArrayDeque<Pair<Int, Int>>()
+        queue.add(row to col)
+
+        while (queue.isNotEmpty()) {
+            val (currentRow, currentCol) = queue.removeFirst()
+            openCell(currentRow, currentCol, queue)
+        }
+    }
+
+    private fun openCell(row: Int, col: Int, queue: ArrayDeque<Pair<Int, Int>>) {
+        val cell = grid[row][col]
+
+        if (cell.isOpened()) {
+            return
+        }
+
+        cell.open()
+
+        if (cell.noAdjacentMines()) {
+            addAdjacentCellToQueue(row, col, queue)
+        }
+    }
+
+    private fun addAdjacentCellToQueue(
+        currentRow: Int,
+        currentCol: Int,
+        queue: ArrayDeque<Pair<Int, Int>>,
+    ) {
+        minesweeper.domain.Direction.entries.forEach { dir ->
+            val newRow = currentRow + dir.dx
+            val newCol = currentCol + dir.dy
+
+            if (isOutOfBound(newRow, newCol)) {
+                return@forEach
+            }
+
+            if (grid[newRow][newCol].isOpened()) {
+                return@forEach
+            }
+
+            queue.add(newRow to newCol)
+        }
+    }
 }

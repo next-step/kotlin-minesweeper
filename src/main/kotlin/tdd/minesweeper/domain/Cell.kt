@@ -10,6 +10,10 @@ abstract class Cell {
     fun isOpened(): Boolean {
         return isOpened
     }
+
+    fun noAdjacentMines(): Boolean {
+        return this is Land && adjacentMineCount == 0
+    }
 }
 
 class Mine : Cell()

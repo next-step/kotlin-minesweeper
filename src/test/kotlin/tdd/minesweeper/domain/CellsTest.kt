@@ -40,4 +40,42 @@ class CellsTest {
         (cells.getCell(2, 1) as Land).adjacentMineCount shouldBe 1
         (cells.getCell(2, 2) as Land).adjacentMineCount shouldBe 1
     }
+
+    @Test
+    fun `지뢰를 열면 false를 반환한다`() {
+        val cells = Cells(
+            height = 3,
+            width = 3,
+            mineCount = 2,
+            minePlaceStrategy = FixedMinePlaceStrategy(
+                listOf(
+                    0 to 0,
+                    1 to 1,
+                ),
+            ),
+        )
+
+        cells.openCellAndAdjacentCells(0, 0) shouldBe false
+    }
+
+    @Test
+    fun `지뢰가 아닌 셀을 열면 주변 지뢰가 없다면 주변 셀을 열어준다`() {
+        val cells = Cells(
+            height = 4,
+            width = 4,
+            mineCount = 2,
+            minePlaceStrategy = FixedMinePlaceStrategy(
+                listOf(
+                    1 to 3,
+                    2 to 2,
+                ),
+            ),
+        )
+
+        cells.openCellAndAdjacentCells(0, 0) shouldBe true
+        cells.getCell(0, 0).isOpened() shouldBe true
+        cells.getCell(0, 1).isOpened() shouldBe true
+        cells.getCell(1, 0).isOpened() shouldBe true
+        cells.getCell(3, 3).isOpened() shouldBe false
+    }
 }

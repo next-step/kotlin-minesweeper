@@ -10,4 +10,8 @@ class GameBoard(
     fun getRemainingMineCount(): Int {
         return cells.getActiveMineCount()
     }
+
+    fun openCell(row: Int, col: Int): Boolean {
+        return cells.openCellAndAdjacentCells(row - 1, col - 1)
+    }
 }
