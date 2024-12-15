@@ -1,6 +1,8 @@
 package minesweeper.application
 
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Coordinate
 import minesweeper.domain.MinedCell
 import org.junit.jupiter.api.Test
 
@@ -18,8 +20,8 @@ class RandomBoardGeneratorTest {
 
         val board = boardGenerator.generate(command)
 
-        val countMine = board.cells.count { it is MinedCell }
-        countMine shouldBe 10
+        val mineCount = board.cells.values.count { it is MinedCell }
+        mineCount shouldBe 10
     }
 
     @Test
@@ -49,7 +51,7 @@ class RandomBoardGeneratorTest {
 
         val board = boardGenerator.generate(command)
 
-        val maxY = board.cells.maxOf { it.coordinate.y }
+        val maxY = board.cells.keys.maxOf { it.y }
         maxY + 1 shouldBe 10
     }
 
@@ -65,7 +67,26 @@ class RandomBoardGeneratorTest {
 
         val board = boardGenerator.generate(command)
 
-        val maxX = board.cells.maxOf { it.coordinate.x }
+        val maxX = board.cells.keys.maxOf { it.x }
         maxX + 1 shouldBe 10
+    }
+
+    @Test
+    fun `격자를 생성한다`() {
+        val boardGenerator = RandomBoardGenerator()
+        val command =
+            GenerateMinesweeperCommand(
+                height = 10,
+                width = 10,
+                mineCount = 10,
+            )
+
+        val board = boardGenerator.generate(command)
+
+        val grid =
+            (0 until 10).flatMap { y ->
+                (0 until 10).map { x -> Coordinate(y, x) }
+            }
+        board.cells.keys shouldContainExactlyInAnyOrder grid
     }
 }

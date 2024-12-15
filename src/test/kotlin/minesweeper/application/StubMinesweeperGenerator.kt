@@ -2,6 +2,7 @@ package minesweeper.application
 
 import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.Coordinate
 
 class StubMinesweeperGenerator private constructor(
     val board: Board,
@@ -9,9 +10,9 @@ class StubMinesweeperGenerator private constructor(
     override fun generate(command: GenerateMinesweeperCommand): Board = board
 
     companion object {
-        fun from(vararg cells: Cell): StubMinesweeperGenerator =
+        fun from(vararg cells: Pair<Coordinate, Cell>) =
             StubMinesweeperGenerator(
-                Board(cells.toSet()),
+                Board(cells.toMap()),
             )
     }
 }

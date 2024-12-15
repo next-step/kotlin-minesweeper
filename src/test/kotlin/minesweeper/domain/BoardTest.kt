@@ -7,6 +7,6 @@ import org.junit.jupiter.api.assertThrows
 class BoardTest {
     @Test
     fun `빈 판을 생성할 수 없다`() {
-        assertThrows<IllegalArgumentException> { Board(emptySet()) }
+        assertThrows<IllegalArgumentException> { Board(emptyMap()) }
     }
 }

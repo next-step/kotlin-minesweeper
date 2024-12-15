@@ -23,14 +23,15 @@ object ResultView {
     }
 
     private fun Board.render(): String {
-        val maxY = cells.maxOf { it.coordinate.y }
-        val maxX = cells.maxOf { it.coordinate.x }
+        val maxY = cells.keys.maxOf { it.y }
+        val maxX = cells.keys.maxOf { it.x }
         return (0..maxY).joinToString(NEWLINE) { y ->
             (0..maxX).joinToString(SPACE) { x ->
-                val cell = cells.first { it.coordinate == Coordinate(y, x) }
-                when (cell) {
+                val coordinate = Coordinate(y, x)
+                when (cells[coordinate]) {
                     is MinedCell -> MINE
                     is EmptyCell -> CLOSED
+                    null -> error("판에서 ${coordinate}의 칸이 빠저있습니다.")
                 }
             }
         }
