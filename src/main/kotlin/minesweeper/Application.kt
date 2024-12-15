@@ -7,10 +7,8 @@ fun main() {
     val inputView = InputView()
     val resultView = ResultView()
 
-    val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight())
-    val mineCount = inputView.readMineCount()
-
-    val board = Board.initializeBoard(dimensions, mineCount, DefaultPositionProvider())
+    val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight(), inputView.readMineCount())
+    val board = Board.initializeBoard(dimensions, DefaultPositionProvider())
 
     resultView.startView()
     resultView.drawBoard(board.draw())

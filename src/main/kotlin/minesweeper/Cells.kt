@@ -1,6 +1,9 @@
 package minesweeper
 
 class Cells(private val values: MutableMap<Position, CellType>) {
+    val mineCount: Int
+        get() = values.values.count { it.isMine() }
+
     fun checkMine(position: Position): Boolean {
         return at(position).isMine()
     }
