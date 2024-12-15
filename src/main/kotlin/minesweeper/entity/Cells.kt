@@ -13,7 +13,7 @@ value class Cells(
     }
 
     fun hasRevealedMine(): Boolean {
-        return cells.any { it is Cell.Mine && it.isRevealed }
+        return cells.any { !it.isSafe() && it.isRevealed }
     }
 
     fun findUnrevealedNeighbors(
