@@ -4,22 +4,38 @@ import cell.Cell
 import cell.Element
 
 class Rows(
-    val rows: List<Columns>,
+    val columns: List<Columns>,
 ) {
     val rowSize: Int
         get() {
-            return rows.size
+            return columns.size
         }
 
     val columnSize: Int
         get() {
-            return rows[0].columns.size
+            return columns[0].points.size
         }
 
     fun updateMineCount(countMines: (Index?, Index?) -> Int): Rows {
-        val updatedRows = rows.map { it.updatePoints(countMines) }
+        val updatedRows = columns.map { it.updatePoints(countMines) }
         return Rows(updatedRows)
     }
+
+    fun open(
+        rowsIndex: Index,
+        columnIndex: Index,
+    ): Rows? =
+        Rows(
+            columns
+                .mapIndexed { index, column ->
+                    if (index != rowsIndex.value) column else column.open(columnIndex = columnIndex) ?: return null
+                },
+        )
+
+    fun isOpenAdjacent(
+        rowIndex: Index,
+        columnIndex: Index,
+    ): Boolean = columns[rowIndex.value].isOpenAdjacent(columnIndex = columnIndex)
 
     companion object {
         fun ready(
@@ -28,7 +44,7 @@ class Rows(
             element: Element = Cell.ready(),
         ): Rows =
             Rows(
-                rows =
+                columns =
                     List(height.size) {
                         Columns.ready(
                             width = width,

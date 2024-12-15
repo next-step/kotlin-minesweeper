@@ -9,7 +9,7 @@ data class Cell(
 ) : Element {
     override fun updateValue(
         newValue: String,
-        newStatus: CellStatus
+        newStatus: CellStatus,
     ): Element = Cell(value = newValue, status = newStatus)
 
     companion object {

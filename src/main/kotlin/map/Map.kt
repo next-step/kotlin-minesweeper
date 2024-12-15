@@ -2,12 +2,18 @@ package map
 
 import cell.Cell
 import cell.Element
+import map.move.Direction
+import map.move.Position
 import mine.Mine
 import mine.MinePoints
 import minecount.strategy.SurroundingMines
+import open.result.OpenResult
+import open.result.OpenResult.InvalidPosition
+import open.result.OpenResult.MineExploded
+import open.result.OpenResult.Success
 
 class Map(
-    val grid: Grid,
+    var grid: Grid,
 ) {
     fun placeMine(minePoints: MinePoints) {
         minePoints.points.forEach { placeMineAtPoint(it) }
@@ -20,6 +26,44 @@ class Map(
 
     fun updateMineCountByCell(): Map = Map(grid = grid.updateMineCountByCell())
 
+    fun open(position: Position): OpenResult {
+        return Success(
+            Map(
+                grid.open(
+                    rowIndex = position.row ?: return InvalidPosition,
+                    columnIndex = position.column ?: return InvalidPosition,
+                ) ?: return MineExploded,
+            ),
+        )
+    }
+
+    fun openAdjacent(position: Position): Map {
+        val row = position.row ?: return this
+        val column = position.column ?: return this
+        val adjacentPositions =
+            Direction.entries
+                .map { position.move(direction = it, rowSize = row.maxSize, columnSize = column.maxSize) }
+                .filter { isOpenPosition(it) }
+
+        adjacentPositions.forEach {
+            grid = grid.open(
+                rowIndex = it.row ?: return@forEach,
+                columnIndex = it.column ?: return@forEach,
+            ) ?: return@forEach
+
+            openAdjacent(it)
+        }
+
+        return this
+    }
+
+    private fun isOpenPosition(position: Position): Boolean {
+        val row = position.row ?: return false
+        val column = position.column ?: return false
+
+        return grid.rows.isOpenAdjacent(rowIndex = row, columnIndex = column)
+    }
+
     companion object {
         fun create(
             height: Height,
@@ -27,7 +71,7 @@ class Map(
             element: Element = Cell.ready(),
         ): Map {
             val rows = Rows.ready(height = height, width = width, element = element)
-            return Map(grid = Grid(points = rows, mineCountStrategy = SurroundingMines(points = rows)))
+            return Map(grid = Grid(rows = rows, mineCountStrategy = SurroundingMines(points = rows)))
         }
     }
 }

@@ -26,7 +26,7 @@ class PointTest {
         val rows = Rows.ready(height = height, width = width)
 
         val mineCountStrategy = SurroundingMines(points = rows)
-        rows.rows[MINE_INDEX].columns[MINE_INDEX] =
+        rows.columns[MINE_INDEX].points[MINE_INDEX] =
             Point(
                 point =
                     Pair(

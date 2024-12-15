@@ -4,15 +4,25 @@ import cell.Cell
 import cell.Element
 
 class Columns(
-    val columns: MutableList<Point>,
+    val points: MutableList<Point>,
 ) {
     fun updatePoints(countMines: (Index?, Index?) -> Int): Columns {
         val updatedPoints =
-            columns
+            points
                 .map { it.updateWithAdjacentMineCount(countMines) }
                 .toMutableList()
         return Columns(updatedPoints)
     }
+
+    fun open(columnIndex: Index): Columns? =
+        Columns(
+            points
+                .mapIndexed { index, point ->
+                    if (index != columnIndex.value) point else point.tryOpen() ?: return null
+                }.toMutableList(),
+        )
+
+    fun isOpenAdjacent(columnIndex: Index): Boolean = points[columnIndex.value].isOpenAdjacentCell()
 
     companion object {
         fun ready(
@@ -21,7 +31,7 @@ class Columns(
             element: Element = Cell.ready(),
         ): Columns =
             Columns(
-                columns =
+                points =
                     MutableList(size = width.size) {
                         Point(
                             Pair(

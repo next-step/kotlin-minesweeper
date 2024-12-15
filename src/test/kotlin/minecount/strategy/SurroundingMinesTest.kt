@@ -24,7 +24,7 @@ class SurroundingMinesTest {
         val width = Width(SIZE)
         rows = Rows.ready(height = height, width = width)
         mineCountStrategy = SurroundingMines(points = rows)
-        grid = Grid(points = rows, mineCountStrategy = mineCountStrategy)
+        grid = Grid(rows = rows, mineCountStrategy = mineCountStrategy)
         grid.place(
             Index(value = MINE_INDEX, maxSize = height.size),
             Index(value = MINE_INDEX, maxSize = width.size),
