@@ -35,4 +35,14 @@ class MineSweeperGameTest {
         assertThatThrownBy { MineSweeperGame.of(5, 5, -1) }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("지뢰는 음수개 일수 없음")
     }
+
+    @Test
+    fun `모든 지뢰를 제외한 칸을 열면 승리`() {
+        val mineSweeperMap =
+            MineSweeperMap(MineSweeperMapShape(2, 2), MineSweeperMapBlocks(MutableList(4) { MineSweeperMapBlock() }))
+        val mineSweeperGame = MineSweeperGame(mineSweeperMap, 0)
+        mineSweeperGame.open(0, 0)
+
+        mineSweeperGame.isWin() shouldBe true
+    }
 }

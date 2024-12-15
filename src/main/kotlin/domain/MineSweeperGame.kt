@@ -14,6 +14,17 @@ class MineSweeperGame(
         minePositionSetter.setPosition(mineSweeperMap)
     }
 
+    fun open(
+        x: Int,
+        y: Int,
+    ) {
+        mineSweeperMap.open(x, y)
+    }
+
+    fun isWin(): Boolean {
+        return mineSweeperMap.blocks.blocks.stream().allMatch { it.isMine || it.isOpen }
+    }
+
     companion object {
         fun of(
             width: Int,
