@@ -14,4 +14,6 @@ abstract class Cell {
 
 class Mine : Cell()
 
-class Land : Cell()
+class Land : Cell() {
+    var adjacentMineCount: Int = 0
+}
