@@ -7,21 +7,21 @@ import io.kotest.matchers.shouldBe
 
 class GameBoardTest : BehaviorSpec({
     given("GameBoard 를 생성할 때") {
-        val rowLength = 10
-        val columnLength = 10
+        val height = 10
+        val width = 10
 
-        `when`("행 길이, 열 길이를 받아 grid를 만들면") {
-            val sut = GameBoard.of(rowLength, columnLength)
+        `when`("높이, 너비를 받아 grid를 만들면") {
+            val sut = GameBoard.of(height = height, width = width)
 
             then("grid는 rowLength x columnLength 크기이며 모든 Cell의 좌표가 저장되어 있다") {
                 val area = sut.area
-                area shouldBe Area(height = rowLength, width = columnLength)
+                area shouldBe Area(height = height, width = width)
 
-                val result: List<Row> = sut.rows()
+                val result: List<Row> = sut.rows
 
-                result shouldHaveSize rowLength
+                result shouldHaveSize height
                 result.forEachIndexed { rowIndex, row ->
-                    row.cells() shouldHaveSize columnLength
+                    row.cells() shouldHaveSize width
                     row.cells().forEachIndexed { columnIndex, cell ->
                         cell.location() shouldBe Location(rowIndex + 1, columnIndex + 1)
                     }
@@ -29,29 +29,29 @@ class GameBoardTest : BehaviorSpec({
             }
         }
 
-        `when`("행 길이가 1 미만이면") {
+        `when`("높이가 1 미만이면") {
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
                         height = 0,
-                        width = columnLength,
+                        width = width,
                     )
                 }
             }
         }
 
-        `when`("열 길이가 1 미만이면") {
+        `when`("너비가 1 미만이면") {
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
-                        height = rowLength,
+                        height = height,
                         width = 0,
                     )
                 }
             }
         }
 
-        `when`("grid를 직접 받아서 GameBoard를 만들 때 모든 행의 열 길이가 똑같지 않은 Grid를 받으면") {
+        `when`("grid를 직접 받아서 GameBoard를 만들 때 모든 행의 너비가 똑같지 않은 Grid를 받으면") {
             val grid =
                 listOf(
                     List(3) { BasicCell(row = 1, column = (it + 1)) },
