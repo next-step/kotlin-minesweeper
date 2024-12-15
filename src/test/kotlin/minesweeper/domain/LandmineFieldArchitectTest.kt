@@ -1,6 +1,8 @@
-import BasicCellGridTextFixture.threeByThreeGrid
+package minesweeper.domain
+
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.types.shouldBeTypeOf
+import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 
 class LandmineFieldArchitectTest : BehaviorSpec({
     given("LandmineFieldArchitect 는") {

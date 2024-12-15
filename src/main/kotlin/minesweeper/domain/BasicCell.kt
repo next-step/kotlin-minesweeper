@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 data class BasicCell(private val row: Int, private val column: Int) : Cell {
     override fun row(): Int = row
 

@@ -1,6 +1,8 @@
-import BasicCellGridTextFixture.threeByThreeGrid
+package minesweeper.domain
+
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 
 class LandmineLocationSelectorTest : BehaviorSpec({
     given("LandmineLocationSelector 는") {

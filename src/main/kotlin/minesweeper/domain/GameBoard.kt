@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 class GameBoard private constructor(
     private val grid: List<List<Cell>>,
     private val landmineFieldArchitect: LandmineFieldArchitect,

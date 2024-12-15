@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 class LandmineLocationSelector(
     private val shuffleAlgorithm: ShuffleAlgorithm = RandomShuffleAlgorithm(),
 ) {

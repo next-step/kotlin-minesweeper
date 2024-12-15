@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 class LandmineFieldArchitect(
     private val landmineLocationSelector: LandmineLocationSelector = LandmineLocationSelector(),
     private val vulture: Vulture = Vulture(),

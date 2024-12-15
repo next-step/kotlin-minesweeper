@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 interface Cell {
     fun row(): Int
 

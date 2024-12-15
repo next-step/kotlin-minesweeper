@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 data class Row(private val cells: List<Cell>) {
     fun display(): String = cells.joinToString(separator = " ") { it.display() }
 

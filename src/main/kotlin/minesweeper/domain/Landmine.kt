@@ -1,3 +1,5 @@
+package minesweeper.domain
+
 data class Landmine(private val row: Int = 0, private val column: Int = 0) : Cell {
     override fun row(): Int = row
 

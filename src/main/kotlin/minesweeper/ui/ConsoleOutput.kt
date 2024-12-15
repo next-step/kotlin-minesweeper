@@ -1,6 +1,6 @@
-package ui
+package minesweeper.ui
 
-import Row
+import minesweeper.domain.Row
 
 object ConsoleOutput {
     fun announceGameStarted() = println("지뢰찾기 게임 시작")

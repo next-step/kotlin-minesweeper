@@ -1,4 +1,4 @@
-package ui
+package minesweeper.ui
 
 object ConsoleInput {
     fun inputRowLength(): Int {
