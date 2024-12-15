@@ -33,8 +33,8 @@ class GameBoardTest : BehaviorSpec({
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
-                        rowLength = 0,
-                        columnLength = columnLength,
+                        height = 0,
+                        width = columnLength,
                     )
                 }
             }
@@ -44,8 +44,8 @@ class GameBoardTest : BehaviorSpec({
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
-                        rowLength = rowLength,
-                        columnLength = 0,
+                        height = rowLength,
+                        width = 0,
                     )
                 }
             }

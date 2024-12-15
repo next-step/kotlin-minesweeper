@@ -16,10 +16,10 @@ class GameBoard private constructor(
 
     companion object {
         fun of(
-            rowLength: Int,
-            columnLength: Int,
+            height: Int,
+            width: Int,
         ): GameBoard {
-            val area = Area(height = rowLength, width = columnLength)
+            val area = Area(height = height, width = width)
             val grid =
                 List(area.height) { row ->
                     List(area.width) { column ->

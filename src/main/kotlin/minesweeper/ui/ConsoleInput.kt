@@ -1,14 +1,14 @@
 package minesweeper.ui
 
 object ConsoleInput {
-    fun inputRowLength(): Int {
+    fun inputHeight(): Int {
         println("높이를 입력하세요.")
         val result = readln().toInt()
         println()
         return result
     }
 
-    fun inputColumnLength(): Int {
+    fun inputWidth(): Int {
         println("너비를 입력하세요.")
         val result = readln().toInt()
         println()
