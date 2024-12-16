@@ -15,7 +15,7 @@ class RandomMinePositionsGeneratorTest {
 
         // when
         val result = assertThrows(IllegalArgumentException::class.java) {
-            generator.generate(boardSize.area, mineCount)
+            generator.generate(boardSize, mineCount)
         }
 
         // then

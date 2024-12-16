@@ -15,8 +15,8 @@ object ResultView {
     }
 
     private fun Cell.print(): String = when (this) {
-        Cell.Island -> "*"
-        Cell.Mine -> "C"
+        is Cell.Island -> "${this.aroundMineCount}"
+        Cell.Mine -> "*"
     }
 
 }

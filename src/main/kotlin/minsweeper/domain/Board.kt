@@ -1,6 +1,6 @@
 package minsweeper.domain
 
-class Board(val boardLines: BoardLines) {
+class Board private constructor(val boardLines: BoardLines) {
 
     companion object {
 

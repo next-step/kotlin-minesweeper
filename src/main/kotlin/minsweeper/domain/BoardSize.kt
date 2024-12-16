@@ -4,7 +4,6 @@ data class BoardSize(
     val height: Int,
     val width: Int,
 ) {
-    val area: Int = height * width
 
     init {
         require(width > 0) { WIDTH_EXCEPTION }

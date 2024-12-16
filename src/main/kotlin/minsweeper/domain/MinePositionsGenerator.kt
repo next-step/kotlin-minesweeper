@@ -2,6 +2,6 @@ package minsweeper.domain
 
 interface MinePositionsGenerator {
 
-    fun generate(area: Int, mineCount: Int): List<Int>
+    fun generate(size: BoardSize, mineCount: Int): List<Position>
 
 }

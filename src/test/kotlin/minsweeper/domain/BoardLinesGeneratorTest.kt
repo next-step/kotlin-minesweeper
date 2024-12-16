@@ -9,10 +9,21 @@ class BoardLinesGeneratorTest {
     fun `지뢰를 내가 원하는 위치에 심을 수 있다`() {
         // given
         val boardSize = BoardSize(10, 10)
-        val mines = listOf(0, 12, 24, 30, 41, 57, 69)
-        val boardLinesGenerator = BoardLinesGenerator(object : MinePositionsGenerator {
-            override fun generate(area: Int, mineCount: Int): List<Int> = mines
-        })
+        val mines = listOf(
+            Position(0, 0),
+            Position(1, 2),
+            Position(2, 4),
+            Position(3, 0),
+            Position(4, 1),
+            Position(5, 7),
+            Position(6, 9),
+        )
+        val boardLinesGenerator = BoardLinesGenerator(
+            object : MinePositionsGenerator {
+                override fun generate(size: BoardSize, mineCount: Int): List<Position> = mines
+            },
+            AroundMineCountJudge(),
+        )
 
         // when
         val result = boardLinesGenerator.generate(boardSize, mines.size)
