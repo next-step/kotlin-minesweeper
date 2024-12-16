@@ -27,32 +27,38 @@ class AroundMineCountJudgeTest {
             return listOf(
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = 11,
-                    minePositions = listOf(1, 2, 10, 21, 22),
+                    position = Position(1, 1),
+                    minePositions = listOf(
+                        Position(0, 1),
+                        Position(0, 2),
+                        Position(1, 0),
+                        Position(2, 1),
+                        Position(2, 2),
+                    ),
                     aroundMineCount = 5,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = 0,
-                    minePositions = listOf(1, 10, 11),
+                    position = Position(0, 0),
+                    minePositions = listOf(Position(0, 1), Position(1, 0), Position(1, 1)),
                     aroundMineCount = 3,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = 99,
-                    minePositions = listOf(89, 98),
+                    position = Position(9, 9),
+                    minePositions = listOf(Position(8, 9), Position(9, 8)),
                     aroundMineCount = 2,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = 9,
-                    minePositions = listOf(18),
+                    position = Position(0, 9),
+                    minePositions = listOf(Position(1, 8)),
                     aroundMineCount = 1,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = 90,
-                    minePositions = listOf(80, 79, 91, 99),
+                    position = Position(9, 0),
+                    minePositions = listOf(Position(8, 0), Position(7, 9), Position(9, 1), Position(9, 9)),
                     aroundMineCount = 2,
                 ),
             )
@@ -61,8 +67,8 @@ class AroundMineCountJudgeTest {
 
     data class AroundMineCountJudgeParam(
         val boardSize: BoardSize,
-        val position: Int,
-        val minePositions: List<Int>,
+        val position: Position,
+        val minePositions: List<Position>,
         val aroundMineCount: Int,
     )
 

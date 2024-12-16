@@ -2,11 +2,16 @@ package minsweeper.domain
 
 class RandomMinePositionsGenerator : MinePositionsGenerator {
 
-    override fun generate(size: BoardSize, mineCount: Int): List<Int> {
+    override fun generate(size: BoardSize, mineCount: Int): List<Position> {
         val area = size.height * size.width
         validateBoardSizeIsMoreThanMineCount(area, mineCount)
         return (0 until area).shuffled()
             .take(mineCount)
+            .map {
+                val row = it / size.width
+                val column = it % size.width
+                return@map Position(row, column)
+            }
     }
 
     private fun validateBoardSizeIsMoreThanMineCount(area: Int, mineCount: Int) {

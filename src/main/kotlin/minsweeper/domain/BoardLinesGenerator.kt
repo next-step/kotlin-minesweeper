@@ -12,7 +12,7 @@ class BoardLinesGenerator(
 
     private fun createBoardLines(
         boardSize: BoardSize,
-        minePositions: List<Int>,
+        minePositions: List<Position>,
     ): BoardLines = BoardLines(List(boardSize.height) { row ->
         createBoardLine(boardSize, row, minePositions)
     })
@@ -20,18 +20,18 @@ class BoardLinesGenerator(
     private fun createBoardLine(
         boardSize: BoardSize,
         row: Int,
-        minePositions: List<Int>,
-    ): BoardLine = BoardLine(List(boardSize.width) { col ->
-        createCell(row, boardSize, col, minePositions)
+        minePositions: List<Position>,
+    ): BoardLine = BoardLine(List(boardSize.width) { column ->
+        createCell(row, boardSize, column, minePositions)
     })
 
     private fun createCell(
         row: Int,
         boardSize: BoardSize,
-        col: Int,
-        minePositions: List<Int>,
+        column: Int,
+        minePositions: List<Position>,
     ): Cell {
-        val position = row * boardSize.width + col
+        val position = Position(row, column)
         return Cell.Mine.takeIf { position in minePositions } ?: Cell.Island(
             aroundMineCountJudge.judge(
                 boardSize,
