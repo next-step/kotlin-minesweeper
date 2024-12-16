@@ -29,10 +29,10 @@ class BoardTest {
                 emptyCellOf(y = 2, x = 2),
             )
 
-        board.countMines(Coordinate(y = 0, x = 0)) shouldBe 2
-        board.countMines(Coordinate(y = 2, x = 0)) shouldBe 2
-        board.countMines(Coordinate(y = 2, x = 2)) shouldBe 2
-        board.countMines(Coordinate(y = 0, x = 2)) shouldBe 2
+        board.countMines(y = 0, x = 0) shouldBe 2
+        board.countMines(y = 2, x = 0) shouldBe 2
+        board.countMines(y = 2, x = 2) shouldBe 2
+        board.countMines(y = 0, x = 2) shouldBe 2
     }
 
     @Test
@@ -50,7 +50,7 @@ class BoardTest {
                 emptyCellOf(y = 2, x = 2),
             )
 
-        val count = board.countMines(Coordinate(y = 1, x = 1))
+        val count = board.countMines(y = 1, x = 1)
 
         count shouldBe 4
     }

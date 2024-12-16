@@ -1,7 +1,6 @@
 package minesweeper.ui
 
 import minesweeper.domain.Board
-import minesweeper.domain.Coordinate
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MinedCell
 
@@ -26,11 +25,10 @@ object ResultView {
         val maxX = cells.keys.maxOf { it.x }
         return (0..maxY).joinToString(NEWLINE) { y ->
             (0..maxX).joinToString(SPACE) { x ->
-                val coordinate = Coordinate(y, x)
-                when (cells[coordinate]) {
+                when (get(y, x)) {
                     is MinedCell -> MINE
-                    is EmptyCell -> countMines(coordinate).toString()
-                    null -> error("판에 ${coordinate}의 칸이 빠저있습니다.")
+                    is EmptyCell -> countMines(y, x).toString()
+                    null -> error("정상적으로 판이 생성되었으면 도달할 수 없는 코드")
                 }
             }
         }

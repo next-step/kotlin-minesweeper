@@ -7,25 +7,19 @@ data class Coordinate(
     val neighbors: List<Coordinate> by lazy { neighbors() }
 
     init {
-        require(y in 0..MAX_VALUE) { "y축 좌표는 0 이상이어야 합니다." }
-        require(x in 0..MAX_VALUE) { "x축 좌표는 0 이상이어야 합니다." }
+        require(y >= 0) { "y축 좌표는 0 이상이어야 합니다." }
+        require(x >= 0) { "x축 좌표는 0 이상이어야 합니다." }
     }
 
     private fun neighbors(): List<Coordinate> =
         Direction
             .entries
-            .mapNotNull {
-                val nextY = y + it.dy
-                val nextX = x + it.dx
-                if (nextY in 0..MAX_VALUE && nextX in 0..MAX_VALUE) {
-                    Coordinate(y = nextY, x = nextX)
-                } else {
-                    null
-                }
-            }
+            .mapNotNull { next(it) }
 
-    companion object {
-        // https://www.perplexity.ai/search/largest-ever-minesweeper-game-EXup1APhRFK6xGo6j8Ps1g#0
-        const val MAX_VALUE = 1_000_000
+    private fun next(direction: Direction): Coordinate? {
+        if (y + direction.dy < 0 || x + direction.dx < 0) {
+            return null
+        }
+        return Coordinate(y + direction.dy, x + direction.dx)
     }
 }

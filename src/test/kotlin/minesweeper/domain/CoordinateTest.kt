@@ -15,18 +15,8 @@ class CoordinateTest {
     }
 
     @Test
-    fun `y축 좌표는 1_000_000 이하이어야 한다`() {
-        assertThrows<IllegalArgumentException> { Coordinate(y = 1_000_001, x = 1) }
-    }
-
-    @Test
     fun `x축 좌표는 0 이상이어야 한다`() {
         assertThrows<IllegalArgumentException> { Coordinate(y = 1, x = -1) }
-    }
-
-    @Test
-    fun `x축 좌표는 1_000_000 이하이어야 한다`() {
-        assertThrows<IllegalArgumentException> { Coordinate(y = 1, x = 1_000_001) }
     }
 
     @Test
@@ -80,30 +70,6 @@ class CoordinateTest {
                         Coordinate(y = 1, x = 1),
                     ),
                 ),
-                Arguments.of(
-                    Coordinate(y = Coordinate.MAX_VALUE, x = 0),
-                    listOf(
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = 0),
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = 1),
-                        Coordinate(y = Coordinate.MAX_VALUE, x = 1),
-                    ),
-                ),
-                Arguments.of(
-                    Coordinate(y = 0, x = Coordinate.MAX_VALUE),
-                    listOf(
-                        Coordinate(y = 0, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = 1, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = 1, x = Coordinate.MAX_VALUE),
-                    ),
-                ),
-                Arguments.of(
-                    Coordinate(y = Coordinate.MAX_VALUE, x = Coordinate.MAX_VALUE),
-                    listOf(
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = Coordinate.MAX_VALUE),
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = Coordinate.MAX_VALUE, x = Coordinate.MAX_VALUE - 1),
-                    ),
-                ),
             )
 
         @JvmStatic
@@ -127,26 +93,6 @@ class CoordinateTest {
                         Coordinate(y = 1, x = 1),
                         Coordinate(y = 2, x = 1),
                         Coordinate(y = 2, x = 0),
-                    ),
-                ),
-                Arguments.of(
-                    Coordinate(y = Coordinate.MAX_VALUE, x = 1),
-                    listOf(
-                        Coordinate(y = Coordinate.MAX_VALUE, x = 0),
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = 0),
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = 1),
-                        Coordinate(y = Coordinate.MAX_VALUE - 1, x = 2),
-                        Coordinate(y = Coordinate.MAX_VALUE, x = 2),
-                    ),
-                ),
-                Arguments.of(
-                    Coordinate(y = 1, x = Coordinate.MAX_VALUE),
-                    listOf(
-                        Coordinate(y = 0, x = Coordinate.MAX_VALUE),
-                        Coordinate(y = 0, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = 1, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = 2, x = Coordinate.MAX_VALUE - 1),
-                        Coordinate(y = 2, x = Coordinate.MAX_VALUE),
                     ),
                 ),
             )
