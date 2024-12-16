@@ -21,11 +21,10 @@ class ResultView {
             return
         }
 
-        print(CELL_SYMBOL)
+        print("${cell.mineAroundCount()} ")
     }
 
     companion object {
         private const val MINE_SYMBOL = "* "
-        private const val CELL_SYMBOL = "C "
     }
 }

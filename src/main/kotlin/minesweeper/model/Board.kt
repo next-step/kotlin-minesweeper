@@ -15,4 +15,8 @@ class Board(
         cells.addMines(mineCount)
         return cells.cells
     }
+
+    fun addMineAroundCounts() {
+        cells.addMineAroundCounts()
+    }
 }

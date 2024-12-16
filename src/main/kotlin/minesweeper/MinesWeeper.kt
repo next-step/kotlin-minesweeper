@@ -16,4 +16,8 @@ class MinesWeeper(
     fun createCells(): List<Cell> {
         return board.createCells()
     }
+
+    fun addMineAroundCounts() {
+        board.addMineAroundCounts()
+    }
 }

@@ -17,6 +17,7 @@ class MinesWeeperGame(
 
         val minesWeeper = MinesWeeper(height, width, mineCount)
         val cells = minesWeeper.createCells()
+        minesWeeper.addMineAroundCounts()
         resultView.printBoard(cells)
     }
 }

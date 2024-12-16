@@ -21,4 +21,14 @@ class Cells(
         val shuffledCells = cells.shuffled()
         shuffledCells.subList(0, mineCount).forEach { it.addMine() }
     }
+
+    fun addMineAroundCounts() {
+        cells.filter { it.isMine() }.forEach { mineCell ->
+            Direction.entries.forEach { direction ->
+                val adjacentRow = mineCell.row + direction.dx
+                val adjacentColumn = mineCell.column + direction.dy
+                cells.find { it.isAround(adjacentRow, adjacentColumn) }?.addMineAroundCount()
+            }
+        }
+    }
 }
