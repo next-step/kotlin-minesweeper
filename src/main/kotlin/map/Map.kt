@@ -5,7 +5,7 @@ import element.Element
 import element.Mine
 import map.move.Direction
 import map.move.Position
-import mine.MinePoints
+import minecount.MinePoints
 import minecount.strategy.SurroundingMines
 import open.result.OpenResult
 import open.result.OpenResult.InvalidPosition

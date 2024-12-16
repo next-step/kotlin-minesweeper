@@ -4,8 +4,8 @@ import map.Height
 import map.Map
 import map.Width
 import map.move.Position
-import mine.MineCount
-import mine.MinePoints
+import minecount.MineCount
+import minecount.MinePoints
 import open.result.OpenResult
 import view.InputView
 import view.ResultView

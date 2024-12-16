@@ -1,4 +1,4 @@
-package mine
+package minecount
 
 class MineCount(
     val count: Int,

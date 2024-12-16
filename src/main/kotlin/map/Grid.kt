@@ -1,7 +1,7 @@
 package map
 
 import element.Element
-import mine.MineCount
+import minecount.MineCount
 import minecount.strategy.MineCountStrategy
 
 class Grid(

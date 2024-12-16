@@ -1,4 +1,4 @@
-package mine
+package minecount
 
 import element.Mine
 import map.Height
