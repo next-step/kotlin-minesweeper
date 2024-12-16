@@ -15,4 +15,10 @@ class MineSweeperMapBlockTest {
         val mineSweeperMapBlock = MineSweeperMapBlock(false, 1)
         mineSweeperMapBlock.mineAroundCount shouldBe 1
     }
+
+    @Test
+    fun `지뢰찾기 칸은 열림 여부를 가진다`() {
+        val mineSweeperMapBlock = MineSweeperMapBlock(_isOpen = false)
+        mineSweeperMapBlock.isOpen shouldBe false
+    }
 }
