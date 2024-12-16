@@ -81,13 +81,20 @@ class GameBoardTest : BehaviorSpec({
             }
         }
 
-        `when`("없는 Location을 입력하면") {
+        `when`("Row 범위 내의 없는 Location 로 Cell을 찾으려고 하면") {
             val location = Location(row = 3, column = 4)
+            val result = sut.find(location)
+
+            then("null 을 반환한다") {
+                result shouldBe null
+            }
+        }
+
+        `when`("Row 범위를 벗어난 Location 으로 Cell을 찾으려고 하면") {
+            val location = Location(row = 4, column = 1)
 
             then("IllegalArgumentException 예외를 던진다") {
-                shouldThrow<IllegalArgumentException> {
-                    sut.find(location)
-                }
+                shouldThrow<IllegalArgumentException> { sut.find(location) }
             }
         }
     }

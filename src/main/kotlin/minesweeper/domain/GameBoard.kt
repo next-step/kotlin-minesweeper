@@ -13,7 +13,7 @@ class GameBoard private constructor(
 
     fun totalCellSize() = area.height * area.width
 
-    fun find(location: Location): Cell = rows.find(location)
+    fun find(location: Location): Cell? = rows.find(location)
 
     companion object {
         fun of(

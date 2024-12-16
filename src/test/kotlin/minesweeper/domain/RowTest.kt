@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class RowTest : BehaviorSpec({
     given("Row 는") {
@@ -20,16 +20,17 @@ class RowTest : BehaviorSpec({
             val result = sut.find(location)
 
             then("해당 셀을 반환한다") {
-                result.location() shouldBe location
+                result shouldNotBe null
+                result?.location() shouldBe location
             }
         }
 
         `when`("Location 으로 일치하는 셀을 찾지 못하면") {
             val location = Location(row = 2, column = 1)
-            then("IllegalArgumentException 예외를 던진다") {
-                shouldThrow<IllegalArgumentException> {
-                    sut.find(location)
-                }
+            val result = sut.find(location)
+
+            then("null 을 반환한다") {
+                result shouldBe null
             }
         }
     }
