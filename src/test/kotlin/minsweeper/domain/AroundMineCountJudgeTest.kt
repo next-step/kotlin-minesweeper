@@ -39,9 +39,26 @@ class AroundMineCountJudgeTest {
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
+                    position = Position(1, 1),
+                    minePositions = listOf(
+                        Position(0, 1),
+                        Position(1, 0),
+                        Position(2, 1),
+                        Position(3, 3),
+                    ),
+                    aroundMineCount = 3,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
                     position = Position(0, 0),
                     minePositions = listOf(Position(0, 1), Position(1, 0), Position(1, 1)),
                     aroundMineCount = 3,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
+                    position = Position(0, 0),
+                    minePositions = listOf(Position(0, 1), Position(2, 1), Position(1, 2)),
+                    aroundMineCount = 1,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
@@ -51,15 +68,51 @@ class AroundMineCountJudgeTest {
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(0, 9),
-                    minePositions = listOf(Position(1, 8)),
+                    position = Position(9, 9),
+                    minePositions = listOf(Position(8, 8), Position(7, 8), Position(8, 7)),
                     aroundMineCount = 1,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
+                    position = Position(0, 9),
+                    minePositions = listOf(Position(1, 8), Position(2, 8)),
+                    aroundMineCount = 1,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
+                    position = Position(0, 9),
+                    minePositions = listOf(Position(1, 8), Position(1, 9), Position(0, 8)),
+                    aroundMineCount = 3,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
                     position = Position(9, 0),
                     minePositions = listOf(Position(8, 0), Position(7, 9), Position(9, 1), Position(9, 9)),
                     aroundMineCount = 2,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
+                    position = Position(5, 5),
+                    minePositions = listOf(
+                        Position(5, 4),
+                        Position(4, 4),
+                        Position(6, 4),
+                        Position(6, 6),
+                    ),
+                    aroundMineCount = 4,
+                ),
+                AroundMineCountJudgeParam(
+                    boardSize = boardSize,
+                    position = Position(5, 5),
+                    minePositions = listOf(
+                        Position(3, 4),
+                        Position(4, 4),
+                        Position(6, 4),
+                        Position(6, 6),
+                        Position(4, 5),
+                        Position(7, 7),
+                    ),
+                    aroundMineCount = 4,
                 ),
             )
         }
