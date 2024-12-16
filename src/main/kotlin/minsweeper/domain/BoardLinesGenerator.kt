@@ -22,24 +22,7 @@ class BoardLinesGenerator(
         row: Int,
         minePositions: List<Position>,
     ): BoardLine = BoardLine(List(boardSize.width) { column ->
-        createCell(row, boardSize, column, minePositions)
+        Cell.create(Position(row, column), boardSize, minePositions, aroundMineCountJudge)
     })
-
-    private fun createCell(
-        row: Int,
-        boardSize: BoardSize,
-        column: Int,
-        minePositions: List<Position>,
-    ): Cell {
-        val position = Position(row, column)
-        return Cell.Mine.takeIf { position in minePositions } ?: Cell.Island(
-            aroundMineCountJudge.judge(
-                boardSize,
-                position,
-                minePositions,
-            )
-        )
-
-    }
 
 }
