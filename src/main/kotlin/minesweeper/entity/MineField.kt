@@ -41,11 +41,11 @@ class MineField(
     private tailrec fun openAdjacentEmptyCells(coordinates: List<Coordinate>) {
         if (coordinates.isEmpty()) return
         val unrevealedCells = coordinates.flatMap(_cells::findUnrevealedNeighbors)
-        val neighborsToOpen = unrevealedCells.onEach { it.open() }
+        val neighborsToOpen = unrevealedCells.onEach(Cell::open)
         val nextCoordinates =
             neighborsToOpen
-                .filter { shouldOpenAdjacentCells(it) }
-                .map { it.coordinate }
+                .filter(::shouldOpenAdjacentCells)
+                .map(Cell::coordinate)
 
         openAdjacentEmptyCells(nextCoordinates)
     }
@@ -61,7 +61,7 @@ class MineField(
     private fun isAllSafeCellsRevealed(): Boolean {
         return cells
             .filter(Cell::isSafe)
-            .all { it.isRevealed }
+            .all(Cell::isRevealed)
     }
 
     companion object {

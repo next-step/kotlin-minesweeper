@@ -18,8 +18,8 @@ value class Cells(
 
     fun findUnrevealedNeighbors(coordinate: Coordinate): List<Cell> {
         return coordinate.findAdjacentCoordinates()
-            .filter { isUnrevealedCell(it) }
-            .mapNotNull { _cells[it] }
+            .filter(::isUnrevealedCell)
+            .mapNotNull(_cells::get)
     }
 
     private fun isUnrevealedCell(coordinate: Coordinate): Boolean {
