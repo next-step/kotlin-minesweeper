@@ -29,7 +29,14 @@ class MineSweeperMapTest {
         mineSweeperMap.getMineAroundCount(7) shouldBe 1
         mineSweeperMap.getMineAroundCount(10) shouldBe 1
         mineSweeperMap.getMineAroundCount(11) shouldBe 1
-        mineSweeperMap.getMineAroundCount(12) shouldBe 1
+        mineSweeperMap.getMineAroundCount(12) shouldBe 2
+        mineSweeperMap.getMineAroundCount(17) shouldBe 1
+        mineSweeperMap.getMineAroundCount(19) shouldBe 1
+        mineSweeperMap.getMineAroundCount(13) shouldBe 1
+        mineSweeperMap.getMineAroundCount(14) shouldBe 1
+        mineSweeperMap.getMineAroundCount(23) shouldBe 1
+        mineSweeperMap.getMineAroundCount(22) shouldBe 1
+        mineSweeperMap.getMineAroundCount(24) shouldBe 1
     }
 
     @Test
