@@ -16,13 +16,9 @@ value class Cells(
         return cells.any { !it.isSafe() && it.isRevealed }
     }
 
-    fun findUnrevealedNeighbors(
-        coordinate: Coordinate,
-        width: Width,
-        height: Height,
-    ): List<Cell> {
+    fun findUnrevealedNeighbors(coordinate: Coordinate): List<Cell> {
         return coordinate.findAdjacentCoordinates()
-            .filter { it.isWithinBounds(width, height) && isUnrevealedCell(it) }
+            .filter { isUnrevealedCell(it) }
             .mapNotNull { _cells[it] }
     }
 

@@ -40,7 +40,7 @@ class MineField(
 
     private tailrec fun openAdjacentEmptyCells(coordinates: List<Coordinate>) {
         if (coordinates.isEmpty()) return
-        val unrevealedCells = coordinates.flatMap { _cells.findUnrevealedNeighbors(it, width, height) }
+        val unrevealedCells = coordinates.flatMap(_cells::findUnrevealedNeighbors)
         val neighborsToOpen = unrevealedCells.onEach { it.open() }
         val nextCoordinates =
             neighborsToOpen
