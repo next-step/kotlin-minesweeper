@@ -26,7 +26,7 @@ class MineSweeperGame(
     }
 
     fun isWin(): Boolean {
-        return mineSweeperMap.blocks.blocks.stream().allMatch { it.isMine || it.isOpen }
+        return mineSweeperMap.blocks.isWin()
     }
 
     companion object {

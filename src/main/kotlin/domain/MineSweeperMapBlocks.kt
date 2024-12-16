@@ -30,4 +30,8 @@ class MineSweeperMapBlocks(private val _blocks: MutableList<MineSweeperMapBlock>
     fun open(index: Int) {
         _blocks[index].open()
     }
+
+    fun isWin(): Boolean {
+        return _blocks.stream().allMatch { it.isMine || it.isOpen }
+    }
 }
