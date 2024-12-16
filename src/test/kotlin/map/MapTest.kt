@@ -104,15 +104,15 @@ class MapTest {
                 .mapNotNull { openPosition.convertValidAdjacentPosition(direction = it) }
                 .mapNotNull { openPosition.convertToPointByIndex(map = mineCountedMap, position = it) }
 
-        val adjacentCellOpenedMap = mineCountedMap.openAdjacent(position = openPosition)
+        val adjacentCellOpenedMap = mineCountedMap.open(position = openPosition) as OpenResult.Success
 
         adjacentPoints
             .filter(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Show }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.visibility shouldBe Show }
 
         adjacentPoints
             .filterNot(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Hide }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.visibility shouldBe Hide }
     }
 
     private val isOpenable: (Point) -> Boolean = { it.isOpenAdjacentCell() }

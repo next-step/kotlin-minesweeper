@@ -27,17 +27,16 @@ class Map(
     fun updateMineCountByCell(): Map = Map(grid = grid.updateMineCountByCell())
 
     fun open(position: Position): OpenResult {
-        return Success(
-            Map(
-                grid.open(
-                    rowIndex = position.row ?: return InvalidPosition,
-                    columnIndex = position.column ?: return InvalidPosition,
-                ) ?: return MineExploded,
-            ),
-        )
+        val result =
+            grid.open(
+                rowIndex = position.row ?: return InvalidPosition,
+                columnIndex = position.column ?: return InvalidPosition,
+            ) ?: return MineExploded
+
+        return Success(map = Map(grid = result).openAdjacent(position = position))
     }
 
-    fun openAdjacent(position: Position): Map {
+    private fun openAdjacent(position: Position): Map {
         val row = position.row ?: return this
         val column = position.column ?: return this
         val adjacentPositions =
