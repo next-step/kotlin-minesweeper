@@ -18,7 +18,7 @@ object ResultView {
 
     private fun Point.value(): String =
         this.element.value
-            .takeIf { it != null && this.visibility is Show }
+            .takeIf { it != null && this.element.visibility is Show }
             ?: "C"
 
     fun printLose() {

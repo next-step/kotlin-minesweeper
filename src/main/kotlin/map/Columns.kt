@@ -22,7 +22,7 @@ class Columns(
                 }.toMutableList(),
         )
 
-    fun isOpenAdjacent(columnIndex: Index): Boolean = points[columnIndex.value].isOpenAdjacentCell()
+    fun isOpenAdjacent(columnIndex: Index): Boolean = points[columnIndex.value].isOpen()
 
     companion object {
         fun ready(
