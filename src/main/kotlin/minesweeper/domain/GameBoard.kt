@@ -21,18 +21,22 @@ class GameBoard private constructor(
             width: Int,
         ): GameBoard {
             val area = Area(height = height, width = width)
-            val grid =
-                List(area.height) { row ->
-                    List(area.width) { column ->
-                        BasicCell(row = row + 1, column = column + 1)
-                    }
-                }
+            val grid = createFlatGrid(area).chunked(width)
             return GameBoard(grid, area)
         }
 
         fun from(grid: List<List<Cell>>): GameBoard {
             val area = Area(height = grid.size, width = grid.firstOrNull()?.size ?: 0)
             return GameBoard(grid, area)
+        }
+
+        private fun createFlatGrid(area: Area): List<Cell> {
+            return (0 until area.height * area.width).map {
+                BasicCell(
+                    row = (it / area.width) + 1,
+                    column = (it % area.width) + 1,
+                )
+            }
         }
     }
 }
