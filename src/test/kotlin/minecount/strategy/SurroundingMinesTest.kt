@@ -1,12 +1,12 @@
 package minecount.strategy
 
+import element.Mine
 import io.kotest.matchers.shouldBe
 import map.Grid
 import map.Height
 import map.Index
 import map.Rows
 import map.Width
-import mine.Mine
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

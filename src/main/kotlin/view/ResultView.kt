@@ -1,6 +1,6 @@
 package view
 
-import cell.showable.Show
+import element.showable.Show
 import map.Map
 import map.Point
 

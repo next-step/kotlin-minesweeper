@@ -1,14 +1,14 @@
 package map
 
-import cell.Cell
-import cell.Element
-import cell.showable.Hide
-import cell.showable.Show
-import cell.showable.Showable
-import cell.status.CellStatus
-import cell.status.MineCell
-import cell.status.NumberCell
-import mine.Mine
+import element.Cell
+import element.Element
+import element.Mine
+import element.showable.Hide
+import element.showable.Show
+import element.showable.Showable
+import element.status.CellStatus
+import element.status.MineCell
+import element.status.NumberCell
 
 data class Point(
     val point: Pair<Index?, Index?>,

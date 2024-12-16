@@ -1,7 +1,7 @@
 package map
 
-import cell.Cell
-import cell.Element
+import element.Cell
+import element.Element
 
 class Rows(
     val columns: List<Columns>,

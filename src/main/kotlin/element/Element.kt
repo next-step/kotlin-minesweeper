@@ -1,6 +1,6 @@
-package cell
+package element
 
-import cell.status.CellStatus
+import element.status.CellStatus
 
 interface Element {
     val value: String?

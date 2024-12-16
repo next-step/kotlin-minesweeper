@@ -1,6 +1,6 @@
 package map
 
-import cell.Element
+import element.Element
 import mine.MineCount
 import minecount.strategy.MineCountStrategy
 

@@ -1,9 +1,9 @@
 package map
 
-import cell.showable.Hide
-import cell.showable.Show
-import cell.status.EmptyCell
-import cell.status.MineCell
+import element.showable.Hide
+import element.showable.Show
+import element.status.EmptyCell
+import element.status.MineCell
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.should

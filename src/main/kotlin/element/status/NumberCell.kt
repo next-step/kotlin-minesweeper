@@ -1,3 +1,3 @@
-package cell.status
+package element.status
 
 object NumberCell : CellStatus

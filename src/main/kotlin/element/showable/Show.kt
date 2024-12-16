@@ -1,4 +1,4 @@
-package cell.showable
+package element.showable
 
 object Show : Showable {
     override fun isShow(): Boolean = true

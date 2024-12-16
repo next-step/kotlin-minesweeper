@@ -1,10 +1,10 @@
 package map
 
-import cell.Cell
-import cell.Element
+import element.Cell
+import element.Element
+import element.Mine
 import map.move.Direction
 import map.move.Position
-import mine.Mine
 import mine.MinePoints
 import minecount.strategy.SurroundingMines
 import open.result.OpenResult

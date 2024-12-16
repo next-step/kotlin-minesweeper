@@ -1,8 +1,7 @@
-package mine
+package element
 
-import cell.Element
-import cell.status.CellStatus
-import cell.status.MineCell
+import element.status.CellStatus
+import element.status.MineCell
 
 data class Mine(
     override val value: String = DEFAULT,

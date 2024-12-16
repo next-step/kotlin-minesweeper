@@ -1,7 +1,7 @@
-package cell
+package element
 
-import cell.status.CellStatus
-import cell.status.EmptyCell
+import element.status.CellStatus
+import element.status.EmptyCell
 
 data class Cell(
     override val value: String? = null,
