@@ -22,5 +22,15 @@ class BasicCellTest : BehaviorSpec({
                 sut.symbol() shouldBe Symbol.CLOSED
             }
         }
+
+        `when`("withIncrementedNumberOfAdjacentMines 을 호출하여") {
+            val location = Location(row = row, column = column)
+            val sut = BasicCell(location, NumberOfAdjacentMines.ZERO)
+            val result = sut.withIncrementedNumberOfAdjacentMines()
+
+            then("numberOfAdjacentMines 가 1 증가한 BasicCell 을 반환할 수 있다") {
+                result.numberOfAdjacentMines shouldBe NumberOfAdjacentMines(1)
+            }
+        }
     }
 })

@@ -8,6 +8,8 @@ value class NumberOfAdjacentMines(private val value: Int) {
         }
     }
 
+    operator fun inc(): NumberOfAdjacentMines = NumberOfAdjacentMines(value + 1)
+
     companion object {
         private const val MAX_NUMBER_OF_ADJACENT_MINES = 8
         private const val MIN_NUMBER_OF_ADJACENT_MINES = 0

@@ -2,11 +2,13 @@ package minesweeper.domain
 
 data class BasicCell(
     private val location: Location,
-    private val numberOfAdjacentMines: NumberOfAdjacentMines = NumberOfAdjacentMines.ZERO,
+    val numberOfAdjacentMines: NumberOfAdjacentMines = NumberOfAdjacentMines.ZERO,
 ) : Cell {
     constructor(row: Int, column: Int) : this(Location(row, column))
 
     override fun location(): Location = location.copy()
 
     override fun symbol(): Symbol = Symbol.CLOSED
+
+    fun withIncrementedNumberOfAdjacentMines() = copy(numberOfAdjacentMines = numberOfAdjacentMines.inc())
 }
