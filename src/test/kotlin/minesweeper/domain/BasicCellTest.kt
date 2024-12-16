@@ -18,8 +18,8 @@ class BasicCellTest : BehaviorSpec({
                 result shouldBe expectedLocation
             }
 
-            then("기본 심볼은 CLOSED 이다") {
-                sut.symbol() shouldBe Symbol.CLOSED
+            then("기본 심볼은 ZERO 이다") {
+                sut.symbol() shouldBe Symbol.ZERO
             }
         }
 

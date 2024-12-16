@@ -8,7 +8,7 @@ data class BasicCell(
 
     override fun location(): Location = location.copy()
 
-    override fun symbol(): Symbol = Symbol.CLOSED
+    override fun symbol(): Symbol = Symbol.from(numberOfAdjacentMines)
 
     fun withIncrementedNumberOfAdjacentMines() = copy(numberOfAdjacentMines = numberOfAdjacentMines.inc())
 }
