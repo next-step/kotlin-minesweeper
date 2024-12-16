@@ -1,10 +1,10 @@
 package domain
 
-class Board(private val row: Int, private val col: Int, private val mineCount: Int) {
+class Board(private val height: BoardHeight, private val width: BoardWidth, private val mineCount: MineCount) {
     init {
-        require(row > 0) { INVALID_ROW_SIZE }
-        require(col > 0) { INVALID_COLUMN_SIZE }
-        require(row * col >= mineCount) { INVALID_MINE_COUNT }
+        require(height > 0) { INVALID_ROW_SIZE }
+        require(width > 0) { INVALID_COLUMN_SIZE }
+        require(height * width >= mineCount.value) { INVALID_MINE_COUNT }
     }
 
     companion object {

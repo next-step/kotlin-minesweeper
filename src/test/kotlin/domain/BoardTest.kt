@@ -10,7 +10,7 @@ class BoardTest : DescribeSpec({
             it("throw exception") {
                 val exception =
                     shouldThrow<IllegalArgumentException> {
-                        Board(0, 10, 10)
+                        Board(BoardHeight(0), BoardWidth(10), MineCount(10))
                     }
                 exception.message shouldBe "높이는 1이상입니다."
             }
@@ -20,7 +20,7 @@ class BoardTest : DescribeSpec({
             it("throw exception") {
                 val exception =
                     shouldThrow<IllegalArgumentException> {
-                        Board(10, 0, 10)
+                        Board(BoardHeight(10), BoardWidth(0), MineCount(10))
                     }
                 exception.message shouldBe "너비는 1이상입니다."
             }
@@ -30,7 +30,7 @@ class BoardTest : DescribeSpec({
             it("throw exception") {
                 val exception =
                     shouldThrow<IllegalArgumentException> {
-                        Board(2, 2, 5)
+                        Board(BoardHeight(2), BoardWidth(2), MineCount(5))
                     }
                 exception.message shouldBe "지뢰 개수는 전체 칸의 개수보다 작아야 합니다."
             }

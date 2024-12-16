@@ -1,3 +1,3 @@
 package domain
 
-data class Coordinate(val row: Int, val col: Int)
+data class Coordinate(val height: BoardHeight, val width: BoardWidth)
