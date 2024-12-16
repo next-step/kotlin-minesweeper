@@ -1,13 +1,7 @@
 package minesweeper.domain
 
-sealed interface Cell {
-    val coordinate: Coordinate
-}
+sealed interface Cell
 
-data class MinedCell(
-    override val coordinate: Coordinate,
-) : Cell
+class MinedCell : Cell
 
-data class EmptyCell(
-    override val coordinate: Coordinate,
-) : Cell
+class EmptyCell : Cell

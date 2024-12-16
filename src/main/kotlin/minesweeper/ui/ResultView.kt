@@ -1,7 +1,6 @@
 package minesweeper.ui
 
 import minesweeper.domain.Board
-import minesweeper.domain.Coordinate
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MinedCell
 
@@ -10,7 +9,6 @@ object ResultView {
     private const val GAME_START = "지뢰찾기 게임 시작"
     private const val SPACE = " "
     private const val MINE = "*"
-    private const val CLOSED = "C"
 
     fun render(board: Board) {
         val message =
@@ -23,14 +21,14 @@ object ResultView {
     }
 
     private fun Board.render(): String {
-        val maxY = cells.maxOf { it.coordinate.y }
-        val maxX = cells.maxOf { it.coordinate.x }
+        val maxY = cells.keys.maxOf { it.y }
+        val maxX = cells.keys.maxOf { it.x }
         return (0..maxY).joinToString(NEWLINE) { y ->
             (0..maxX).joinToString(SPACE) { x ->
-                val cell = cells.first { it.coordinate == Coordinate(y, x) }
-                when (cell) {
+                when (get(y, x)) {
                     is MinedCell -> MINE
-                    is EmptyCell -> CLOSED
+                    is EmptyCell -> countMines(y, x).toString()
+                    null -> error("정상적으로 판이 생성되었으면 도달할 수 없는 코드")
                 }
             }
         }

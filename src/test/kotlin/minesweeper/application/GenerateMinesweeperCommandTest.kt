@@ -32,26 +32,24 @@ class GenerateMinesweeperCommandTest {
         }
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [0, -1])
-    fun `지뢰 개수는 1 이상이어야 한다`(mineCount: Int) {
+    @Test
+    fun `지뢰 개수는 0 이상이어야 한다`() {
         assertThrows<IllegalArgumentException> {
             GenerateMinesweeperCommand(
                 height = 10,
                 width = 10,
-                mineCount = mineCount,
+                mineCount = -1,
             )
         }
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [100, 101])
-    fun `지뢰 개수는 총 칸 개수를 넘을 수 없습니다`(mineCount: Int) {
+    @Test
+    fun `지뢰 개수는 총 칸 개수를 넘을 수 없습니다`() {
         assertThrows<IllegalArgumentException> {
             GenerateMinesweeperCommand(
                 height = 10,
                 width = 10,
-                mineCount = mineCount,
+                mineCount = 101,
             )
         }
     }

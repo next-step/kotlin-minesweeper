@@ -16,14 +16,14 @@ class RandomBoardGenerator : BoardGenerator {
         val minedCells =
             shuffledIndices
                 .take(mineCount)
-                .map { MinedCell(toCoordinate(it, width)) }
+                .associate { toCoordinate(it, width) to MinedCell() }
 
         val emptyCellCoordinates =
             shuffledIndices
                 .drop(mineCount)
-                .map { EmptyCell(toCoordinate(it, width)) }
+                .associate { toCoordinate(it, width) to EmptyCell() }
 
-        return Board((minedCells + emptyCellCoordinates).toSet())
+        return Board(minedCells + emptyCellCoordinates)
     }
 
     private fun toCoordinate(
