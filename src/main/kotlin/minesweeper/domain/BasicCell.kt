@@ -1,6 +1,9 @@
 package minesweeper.domain
 
-data class BasicCell(private val location: Location) : Cell {
+data class BasicCell(
+    private val location: Location,
+    private val numberOfAdjacentMines: NumberOfAdjacentMines = NumberOfAdjacentMines.ZERO,
+) : Cell {
     constructor(row: Int, column: Int) : this(Location(row, column))
 
     override fun location(): Location = location.copy()
