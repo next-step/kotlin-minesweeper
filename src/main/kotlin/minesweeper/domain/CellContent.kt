@@ -5,7 +5,7 @@ class Mine : CellContent()
 class Empty : CellContent()
 
 class Cell(private val content: CellContent) {
-    private fun isMine(): Boolean = content is Mine
+    fun isMine(): Boolean = content is Mine
     override fun toString(): String = if (isMine()) MINE_CELL else NON_MINE_CELL
 
     companion object {
