@@ -68,7 +68,7 @@ class CoordinateTest : BehaviorSpec({
         val coordinate = Coordinate(3, 3)
 
         When("adjacentCoordinates 메서드를 호출하면") {
-            val adjacent = coordinate.adjacentCoordinates()
+            val adjacent = coordinate.findAdjacentCoordinates()
 
             Then("현재 좌표를 제외한 8개의 주변 좌표를 반환해야 한다") {
                 adjacent shouldContainExactlyInAnyOrder
@@ -101,7 +101,7 @@ class CoordinateTest : BehaviorSpec({
         val coordinate = Coordinate(0, 0)
 
         When("adjacentCoordinates 메서드를 호출하면") {
-            val adjacent = coordinate.adjacentCoordinates()
+            val adjacent = coordinate.findAdjacentCoordinates()
 
             Then("음수 좌표는 포함되지 않아야 한다") {
                 adjacent shouldContainExactlyInAnyOrder

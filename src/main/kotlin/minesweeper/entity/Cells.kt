@@ -13,7 +13,17 @@ value class Cells(
     }
 
     fun hasRevealedMine(): Boolean {
-        return cells.any { it is Cell.Mine && it.isRevealed }
+        return cells.any { !it.isSafe() && it.isRevealed }
+    }
+
+    fun findUnrevealedNeighbors(coordinate: Coordinate): List<Cell> {
+        return coordinate.findAdjacentCoordinates()
+            .filter(::isUnrevealedCell)
+            .mapNotNull(_cells::get)
+    }
+
+    private fun isUnrevealedCell(coordinate: Coordinate): Boolean {
+        return _cells[coordinate]?.isRevealed == false
     }
 
     companion object {
