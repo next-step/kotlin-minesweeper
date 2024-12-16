@@ -19,6 +19,15 @@ object ConsoleOutput {
         return when (symbol) {
             Symbol.LANDMINE -> "*"
             Symbol.CLOSED -> "■"
+            Symbol.ZERO -> "0"
+            Symbol.ONE -> "1"
+            Symbol.TWO -> "2"
+            Symbol.THREE -> "3"
+            Symbol.FOUR -> "4"
+            Symbol.FIVE -> "5"
+            Symbol.SIX -> "6"
+            Symbol.SEVEN -> "7"
+            Symbol.EIGHT -> "8"
         }
     }
 }
