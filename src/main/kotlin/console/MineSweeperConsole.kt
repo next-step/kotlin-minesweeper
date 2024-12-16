@@ -26,22 +26,39 @@ class MineSweeperConsole(
         map.placeMine(minePoints)
 
         map = map.updateMineCountByCell()
+        play(height, width)
+        return
+    }
+
+    private fun play(
+        height: Height,
+        width: Width,
+    ) {
         while (true) {
-            val searchPosition =
-                InputView.inputSearchPosition(height = height, width = width)
-                    ?: Position.default(height = height, width = width)
-
-            when (val result = map.open(position = searchPosition)) {
-                is OpenResult.Success -> map = result.map
-                is OpenResult.InvalidPosition -> Unit
-                is OpenResult.MineExploded -> {
-                    ResultView.printLose()
-                    return
-                }
-            }
-
-            ResultView.printMap(map)
+            playRound(height, width)
+                ?.also { ResultView.printMap(map) }
+                ?: return
         }
+    }
+
+    private fun playRound(
+        height: Height,
+        width: Width,
+    ): OpenResult? {
+        val searchPosition =
+            InputView.inputSearchPosition(height = height, width = width)
+                ?: Position.default(height = height, width = width)
+
+        val result = map.open(position = searchPosition)
+        when (result) {
+            is OpenResult.Success -> map = result.map
+            is OpenResult.InvalidPosition -> Unit
+            is OpenResult.MineExploded -> {
+                ResultView.printLose()
+                return null
+            }
+        }
+        return result
     }
 
     companion object {
