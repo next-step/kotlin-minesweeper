@@ -1,18 +1,14 @@
 package domain
 
-import domain.strategy.MineCellGenerator
-
 class Board(
     private val coordinate: Coordinate,
     private val mineCount: MineCount,
-    private val mineCellGenerator: MineCellGenerator,
 ) {
     init {
         require(coordinate.height * coordinate.width >= mineCount.value) { INVALID_MINE_COUNT }
     }
 
     fun create(): Cells {
-        val mineCells = mineCellGenerator.execute(coordinate, mineCount)
         return Cells()
     }
 
