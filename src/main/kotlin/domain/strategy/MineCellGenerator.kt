@@ -1,14 +1,12 @@
 package domain.strategy
 
-import domain.BoardHeight
-import domain.BoardWidth
 import domain.Cell
+import domain.Coordinate
 import domain.MineCount
 
 interface MineCellGenerator {
     fun execute(
-        height: BoardHeight,
-        width: BoardWidth,
+        coordinate: Coordinate,
         mineCount: MineCount,
     ): Set<Cell>
 }

@@ -12,13 +12,12 @@ import kotlin.random.Random
 
 class RandomMineCellGenerator : MineCellGenerator {
     override fun execute(
-        height: BoardHeight,
-        width: BoardWidth,
+        coordinate: Coordinate,
         mineCount: MineCount,
     ): Set<Cell> =
         generateSequence {
-            val randomHeight = Random.nextInt(MINIMUM_HEIGHT, height.value)
-            val randomWidth = Random.nextInt(MINIMUM_WIDTH, width.value)
+            val randomHeight = Random.nextInt(MINIMUM_HEIGHT, coordinate.height.value)
+            val randomWidth = Random.nextInt(MINIMUM_WIDTH, coordinate.width.value)
             MineCell(Coordinate(BoardHeight(randomHeight), BoardWidth(randomWidth)))
         }.distinct()
             .take(mineCount.value)
