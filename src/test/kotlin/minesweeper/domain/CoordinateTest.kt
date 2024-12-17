@@ -38,14 +38,18 @@ class CoordinateTest {
             )
     }
 
-    @ParameterizedTest
-    @MethodSource
-    fun `코너인 경우 주변 좌표가 3개 있다`(
-        coordinate: Coordinate,
-        expected: List<Coordinate>,
-    ) {
+    @Test
+    fun `코너인 경우 주변 좌표가 3개 있다`() {
+        val coordinate = Coordinate(y = 0, x = 0)
+
         val neighbors = coordinate.neighbors
-        neighbors shouldContainExactlyInAnyOrder expected
+
+        neighbors shouldContainExactlyInAnyOrder
+            listOf(
+                Coordinate(y = 0, x = 1),
+                Coordinate(y = 1, x = 0),
+                Coordinate(y = 1, x = 1),
+            )
     }
 
     @ParameterizedTest
@@ -59,19 +63,6 @@ class CoordinateTest {
     }
 
     companion object {
-        @JvmStatic
-        fun `코너인 경우 주변 좌표가 3개 있다`() =
-            listOf(
-                Arguments.of(
-                    Coordinate(y = 0, x = 0),
-                    listOf(
-                        Coordinate(y = 0, x = 1),
-                        Coordinate(y = 1, x = 0),
-                        Coordinate(y = 1, x = 1),
-                    ),
-                ),
-            )
-
         @JvmStatic
         fun `외곽 변에 있는 칸은 주변 좌표가 5개 있다`() =
             listOf(
