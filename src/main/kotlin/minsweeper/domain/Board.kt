@@ -4,13 +4,37 @@ class Board private constructor(
     private val boardSize: BoardSize,
     val boardLines: BoardLines,
 ) {
-    fun open(coordinate: Coordinate) {
+
+    fun open(coordinate: Coordinate): Cell {
         require(coordinate.row < boardSize.height && coordinate.column < boardSize.width) {
             BOARD_SIZE_EXCEPTION
         }
 
-        boardLines.lines[coordinate.row].cells[coordinate.column].open()
+        val cell = coordinate.findCell()
+            .apply { open() }
+
+        openAround(coordinate)
+
+        return cell
     }
+
+    private fun openAround(coordinate: Coordinate) {
+        val cell = coordinate.findCell()
+
+        if (!cell.isZeroMineIsland()) {
+            return
+        }
+
+        coordinate.aroundCoordinates(boardSize)
+            .filter { !it.findCell().isOpened }
+            .forEach { aroundCoordinate ->
+                aroundCoordinate.findCell()
+                    .open()
+                openAround(aroundCoordinate)
+            }
+    }
+
+    private fun Coordinate.findCell(): Cell = boardLines.lines[row].cells[column]
 
     companion object {
 
@@ -21,6 +45,11 @@ class Board private constructor(
             mineCount: Int,
             boardLinesGenerator: BoardLinesGenerator,
         ): Board = Board(boardSize, boardLinesGenerator.generate(boardSize, mineCount))
+
+        fun of(
+            boardSize: BoardSize,
+            boardLines: BoardLines,
+        ) = Board(boardSize, boardLines)
 
     }
 

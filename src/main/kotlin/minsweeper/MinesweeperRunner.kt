@@ -1,34 +1,37 @@
 package minsweeper
 
-import minsweeper.domain.AroundMineCountJudge
-import minsweeper.domain.Board
-import minsweeper.domain.BoardLinesGenerator
-import minsweeper.domain.BoardSize
+import minsweeper.domain.*
 import minsweeper.view.InputView
 import minsweeper.view.ResultView
 
 class MinesweeperRunner {
 
     fun run() {
+        val board = initializeBoard()
+        ResultView.printStartGame()
+        while (true) {
+            when (board.open(InputView.showAndGetOpenCoordinate())) {
+                is Cell.Island -> ResultView.printBoard(board.boardLines)
+                Cell.Mine -> {
+                    ResultView.printLoseGame()
+                    return
+                }
+            }
+        }
+    }
+
+    private fun initializeBoard(): Board {
         val boardSize = BoardSize(
             InputView.showAndGetHeight(),
             InputView.showAndGetWidth(),
         )
         val mineCount = InputView.showAndGetMineCount()
 
-        val board = Board.of(
+        return Board.of(
             boardSize,
             mineCount,
             BoardLinesGenerator(aroundMineCountJudge = AroundMineCountJudge()),
         )
-
-        ResultView.printStartGame()
-        while (true) {
-            val coordinate = InputView.showAndGetOpenCoordinate()
-            board.open(coordinate)
-
-            ResultView.printBoard(board.boardLines)
-        }
     }
 
 }
