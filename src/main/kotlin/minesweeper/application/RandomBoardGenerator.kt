@@ -2,8 +2,9 @@ package minesweeper.application
 
 import minesweeper.domain.Board
 import minesweeper.domain.Coordinate
-import minesweeper.domain.EmptyCell
-import minesweeper.domain.MinedCell
+import minesweeper.domain.PlayableBoard
+import minesweeper.domain.UndetonatedMineCell
+import minesweeper.domain.UnopenedCell
 
 class RandomBoardGenerator : BoardGenerator {
     override fun generate(command: GenerateMinesweeperCommand): Board {
@@ -16,14 +17,14 @@ class RandomBoardGenerator : BoardGenerator {
         val minedCells =
             shuffledIndices
                 .take(mineCount)
-                .associate { toCoordinate(it, width) to MinedCell() }
+                .associate { toCoordinate(it, width) to UndetonatedMineCell() }
 
         val emptyCellCoordinates =
             shuffledIndices
                 .drop(mineCount)
-                .associate { toCoordinate(it, width) to EmptyCell() }
+                .associate { toCoordinate(it, width) to UnopenedCell() }
 
-        return Board(minedCells + emptyCellCoordinates)
+        return PlayableBoard(minedCells + emptyCellCoordinates)
     }
 
     private fun toCoordinate(
