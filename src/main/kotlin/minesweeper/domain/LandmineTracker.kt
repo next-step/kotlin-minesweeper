@@ -2,7 +2,7 @@ package minesweeper.domain
 
 interface LandmineTracker {
     fun withUpdatedAdjacentMineCounts(
-        cells: List<Cell>,
+        cells: Cells,
         landmineLocation: Location,
-    ): List<Cell>
+    ): Cells
 }

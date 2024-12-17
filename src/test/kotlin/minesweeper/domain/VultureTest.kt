@@ -21,7 +21,7 @@ class VultureTest : BehaviorSpec({
 
         `when`("전체 셀 리스트와 지뢰 지역 정보 목록을 받아") {
             val allCells =
-                listOf(
+                Cells(
                     BasicCell(Location(row = 1, column = 1)),
                     BasicCell(Location(row = 1, column = 2)),
                     BasicCell(Location(row = 1, column = 3)),
@@ -32,6 +32,7 @@ class VultureTest : BehaviorSpec({
                     BasicCell(Location(row = 3, column = 2)),
                     BasicCell(Location(row = 3, column = 3)),
                 )
+
             val landmineCandidates =
                 listOf(
                     Location(row = 1, column = 1),

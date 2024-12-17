@@ -4,7 +4,7 @@ interface LandminePlanter {
     fun plant(location: Location): Landmine
 
     fun plantAll(
-        allCells: List<Cell>,
+        allCells: Cells,
         landmineCandidates: List<Location>,
-    ): List<Cell>
+    ): Cells
 }
