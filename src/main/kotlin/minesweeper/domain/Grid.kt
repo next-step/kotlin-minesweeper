@@ -13,8 +13,12 @@ class Grid(
         return (0 until dimension.height).map { row ->
             (0 until dimension.width).map { col ->
                 val index = row * dimension.width + col
-                if (index in minePositions) Cell(Mine()) else Cell(Empty())
+                createCell(index in minePositions)
             }
         }
+    }
+
+    private fun createCell(isIndexMine: Boolean): Cell {
+        return if (isIndexMine) Cell(Mine()) else Cell(Empty())
     }
 }
