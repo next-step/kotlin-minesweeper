@@ -3,37 +3,26 @@ package domain
 import domain.Cell.EmptyCell
 import domain.Cell.MineCell
 
-class Cells(private val cells: List<Cell>) {
-    fun placeMines(mineCells: Cells): Cells {
-        val mineCoordinates = mineCells.cells.map { it.coordinate }.toSet()
-
-        val updatedCells =
-            cells.map { cell ->
-                if (cell.coordinate in mineCoordinates) {
-                    MineCell(cell.coordinate)
-                } else {
-                    cell
-                }
-            }
-
-        return Cells(updatedCells)
-    }
-
+data class Cells(private val cells: List<Cell>) {
     fun mineCells(): List<MineCell> = cells.filterIsInstance<MineCell>()
 
     fun emptyCells(): List<EmptyCell> = cells.filterIsInstance<EmptyCell>()
 
     companion object {
-        fun generate(
+        fun generateWithMines(
             heightRange: IntRange,
             widthRange: IntRange,
+            mineCoordinates: Set<Coordinate>,
         ): Cells {
             val cells =
                 heightRange.flatMap { height ->
                     widthRange.map { width ->
-                        EmptyCell(
-                            Coordinate(BoardHeight(height), BoardWidth(width)),
-                        )
+                        val coordinate = Coordinate(BoardHeight(height), BoardWidth(width))
+                        if (coordinate in mineCoordinates) {
+                            MineCell(coordinate)
+                        } else {
+                            EmptyCell(coordinate)
+                        }
                     }
                 }
             return Cells(cells)

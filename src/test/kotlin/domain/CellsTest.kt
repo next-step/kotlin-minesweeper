@@ -2,28 +2,17 @@ package domain
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import strategy.FixedMineCellGenerator
 
 class CellsTest : DescribeSpec({
     describe("generate test") {
-        it("비어 있는 셀을 생성한다.") {
-            val sut = Cells.generate(heightRange = 1..3, widthRange = 1..3)
-            sut.emptyCells().size shouldBe 9
+        it("지뢰를 생성하고 남은 칸의 수는 비어있는 칸이다.") {
+            val sut = Cells.generateWithMines(heightRange = 1..3, widthRange = 1..3, setOf(Coordinate(BoardHeight(2), BoardWidth(2))))
+            sut.emptyCells().size shouldBe 8
         }
-    }
 
-    describe("placeMines test") {
-        lateinit var sut: Cells
-        lateinit var coordinate: Coordinate
-        beforeTest {
-            coordinate = Coordinate(BoardHeight(3), BoardWidth(3))
-            sut = Cells.generate(heightRange = 1..coordinate.height.value, widthRange = 1..coordinate.width.value)
-        }
-        it("지뢰 셀을 배치한다.") {
-            val mineCells = FixedMineCellGenerator().execute(coordinate, MineCount(2)).toList()
-            val actual = sut.placeMines(Cells(mineCells))
-            actual.mineCells().size shouldBe 2
-            actual.emptyCells().size shouldBe 7
+        it("지뢰 위치만큼 지뢰 칸을 차지한다.") {
+            val sut = Cells.generateWithMines(heightRange = 1..3, widthRange = 1..3, setOf(Coordinate(BoardHeight(2), BoardWidth(2))))
+            sut.mineCells().size shouldBe 1
         }
     }
 })

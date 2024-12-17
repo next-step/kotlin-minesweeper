@@ -46,17 +46,11 @@ class BoardTest : DescribeSpec({
         }
     }
 
-    describe("지뢰찾기 보드를 생성한다") {
+    describe("보드에 지뢰를 생성한다") {
         it("입력받은 지뢰 개수만큼 지뢰 셀을 생성한다.") {
-            val board = Board(Coordinate(BoardHeight(2), BoardWidth(2)), MineCount(3))
+            val board = Board(Coordinate(BoardHeight(4), BoardWidth(4)), MineCount(3))
             val actual = board.create()
-            actual.mineCells().size shouldBe 2
-        }
-
-        it("지뢰칸이 아닌 칸은 빈 칸이다.") {
-            val board = Board(Coordinate(BoardHeight(2), BoardWidth(2)), MineCount(3))
-            val actual = board.create()
-            actual.emptyCells().size shouldBe 1
+            actual.mineCells().size shouldBe 3
         }
     }
 })
