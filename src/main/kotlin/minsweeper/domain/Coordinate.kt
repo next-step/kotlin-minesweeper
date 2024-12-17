@@ -9,6 +9,17 @@ data class Coordinate(
         require(row >= 0 && column >= 0) { NEGATIVE_EXCEPTION }
     }
 
+    fun aroundCoordinates(boardSize: BoardSize): List<Coordinate> = listOfNotNull(
+        left(),
+        right(boardSize.width),
+        topLeft(),
+        topCenter(),
+        topRight(boardSize.width),
+        bottomLeft(boardSize.height),
+        bottomCenter(boardSize.height),
+        bottomRight(boardSize.width, boardSize.height),
+    )
+
     fun left(): Coordinate? = this.takeIf { column > 0 }
         ?.copy(column = column - 1)
 
