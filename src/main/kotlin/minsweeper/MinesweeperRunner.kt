@@ -22,7 +22,13 @@ class MinesweeperRunner {
             BoardLinesGenerator(aroundMineCountJudge = AroundMineCountJudge()),
         )
 
-        ResultView.printBoard(board.boardLines)
+        ResultView.printStartGame()
+        while (true) {
+            val coordinate = InputView.showAndGetOpenCoordinate()
+            board.open(coordinate)
+
+            ResultView.printBoard(board.boardLines)
+        }
     }
 
 }

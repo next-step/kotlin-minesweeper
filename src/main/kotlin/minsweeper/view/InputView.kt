@@ -1,5 +1,7 @@
 package minsweeper.view
 
+import minsweeper.domain.Coordinate
+
 object InputView {
 
     fun showAndGetWidth(): Int {
@@ -15,6 +17,11 @@ object InputView {
     fun showAndGetMineCount(): Int {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
+    }
+
+    fun showAndGetOpenCoordinate(): Coordinate {
+        print("open: ")
+        return CoordinateParser.parse(readln())
     }
 
 }
