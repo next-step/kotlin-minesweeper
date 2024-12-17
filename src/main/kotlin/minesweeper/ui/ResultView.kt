@@ -1,8 +1,11 @@
 package minesweeper.ui
 
-import minesweeper.domain.Board
+import minesweeper.domain.CompletedGame
 import minesweeper.domain.EmptyCell
+import minesweeper.domain.MineExplodedGame
 import minesweeper.domain.MinedCell
+import minesweeper.domain.PlayableBoard
+import minesweeper.domain.PlayerWonGame
 
 object ResultView {
     private val NEWLINE = System.lineSeparator()
@@ -10,17 +13,18 @@ object ResultView {
     private const val SPACE = " "
     private const val MINE = "*"
 
-    fun render(board: Board) {
-        val message =
-            buildString {
-                appendLine()
-                appendLine(GAME_START)
-                appendLine(board.render())
-            }
-        println(message)
+    fun start() {
+        buildString {
+            appendLine()
+            appendLine(GAME_START)
+        }.also { print(it) }
     }
 
-    private fun Board.render(): String {
+    fun render(board: PlayableBoard) {
+        println(board.render())
+    }
+
+    private fun PlayableBoard.render(): String {
         val maxY = cells.keys.maxOf { it.y }
         val maxX = cells.keys.maxOf { it.x }
         return (0..maxY).joinToString(NEWLINE) { y ->
@@ -31,6 +35,13 @@ object ResultView {
                     null -> error("정상적으로 판이 생성되었으면 도달할 수 없는 코드")
                 }
             }
+        }
+    }
+
+    fun result(game: CompletedGame) {
+        when (game) {
+            is PlayerWonGame -> println("Won Game.")
+            is MineExplodedGame -> println("Lose Game.")
         }
     }
 }
