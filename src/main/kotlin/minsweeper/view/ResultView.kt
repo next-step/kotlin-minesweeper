@@ -18,6 +18,10 @@ object ResultView {
         println("지뢰찾기 게임 시작")
     }
 
+    fun printLoseGame() {
+        println("Lose Game.")
+    }
+
     private fun Cell.print(): String {
         if (!this.isOpened) {
             return "C"
