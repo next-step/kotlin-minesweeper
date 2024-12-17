@@ -11,7 +11,7 @@ class RandomMineGeneratorTest {
     fun `random mine positions generation`() {
         val totalCells = 100
         val mineCount = 10
-        val minePositions = RandomMineGenerator.generateMinePositions(totalCells, mineCount)
+        val minePositions = RandomMineGeneratorImpl().generateMinePositions(totalCells, mineCount)
 
         assertEquals(mineCount, minePositions.size)
         assertTrue(minePositions.all { it in 0 until totalCells })
@@ -21,7 +21,7 @@ class RandomMineGeneratorTest {
     @DisplayName("가용한 Cell 개수를 초과해서 지뢰를 생성하고자 하는 경우 예외를 던짐")
     fun `more mines than cells throws exception`() {
         assertThrows<IllegalArgumentException> {
-            RandomMineGenerator.generateMinePositions(10, 20)
+            RandomMineGeneratorImpl().generateMinePositions(10, 20)
         }
     }
 }
