@@ -4,9 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.model.Cell
 
-/**
- * @author 이상준
- */
+
 class CellTest : StringSpec({
     "지뢰찾기 셀 생성 테스트" {
         val cell = Cell()

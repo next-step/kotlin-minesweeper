@@ -5,9 +5,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.model.Cell
 import minesweeper.model.Cells
 
-/**
- * @author 이상준
- */
+
 class CellsTest : StringSpec({
     "지뢰찾기 셀 표시 숫자 테스트" {
         val cells = Cells(
@@ -23,10 +21,10 @@ class CellsTest : StringSpec({
             )
         )
 
-        cells.cells[0].addMine()
+        cells.cellList[0].addMine()
         cells.addMineAroundCounts()
 
-        cells.cells[1].mineAroundCount() shouldBe 1
+        cells.cellList[1].mineAroundCount() shouldBe 1
     }
     "지뢰찾기 셀 표시 숫자 2 테스트" {
         val cells = Cells(
@@ -42,10 +40,10 @@ class CellsTest : StringSpec({
             )
         )
 
-        cells.cells[0].addMine()
-        cells.cells[2].addMine()
+        cells.cellList[0].addMine()
+        cells.cellList[2].addMine()
         cells.addMineAroundCounts()
 
-        cells.cells[1].mineAroundCount() shouldBe 2
+        cells.cellList[1].mineAroundCount() shouldBe 2
     }
 })

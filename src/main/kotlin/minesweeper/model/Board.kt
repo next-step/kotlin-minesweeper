@@ -1,8 +1,6 @@
 package minesweeper.model
 
-/**
- * @author 이상준
- */
+
 class Board(
     private val height: Int,
     private val width: Int,
@@ -10,10 +8,14 @@ class Board(
 ) {
     private var cells = Cells()
 
+    init {
+        require(height > 0 || width > 0 || mineCount > 0) { "높이, 너비, 지뢰 개수는 0보다 커야합니다." }
+    }
+
     fun createCells(): List<Cell> {
         this.cells = cells.addAll(List(height * width) { index -> Cell(index / width, index % width) })
         cells.addMines(mineCount)
-        return cells.cells
+        return cells.cellList
     }
 
     fun addMineAroundCounts() {

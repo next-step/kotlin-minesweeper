@@ -2,9 +2,7 @@ package minesweeper.view
 
 import minesweeper.model.Cell
 
-/**
- * @author 이상준
- */
+
 class ResultView {
     fun printBoard(cells: List<Cell>) {
         cells.groupBy { it.row }.forEach { (_, rowCells) ->

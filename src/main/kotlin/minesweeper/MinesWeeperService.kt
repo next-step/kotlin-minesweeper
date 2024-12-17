@@ -3,10 +3,8 @@ package minesweeper
 import minesweeper.model.Board
 import minesweeper.model.Cell
 
-/**
- * @author 이상준
- */
-class MinesWeeper(
+
+class MinesWeeperService(
     height: Int,
     width: Int,
     mineCount: Int,

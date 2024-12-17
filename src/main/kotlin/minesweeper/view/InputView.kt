@@ -1,8 +1,6 @@
 package minesweeper.view
 
-/**
- * @author 이상준
- */
+
 class InputView {
     fun inputHeight(): Int {
         println("높이를 입력해주세요.")

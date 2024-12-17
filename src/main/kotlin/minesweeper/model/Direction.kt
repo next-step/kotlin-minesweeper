@@ -1,8 +1,6 @@
 package minesweeper.model
 
-/**
- * @author 이상준
- */
+
 enum class Direction(
     val dy: Int,
     val dx: Int,
