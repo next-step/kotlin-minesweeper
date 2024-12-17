@@ -1,23 +1,18 @@
 package minesweeper.domain
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import io.kotest.core.spec.style.StringSpec
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 
-class MineCountTest {
-    @Test
-    @DisplayName("지뢰 개수가 0 보다 크다면 유효한 지뢰 개수")
-    fun `valid mine count is accepted`() {
+class MineCountTest : StringSpec({
+    "지뢰 개수가 0 보다 크다면 유효한 지뢰 개수" {
         val mineCount = MineCount(10)
         assertEquals(10, mineCount.count)
     }
 
-    @Test
-    @DisplayName("지뢰 개수가 0 이라면 예외를 던진다")
-    fun `mine count validation`() {
+    "지뢰 개수가 0 이라면 예외를 던진다" {
         assertThrows<IllegalArgumentException> {
             MineCount(0)
         }
     }
-}
+})
