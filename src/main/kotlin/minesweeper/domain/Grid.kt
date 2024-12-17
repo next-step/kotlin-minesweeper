@@ -3,7 +3,7 @@ package minesweeper.domain
 class Grid(
     private val dimension: Dimension,
     private val mineCount: MineCount,
-    private val randomMineGenerator: RandomMineGenerator = RandomMineGeneratorImpl()
+    private val randomMineGenerator: RandomMineGenerator = RandomMineGeneratorImpl(),
 ) {
     val cells: List<List<Cell>> = initializeCells()
 
