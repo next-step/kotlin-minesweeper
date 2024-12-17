@@ -17,7 +17,7 @@ class DefaultLandmineFieldArchitect(
 
         val minePlantedCells =
             landminePlanter.plantAll(
-                allCells = board.rows.flatMap { it.cells() },
+                allCells = board.allCells(),
                 landmineCandidates = candidates,
             )
 

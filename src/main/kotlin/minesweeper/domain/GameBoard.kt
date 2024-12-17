@@ -15,6 +15,8 @@ class GameBoard private constructor(
 
     fun find(location: Location): Cell? = rows.find(location)
 
+    fun allCells(): List<Cell> = rows.flatMap { it.cells() }
+
     companion object {
         fun of(
             height: Int,

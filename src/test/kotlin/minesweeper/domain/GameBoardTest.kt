@@ -97,5 +97,13 @@ class GameBoardTest : BehaviorSpec({
                 shouldThrow<IllegalArgumentException> { sut.find(location) }
             }
         }
+
+        `when`("allCells() 로") {
+            val result = sut.allCells()
+
+            then("존재하는 모든 셀을 1차원 목록으로 평탄화해서 반환한다") {
+                result shouldBe grid.flatten()
+            }
+        }
     }
 })
