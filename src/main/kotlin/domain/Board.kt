@@ -9,7 +9,7 @@ class Board(
     }
 
     fun create(): Cells {
-        return Cells()
+        return Cells.generate(1..3, 1..3)
     }
 
     companion object {
