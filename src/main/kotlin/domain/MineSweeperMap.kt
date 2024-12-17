@@ -59,6 +59,10 @@ class MineSweeperMap(
         x: Int,
         y: Int,
     ) {
+        if (isMine(x, y)) {
+            blocks.open(x * getWidth() + y)
+            return
+        }
         recursiveOpen(x, y)
         Directions.entries.filter { it.openDirection }.forEach { direction ->
             val nx = x + direction.horizontalDirection

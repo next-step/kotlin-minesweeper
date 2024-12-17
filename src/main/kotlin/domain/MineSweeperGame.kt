@@ -19,6 +19,7 @@ class MineSweeperGame(
         y: Int,
     ): Boolean {
         if (mineSweeperMap.isMine(x, y)) {
+            mineSweeperMap.open(x, y)
             return false
         }
         mineSweeperMap.open(x, y)
@@ -27,6 +28,10 @@ class MineSweeperGame(
 
     fun isWin(): Boolean {
         return mineSweeperMap.blocks.isWin()
+    }
+
+    fun isLose(): Boolean {
+        return mineSweeperMap.blocks.isLose()
     }
 
     companion object {

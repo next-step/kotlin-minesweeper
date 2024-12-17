@@ -5,9 +5,14 @@ import domain.MineSweeperGame
 object MineSweeperResultView {
     fun drawResult(game: MineSweeperGame) {
         if (game.isWin()) {
-            MineSweeperMapView.drawWinResult(game.mineSweeperMap)
+            println("Win Game")
+            MineSweeperMapView.drawMineSweeperMap(game.mineSweeperMap)
             return
         }
-        println("Lose Game")
+        if (game.isLose()) {
+            println("Lose Game")
+            MineSweeperMapView.drawMineSweeperMap(game.mineSweeperMap)
+            return
+        }
     }
 }

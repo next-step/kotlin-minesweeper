@@ -45,4 +45,15 @@ class MineSweeperGameTest {
 
         mineSweeperGame.isWin() shouldBe true
     }
+
+    @Test
+    fun `지뢰칸을 열면 패배`() {
+        val map = MutableList(3) { MineSweeperMapBlock() }
+        map.add(MineSweeperMapBlock(_isMine = true))
+        val mineSweeperMap =
+            MineSweeperMap(MineSweeperMapShape(2, 2), MineSweeperMapBlocks(map))
+        val mineSweeperGame = MineSweeperGame(mineSweeperMap, 0)
+        mineSweeperGame.open(1, 1)
+        mineSweeperGame.isLose() shouldBe true
+    }
 }
