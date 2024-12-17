@@ -11,7 +11,7 @@ class DefaultLandmineTracker : LandmineTracker {
         // 해당 지뢰 위치 주변의 모든 BasicCell 의 인접 지뢰 갯수 업데이트
         return Cells(
             cells.map { cell ->
-                if (cell.location() in adjacentLocations && cell is BasicCell) {
+                if (cell.location() in adjacentLocations) {
                     cell.withIncrementedNumberOfAdjacentMines()
                 } else {
                     cell

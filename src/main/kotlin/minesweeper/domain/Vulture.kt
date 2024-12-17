@@ -9,7 +9,7 @@ class Vulture : LandminePlanter {
     ): Cells {
         return Cells(
             allCells.map { cell ->
-                if (cell.location() in landmineCandidates && cell is BasicCell) {
+                if (cell.location() in landmineCandidates) {
                     plant(cell.location())
                 } else {
                     cell
