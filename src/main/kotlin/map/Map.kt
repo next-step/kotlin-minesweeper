@@ -15,6 +15,16 @@ import open.result.OpenResult.Success
 class Map(
     var grid: Grid,
 ) {
+    val height: Height
+        get() {
+            return Height(size = grid.rows.rowSize)
+        }
+
+    val width: Width
+        get() {
+            return Width(size = grid.rows.columnSize)
+        }
+
     fun placeMine(minePoints: MinePoints) {
         minePoints.points.forEach { placeMineAtPoint(it) }
     }
