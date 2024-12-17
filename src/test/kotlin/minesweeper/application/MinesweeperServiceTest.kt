@@ -3,12 +3,12 @@ package minesweeper.application
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.types.shouldBeInstanceOf
+import minesweeper.closedEmptyCellOf
 import minesweeper.domain.Board
 import minesweeper.domain.Coordinate
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MinedCell
 import minesweeper.domain.PlayableGame
-import minesweeper.unOpenedCellOf
 import minesweeper.undetonatedMineCellOf
 import org.junit.jupiter.api.Test
 
@@ -20,9 +20,9 @@ class MinesweeperServiceTest {
         val generator =
             StubMinesweeperGenerator.from(
                 undetonatedMineCellOf(y = 0, x = 0),
-                unOpenedCellOf(y = 0, x = 1),
-                unOpenedCellOf(y = 1, x = 0),
-                unOpenedCellOf(y = 1, x = 1),
+                closedEmptyCellOf(y = 0, x = 1),
+                closedEmptyCellOf(y = 1, x = 0),
+                closedEmptyCellOf(y = 1, x = 1),
             )
 //    * C
 //    C C

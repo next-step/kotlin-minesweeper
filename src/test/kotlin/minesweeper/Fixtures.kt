@@ -1,10 +1,10 @@
 package minesweeper
 
+import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.DetonatedMineCell
-import minesweeper.domain.OpenedCell
+import minesweeper.domain.OpenedEmptyCell
 import minesweeper.domain.UndetonatedMineCell
-import minesweeper.domain.UnopenedCell
 
 fun undetonatedMineCellOf(
     y: Int,
@@ -16,12 +16,12 @@ fun detonatedMineCellOf(
     x: Int,
 ) = Coordinate(y, x) to DetonatedMineCell()
 
-fun unOpenedCellOf(
+fun closedEmptyCellOf(
     y: Int,
     x: Int,
-) = Coordinate(y, x) to UnopenedCell()
+) = Coordinate(y, x) to ClosedEmptyCell()
 
-fun openedCellOf(
+fun openedEmptyCellOf(
     y: Int,
     x: Int,
-) = Coordinate(y, x) to OpenedCell()
+) = Coordinate(y, x) to OpenedEmptyCell()

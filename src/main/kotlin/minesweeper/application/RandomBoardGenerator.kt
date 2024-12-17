@@ -1,10 +1,10 @@
 package minesweeper.application
 
 import minesweeper.domain.Board
+import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.PlayableBoard
 import minesweeper.domain.UndetonatedMineCell
-import minesweeper.domain.UnopenedCell
 
 class RandomBoardGenerator : BoardGenerator {
     override fun generate(command: GenerateMinesweeperCommand): Board {
@@ -22,7 +22,7 @@ class RandomBoardGenerator : BoardGenerator {
         val emptyCellCoordinates =
             shuffledIndices
                 .drop(mineCount)
-                .associate { toCoordinate(it, width) to UnopenedCell() }
+                .associate { toCoordinate(it, width) to ClosedEmptyCell() }
 
         return PlayableBoard(minedCells + emptyCellCoordinates)
     }

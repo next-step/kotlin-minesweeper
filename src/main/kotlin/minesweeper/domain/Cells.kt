@@ -10,6 +10,6 @@ class DetonatedMineCell : MinedCell
 
 sealed interface EmptyCell : Cell
 
-class UnopenedCell : EmptyCell
+class ClosedEmptyCell : EmptyCell
 
-class OpenedCell : EmptyCell
+class OpenedEmptyCell : EmptyCell
