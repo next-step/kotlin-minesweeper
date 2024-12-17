@@ -1,8 +1,8 @@
 package domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 
 class PositionTest : StringSpec({
     "유효한 row와 col 값을 가질 수 있다." {

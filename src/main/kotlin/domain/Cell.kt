@@ -1,8 +1,9 @@
 package domain
 
 sealed class Cell {
-    object Empty : Cell()
-    object MineCell : Cell()
+    data object Empty : Cell()
+
+    data object MineCell : Cell()
 
     companion object {
         fun create(isMine: Boolean): Cell = if (isMine) MineCell else Empty
