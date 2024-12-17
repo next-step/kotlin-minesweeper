@@ -6,15 +6,15 @@ sealed interface Cell {
 
     companion object {
         fun create(
-            position: Position,
+            coordinate: Coordinate,
             boardSize: BoardSize,
-            minePositions: List<Position>,
+            mineCoordinates: List<Coordinate>,
             aroundMineCountJudge: AroundMineCountJudge,
-        ): Cell = Mine.takeIf { position in minePositions } ?: Island(
+        ): Cell = Mine.takeIf { coordinate in mineCoordinates } ?: Island(
             aroundMineCountJudge.judge(
                 boardSize,
-                position,
-                minePositions,
+                coordinate,
+                mineCoordinates,
             )
         )
     }

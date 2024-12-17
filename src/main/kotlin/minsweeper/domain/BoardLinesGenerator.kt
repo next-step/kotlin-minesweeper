@@ -1,28 +1,28 @@
 package minsweeper.domain
 
 class BoardLinesGenerator(
-    private val minePositionsGenerator: MinePositionsGenerator = RandomMinePositionsGenerator(),
+    private val mineCoordinatesGenerator: MineCoordinatesGenerator = RandomMineCoordinatesGenerator(),
     private val aroundMineCountJudge: AroundMineCountJudge,
 ) {
 
     fun generate(boardSize: BoardSize, mineCount: Int): BoardLines = createBoardLines(
         boardSize,
-        minePositionsGenerator.generate(boardSize, mineCount),
+        mineCoordinatesGenerator.generate(boardSize, mineCount),
     )
 
     private fun createBoardLines(
         boardSize: BoardSize,
-        minePositions: List<Position>,
+        mineCoordinates: List<Coordinate>,
     ): BoardLines = BoardLines(List(boardSize.height) { row ->
-        createBoardLine(boardSize, row, minePositions)
+        createBoardLine(boardSize, row, mineCoordinates)
     })
 
     private fun createBoardLine(
         boardSize: BoardSize,
         row: Int,
-        minePositions: List<Position>,
+        mineCoordinates: List<Coordinate>,
     ): BoardLine = BoardLine(List(boardSize.width) { column ->
-        Cell.create(Position(row, column), boardSize, minePositions, aroundMineCountJudge)
+        Cell.create(Coordinate(row, column), boardSize, mineCoordinates, aroundMineCountJudge)
     })
 
 }

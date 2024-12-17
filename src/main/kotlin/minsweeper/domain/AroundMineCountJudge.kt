@@ -4,12 +4,12 @@ class AroundMineCountJudge {
 
     fun judge(
         boardSize: BoardSize,
-        position: Position,
-        minePositions: List<Position>,
-    ): Int = position.findAroundPositions(boardSize)
-        .matches(minePositions)
+        coordinate: Coordinate,
+        mineCoordinates: List<Coordinate>,
+    ): Int = coordinate.findAroundCoordinates(boardSize)
+        .matches(mineCoordinates)
 
-    private fun Position.findAroundPositions(boardSize: BoardSize): List<Position> = listOfNotNull(
+    private fun Coordinate.findAroundCoordinates(boardSize: BoardSize): List<Coordinate> = listOfNotNull(
         left(),
         right(boardSize.width),
         topLeft(),
@@ -20,6 +20,6 @@ class AroundMineCountJudge {
         bottomRight(boardSize.width, boardSize.height),
     )
 
-    private fun List<Position>.matches(minePositions: List<Position>): Int = this.intersect(minePositions.toSet()).size
+    private fun List<Coordinate>.matches(mineCoordinates: List<Coordinate>): Int = this.intersect(mineCoordinates.toSet()).size
 
 }
