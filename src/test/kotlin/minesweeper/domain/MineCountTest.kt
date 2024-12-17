@@ -10,7 +10,7 @@ class MineCountTest {
     @DisplayName("지뢰 개수가 0 보다 크다면 유효한 지뢰 개수")
     fun `valid mine count is accepted`() {
         val mineCount = MineCount(10)
-        assertEquals(10, mineCount.getCount())
+        assertEquals(10, mineCount.count)
     }
 
     @Test

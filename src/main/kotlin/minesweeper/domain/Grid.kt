@@ -9,7 +9,7 @@ class Grid(
 
     private fun initializeCells(): List<List<Cell>> {
         val totalCells = dimension.totalCells()
-        val minePositions = randomMineGenerator.generateMinePositions(totalCells, mineCount.getCount())
+        val minePositions = randomMineGenerator.generateMinePositions(totalCells, mineCount.count)
         return (0 until dimension.height).map { row ->
             (0 until dimension.width).map { col ->
                 val index = row * dimension.width + col
