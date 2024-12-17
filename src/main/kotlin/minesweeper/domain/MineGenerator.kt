@@ -1,13 +1,13 @@
 package minesweeper.domain
 
-interface RandomMineGenerator {
+interface MineGenerator {
     fun generateMinePositions(
         totalCells: Int,
         mineCount: Int,
     ): Set<Int>
 }
 
-class RandomMineGeneratorImpl : RandomMineGenerator {
+class RandomMineGenerator : MineGenerator {
     override fun generateMinePositions(
         totalCells: Int,
         mineCount: Int,
