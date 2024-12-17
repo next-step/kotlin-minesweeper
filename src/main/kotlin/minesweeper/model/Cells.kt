@@ -1,9 +1,8 @@
 package minesweeper.model
 
-
 class Cells(
-    cells: List<Cell> = listOf()
-) {
+    cells: List<Cell> = listOf(),
+) : MinesStrategy {
     var cellList: List<Cell> = cells
         private set
 
@@ -15,9 +14,15 @@ class Cells(
         return Cells(this.cellList + cells)
     }
 
-    fun addMines(mineCount: Int) {
-        val shuffledCells = cellList.shuffled()
-        shuffledCells.subList(0, mineCount).forEach { it.addMine() }
+    override fun addMines(
+        cells: Cells,
+        mineCount: Int,
+    ): Cells {
+        repeat(mineCount) {
+            cells.cellList[it].addMine()
+        }
+
+        return cells
     }
 
     fun addMineAroundCounts() {

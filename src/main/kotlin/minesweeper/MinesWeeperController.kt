@@ -3,7 +3,6 @@ package minesweeper
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
-
 class MinesWeeperGame(
     private val inputView: InputView,
     private val resultView: ResultView,
@@ -14,9 +13,9 @@ class MinesWeeperGame(
         val mineCount = inputView.inputMineCount()
 
         val minesWeeperService = MinesWeeperService(height, width, mineCount)
-        val cells = minesWeeperService.createCells()
+        val board = minesWeeperService.createCells()
         minesWeeperService.addMineAroundCounts()
-        resultView.printBoard(cells)
+        resultView.printBoard(board)
     }
 }
 

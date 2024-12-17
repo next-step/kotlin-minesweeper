@@ -1,6 +1,5 @@
 package minesweeper.model
 
-
 class Cell(
     val row: Int = 0,
     val column: Int = 0,
@@ -20,7 +19,10 @@ class Cell(
 
     fun mineAroundCount(): Int = mineAroundCount
 
-    fun isAround(row: Int, column: Int): Boolean {
+    fun isAround(
+        row: Int,
+        column: Int,
+    ): Boolean {
         return this.row == row && this.column == column
     }
 }

@@ -1,15 +1,20 @@
 package minesweeper.view
 
+import minesweeper.model.Board
 import minesweeper.model.Cell
-
+import minesweeper.model.Cells
 
 class ResultView {
-    fun printBoard(cells: List<Cell>) {
-        cells.groupBy { it.row }.forEach { (_, rowCells) ->
-            rowCells.sortedBy { it.column }.forEach { cell ->
-                printCell(cell)
-            }
+    fun printBoard(board: Board) {
+        for (row in 0 until board.height) {
+            printRow(board.getRowCells(row))
             println()
+        }
+    }
+
+    private fun printRow(rowCells: Cells) {
+        for (cell in rowCells.cellList) {
+            printCell(cell)
         }
     }
 

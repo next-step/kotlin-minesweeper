@@ -1,6 +1,5 @@
 package minesweeper.model
 
-
 enum class Direction(
     val dy: Int,
     val dx: Int,
