@@ -1,8 +1,8 @@
 package map
 
-import cell.Cell
+import element.Cell
+import element.Mine
 import io.kotest.matchers.shouldBe
-import mine.Mine
 import minecount.strategy.SurroundingMines
 import org.junit.jupiter.api.Test
 

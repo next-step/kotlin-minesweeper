@@ -1,6 +1,7 @@
 package view
 
-import cell.showable.Show
+import element.Element
+import element.showable.Show
 import map.Map
 import map.Point
 
@@ -18,8 +19,10 @@ object ResultView {
 
     private fun Point.value(): String =
         this.element.value
-            .takeIf { it != null && this.visibility is Show }
+            .takeIf { it != null && this.element.isShow() }
             ?: "C"
+
+    private fun Element.isShow() = this.status.visibility is Show
 
     fun printLose() {
         println("Lose Game.")

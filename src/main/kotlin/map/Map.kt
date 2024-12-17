@@ -1,11 +1,11 @@
 package map
 
-import cell.Cell
-import cell.Element
+import element.Cell
+import element.Element
+import element.Mine
 import map.move.Direction
 import map.move.Position
-import mine.Mine
-import mine.MinePoints
+import minecount.MinePoints
 import minecount.strategy.SurroundingMines
 import open.result.OpenResult
 import open.result.OpenResult.InvalidPosition
@@ -15,6 +15,16 @@ import open.result.OpenResult.Success
 class Map(
     var grid: Grid,
 ) {
+    val height: Height
+        get() {
+            return Height(size = grid.rows.rowSize)
+        }
+
+    val width: Width
+        get() {
+            return Width(size = grid.rows.columnSize)
+        }
+
     fun placeMine(minePoints: MinePoints) {
         minePoints.points.forEach { placeMineAtPoint(it) }
     }
@@ -27,17 +37,16 @@ class Map(
     fun updateMineCountByCell(): Map = Map(grid = grid.updateMineCountByCell())
 
     fun open(position: Position): OpenResult {
-        return Success(
-            Map(
-                grid.open(
-                    rowIndex = position.row ?: return InvalidPosition,
-                    columnIndex = position.column ?: return InvalidPosition,
-                ) ?: return MineExploded,
-            ),
-        )
+        val result =
+            grid.open(
+                rowIndex = position.row ?: return InvalidPosition,
+                columnIndex = position.column ?: return InvalidPosition,
+            ) ?: return MineExploded
+
+        return Success(map = Map(grid = result).openAdjacent(position = position))
     }
 
-    fun openAdjacent(position: Position): Map {
+    private fun openAdjacent(position: Position): Map {
         val row = position.row ?: return this
         val column = position.column ?: return this
         val adjacentPositions =

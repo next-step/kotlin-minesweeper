@@ -1,23 +1,20 @@
 package console
 
+import console.round.Game
 import map.Height
 import map.Map
 import map.Width
-import map.move.Position
-import mine.MineCount
-import mine.MinePoints
-import open.result.OpenResult
+import minecount.MineCount
+import minecount.MinePoints
 import view.InputView
 import view.ResultView
 
-class MineSweeperConsole(
-    var map: Map = Map.create(height = Height(size = 0), width = Width(size = 0)),
-) {
+class MineSweeperConsole {
     fun start() {
         val height = Height(size = InputView.inputHeight() ?: DEFAULT)
         val width = Width(size = InputView.inputWidth() ?: DEFAULT)
 
-        map = Map.create(height = height, width = width)
+        val map = Map.create(height = height, width = width)
 
         val mineCount = MineCount(count = InputView.inputMineCount() ?: DEFAULT)
 
@@ -25,25 +22,16 @@ class MineSweeperConsole(
         val minePoints = MinePoints.create(height = height, width = width, mineCount = mineCount)
         map.placeMine(minePoints)
 
-        map = map.updateMineCountByCell()
-        while (true) {
-            val searchPosition =
-                InputView.inputSearchPosition(height = height, width = width)
-                    ?: Position.default(height = height, width = width)
+        val result =
+            Game
+                .init(map = map.updateMineCountByCell())
+                .start(
+                    choosePosition = { searchHeight, searchWidth -> InputView.inputSearchPosition(searchHeight, searchWidth) },
+                    afterRound = { mapForPint -> ResultView.printMap(mapForPint) },
+                )
 
-            when (val result = map.open(position = searchPosition)) {
-                is OpenResult.Success -> {
-                    map = result.map.openAdjacent(searchPosition)
-                }
-                is OpenResult.InvalidPosition -> Unit
-                is OpenResult.MineExploded -> {
-                    ResultView.printLose()
-                    return
-                }
-            }
-
-            ResultView.printMap(map)
-        }
+        if (result.isLose()) ResultView.printLose()
+        return
     }
 
     companion object {

@@ -1,9 +1,9 @@
 package map
 
-import cell.showable.Hide
-import cell.showable.Show
-import cell.status.EmptyCell
-import cell.status.MineCell
+import element.showable.Hide
+import element.showable.Show
+import element.status.EmptyCell
+import element.status.MineCell
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.should
@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beInstanceOf
 import map.move.Direction
 import map.move.Position
-import mine.MinePoints
+import minecount.MinePoints
 import open.result.OpenResult
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -87,7 +87,7 @@ class MapTest {
             (openResultMap as? OpenResult.Success)
                 ?.map
                 ?.getPointByIndex(openRowIndex, openColumnIndex)
-        pointByIndex?.visibility shouldBe Show
+        pointByIndex?.getVisibility() shouldBe Show
     }
 
     @Test
@@ -104,18 +104,20 @@ class MapTest {
                 .mapNotNull { openPosition.convertValidAdjacentPosition(direction = it) }
                 .mapNotNull { openPosition.convertToPointByIndex(map = mineCountedMap, position = it) }
 
-        val adjacentCellOpenedMap = mineCountedMap.openAdjacent(position = openPosition)
+        val adjacentCellOpenedMap = mineCountedMap.open(position = openPosition) as OpenResult.Success
 
         adjacentPoints
             .filter(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Show }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.getVisibility() shouldBe Show }
 
         adjacentPoints
             .filterNot(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap)?.visibility shouldBe Hide }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.getVisibility() shouldBe Hide }
     }
 
-    private val isOpenable: (Point) -> Boolean = { it.isOpenAdjacentCell() }
+    private fun Point.getVisibility() = this.element.status.visibility
+
+    private val isOpenable: (Point) -> Boolean = { it.isOpen() }
 
     private fun Point.getAdjacentPoint(map: Map): Point? {
         return map.getPointByIndex(
@@ -165,8 +167,8 @@ class MapTest {
 
     companion object {
         private const val MAX_SIZE = 3
-        private val EMPTY_CELL = EmptyCell
-        private val MINE_CELL = MineCell
+        private val EMPTY_CELL = EmptyCell()
+        private val MINE_CELL = MineCell()
 
         @JvmStatic
         fun mapSizes() =

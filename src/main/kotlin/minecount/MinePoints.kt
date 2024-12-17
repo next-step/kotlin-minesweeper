@@ -1,5 +1,6 @@
-package mine
+package minecount
 
+import element.Mine
 import map.Height
 import map.Map
 import map.Point
@@ -14,9 +15,11 @@ class MinePoints(
             width: Width,
             mineCount: MineCount,
         ): MinePoints =
-            MinePoints(Map.create(height = height, width = width, element = Mine.ready())
-                .grid
-                .shuffle(mineCount),
+            MinePoints(
+                Map
+                    .create(height = height, width = width, element = Mine.ready())
+                    .grid
+                    .shuffle(mineCount),
             )
     }
 }

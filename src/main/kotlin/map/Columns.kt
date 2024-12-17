@@ -1,7 +1,7 @@
 package map
 
-import cell.Cell
-import cell.Element
+import element.Cell
+import element.Element
 
 class Columns(
     val points: MutableList<Point>,
@@ -22,7 +22,7 @@ class Columns(
                 }.toMutableList(),
         )
 
-    fun isOpenAdjacent(columnIndex: Index): Boolean = points[columnIndex.value].isOpenAdjacentCell()
+    fun isOpenAdjacent(columnIndex: Index): Boolean = points[columnIndex.value].isOpen()
 
     companion object {
         fun ready(

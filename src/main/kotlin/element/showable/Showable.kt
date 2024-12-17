@@ -1,4 +1,4 @@
-package cell.showable
+package element.showable
 
 interface Showable {
     fun isShow(): Boolean = false

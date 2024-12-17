@@ -1,19 +1,13 @@
 package map
 
-import cell.Cell
-import cell.Element
-import cell.showable.Hide
-import cell.showable.Show
-import cell.showable.Showable
-import cell.status.CellStatus
-import cell.status.MineCell
-import cell.status.NumberCell
-import mine.Mine
+import element.Cell
+import element.Element
+import element.status.CellStatus
+import element.status.NumberCell
 
 data class Point(
     val point: Pair<Index?, Index?>,
     val element: Element = Cell.ready(),
-    val visibility: Showable = Hide,
 ) {
     private val rowIndex: Index?
         get() {
@@ -26,7 +20,7 @@ data class Point(
         }
 
     fun updateWithAdjacentMineCount(countMines: (rowIndex: Index?, columnIndex: Index?) -> Int): Point =
-        update(element = countMines(rowIndex, columnIndex), cellStatus = NumberCell)
+        update(element = countMines(rowIndex, columnIndex), cellStatus = NumberCell())
 
     private fun update(
         element: Int,
@@ -38,19 +32,11 @@ data class Point(
         )
 
     fun tryOpen(): Point? =
-        when {
-            element.status is MineCell -> null
-            isNumberCell() && visibility is Hide -> this.open()
-            else -> this
-        }
+        element
+            .open()
+            ?.let { this.copy(element = it) }
 
-    private fun open(): Point = this.copy(visibility = Show)
+    fun isOpen(): Boolean = element.isOpenable()
 
-    fun isOpenAdjacentCell(): Boolean = this.isNumberCell() && this.isMineCountZero() && this.visibility == Hide
-
-    private fun isMineCountZero(): Boolean = element.value?.toIntOrNull() == 0
-
-    private fun isNumberCell(): Boolean = element.status is NumberCell
-
-    fun isMine(): Boolean = element is Mine
+    fun isMine(): Boolean = element.isMine()
 }
