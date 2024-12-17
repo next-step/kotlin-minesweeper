@@ -8,8 +8,8 @@ import minesweeper.domain.Coordinate
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MinedCell
 import minesweeper.openedCellOf
+import minesweeper.unOpenedCellOf
 import minesweeper.undetonatedMineCellOf
-import minesweeper.unopenedCellOf
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
@@ -19,9 +19,9 @@ class MinesweeperServiceTest {
         val generator =
             StubMinesweeperGenerator.from(
                 undetonatedMineCellOf(y = 0, x = 0),
-                unopenedCellOf(y = 0, x = 1),
+                unOpenedCellOf(y = 0, x = 1),
                 openedCellOf(y = 1, x = 0),
-                unopenedCellOf(y = 1, x = 1),
+                unOpenedCellOf(y = 1, x = 1),
             )
         val service = MinesweeperService(generator)
         val command = GenerateMinesweeperCommand(height = 2, width = 2, mineCount = 1)
