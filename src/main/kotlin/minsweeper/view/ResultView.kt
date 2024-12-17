@@ -14,9 +14,15 @@ object ResultView {
         })
     }
 
-    private fun Cell.print(): String = when (this) {
-        is Cell.Island -> "${this.aroundMineCount}"
-        Cell.Mine -> "*"
+    private fun Cell.print(): String {
+        if (!this.isOpened) {
+            return "C"
+        }
+
+        return when (this) {
+            is Cell.Island -> "${this.aroundMineCount}"
+            Cell.Mine -> "*"
+        }
     }
 
 }
