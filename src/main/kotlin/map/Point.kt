@@ -2,7 +2,6 @@ package map
 
 import element.Cell
 import element.Element
-import element.Mine
 import element.status.CellStatus
 import element.status.NumberCell
 
@@ -21,7 +20,7 @@ data class Point(
         }
 
     fun updateWithAdjacentMineCount(countMines: (rowIndex: Index?, columnIndex: Index?) -> Int): Point =
-        update(element = countMines(rowIndex, columnIndex), cellStatus = NumberCell)
+        update(element = countMines(rowIndex, columnIndex), cellStatus = NumberCell())
 
     private fun update(
         element: Int,
@@ -37,7 +36,7 @@ data class Point(
             .open()
             ?.let { this.copy(element = it) }
 
-    fun isOpen(): Boolean = element.isOpen()
+    fun isOpen(): Boolean = element.isOpenable()
 
-    fun isMine(): Boolean = element is Mine
+    fun isMine(): Boolean = element.isMine()
 }

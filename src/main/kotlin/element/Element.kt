@@ -1,16 +1,16 @@
 package element
 
-import element.showable.Showable
 import element.status.CellStatus
 
 interface Element {
     val value: String?
     val status: CellStatus
-    val visibility: Showable
 
     fun open(): Element?
 
-    fun isOpen(): Boolean
+    fun isOpenable(): Boolean
+
+    fun isMine(): Boolean = false
 
     fun updateValue(
         newValue: String,

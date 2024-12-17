@@ -87,7 +87,7 @@ class MapTest {
             (openResultMap as? OpenResult.Success)
                 ?.map
                 ?.getPointByIndex(openRowIndex, openColumnIndex)
-        pointByIndex?.element?.visibility shouldBe Show
+        pointByIndex?.getVisibility() shouldBe Show
     }
 
     @Test
@@ -108,12 +108,14 @@ class MapTest {
 
         adjacentPoints
             .filter(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.element?.visibility shouldBe Show }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.getVisibility() shouldBe Show }
 
         adjacentPoints
             .filterNot(isOpenable)
-            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.element?.visibility shouldBe Hide }
+            .forAll { it.getAdjacentPoint(adjacentCellOpenedMap.map)?.getVisibility() shouldBe Hide }
     }
+
+    private fun Point.getVisibility() = this.element.status.visibility
 
     private val isOpenable: (Point) -> Boolean = { it.isOpen() }
 
@@ -165,8 +167,8 @@ class MapTest {
 
     companion object {
         private const val MAX_SIZE = 3
-        private val EMPTY_CELL = EmptyCell
-        private val MINE_CELL = MineCell
+        private val EMPTY_CELL = EmptyCell()
+        private val MINE_CELL = MineCell()
 
         @JvmStatic
         fun mapSizes() =

@@ -1,18 +1,17 @@
 package element
 
-import element.showable.Hide
-import element.showable.Showable
 import element.status.CellStatus
 import element.status.MineCell
 
 data class Mine(
     override val value: String = DEFAULT,
-    override val status: CellStatus = MineCell,
-    override val visibility: Showable = Hide,
+    override val status: CellStatus = MineCell(),
 ) : Element {
     override fun open(): Element? = null
 
-    override fun isOpen(): Boolean = false
+    override fun isOpenable(): Boolean = false
+
+    override fun isMine(): Boolean = true
 
     companion object {
         const val DEFAULT = "*"
