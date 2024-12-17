@@ -4,6 +4,7 @@ import domain.Board
 import domain.Coordinate
 import domain.strategy.RandomMineCellGenerator
 import view.InputView
+import view.OutputView
 
 class MineSweeperController {
     fun run() {
@@ -13,6 +14,7 @@ class MineSweeperController {
 
         val board = Board(Coordinate(rowSize, colSize), mineCount = mineCount, RandomMineCellGenerator())
         val cells = board.create()
-        println(cells)
+
+        OutputView.showMineSweeperBoard(cells)
     }
 }

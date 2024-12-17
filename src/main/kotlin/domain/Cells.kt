@@ -3,7 +3,7 @@ package domain
 import domain.Cell.EmptyCell
 import domain.Cell.MineCell
 
-data class Cells(private val cells: List<Cell>) {
+data class Cells(val cells: List<Cell>) {
     fun mineCells(): List<MineCell> = cells.filterIsInstance<MineCell>()
 
     fun emptyCells(): List<EmptyCell> = cells.filterIsInstance<EmptyCell>()
