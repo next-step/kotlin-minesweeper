@@ -2,23 +2,20 @@ package minesweeper.domain
 
 class DefaultLandmineTracker : LandmineTracker {
     override fun withUpdatedAdjacentMineCounts(
-        gameBoard: GameBoard,
+        cells: List<Cell>,
         landmineLocation: Location,
-    ): GameBoard {
+    ): List<Cell> {
         // 1.지뢰 주변 8칸의 Location 목록 구하기
         val adjacentLocations = AdjacentLocationDirection.allAdjacentLocations(landmineLocation)
 
-        return GameBoard.from(
-            gameBoard.rows.map { row ->
-                row.cells().map { cell ->
-                    if (cell.location() in adjacentLocations && cell is BasicCell) {
-                        cell.withIncrementedNumberOfAdjacentMines()
-                    } else {
-                        cell
-                    }
-                }
-            },
-        )
+        // 해당 지뢰 위치 주변의 모든 BasicCell 의 인접 지뢰 갯수 업데이트
+        return cells.map { cell ->
+            if (cell.location() in adjacentLocations && cell is BasicCell) {
+                cell.withIncrementedNumberOfAdjacentMines()
+            } else {
+                cell
+            }
+        }
     }
 }
 

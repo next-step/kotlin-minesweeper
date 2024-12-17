@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 
@@ -12,6 +13,7 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
             DefaultLandmineFieldArchitect(
                 landmineLocationSelector = fixedLandmineLocationSelector,
                 landminePlanter = Vulture(),
+                landmineTracker = DefaultLandmineTracker(),
             )
 
         val grid = threeByThreeGrid
@@ -28,6 +30,36 @@ class DefaultLandmineFieldArchitectTest : BehaviorSpec({
                 candidates.forEach { candidate ->
                     result.find(candidate).shouldBeTypeOf<Landmine>()
                 }
+            }
+
+            then("지뢰와 지뢰 주변 셀의 인접 지뢰 갯수도 기록된 GameBoard를 반환한다") {
+                result.area shouldBe gameBoard.area
+                result.rows shouldBe
+                    Rows(
+                        listOf(
+                            Row(
+                                listOf(
+                                    Landmine(Location(row = 1, column = 1)),
+                                    Landmine(Location(row = 1, column = 2)),
+                                    Landmine(Location(row = 1, column = 3)),
+                                ),
+                            ),
+                            Row(
+                                listOf(
+                                    BasicCell(Location(row = 2, column = 1), NumberOfAdjacentMines(2)),
+                                    BasicCell(Location(row = 2, column = 2), NumberOfAdjacentMines(3)),
+                                    BasicCell(Location(row = 2, column = 3), NumberOfAdjacentMines(2)),
+                                ),
+                            ),
+                            Row(
+                                listOf(
+                                    BasicCell(Location(row = 3, column = 1), NumberOfAdjacentMines.ZERO),
+                                    BasicCell(Location(row = 3, column = 2), NumberOfAdjacentMines.ZERO),
+                                    BasicCell(Location(row = 3, column = 3), NumberOfAdjacentMines.ZERO),
+                                ),
+                            ),
+                        ),
+                    )
             }
         }
         `when`("GameBoard의 전체 사이즈보다 countOfLandmines의 개수가 더 많으면") {

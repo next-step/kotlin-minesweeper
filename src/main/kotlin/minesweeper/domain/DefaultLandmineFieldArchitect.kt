@@ -3,6 +3,7 @@ package minesweeper.domain
 class DefaultLandmineFieldArchitect(
     private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),
     private val landminePlanter: LandminePlanter = Vulture(),
+    private val landmineTracker: LandmineTracker = DefaultLandmineTracker(),
 ) : LandmineFieldArchitect {
     override fun design(
         board: GameBoard,
@@ -13,13 +14,19 @@ class DefaultLandmineFieldArchitect(
         }
         val candidates = landmineLocationSelector.selectCandidates(board, countOfLandmines)
 
-        return GameBoard.from(
-            board.rows.map { row ->
-                row.cells().map { cell ->
-                    if (isLandmineLocation(candidates, cell.location())) landminePlanter.plant(cell.location()) else cell
-                }
-            },
-        )
+        val allCells = board.rows.flatMap { it.cells() }
+
+        val minePlantedCells =
+            allCells
+                .map { cell -> if (isLandmineLocation(candidates, cell.location())) landminePlanter.plant(cell.location()) else cell }
+
+        var result = minePlantedCells
+
+        candidates.forEach { candidate ->
+            result = landmineTracker.withUpdatedAdjacentMineCounts(result, candidate)
+        }
+
+        return GameBoard.from(result.chunked(board.area.width))
     }
 
     private fun isLandmineLocation(
