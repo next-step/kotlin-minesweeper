@@ -12,8 +12,8 @@ class GridTest {
         val mineCount = MineCount(10)
         val grid = Grid(dimension, mineCount)
 
-        assertEquals(10, grid.getCells().size)
-        assertEquals(10, grid.getCells()[0].size)
+        assertEquals(10, grid.cells.size)
+        assertEquals(10, grid.cells[0].size)
     }
 
     @Test
@@ -23,7 +23,7 @@ class GridTest {
         val mineCount = MineCount(5)
         val grid = Grid(dimension, mineCount)
 
-        val allCells = grid.getCells().flatten()
+        val allCells = grid.cells.flatten()
         val mineCountInGrid = allCells.count { it.isMine() }
 
         assertEquals(5, mineCountInGrid)
