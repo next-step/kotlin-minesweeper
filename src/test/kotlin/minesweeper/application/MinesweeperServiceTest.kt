@@ -7,7 +7,7 @@ import minesweeper.domain.Board
 import minesweeper.domain.Coordinate
 import minesweeper.domain.EmptyCell
 import minesweeper.domain.MinedCell
-import minesweeper.openedCellOf
+import minesweeper.domain.PlayableGame
 import minesweeper.unOpenedCellOf
 import minesweeper.undetonatedMineCellOf
 import org.junit.jupiter.api.Test
@@ -15,22 +15,25 @@ import org.junit.jupiter.api.Test
 @Suppress("NonAsciiCharacters")
 class MinesweeperServiceTest {
     @Test
-    fun `지뢰 찾기 보드를 생성한다`() {
+    fun `새로운 지뢰 찾기 게임을 생성한다`() {
+        val command = GenerateMinesweeperCommand(height = 2, width = 2, mineCount = 1)
         val generator =
             StubMinesweeperGenerator.from(
                 undetonatedMineCellOf(y = 0, x = 0),
                 unOpenedCellOf(y = 0, x = 1),
-                openedCellOf(y = 1, x = 0),
+                unOpenedCellOf(y = 1, x = 0),
                 unOpenedCellOf(y = 1, x = 1),
             )
+//    * C
+//    C C
         val service = MinesweeperService(generator)
-        val command = GenerateMinesweeperCommand(height = 2, width = 2, mineCount = 1)
 
-        val board = service.generateBoard(command)
+        val game = service.newGame(command)
 
+        game.shouldBeInstanceOf<PlayableGame>()
         assertSoftly {
             assertCellsAreCorrect(
-                board,
+                game.board,
                 mined = listOf(Coordinate(y = 0, x = 0)),
                 empty =
                     listOf(
