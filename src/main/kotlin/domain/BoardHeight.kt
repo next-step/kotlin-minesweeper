@@ -5,7 +5,7 @@ import constants.MineSweeperConstants.MINIMUM_HEIGHT
 @JvmInline
 value class BoardHeight(val value: Int) {
     init {
-        require(value > MINIMUM_HEIGHT) { INVALID_ROW_SIZE }
+        require(value >= MINIMUM_HEIGHT) { INVALID_ROW_SIZE }
     }
 
     operator fun compareTo(other: Int): Int = value.compareTo(other)
