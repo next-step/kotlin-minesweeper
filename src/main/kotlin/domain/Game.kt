@@ -4,7 +4,7 @@ class Game(
     height: Int,
     width: Int,
     mineCount: Int,
-    cellMapper: CellMapper = DefaultCellMapper()
+    cellMapper: CellMapper = DefaultCellMapper(),
 ) {
     private val mineField =
         MineField(

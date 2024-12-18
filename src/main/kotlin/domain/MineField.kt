@@ -10,7 +10,7 @@ class MineField(
 
     init {
         require(mineCount <= height.value * width.value) { MINE_MAXIMUM_EXCEPTION_MESSAGE }
-        grid = createMineField()
+        grid = createMineField().withNumberHints()
     }
 
     private fun createMineField(): Grid {
