@@ -10,5 +10,5 @@ data class BasicCell(
 
     override fun symbol(): Symbol = Symbol.from(numberOfAdjacentMines)
 
-    override fun withIncrementedNumberOfAdjacentMines() = copy(numberOfAdjacentMines = numberOfAdjacentMines.inc())
+    fun withIncrementedNumberOfAdjacentMines() = copy(numberOfAdjacentMines = numberOfAdjacentMines.inc())
 }

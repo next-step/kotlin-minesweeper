@@ -17,13 +17,5 @@ class LandmineTest : BehaviorSpec({
                 sut.symbol() shouldBe Symbol.LANDMINE
             }
         }
-
-        `when`("withIncrementedNumberOfAdjacentMines()을 호출하면") {
-            val result = sut.withIncrementedNumberOfAdjacentMines()
-
-            then("데이터 변동 없이 자기 자신을 복사한다") {
-                result shouldBe sut
-            }
-        }
     }
 })

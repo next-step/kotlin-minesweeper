@@ -6,6 +6,4 @@ data class Landmine(private val location: Location) : Cell {
     override fun location(): Location = location.copy()
 
     override fun symbol(): Symbol = Symbol.LANDMINE
-
-    override fun withIncrementedNumberOfAdjacentMines(): Cell = this.copy()
 }
