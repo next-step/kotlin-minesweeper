@@ -11,9 +11,9 @@ class BoardTest {
         val fixture =
             testFixture(
                 listOf(
-                    Cell(CellType.MINE, Position(0, 0)),
+                    Cell(CellType.Mine, Position(0, 0)),
                     Cell(CellType.EMPTY, Position(0, 1)),
-                    Cell(CellType.MINE, Position(0, 2)),
+                    Cell(CellType.Mine, Position(0, 2)),
                 ),
             )
         val board = Board.initializeBoard(Dimensions(3, 3, 2), fixture)
@@ -30,7 +30,7 @@ class BoardTest {
         val fixture =
             testFixture(
                 listOf(
-                    Cell(CellType.MINE, Position(0, 0)),
+                    Cell(CellType.Mine, Position(0, 0)),
                     Cell(CellType.EMPTY, Position(1, 0)),
                     Cell(CellType.EMPTY, Position(2, 0)),
                 ),
