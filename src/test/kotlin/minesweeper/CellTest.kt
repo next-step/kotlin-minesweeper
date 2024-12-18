@@ -30,4 +30,12 @@ class CellTest {
 
         assertThat(position).isEqualTo(Position(1, 1))
     }
+
+    @Test
+    fun `지뢰 갯수에 따라 셀 타입을 업데이트할 수 있다`() {
+        val cell = Cell(CellType.Number(0), Position(0, 0))
+        val updatedCell = cell.withMineCount(3)
+
+        assertThat(updatedCell.type).isEqualTo(CellType.Number(3))
+    }
 }

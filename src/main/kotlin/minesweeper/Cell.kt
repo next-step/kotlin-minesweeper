@@ -17,12 +17,16 @@ class Cell(private var _type: CellType = CellType.EMPTY, val position: Position)
             return
         }
 
-        _type = CellType.MINE
+        _type = CellType.Mine
+    }
+
+    fun withMineCount(count: Int): Cell {
+        return Cell(CellType.fromMineCount(count), position)
     }
 
     companion object {
         fun createMine(): Cell {
-            return Cell(CellType.MINE, Position(1, 1))
+            return Cell(CellType.Mine, Position(1, 1))
         }
     }
 }
