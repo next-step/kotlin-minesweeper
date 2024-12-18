@@ -4,7 +4,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.GameBoard
 import minesweeper.domain.Row
@@ -13,6 +12,7 @@ import minesweeper.domain.cell.BasicCell
 import minesweeper.domain.cell.Landmine
 import minesweeper.domain.cell.Location
 import minesweeper.domain.cell.NumberOfAdjacentMines
+import minesweeper.domain.threeByThreeGrid
 
 class DefaultLandmineFieldArchitectTest : BehaviorSpec({
     given("LandmineFieldArchitect 는 ") {

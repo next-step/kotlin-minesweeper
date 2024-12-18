@@ -4,7 +4,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
 import minesweeper.domain.cell.Location
 
 class RowsTest : BehaviorSpec({
