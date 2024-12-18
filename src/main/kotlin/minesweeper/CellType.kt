@@ -9,8 +9,9 @@ sealed class CellType {
         return this is Mine
     }
 
+
     companion object {
-        val EMPTY: CellType = Number(0)
+        val DEFAULT: CellType = Number(0)
 
         fun fromMineCount(mineCount: Int): CellType {
             return Number(mineCount)

@@ -1,6 +1,12 @@
 package minesweeper
 
-class Cell(private var _type: CellType = CellType.EMPTY, val position: Position) {
+class Cell(private var _type: CellType = CellType.DEFAULT, val position: Position) {
+    val mineCount: Int
+        get() = if (type is CellType.Number) {
+            (type as CellType.Number).mineCount
+        } else {
+            0
+        }
     val type: CellType
         get() = _type
     val x: Int

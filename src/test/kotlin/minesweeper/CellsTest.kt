@@ -10,7 +10,7 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.DEFAULT, Position(0, 0)),
                     Cell(CellType.Mine, Position(1, 1)),
                 ),
             )
@@ -26,8 +26,8 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.EMPTY, Position(0, 0)),
-                    Cell(CellType.EMPTY, Position(1, 0)),
+                    Cell(CellType.DEFAULT, Position(0, 0)),
+                    Cell(CellType.DEFAULT, Position(1, 0)),
                 ),
             )
 
@@ -39,12 +39,12 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.DEFAULT, Position(0, 0)),
                     Cell(CellType.Mine, Position(1, 0)),
                 ),
             )
 
-        assertThat(cells.rowAt(0).map { it.type }).containsExactly(CellType.EMPTY, CellType.Mine)
+        assertThat(cells.rowAt(0).map { it.type }).containsExactly(CellType.DEFAULT, CellType.Mine)
     }
 
     @Test
@@ -52,7 +52,7 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.DEFAULT, Position(0, 0)),
                     Cell(CellType.Mine, Position(1, 0)),
                     Cell(CellType.Mine, Position(1, 1)),
                 ),

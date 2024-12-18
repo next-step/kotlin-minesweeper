@@ -12,7 +12,7 @@ class BoardTest {
             testFixture(
                 listOf(
                     Cell(CellType.Mine, Position(0, 0)),
-                    Cell(CellType.EMPTY, Position(0, 1)),
+                    Cell(CellType.DEFAULT, Position(0, 1)),
                     Cell(CellType.Mine, Position(0, 2)),
                 ),
             )
@@ -31,8 +31,8 @@ class BoardTest {
             testFixture(
                 listOf(
                     Cell(CellType.Mine, Position(0, 0)),
-                    Cell(CellType.EMPTY, Position(1, 0)),
-                    Cell(CellType.EMPTY, Position(2, 0)),
+                    Cell(CellType.DEFAULT, Position(1, 0)),
+                    Cell(CellType.DEFAULT, Position(2, 0)),
                 ),
             )
 
