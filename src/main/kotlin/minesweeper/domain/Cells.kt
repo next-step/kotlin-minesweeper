@@ -40,11 +40,9 @@ class Cells(
 
         while (queue.isNotEmpty()) {
             val current = queue.removeFirst()
-
             current
                 .neighbors
-                .filter { it in cellMap }
-                .filter { newCellMap[it] is ClosedEmptyCell }
+                .filter { it in newCellMap && newCellMap[it] is ClosedEmptyCell }
                 .forEach {
                     newCellMap[it] = OpenedEmptyCell
                     addToQueueIfZeroNeighboringMines(it, queue)
