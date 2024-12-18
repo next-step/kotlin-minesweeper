@@ -4,12 +4,12 @@ sealed interface Cell
 
 sealed interface MinedCell : Cell
 
-class UndetonatedMineCell : MinedCell
+data object UndetonatedMineCell : MinedCell
 
-class DetonatedMineCell : MinedCell
+data object DetonatedMineCell : MinedCell
 
 sealed interface EmptyCell : Cell
 
-class ClosedEmptyCell : EmptyCell
+data object ClosedEmptyCell : EmptyCell
 
-class OpenedEmptyCell : EmptyCell
+data object OpenedEmptyCell : EmptyCell

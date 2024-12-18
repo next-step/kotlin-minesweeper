@@ -17,12 +17,12 @@ class RandomBoardGenerator : BoardGenerator {
         val minedCells =
             shuffledIndices
                 .take(mineCount)
-                .associate { toCoordinate(it, width) to UndetonatedMineCell() }
+                .associate { toCoordinate(it, width) to UndetonatedMineCell }
 
         val emptyCellCoordinates =
             shuffledIndices
                 .drop(mineCount)
-                .associate { toCoordinate(it, width) to ClosedEmptyCell() }
+                .associate { toCoordinate(it, width) to ClosedEmptyCell }
 
         return PlayableBoard(minedCells + emptyCellCoordinates)
     }
