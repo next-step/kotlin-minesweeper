@@ -1,9 +1,5 @@
 package minesweeper.domain
 
-sealed interface Game {
-    val board: Board
-}
-
 class PlayableGame(
     override val board: PlayableBoard,
 ) : Game {
@@ -17,13 +13,3 @@ class PlayableGame(
             is MineDetonatedBoard -> MineDetonatedGame(newBoard)
         }
 }
-
-sealed interface CompletedGame : Game
-
-class PlayerWonGame(
-    override val board: PlayerWonBoard,
-) : CompletedGame
-
-class MineDetonatedGame(
-    override val board: MineDetonatedBoard,
-) : CompletedGame

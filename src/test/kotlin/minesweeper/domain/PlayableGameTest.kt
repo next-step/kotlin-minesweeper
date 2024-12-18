@@ -13,28 +13,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 @Suppress("NonAsciiCharacters")
-class GamesTest {
+class PlayableGameTest {
     @Test
     fun `PlayableGame 은 게임이 종료되지 않았다`() {
         val game = playableGameOf(closedEmptyCellOf(y = 0, x = 0))
         game.shouldBeInstanceOf<PlayableGame>()
-    }
-
-    @Test
-    fun `CompletedGame 은 게임이 종료되었다`() {
-        PlayerWonGame(
-            PlayerWonBoard(
-                mapOf(
-                    openedEmptyCellOf(y = 0, x = 0),
-                ),
-            ),
-        ).shouldBeInstanceOf<CompletedGame>()
-
-        MineDetonatedGame(
-            MineDetonatedBoard(
-                mapOf(detonatedMineCellOf(y = 0, x = 0)),
-            ),
-        ).shouldBeInstanceOf<CompletedGame>()
     }
 
     @Test
