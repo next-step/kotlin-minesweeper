@@ -1,6 +1,11 @@
 package domain
 
-class MineField(private val height: Int, private val width: Int, private val mineCount: Int) {
+class MineField(
+    private val height: Int,
+    private val width: Int,
+    private val mineCount: Int,
+    private val cellMapper: CellMapper = DefaultCellMapper(),
+) {
     private val field: List<List<Cell>>
 
     init {
@@ -27,7 +32,7 @@ class MineField(private val height: Int, private val width: Int, private val min
 
     fun display(): List<String> =
         field.map { row ->
-            row.joinToString(" ") { it.display() }
+            row.joinToString(" ") { cellMapper.mapToDisplay(it) }
         }
 
     companion object {
