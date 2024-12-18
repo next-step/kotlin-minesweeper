@@ -14,4 +14,13 @@ class CellTest : StringSpec({
         cell.addMine()
         cell.isMine() shouldBe true
     }
+    "지뢰찾기 셀 AroundCount 테스트" {
+        val cell = Cell()
+        cell.mineAroundCount shouldBe 0
+    }
+    "지뢰찾기 셀 AroundCount 증감 테스트" {
+        val cell = Cell()
+        cell.addMineAroundCount()
+        cell.mineAroundCount shouldBe 1
+    }
 })

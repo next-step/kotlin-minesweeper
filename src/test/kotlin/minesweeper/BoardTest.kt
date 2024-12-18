@@ -24,11 +24,31 @@ class BoardTest : StringSpec({
         board.getCells().cellList.filter { it.isMine() }.size shouldBe 5
     }
     "지뢰찾기 보드 생성 테스트 예외 테스트" {
-        val board = Board(1, 1, 2)
         val exception =
             shouldThrow<IllegalArgumentException> {
-                board.createCells(minesStrategy = testMinesStrategy).size() shouldBe 12
+                Board(1, 1, 2)
             }
-        exception.message should startWith("Failed requirement.")
+        exception.message should startWith("지뢰 개수는 셀의 개수보다 작아야합니다.")
+    }
+    "지뢰찾기 보드 생성 테스트 예외 높이 0 테스트" {
+        val exception =
+            shouldThrow<IllegalArgumentException> {
+                Board(0, 1, 1)
+            }
+        exception.message should startWith("높이, 너비, 지뢰 개수는 0보다 커야합니다.")
+    }
+    "지뢰찾기 보드 생성 테스트 예외 너비 0 테스트" {
+        val exception =
+            shouldThrow<IllegalArgumentException> {
+                Board(1, 0, 1)
+            }
+        exception.message should startWith("높이, 너비, 지뢰 개수는 0보다 커야합니다.")
+    }
+    "지뢰찾기 보드 생성 테스트 예외 지뢰 0 테스트" {
+        val exception =
+            shouldThrow<IllegalArgumentException> {
+                Board(1, 1, 0)
+            }
+        exception.message should startWith("높이, 너비, 지뢰 개수는 0보다 커야합니다.")
     }
 })

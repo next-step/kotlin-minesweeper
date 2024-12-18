@@ -5,7 +5,8 @@ class Cell(
     val column: Int = 0,
 ) {
     private var isMine: Boolean = false
-    private var mineAroundCount: Int = 0
+    var mineAroundCount: Int = 0
+        private set
 
     fun isMine(): Boolean = isMine
 
@@ -16,8 +17,6 @@ class Cell(
     fun addMineAroundCount() {
         mineAroundCount++
     }
-
-    fun mineAroundCount(): Int = mineAroundCount
 
     fun isAround(
         row: Int,

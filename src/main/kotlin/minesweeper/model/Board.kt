@@ -12,12 +12,13 @@ class Board(
     private var cells = Cells()
 
     init {
-        require(height > 0 || width > 0 || mineCount > 0) { "높이, 너비, 지뢰 개수는 0보다 커야합니다." }
+        require(height > 0 && width > 0 && mineCount > 0) { "높이, 너비, 지뢰 개수는 0보다 커야합니다." }
+        require(height * width > mineCount) { "지뢰 개수는 셀의 개수보다 작아야합니다." }
     }
 
     fun createCells(minesStrategy: MinesStrategy): Board {
         this.cells = cells.addAll(List(height * width) { index -> Cell(index / width, index % width) })
-        this.cells = minesStrategy.addMines(this.cells, mineCount)
+        this.cells = cells.addMines(minesStrategy, mineCount)
         return this
     }
 
@@ -26,7 +27,7 @@ class Board(
     }
 
     fun addMineAroundCounts() {
-        cells.addMineAroundCounts()
+        cells.addMinesAroundCounts()
     }
 
     fun getCells(): Cells {
@@ -34,10 +35,6 @@ class Board(
     }
 
     fun getRowCells(row: Int): Cells {
-        return Cells(cells.cellList.filter { it.row == row })
-    }
-
-    fun getColumnCells(column: Int): Cells {
-        return Cells(cells.cellList.filter { it.column == column })
+        return cells.getRowCells(row)
     }
 }

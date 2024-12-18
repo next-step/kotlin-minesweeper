@@ -13,9 +13,7 @@ class ResultView {
     }
 
     private fun printRow(rowCells: Cells) {
-        for (cell in rowCells.cellList) {
-            printCell(cell)
-        }
+        print(rowCells.cellList.joinToString("") { cell -> buildString { printCell(cell) } })
     }
 
     private fun printCell(cell: Cell) {
@@ -24,7 +22,7 @@ class ResultView {
             return
         }
 
-        print("${cell.mineAroundCount()} ")
+        print("${cell.mineAroundCount} ")
     }
 
     companion object {

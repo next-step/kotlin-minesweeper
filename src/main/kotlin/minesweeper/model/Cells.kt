@@ -2,7 +2,7 @@ package minesweeper.model
 
 class Cells(
     cells: List<Cell> = listOf(),
-) : MinesStrategy {
+) {
     var cellList: List<Cell> = cells
         private set
 
@@ -14,24 +14,28 @@ class Cells(
         return Cells(this.cellList + cells)
     }
 
-    override fun addMines(
-        cells: Cells,
+    fun addMines(
+        minesStrategy: MinesStrategy,
         mineCount: Int,
     ): Cells {
-        repeat(mineCount) {
-            cells.cellList[it].addMine()
-        }
-
-        return cells
+        return minesStrategy.addMines(this, mineCount)
     }
 
-    fun addMineAroundCounts() {
+    fun addMinesAroundCounts() {
         cellList.filter { it.isMine() }.forEach { mineCell ->
             Direction.entries.forEach { direction ->
-                val adjacentRow = mineCell.row + direction.dx
-                val adjacentColumn = mineCell.column + direction.dy
-                cellList.find { it.isAround(adjacentRow, adjacentColumn) }?.addMineAroundCount()
+                minesCellAroundCount(mineCell, direction)
             }
         }
+    }
+
+    private fun minesCellAroundCount(mineCell: Cell, direction: Direction) {
+        val adjacentRow = mineCell.row + direction.dx
+        val adjacentColumn = mineCell.column + direction.dy
+        cellList.find { it.isAround(adjacentRow, adjacentColumn) }?.addMineAroundCount()
+    }
+
+    fun getRowCells(row: Int): Cells {
+        return Cells(cellList.filter { it.row == row})
     }
 }
