@@ -5,14 +5,14 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.GameBoard
 import minesweeper.domain.cell.Location
-import minesweeper.domain.threeByThreeGrid
+import minesweeper.domain.threeByThreeCells
 
 class DefaultLandmineLocationSelectorTest : BehaviorSpec({
     given("LandmineLocationSelector 는") {
         val sut = DefaultLandmineLocationSelector(FixedShuffleAlgorithm())
 
         `when`("board 와 countOfLandmines 를 받아") {
-            val grid = threeByThreeGrid
+            val grid = threeByThreeCells
             val board = GameBoard.from(grid)
             val countOfLandmines = CountOfLandmines(3)
 

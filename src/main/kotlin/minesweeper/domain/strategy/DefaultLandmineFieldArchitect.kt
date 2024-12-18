@@ -20,7 +20,7 @@ class DefaultLandmineFieldArchitect(
 
         val minePlantedCells =
             landminePlanter.plantAll(
-                allCells = board.allCells(),
+                allCells = board.cells,
                 landmineCandidates = candidates,
             )
 
@@ -30,6 +30,6 @@ class DefaultLandmineFieldArchitect(
                     landmineTracker.withUpdatedAdjacentMineCounts(acc, candidate)
                 }
 
-        return GameBoard.from(result.chunked(board.area.width))
+        return GameBoard.from(result)
     }
 }
