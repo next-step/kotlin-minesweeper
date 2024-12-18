@@ -17,7 +17,8 @@ fun main() {
 
     val gameBoardCreator = GameBoardCreator()
     val gameBoard = gameBoardCreator.design(height = height, width = width, countOfLandmines = countOfLandmines)
+    val allOpenedGameBoard = gameBoard.openAll()
 
     announceGameStarted()
-    displayCurrentGameBoard(gameBoard)
+    displayCurrentGameBoard(allOpenedGameBoard)
 }

@@ -5,8 +5,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Area
 import minesweeper.domain.CountOfLandmines
-import minesweeper.domain.cell.LandmineCell
-import minesweeper.domain.cell.NumberCell
+import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.NumberOfAdjacentMines
 import minesweeper.domain.oneByOneLocation
 import minesweeper.domain.oneByThreeLocation
@@ -44,15 +43,15 @@ class GameBoardCreatorTest : BehaviorSpec({
                 result.area shouldBe Area(height = height, width = width)
                 result.cells shouldBe
                     listOf(
-                        LandmineCell(oneByOneLocation),
-                        LandmineCell(oneByTwoLocation),
-                        LandmineCell(oneByThreeLocation),
-                        NumberCell(twoByOneLocation, NumberOfAdjacentMines(2)),
-                        NumberCell(twoByTwoLocation, NumberOfAdjacentMines(3)),
-                        NumberCell(twoByThreeLocation, NumberOfAdjacentMines(2)),
-                        NumberCell(threeByOneLocation, NumberOfAdjacentMines.ZERO),
-                        NumberCell(threeByTwoLocation, NumberOfAdjacentMines.ZERO),
-                        NumberCell(threeByThreeLocation, NumberOfAdjacentMines.ZERO),
+                        ClosedCell(oneByOneLocation, true, NumberOfAdjacentMines(1)),
+                        ClosedCell(oneByTwoLocation, true, NumberOfAdjacentMines(2)),
+                        ClosedCell(oneByThreeLocation, true, NumberOfAdjacentMines(1)),
+                        ClosedCell(twoByOneLocation, false, NumberOfAdjacentMines(2)),
+                        ClosedCell(twoByTwoLocation, false, NumberOfAdjacentMines(3)),
+                        ClosedCell(twoByThreeLocation, false, NumberOfAdjacentMines(2)),
+                        ClosedCell(threeByOneLocation, false, NumberOfAdjacentMines.ZERO),
+                        ClosedCell(threeByTwoLocation, false, NumberOfAdjacentMines.ZERO),
+                        ClosedCell(threeByThreeLocation, false, NumberOfAdjacentMines.ZERO),
                     )
             }
         }

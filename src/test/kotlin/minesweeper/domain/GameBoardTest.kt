@@ -2,10 +2,13 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
+import minesweeper.domain.cell.NumberCell
+import minesweeper.domain.cell.NumberOfAdjacentMines
 
 class GameBoardTest : BehaviorSpec({
     given("GameBoard 를 생성할 때") {
@@ -97,6 +100,26 @@ class GameBoardTest : BehaviorSpec({
                 notFoundLocations.forEach { location ->
                     sut.find(location) shouldBe null
                 }
+            }
+        }
+
+        `when`("openAll() 하면") {
+            val result = sut.openAll()
+
+            then("모든 Cell 이 open 된 상태로 바뀐 GameBoard 를 반환한다") {
+                result.cells shouldHaveSize 9
+                result.cells shouldContainExactlyInAnyOrder
+                    listOf(
+                        NumberCell(oneByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(oneByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(oneByThreeLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByThreeLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByThreeLocation, NumberOfAdjacentMines.ZERO),
+                    )
             }
         }
     }

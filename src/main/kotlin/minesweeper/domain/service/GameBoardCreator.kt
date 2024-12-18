@@ -3,7 +3,6 @@ package minesweeper.domain.service
 import minesweeper.domain.Cells
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.GameBoard
-import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
 import minesweeper.domain.strategy.DefaultLandmineLocationSelector
 import minesweeper.domain.strategy.DefaultLandmineTracker
@@ -40,7 +39,7 @@ class GameBoardCreator(
                     landmineTracker.withUpdatedAdjacentMineCounts(acc, candidate)
                 }
 
-        return GameBoard.from(resultCells.map { if (it is ClosedCell) it.open() else it })
+        return GameBoard.from(resultCells)
     }
 
     private fun validateCountOfLandmines(
