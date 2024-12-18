@@ -23,6 +23,10 @@ class ClosedCellTest : BehaviorSpec({
             then("기본적으로는 지뢰를 갖고 있지 않다") {
                 sut.hasLandmine shouldBe false
             }
+
+            then("기본적으로는 인접 지뢰 개수가 0개이다") {
+                sut.numberOfAdjacentLandmines shouldBe NumberOfAdjacentMines.ZERO
+            }
         }
     }
 
@@ -46,6 +50,43 @@ class ClosedCellTest : BehaviorSpec({
 
             then("NumberCell 을 반환한다") {
                 result.shouldBeInstanceOf<NumberCell>()
+            }
+        }
+    }
+
+    given("새로운 인접 지뢰 개수를 가지고") {
+        val location = oneByOneLocation
+        val sut = ClosedCell(location)
+        val newNumberOfAdjacentMines = NumberOfAdjacentMines(8)
+
+        `when`("withNumberOfAdjacentLandmines() 를 호출하면") {
+            val result = sut.withNumberOfAdjacentLandmines(newNumberOfAdjacentMines)
+
+            then("해당 인접 지뢰 개수로 업데이트된 ClosedCell 을 반환한다") {
+                sut.location shouldBe result.location
+                sut.symbol shouldBe result.symbol
+                sut.hasLandmine shouldBe result.hasLandmine
+
+                sut.numberOfAdjacentLandmines shouldBe NumberOfAdjacentMines.ZERO
+                result.numberOfAdjacentLandmines shouldBe newNumberOfAdjacentMines
+            }
+        }
+    }
+
+    given("지뢰를 심기 위해") {
+        val location = oneByOneLocation
+        val sut = ClosedCell(location)
+
+        `when`("plantMine()을 호출하면") {
+            val result = sut.plantMine()
+
+            then("hasLandmine 이 true 로 업데이트 된 ClosedCell 을 반환한다") {
+                sut.location shouldBe result.location
+                sut.symbol shouldBe result.symbol
+                sut.numberOfAdjacentLandmines shouldBe result.numberOfAdjacentLandmines
+
+                sut.hasLandmine shouldBe false
+                result.hasLandmine shouldBe true
             }
         }
     }

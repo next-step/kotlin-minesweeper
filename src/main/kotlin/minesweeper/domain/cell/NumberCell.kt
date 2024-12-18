@@ -1,6 +1,9 @@
 package minesweeper.domain.cell
 
-class NumberCell(override val location: Location) : Cell {
+class NumberCell(
+    override val location: Location,
+    override val numberOfAdjacentLandmines: NumberOfAdjacentMines,
+) : Cell, HasAdjacentLandmines {
     override val symbol: Symbol
-        get() = Symbol.ZERO
+        get() = Symbol.from(numberOfAdjacentLandmines)
 }
