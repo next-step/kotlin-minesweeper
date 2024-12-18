@@ -15,12 +15,13 @@ class MineField(
 
     private fun createMineField(): Grid {
         val positions = generateAllPositions().shuffled().take(mineCount).toSet()
-        val cells = List(height.value) { row ->
-            List(width.value) { col ->
-                val isMine = positions.contains(Position(row, col))
-                Cell.create(isMine)
+        val cells =
+            List(height.value) { row ->
+                List(width.value) { col ->
+                    val isMine = positions.contains(Position(row, col))
+                    Cell.create(isMine)
+                }
             }
-        }
 
         return Grid(height, width, cells)
     }
