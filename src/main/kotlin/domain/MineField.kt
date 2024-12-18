@@ -21,14 +21,13 @@ class MineField(
                 Cell.create(isMine)
             }
         }
+
         return Grid(height, width, cells)
     }
 
     private fun generateAllPositions(): List<Position> =
-        (0 until height.value).flatMap { row ->
-            (0 until width.value).map { col ->
-                Position(row, col)
-            }
+        List(height.value * width.value) { index ->
+            Position(index / width.value, index % width.value)
         }
 
     fun display(): List<String> = grid.toDisplayRows(cellMapper)
