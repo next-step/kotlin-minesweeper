@@ -6,6 +6,28 @@ class Cells(private val values: Map<CellKey, Cell>) {
     val mineCount: Int
         get() = values.values.count { it.isMine }
 
+    fun detectMines() {
+        values.values.forEach { cell ->
+            cell.determineCell(this)
+        }
+    }
+
+    fun neighborsMineCount(position: Position): Int {
+        return Direction.neighbors(position)
+            .mapNotNull { values[it.key()] }
+            .count { it.isMine }
+    }
+
+    fun assignMinesToCells(minePositions: List<Position>): Cells {
+        return Cells(values.mapValues { (_, cell) ->
+            if (minePositions.contains(cell.position)) {
+                cell.withMine()
+            } else {
+                cell
+            }
+        })
+    }
+
     fun checkMine(position: Position): Boolean {
         return at(position).isMine()
     }
@@ -19,20 +41,6 @@ class Cells(private val values: Map<CellKey, Cell>) {
     fun rowAt(rowIndex: Int): List<Cell> {
         return values.values
             .filter { it.matchRowIndex(rowIndex) }
-    }
-
-    fun neighborsMineCount(position: Position): Int {
-        return Direction.neighbors(position)
-            .mapNotNull { values[it.key()] }
-            .count { it.isMine }
-    }
-
-    fun determineCellTypes(): List<List<CellType>> {
-        return (0 until rowSize()).map { rowIndex ->
-            rowAt(rowIndex).map { cell ->
-                cell.determineCellType(this)
-            }
-        }
     }
 
     private fun at(position: Position): CellType {

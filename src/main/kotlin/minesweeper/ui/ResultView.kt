@@ -1,7 +1,7 @@
 package minesweeper.ui
 
 import minesweeper.BoardDrawing
-import minesweeper.CellType
+import minesweeper.DrawingRow
 
 class ResultView {
     fun drawBoard(draw: BoardDrawing) {
@@ -15,12 +15,13 @@ class ResultView {
         println("지뢰찾기 게임 시작")
     }
 
-    private fun drawRow(row: List<CellType>) {
+    private fun drawRow(row: DrawingRow) {
         row.forEach { cell ->
             val icon =
-                when (cell) {
-                    is CellType.Mine -> CellIcon.MINE.icon
-                    is CellType.Number -> cell.mineCount.toString()
+                if (cell.isMine) {
+                    CellIcon.MINE.icon
+                } else {
+                    cell.neighborsMineCount.toString()
                 }
             print(icon)
         }

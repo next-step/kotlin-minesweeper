@@ -11,5 +11,6 @@ fun main() {
     val board = Board.initializeBoard(dimensions, DefaultCellProvider())
 
     resultView.startView()
+    board.detectMines()
     resultView.drawBoard(board.draw())
 }

@@ -18,20 +18,16 @@ class Cell(private var _type: CellType = CellType.DEFAULT, val position: Positio
         return position.y == rowIndex
     }
 
-    fun changeMine() {
-        if (type.isMine()) {
-            return
-        }
-
-        _type = CellType.Mine
-    }
-
     fun withMineCount(count: Int): Cell {
         return Cell(CellType.fromMineCount(count), position)
     }
 
-    fun determineCellType(cells: Cells): CellType {
-        return if (isMine) {
+    fun withMine(): Cell {
+        return Cell(CellType.Mine, position)
+    }
+
+    fun determineCell(cells: Cells) {
+        _type = if (isMine) {
             CellType.Mine
         } else {
             CellType.fromMineCount(cells.neighborsMineCount(position))

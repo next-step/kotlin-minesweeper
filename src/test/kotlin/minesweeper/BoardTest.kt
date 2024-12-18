@@ -43,8 +43,8 @@ class BoardTest {
 
     private fun testFixture(data: List<Cell>) =
         object : CellProvider {
-            override fun provide(dimensions: Dimensions): List<Cell> {
-                return data
+            override fun provide(dimensions: Dimensions): Cells {
+                return Cells.create(data)
             }
         }
 }
