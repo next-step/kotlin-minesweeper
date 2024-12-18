@@ -1,12 +1,12 @@
 package minesweeper.domain.strategy
 
+import minesweeper.domain.Cells
 import minesweeper.domain.CountOfLandmines
-import minesweeper.domain.GameBoard
 import minesweeper.domain.cell.Location
 
 interface LandmineLocationSelector {
     fun selectCandidates(
-        board: GameBoard,
+        cells: Cells,
         countOfLandmines: CountOfLandmines,
     ): List<Location>
 }

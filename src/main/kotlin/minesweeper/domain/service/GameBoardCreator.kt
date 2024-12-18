@@ -9,33 +9,44 @@ import minesweeper.domain.strategy.LandminePlanter
 import minesweeper.domain.strategy.LandmineTracker
 import minesweeper.domain.strategy.Vulture
 
-class LandmineFieldArchitect(
+class GameBoardCreator(
     private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),
     private val landminePlanter: LandminePlanter = Vulture(),
     private val landmineTracker: LandmineTracker = DefaultLandmineTracker(),
 ) {
     fun design(
-        board: GameBoard,
+        height: Int,
+        width: Int,
         countOfLandmines: CountOfLandmines,
     ): GameBoard {
-        require(board.totalCellSize() >= countOfLandmines.value) {
-            "보드의 총 셀 개수보다 지뢰 개수가 더 많습니다: countOfLandmines=${countOfLandmines.value}, totalCellSize=${board.totalCellSize()}"
-        }
+        validateCountOfLandmines(width, height, countOfLandmines)
 
-        val candidates = landmineLocationSelector.selectCandidates(board, countOfLandmines)
+        val initialBoard = GameBoard.of(height = height, width = width)
+
+        val candidates = landmineLocationSelector.selectCandidates(initialBoard.cells, countOfLandmines)
 
         val minePlantedCells =
             landminePlanter.plantAll(
-                allCells = board.cells,
+                allCells = initialBoard.cells,
                 landmineCandidates = candidates,
             )
 
-        val result =
+        val resultCells =
             candidates
                 .fold(minePlantedCells) { acc, candidate ->
                     landmineTracker.withUpdatedAdjacentMineCounts(acc, candidate)
                 }
 
-        return GameBoard.from(result)
+        return GameBoard.from(resultCells)
+    }
+
+    private fun validateCountOfLandmines(
+        width: Int,
+        height: Int,
+        countOfLandmines: CountOfLandmines,
+    ) {
+        require((width * height) >= countOfLandmines.value) {
+            "보드의 총 셀 개수보다 지뢰 개수가 더 많습니다: countOfLandmines=${countOfLandmines.value}, totalCellSize=${(width * height)}"
+        }
     }
 }
