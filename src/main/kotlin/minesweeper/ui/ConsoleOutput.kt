@@ -1,7 +1,7 @@
 package minesweeper.ui
 
 import minesweeper.domain.Row
-import minesweeper.domain.Symbol
+import minesweeper.domain.cell.Symbol
 
 object ConsoleOutput {
     private const val DELIMITER = " "

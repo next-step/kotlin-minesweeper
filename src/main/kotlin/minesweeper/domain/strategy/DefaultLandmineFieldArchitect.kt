@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.CountOfLandmines
+import minesweeper.domain.GameBoard
 
 class DefaultLandmineFieldArchitect(
     private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),

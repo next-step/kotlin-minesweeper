@@ -1,4 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.CountOfLandmines
+import minesweeper.domain.GameBoard
+import minesweeper.domain.cell.Location
 
 class DefaultLandmineLocationSelector(
     private val shuffleAlgorithm: ShuffleAlgorithm = RandomShuffleAlgorithm(),

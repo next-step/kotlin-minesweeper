@@ -1,8 +1,12 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
+import minesweeper.domain.Cells
+import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.Location
 
 class VultureTest : BehaviorSpec({
     given("Vulture 는") {

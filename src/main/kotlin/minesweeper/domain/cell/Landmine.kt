@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.cell
 
 data class Landmine(private val location: Location) : Cell {
     constructor(row: Int, column: Int) : this(Location(row, column))

@@ -1,8 +1,11 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
+import minesweeper.domain.CountOfLandmines
+import minesweeper.domain.GameBoard
+import minesweeper.domain.cell.Location
 
 class DefaultLandmineLocationSelectorTest : BehaviorSpec({
     given("LandmineLocationSelector 는") {

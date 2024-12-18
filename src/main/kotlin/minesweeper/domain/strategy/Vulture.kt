@@ -1,4 +1,8 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.Cells
+import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.Location
 
 class Vulture : LandminePlanter {
     override fun plant(location: Location): Landmine = Landmine(location)

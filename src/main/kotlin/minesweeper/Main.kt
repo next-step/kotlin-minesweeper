@@ -1,9 +1,9 @@
 package minesweeper
 
 import minesweeper.domain.CountOfLandmines
-import minesweeper.domain.DefaultLandmineFieldArchitect
 import minesweeper.domain.GameBoard
-import minesweeper.domain.LandmineFieldArchitect
+import minesweeper.domain.strategy.DefaultLandmineFieldArchitect
+import minesweeper.domain.strategy.LandmineFieldArchitect
 import minesweeper.ui.ConsoleInput.inputCountOfLandmines
 import minesweeper.ui.ConsoleInput.inputHeight
 import minesweeper.ui.ConsoleInput.inputWidth

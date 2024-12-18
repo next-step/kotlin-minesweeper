@@ -1,5 +1,9 @@
 package minesweeper.domain
 
+import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Location
+
 class GameBoard private constructor(
     grid: List<List<Cell>>,
     val area: Area,

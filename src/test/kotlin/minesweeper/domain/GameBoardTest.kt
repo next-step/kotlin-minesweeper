@@ -5,6 +5,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
+import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.Location
 
 class GameBoardTest : BehaviorSpec({
     given("GameBoard 를 생성할 때") {

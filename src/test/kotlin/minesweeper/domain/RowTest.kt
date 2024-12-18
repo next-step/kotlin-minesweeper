@@ -3,6 +3,8 @@ package minesweeper.domain
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.Location
 
 class RowTest : BehaviorSpec({
     given("Row 는") {

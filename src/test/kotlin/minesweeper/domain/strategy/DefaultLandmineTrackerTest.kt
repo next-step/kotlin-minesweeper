@@ -1,7 +1,12 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import minesweeper.domain.Cells
+import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.Location
+import minesweeper.domain.cell.NumberOfAdjacentMines
 
 class DefaultLandmineTrackerTest : BehaviorSpec({
     given("DefaultLandmineTracker 는 ") {

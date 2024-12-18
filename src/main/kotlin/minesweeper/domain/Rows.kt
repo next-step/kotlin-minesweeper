@@ -1,5 +1,8 @@
 package minesweeper.domain
 
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.Location
+
 class Rows(private val values: List<Row>) : List<Row> by values {
     fun find(location: Location): Cell? {
         val rowIndex = location.row - 1

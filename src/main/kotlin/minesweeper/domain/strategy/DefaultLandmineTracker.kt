@@ -1,4 +1,7 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
+
+import minesweeper.domain.Cells
+import minesweeper.domain.cell.Location
 
 class DefaultLandmineTracker : LandmineTracker {
     override fun withUpdatedAdjacentMineCounts(
