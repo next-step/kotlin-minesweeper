@@ -30,7 +30,7 @@
 
 ## 피드백
 
-- [ ] Cell 타입정의
+- [X] Cell 타입정의
 - [ ] MutableList 외부노출 제거
 - [ ] Cells 메시지 보내기
 
