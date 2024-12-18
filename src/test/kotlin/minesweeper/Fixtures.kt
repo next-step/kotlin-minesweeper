@@ -1,6 +1,7 @@
 package minesweeper
 
 import minesweeper.domain.Cell
+import minesweeper.domain.Cells
 import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.DetonatedMineCell
@@ -30,3 +31,5 @@ fun openedEmptyCellOf(
 ) = Coordinate(y, x) to OpenedEmptyCell
 
 fun playableGameOf(vararg cells: Pair<Coordinate, Cell>) = PlayableGame(PlayableBoard(cells.toMap()))
+
+fun cellsOf(vararg cells: Pair<Coordinate, Cell>) = Cells(cells.toMap())

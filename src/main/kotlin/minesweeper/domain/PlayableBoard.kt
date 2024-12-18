@@ -89,7 +89,7 @@ class PlayableBoard(
         y: Int,
         x: Int,
     ) {
-        check(get(y, x) !is OpenedEmptyCell) { "해당 좌표에 칸이 없거나 이미 열린 칸입니다." }
+        check(get(y, x) !is OpenedEmptyCell) { "이미 열린 칸입니다." }
     }
 
     private fun playerWins(newCells: Map<Coordinate, Cell>) =
@@ -97,8 +97,3 @@ class PlayableBoard(
             .values
             .count { it is ClosedEmptyCell } == 0
 }
-
-internal fun <K, V> Map<K, V>.replacing(
-    key: K,
-    value: V,
-): Map<K, V> = toMutableMap().apply { set(key, value) }
