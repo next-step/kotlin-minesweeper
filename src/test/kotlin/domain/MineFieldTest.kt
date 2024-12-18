@@ -1,5 +1,6 @@
 package domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -24,5 +25,11 @@ class MineFieldTest : StringSpec({
         val mineField = MineField(Height(2), Width(2), 4)
         val display = mineField.display()
         display.all { it -> it.split(" ").all { it == "*" } } shouldBe true
+    }
+
+    "지뢰의 개수가 필드 크기를 초과하면 예외가 발생한다." {
+        shouldThrow<IllegalArgumentException> {
+            MineField(Height(5), Width(5), 26)
+        }
     }
 })
