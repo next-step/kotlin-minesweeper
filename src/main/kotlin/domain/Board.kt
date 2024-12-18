@@ -1,16 +1,23 @@
 package domain
 
-class Board(
-    val height: Int,
-    val width: Int,
-    val mineCount: Int,
+class Board private constructor(
+    private val cells: Cells,
 ) {
-    private val _cells = mutableListOf<Cell>()
+    fun cells(): Cells {
+        return cells
+    }
 
-    val cells: List<Cell>
-        get() = _cells.toList()
+    fun placeMines(
+        minePlacer: MinePlacer,
+        mineCount: Int,
+    ): Board {
+        val cells = minePlacer.placeMines(cells, mineCount)
+        return Board(cells)
+    }
 
-    fun addCell(cell: Cell) {
-        _cells.add(cell)
+    companion object {
+        fun from(cells: Cells): Board {
+            return Board(cells)
+        }
     }
 }

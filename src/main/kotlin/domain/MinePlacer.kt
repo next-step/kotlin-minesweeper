@@ -1,5 +1,8 @@
 package domain
 
 interface MinePlacer {
-    fun addMine(cells: List<Cell>)
+    fun placeMines(
+        cells: Cells,
+        mineCount: Int,
+    ): Cells
 }

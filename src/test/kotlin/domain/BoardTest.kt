@@ -4,15 +4,29 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class BoardTest : FunSpec({
-    test("addCell() 테스트") {
+    test("cells() 테스트") {
         // given
-        val board = Board(3, 3, 1)
-        val cell = Cell.create(1, 1)
+        val cells = Cells.create(3, 3)
+        val board = Board.from(cells)
 
         // when
-        board.addCell(cell)
+        val result = board.cells()
 
         // then
-        board.cells.size shouldBe 1
+        result shouldBe cells
+    }
+
+    test("placeMines() 테스트") {
+        // given
+        val cells = Cells.create(3, 3)
+        val board = Board.from(cells)
+        val minePlacer = RandomMinePlacer()
+        val mineCount = 2
+
+        // when
+        val result = board.placeMines(minePlacer, mineCount)
+
+        // then
+        result.cells().allCells().filter { it.hasMine }.size shouldBe 2
     }
 })
