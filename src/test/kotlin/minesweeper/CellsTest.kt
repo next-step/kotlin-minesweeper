@@ -11,7 +11,7 @@ class CellsTest {
             Cells.create(
                 listOf(
                     Cell(CellType.EMPTY, Position(0, 0)),
-                    Cell(CellType.MINE, Position(1, 1)),
+                    Cell(CellType.Mine, Position(1, 1)),
                 )
             )
 
@@ -40,10 +40,26 @@ class CellsTest {
             Cells.create(
                 listOf(
                     Cell(CellType.EMPTY, Position(0, 0)),
-                    Cell(CellType.MINE, Position(1, 0)),
+                    Cell(CellType.Mine, Position(1, 0)),
                 ),
             )
 
-        assertThat(cells.rowAt(0)).containsExactly(CellType.EMPTY, CellType.MINE)
+        assertThat(cells.rowAt(0)).containsExactly(CellType.EMPTY, CellType.Mine)
+    }
+
+    @Test
+    fun `셀의 이웃 지뢰 갯수를 알 수 있다`() {
+        val cells =
+            Cells.create(
+                listOf(
+                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.Mine, Position(1, 0)),
+                    Cell(CellType.Mine, Position(1, 1)),
+                ),
+            )
+
+        val actual = cells.neighborsMineCount(Position(0, 0))
+
+        assertThat(actual).isEqualTo(2)
     }
 }

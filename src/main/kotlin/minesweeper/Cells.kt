@@ -21,6 +21,12 @@ class Cells(private val values: Map<Int, Cell>) {
             .map { it.type }
     }
 
+    fun neighborsMineCount(position: Position): Int {
+        return Direction.neighbors(position)
+            .mapNotNull { values[it.key()] }
+            .count { it.isMine }
+    }
+
     private fun at(position: Position): CellType {
         return values[position.key()]?.type ?: throw IllegalArgumentException("존재 하지 않는 위치 입니다.")
     }
