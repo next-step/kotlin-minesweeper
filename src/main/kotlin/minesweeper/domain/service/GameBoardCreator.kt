@@ -1,7 +1,10 @@
 package minesweeper.domain.service
 
+import minesweeper.domain.Cells
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.GameBoard
+import minesweeper.domain.cell.ClosedCell
+import minesweeper.domain.cell.Location
 import minesweeper.domain.strategy.DefaultLandmineLocationSelector
 import minesweeper.domain.strategy.DefaultLandmineTracker
 import minesweeper.domain.strategy.LandmineLocationSelector
@@ -23,9 +26,9 @@ class GameBoardCreator(
 
         val initialBoard = GameBoard.of(height = height, width = width)
 
-        val candidates = landmineLocationSelector.selectCandidates(initialBoard.cells, countOfLandmines)
+        val candidates: List<Location> = landmineLocationSelector.selectCandidates(initialBoard.cells, countOfLandmines)
 
-        val minePlantedCells =
+        val minePlantedCells: Cells =
             landminePlanter.plantAll(
                 allCells = initialBoard.cells,
                 landmineCandidates = candidates,
@@ -37,7 +40,7 @@ class GameBoardCreator(
                     landmineTracker.withUpdatedAdjacentMineCounts(acc, candidate)
                 }
 
-        return GameBoard.from(resultCells)
+        return GameBoard.from(resultCells.map { if (it is ClosedCell) it.open() else it })
     }
 
     private fun validateCountOfLandmines(

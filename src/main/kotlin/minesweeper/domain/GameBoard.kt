@@ -1,7 +1,7 @@
 package minesweeper.domain
 
-import minesweeper.domain.cell.BasicCell
 import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
 
 class GameBoard private constructor(
@@ -34,9 +34,11 @@ class GameBoard private constructor(
         private fun createCellsByArea(area: Area): List<Cell> {
             return (0 until area.height * area.width)
                 .map {
-                    BasicCell(
-                        row = (it / area.width) + 1,
-                        column = (it % area.width) + 1,
+                    ClosedCell(
+                        Location(
+                            row = (it / area.width) + 1,
+                            column = (it % area.width) + 1,
+                        ),
                     )
                 }
         }

@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.cell.BasicCell
+import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
 
 class GameBoardTest : BehaviorSpec({
@@ -54,14 +54,14 @@ class GameBoardTest : BehaviorSpec({
         `when`("cells를 직접 받아서 GameBoard2를 만들 때 모든 행의 너비가 똑같지 않은 cells를 받으면") {
             val cells =
                 listOf(
-                    BasicCell(oneByOneLocation),
-                    BasicCell(oneByTwoLocation),
-                    BasicCell(oneByThreeLocation),
-                    BasicCell(twoByOneLocation),
-                    BasicCell(twoByTwoLocation),
-                    BasicCell(threeByOneLocation),
-                    BasicCell(threeByTwoLocation),
-                    BasicCell(threeByThreeLocation),
+                    ClosedCell(oneByOneLocation),
+                    ClosedCell(oneByTwoLocation),
+                    ClosedCell(oneByThreeLocation),
+                    ClosedCell(twoByOneLocation),
+                    ClosedCell(twoByTwoLocation),
+                    ClosedCell(threeByOneLocation),
+                    ClosedCell(threeByTwoLocation),
+                    ClosedCell(threeByThreeLocation),
                 )
 
             then("IllegalArgumentException 예외를 던진다") {

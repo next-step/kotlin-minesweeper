@@ -1,11 +1,12 @@
 package minesweeper.domain.strategy
 
 import minesweeper.domain.Cells
-import minesweeper.domain.cell.LandmineCell
+import minesweeper.domain.cell.Cell
+import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
 
 class Vulture : LandminePlanter {
-    override fun plant(location: Location): LandmineCell = LandmineCell(location)
+    override fun plant(location: Location): Cell = ClosedCell(location).plantMine()
 
     override fun plantAll(
         allCells: Cells,

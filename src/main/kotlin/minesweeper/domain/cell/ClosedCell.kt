@@ -1,6 +1,6 @@
 package minesweeper.domain.cell
 
-class ClosedCell(
+data class ClosedCell(
     override val location: Location,
     override val hasLandmine: Boolean = false,
     override val numberOfAdjacentLandmines: NumberOfAdjacentMines = NumberOfAdjacentMines.ZERO,
