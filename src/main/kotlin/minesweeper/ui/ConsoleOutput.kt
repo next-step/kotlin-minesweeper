@@ -12,7 +12,7 @@ object ConsoleOutput {
         gameBoard.cells
             .chunked(gameBoard.area.width)
             .forEach { row ->
-                println(row.joinToString(DELIMITER) { display(it.symbol()) })
+                println(row.joinToString(DELIMITER) { display(it.symbol) })
             }
     }
 

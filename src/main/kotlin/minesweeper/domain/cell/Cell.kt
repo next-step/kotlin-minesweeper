@@ -1,7 +1,7 @@
 package minesweeper.domain.cell
 
 interface Cell {
-    fun location(): Location
+    val location: Location
 
-    fun symbol(): Symbol
+    val symbol: Symbol
 }

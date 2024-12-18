@@ -14,6 +14,6 @@ class DefaultLandmineLocationSelector(
         val shuffledCells = shuffleAlgorithm.shuffle(cells)
         return shuffledCells
             .take(countOfLandmines.value)
-            .map { it.location() }
+            .map { it.location }
     }
 }

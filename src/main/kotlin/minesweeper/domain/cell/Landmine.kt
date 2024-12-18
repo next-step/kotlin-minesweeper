@@ -1,9 +1,8 @@
 package minesweeper.domain.cell
 
-data class Landmine(private val location: Location) : Cell {
+data class Landmine(override val location: Location) : Cell {
+    override val symbol: Symbol
+        get() = Symbol.LANDMINE
+
     constructor(row: Int, column: Int) : this(Location(row, column))
-
-    override fun location(): Location = location.copy()
-
-    override fun symbol(): Symbol = Symbol.LANDMINE
 }

@@ -23,8 +23,8 @@ class GameBoardTest : BehaviorSpec({
 
                 result shouldHaveSize height * width
                 result.forEach { cell ->
-                    cell.location().row in (1..height)
-                    cell.location().column in (1..width)
+                    cell.location.row in (1..height)
+                    cell.location.column in (1..width)
                 }
             }
         }
@@ -81,7 +81,7 @@ class GameBoardTest : BehaviorSpec({
             val result = sut.find(location)
 
             then("해당 셀을 찾을 수 있다") {
-                result shouldBe cells.find { it.location().row == 1 && it.location().column == 1 }
+                result shouldBe cells.find { it.location.row == 1 && it.location.column == 1 }
             }
         }
 

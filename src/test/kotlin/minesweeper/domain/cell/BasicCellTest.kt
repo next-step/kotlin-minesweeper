@@ -12,14 +12,14 @@ class BasicCellTest : BehaviorSpec({
             val sut = BasicCell(row = row, column = column)
 
             then("자신의 위치를 알 수 있다") {
-                val result = sut.location()
+                val result = sut.location
                 val expectedLocation = Location(row = row, column = column)
 
                 result shouldBe expectedLocation
             }
 
             then("기본 심볼은 ZERO 이다") {
-                sut.symbol() shouldBe Symbol.ZERO
+                sut.symbol shouldBe Symbol.ZERO
             }
         }
 

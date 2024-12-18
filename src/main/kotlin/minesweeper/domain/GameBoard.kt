@@ -14,7 +14,7 @@ class GameBoard private constructor(
         }
     }
 
-    fun find(location: Location): Cell? = cells.find { it.location() == location }
+    fun find(location: Location): Cell? = cells.find { it.location == location }
 
     companion object {
         fun of(
@@ -42,8 +42,8 @@ class GameBoard private constructor(
         }
 
         private fun calculateArea(cells: List<Cell>): Area {
-            val maxRow = cells.maxOfOrNull { it.location().row } ?: 0
-            val maxColumn = cells.maxOfOrNull { it.location().column } ?: 0
+            val maxRow = cells.maxOfOrNull { it.location.row } ?: 0
+            val maxColumn = cells.maxOfOrNull { it.location.column } ?: 0
             return Area(height = maxRow, width = maxColumn)
         }
     }

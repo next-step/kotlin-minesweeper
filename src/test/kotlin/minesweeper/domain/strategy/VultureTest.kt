@@ -19,7 +19,7 @@ class VultureTest : BehaviorSpec({
             then("해당 Location 을 가진 Landmine을 반환한다") {
                 result.shouldBeTypeOf<Landmine>()
 
-                result.location() shouldBe location
+                result.location shouldBe location
             }
         }
 

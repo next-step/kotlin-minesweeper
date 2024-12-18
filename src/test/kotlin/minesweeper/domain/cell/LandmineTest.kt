@@ -9,12 +9,12 @@ class LandmineTest : BehaviorSpec({
 
         `when`("생성하면") {
             then("자신의 위치를 알 수 있다") {
-                val result = sut.location()
+                val result = sut.location
                 result shouldBe Location(row = 1, column = 1)
             }
 
             then("기본 심볼은 LANDMINE 이다") { // TODO 추후 확장
-                sut.symbol() shouldBe Symbol.LANDMINE
+                sut.symbol shouldBe Symbol.LANDMINE
             }
         }
     }
