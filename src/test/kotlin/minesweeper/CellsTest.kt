@@ -44,7 +44,7 @@ class CellsTest {
                 ),
             )
 
-        assertThat(cells.rowAt(0)).containsExactly(CellType.EMPTY, CellType.Mine)
+        assertThat(cells.rowAt(0).map { it.type }).containsExactly(CellType.EMPTY, CellType.Mine)
     }
 
     @Test

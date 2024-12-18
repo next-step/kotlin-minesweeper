@@ -8,23 +8,29 @@ class Cells(private val values: Map<Int, Cell>) {
         return at(position).isMine()
     }
 
-    // TODO : rowSize, rowAt 는 사실 Dimensions 정보인데 이렇게 할 이유가 있을까?
     fun rowSize(): Int {
         return values.values
             .filter { it.x == 0 }
             .size
     }
 
-    fun rowAt(rowIndex: Int): List<CellType> {
+    fun rowAt(rowIndex: Int): List<Cell> {
         return values.values
             .filter { it.matchRowIndex(rowIndex) }
-            .map { it.type }
     }
 
     fun neighborsMineCount(position: Position): Int {
         return Direction.neighbors(position)
             .mapNotNull { values[it.key()] }
             .count { it.isMine }
+    }
+
+    fun determineCellTypes(): List<List<CellType>> {
+        return (0 until rowSize()).map { rowIndex ->
+            rowAt(rowIndex).map { cell ->
+                cell.determineCellType(this)
+            }
+        }
     }
 
     private fun at(position: Position): CellType {

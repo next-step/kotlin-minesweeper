@@ -24,6 +24,14 @@ class Cell(private var _type: CellType = CellType.EMPTY, val position: Position)
         return Cell(CellType.fromMineCount(count), position)
     }
 
+    fun determineCellType(cells: Cells): CellType {
+        return if (isMine) {
+            CellType.Mine
+        } else {
+            CellType.fromMineCount(cells.neighborsMineCount(position))
+        }
+    }
+
     companion object {
         fun createMine(): Cell {
             return Cell(CellType.Mine, Position(1, 1))
