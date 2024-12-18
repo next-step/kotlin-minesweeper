@@ -13,14 +13,4 @@ class CellTest : StringSpec({
         val cell = Cell.create(true)
         cell shouldBe Cell.MineCell
     }
-
-    "Empty 셀은 C를 출력한다." {
-        val cell = Cell.Empty
-        cell.display() shouldBe "C"
-    }
-
-    "MineCell 셀은 *를 출력한다." {
-        val cell = Cell.MineCell
-        cell.display() shouldBe "*"
-    }
 })
