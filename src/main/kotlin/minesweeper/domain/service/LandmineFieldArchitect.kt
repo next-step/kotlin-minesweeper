@@ -1,14 +1,20 @@
-package minesweeper.domain.strategy
+package minesweeper.domain.service
 
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.GameBoard
+import minesweeper.domain.strategy.DefaultLandmineLocationSelector
+import minesweeper.domain.strategy.DefaultLandmineTracker
+import minesweeper.domain.strategy.LandmineLocationSelector
+import minesweeper.domain.strategy.LandminePlanter
+import minesweeper.domain.strategy.LandmineTracker
+import minesweeper.domain.strategy.Vulture
 
-class DefaultLandmineFieldArchitect(
+class LandmineFieldArchitect(
     private val landmineLocationSelector: LandmineLocationSelector = DefaultLandmineLocationSelector(),
     private val landminePlanter: LandminePlanter = Vulture(),
     private val landmineTracker: LandmineTracker = DefaultLandmineTracker(),
-) : LandmineFieldArchitect {
-    override fun design(
+) {
+    fun design(
         board: GameBoard,
         countOfLandmines: CountOfLandmines,
     ): GameBoard {

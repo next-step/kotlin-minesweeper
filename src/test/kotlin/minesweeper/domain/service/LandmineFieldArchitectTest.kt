@@ -1,4 +1,4 @@
-package minesweeper.domain.strategy
+package minesweeper.domain.service
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -10,13 +10,17 @@ import minesweeper.domain.cell.BasicCell
 import minesweeper.domain.cell.Landmine
 import minesweeper.domain.cell.Location
 import minesweeper.domain.cell.NumberOfAdjacentMines
+import minesweeper.domain.strategy.DefaultLandmineLocationSelector
+import minesweeper.domain.strategy.DefaultLandmineTracker
+import minesweeper.domain.strategy.FixedShuffleAlgorithm
+import minesweeper.domain.strategy.Vulture
 import minesweeper.domain.threeByThreeCells
 
-class DefaultLandmineFieldArchitectTest : BehaviorSpec({
+class LandmineFieldArchitectTest : BehaviorSpec({
     given("LandmineFieldArchitect 는 ") {
         val fixedLandmineLocationSelector = DefaultLandmineLocationSelector(FixedShuffleAlgorithm())
         val sut =
-            DefaultLandmineFieldArchitect(
+            LandmineFieldArchitect(
                 landmineLocationSelector = fixedLandmineLocationSelector,
                 landminePlanter = Vulture(),
                 landmineTracker = DefaultLandmineTracker(),
