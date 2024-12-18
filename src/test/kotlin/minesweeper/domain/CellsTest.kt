@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.cellsOf
 import minesweeper.closedEmptyCellOf
+import minesweeper.detonatedMineCellOf
 import minesweeper.openedEmptyCellOf
 import minesweeper.undetonatedMineCellOf
 import org.junit.jupiter.api.Test
@@ -156,7 +157,16 @@ class CellsTest {
         cells: Cells,
         expected: Boolean,
     ) {
-        cells.isAnyEmptyClosed() shouldBe expected
+        cells.isAnyEmptyCellClosed() shouldBe expected
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    fun `폭발한 지뢰가 있는지 리턴한다`(
+        cells: Cells,
+        expected: Boolean,
+    ) {
+        cells.isAnyMineDetonated() shouldBe expected
     }
 
     companion object {
@@ -183,6 +193,25 @@ class CellsTest {
                     ),
 //                    2 2
 //                    * *
+                    false,
+                ),
+            )
+
+        @JvmStatic
+        fun `폭발한 지뢰가 있는지 리턴한다`() =
+            listOf(
+                Arguments.of(
+                    cellsOf(
+                        closedEmptyCellOf(y = 0, x = 0),
+                        detonatedMineCellOf(y = 0, x = 1),
+                    ),
+                    true,
+                ),
+                Arguments.of(
+                    cellsOf(
+                        undetonatedMineCellOf(y = 0, x = 0),
+                        openedEmptyCellOf(y = 0, x = 1),
+                    ),
                     false,
                 ),
             )

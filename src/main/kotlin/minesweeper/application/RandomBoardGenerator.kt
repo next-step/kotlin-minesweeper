@@ -1,6 +1,7 @@
 package minesweeper.application
 
 import minesweeper.domain.Board
+import minesweeper.domain.Cells
 import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
 import minesweeper.domain.PlayableBoard
@@ -24,7 +25,7 @@ class RandomBoardGenerator : BoardGenerator {
                 .drop(mineCount)
                 .associate { toCoordinate(it, width) to ClosedEmptyCell }
 
-        return PlayableBoard(minedCells + emptyCellCoordinates)
+        return PlayableBoard(Cells(minedCells + emptyCellCoordinates))
     }
 
     private fun toCoordinate(

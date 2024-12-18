@@ -30,6 +30,6 @@ fun openedEmptyCellOf(
     x: Int,
 ) = Coordinate(y, x) to OpenedEmptyCell
 
-fun playableGameOf(vararg cells: Pair<Coordinate, Cell>) = PlayableGame(PlayableBoard(cells.toMap()))
+fun playableGameOf(vararg cells: Pair<Coordinate, Cell>) = PlayableGame(PlayableBoard(cellsOf(*cells)))
 
 fun cellsOf(vararg cells: Pair<Coordinate, Cell>) = Cells(cells.toMap())

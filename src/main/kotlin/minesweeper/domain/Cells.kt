@@ -25,7 +25,9 @@ class Cells(
         }
     }
 
-    fun isAnyEmptyClosed(): Boolean = cellMap.any { it.value is ClosedEmptyCell }
+    fun isAnyEmptyCellClosed(): Boolean = cellMap.any { it.value is ClosedEmptyCell }
+
+    fun isAnyMineDetonated(): Boolean = cellMap.any { it.value is DetonatedMineCell }
 
     private fun openAllNeighbors(coordinate: Coordinate): Cells {
         check(cellMap[coordinate] is ClosedEmptyCell)
