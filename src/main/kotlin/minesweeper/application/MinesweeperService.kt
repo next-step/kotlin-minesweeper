@@ -1,7 +1,14 @@
 package minesweeper.application
 
+import minesweeper.domain.Game
+import minesweeper.domain.PlayableBoard
+import minesweeper.domain.PlayableGame
+
 class MinesweeperService(
     private val boardGenerator: BoardGenerator,
 ) {
-    fun generateBoard(command: GenerateMinesweeperCommand) = boardGenerator.generate(command)
+    fun newGame(command: GenerateMinesweeperCommand): Game {
+        val board = boardGenerator.generate(command) as PlayableBoard
+        return PlayableGame(board)
+    }
 }

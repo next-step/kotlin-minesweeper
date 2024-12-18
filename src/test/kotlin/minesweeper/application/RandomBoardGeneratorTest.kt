@@ -3,7 +3,7 @@ package minesweeper.application
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Coordinate
-import minesweeper.domain.MinedCell
+import minesweeper.domain.UndetonatedMineCell
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
@@ -20,7 +20,7 @@ class RandomBoardGeneratorTest {
 
         val board = boardGenerator.generate(command)
 
-        val mineCount = board.cells.values.count { it is MinedCell }
+        val mineCount = board.cells.values.count { it is UndetonatedMineCell }
         mineCount shouldBe 10
     }
 
@@ -52,7 +52,7 @@ class RandomBoardGeneratorTest {
         val board = boardGenerator.generate(command)
 
         val maxY = board.cells.keys.maxOf { it.y }
-        maxY + 1 shouldBe 10
+        (maxY + 1) shouldBe 10
     }
 
     @Test
@@ -68,7 +68,7 @@ class RandomBoardGeneratorTest {
         val board = boardGenerator.generate(command)
 
         val maxX = board.cells.keys.maxOf { it.x }
-        maxX + 1 shouldBe 10
+        (maxX + 1) shouldBe 10
     }
 
     @Test
