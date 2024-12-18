@@ -3,9 +3,9 @@ package minesweeper.domain.cell
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class LandmineTest : BehaviorSpec({
-    given("Landmine 는") {
-        val sut = Landmine(row = 1, column = 1)
+class LandmineCellTest : BehaviorSpec({
+    given("LandmineCell 는") {
+        val sut = LandmineCell(row = 1, column = 1)
 
         `when`("생성하면") {
             then("자신의 위치를 알 수 있다") {

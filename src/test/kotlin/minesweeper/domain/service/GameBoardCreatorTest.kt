@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import minesweeper.domain.Area
 import minesweeper.domain.CountOfLandmines
 import minesweeper.domain.cell.BasicCell
-import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.LandmineCell
 import minesweeper.domain.cell.Location
 import minesweeper.domain.cell.NumberOfAdjacentMines
 import minesweeper.domain.strategy.DefaultLandmineLocationSelector
@@ -36,9 +36,9 @@ class GameBoardCreatorTest : BehaviorSpec({
                 result.area shouldBe Area(height = height, width = width)
                 result.cells shouldBe
                     listOf(
-                        Landmine(Location(row = 1, column = 1)),
-                        Landmine(Location(row = 1, column = 2)),
-                        Landmine(Location(row = 1, column = 3)),
+                        LandmineCell(Location(row = 1, column = 1)),
+                        LandmineCell(Location(row = 1, column = 2)),
+                        LandmineCell(Location(row = 1, column = 3)),
                         BasicCell(Location(row = 2, column = 1), NumberOfAdjacentMines(2)),
                         BasicCell(Location(row = 2, column = 2), NumberOfAdjacentMines(3)),
                         BasicCell(Location(row = 2, column = 3), NumberOfAdjacentMines(2)),

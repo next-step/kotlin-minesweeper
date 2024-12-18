@@ -1,6 +1,6 @@
 package minesweeper.domain.cell
 
-data class Landmine(override val location: Location) : Cell {
+data class LandmineCell(override val location: Location) : Cell {
     override val symbol: Symbol
         get() = Symbol.LANDMINE
 

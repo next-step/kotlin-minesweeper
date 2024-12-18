@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.Cells
 import minesweeper.domain.cell.BasicCell
-import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.LandmineCell
 import minesweeper.domain.cell.Location
 import minesweeper.domain.cell.NumberOfAdjacentMines
 
@@ -17,11 +17,11 @@ class DefaultLandmineTrackerTest : BehaviorSpec({
          */
         val allCells =
             Cells(
-                Landmine(Location(row = 1, column = 1)),
+                LandmineCell(Location(row = 1, column = 1)),
                 BasicCell(Location(row = 1, column = 2)),
                 BasicCell(Location(row = 1, column = 3)),
                 BasicCell(Location(row = 2, column = 1)),
-                Landmine(Location(row = 2, column = 2)),
+                LandmineCell(Location(row = 2, column = 2)),
                 BasicCell(Location(row = 2, column = 3)),
                 BasicCell(Location(row = 3, column = 1)),
                 BasicCell(Location(row = 3, column = 2)),
@@ -38,11 +38,11 @@ class DefaultLandmineTrackerTest : BehaviorSpec({
                 val expectedCells =
                     Cells(
                         listOf(
-                            Landmine(Location(row = 1, column = 1)),
+                            LandmineCell(Location(row = 1, column = 1)),
                             BasicCell(Location(row = 1, column = 2), NumberOfAdjacentMines(1)),
                             BasicCell(Location(row = 1, column = 3), NumberOfAdjacentMines.ZERO),
                             BasicCell(Location(row = 2, column = 1), NumberOfAdjacentMines(1)),
-                            Landmine(Location(row = 2, column = 2)),
+                            LandmineCell(Location(row = 2, column = 2)),
                             BasicCell(Location(row = 2, column = 3), NumberOfAdjacentMines.ZERO),
                             BasicCell(Location(row = 3, column = 1), NumberOfAdjacentMines.ZERO),
                             BasicCell(Location(row = 3, column = 2), NumberOfAdjacentMines.ZERO),
@@ -62,11 +62,11 @@ class DefaultLandmineTrackerTest : BehaviorSpec({
             then("landmineLocation 주변 셀의 인접 지뢰 개수를 표시한 List<Cell> 을 반환한다") {
                 val expectedCells =
                     listOf(
-                        Landmine(Location(row = 1, column = 1)),
+                        LandmineCell(Location(row = 1, column = 1)),
                         BasicCell(Location(row = 1, column = 2), NumberOfAdjacentMines(1)),
                         BasicCell(Location(row = 1, column = 3), NumberOfAdjacentMines(1)),
                         BasicCell(Location(row = 2, column = 1), NumberOfAdjacentMines(1)),
-                        Landmine(Location(row = 2, column = 2)),
+                        LandmineCell(Location(row = 2, column = 2)),
                         BasicCell(Location(row = 2, column = 3), NumberOfAdjacentMines(1)),
                         BasicCell(Location(row = 3, column = 1), NumberOfAdjacentMines(1)),
                         BasicCell(Location(row = 3, column = 2), NumberOfAdjacentMines(1)),

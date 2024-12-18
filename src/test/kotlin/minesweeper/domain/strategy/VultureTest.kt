@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.Cells
 import minesweeper.domain.cell.BasicCell
-import minesweeper.domain.cell.Landmine
+import minesweeper.domain.cell.LandmineCell
 import minesweeper.domain.cell.Location
 
 class VultureTest : BehaviorSpec({
@@ -17,7 +17,7 @@ class VultureTest : BehaviorSpec({
             val result = sut.plant(location)
 
             then("해당 Location 을 가진 Landmine을 반환한다") {
-                result.shouldBeTypeOf<Landmine>()
+                result.shouldBeTypeOf<LandmineCell>()
 
                 result.location shouldBe location
             }
@@ -49,15 +49,15 @@ class VultureTest : BehaviorSpec({
             then("지뢰를 심은 셀 리스트를 반환한다") {
                 val expected =
                     listOf(
-                        Landmine(Location(row = 1, column = 1)),
+                        LandmineCell(Location(row = 1, column = 1)),
                         BasicCell(Location(row = 1, column = 2)),
                         BasicCell(Location(row = 1, column = 3)),
                         BasicCell(Location(row = 2, column = 1)),
-                        Landmine(Location(row = 2, column = 2)),
+                        LandmineCell(Location(row = 2, column = 2)),
                         BasicCell(Location(row = 2, column = 3)),
                         BasicCell(Location(row = 3, column = 1)),
                         BasicCell(Location(row = 3, column = 2)),
-                        Landmine(Location(row = 3, column = 3)),
+                        LandmineCell(Location(row = 3, column = 3)),
                     )
 
                 result shouldBe expected
