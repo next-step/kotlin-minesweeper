@@ -1,17 +1,19 @@
 package minesweeper
 
-data class BoardDrawing(val values: MutableList<List<CellType>>) {
+typealias DrawingRow = List<CellType>
+
+data class BoardDrawing(private val _values: MutableList<DrawingRow>) {
     fun hasNext(): Boolean {
-        return values.isNotEmpty()
+        return _values.isNotEmpty()
     }
 
-    fun next(): List<CellType> {
-        return values.removeFirst()
+    fun next(): DrawingRow {
+        return _values.removeFirst()
     }
 
     companion object {
         fun create(cells: Cells): BoardDrawing {
-            val result = mutableListOf<List<CellType>>()
+            val result = mutableListOf<DrawingRow>()
             val cellSize = cells.rowSize()
             while (cellSize > result.size) {
                 val row = cells.rowAt(result.size) ?: break
