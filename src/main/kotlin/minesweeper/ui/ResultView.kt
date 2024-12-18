@@ -17,7 +17,10 @@ class ResultView {
 
     private fun drawRow(row: List<CellType>) {
         row.forEach { cell ->
-            val icon = CellIcon.valueOf(cell.name).icon
+            val icon = when (cell) {
+                is CellType.Mine -> CellIcon.MINE.icon
+                is CellType.Number -> cell.mineCount.toString()
+            }
             print(icon)
         }
     }
@@ -29,5 +32,4 @@ class ResultView {
 
 enum class CellIcon(val icon: String) {
     MINE("*"),
-    EMPTY("C"),
 }
