@@ -31,8 +31,8 @@
 ## 피드백
 
 - [X] Cell 타입정의
-- [ ] MutableList 외부노출 제거
-- [ ] Cells 메시지 보내기
+- [X] MutableList 외부노출 제거
+- [X] Cells 메시지 보내기
 
 ## 기능 구현
 
