@@ -21,14 +21,15 @@ class BoardDrawingTest {
 
     @Test
     fun `next는 첫 번째 행을 반환하고 값을 제거한다`() {
-        val boardDrawing = BoardDrawing.create(
-            Cells.create(
-                listOf(
-                    Cell(CellType.EMPTY, Position(0, 0)),
-                    Cell(CellType.Mine, Position(1, 0)),
+        val boardDrawing =
+            BoardDrawing.create(
+                Cells.create(
+                    listOf(
+                        Cell(CellType.EMPTY, Position(0, 0)),
+                        Cell(CellType.Mine, Position(1, 0)),
+                    ),
                 ),
-            ),
-        )
+            )
 
         assertAll(
             { assertThat(boardDrawing.next()).containsExactly(CellType.Number(1), CellType.Mine) },

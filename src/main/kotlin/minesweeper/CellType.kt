@@ -2,6 +2,7 @@ package minesweeper
 
 sealed class CellType {
     data object Mine : CellType()
+
     data class Number(val mineCount: Int) : CellType()
 
     fun isMine(): Boolean {

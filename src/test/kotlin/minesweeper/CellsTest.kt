@@ -12,7 +12,7 @@ class CellsTest {
                 listOf(
                     Cell(CellType.EMPTY, Position(0, 0)),
                     Cell(CellType.Mine, Position(1, 1)),
-                )
+                ),
             )
 
         assertAll(

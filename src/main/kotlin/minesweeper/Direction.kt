@@ -8,7 +8,8 @@ enum class Direction(val offset: Position) {
     RIGHT(Position(0, 1)),
     DOWN_LEFT(Position(1, -1)),
     DOWN(Position(1, 0)),
-    DOWN_RIGHT(Position(1, 1));
+    DOWN_RIGHT(Position(1, 1)),
+    ;
 
     companion object {
         fun neighbors(position: Position): List<Position> {

@@ -1,6 +1,8 @@
 package minesweeper
 
-class Cells(private val values: Map<Int, Cell>) {
+typealias CellKey = Int
+
+class Cells(private val values: Map<CellKey, Cell>) {
     val mineCount: Int
         get() = values.values.count { it.isMine }
 
