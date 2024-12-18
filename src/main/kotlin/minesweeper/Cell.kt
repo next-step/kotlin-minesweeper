@@ -1,18 +1,14 @@
 package minesweeper
 
 class Cell(private var _type: CellType = CellType.DEFAULT, val position: Position) {
-    val mineCount: Int
-        get() = if (type is CellType.Number) {
-            (type as CellType.Number).mineCount
-        } else {
-            0
-        }
     val type: CellType
         get() = _type
     val x: Int
         get() = position.x
     val isMine: Boolean
         get() = type.isMine()
+    val mineCount: Int
+        get() = _type.mineCount()
 
     fun matchRowIndex(rowIndex: Int): Boolean {
         return position.y == rowIndex
