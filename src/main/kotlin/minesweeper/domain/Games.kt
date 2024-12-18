@@ -2,7 +2,6 @@ package minesweeper.domain
 
 sealed interface Game {
     val board: Board
-    val isOver: Boolean
 }
 
 class PlayableGame(
@@ -17,13 +16,9 @@ class PlayableGame(
             is PlayerWonBoard -> PlayerWonGame(newBoard)
             is MineDetonatedBoard -> MineDetonatedGame(newBoard)
         }
-
-    override val isOver: Boolean get() = false
 }
 
-sealed interface CompletedGame : Game {
-    override val isOver: Boolean get() = true
-}
+sealed interface CompletedGame : Game
 
 class PlayerWonGame(
     override val board: PlayerWonBoard,

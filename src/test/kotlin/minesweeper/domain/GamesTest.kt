@@ -2,6 +2,7 @@ package minesweeper.domain
 
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.closedEmptyCellOf
 import minesweeper.detonatedMineCellOf
@@ -16,7 +17,7 @@ class GamesTest {
     @Test
     fun `PlayableGame 은 게임이 종료되지 않았다`() {
         val game = playableGameOf(closedEmptyCellOf(y = 0, x = 0))
-        game.isOver shouldBe false
+        game.shouldBeInstanceOf<PlayableGame>()
     }
 
     @Test
@@ -27,13 +28,13 @@ class GamesTest {
                     openedEmptyCellOf(y = 0, x = 0),
                 ),
             ),
-        ).isOver shouldBe true
+        ).shouldBeInstanceOf<CompletedGame>()
 
         MineDetonatedGame(
             MineDetonatedBoard(
                 mapOf(detonatedMineCellOf(y = 0, x = 0)),
             ),
-        ).isOver shouldBe true
+        ).shouldBeInstanceOf<CompletedGame>()
     }
 
     @Test
