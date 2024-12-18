@@ -8,11 +8,11 @@ class CellsTest {
     @Test
     fun `위치와 지뢰 타입을 가진다`() {
         val cells =
-            Cells(
-                mutableMapOf(
-                    Position(0, 0) to CellType.EMPTY,
-                    Position(1, 1) to CellType.MINE,
-                ),
+            Cells.create(
+                listOf(
+                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.MINE, Position(1, 1)),
+                )
             )
 
         assertAll(
@@ -24,10 +24,10 @@ class CellsTest {
     @Test
     fun `행 갯수를 알 수 있다`() {
         val cells =
-            Cells(
-                mutableMapOf(
-                    Position(0, 0) to CellType.EMPTY,
-                    Position(1, 0) to CellType.EMPTY,
+            Cells.create(
+                listOf(
+                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.EMPTY, Position(1, 0)),
                 ),
             )
 
@@ -37,10 +37,10 @@ class CellsTest {
     @Test
     fun `해당 행의 셀 타입을 알 수 있다`() {
         val cells =
-            Cells(
-                mutableMapOf(
-                    Position(0, 0) to CellType.EMPTY,
-                    Position(1, 0) to CellType.MINE,
+            Cells.create(
+                listOf(
+                    Cell(CellType.EMPTY, Position(0, 0)),
+                    Cell(CellType.MINE, Position(1, 0)),
                 ),
             )
 

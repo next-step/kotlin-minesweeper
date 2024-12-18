@@ -10,10 +10,10 @@ class BoardTest {
     fun `지뢰 갯수 지정 가능하다`() {
         val fixture =
             testFixture(
-                mutableMapOf(
-                    Position(0, 0) to CellType.MINE,
-                    Position(0, 1) to CellType.EMPTY,
-                    Position(0, 2) to CellType.MINE,
+                listOf(
+                    Cell(CellType.MINE, Position(0, 0)),
+                    Cell(CellType.EMPTY, Position(0, 1)),
+                    Cell(CellType.MINE, Position(0, 2)),
                 ),
             )
         val board = Board.initializeBoard(Dimensions(3, 3, 2), fixture)
@@ -29,10 +29,10 @@ class BoardTest {
     fun `지뢰 갯수가 일치하지 않으면 예외가 발생한다`() {
         val fixture =
             testFixture(
-                mutableMapOf(
-                    Position(0, 0) to CellType.MINE,
-                    Position(1, 0) to CellType.EMPTY,
-                    Position(2, 0) to CellType.EMPTY,
+                listOf(
+                    Cell(CellType.MINE, Position(0, 0)),
+                    Cell(CellType.EMPTY, Position(1, 0)),
+                    Cell(CellType.EMPTY, Position(2, 0)),
                 ),
             )
 
@@ -41,9 +41,9 @@ class BoardTest {
             .withMessage("지뢰 갯수가 일치하지 않습니다.")
     }
 
-    private fun testFixture(data: MutableMap<Position, CellType>) =
+    private fun testFixture(data: List<Cell>) =
         object : CellProvider {
-            override fun provide(dimensions: Dimensions): MutableMap<Position, CellType> {
+            override fun provide(dimensions: Dimensions): List<Cell> {
                 return data
             }
         }

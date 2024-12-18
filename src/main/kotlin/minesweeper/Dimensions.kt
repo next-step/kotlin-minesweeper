@@ -13,4 +13,8 @@ data class Dimensions(val width: Int, val height: Int, val mineCount: Int) {
             (0 until width).map { x -> Position(x, y) }
         }
     }
+
+    fun createCells(): List<Cell> {
+        return allPositions().map { Cell(_type = CellType.EMPTY, position = it) }
+    }
 }

@@ -1,22 +1,18 @@
 package minesweeper
 
 interface CellProvider {
-    fun provide(dimensions: Dimensions): MutableMap<Position, CellType>
+    fun provide(dimensions: Dimensions): List<Cell>
 }
 
 class DefaultCellProvider : CellProvider {
-    override fun provide(dimensions: Dimensions): MutableMap<Position, CellType> {
-        val allCells =
-            dimensions.allPositions()
-                .associateWith { CellType.EMPTY }
-                .toMutableMap()
-
-        allCells.keys.shuffled()
+    override fun provide(dimensions: Dimensions): List<Cell> {
+        val cells = dimensions.createCells()
+        cells.shuffled()
             .take(dimensions.mineCount)
-            .forEach { position ->
-                allCells[position] = CellType.MINE
+            .forEach { cell ->
+                cell.changeMine()
             }
 
-        return allCells
+        return cells
     }
 }
