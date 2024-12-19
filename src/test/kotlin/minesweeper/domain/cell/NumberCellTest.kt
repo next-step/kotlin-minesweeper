@@ -5,24 +5,28 @@ import io.kotest.matchers.shouldBe
 import minesweeper.domain.oneByOneLocation
 
 class NumberCellTest : BehaviorSpec({
-    given("Location 와 NumberOfAdjacentMines.ZERO 를 받아") {
+    given("row = 1, column = 1인 위치와 인접 지뢰 개수 0을 받아") {
         val location = oneByOneLocation
         val numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO
 
-        `when`("생성하면") {
+        `when`("숫자 셀을 생성하면") {
             val sut = NumberCell(location, numberOfAdjacentLandmines)
 
-            then("해당 Location 을 가지고 있다") {
+            then("위치는 row = 1, column = 1이다") {
                 sut.location shouldBe location
+            }
+
+            then("인접 지뢰 개수는 0개이다") {
+                sut.numberOfAdjacentLandmines shouldBe NumberOfAdjacentMines.ZERO
             }
         }
     }
 
-    given("생성할 때의 NumberOfAdjacentMines 에 따라") {
+    given("인접 지뢰 개수은") {
         val location = oneByOneLocation
 
-        `when`("생성된 NumberCell 의") {
-            then("Symbol 이 다르다") {
+        `when`("생성된 숫자 셀의") {
+            then("심볼에 표시된다") {
                 listOf(
                     NumberOfAdjacentMines.ZERO,
                     NumberOfAdjacentMines(1),

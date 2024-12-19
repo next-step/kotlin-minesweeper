@@ -30,16 +30,16 @@ class GameBoardCreatorTest : BehaviorSpec({
             landmineTracker = DefaultLandmineTracker(),
         )
 
-    given("width, height, countOfLandmines 를 받아") {
+    given("너비 3, 높이 3, 지뢰 개수 3을 받아") {
         val width = 3
         val height = 3
         val countOfLandmines = CountOfLandmines(3)
 
-        `when`("design() 를 호출하면") {
+        `when`("게임판을 생성하면") {
             val result =
-                sut.design(width = width, height = height, countOfLandmines = countOfLandmines)
+                sut.createBoard(width = width, height = height, countOfLandmines = countOfLandmines)
 
-            then("지뢰 셀과 지뢰 인접 개수가 포함된 셀이 포함된 gameBoard를 반환한다") {
+            then("3개의 지뢰가 숨겨지고 인접 지뢰 개수가 기록된 닫힌 셀 9개를 가진 게임판이 만들어져야 한다") {
                 result.area shouldBe Area(height = height, width = width)
                 result.cells shouldBe
                     listOf(
@@ -57,15 +57,15 @@ class GameBoardCreatorTest : BehaviorSpec({
         }
     }
 
-    given("width, height, 그리고 width * height 보다 큰 countOfLandmines 를 받아") {
+    given("너비 3, 높이 3, 지뢰 개수 10개를 받아") {
         val width = 3
         val height = 3
         val countOfLandmines = CountOfLandmines(10)
 
-        `when`("design() 를 호출하면") {
-            then("IllegalArgumentException 예외를 던진다") {
+        `when`("게임판을 생성하려고 하면") {
+            then("게임판의 모든 셀 갯수보다 지뢰 개수가 많으므로 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
-                    sut.design(width = width, height = height, countOfLandmines = countOfLandmines)
+                    sut.createBoard(width = width, height = height, countOfLandmines = countOfLandmines)
                 }
             }
         }
