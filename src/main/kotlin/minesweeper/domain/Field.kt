@@ -1,44 +1,64 @@
 package minesweeper.domain
 
-import kotlin.random.Random
+class Field(
+    private val fieldInfo: FieldInfo,
+    private val mineCount: MineCount,
+    private val spotGenerator: SpotGenerator,
+) {
+    private val width = fieldInfo.getWidth()
+    val lines: List<FieldLine> = createField()
 
-class Field(val lines: List<FieldLine>) {
-    companion object {
-        fun createField(
-            fieldInfo: FieldInfo,
-            mineCount: MineCount,
-        ): Field {
-            val spots = makeSpots(fieldInfo, mineCount)
-            return Field(
-                spots.chunked(fieldInfo.getWidth()).map { spotList ->
-                    FieldLine(spotList)
-                },
-            )
-        }
+    init {
+        validateMineCount()
+    }
 
-        private fun makeSpots(
-            fieldInfo: FieldInfo,
-            mineCount: MineCount,
-        ): List<Spot> {
-            val totalSpots = fieldInfo.getWidth() * fieldInfo.getHeight()
-            require(mineCount.count <= totalSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
-            val minePositions = selectMinePosition(mineCount, totalSpots)
-
-            return (0 until totalSpots).map { spotCount ->
-                val height = FieldHeight((spotCount / fieldInfo.getWidth()) + 1)
-                val width = FieldWidth((spotCount % fieldInfo.getWidth()) + 1)
-                (if (spotCount in minePositions) ::MineSpot else ::SafeSpot)(height, width)
+    private fun createField(): List<FieldLine> {
+        val spots = spotGenerator.generate(fieldInfo, mineCount)
+        return spots.mapIndexed { index, spot ->
+            if (spot is SafeSpot) {
+                val y = index / width
+                val x = index % width
+                val nearbyMineCount = countAdjacentMines(spots, y, x)
+                spot.updateNearbyMineCount(nearbyMineCount)
             }
+            spot
+        }.chunked(width).map { lineSpots ->
+            FieldLine(lineSpots)
         }
+    }
 
-        private fun selectMinePosition(
-            mineCount: MineCount,
-            totalSpots: Int,
-        ): Set<Int> {
-            return generateSequence { Random.nextInt(totalSpots) }
-                .distinct()
-                .take(mineCount.count)
-                .toSet()
+    private fun countAdjacentMines(
+        spots: List<Spot>,
+        y: Int,
+        x: Int,
+    ): Int {
+        return NEARBY.count { (dy, dx) ->
+            val newY = y + dy
+            val newX = x + dx
+            isWithinBounds(newY, newX) && spots[newY * width + newX].isMine()
         }
+    }
+
+    private fun isWithinBounds(
+        y: Int,
+        x: Int,
+    ): Boolean {
+        return y in 0 until fieldInfo.getHeight() && x in 0 until width
+    }
+
+    private fun validateMineCount() {
+        val height = fieldInfo.getHeight()
+        val totalSpots = height * width
+        require(mineCount.count <= totalSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
+    }
+
+    companion object {
+        private val NEARBY =
+            listOf(
+                Pair(-1, 0),
+                Pair(0, -1),
+                Pair(0, 1),
+                Pair(1, 0),
+            )
     }
 }
