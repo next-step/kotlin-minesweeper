@@ -18,8 +18,8 @@ class AreaTest : BehaviorSpec({
         }
 
         `when`("너비가 1 미만이면") {
-            val height = 0
-            val width = 1
+            val height = 1
+            val width = 0
 
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {

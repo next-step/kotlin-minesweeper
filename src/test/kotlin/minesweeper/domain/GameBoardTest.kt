@@ -2,30 +2,32 @@ package minesweeper.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import minesweeper.domain.BasicCellGridTextFixture.threeByThreeGrid
+import minesweeper.domain.cell.ClosedCell
+import minesweeper.domain.cell.Location
+import minesweeper.domain.cell.NumberCell
+import minesweeper.domain.cell.NumberOfAdjacentMines
 
 class GameBoardTest : BehaviorSpec({
     given("GameBoard 를 생성할 때") {
         val height = 10
         val width = 10
 
-        `when`("높이, 너비를 받아 grid를 만들면") {
+        `when`("높이, 너비를 받아 cells를 만들면") {
             val sut = GameBoard.of(height = height, width = width)
 
-            then("grid는 rowLength x columnLength 크기이며 모든 Cell의 좌표가 저장되어 있다") {
+            then("cells는 height x width 크기이며 모든 Cell의 좌표가 저장되어 있다") {
                 val area = sut.area
                 area shouldBe Area(height = height, width = width)
 
-                val result: List<Row> = sut.rows
+                val result = sut.cells
 
-                result shouldHaveSize height
-                result.forEachIndexed { rowIndex, row ->
-                    row.cells() shouldHaveSize width
-                    row.cells().forEachIndexed { columnIndex, cell ->
-                        cell.location() shouldBe Location(rowIndex + 1, columnIndex + 1)
-                    }
+                result shouldHaveSize height * width
+                result.forEach { cell ->
+                    cell.location.row in (1..height)
+                    cell.location.column in (1..width)
                 }
             }
         }
@@ -52,42 +54,72 @@ class GameBoardTest : BehaviorSpec({
             }
         }
 
-        `when`("grid를 직접 받아서 GameBoard를 만들 때 모든 행의 너비가 똑같지 않은 Grid를 받으면") {
-            val grid =
+        `when`("cells를 직접 받아서 GameBoard2를 만들 때 모든 행의 너비가 똑같지 않은 cells를 받으면") {
+            val cells =
                 listOf(
-                    List(3) { BasicCell(row = 1, column = (it + 1)) },
-                    List(2) { BasicCell(row = 2, column = (it + 1)) },
-                    List(3) { BasicCell(row = 3, column = (it + 1)) },
+                    ClosedCell(oneByOneLocation),
+                    ClosedCell(oneByTwoLocation),
+                    ClosedCell(oneByThreeLocation),
+                    ClosedCell(twoByOneLocation),
+                    ClosedCell(twoByTwoLocation),
+                    ClosedCell(threeByOneLocation),
+                    ClosedCell(threeByTwoLocation),
+                    ClosedCell(threeByThreeLocation),
                 )
 
             then("IllegalArgumentException 예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
-                    GameBoard.from(grid)
+                    GameBoard.from(cells)
                 }
             }
         }
     }
 
     given("GameBoard 는 ") {
-        val grid = threeByThreeGrid
-        val sut = GameBoard.from(grid)
+        val cells = threeByThreeCells
+        val sut = GameBoard.from(cells)
 
         `when`("Location 으로") {
             val location = Location(row = 1, column = 1)
             val result = sut.find(location)
 
             then("해당 셀을 찾을 수 있다") {
-                result shouldBe grid[0][0]
+                result shouldBe cells.find { it.location.row == 1 && it.location.column == 1 }
             }
         }
 
-        `when`("없는 Location을 입력하면") {
-            val location = Location(row = 3, column = 4)
+        `when`("GameBoard 내 없는 location 로 cell을 찾으면 ") {
+            val notFoundLocations =
+                listOf(
+                    Location(row = 0, column = 0),
+                    Location(row = 3, column = 4),
+                    Location(row = 4, column = 1),
+                )
 
-            then("IllegalArgumentException 예외를 던진다") {
-                shouldThrow<IllegalArgumentException> {
-                    sut.find(location)
+            then("null 을 반환한다") {
+                notFoundLocations.forEach { location ->
+                    sut.find(location) shouldBe null
                 }
+            }
+        }
+
+        `when`("openAll() 하면") {
+            val result = sut.openAll()
+
+            then("모든 Cell 이 open 된 상태로 바뀐 GameBoard 를 반환한다") {
+                result.cells shouldHaveSize 9
+                result.cells shouldContainExactlyInAnyOrder
+                    listOf(
+                        NumberCell(oneByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(oneByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(oneByThreeLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(twoByThreeLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByOneLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByTwoLocation, NumberOfAdjacentMines.ZERO),
+                        NumberCell(threeByThreeLocation, NumberOfAdjacentMines.ZERO),
+                    )
             }
         }
     }

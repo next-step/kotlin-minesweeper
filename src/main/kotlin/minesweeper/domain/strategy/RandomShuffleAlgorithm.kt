@@ -1,4 +1,4 @@
-package minesweeper.domain
+package minesweeper.domain.strategy
 
 class RandomShuffleAlgorithm : ShuffleAlgorithm {
     override fun <T> shuffle(list: List<T>): List<T> = list.shuffled()
