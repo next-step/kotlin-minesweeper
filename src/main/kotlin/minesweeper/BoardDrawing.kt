@@ -2,7 +2,11 @@ package minesweeper
 
 data class DrawingCell(val position: Position, val isMine: Boolean, val neighborsMineCount: Int)
 
-data class DrawingRow(val cells: List<DrawingCell>) : List<DrawingCell> by cells
+data class DrawingRow(val cells: List<DrawingCell>) {
+    fun forEach(action: (DrawingCell) -> Unit) {
+        cells.forEach(action)
+    }
+}
 
 data class BoardDrawing(private val _values: MutableList<DrawingRow>) {
     fun hasNext(): Boolean = _values.isNotEmpty()
