@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-interface MineGenerator {
+fun interface MineGenerator {
     fun generateMinePositions(
         totalCells: Int,
         mineCount: Int,

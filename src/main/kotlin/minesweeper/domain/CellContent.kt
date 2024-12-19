@@ -1,18 +1,40 @@
 package minesweeper.domain
 
-sealed class CellContent
+sealed class CellContent {
+    abstract fun toDisplayString(): String
+}
 
-class Mine : CellContent()
+class Mine : CellContent() {
+    override fun toDisplayString(): String {
+        return MINE_CELL
+    }
 
-class Empty : CellContent()
+    companion object {
+        private const val MINE_CELL = "*"
+    }
+}
+
+class Empty(val adjacentMines: Int = 0) : CellContent() {
+    override fun toDisplayString(): String {
+        return adjacentMines.toString()
+    }
+}
 
 class Cell(private val content: CellContent) {
     fun isMine(): Boolean = content is Mine
 
-    override fun toString(): String = if (isMine()) MINE_CELL else NON_MINE_CELL
+    fun displayString() = content.toDisplayString()
 
     companion object {
-        private const val MINE_CELL = "*"
-        private const val NON_MINE_CELL = "C"
+        fun from(
+            isMinePosition: Boolean,
+            adjacentMines: Int = 0,
+        ): Cell {
+            return if (isMinePosition) {
+                Cell(Mine())
+            } else {
+                Cell(Empty(adjacentMines))
+            }
+        }
     }
 }
