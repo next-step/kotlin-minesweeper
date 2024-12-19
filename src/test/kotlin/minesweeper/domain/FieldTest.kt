@@ -1,6 +1,8 @@
 package minesweeper.domain
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 import minesweeper.infrastructrue.CustomSpotGenerator
@@ -30,6 +32,31 @@ class FieldTest : StringSpec({
                     field.lines[x].spots[y] shouldBeEqualToComparingFields SafeSpot(x, y)
                 }
             }
+        }
+    }
+
+    /*
+     * C C C
+    C C C C
+    C * C *
+     */
+    "필드의 각 SafeSpot에 대해 주변에 있는 지뢰의 개수를 계산한다." {
+        forAll(
+            row(0, 1, 1),
+            row(3, 0, 0),
+            row(2, 2, 2),
+        ) { x, y, expected ->
+            val height = 3
+            val width = 4
+            val minePositions = setOf(Pair(0, 0), Pair(1, 2), Pair(3, 2))
+            val mineCount = MineCount(minePositions.size)
+            val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
+            val spotGenerator = CustomSpotGenerator(minePositions)
+
+            val field = Field(fieldInfo, mineCount, spotGenerator)
+
+            val spot = field.lines[y].spots[x] as SafeSpot
+            spot.nearbyMineCount shouldBe expected
         }
     }
 })

@@ -35,7 +35,7 @@ class CustomSpotGenerator(private val minePositions: Set<Pair<Int, Int>>) : Spot
         y: Int,
         minePositions: Set<Pair<Int, Int>>,
     ): Spot {
-        val position = Pair(x, y)
+        val position = Pair(y, x)
 
         if (minePositions.contains(position)) {
             return MineSpot(y, x)
