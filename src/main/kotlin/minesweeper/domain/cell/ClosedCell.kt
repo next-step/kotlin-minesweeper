@@ -16,7 +16,7 @@ data class ClosedCell(
     }
 
     fun withNumberOfAdjacentLandmines(newNumberOfAdjacentMines: NumberOfAdjacentMines): ClosedCell {
-        return ClosedCell(location, hasLandmine, newNumberOfAdjacentMines)
+        return this.copy(numberOfAdjacentLandmines = newNumberOfAdjacentMines)
     }
 
     fun plantMine(): ClosedCell = ClosedCell(location = location, numberOfAdjacentLandmines = numberOfAdjacentLandmines, hasLandmine = true)
