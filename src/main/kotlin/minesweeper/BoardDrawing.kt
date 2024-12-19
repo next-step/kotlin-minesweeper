@@ -1,6 +1,6 @@
 package minesweeper
 
-data class DrawingCell(val position: Position, val isMine: Boolean, val neighborsMineCount: Int)
+data class DrawingCell(val isMine: Boolean, val neighborsMineCount: Int)
 
 data class DrawingRow(val cells: List<DrawingCell>) {
     fun forEach(action: (DrawingCell) -> Unit) {
@@ -25,7 +25,7 @@ private fun Cells.toDrawingRow(): MutableList<DrawingRow> {
         val rowCells = rowAt(i)
         DrawingRow(
             rowCells.map { cell ->
-                DrawingCell(cell.position, cell.isMine, cell.mineCount)
+                DrawingCell(cell.isMine, cell.mineCount)
             },
         )
     }.toMutableList()
