@@ -21,6 +21,11 @@ class GameBoard private constructor(
         return GameBoard(area, Cells(allOpenedCells))
     }
 
+    fun open(location: Location): GameBoard {
+        val cellsWithOpenCells = cells.map { if (it.location == location && it is ClosedCell) it.open() else it }
+        return GameBoard(area, Cells(cellsWithOpenCells))
+    }
+
     companion object {
         fun of(
             height: Int,

@@ -137,4 +137,65 @@ class GameBoardTest : BehaviorSpec({
             }
         }
     }
+
+    given("5x5 닫힌 셀, 지뢰 개수 5개의 게임판에서") {
+        val cells = fiveByFiveCellsWithFiveLandmines
+        val sut = GameBoard.from(cells)
+
+        `when`("(1,5) 위치(닫힌 셀. 지뢰 X, 인접 지뢰 개수 2개)를 을 열면") {
+            val location = Location(row = 1, column = 5)
+            val result: GameBoard = sut.open(location)
+
+            then("(1,5)의 닫힌 셀만 숫자 셀로 열린다") {
+                result.cells shouldContainExactlyInAnyOrder
+                    listOf(
+                        ClosedCell(location = oneByOneLocation),
+                        ClosedCell(location = oneByTwoLocation),
+                        ClosedCell(location = oneByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(
+                            location = Location(row = 1, column = 4),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        NumberCell(location = Location(row = 1, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = twoByOneLocation),
+                        ClosedCell(location = twoByTwoLocation),
+                        ClosedCell(location = twoByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 2, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(3)),
+                        ClosedCell(
+                            location = Location(row = 2, column = 5),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(2),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = threeByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = threeByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = threeByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(
+                            location = Location(row = 3, column = 4),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 3, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(
+                            location = Location(row = 4, column = 1),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 4, column = 2), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 4, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 4, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 4, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 5, column = 1), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(
+                            location = Location(row = 5, column = 2),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 5, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 5, column = 4)),
+                        ClosedCell(location = Location(row = 5, column = 5)),
+                    )
+            }
+        }
+    }
 })
