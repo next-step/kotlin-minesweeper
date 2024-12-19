@@ -2,7 +2,6 @@ package minesweeper.domain.strategy
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.Cells
 import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.Location
@@ -10,18 +9,6 @@ import minesweeper.domain.cell.Location
 class VultureTest : BehaviorSpec({
     given("Vulture 는") {
         val sut = Vulture()
-
-        `when`("Location을 받아") {
-            val location = Location(row = 1, column = 1)
-            val result = sut.plant(location)
-
-            then("해당 Location 을 가진 Landmine을 반환한다") {
-                result.shouldBeTypeOf<ClosedCell>()
-
-                result.location shouldBe location
-                result.hasLandmine shouldBe true
-            }
-        }
 
         `when`("전체 셀 리스트와 지뢰 지역 정보 목록을 받아") {
             val allCells =
