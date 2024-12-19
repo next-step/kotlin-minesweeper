@@ -13,7 +13,7 @@ class AroundMineCountJudgeTest {
         val judge = AroundMineCountJudge()
 
         // when
-        val result = judge.judge(param.boardSize, param.position, param.minePositions)
+        val result = judge.judge(param.boardSize, param.coordinate, param.mineCoordinates)
 
         // then
         assertThat(result).isEqualTo(param.aroundMineCount)
@@ -27,90 +27,90 @@ class AroundMineCountJudgeTest {
             return listOf(
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(1, 1),
-                    minePositions = listOf(
-                        Position(0, 1),
-                        Position(0, 2),
-                        Position(1, 0),
-                        Position(2, 1),
-                        Position(2, 2),
+                    coordinate = Coordinate.of(1, 1),
+                    mineCoordinates = listOf(
+                        Coordinate.of(0, 1),
+                        Coordinate.of(0, 2),
+                        Coordinate.of(1, 0),
+                        Coordinate.of(2, 1),
+                        Coordinate.of(2, 2),
                     ),
                     aroundMineCount = 5,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(1, 1),
-                    minePositions = listOf(
-                        Position(0, 1),
-                        Position(1, 0),
-                        Position(2, 1),
-                        Position(3, 3),
+                    coordinate = Coordinate.of(1, 1),
+                    mineCoordinates = listOf(
+                        Coordinate.of(0, 1),
+                        Coordinate.of(1, 0),
+                        Coordinate.of(2, 1),
+                        Coordinate.of(3, 3),
                     ),
                     aroundMineCount = 3,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(0, 0),
-                    minePositions = listOf(Position(0, 1), Position(1, 0), Position(1, 1)),
+                    coordinate = Coordinate.of(0, 0),
+                    mineCoordinates = listOf(Coordinate.of(0, 1), Coordinate.of(1, 0), Coordinate.of(1, 1)),
                     aroundMineCount = 3,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(0, 0),
-                    minePositions = listOf(Position(0, 1), Position(2, 1), Position(1, 2)),
+                    coordinate = Coordinate.of(0, 0),
+                    mineCoordinates = listOf(Coordinate.of(0, 1), Coordinate.of(2, 1), Coordinate.of(1, 2)),
                     aroundMineCount = 1,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(9, 9),
-                    minePositions = listOf(Position(8, 9), Position(9, 8)),
+                    coordinate = Coordinate.of(9, 9),
+                    mineCoordinates = listOf(Coordinate.of(8, 9), Coordinate.of(9, 8)),
                     aroundMineCount = 2,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(9, 9),
-                    minePositions = listOf(Position(8, 8), Position(7, 8), Position(8, 7)),
+                    coordinate = Coordinate.of(9, 9),
+                    mineCoordinates = listOf(Coordinate.of(8, 8), Coordinate.of(7, 8), Coordinate.of(8, 7)),
                     aroundMineCount = 1,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(0, 9),
-                    minePositions = listOf(Position(1, 8), Position(2, 8)),
+                    coordinate = Coordinate.of(0, 9),
+                    mineCoordinates = listOf(Coordinate.of(1, 8), Coordinate.of(2, 8)),
                     aroundMineCount = 1,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(0, 9),
-                    minePositions = listOf(Position(1, 8), Position(1, 9), Position(0, 8)),
+                    coordinate = Coordinate.of(0, 9),
+                    mineCoordinates = listOf(Coordinate.of(1, 8), Coordinate.of(1, 9), Coordinate.of(0, 8)),
                     aroundMineCount = 3,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(9, 0),
-                    minePositions = listOf(Position(8, 0), Position(7, 9), Position(9, 1), Position(9, 9)),
+                    coordinate = Coordinate.of(9, 0),
+                    mineCoordinates = listOf(Coordinate.of(8, 0), Coordinate.of(7, 9), Coordinate.of(9, 1), Coordinate.of(9, 9)),
                     aroundMineCount = 2,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(5, 5),
-                    minePositions = listOf(
-                        Position(5, 4),
-                        Position(4, 4),
-                        Position(6, 4),
-                        Position(6, 6),
+                    coordinate = Coordinate.of(5, 5),
+                    mineCoordinates = listOf(
+                        Coordinate.of(5, 4),
+                        Coordinate.of(4, 4),
+                        Coordinate.of(6, 4),
+                        Coordinate.of(6, 6),
                     ),
                     aroundMineCount = 4,
                 ),
                 AroundMineCountJudgeParam(
                     boardSize = boardSize,
-                    position = Position(5, 5),
-                    minePositions = listOf(
-                        Position(3, 4),
-                        Position(4, 4),
-                        Position(6, 4),
-                        Position(6, 6),
-                        Position(4, 5),
-                        Position(7, 7),
+                    coordinate = Coordinate.of(5, 5),
+                    mineCoordinates = listOf(
+                        Coordinate.of(3, 4),
+                        Coordinate.of(4, 4),
+                        Coordinate.of(6, 4),
+                        Coordinate.of(6, 6),
+                        Coordinate.of(4, 5),
+                        Coordinate.of(7, 7),
                     ),
                     aroundMineCount = 4,
                 ),
@@ -120,8 +120,8 @@ class AroundMineCountJudgeTest {
 
     data class AroundMineCountJudgeParam(
         val boardSize: BoardSize,
-        val position: Position,
-        val minePositions: List<Position>,
+        val coordinate: Coordinate,
+        val mineCoordinates: List<Coordinate>,
         val aroundMineCount: Int,
     )
 
