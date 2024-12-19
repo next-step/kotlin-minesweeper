@@ -6,10 +6,14 @@ import domain.Cell.EmptyCell
 import domain.Cell.MineCell
 import domain.strategy.MineCellGenerator
 
-class Cells private constructor(val cells: List<Cell>) {
+class Cells(val cells: List<Cell>) {
     fun mineCells(): List<MineCell> = cells.filterIsInstance<MineCell>()
 
     fun emptyCells(): List<EmptyCell> = cells.filterIsInstance<EmptyCell>()
+
+    fun getCoordinateIs(coordinate: Coordinate): Cell {
+        return cells.firstOrNull { it.coordinate == coordinate } ?: throw IllegalArgumentException("Coordinate $coordinate not found")
+    }
 
     companion object {
         fun generateWithMines(
@@ -20,7 +24,7 @@ class Cells private constructor(val cells: List<Cell>) {
             val mineCellCoordinates =
                 generateMineCells(
                     mineCellGenerator,
-                    Coordinate(BoardHeight(mineGameMetric.boardHeightSize), BoardWidth(mineGameMetric.boardWidthSize)),
+                    Coordinate(Row(mineGameMetric.boardHeightSize), Col(mineGameMetric.boardWidthSize)),
                     mineGameMetric.mineCount,
                 )
 
@@ -37,7 +41,7 @@ class Cells private constructor(val cells: List<Cell>) {
 
             return heightRange.flatMap { height ->
                 widthRange.map { width ->
-                    Coordinate(BoardHeight(height), BoardWidth(width))
+                    Coordinate(Row(height), Col(width))
                 }
             }
         }
