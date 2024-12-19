@@ -2,9 +2,9 @@ package minesweeper.domain.cell
 
 data class ClosedCell(
     override val location: Location,
-    override val hasLandmine: Boolean = false,
+    val hasLandmine: Boolean = false,
     override val numberOfAdjacentLandmines: NumberOfAdjacentMines = NumberOfAdjacentMines.ZERO,
-) : Cell, HasLandmine, HasAdjacentLandmines {
+) : Cell, HasAdjacentLandmines {
     override val symbol: Symbol
         get() = Symbol.CLOSED
 
@@ -19,5 +19,5 @@ data class ClosedCell(
         return this.copy(numberOfAdjacentLandmines = newNumberOfAdjacentMines)
     }
 
-    fun plantMine(): ClosedCell = ClosedCell(location = location, numberOfAdjacentLandmines = numberOfAdjacentLandmines, hasLandmine = true)
+    fun plantMine(): ClosedCell = this.copy(hasLandmine = true)
 }
