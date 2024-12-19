@@ -8,7 +8,8 @@ class Cells(private val values: Map<CellKey, Cell>) {
 
     fun detectMines() {
         values.values.forEach { cell ->
-            cell.determineCell(this)
+            val neighborMineCount = neighborsMineCount(cell.position)
+            cell.determineCell(neighborMineCount)
         }
     }
 

@@ -7,7 +7,7 @@ sealed class Cell(val position: Position) {
     val x: Int
         get() = position.x
 
-    open fun determineCell(cells: Cells) {}
+    open fun determineCell(determineMineCount: Int) {}
 
     fun matchRowIndex(rowIndex: Int): Boolean {
         return position.y == rowIndex
@@ -23,8 +23,8 @@ sealed class Cell(val position: Position) {
         override val mineCount: Int
             get() = _mineCount
 
-        override fun determineCell(cells: Cells) {
-            _mineCount = cells.neighborsMineCount(position)
+        override fun determineCell(determineMineCount: Int) {
+            _mineCount = determineMineCount
         }
     }
 
