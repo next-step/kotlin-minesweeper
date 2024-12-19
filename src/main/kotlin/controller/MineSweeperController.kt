@@ -12,7 +12,7 @@ class MineSweeperController {
         val rowSize = InputView.inputRowSize()
         val colSize = InputView.inputColumnSize()
         val mineCount = InputView.inputMineCount()
-        val mineGameMetric = MineGameMetric(mineCount, rowSize, colSize)
+        val mineGameMetric = MineGameMetric(boardHeightSize = rowSize, boardWidthSize = colSize, mineCount = mineCount)
 
         val cells = Cells.generateWithMines(mineGameMetric, RandomMineCellGenerator())
         val mineBoard = MineBoard(mineGameMetric, cells)

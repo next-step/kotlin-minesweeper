@@ -28,9 +28,6 @@ class Cells(val cells: List<Cell>) {
                     mineGameMetric,
                 )
 
-            println("emptyCellCoordinates: $emptyCellCoordinates")
-            println("mineCellCoordinates: $mineCellCoordinates")
-
             val cells = emptyCellCoordinates.map { coordinate -> parseCell(mineCellCoordinates, coordinate) }
             return Cells(cells)
         }
