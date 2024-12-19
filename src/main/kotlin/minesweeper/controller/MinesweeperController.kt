@@ -35,6 +35,6 @@ class MinesweeperController(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
     ): Field {
-        return Field.createField(fieldInfo, mineCount, spotGenerator)
+        return Field(fieldInfo, mineCount, spotGenerator)
     }
 }

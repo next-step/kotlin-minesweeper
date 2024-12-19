@@ -14,7 +14,7 @@ class FieldTest : StringSpec({
         val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
         val spotGenerator = CustomSpotGenerator(minePositions)
 
-        val field = Field.createField(fieldInfo, mineCount, spotGenerator)
+        val field = Field(fieldInfo, mineCount, spotGenerator)
 
         field.lines.size shouldBe height
 

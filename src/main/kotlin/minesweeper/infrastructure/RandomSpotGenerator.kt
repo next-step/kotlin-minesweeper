@@ -14,10 +14,6 @@ class RandomSpotGenerator : SpotGenerator {
     ): List<Spot> {
         val height = fieldInfo.getHeight()
         val width = fieldInfo.getWidth()
-        val totalSpots = height * width
-
-        require(mineCount.count <= totalSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
-
         val minePositions = extractMinePositions(mineCount, width, height)
 
         return createFieldSpots(height, width, minePositions)
