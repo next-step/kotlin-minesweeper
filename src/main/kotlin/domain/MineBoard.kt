@@ -5,7 +5,7 @@ import constants.MineSweeperConstants.MINIMUM_WIDTH
 import domain.strategy.MineCellGenerator
 import domain.strategy.RandomMineCellGenerator
 
-class Board(
+class MineBoard(
     private val coordinate: Coordinate,
     private val mineCount: MineCount,
     private val mineCellGenerator: MineCellGenerator = RandomMineCellGenerator(),
