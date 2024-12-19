@@ -2,11 +2,11 @@ package domain.strategy
 
 import constants.MineSweeperConstants.MINIMUM_HEIGHT
 import constants.MineSweeperConstants.MINIMUM_WIDTH
-import domain.BoardHeight
-import domain.BoardWidth
 import domain.Cell
 import domain.Cell.MineCell
+import domain.Col
 import domain.Coordinate
+import domain.Row
 import kotlin.random.Random
 
 class RandomMineCellGenerator : MineCellGenerator {
@@ -15,9 +15,9 @@ class RandomMineCellGenerator : MineCellGenerator {
         mineCount: Int,
     ): Set<Cell> =
         generateSequence {
-            val randomHeight = Random.nextInt(MINIMUM_HEIGHT, coordinate.height.value)
-            val randomWidth = Random.nextInt(MINIMUM_WIDTH, coordinate.width.value)
-            MineCell(Coordinate(BoardHeight(randomHeight), BoardWidth(randomWidth)))
+            val randomHeight = Random.nextInt(MINIMUM_HEIGHT, coordinate.r.value)
+            val randomWidth = Random.nextInt(MINIMUM_WIDTH, coordinate.c.value)
+            MineCell(Coordinate(Row(randomHeight), Col(randomWidth)))
         }.distinct()
             .take(mineCount)
             .toSet()
