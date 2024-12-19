@@ -17,4 +17,15 @@ class CellTest : StringSpec({
         cell.isMine().shouldNotBeTrue()
         cell.displayString() shouldBe "1"
     }
+
+    "지뢰 여부가 주어지면 알맞은 Cell 을 생성한다" {
+        val cell = Cell.from(isMinePosition = true)
+        cell.isMine() shouldBe true
+    }
+
+    "지뢰 여부와 인접한 지뢰 개수가 주어지면 알맞은 Cell 을 생성한다" {
+        val cell = Cell.from(isMinePosition = false, adjacentMines = 3)
+        cell.isMine() shouldBe false
+        cell.displayString() shouldBe "3"
+    }
 })
