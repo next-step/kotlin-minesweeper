@@ -21,9 +21,6 @@ class Board private constructor(
             positionProvider: CellProvider,
         ): Board {
             val cells = positionProvider.provide(dimensions)
-            if (cells.mineCount != dimensions.mineCount) {
-                throw IllegalArgumentException("지뢰 갯수가 일치하지 않습니다.")
-            }
 
             return Board(cells)
         }
