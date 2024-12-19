@@ -1,7 +1,7 @@
 package mine.domain
 
-import mine.domain.Mine.Companion.MINE_SYMBOL
-import org.junit.jupiter.api.Assertions.assertEquals
+import io.kotest.matchers.shouldBe
+import mine.enums.MineCell
 import org.junit.jupiter.api.Test
 
 class MineRandomPlacerTest {
@@ -14,8 +14,8 @@ class MineRandomPlacerTest {
 
         val board = placer.placeMines(height, width, mineCount)
 
-        val placedMines = board.sumOf { row -> row.count { it == MINE_SYMBOL } }
-        assertEquals(mineCount, placedMines)
+        val placedMines = board.sumOf { row -> row.mineCells.count { it == MineCell.MINE } }
+        mineCount shouldBe placedMines
     }
 
     @Test
@@ -27,9 +27,9 @@ class MineRandomPlacerTest {
 
         val board = placer.placeMines(height, width, mineCount)
 
-        val allCells = board.flatten()
-        val distinctMines = allCells.filter { it == MINE_SYMBOL }.size
-        assertEquals(mineCount, distinctMines)
+        val allCells = board.map { it.mineCells }.flatten()
+        val distinctMines = allCells.count { it == MineCell.MINE }
+        mineCount shouldBe distinctMines
     }
 
     @Test
@@ -41,7 +41,7 @@ class MineRandomPlacerTest {
 
         val board = placer.placeMines(height, width, mineCount)
 
-        val placedMines = board.sumOf { row -> row.count { it == MINE_SYMBOL } }
-        assertEquals(0, placedMines)
+        val placedMines = board.sumOf { row -> row.mineCells.count { it == MineCell.MINE } }
+        placedMines shouldBe 0
     }
 }

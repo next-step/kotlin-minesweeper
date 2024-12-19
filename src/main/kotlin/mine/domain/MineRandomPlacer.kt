@@ -1,32 +1,33 @@
 package mine.domain
 
-import mine.domain.Mine.Companion.MINE_SYMBOL
-import mine.domain.Mine.Companion.NORMAL_SYMBOL
+import mine.enums.MineCell
 
 class MineRandomPlacer {
     fun placeMines(
         height: Int,
         width: Int,
         mineCount: Int,
-    ): Array<Array<String>> {
-        val board = Array(height) { Array(width) { NORMAL_SYMBOL } }
-        var placedMines = PLACE_MINE_DEFAULT
+    ): List<MineRow> {
+        require(mineCount <= height * width) { "지뢰 개수는 전체 칸 수를 초과할 수 없습니다." }
 
-        while (placedMines < mineCount) {
-            val randomRow = getRandomValue(height)
-            val randomCol = getRandomValue(height)
-            if (board[randomRow][randomCol] == MINE_SYMBOL) continue
-            board[randomRow][randomCol] = MINE_SYMBOL
-            placedMines++
-        }
+        val positions =
+            (RANDOM_MINE_START_VALUE until height).flatMap { row ->
+                (RANDOM_MINE_START_VALUE until width).map { col -> row to col }
+            }.shuffled()
 
-        return board
+        val minePositions = positions.take(mineCount).toSet()
+
+        val board =
+            (RANDOM_MINE_START_VALUE until height).map { row ->
+                (RANDOM_MINE_START_VALUE until width).map { col ->
+                    if (row to col in minePositions) MineCell.MINE else MineCell.NORMAL
+                }
+            }
+
+        return board.map { MineRow(it) }
     }
 
-    private fun getRandomValue(target: Int) = (RANDOM_MINE_VALUE until target).random()
-
     companion object {
-        private const val PLACE_MINE_DEFAULT = 0
-        private const val RANDOM_MINE_VALUE = 0
+        private const val RANDOM_MINE_START_VALUE = 0
     }
 }

@@ -1,7 +1,7 @@
 package mine.domain
 
 data class Mine(val height: Int, val width: Int, val mineCount: Int) {
-    val minesweeper: Array<Array<String>>
+    val minesweeper: List<MineRow>
 
     init {
         require(height > MINE_MIN_VALUE) { "높이는 0보다 커야합니다." }
@@ -13,7 +13,5 @@ data class Mine(val height: Int, val width: Int, val mineCount: Int) {
 
     companion object {
         const val MINE_MIN_VALUE = 0
-        const val NORMAL_SYMBOL = "*"
-        const val MINE_SYMBOL = "M"
     }
 }
