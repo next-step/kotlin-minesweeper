@@ -9,5 +9,5 @@ fun main() {
     val game = Game(height, width, mineCount)
 
     OutputView.printGameStartMessage()
-    game.start()
+    OutputView.printMineField(game)
 }
