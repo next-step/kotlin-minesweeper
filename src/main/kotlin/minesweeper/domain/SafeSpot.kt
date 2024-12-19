@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class SafeSpot(private val height: FieldHeight, private val width: FieldWidth) : Spot(height, width) {
+class SafeSpot(private val y: Int, private val x: Int) : Spot(y, x) {
     override fun isMine(): Boolean {
         return false
     }
