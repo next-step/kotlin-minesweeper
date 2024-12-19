@@ -16,7 +16,7 @@ fun main() {
     val countOfLandmines = CountOfLandmines(inputCountOfLandmines())
 
     val gameBoardCreator = GameBoardCreator()
-    val gameBoard = gameBoardCreator.design(height = height, width = width, countOfLandmines = countOfLandmines)
+    val gameBoard = gameBoardCreator.createBoard(height = height, width = width, countOfLandmines = countOfLandmines)
     val allOpenedGameBoard = gameBoard.openAll()
 
     announceGameStarted()
