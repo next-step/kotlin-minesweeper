@@ -12,8 +12,8 @@ class BoardDrawingTest {
                 mutableListOf(
                     DrawingRow(
                         listOf(
-                            DrawingCell(false, 1),
-                            DrawingCell(true, 0),
+                            DrawingCell.NumberCell(1),
+                            DrawingCell.MineCell,
                         ),
                     ),
                 ),
@@ -44,8 +44,8 @@ class BoardDrawingTest {
         val expected =
             DrawingRow(
                 listOf(
-                    DrawingCell(false, 0),
-                    DrawingCell(true, 0),
+                    DrawingCell.NumberCell(0),
+                    DrawingCell.MineCell,
                 ),
             )
         assertAll(
