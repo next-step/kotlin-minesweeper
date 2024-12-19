@@ -10,20 +10,9 @@ class MineField(
 
     init {
         require(mineCount <= height.value * width.value) { MINE_MAXIMUM_EXCEPTION_MESSAGE }
-        grid = createMineField().withNumberHints()
-    }
-
-    private fun createMineField(): Grid {
-        val positions = generateAllPositions().shuffled().take(mineCount).toSet()
-        val cells =
-            List(height.value) { row ->
-                List(width.value) { col ->
-                    val isMine = positions.contains(Position(row, col))
-                    Cell.create(isMine)
-                }
-            }
-
-        return Grid(height, width, cells)
+        val minePositions = generateAllPositions().shuffled().take(mineCount).toSet()
+        val cells = Cells.create(height.value, width.value, minePositions)
+        grid = Grid(height, width, cells).withNumberHints()
     }
 
     private fun generateAllPositions(): List<Position> =
