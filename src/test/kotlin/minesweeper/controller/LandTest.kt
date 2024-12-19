@@ -36,13 +36,8 @@ class LandTest {
     fun `생성된 지뢰 갯수를 확인한다`(count: Int) {
         val land = Land.from(10, 10, count)
         val actualCount: Int =
-            land.spots.sumOf { lines ->
-                lines.sumOf {
-                    when (it) {
-                        is MineSpot -> 1.toInt()
-                        else -> 0.toInt()
-                    }
-                }
+            land.spots.count { spot ->
+                spot is MineSpot
             }
         actualCount shouldBe count
     }

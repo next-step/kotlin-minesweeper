@@ -5,7 +5,12 @@ import minesweeper.domain.spot.DefaultSpot
 import minesweeper.domain.spot.MineSpot
 import minesweeper.domain.spot.Spot
 
-class Land private constructor(val spots: Array<Array<Spot>>) {
+class Land private constructor(val spots: Array<Spot>, val height: Int, val width: Int) {
+    fun getLines(y: Int): Array<Spot> {
+        val startIndex = y * width
+        return spots.sliceArray(startIndex..<(startIndex + width))
+    }
+
     companion object {
         fun from(
             height: Int,
@@ -16,19 +21,22 @@ class Land private constructor(val spots: Array<Array<Spot>>) {
             check(width > 0) { "너비를 양수로 입력해 주세요" }
             check(mineCount > 0) { "지뢰는 한개 이상 입력해주세요" }
 
-            val mines = (0..<height * width).shuffled().take(mineCount)
+            val mines =
+                (0..<height * width)
+                    .shuffled()
+                    .take(mineCount)
 
             val spots =
-                Array(height) { y ->
-                    Array(width) { x ->
-                        when (mines.contains(y * width + x)) {
-                            true -> MineSpot(Point(x, y))
-                            false -> DefaultSpot(Point(x, y))
-                        }
+                Array(height * width) { index ->
+                    val y = index / width
+                    val x = index % width
+                    when (mines.contains(y * width + x)) {
+                        true -> MineSpot(Point(x, y))
+                        false -> DefaultSpot(Point(x, y))
                     }
                 }
 
-            return Land(spots)
+            return Land(spots, height, width)
         }
     }
 }

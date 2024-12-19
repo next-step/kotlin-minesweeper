@@ -6,8 +6,9 @@ import minesweeper.domain.spot.Spot
 object ResultView {
     fun showLand(land: Land) {
         println("지뢰찾기 게임 시작")
-        land.spots.forEach { lines ->
-            println(lines.toShowString())
+        val height = land.height
+        for (n in 0..<height) {
+            println(land.getLines(n).toShowString())
         }
     }
 }
@@ -15,5 +16,5 @@ object ResultView {
 private fun Array<Spot>.toShowString() =
     this.joinToString(
         separator = " ",
-        transform = { it.toString() },
+        transform = { it.displayCharacter() },
     )

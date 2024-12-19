@@ -16,7 +16,6 @@ fun main() {
             InputView.inputMineCount(),
         )
 
-    game.land?.let {
-        ResultView.showLand(it)
-    }
+    val land = game.land ?: return
+    ResultView.showLand(land)
 }
