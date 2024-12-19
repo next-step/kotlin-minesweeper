@@ -1,26 +1,22 @@
 package view
 
-import domain.BoardHeight
-import domain.BoardWidth
-import domain.MineCount
-
 object InputView {
-    fun inputRowSize(): BoardHeight {
+    fun inputRowSize(): Int {
         println("높이를 입력하세요.")
         val input = parseToGameMetricOrThrow(readln())
-        return BoardHeight(input)
+        return input
     }
 
-    fun inputColumnSize(): BoardWidth {
+    fun inputColumnSize(): Int {
         println("너비를 입력하세요.")
         val input = parseToGameMetricOrThrow(readln())
-        return BoardWidth(input)
+        return input
     }
 
-    fun inputMineCount(): MineCount {
+    fun inputMineCount(): Int {
         println("지뢰는 몇 개인가요?")
         val input = parseToGameMetricOrThrow(readln())
-        return MineCount(input)
+        return input
     }
 
     private fun parseToGameMetricOrThrow(value: String): Int {

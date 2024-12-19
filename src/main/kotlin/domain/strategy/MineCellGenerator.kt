@@ -1,12 +1,8 @@
 package domain.strategy
 
 import domain.Cell
-import domain.Coordinate
-import domain.MineCount
+import domain.MineGameMetric
 
 interface MineCellGenerator {
-    fun execute(
-        coordinate: Coordinate,
-        mineCount: MineCount,
-    ): Set<Cell>
+    fun execute(mineGameMetric: MineGameMetric): Set<Cell>
 }
