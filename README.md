@@ -40,3 +40,10 @@
 - [X] 주변 지뢰 갯수를 알 수 있다.
 - [X] Cell 타입에 Number 타입이 있다.
 - [X] 주어진 위치의 이웃 위치들을 알수 있다
+
+## 2단계 피드백
+
+- [ ] delegate pattern 적용 고민
+- [ ] Cell 을 sealed class 로 변경
+- [ ] Cells <-> Cell 간의 양방향 참조를 제거
+- 
