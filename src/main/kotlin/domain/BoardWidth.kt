@@ -5,7 +5,7 @@ import constants.MineSweeperConstants.MINIMUM_WIDTH
 @JvmInline
 value class BoardWidth(val value: Int) {
     init {
-        require(value >= MINIMUM_WIDTH) { "$INVALID_COLUMN_SIZE. value $value" }
+        require(value >= MINIMUM_WIDTH) { "$INVALID_COLUMN_SIZE value: $value" }
     }
 
     operator fun compareTo(other: Int): Int = value.compareTo(other)

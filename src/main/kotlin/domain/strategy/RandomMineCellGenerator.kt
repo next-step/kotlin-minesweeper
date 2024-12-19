@@ -7,19 +7,18 @@ import domain.BoardWidth
 import domain.Cell
 import domain.Cell.MineCell
 import domain.Coordinate
-import domain.MineCount
 import kotlin.random.Random
 
 class RandomMineCellGenerator : MineCellGenerator {
     override fun execute(
         coordinate: Coordinate,
-        mineCount: MineCount,
+        mineCount: Int,
     ): Set<Cell> =
         generateSequence {
             val randomHeight = Random.nextInt(MINIMUM_HEIGHT, coordinate.height.value)
             val randomWidth = Random.nextInt(MINIMUM_WIDTH, coordinate.width.value)
             MineCell(Coordinate(BoardHeight(randomHeight), BoardWidth(randomWidth)))
         }.distinct()
-            .take(mineCount.value)
+            .take(mineCount)
             .toSet()
 }

@@ -5,7 +5,7 @@ import constants.MineSweeperConstants.MINIMUM_MINE_COUNT
 @JvmInline
 value class MineCount(val value: Int) {
     init {
-        require(value > MINIMUM_MINE_COUNT) { "$INVALID_MINE_COUNT. value $value" }
+        require(value > MINIMUM_MINE_COUNT) { "$INVALID_MINE_COUNT value $value" }
     }
 
     companion object {
