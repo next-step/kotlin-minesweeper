@@ -8,9 +8,9 @@ sealed class Cell {
         isOpened = true
     }
 
-    fun isZeroMineIsland(): Boolean = this is Island && aroundMineCount == 0
-
-    data class Island(val aroundMineCount: Int) : Cell()
+    data class Island(val aroundMineCount: Int) : Cell() {
+        fun isAroundMineCountZero() = aroundMineCount == 0
+    }
     data object Mine : Cell()
 
     companion object {

@@ -20,8 +20,9 @@ class Board private constructor(
 
     private fun openAround(coordinate: Coordinate) {
         val cell = coordinate.findCell()
+        val island = cell as? Cell.Island ?: return
 
-        if (!cell.isZeroMineIsland()) {
+        if (!island.isAroundMineCountZero()) {
             return
         }
 
