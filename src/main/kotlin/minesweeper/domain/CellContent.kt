@@ -22,6 +22,7 @@ class Empty(val adjacentMines: Int = 0) : CellContent() {
 
 class Cell(private val content: CellContent) {
     fun isMine(): Boolean = content is Mine
+
     fun displayString() = content.toDisplayString()
 
     companion object {
@@ -29,8 +30,11 @@ class Cell(private val content: CellContent) {
             isMinePosition: Boolean,
             adjacentMines: Int = 0,
         ): Cell {
-            return if (isMinePosition) Cell(Mine())
-            else Cell(Empty(adjacentMines))
+            return if (isMinePosition) {
+                Cell(Mine())
+            } else {
+                Cell(Empty(adjacentMines))
+            }
         }
     }
 }

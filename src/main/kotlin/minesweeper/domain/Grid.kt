@@ -57,6 +57,6 @@ class Grid(
 
     enum class CoordinateOffset(vararg val offsets: Int) {
         X(-1, 0, 1),
-        Y(-1, 0, 1)
+        Y(-1, 0, 1),
     }
 }
