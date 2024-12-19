@@ -1,8 +1,8 @@
 package minsweeper.domain
 
-class RandomMinePositionsGenerator : MinePositionsGenerator {
+class RandomMineCoordinatesGenerator : MineCoordinatesGenerator {
 
-    override fun generate(size: BoardSize, mineCount: Int): List<Position> {
+    override fun generate(size: BoardSize, mineCount: Int): List<Coordinate> {
         val area = size.height * size.width
         validateBoardSizeIsMoreThanMineCount(area, mineCount)
         return (0 until area).shuffled()
@@ -10,7 +10,7 @@ class RandomMinePositionsGenerator : MinePositionsGenerator {
             .map {
                 val row = it / size.width
                 val column = it % size.width
-                return@map Position(row, column)
+                return@map Coordinate.of(row, column)
             }
     }
 

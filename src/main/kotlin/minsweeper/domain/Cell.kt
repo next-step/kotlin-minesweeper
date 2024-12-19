@@ -1,20 +1,29 @@
 package minsweeper.domain
 
-sealed interface Cell {
-    data class Island(val aroundMineCount: Int) : Cell
-    data object Mine : Cell
+sealed class Cell {
+    var isOpened: Boolean = false
+        private set
+
+    fun open() {
+        isOpened = true
+    }
+
+    data class Island(val aroundMineCount: Int) : Cell() {
+        fun isAroundMineCountZero() = aroundMineCount == 0
+    }
+    data object Mine : Cell()
 
     companion object {
         fun create(
-            position: Position,
+            coordinate: Coordinate,
             boardSize: BoardSize,
-            minePositions: List<Position>,
+            mineCoordinates: List<Coordinate>,
             aroundMineCountJudge: AroundMineCountJudge,
-        ): Cell = Mine.takeIf { position in minePositions } ?: Island(
+        ): Cell = Mine.takeIf { coordinate in mineCoordinates } ?: Island(
             aroundMineCountJudge.judge(
                 boardSize,
-                position,
-                minePositions,
+                coordinate,
+                mineCoordinates,
             )
         )
     }
