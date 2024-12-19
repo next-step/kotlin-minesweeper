@@ -1,6 +1,6 @@
 package minesweeper
 
-sealed class Cell2(val position: Position) {
+sealed class Cell(val position: Position) {
     abstract val isMine: Boolean
     abstract val mineCount: Int
 
@@ -13,12 +13,12 @@ sealed class Cell2(val position: Position) {
         return position.y == rowIndex
     }
 
-    data class MineCell(val pos: Position) : Cell2(pos) {
+    data class MineCell(val pos: Position) : Cell(pos) {
         override val isMine: Boolean = true
         override val mineCount: Int = 0
     }
 
-    data class NumberCell(val pos: Position, private var _mineCount: Int = 0) : Cell2(pos) {
+    data class NumberCell(val pos: Position, private var _mineCount: Int = 0) : Cell(pos) {
         override val isMine: Boolean = false
         override val mineCount: Int
             get() = _mineCount
@@ -29,11 +29,11 @@ sealed class Cell2(val position: Position) {
     }
 
     companion object {
-        fun createMine(position: Position): Cell2 {
+        fun createMine(position: Position): Cell {
             return MineCell(position)
         }
 
-        fun createDefault(position: Position): Cell2 {
+        fun createDefault(position: Position): Cell {
             return NumberCell(position)
         }
     }

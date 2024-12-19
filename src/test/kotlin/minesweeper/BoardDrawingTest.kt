@@ -34,8 +34,8 @@ class BoardDrawingTest {
             BoardDrawing.create(
                 Cells.create(
                     listOf(
-                        Cell2.createDefault(Position(0, 0)),
-                        Cell2.MineCell(Position(1, 0)),
+                        Cell.createDefault(Position(0, 0)),
+                        Cell.MineCell(Position(1, 0)),
                     ),
                 ),
             )

@@ -10,8 +10,8 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell2.NumberCell(Position(0, 0)),
-                    Cell2.MineCell(Position(1, 1)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 1)),
                 ),
             )
 
@@ -26,8 +26,8 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell2.NumberCell(Position(0, 0)),
-                    Cell2.NumberCell(Position(1, 0)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.NumberCell(Position(1, 0)),
                 ),
             )
 
@@ -39,14 +39,14 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell2.NumberCell(Position(0, 0)),
-                    Cell2.MineCell(Position(1, 0)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 0)),
                 ),
             )
 
         assertThat(cells.rowAt(0).map { it }).containsExactly(
-            Cell2.NumberCell(Position(0, 0)),
-            Cell2.MineCell(Position(1, 0)),
+            Cell.NumberCell(Position(0, 0)),
+            Cell.MineCell(Position(1, 0)),
         )
     }
 
@@ -55,9 +55,9 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell2.NumberCell(Position(0, 0)),
-                    Cell2.MineCell(Position(1, 0)),
-                    Cell2.MineCell(Position(1, 1)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 0)),
+                    Cell.MineCell(Position(1, 1)),
                 ),
             )
 
@@ -71,12 +71,12 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell2.NumberCell(Position(0, 0)),
-                    Cell2.NumberCell(Position(1, 0)),
-                    Cell2.NumberCell(Position(0, 1)),
-                    Cell2.NumberCell(Position(1, 1)),
-                    Cell2.NumberCell(Position(0, 2)),
-                    Cell2.NumberCell(Position(1, 2)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.NumberCell(Position(1, 0)),
+                    Cell.NumberCell(Position(0, 1)),
+                    Cell.NumberCell(Position(1, 1)),
+                    Cell.NumberCell(Position(0, 2)),
+                    Cell.NumberCell(Position(1, 2)),
                 ),
             )
 

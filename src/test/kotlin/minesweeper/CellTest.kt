@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CellTest {
     @Test
     fun `지뢰가 없는 셀을 생성할 수 있다`() {
-        val cell = Cell2.NumberCell(Position(1, 1))
+        val cell = Cell.NumberCell(Position(1, 1))
 
         val isMine = cell.isMine
 
@@ -15,7 +15,7 @@ class CellTest {
 
     @Test
     fun `지뢰가 있는 셀을 생성할 수 있다`() {
-        val cell = Cell2.createMine(Position(1, 1))
+        val cell = Cell.createMine(Position(1, 1))
 
         val isMine = cell.isMine
 
@@ -24,7 +24,7 @@ class CellTest {
 
     @Test
     fun `셀은 위치를 가진다`() {
-        val cell = Cell2.NumberCell(Position(1, 1))
+        val cell = Cell.NumberCell(Position(1, 1))
 
         val position = cell.position
 

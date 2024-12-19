@@ -11,9 +11,9 @@ class BoardTest {
         val fixture =
             testFixture(
                 listOf(
-                    Cell2.MineCell(Position(0, 0)),
-                    Cell2.NumberCell(Position(0, 1)),
-                    Cell2.MineCell(Position(0, 2)),
+                    Cell.MineCell(Position(0, 0)),
+                    Cell.NumberCell(Position(0, 1)),
+                    Cell.MineCell(Position(0, 2)),
                 ),
             )
         val board = Board.initializeBoard(Dimensions(3, 3, 2), fixture)
@@ -30,9 +30,9 @@ class BoardTest {
         val fixture =
             testFixture(
                 listOf(
-                    Cell2.MineCell(Position(0, 0)),
-                    Cell2.NumberCell(Position(1, 0)),
-                    Cell2.NumberCell(Position(2, 0)),
+                    Cell.MineCell(Position(0, 0)),
+                    Cell.NumberCell(Position(1, 0)),
+                    Cell.NumberCell(Position(2, 0)),
                 ),
             )
 
@@ -41,7 +41,7 @@ class BoardTest {
             .withMessage("지뢰 갯수가 일치하지 않습니다.")
     }
 
-    private fun testFixture(data: List<Cell2>) =
+    private fun testFixture(data: List<Cell>) =
         object : CellProvider {
             override fun provide(dimensions: Dimensions): Cells {
                 return Cells.create(data)
