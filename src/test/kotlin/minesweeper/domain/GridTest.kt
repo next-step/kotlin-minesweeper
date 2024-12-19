@@ -7,16 +7,16 @@ class GridTest : StringSpec({
     "Grid 는 주어진 높이와 너비를 곱한 개수만큼 초기화 된다" {
         val dimension = Dimension(height = 10, width = 10)
         val mineCount = MineCount(10)
-        val grid = Grid(dimension, mineCount)
+        val grid = Grid(dimension, mineCount, RandomMineGenerator())
 
-        grid.cells.size shouldBe  10
+        grid.cells.size shouldBe 10
         grid.cells[0].size shouldBe 10
     }
 
     "Grid 는 주어진 지뢰의 개수만큼 지뢰를 가진채로 초기화 된다" {
         val dimension = Dimension(height = 5, width = 5)
         val mineCount = MineCount(5)
-        val grid = Grid(dimension, mineCount)
+        val grid = Grid(dimension, mineCount, RandomMineGenerator())
 
         val allCells = grid.cells.flatten()
         val mineCountInGrid = allCells.count { it.isMine() }
@@ -36,5 +36,21 @@ class GridTest : StringSpec({
         val grid = Grid(dimension, mineCount, mineGenerator)
         val allCells = grid.cells.flatten()
         allCells.take(5).all { it.isMine() } shouldBe true
+    }
+
+    "Grid 의 0,0 이 지뢰라면, (0,1) (1,1), (1,0) 은 인접한 지뢰가 1이다" {
+        val dimension = Dimension(height = 5, width = 5)
+        val mineCount = MineCount(1)
+        val minePosition = setOf(1)
+        val mineGenerator = object : MineGenerator {
+            override fun generateMinePositions(totalCells: Int, mineCount: Int): Set<Int> {
+                return minePosition
+            }
+        }
+
+        val grid = Grid(dimension, mineCount, mineGenerator)
+        grid.cells[0][1] shouldBe 1
+        grid.cells[1][1] shouldBe 1
+        grid.cells[1][0] shouldBe 1
     }
 })
