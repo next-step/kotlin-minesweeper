@@ -10,7 +10,7 @@ class Grid(
     private fun initializeCells(): List<List<Cell>> {
         val totalCells = dimension.totalCells()
         val minePositions = mineGenerator.generateMinePositions(totalCells, mineCount.count)
-        val tempCells = createInitialCells(minePositions)  // Initial mine placement
+        val tempCells = createInitialCells(minePositions) // Initial mine placement
         return mapAdjacentCounts(tempCells)
     }
 
@@ -25,7 +25,7 @@ class Grid(
     private fun createInitialCell(
         row: Int,
         col: Int,
-        minePositions: Set<Int>
+        minePositions: Set<Int>,
     ): Cell {
         val currentPosition = row * dimension.width + col
         val isMine = currentPosition in minePositions
@@ -48,7 +48,7 @@ class Grid(
         cell: Cell,
         row: Int,
         col: Int,
-        tempCells: List<List<Cell>>
+        tempCells: List<List<Cell>>,
     ): Cell {
         return if (cell.isMine()) {
             cell
@@ -58,9 +58,16 @@ class Grid(
         }
     }
 
-    private fun countAdjacentMines(row: Int, col: Int, cells: List<List<Cell>>): Int {
-        fun isWithinBounds(row: Int, col: Int, cells: List<List<Cell>>) =
-            row in cells.indices && col in cells[row].indices
+    private fun countAdjacentMines(
+        row: Int,
+        col: Int,
+        cells: List<List<Cell>>,
+    ): Int {
+        fun isWithinBounds(
+            row: Int,
+            col: Int,
+            cells: List<List<Cell>>,
+        ) = row in cells.indices && col in cells[row].indices
 
         return (-1..1).sumOf { dx ->
             (-1..1).count { dy ->

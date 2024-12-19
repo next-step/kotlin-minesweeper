@@ -16,7 +16,7 @@ object MineSweeperController {
             Grid(
                 dimension = Dimension(height, width),
                 mineCount = MineCount(mineCount),
-                mineGenerator = RandomMineGenerator()
+                mineGenerator = RandomMineGenerator(),
             )
         ResultView.renderBoard(grid)
     }
