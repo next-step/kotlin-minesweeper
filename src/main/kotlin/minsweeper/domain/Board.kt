@@ -27,7 +27,10 @@ class Board private constructor(
         }
 
         coordinate.aroundCoordinates(boardSize)
-            .filter { !it.findCell().isOpened }
+            .filter { aroundCoordinate ->
+                val aroundCell = aroundCoordinate.findCell()
+                !aroundCell.isOpened
+            }
             .forEach { aroundCoordinate ->
                 aroundCoordinate.findCell()
                     .open()
@@ -35,7 +38,10 @@ class Board private constructor(
             }
     }
 
-    private fun Coordinate.findCell(): Cell = boardLines.lines[row].cells[column]
+    private fun Coordinate.findCell(): Cell {
+        return boardLines.find(row)
+            .find(column)
+    }
 
     companion object {
 

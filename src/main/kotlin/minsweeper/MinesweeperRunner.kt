@@ -26,11 +26,25 @@ class MinesweeperRunner {
 
     private fun startGame(board: Board) {
         ResultView.printStartGame()
-        while (board.open(Coordinate.of(InputView.showAndGetOpenCoordinate())) is Cell.Island) {
-            ResultView.printBoard(board.boardLines)
+        while (true) {
+            val coordinate = Coordinate.of(InputView.showAndGetOpenCoordinate())
+            val cell = board.open(coordinate)
+            if (processCellAndCheckGameOver(cell, board)) return
         }
+    }
 
-        ResultView.printLoseGame()
+    private fun processCellAndCheckGameOver(cell: Cell, board: Board): Boolean {
+        return when (cell) {
+            is Cell.Island -> {
+                ResultView.printBoard(board.boardLines)
+                false
+            }
+
+            Cell.Mine -> {
+                ResultView.printLoseGame()
+                true
+            }
+        }
     }
 
 }
