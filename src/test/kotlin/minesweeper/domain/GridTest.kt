@@ -28,15 +28,7 @@ class GridTest : StringSpec({
         val dimension = Dimension(height = 5, width = 5)
         val mineCount = MineCount(5)
         val minePositions = setOf(1, 2, 3, 4, 5)
-        val mineGenerator =
-            object : MineGenerator {
-                override fun generateMinePositions(
-                    totalCells: Int,
-                    mineCount: Int,
-                ): Set<Int> {
-                    return minePositions
-                }
-            }
+        val mineGenerator = MineGenerator { _, _ -> minePositions }
         val grid = Grid(dimension, mineCount, mineGenerator)
         val allCells = grid.cells.flatten()
         allCells.take(5).all { it.isMine() } shouldBe true
@@ -46,15 +38,7 @@ class GridTest : StringSpec({
         val dimension = Dimension(height = 5, width = 5)
         val mineCount = MineCount(1)
         val minePosition = setOf(1)
-        val mineGenerator =
-            object : MineGenerator {
-                override fun generateMinePositions(
-                    totalCells: Int,
-                    mineCount: Int,
-                ): Set<Int> {
-                    return minePosition
-                }
-            }
+        val mineGenerator = MineGenerator { _, _ -> minePosition }
 
         val grid = Grid(dimension, mineCount, mineGenerator)
         grid.cells[0][1] shouldBe 1
