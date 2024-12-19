@@ -17,6 +17,6 @@ class MineSweeperController {
         val cells = Cells.generateWithMines(mineGameMetric, RandomMineCellGenerator())
         val mineBoard = MineBoard(mineGameMetric, cells)
 
-        OutputView.showMineSweeperBoard(cells)
+        OutputView.showMineSweeperBoard(mineBoard)
     }
 }

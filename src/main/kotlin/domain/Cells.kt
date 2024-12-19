@@ -12,7 +12,8 @@ class Cells(val cells: List<Cell>) {
     fun emptyCells(): List<EmptyCell> = cells.filterIsInstance<EmptyCell>()
 
     fun getCoordinateIs(coordinate: Coordinate): Cell {
-        return cells.firstOrNull { it.coordinate == coordinate } ?: throw IllegalArgumentException("Coordinate $coordinate not found")
+        return cells.firstOrNull { it.coordinate == coordinate }
+            ?: throw IllegalArgumentException("Coordinate $coordinate not found")
     }
 
     companion object {
@@ -24,9 +25,11 @@ class Cells(val cells: List<Cell>) {
             val mineCellCoordinates =
                 generateMineCells(
                     mineCellGenerator,
-                    Coordinate(Row(mineGameMetric.boardHeightSize), Col(mineGameMetric.boardWidthSize)),
-                    mineGameMetric.mineCount,
+                    mineGameMetric,
                 )
+
+            println("emptyCellCoordinates: $emptyCellCoordinates")
+            println("mineCellCoordinates: $mineCellCoordinates")
 
             val cells = emptyCellCoordinates.map { coordinate -> parseCell(mineCellCoordinates, coordinate) }
             return Cells(cells)
@@ -48,10 +51,9 @@ class Cells(val cells: List<Cell>) {
 
         private fun generateMineCells(
             mineCellGenerator: MineCellGenerator,
-            coordinate: Coordinate,
-            mineCount: Int,
+            mineGameMetric: MineGameMetric,
         ): Set<Coordinate> {
-            return mineCellGenerator.execute(coordinate, mineCount).map { it.coordinate }.toSet()
+            return mineCellGenerator.execute(mineGameMetric).map { it.coordinate }.toSet()
         }
 
         private fun parseCell(
