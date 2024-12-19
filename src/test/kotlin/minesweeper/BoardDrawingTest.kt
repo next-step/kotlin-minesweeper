@@ -7,16 +7,17 @@ import org.junit.jupiter.api.assertAll
 class BoardDrawingTest {
     @Test
     fun `다음 Row가 비어있지 않으면 true를 반환한다`() {
-        val boardDrawing = BoardDrawing(
-            mutableListOf(
-                DrawingRow(
-                    listOf(
-                        DrawingCell(Position(0, 0), false, 1),
-                        DrawingCell(Position(1, 0), true, 0),
+        val boardDrawing =
+            BoardDrawing(
+                mutableListOf(
+                    DrawingRow(
+                        listOf(
+                            DrawingCell.NumberCell(1),
+                            DrawingCell.MineCell,
+                        ),
                     ),
                 ),
-            ),
-        )
+            )
 
         assertThat(boardDrawing.hasNext()).isTrue()
     }
@@ -34,18 +35,19 @@ class BoardDrawingTest {
             BoardDrawing.create(
                 Cells.create(
                     listOf(
-                        Cell(CellType.DEFAULT, Position(0, 0)),
-                        Cell(CellType.Mine, Position(1, 0)),
+                        Cell.createDefault(Position(0, 0)),
+                        Cell.MineCell(Position(1, 0)),
                     ),
                 ),
             )
 
-        val expected = DrawingRow(
-            listOf(
-                DrawingCell(Position(0, 0), false, 1),
-                DrawingCell(Position(1, 0), true, 0),
-            ),
-        )
+        val expected =
+            DrawingRow(
+                listOf(
+                    DrawingCell.NumberCell(0),
+                    DrawingCell.MineCell,
+                ),
+            )
         assertAll(
             { assertThat(boardDrawing.next()).isEqualTo(expected) },
             { assertThat(boardDrawing.hasNext()).isFalse() },

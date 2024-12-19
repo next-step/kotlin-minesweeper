@@ -7,8 +7,8 @@ fun main() {
     val inputView = InputView()
     val resultView = ResultView()
 
-    val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight(), inputView.readMineCount())
-    val board = Board.initializeBoard(dimensions, DefaultCellProvider())
+    val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight())
+    val board = Board.initializeBoard(dimensions, DefaultCellProvider(inputView.readMineCount()))
 
     resultView.startView()
     board.detectMines()

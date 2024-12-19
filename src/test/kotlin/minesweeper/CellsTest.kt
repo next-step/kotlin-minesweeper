@@ -10,8 +10,8 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.DEFAULT, Position(0, 0)),
-                    Cell(CellType.Mine, Position(1, 1)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 1)),
                 ),
             )
 
@@ -26,8 +26,8 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.DEFAULT, Position(0, 0)),
-                    Cell(CellType.DEFAULT, Position(1, 0)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.NumberCell(Position(1, 0)),
                 ),
             )
 
@@ -39,12 +39,15 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.DEFAULT, Position(0, 0)),
-                    Cell(CellType.Mine, Position(1, 0)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 0)),
                 ),
             )
 
-        assertThat(cells.rowAt(0).map { it.type }).containsExactly(CellType.DEFAULT, CellType.Mine)
+        assertThat(cells.rowAt(0).map { it }).containsExactly(
+            Cell.NumberCell(Position(0, 0)),
+            Cell.MineCell(Position(1, 0)),
+        )
     }
 
     @Test
@@ -52,9 +55,9 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.DEFAULT, Position(0, 0)),
-                    Cell(CellType.Mine, Position(1, 0)),
-                    Cell(CellType.Mine, Position(1, 1)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.MineCell(Position(1, 0)),
+                    Cell.MineCell(Position(1, 1)),
                 ),
             )
 
@@ -68,12 +71,12 @@ class CellsTest {
         val cells =
             Cells.create(
                 listOf(
-                    Cell(CellType.DEFAULT, Position(0, 0)),
-                    Cell(CellType.DEFAULT, Position(1, 0)),
-                    Cell(CellType.DEFAULT, Position(0, 1)),
-                    Cell(CellType.DEFAULT, Position(1, 1)),
-                    Cell(CellType.DEFAULT, Position(0, 2)),
-                    Cell(CellType.DEFAULT, Position(1, 2)),
+                    Cell.NumberCell(Position(0, 0)),
+                    Cell.NumberCell(Position(1, 0)),
+                    Cell.NumberCell(Position(0, 1)),
+                    Cell.NumberCell(Position(1, 1)),
+                    Cell.NumberCell(Position(0, 2)),
+                    Cell.NumberCell(Position(1, 2)),
                 ),
             )
 

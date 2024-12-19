@@ -8,7 +8,8 @@ class Cells(private val values: Map<CellKey, Cell>) {
 
     fun detectMines() {
         values.values.forEach { cell ->
-            cell.determineCell(this)
+            val neighborMineCount = neighborsMineCount(cell.position)
+            cell.determineCell(neighborMineCount)
         }
     }
 
@@ -19,17 +20,19 @@ class Cells(private val values: Map<CellKey, Cell>) {
     }
 
     fun assignMinesToCells(minePositions: List<Position>): Cells {
-        return Cells(values.mapValues { (_, cell) ->
-            if (minePositions.contains(cell.position)) {
-                cell.withMine()
-            } else {
-                cell
-            }
-        })
+        return Cells(
+            values.mapValues { (_, cell) ->
+                if (minePositions.contains(cell.position)) {
+                    Cell.MineCell(cell.position)
+                } else {
+                    cell
+                }
+            },
+        )
     }
 
     fun checkMine(position: Position): Boolean {
-        return at(position).isMine()
+        return at(position).isMine
     }
 
     fun rowSize(): Int {
@@ -43,8 +46,8 @@ class Cells(private val values: Map<CellKey, Cell>) {
             .filter { it.matchRowIndex(rowIndex) }
     }
 
-    private fun at(position: Position): CellType {
-        return values[position.key()]?.type ?: throw IllegalArgumentException("존재 하지 않는 위치 입니다.")
+    private fun at(position: Position): Cell {
+        return values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
     }
 
     companion object {
