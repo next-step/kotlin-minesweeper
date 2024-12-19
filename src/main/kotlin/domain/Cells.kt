@@ -1,5 +1,7 @@
 package domain
 
+import constants.MineSweeperConstants.MINIMUM_HEIGHT
+import constants.MineSweeperConstants.MINIMUM_WIDTH
 import domain.Cell.EmptyCell
 import domain.Cell.MineCell
 
@@ -10,10 +12,13 @@ data class Cells(val cells: List<Cell>) {
 
     companion object {
         fun generateWithMines(
-            heightRange: IntRange,
-            widthRange: IntRange,
+            mineBoardHeightSize: Int,
+            mineBoardWidthSize: Int,
             mineCoordinates: Set<Coordinate>,
         ): Cells {
+            val heightRange = MINIMUM_HEIGHT..mineBoardHeightSize
+            val widthRange = MINIMUM_WIDTH..mineBoardWidthSize
+
             val cells =
                 heightRange.flatMap { height ->
                     widthRange.map { width ->

@@ -1,7 +1,5 @@
 package domain
 
-import constants.MineSweeperConstants.MINIMUM_HEIGHT
-import constants.MineSweeperConstants.MINIMUM_WIDTH
 import domain.strategy.MineCellGenerator
 import domain.strategy.RandomMineCellGenerator
 
@@ -18,8 +16,8 @@ class MineBoard(
         val mineCoordinates = mineCellGenerator.execute(coordinate, mineCount).map { it.coordinate }.toSet()
 
         return Cells.generateWithMines(
-            heightRange = MINIMUM_HEIGHT..coordinate.height.value,
-            widthRange = MINIMUM_WIDTH..coordinate.width.value,
+            coordinate.height.value,
+            coordinate.width.value,
             mineCoordinates = mineCoordinates,
         )
     }
