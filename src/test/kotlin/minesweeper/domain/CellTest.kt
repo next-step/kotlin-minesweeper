@@ -12,9 +12,9 @@ class CellTest : StringSpec({
         cell.toString() shouldBe "*"
     }
 
-    "지뢰가 아니라면 C 표시로 나타난다" {
-        val cell = Cell(Empty())
+    "지뢰가 아니라면 인접한 지뢰의 개수로 나타난다" {
+        val cell = Cell(Empty(adjacentMines = 1))
         cell.isMine().shouldNotBeTrue()
-        cell.toString() shouldBe "C"
+        cell.toString() shouldBe "1"
     }
 })
