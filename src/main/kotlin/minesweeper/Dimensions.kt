@@ -16,7 +16,7 @@ data class Dimensions(val width: Int, val height: Int, val mineCount: Int) {
 
     fun createDefaultCells(): Cells {
         return allPositions().map {
-            Cell(_type = CellType.DEFAULT, position = it)
+            Cell2.NumberCell(it)
         }.let {
             Cells.create(it)
         }

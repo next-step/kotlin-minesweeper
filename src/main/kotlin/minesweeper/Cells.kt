@@ -2,7 +2,7 @@ package minesweeper
 
 typealias CellKey = Int
 
-class Cells(private val values: Map<CellKey, Cell>) {
+class Cells(private val values: Map<CellKey, Cell2>) {
     val mineCount: Int
         get() = values.values.count { it.isMine }
 
@@ -21,7 +21,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
     fun assignMinesToCells(minePositions: List<Position>): Cells {
         return Cells(values.mapValues { (_, cell) ->
             if (minePositions.contains(cell.position)) {
-                cell.withMine()
+                Cell2.MineCell(cell.position)
             } else {
                 cell
             }
@@ -29,7 +29,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
     }
 
     fun checkMine(position: Position): Boolean {
-        return at(position).isMine()
+        return at(position).isMine
     }
 
     fun rowSize(): Int {
@@ -38,17 +38,17 @@ class Cells(private val values: Map<CellKey, Cell>) {
             .size
     }
 
-    fun rowAt(rowIndex: Int): List<Cell> {
+    fun rowAt(rowIndex: Int): List<Cell2> {
         return values.values
             .filter { it.matchRowIndex(rowIndex) }
     }
 
-    private fun at(position: Position): CellType {
-        return values[position.key()]?.type ?: throw IllegalArgumentException("존재 하지 않는 위치 입니다.")
+    private fun at(position: Position): Cell2 {
+        return values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
     }
 
     companion object {
-        fun create(otherCells: List<Cell>): Cells {
+        fun create(otherCells: List<Cell2>): Cells {
             return Cells(otherCells.associateBy { it.position.key() })
         }
     }
