@@ -5,28 +5,27 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class PositionTest : StringSpec({
-    "유효한 row와 col 값을 가질 수 있다." {
-        val position =
-            Position(
-                row = 1,
-                col = 2,
-            )
+    "올바른 좌표값으로 Position이 생성된다." {
+        val position = Position(1, 2)
         position.row shouldBe 1
         position.col shouldBe 2
     }
 
-    "row나 col이 음수이면 예외를 발생시킨다." {
+    "원점(0,0) 좌표로 Position이 생성된다." {
+        val position = Position(0, 0)
+        position.row shouldBe 0
+        position.col shouldBe 0
+    }
+
+    "음수 row 값으로 Position을 생성하면 예외가 발생한다." {
         shouldThrow<IllegalArgumentException> {
-            Position(
-                row = -1,
-                col = 0,
-            )
+            Position(-1, 0)
         }
+    }
+
+    "음수 col 값으로 Position을 생성하면 예외가 발생한다." {
         shouldThrow<IllegalArgumentException> {
-            Position(
-                row = 0,
-                col = -1,
-            )
+            Position(0, -1)
         }
     }
 })
