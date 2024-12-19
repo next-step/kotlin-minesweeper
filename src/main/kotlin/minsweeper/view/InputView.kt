@@ -19,9 +19,9 @@ object InputView {
         return readln().toInt()
     }
 
-    fun showAndGetOpenCoordinate(): Coordinate {
+    fun showAndGetOpenCoordinate(): String {
         print("open: ")
-        return CoordinateParser.parse(readln())
+        return readln()
     }
 
 }

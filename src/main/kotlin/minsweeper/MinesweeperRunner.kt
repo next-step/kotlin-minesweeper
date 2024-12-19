@@ -26,7 +26,7 @@ class MinesweeperRunner {
 
     private fun startGame(board: Board) {
         ResultView.printStartGame()
-        while (board.open(InputView.showAndGetOpenCoordinate()) is Cell.Island) {
+        while (board.open(Coordinate.of(InputView.showAndGetOpenCoordinate())) is Cell.Island) {
             ResultView.printBoard(board.boardLines)
         }
 

@@ -22,7 +22,7 @@ class BoardLinesGenerator(
         row: Int,
         mineCoordinates: List<Coordinate>,
     ): BoardLine = BoardLine(List(boardSize.width) { column ->
-        Cell.create(Coordinate(row, column), boardSize, mineCoordinates, aroundMineCountJudge)
+        Cell.create(Coordinate.of(row, column), boardSize, mineCoordinates, aroundMineCountJudge)
     })
 
 }

@@ -10,7 +10,7 @@ class RandomMineCoordinatesGenerator : MineCoordinatesGenerator {
             .map {
                 val row = it / size.width
                 val column = it % size.width
-                return@map Coordinate(row, column)
+                return@map Coordinate.of(row, column)
             }
     }
 

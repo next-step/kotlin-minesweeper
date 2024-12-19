@@ -29,7 +29,7 @@ class BoardTest {
         val board = getFixtureBoard()
 
         // when
-        board.open(Coordinate(0, 1))
+        board.open(Coordinate.of(0, 1))
 
         // then
         assertThat(board.boardLines.lines[0].cells[0].isOpened).isFalse()
@@ -49,7 +49,7 @@ class BoardTest {
         val board = getFixtureBoard()
 
         // when
-        board.open(Coordinate(0, 0))
+        board.open(Coordinate.of(0, 0))
 
         // then
         assertThat(board.boardLines.lines[0].cells[0].isOpened).isTrue()
@@ -66,9 +66,9 @@ class BoardTest {
     companion object {
         @JvmStatic
         fun provideCoordinates(): List<Coordinate> = listOf(
-            Coordinate(10, 9),
-            Coordinate(9, 10),
-            Coordinate(10, 10),
+            Coordinate.of(10, 9),
+            Coordinate.of(9, 10),
+            Coordinate.of(10, 10),
         )
     }
 

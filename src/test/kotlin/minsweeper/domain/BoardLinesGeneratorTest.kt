@@ -10,13 +10,13 @@ class BoardLinesGeneratorTest {
         // given
         val boardSize = BoardSize(10, 10)
         val mines = listOf(
-            Coordinate(0, 0),
-            Coordinate(1, 2),
-            Coordinate(2, 4),
-            Coordinate(3, 0),
-            Coordinate(4, 1),
-            Coordinate(5, 7),
-            Coordinate(6, 9),
+            Coordinate.of(0, 0),
+            Coordinate.of(1, 2),
+            Coordinate.of(2, 4),
+            Coordinate.of(3, 0),
+            Coordinate.of(4, 1),
+            Coordinate.of(5, 7),
+            Coordinate.of(6, 9),
         )
         val boardLinesGenerator = BoardLinesGenerator(
             object : MineCoordinatesGenerator {
