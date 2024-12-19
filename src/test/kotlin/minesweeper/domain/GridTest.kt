@@ -27,7 +27,7 @@ class GridTest : StringSpec({
     "Grid 의 알맞은 위치에 지뢰가 생성된다" {
         val dimension = Dimension(height = 5, width = 5)
         val mineCount = MineCount(5)
-        val minePositions = setOf(1, 2, 3, 4, 5)
+        val minePositions = setOf(0, 1, 2, 3, 4)
         val mineGenerator = MineGenerator { _, _ -> minePositions }
         val grid = Grid(dimension, mineCount, mineGenerator)
         val allCells = grid.cells.flatten()
@@ -37,12 +37,12 @@ class GridTest : StringSpec({
     "Grid 의 0,0 이 지뢰라면, (0,1) (1,1), (1,0) 은 인접한 지뢰가 1이다" {
         val dimension = Dimension(height = 5, width = 5)
         val mineCount = MineCount(1)
-        val minePosition = setOf(1)
+        val minePosition = setOf(0)
         val mineGenerator = MineGenerator { _, _ -> minePosition }
 
         val grid = Grid(dimension, mineCount, mineGenerator)
-        grid.cells[0][1] shouldBe 1
-        grid.cells[1][1] shouldBe 1
-        grid.cells[1][0] shouldBe 1
+        grid.cells[0][1].displayString() shouldBe "1"
+        grid.cells[1][1].displayString() shouldBe "1"
+        grid.cells[1][0].displayString() shouldBe "1"
     }
 })
