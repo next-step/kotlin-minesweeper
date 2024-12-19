@@ -43,7 +43,6 @@
 
 ## 2단계 피드백
 
-- [ ] delegate pattern 적용 고민
+- [X] delegate pattern 적용 고민
 - [ ] Cell 을 sealed class 로 변경
 - [ ] Cells <-> Cell 간의 양방향 참조를 제거
-- 
