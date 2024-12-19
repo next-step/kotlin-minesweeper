@@ -43,8 +43,8 @@ class Grid(
             cells: List<List<Cell>>,
         ) = row in cells.indices && col in cells[row].indices
 
-        return (-1..1).sumOf { dx ->
-            (-1..1).count { dy ->
+        return CoordinateOffset.X.offsets.sumOf { dx ->
+            CoordinateOffset.Y.offsets.count { dy ->
                 val isCurrentCell = dx == 0 && dy == 0
                 val adjacentRow = row + dx
                 val adjacentCol = col + dy
@@ -53,5 +53,10 @@ class Grid(
                 isAdjacentCellMine
             }
         }
+    }
+
+    enum class CoordinateOffset(vararg val offsets: Int) {
+        X(-1, 0, 1),
+        Y(-1, 0, 1)
     }
 }
