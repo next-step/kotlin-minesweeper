@@ -7,17 +7,7 @@ import minsweeper.view.ResultView
 class MinesweeperRunner {
 
     fun run() {
-        val board = initializeBoard()
-        ResultView.printStartGame()
-        while (true) {
-            when (board.open(InputView.showAndGetOpenCoordinate())) {
-                is Cell.Island -> ResultView.printBoard(board.boardLines)
-                Cell.Mine -> {
-                    ResultView.printLoseGame()
-                    return
-                }
-            }
-        }
+        startGame(initializeBoard())
     }
 
     private fun initializeBoard(): Board {
@@ -32,6 +22,15 @@ class MinesweeperRunner {
             mineCount,
             BoardLinesGenerator(aroundMineCountJudge = AroundMineCountJudge()),
         )
+    }
+
+    private fun startGame(board: Board) {
+        ResultView.printStartGame()
+        while (board.open(InputView.showAndGetOpenCoordinate()) is Cell.Island) {
+            ResultView.printBoard(board.boardLines)
+        }
+
+        ResultView.printLoseGame()
     }
 
 }
