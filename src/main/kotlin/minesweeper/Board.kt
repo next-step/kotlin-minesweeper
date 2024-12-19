@@ -11,15 +11,16 @@ class Board private constructor(
         return BoardDrawing.create(cells)
     }
 
+    fun detectMines() {
+        cells.detectMines()
+    }
+
     companion object {
         fun initializeBoard(
             dimensions: Dimensions,
             positionProvider: CellProvider,
         ): Board {
-            val cells = Cells(positionProvider.provide(dimensions))
-            if (cells.mineCount != dimensions.mineCount) {
-                throw IllegalArgumentException("지뢰 갯수가 일치하지 않습니다.")
-            }
+            val cells = positionProvider.provide(dimensions)
 
             return Board(cells)
         }
