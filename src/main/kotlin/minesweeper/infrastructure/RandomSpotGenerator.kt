@@ -24,10 +24,8 @@ class RandomSpotGenerator : SpotGenerator {
         width: Int,
         height: Int,
     ): Set<Pair<Int, Int>> {
-        val mineSpots = mineCount.count
         val minePositions = mutableSetOf<Pair<Int, Int>>()
-
-        while (minePositions.size < mineSpots) {
+        while (minePositions.size < mineCount.count) {
             val position = generateRandomPosition(width, height)
             minePositions.add(position)
         }
@@ -38,8 +36,8 @@ class RandomSpotGenerator : SpotGenerator {
         width: Int,
         height: Int,
     ): Pair<Int, Int> {
-        val x = (0 until width).random()
-        val y = (0 until height).random()
+        val x = (0 until height).random()
+        val y = (0 until width).random()
         return Pair(x, y)
     }
 
