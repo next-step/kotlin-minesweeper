@@ -20,13 +20,15 @@ class Cells(private val values: Map<CellKey, Cell>) {
     }
 
     fun assignMinesToCells(minePositions: List<Position>): Cells {
-        return Cells(values.mapValues { (_, cell) ->
-            if (minePositions.contains(cell.position)) {
-                Cell.MineCell(cell.position)
-            } else {
-                cell
-            }
-        })
+        return Cells(
+            values.mapValues { (_, cell) ->
+                if (minePositions.contains(cell.position)) {
+                    Cell.MineCell(cell.position)
+                } else {
+                    cell
+                }
+            },
+        )
     }
 
     fun checkMine(position: Position): Boolean {

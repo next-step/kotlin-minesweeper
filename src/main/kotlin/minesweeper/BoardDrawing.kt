@@ -23,8 +23,10 @@ data class BoardDrawing(private val _values: MutableList<DrawingRow>) {
 private fun Cells.toDrawingRow(): MutableList<DrawingRow> {
     return (0 until rowSize()).map { i ->
         val rowCells = rowAt(i)
-        DrawingRow(rowCells.map { cell ->
-            DrawingCell(cell.position, cell.isMine, cell.mineCount)
-        })
+        DrawingRow(
+            rowCells.map { cell ->
+                DrawingCell(cell.position, cell.isMine, cell.mineCount)
+            },
+        )
     }.toMutableList()
 }
