@@ -19,18 +19,25 @@ data class Cells(val cells: List<Cell>) {
             val heightRange = MINIMUM_HEIGHT..mineBoardHeightSize
             val widthRange = MINIMUM_WIDTH..mineBoardWidthSize
 
-            val cells =
+            val coordinates =
                 heightRange.flatMap { height ->
                     widthRange.map { width ->
-                        val coordinate = Coordinate(BoardHeight(height), BoardWidth(width))
-                        if (coordinate in mineCoordinates) {
-                            MineCell(coordinate)
-                        } else {
-                            EmptyCell(coordinate)
-                        }
+                        Coordinate(BoardHeight(height), BoardWidth(width))
                     }
                 }
+
+            val cells = coordinates.map { coordinate -> parseCell(mineCoordinates, coordinate) }
             return Cells(cells)
+        }
+
+        private fun parseCell(
+            mineCoordinates: Set<Coordinate>,
+            coordinate: Coordinate,
+        ): Cell {
+            if (coordinate in mineCoordinates) {
+                return MineCell(coordinate)
+            }
+            return EmptyCell(coordinate)
         }
     }
 }
