@@ -9,7 +9,9 @@ class MineBoard(
     private val mineCellGenerator: MineCellGenerator = RandomMineCellGenerator(),
 ) {
     init {
-        require(coordinate.height * coordinate.width >= mineCount.value) { INVALID_MINE_COUNT }
+        require(coordinate.height * coordinate.width >= mineCount.value) {
+            "$INVALID_MINE_COUNT. ${coordinate.height} x ${coordinate.width} must be greater than $mineCount"
+        }
     }
 
     fun create(): Cells {
