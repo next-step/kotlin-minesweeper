@@ -1,24 +1,41 @@
 package minesweeper.model
 
-/**
- * @author 이상준
- */
 class Cells(
-    cells: List<Cell> = listOf()
+    cells: List<Cell> = listOf(),
 ) {
-    var cells: List<Cell> = cells
+    var cellList: List<Cell> = cells
         private set
 
     fun add(cell: Cell): Cells {
-        return Cells(cells + cell)
+        return Cells(cellList + cell)
     }
 
     fun addAll(cells: List<Cell>): Cells {
-        return Cells(this.cells + cells)
+        return Cells(this.cellList + cells)
     }
 
-    fun addMines(mineCount: Int) {
-        val shuffledCells = cells.shuffled()
-        shuffledCells.subList(0, mineCount).forEach { it.addMine() }
+    fun addMines(
+        minesStrategy: MinesStrategy,
+        mineCount: Int,
+    ): Cells {
+        return minesStrategy.addMines(this, mineCount)
+    }
+
+    fun addMinesAroundCounts() {
+        cellList.filter { it.isMine() }.forEach { mineCell ->
+            Direction.entries.forEach { direction ->
+                minesCellAroundCount(mineCell, direction)
+            }
+        }
+    }
+
+    private fun minesCellAroundCount(mineCell: Cell, direction: Direction) {
+        val adjacentRow = mineCell.row + direction.dx
+        val adjacentColumn = mineCell.column + direction.dy
+        cellList.find { it.isAround(adjacentRow, adjacentColumn) }?.addMineAroundCount()
+    }
+
+    fun getRowCells(row: Int): Cells {
+        return Cells(cellList.filter { it.row == row})
     }
 }

@@ -1,18 +1,40 @@
 package minesweeper.model
 
-/**
- * @author 이상준
- */
 class Board(
-    private val height: Int,
-    private val width: Int,
+    height: Int = 0,
+    width: Int = 0,
     private val mineCount: Int,
 ) {
+    var height: Int = height
+        private set
+    var width: Int = width
+        private set
     private var cells = Cells()
 
-    fun createCells(): List<Cell> {
+    init {
+        require(height > 0 && width > 0 && mineCount > 0) { "높이, 너비, 지뢰 개수는 0보다 커야합니다." }
+        require(height * width > mineCount) { "지뢰 개수는 셀의 개수보다 작아야합니다." }
+    }
+
+    fun createCells(minesStrategy: MinesStrategy): Board {
         this.cells = cells.addAll(List(height * width) { index -> Cell(index / width, index % width) })
-        cells.addMines(mineCount)
-        return cells.cells
+        this.cells = cells.addMines(minesStrategy, mineCount)
+        return this
+    }
+
+    fun size(): Int {
+        return height * width
+    }
+
+    fun addMineAroundCounts() {
+        cells.addMinesAroundCounts()
+    }
+
+    fun getCells(): Cells {
+        return cells
+    }
+
+    fun getRowCells(row: Int): Cells {
+        return cells.getRowCells(row)
     }
 }
