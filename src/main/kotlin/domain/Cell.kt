@@ -1,7 +1,7 @@
 package domain
 
 sealed class Cell {
-    abstract fun mapToDisplay(cellMapper: CellMapper): String
+    abstract val id: CellId
 
     fun addNumberHint(row: Int, col: Int, allCells: Cells): Cell {
         if (this is Empty) {
@@ -22,15 +22,15 @@ sealed class Cell {
     }
 
     data object Empty : Cell() {
-        override fun mapToDisplay(cellMapper: CellMapper): String = cellMapper.mapToDisplay(this)
+        override val id = CellId.EMPTY
     }
 
     data object MineCell : Cell() {
-        override fun mapToDisplay(cellMapper: CellMapper): String = cellMapper.mapToDisplay(this)
+        override val id = CellId.MINE
     }
 
     data class NumberCell(val count: Int) : Cell() {
-        override fun mapToDisplay(cellMapper: CellMapper): String = cellMapper.mapToDisplay(this)
+        override val id = CellId.NUMBER
     }
 
     companion object {

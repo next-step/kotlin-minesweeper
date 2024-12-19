@@ -1,8 +1,7 @@
 package domain
 
 class Row(private val cells: List<Cell>) {
-    fun joinToString(separator: String, transform: (Cell) -> String): String =
-        cells.joinToString(separator, transform = transform)
+    fun getCells(): List<Cell> = cells.toList()
 
     fun addNumberHints(rowIndex: Int, allCells: Cells): Row {
         val updatedCells = cells.mapIndexed { colIndex, cell ->

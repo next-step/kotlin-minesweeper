@@ -20,7 +20,7 @@ class MineField(
             Position(index / width.value, index % width.value)
         }
 
-    fun display(): List<String> = grid.toDisplayRows(cellMapper)
+    fun getState(): MineFieldState = MineFieldState(grid.getCells())
 
     companion object {
         private const val MINE_MAXIMUM_EXCEPTION_MESSAGE = "지뢰는 총 셀 수를 초과할 수 없습니다."

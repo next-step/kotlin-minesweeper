@@ -5,13 +5,7 @@ class Grid(
     private val width: Width,
     private val  cells: Cells,
 ) {
-    private val rowCount: Int = height.value
-    private val columnCount: Int = width.value
-
-    fun toDisplayRows(cellMapper: CellMapper): List<String> =
-        cells.map { row ->
-            row.joinToString(" ") { it.mapToDisplay(cellMapper) }
-        }
+    fun getCells(): Cells = cells
 
     fun withNumberHints(): Grid {
         val updatedCells = cells.addNumberHints()
