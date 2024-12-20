@@ -54,6 +54,6 @@
 지뢰가 없는 인접한 칸이 모두 열리게 된다.
 
 ## 기능 구현
-- [ ] `Cell` isMine 제거
+- [X] `Cell` isMine 제거
 - [ ] `detectMines` 초기화 시점에서 정의
 - [ ] `dimensions` 지뢰 개수에 대한 책임 분리
