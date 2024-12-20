@@ -14,7 +14,7 @@ value class Cells(val cells: List<Cell>) {
 
     fun getCoordinateIs(coordinate: Coordinate): Cell {
         return cells.firstOrNull { it.coordinate == coordinate }
-            ?: throw IllegalArgumentException("Coordinate $coordinate not found")
+            ?: throw NoSuchElementException("Coordinate $coordinate not found")
     }
 
     companion object {
