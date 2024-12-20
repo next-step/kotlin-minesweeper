@@ -1,63 +1,33 @@
 package minesweeper
-
 typealias CellKey = Int
 
-class Cells(private val values: Map<CellKey, Cell>) {
+class Cells(val values: Map<CellKey, Cell>) {
     val mineCount: Int
         get() = values.values.count { isMineCell(it) }
 
     fun open(position: Position): OpenState {
         val cell = at(position)
-        if (cell.availableOpen().not() || cell.isMine()) {
-            return OpenState.LOSE
-        }
+        if (!cell.availableOpen() || cell.isMine()) return OpenState.LOSE
 
         cell.open()
         val visited = mutableSetOf<Position>()
-        open(neighborsCells(position), visited)
+        openCellAndNeighbors(cell, position, visited)
+        return if (allNonMineCellsOpened()) OpenState.ALL_DONE else OpenState.CONTINUE
+    }
 
-        if (allNonMineCellsOpened()) {
-            return OpenState.ALL_DONE
+    private fun openCellAndNeighbors(cell: Cell, position: Position, visited: MutableSet<Position>) {
+        if (visited.contains(position) || isMineCell(cell)) return
+
+        visited.add(position)
+        val neighborMineCount = neighborsMineCount(position)
+        if (neighborMineCount > 0) {
+            return
         }
 
-        return OpenState.CONTINUE
-    }
-
-    private fun allNonMineCellsOpened(): Boolean {
-        return cells().all { cell ->
-            cell.isOpen || isMineCell(cell)
-        }
-    }
-
-    private fun cells(): List<Cell> {
-        return values.values.toList()
-    }
-
-    private fun open(
-        neighborsCells: Cells,
-        visited: MutableSet<Position>,
-    ) {
-        neighborsCells.cells().forEach { cell ->
-            if (visited.contains(cell.position) || cell.isOpen || isMineCell(cell)) {
-                return@forEach
-            }
-
-            visited.add(cell.position)
-
-            val neighborMineCount = neighborsMineCount(cell.position)
-            if (neighborMineCount == 0) {
-                cell.open()
-                open(neighborsCells(cell.position), visited)
-            }
-        }
-    }
-
-    private fun neighborsCells(position: Position): Cells {
-        return Cells(
-            Direction.neighbors(position)
-                .mapNotNull { values[it.key()] }
-                .associateBy { it.position.key() },
-        )
+        cell.open()
+        position.neighbors()
+            .mapNotNull { values[it.key()] }
+            .forEach { openCellAndNeighbors(it, it.position, visited) }
     }
 
     fun detectMines() {
@@ -67,41 +37,22 @@ class Cells(private val values: Map<CellKey, Cell>) {
         }
     }
 
-    fun neighborsMineCount(position: Position): Int {
-        return Direction.neighbors(position)
+    private fun allNonMineCellsOpened(): Boolean =
+        values.values.all { it.isOpen || isMineCell(it) }
+
+    fun neighborsMineCount(position: Position): Int =
+        Direction.neighbors(position)
             .mapNotNull { values[it.key()] }
-            .count { it is Cell.MineCell }
-    }
+            .count { isMineCell(it) }
 
-    fun checkMine(position: Position): Boolean {
-        return isMineCell(at(position))
-    }
+    fun at(position: Position): Cell =
+        values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
 
-    fun rowSize(): Int {
-        return values.values
-            .filter { it.x == 0 }
-            .size
-    }
-
-    fun at(position: Position): Cell {
-        return values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
-    }
-
-    fun rowAt(rowIndex: Int): List<Cell> {
-        return values.values
-            .filter { it.matchRowIndex(rowIndex) }
-    }
-
-    private fun isMineCell(cell: Cell): Boolean {
-        return cell is Cell.MineCell
-    }
+    private fun isMineCell(cell: Cell): Boolean = cell is Cell.MineCell
 
     companion object {
-        fun detectCreateOf(cells: List<Cell>): Cells {
-            return Cells(cells.associateBy { it.position.key() }).apply {
-                detectMines()
-            }
-        }
+        fun detectCreateOf(cells: List<Cell>): Cells =
+            Cells(cells.associateBy { it.position.key() }).apply { detectMines() }
     }
 }
 

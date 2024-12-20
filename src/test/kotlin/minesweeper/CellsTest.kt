@@ -6,50 +6,6 @@ import org.junit.jupiter.api.assertAll
 
 class CellsTest {
     @Test
-    fun `위치와 지뢰 타입을 가진다`() {
-        val cells =
-            Cells.detectCreateOf(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 1)),
-                ),
-            )
-
-        assertAll(
-            { assertThat(cells.checkMine(Position(0, 0))).isFalse() },
-            { assertThat(cells.checkMine(Position(1, 1))).isTrue() },
-        )
-    }
-
-    @Test
-    fun `행 갯수를 알 수 있다`() {
-        val cells =
-            Cells.detectCreateOf(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                ),
-            )
-
-        assertThat(cells.rowSize()).isEqualTo(1)
-    }
-
-    @Test
-    fun `해당 행의 셀 타입을 알 수 있다`() {
-        val cells =
-            Cells.detectCreateOf(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 0)),
-                ),
-            )
-
-        val actual = cells.rowAt(0)
-
-        assertThat(actual.size).isEqualTo(2)
-    }
-
-    @Test
     fun `셀의 이웃 지뢰 갯수를 알 수 있다`() {
         val cells =
             Cells.detectCreateOf(
@@ -143,9 +99,9 @@ class CellsTest {
             { assertThat(cells.at(Position(1, 0)).isOpen).isTrue() },
             { assertThat(cells.at(Position(2, 0)).isOpen).isTrue() },
             { assertThat(cells.at(Position(0, 1)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 2)).isOpen).isTrue() },
             { assertThat(cells.at(Position(1, 1)).isOpen).isFalse() },
             { assertThat(cells.at(Position(2, 1)).isOpen).isFalse() },
-            { assertThat(cells.at(Position(0, 2)).isOpen).isTrue() },
             { assertThat(cells.at(Position(1, 2)).isOpen).isFalse() },
             { assertThat(cells.at(Position(2, 2)).isOpen).isFalse() },
         )

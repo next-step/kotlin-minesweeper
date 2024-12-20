@@ -1,19 +1,19 @@
 package minesweeper.ui
 
-import minesweeper.BoardDrawing
-import minesweeper.DrawingCell
-import minesweeper.DrawingRow
+import minesweeper.*
 
 class ResultView {
-    fun drawBoard(draw: BoardDrawing) {
-        while (draw.hasNext()) {
-            drawRow(draw.next())
-            nextLine()
-        }
-    }
 
     fun startView() {
         println("지뢰찾기 게임 시작")
+    }
+
+    fun drawBoard(draw: State) {
+        if (draw is Playing) {
+            drawBoard(draw.displayBoard())
+            return
+        }
+        resultDraw(draw.isWin())
     }
 
     private fun drawRow(row: DrawingRow) {
@@ -28,16 +28,23 @@ class ResultView {
         }
     }
 
-    private fun nextLine() {
-        println()
+    private fun drawBoard(draw: BoardDrawing) {
+        while (draw.hasNext()) {
+            drawRow(draw.next())
+            nextLine()
+        }
     }
 
-    fun resultDraw(win: Boolean) {
+    private fun resultDraw(win: Boolean) {
         if (win) {
             println("Win Game.")
         } else {
             println("Lose Game.")
         }
+    }
+
+    private fun nextLine() {
+        println()
     }
 }
 

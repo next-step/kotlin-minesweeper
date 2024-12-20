@@ -27,16 +27,18 @@ data class BoardDrawing(private val _values: MutableList<DrawingRow>) {
 }
 
 private fun Cells.toDrawingRow(): MutableList<DrawingRow> {
-    return (0 until rowSize()).map { i ->
-        val rowCells = rowAt(i)
-        DrawingRow(
-            rowCells.map { cell ->
-                if (cell.isOpen) {
-                    DrawingCell.OpenCell(cell.neighborMineCount)
-                } else {
-                    DrawingCell.CloseCell
-                }
-            },
-        )
-    }.toMutableList()
+    return values.values
+        .groupBy { it.y }
+        .map { (_, cells) ->
+            DrawingRow(
+                cells.map { cell ->
+                    if (cell.isOpen) {
+                        DrawingCell.OpenCell(cell.neighborMineCount)
+                    } else {
+                        DrawingCell.CloseCell
+                    }
+                },
+            )
+        }
+        .toMutableList()
 }
