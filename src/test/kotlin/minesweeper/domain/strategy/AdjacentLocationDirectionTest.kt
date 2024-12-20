@@ -5,13 +5,13 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import minesweeper.domain.cell.Location
 
 class AdjacentLocationDirectionTest : BehaviorSpec({
-    given("AdjacentLocationDirection 은") {
+    given("row = 2, column = 2의 위치를 받아") {
         val location = Location(row = 2, column = 2)
 
-        `when`("하나의 Location 을 받아 allAdjacentLocations()을 호출하면") {
+        `when`("모든 인접 위치를 구하면") {
             val result = AdjacentLocationDirection.allAdjacentLocations(location)
 
-            then("인접한 8칸의 위치 리스트를 반환한다") {
+            then("인접 방향 8칸의 위치 리스트를 받을 수 있다") {
                 result shouldContainExactlyInAnyOrder
                     listOf(
                         Location(row = 1, column = 1),

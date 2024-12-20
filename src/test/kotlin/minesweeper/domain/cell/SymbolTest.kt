@@ -4,17 +4,17 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class SymbolTest : BehaviorSpec({
-    given("Symbol.from 은") {
-        `when`("NumberOfAdjacentMines.ZERO를 입력받으면") {
+    given("심볼은") {
+        `when`("인접 지뢰 개수 0개를 입력 받으면") {
             val result = Symbol.from(NumberOfAdjacentMines.ZERO)
 
-            then("Symbol.ZERO 를 반환한다") {
+            then("표시 심볼도 0개를 뜻한다") {
                 result shouldBe Symbol.ZERO
             }
         }
 
-        `when`("NumberOfAdjacentMines 의 각 숫자를 입력 받을 때마다") {
-            then("적절한 Symbol 을 반환한다") {
+        `when`("입력받은 인접 지뢰 개수에 따라") {
+            then("해당 인접 지뢰 개수를 뜻하는 심볼을 보여준다") {
                 Symbol.from(NumberOfAdjacentMines(1)) shouldBe Symbol.ONE
                 Symbol.from(NumberOfAdjacentMines(2)) shouldBe Symbol.TWO
                 Symbol.from(NumberOfAdjacentMines(3)) shouldBe Symbol.THREE

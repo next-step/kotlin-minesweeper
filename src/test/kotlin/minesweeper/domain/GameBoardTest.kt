@@ -11,17 +11,19 @@ import minesweeper.domain.cell.NumberCell
 import minesweeper.domain.cell.NumberOfAdjacentMines
 
 class GameBoardTest : BehaviorSpec({
-    given("GameBoard 를 생성할 때") {
+    given("높이 10, 너비 10으로") {
         val height = 10
         val width = 10
 
-        `when`("높이, 너비를 받아 cells를 만들면") {
+        `when`("게임판을 만들면") {
             val sut = GameBoard.of(height = height, width = width)
 
-            then("cells는 height x width 크기이며 모든 Cell의 좌표가 저장되어 있다") {
+            then("게임판은 높이 10, 너비 10의 지역을 가진다") {
                 val area = sut.area
                 area shouldBe Area(height = height, width = width)
+            }
 
+            then("게임판은 row = 1 ~ 높이, column = 1 ~ 너비 의 위치를 가진 셀들을 가진다") {
                 val result = sut.cells
 
                 result shouldHaveSize height * width
@@ -31,43 +33,55 @@ class GameBoardTest : BehaviorSpec({
                 }
             }
         }
+    }
 
-        `when`("높이가 1 미만이면") {
-            then("IllegalArgumentException 예외를 던진다") {
+    given("1보다 작은 높이로") {
+        val height = 0
+        val width = 10
+
+        `when`("게임판을 생성하려고 하면") {
+            then("예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
-                        height = 0,
+                        height = height,
                         width = width,
                     )
                 }
             }
         }
+    }
 
-        `when`("너비가 1 미만이면") {
-            then("IllegalArgumentException 예외를 던진다") {
+    given("1보다 작은 너비로") {
+        val height = 10
+        val width = 0
+
+        `when`("게임판을 생성하려고 하면") {
+            then("예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.of(
                         height = height,
-                        width = 0,
+                        width = width,
                     )
                 }
             }
         }
+    }
 
-        `when`("cells를 직접 받아서 GameBoard2를 만들 때 모든 행의 너비가 똑같지 않은 cells를 받으면") {
-            val cells =
-                listOf(
-                    ClosedCell(oneByOneLocation),
-                    ClosedCell(oneByTwoLocation),
-                    ClosedCell(oneByThreeLocation),
-                    ClosedCell(twoByOneLocation),
-                    ClosedCell(twoByTwoLocation),
-                    ClosedCell(threeByOneLocation),
-                    ClosedCell(threeByTwoLocation),
-                    ClosedCell(threeByThreeLocation),
-                )
+    given("첫번째 행의 셀이 3개, 두번째 행의 셀이 2개 세번째 행의 셀이 3개인 전체 행의 길이가 일정치 않은 셀 목록으로") {
+        val cells =
+            listOf(
+                ClosedCell(oneByOneLocation),
+                ClosedCell(oneByTwoLocation),
+                ClosedCell(oneByThreeLocation),
+                ClosedCell(twoByOneLocation),
+                ClosedCell(twoByTwoLocation),
+                ClosedCell(threeByOneLocation),
+                ClosedCell(threeByTwoLocation),
+                ClosedCell(threeByThreeLocation),
+            )
 
-            then("IllegalArgumentException 예외를 던진다") {
+        `when`("게임판을 생성하려고 하면") {
+            then("예외를 던진다") {
                 shouldThrow<IllegalArgumentException> {
                     GameBoard.from(cells)
                 }
@@ -75,20 +89,20 @@ class GameBoardTest : BehaviorSpec({
         }
     }
 
-    given("GameBoard 는 ") {
+    given("3x3 셀로 만든 게임판에서") {
         val cells = threeByThreeCells
         val sut = GameBoard.from(cells)
 
-        `when`("Location 으로") {
+        `when`("(1,1)의 위치로 셀을 찾으면") {
             val location = Location(row = 1, column = 1)
             val result = sut.find(location)
 
-            then("해당 셀을 찾을 수 있다") {
+            then("해당 위치를 가진 셀을 찾을 수 있다") {
                 result shouldBe cells.find { it.location.row == 1 && it.location.column == 1 }
             }
         }
 
-        `when`("GameBoard 내 없는 location 로 cell을 찾으면 ") {
+        `when`("게임판 내에 존재하지 않는 위치로 셀을 찾으려고 하면") {
             val notFoundLocations =
                 listOf(
                     Location(row = 0, column = 0),
@@ -96,17 +110,17 @@ class GameBoardTest : BehaviorSpec({
                     Location(row = 4, column = 1),
                 )
 
-            then("null 을 반환한다") {
+            then("셀을 찾을 수 없다") {
                 notFoundLocations.forEach { location ->
                     sut.find(location) shouldBe null
                 }
             }
         }
 
-        `when`("openAll() 하면") {
+        `when`("모든 셀을 열면") {
             val result = sut.openAll()
 
-            then("모든 Cell 이 open 된 상태로 바뀐 GameBoard 를 반환한다") {
+            then("닫힌 셀이 모두 숫자 셀로 변한 3x3 게임판을 반환한다") {
                 result.cells shouldHaveSize 9
                 result.cells shouldContainExactlyInAnyOrder
                     listOf(
@@ -120,6 +134,21 @@ class GameBoardTest : BehaviorSpec({
                         NumberCell(threeByTwoLocation, NumberOfAdjacentMines.ZERO),
                         NumberCell(threeByThreeLocation, NumberOfAdjacentMines.ZERO),
                     )
+            }
+        }
+    }
+
+    given("5x5 의 셀로 만든 게임판에서") {
+        val sut = GameBoard.from(fiveByFiveCellsWithFiveLandmines)
+
+        `when`("현재 상태를 구하면") {
+            val result = sut.currentState()
+
+            then("모든 셀의 수, 닫힌 셀 수, 숫자 셀 수, 지뢰 셀 수를 알 수 있다") {
+                result.countOfTotalCells shouldBe 25
+                result.countOfClosedCells shouldBe 25
+                result.countOfLandmineCells shouldBe 0
+                result.countOfTotalLandmines shouldBe 5
             }
         }
     }

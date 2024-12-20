@@ -16,7 +16,7 @@ import minesweeper.domain.twoByThreeLocation
 import minesweeper.domain.twoByTwoLocation
 
 class DefaultLandmineTrackerTest : BehaviorSpec({
-    given("DefaultLandmineTracker 는 ") {
+    given("(1,1), (2,2)에 지뢰가 매설된 3x3의 닫힌 셀들을 받아") {
         /**
          * * 0 0
          * 0 * 0
@@ -36,12 +36,12 @@ class DefaultLandmineTrackerTest : BehaviorSpec({
             )
         val sut = DefaultLandmineTracker()
 
-        `when`("allCells 와 landmineLocation(1,1) 을 받아") {
+        `when`("(1,1)의 지뢰 위치를 가지고 인접 지뢰 개수를 업데이트 하면") {
             val landmineLocation = oneByOneLocation
             val result =
                 sut.withUpdatedAdjacentMineCounts(allCells, landmineLocation)
 
-            then("landmineLocation 주변 셀의 인접 지뢰 개수를 표시한 Cells 을 반환한다") {
+            then("(1,1) 지뢰 위치에 인접한 (1,2), (2,1), (2,2)에 있는 닫힌 셀의 인접 지뢰 개수가 각 1개로 업데이트 된다") {
                 val expectedCells =
                     Cells(
                         listOf(
@@ -61,12 +61,12 @@ class DefaultLandmineTrackerTest : BehaviorSpec({
             }
         }
 
-        `when`("gameBoard 와 landmineLocation(2,2) 을 받아") {
+        `when`("(2,2)의 지뢰 위치를 가지고 인접 지뢰 개수를 업데이트 하면") {
             val landmineLocation = twoByTwoLocation
             val result =
                 sut.withUpdatedAdjacentMineCounts(allCells, landmineLocation)
 
-            then("landmineLocation 주변 셀의 인접 지뢰 개수를 표시한 List<Cell> 을 반환한다") {
+            then("(2,2) 지뢰 위치에 인접한 (1,1), (1,2), (1,3), (2,1), (2,3), (3, 1), (3, 2), (3, 3) 에 있는 닫힌 셀의 인접 지뢰 개수가 각 1개로 업데이트 된다") {
                 val expectedCells =
                     listOf(
                         ClosedCell(oneByOneLocation, hasLandmine = true, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),

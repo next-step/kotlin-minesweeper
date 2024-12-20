@@ -2,62 +2,42 @@ package minesweeper.domain.strategy
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeTypeOf
 import minesweeper.domain.Cells
 import minesweeper.domain.cell.ClosedCell
-import minesweeper.domain.cell.Location
+import minesweeper.domain.oneByOneLocation
+import minesweeper.domain.oneByThreeLocation
+import minesweeper.domain.oneByTwoLocation
+import minesweeper.domain.threeByOneLocation
+import minesweeper.domain.threeByThreeCells
+import minesweeper.domain.threeByThreeLocation
+import minesweeper.domain.threeByTwoLocation
+import minesweeper.domain.twoByOneLocation
+import minesweeper.domain.twoByThreeLocation
+import minesweeper.domain.twoByTwoLocation
 
 class VultureTest : BehaviorSpec({
-    given("Vulture 는") {
+    given("3x3의 닫힌 셀들과 (1,1), (2,2), (3,3)의 지뢰 위치들을 받아") {
+        val allCells = Cells(threeByThreeCells)
+
+        val landmineCandidates = listOf(oneByOneLocation, twoByTwoLocation, threeByThreeLocation)
+
         val sut = Vulture()
 
-        `when`("Location을 받아") {
-            val location = Location(row = 1, column = 1)
-            val result = sut.plant(location)
-
-            then("해당 Location 을 가진 Landmine을 반환한다") {
-                result.shouldBeTypeOf<ClosedCell>()
-
-                result.location shouldBe location
-                result.hasLandmine shouldBe true
-            }
-        }
-
-        `when`("전체 셀 리스트와 지뢰 지역 정보 목록을 받아") {
-            val allCells =
-                Cells(
-                    ClosedCell(Location(row = 1, column = 1)),
-                    ClosedCell(Location(row = 1, column = 2)),
-                    ClosedCell(Location(row = 1, column = 3)),
-                    ClosedCell(Location(row = 2, column = 1)),
-                    ClosedCell(Location(row = 2, column = 2)),
-                    ClosedCell(Location(row = 2, column = 3)),
-                    ClosedCell(Location(row = 3, column = 1)),
-                    ClosedCell(Location(row = 3, column = 2)),
-                    ClosedCell(Location(row = 3, column = 3)),
-                )
-
-            val landmineCandidates =
-                listOf(
-                    Location(row = 1, column = 1),
-                    Location(row = 2, column = 2),
-                    Location(row = 3, column = 3),
-                )
-
+        `when`("지뢰를 전부 매설하면") {
             val result = sut.plantAll(allCells = allCells, landmineCandidates = landmineCandidates)
 
-            then("지뢰를 심은 셀 리스트를 반환한다") {
+            then("(1,1), (2,2), (3,3) 에 지뢰를 매설한 닫힌 셀 리스트를 받는다") {
                 val expected =
                     listOf(
-                        ClosedCell(location = Location(row = 1, column = 1), hasLandmine = true),
-                        ClosedCell(Location(row = 1, column = 2)),
-                        ClosedCell(Location(row = 1, column = 3)),
-                        ClosedCell(Location(row = 2, column = 1)),
-                        ClosedCell(location = Location(row = 2, column = 2), hasLandmine = true),
-                        ClosedCell(Location(row = 2, column = 3)),
-                        ClosedCell(Location(row = 3, column = 1)),
-                        ClosedCell(Location(row = 3, column = 2)),
-                        ClosedCell(location = Location(row = 3, column = 3), hasLandmine = true),
+                        ClosedCell(location = oneByOneLocation, hasLandmine = true),
+                        ClosedCell(oneByTwoLocation),
+                        ClosedCell(oneByThreeLocation),
+                        ClosedCell(twoByOneLocation),
+                        ClosedCell(location = twoByTwoLocation, hasLandmine = true),
+                        ClosedCell(twoByThreeLocation),
+                        ClosedCell(threeByOneLocation),
+                        ClosedCell(threeByTwoLocation),
+                        ClosedCell(location = threeByThreeLocation, hasLandmine = true),
                     )
 
                 result shouldBe expected

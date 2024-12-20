@@ -11,14 +11,14 @@ import minesweeper.domain.threeByThreeCells
 class DefaultLandmineLocationSelectorTest : BehaviorSpec({
     val sut = DefaultLandmineLocationSelector(FixedShuffleAlgorithm())
 
-    given("cells 와 countOfLandmines 를 받아") {
+    given("3x3의 닫힌 셀들과 3개의 지뢰 개수를 받아") {
         val cells = Cells(threeByThreeCells)
         val countOfLandmines = CountOfLandmines(3)
 
-        `when`("selectCandidates2() 를 호출하면") {
+        `when`("지뢰 매설 후보지를 찾으면") {
             val results = sut.selectCandidates(cells, countOfLandmines)
 
-            then("countOfLandmines 개수 만큼 지뢰 후보 Location 리스트를 반환한다") {
+            then("3개의 지뢰를 매설할 후보 지역을 반환한다") {
                 results shouldHaveSize countOfLandmines.value
 
                 results shouldContainExactlyInAnyOrder

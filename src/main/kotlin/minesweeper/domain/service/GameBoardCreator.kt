@@ -16,7 +16,7 @@ class GameBoardCreator(
     private val landminePlanter: LandminePlanter = Vulture(),
     private val landmineTracker: LandmineTracker = DefaultLandmineTracker(),
 ) {
-    fun design(
+    fun createBoard(
         height: Int,
         width: Int,
         countOfLandmines: CountOfLandmines,
