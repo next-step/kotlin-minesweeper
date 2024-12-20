@@ -2,6 +2,7 @@ package minesweeper.domain.cell
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class NumberOfAdjacentMinesTest : BehaviorSpec({
@@ -36,6 +37,19 @@ class NumberOfAdjacentMinesTest : BehaviorSpec({
                 shouldThrow<IllegalArgumentException> {
                     sut.inc()
                 }
+            }
+        }
+    }
+
+    given("인접 지뢰 개수 0 과 인접 지뢰 개수 1이 있을 때") {
+        val zero = NumberOfAdjacentMines.ZERO
+        val one = NumberOfAdjacentMines(1)
+
+        `when`("둘을 비교하면") {
+            val result = one > zero
+
+            then("인접 지뢰 개수 1이 더 크다") {
+                result.shouldBeTrue()
             }
         }
     }

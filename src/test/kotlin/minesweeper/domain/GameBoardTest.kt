@@ -250,5 +250,61 @@ class GameBoardTest : BehaviorSpec({
                     )
             }
         }
+
+        `when`("(1,1) 위치(닫힌 셀. 지뢰 x, 인접 지뢰 개수 0개)를 을 열면") {
+            val location = Location(row = 1, column = 1)
+            val result: GameBoard = sut.open(location)
+
+            then("지뢰가 없는 인접한 셀들 모두 열린다") {
+                result.cells shouldContainExactlyInAnyOrder
+                    listOf(
+                        NumberCell(location = oneByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
+                        NumberCell(location = oneByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
+                        NumberCell(location = oneByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(
+                            location = Location(row = 1, column = 4),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 1, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        NumberCell(location = twoByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
+                        NumberCell(location = twoByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
+                        NumberCell(location = twoByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 2, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(3)),
+                        ClosedCell(
+                            location = Location(row = 2, column = 5),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(2),
+                            hasLandmine = true,
+                        ),
+                        NumberCell(location = threeByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        NumberCell(location = threeByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        NumberCell(location = threeByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(
+                            location = Location(row = 3, column = 4),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 3, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(
+                            location = Location(row = 4, column = 1),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 4, column = 2), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 4, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(location = Location(row = 4, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 4, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 5, column = 1), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
+                        ClosedCell(
+                            location = Location(row = 5, column = 2),
+                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
+                            hasLandmine = true,
+                        ),
+                        ClosedCell(location = Location(row = 5, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
+                        ClosedCell(location = Location(row = 5, column = 4)),
+                        ClosedCell(location = Location(row = 5, column = 5)),
+                    )
+            }
+        }
     }
 })

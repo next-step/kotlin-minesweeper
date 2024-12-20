@@ -10,6 +10,10 @@ value class NumberOfAdjacentMines(private val value: Int) {
 
     operator fun inc(): NumberOfAdjacentMines = NumberOfAdjacentMines(value + 1)
 
+    operator fun compareTo(numberOfAdjacentMines: NumberOfAdjacentMines): Int {
+        return value - numberOfAdjacentMines.value
+    }
+
     companion object {
         private const val MIN_VALUE = 0
         private const val MAX_VALUE = 8
