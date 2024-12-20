@@ -16,7 +16,15 @@ class MinesWeeperService(
         return board.createCells(minesStrategy)
     }
 
+    fun openCells(row: Int, column: Int): Boolean {
+        return board.openCells(row, column)
+    }
+
     fun addMineAroundCounts() {
         board.addMineAroundCounts()
+    }
+
+    fun isFinishGame() : Boolean {
+        return board.isFinishGame()
     }
 }

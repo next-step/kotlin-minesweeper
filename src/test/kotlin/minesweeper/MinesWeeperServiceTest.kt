@@ -63,5 +63,29 @@ class MinesWeeperServiceTest : StringSpec({
             }
         exception.message should startWith("높이, 너비, 지뢰 개수는 0보다 커야합니다.")
     }
+    "서비스를 통한 셀 오픈 테스트" {
+        val height = 4
+        val width = 4
+        val mineCount = 1
+
+        val minesWeeperService = MinesWeeperService(height, width, mineCount, TestMinesStrategy())
+        minesWeeperService.createCells()
+
+        minesWeeperService.openCells(1,1) shouldBe true
+        minesWeeperService.openCells(2,2) shouldBe true
+    }
+    "서비스를 통한 셀 오픈 예외 테스트" {
+        val height = 4
+        val width = 4
+        val mineCount = 1
+
+        val minesWeeperService = MinesWeeperService(height, width, mineCount, TestMinesStrategy())
+        minesWeeperService.createCells()
+        val exception =
+            shouldThrow<IllegalArgumentException> {
+                minesWeeperService.openCells(4,1) shouldBe true
+            }
+        exception.message should startWith("해당 셀이 없습니다.")
+    }
 })
 

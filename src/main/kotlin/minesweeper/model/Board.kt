@@ -37,4 +37,21 @@ class Board(
     fun getRowCells(row: Int): Cells {
         return cells.getRowCells(row)
     }
+
+    fun openCells(row: Int, column: Int): Boolean {
+        if (isMine(row, column)) {
+            return false
+        }
+
+        cells.openAroundCells(row, column)
+        return true
+    }
+
+    fun isFinishGame(): Boolean {
+        return cells.cellList.all { it.isOpen || it.isMine }
+    }
+
+    private fun isMine(row: Int, column: Int): Boolean {
+        return cells.cellList.find { it.isAround(row, column) }?.isMine ?: false
+    }
 }

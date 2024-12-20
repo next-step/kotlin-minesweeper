@@ -12,20 +12,38 @@ class ResultView {
         }
     }
 
+    fun printStartGame() {
+        println("지뢰찾기 게임 시작")
+    }
+
+    fun printLoseGame() {
+        println("Lose Game.")
+    }
+
+    fun printWinGame() {
+        println("Win Game.")
+    }
+
     private fun printRow(rowCells: Cells) {
         print(rowCells.cellList.joinToString("") { cell -> buildString { printCell(cell) } })
     }
 
     private fun printCell(cell: Cell) {
-        if (cell.isMine()) {
-            print(MINE_SYMBOL)
+        if (cell.isMine) {
+            print(CELL_SYMBOL)
             return
         }
 
-        print("${cell.mineAroundCount} ")
+        if (cell.isOpen) {
+            print("${cell.mineAroundCount} ")
+            return
+        }
+
+        print(CELL_SYMBOL)
     }
 
     companion object {
+        private const val CELL_SYMBOL = "C "
         private const val MINE_SYMBOL = "* "
     }
 }
