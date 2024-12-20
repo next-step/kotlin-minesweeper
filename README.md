@@ -56,4 +56,4 @@
 ## 기능 구현
 - [X] `Cell` isMine 제거
 - [X] `detectMines` 초기화 시점에서 정의
-- [ ] `dimensions` 지뢰 개수에 대한 책임 분리
+- [X] `dimensions` 지뢰 개수에 대한 책임 분리
