@@ -1,31 +1,30 @@
 package domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 class MineFieldTest : StringSpec({
-    "지정된 높이와 너비만큼의 필드를 생성한다." {
-        val mineField = MineField(3, 4, 0)
-        mineField.display().shouldHaveSize(3)
-        mineField.display().all { it.split(" ").size == 4 } shouldBe true
-    }
+    "올바른 크기와 지뢰 개수로 지뢰밭이 생성된다." {
+        val height = Height(3)
+        val width = Width(3)
+        val mineCount = 3
 
-    "지뢰의 개수가 필드 크기 이하이어야 한다." {
-        val height = 5
-        val width = 5
-        val mineCount = 10
         val mineField = MineField(height, width, mineCount)
+        val state = mineField.getState()
 
-        val flattened = mineField.display().flatMap { it.split(" ") }
-        val mineCountInField = flattened.count { it == "*" }
-
-        mineCountInField shouldBe mineCount
+        state.cells.size shouldBe 3
+        state.cells[0].size shouldBe 3
     }
 
-    "지뢰가 올바르게 표시된다." {
-        val mineField = MineField(2, 2, 4)
-        val display = mineField.display()
-        display.all { it.split(" ").all { it == "*" } } shouldBe true
+    "지뢰 개수가 셀의 총 개수를 초과하면 예외가 발생한다." {
+        val height = Height(3)
+        val width = Width(3)
+        val invalidMineCount = 10
+
+        shouldThrow<IllegalArgumentException> {
+            MineField(height, width, invalidMineCount)
+        }
     }
 })

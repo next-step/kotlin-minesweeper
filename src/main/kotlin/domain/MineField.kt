@@ -1,34 +1,26 @@
 package domain
 
-class MineField(private val height: Int, private val width: Int, private val mineCount: Int) {
-    private val field: List<List<Cell>>
+class MineField(
+    private val height: Height,
+    private val width: Width,
+    private val mineCount: Int,
+    private val cellMapper: CellMapper = DefaultCellMapper(),
+) {
+    private val grid: Grid
 
     init {
-        require(mineCount <= height * width) { MINE_MAXIMUM_EXCEPTION_MESSAGE }
-        field = createMineField()
-    }
-
-    private fun createMineField(): List<List<Cell>> {
-        val positions = generateAllPositions().shuffled().take(mineCount).toSet()
-        return List(height) { row ->
-            List(width) { col ->
-                val isMine = positions.contains(Position(row, col))
-                Cell.create(isMine)
-            }
-        }
+        require(mineCount <= height.value * width.value) { MINE_MAXIMUM_EXCEPTION_MESSAGE }
+        val minePositions = generateAllPositions().shuffled().take(mineCount).toSet()
+        val cells = Cells.create(height.value, width.value, minePositions)
+        grid = Grid(height, width, cells).withNumberHints()
     }
 
     private fun generateAllPositions(): List<Position> =
-        (0 until height).flatMap { row ->
-            (0 until width).map { col ->
-                Position(row, col)
-            }
+        List(height.value * width.value) { index ->
+            Position(index / width.value, index % width.value)
         }
 
-    fun display(): List<String> =
-        field.map { row ->
-            row.joinToString(" ") { it.display() }
-        }
+    fun getState(): MineFieldState = MineFieldState(grid.getCells())
 
     companion object {
         private const val MINE_MAXIMUM_EXCEPTION_MESSAGE = "지뢰는 총 셀 수를 초과할 수 없습니다."
