@@ -65,28 +65,4 @@ class CellsTest {
 
         assertThat(actual).isEqualTo(2)
     }
-
-    @Test
-    fun `셀은 지뢰를 지정 할 수 있다`() {
-        val cells =
-            Cells.detectCreateOf(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.NumberCell(Position(1, 1)),
-                    Cell.NumberCell(Position(0, 2)),
-                    Cell.NumberCell(Position(1, 2)),
-                ),
-            )
-
-        val actual = cells.assignMinesToCells(listOf(Position(0, 0), Position(1, 1)))
-
-        assertAll(
-            { assertThat(actual.checkMine(Position(0, 0))).isTrue() },
-            { assertThat(actual.checkMine(Position(1, 1))).isTrue() },
-            { assertThat(actual.checkMine(Position(0, 1))).isFalse() },
-            { assertThat(actual.checkMine(Position(1, 0))).isFalse() },
-        )
-    }
 }

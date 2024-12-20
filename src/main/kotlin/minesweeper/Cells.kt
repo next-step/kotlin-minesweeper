@@ -49,17 +49,4 @@ class Cells(private val values: Map<CellKey, Cell>) {
             }
         }
     }
-
-    @Deprecated("필요 없음")
-    fun assignMinesToCells(minePositions: List<Position>): Cells {
-        return Cells(
-            values.mapValues { (_, cell) ->
-                if (minePositions.contains(cell.position)) {
-                    Cell.MineCell(cell.position)
-                } else {
-                    cell
-                }
-            },
-        )
-    }
 }
