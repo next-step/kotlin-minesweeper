@@ -47,4 +47,11 @@ class CellTest {
 
         assertThat(cell.isOpen).isTrue()
     }
+
+    @Test
+    fun `Cell 은 초기 닫힌 상태다`() {
+        val cell = Cell.createDefault(Position(1, 1))
+
+        assertThat(cell.isOpen).isFalse()
+    }
 }
