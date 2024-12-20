@@ -95,7 +95,6 @@ class CellsTest {
             { assertThat(cells.at(Position(1, 2)).isOpen).isTrue() },
             { assertThat(cells.at(Position(2, 2)).isOpen).isTrue() },
         )
-
     }
 
     @Test
