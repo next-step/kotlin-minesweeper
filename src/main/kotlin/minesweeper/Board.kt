@@ -2,7 +2,7 @@ package minesweeper
 
 import kotlin.random.Random
 
-class Board2(
+class Board(
     private val dimensions: Dimensions,
     minePositions: Set<Position>,
 ) {
