@@ -4,7 +4,6 @@ import minesweeper.domain.cell.Cell
 import minesweeper.domain.cell.ClosedCell
 import minesweeper.domain.cell.LandmineCell
 import minesweeper.domain.cell.Location
-import minesweeper.domain.cell.NumberCell
 
 class GameBoard private constructor(
     val area: Area,
@@ -27,8 +26,8 @@ class GameBoard private constructor(
         return GameBoardState(
             countOfTotalCells = cells.size,
             countOfClosedCells = cells.count { it is ClosedCell },
-            countOfNumberCells = cells.count { it is NumberCell },
             countOfLandmineCells = cells.count { it is LandmineCell },
+            countOfTotalLandmines = cells.count { (it is ClosedCell && it.hasLandmine) || (it is LandmineCell) },
         )
     }
 
