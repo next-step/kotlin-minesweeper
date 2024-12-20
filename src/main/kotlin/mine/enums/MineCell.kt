@@ -1,6 +1,7 @@
 package mine.enums
 
-enum class MineCell(val value: String) {
-    NORMAL("*"),
-    MINE("M"),
+sealed class MineCell {
+    data object MINE : MineCell()
+
+    data class Number(val value: Int) : MineCell()
 }
