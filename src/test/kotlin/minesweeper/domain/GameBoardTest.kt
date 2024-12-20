@@ -168,5 +168,25 @@ class GameBoardTest : BehaviorSpec({
                 result.cells shouldContainExactlyInAnyOrder fiveByFiveCellsWithFiveLandminesOneOneNumberCellAndAdjacentNumberCell
             }
         }
+
+        `when`("게임판을 벗어난 위치를 열려고 하면") {
+            val location = Location(row = 6, column = 1)
+
+            then("논리적 오류이므로 예외를 던진다") {
+                shouldThrow<IllegalArgumentException> {
+                    sut.open(location)
+                }
+            }
+        }
+
+        `when`("이미 열린 셀 위치로 다시 열려고 하면") {
+            val location = Location(row = 1, column = 5)
+            val firstTry: GameBoard = sut.open(location)
+            val secondTry: GameBoard = sut.open(location)
+
+            then("동일한 게임판을 반환한다") {
+                firstTry.cells shouldContainExactlyInAnyOrder secondTry.cells
+            }
+        }
     }
 })
