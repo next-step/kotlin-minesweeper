@@ -3,7 +3,6 @@ package minesweeper.ui
 import minesweeper.*
 
 class ResultView {
-
     fun startView() {
         println("지뢰찾기 게임 시작")
     }

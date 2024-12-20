@@ -7,13 +7,16 @@ sealed class Cell(val position: Position) {
         get() = position.y
 
     open fun determineCell(determineMineCount: Int) {}
+
     var isOpen: Boolean = false
         private set
     val x: Int
         get() = position.x
 
     fun availableOpen(): Boolean = !isOpen
+
     fun isMine(): Boolean = this is MineCell
+
     fun open() {
         if (isOpen) return
 
