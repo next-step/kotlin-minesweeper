@@ -1,9 +1,11 @@
 package minesweeper
 
+@Deprecated("MinePlacer 로 대체")
 interface CellProvider {
     fun provide(dimensions: Dimensions): Cells
 }
 
+@Deprecated("MinePlacer 로 대체")
 class DefaultCellProvider(private val mineCount: Int) : CellProvider {
     private fun validateMineCount(
         dimensions: Dimensions,
