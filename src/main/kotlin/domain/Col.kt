@@ -8,7 +8,7 @@ value class Col(val value: Int) {
         require(value >= MINIMUM_WIDTH) { "$INVALID_COLUMN_SIZE value: $value" }
     }
 
-    operator fun compareTo(other: Int): Int = value.compareTo(other)
+    operator fun compareTo(other: Col): Int = value.compareTo(other.value)
 
     operator fun times(other: Row): Int = value * other.value
 

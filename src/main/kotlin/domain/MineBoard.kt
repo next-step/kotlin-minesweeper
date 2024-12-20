@@ -1,8 +1,5 @@
 package domain
 
-import constants.MineSweeperConstants.MINIMUM_HEIGHT
-import constants.MineSweeperConstants.MINIMUM_WIDTH
-
 class MineBoard(
     private val mineGameMetric: MineGameMetric,
     val cells: Cells,
@@ -14,11 +11,7 @@ class MineBoard(
             val nextRow = cell.coordinate.row.value + direction.rowOffset
             val nextCol = cell.coordinate.col.value + direction.colOffset
 
-            if (MINIMUM_HEIGHT > nextRow || nextRow > mineGameMetric.boardHeightSize ||
-                MINIMUM_WIDTH > nextCol || nextCol > mineGameMetric.boardWidthSize
-            ) {
-                continue
-            }
+            if (mineGameMetric.isOutOfMineBoard(Coordinate(Row(nextRow), Col(nextCol)))) continue
 
             val nextCoordinate = cells.getCoordinateIs(Coordinate(Row(nextRow), Col(nextCol)))
             if (nextCoordinate.isMineCell()) {
