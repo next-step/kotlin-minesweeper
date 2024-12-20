@@ -19,7 +19,7 @@ data class Dimensions(val width: Int, val height: Int) {
         return allPositions().map {
             Cell.NumberCell(it)
         }.let {
-            Cells.create(it)
+            Cells.detectCreateOf(it)
         }
     }
 }

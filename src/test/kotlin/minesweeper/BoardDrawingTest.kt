@@ -33,7 +33,7 @@ class BoardDrawingTest {
     fun `첫 번째 행을 반환하고 값을 제거한다`() {
         val boardDrawing =
             BoardDrawing.create(
-                Cells.create(
+                Cells.detectCreateOf(
                     listOf(
                         Cell.createDefault(Position(0, 0)),
                         Cell.MineCell(Position(1, 0)),

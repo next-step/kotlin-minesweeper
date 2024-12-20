@@ -21,7 +21,7 @@ class Board2(
                 Cell.createDefault(position)
             }
         }
-        return Cells.create(cellList)
+        return Cells.detectCreateOf(cellList)
     }
 
     fun checkMine(position: Position): Boolean {

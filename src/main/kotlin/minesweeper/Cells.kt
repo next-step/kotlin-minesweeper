@@ -19,18 +19,6 @@ class Cells(private val values: Map<CellKey, Cell>) {
             .count { it is Cell.MineCell }
     }
 
-    fun assignMinesToCells(minePositions: List<Position>): Cells {
-        return Cells(
-            values.mapValues { (_, cell) ->
-                if (minePositions.contains(cell.position)) {
-                    Cell.MineCell(cell.position)
-                } else {
-                    cell
-                }
-            },
-        )
-    }
-
     fun checkMine(position: Position): Boolean {
         return isMineCell(at(position))
     }
@@ -45,7 +33,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
         return values.values
             .filter { it.matchRowIndex(rowIndex) }
     }
-    
+
     private fun isMineCell(cell: Cell): Boolean {
         return cell is Cell.MineCell
     }
@@ -55,8 +43,23 @@ class Cells(private val values: Map<CellKey, Cell>) {
     }
 
     companion object {
-        fun create(otherCells: List<Cell>): Cells {
-            return Cells(otherCells.associateBy { it.position.key() })
+        fun detectCreateOf(cells: List<Cell>): Cells {
+            return Cells(cells.associateBy { it.position.key() }).apply {
+                detectMines()
+            }
         }
+    }
+
+    @Deprecated("필요 없음")
+    fun assignMinesToCells(minePositions: List<Position>): Cells {
+        return Cells(
+            values.mapValues { (_, cell) ->
+                if (minePositions.contains(cell.position)) {
+                    Cell.MineCell(cell.position)
+                } else {
+                    cell
+                }
+            },
+        )
     }
 }

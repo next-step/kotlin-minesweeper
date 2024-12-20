@@ -8,7 +8,7 @@ class CellsTest {
     @Test
     fun `위치와 지뢰 타입을 가진다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
                     Cell.NumberCell(Position(0, 0)),
                     Cell.MineCell(Position(1, 1)),
@@ -24,7 +24,7 @@ class CellsTest {
     @Test
     fun `행 갯수를 알 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
                     Cell.NumberCell(Position(0, 0)),
                     Cell.NumberCell(Position(1, 0)),
@@ -37,7 +37,7 @@ class CellsTest {
     @Test
     fun `해당 행의 셀 타입을 알 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
                     Cell.NumberCell(Position(0, 0)),
                     Cell.MineCell(Position(1, 0)),
@@ -53,7 +53,7 @@ class CellsTest {
     @Test
     fun `셀의 이웃 지뢰 갯수를 알 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
                     Cell.NumberCell(Position(0, 0)),
                     Cell.MineCell(Position(1, 0)),
@@ -69,7 +69,7 @@ class CellsTest {
     @Test
     fun `셀은 지뢰를 지정 할 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
                     Cell.NumberCell(Position(0, 0)),
                     Cell.NumberCell(Position(1, 0)),
