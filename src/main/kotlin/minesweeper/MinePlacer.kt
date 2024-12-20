@@ -8,7 +8,7 @@ class MinePlacer(
 ) {
     init {
         require(mineCount in 1 until dimensions.totalCells) {
-            "Mine count must be less than total cells and greater than 0."
+            "지뢰 개수는 전체 칸 수보다 적고 0보다 커야 합니다."
         }
     }
 
