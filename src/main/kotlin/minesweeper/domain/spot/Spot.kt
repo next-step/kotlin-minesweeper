@@ -1,7 +1,5 @@
 package minesweeper.domain.spot
 
-import minesweeper.domain.Point
+import minesweeper.domain.land.Point
 
-abstract class Spot(val point: Point) {
-    abstract fun displayCharacter(): String
-}
+abstract class Spot(val point: Point)

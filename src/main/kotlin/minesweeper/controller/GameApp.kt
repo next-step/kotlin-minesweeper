@@ -1,11 +1,10 @@
 package minesweeper.controller
 
+import minesweeper.domain.land.LandSize
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
 
-class GameApp {
-    var land: Land? = null
-
+class GameApp(val land: Land) {
     companion object {
         fun generateMines(
             total: Int,
@@ -19,18 +18,17 @@ class GameApp {
 }
 
 fun main() {
-    val game = GameApp()
-    val height = InputView.inputHeight()
-    val width = InputView.inputWidth()
+    val landSize = LandSize(InputView.inputHeight(), InputView.inputWidth())
     val mineCount = InputView.inputMineCount()
-    game.land =
-        Land.from(
-            height,
-            width,
-            mineCount,
-            GameApp::generateMines,
+    val game =
+        GameApp(
+            Land.from(
+                landSize,
+                mineCount,
+                GameApp::generateMines,
+            ),
         )
 
-    val land = game.land ?: return
+    val land = game.land
     ResultView.showLand(land)
 }

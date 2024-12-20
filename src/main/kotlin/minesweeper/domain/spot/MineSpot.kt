@@ -1,9 +1,5 @@
 package minesweeper.domain.spot
 
-import minesweeper.domain.Point
+import minesweeper.domain.land.Point
 
-class MineSpot(point: Point) : Spot(point) {
-    override fun displayCharacter(): String {
-        return "*"
-    }
-}
+class MineSpot(point: Point) : Spot(point)
