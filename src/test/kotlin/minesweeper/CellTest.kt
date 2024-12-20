@@ -5,26 +5,33 @@ import org.junit.jupiter.api.Test
 
 class CellTest {
     @Test
-    fun `지뢰가 없는 셀을 생성할 수 있다`() {
+    fun `주변 지뢰 개수를 가지는 셀을 생성한다`() {
+        val cell = Cell.createDefault(Position(1, 1))
+
+        val actual = cell.neighborMineCount
+
+        assertThat(actual).isEqualTo(0)
+    }
+
+    @Test
+    fun `주변 지뢰 개수를 지정가능하다`() {
         val cell = Cell.NumberCell(Position(1, 1))
 
-        val isMine = cell.isMine
+        cell.determineCell(3)
 
-        assertThat(isMine).isFalse()
+        assertThat(cell.neighborMineCount).isEqualTo(3)
     }
 
     @Test
     fun `지뢰가 있는 셀을 생성할 수 있다`() {
         val cell = Cell.createMine(Position(1, 1))
 
-        val isMine = cell.isMine
-
-        assertThat(isMine).isTrue()
+        assertThat(cell is Cell.MineCell).isTrue()
     }
 
     @Test
     fun `셀은 위치를 가진다`() {
-        val cell = Cell.NumberCell(Position(1, 1))
+        val cell = Cell.createDefault(Position(1, 1))
 
         val position = cell.position
 

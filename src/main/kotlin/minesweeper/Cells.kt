@@ -4,7 +4,7 @@ typealias CellKey = Int
 
 class Cells(private val values: Map<CellKey, Cell>) {
     val mineCount: Int
-        get() = values.values.count { it.isMine }
+        get() = values.values.count { isMineCell(it) }
 
     fun detectMines() {
         values.values.forEach { cell ->
@@ -16,7 +16,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
     fun neighborsMineCount(position: Position): Int {
         return Direction.neighbors(position)
             .mapNotNull { values[it.key()] }
-            .count { it.isMine }
+            .count { it is Cell.MineCell }
     }
 
     fun assignMinesToCells(minePositions: List<Position>): Cells {
@@ -32,7 +32,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
     }
 
     fun checkMine(position: Position): Boolean {
-        return at(position).isMine
+        return isMineCell(at(position))
     }
 
     fun rowSize(): Int {
@@ -44,6 +44,10 @@ class Cells(private val values: Map<CellKey, Cell>) {
     fun rowAt(rowIndex: Int): List<Cell> {
         return values.values
             .filter { it.matchRowIndex(rowIndex) }
+    }
+    
+    private fun isMineCell(cell: Cell): Boolean {
+        return cell is Cell.MineCell
     }
 
     private fun at(position: Position): Cell {

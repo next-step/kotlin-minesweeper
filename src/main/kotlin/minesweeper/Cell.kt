@@ -1,8 +1,7 @@
 package minesweeper
 
 sealed class Cell(val position: Position) {
-    abstract val isMine: Boolean
-    abstract val mineCount: Int
+    abstract val neighborMineCount: Int
 
     val x: Int
         get() = position.x
@@ -14,13 +13,11 @@ sealed class Cell(val position: Position) {
     }
 
     data class MineCell(val pos: Position) : Cell(pos) {
-        override val isMine: Boolean = true
-        override val mineCount: Int = 0
+        override val neighborMineCount: Int = 0
     }
 
     data class NumberCell(val pos: Position, private var _mineCount: Int = 0) : Cell(pos) {
-        override val isMine: Boolean = false
-        override val mineCount: Int
+        override val neighborMineCount: Int
             get() = _mineCount
 
         override fun determineCell(determineMineCount: Int) {

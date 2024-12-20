@@ -30,7 +30,7 @@ private fun Cells.toDrawingRow(): MutableList<DrawingRow> {
             rowCells.map { cell ->
                 when (cell) {
                     is Cell.MineCell -> DrawingCell.MineCell
-                    is Cell.NumberCell -> DrawingCell.NumberCell(cell.mineCount)
+                    is Cell.NumberCell -> DrawingCell.NumberCell(cell.neighborMineCount)
                 }
             },
         )
