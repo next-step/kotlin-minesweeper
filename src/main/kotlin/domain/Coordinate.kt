@@ -1,3 +1,3 @@
 package domain
 
-data class Coordinate(val r: Row, val c: Col)
+data class Coordinate(val row: Row, val col: Col)

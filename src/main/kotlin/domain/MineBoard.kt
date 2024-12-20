@@ -10,13 +10,15 @@ class MineBoard(
     fun countAdjacentMines(cell: Cell): Int {
         var numberOfMines = 0
         for (i in DIRECTION_START_COUNT until DIRECTION_COUNT) {
-            val nr = ROW_OFFSETS[i] + cell.coordinate.r.value
-            val nc = COL_OFFSETS[i] + cell.coordinate.c.value
-            if (MINIMUM_HEIGHT > nr || nr > mineGameMetric.boardHeightSize || MINIMUM_WIDTH > nc || nc > mineGameMetric.boardWidthSize) {
+            val nextRow = ROW_OFFSETS[i] + cell.coordinate.row.value
+            val nextCol = COL_OFFSETS[i] + cell.coordinate.col.value
+            if (MINIMUM_HEIGHT > nextRow || nextRow > mineGameMetric.boardHeightSize ||
+                MINIMUM_WIDTH > nextCol || nextCol > mineGameMetric.boardWidthSize
+            ) {
                 continue
             }
 
-            val nextCoordinate = cells.getCoordinateIs(Coordinate(Row(nr), Col(nc)))
+            val nextCoordinate = cells.getCoordinateIs(Coordinate(Row(nextRow), Col(nextCol)))
 
             if (nextCoordinate.isMineCell()) {
                 numberOfMines++
