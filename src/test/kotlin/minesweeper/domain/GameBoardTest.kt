@@ -137,4 +137,19 @@ class GameBoardTest : BehaviorSpec({
             }
         }
     }
+
+    given("3x3 의 셀로 만든 게임판에서") {
+        val sut = GameBoard.from(threeByThreeCells)
+
+        `when`("현재 상태를 구하면") {
+            val result = sut.currentState()
+
+            then("모든 셀의 수, 닫힌 셀 수, 숫자 셀 수, 지뢰 셀 수를 알 수 있다") {
+                result.countOfTotalCells shouldBe 9
+                result.countOfClosedCells shouldBe 9
+                result.countOfNumberCells shouldBe 0
+                result.countOfLandmineCells shouldBe 0
+            }
+        }
+    }
 })
