@@ -18,10 +18,11 @@ class ResultView {
 
     private fun drawRow(row: DrawingRow) {
         row.forEach { cell ->
-            val icon = when (cell) {
-                is DrawingCell.MineCell -> CellIcon.MINE.icon
-                is DrawingCell.NumberCell -> cell.mineCount.toString()
-            }
+            val icon =
+                when (cell) {
+                    is DrawingCell.MineCell -> CellIcon.MINE.icon
+                    is DrawingCell.NumberCell -> cell.mineCount.toString()
+                }
             print(icon)
         }
     }

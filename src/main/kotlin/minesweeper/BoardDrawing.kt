@@ -2,6 +2,7 @@ package minesweeper
 
 sealed class DrawingCell {
     data object MineCell : DrawingCell()
+
     data class NumberCell(val mineCount: Int) : DrawingCell()
 }
 

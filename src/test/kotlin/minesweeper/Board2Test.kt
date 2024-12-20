@@ -44,5 +44,3 @@ class MinePlacerTest {
         assertThat(minePositions).hasSize(2)
     }
 }
-
-
