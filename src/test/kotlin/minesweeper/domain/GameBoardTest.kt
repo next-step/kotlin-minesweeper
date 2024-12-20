@@ -6,7 +6,6 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import minesweeper.domain.cell.ClosedCell
-import minesweeper.domain.cell.LandmineCell
 import minesweeper.domain.cell.Location
 import minesweeper.domain.cell.NumberCell
 import minesweeper.domain.cell.NumberOfAdjacentMines
@@ -148,54 +147,7 @@ class GameBoardTest : BehaviorSpec({
             val result: GameBoard = sut.open(location)
 
             then("(1,5)의 닫힌 셀만 숫자 셀로 열린다") {
-                result.cells shouldContainExactlyInAnyOrder
-                    listOf(
-                        ClosedCell(location = oneByOneLocation),
-                        ClosedCell(location = oneByTwoLocation),
-                        ClosedCell(location = oneByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(
-                            location = Location(row = 1, column = 4),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        NumberCell(location = Location(row = 1, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = twoByOneLocation),
-                        ClosedCell(location = twoByTwoLocation),
-                        ClosedCell(location = twoByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 2, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(3)),
-                        ClosedCell(
-                            location = Location(row = 2, column = 5),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(2),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = threeByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = threeByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = threeByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(
-                            location = Location(row = 3, column = 4),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 3, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 4, column = 1),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 4, column = 2), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 4, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 1), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 5, column = 2),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 5, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 4)),
-                        ClosedCell(location = Location(row = 5, column = 5)),
-                    )
+                result.cells shouldContainExactlyInAnyOrder fiveByFiveCellsWithFiveLandminesAndOneFiveNumberCell
             }
         }
 
@@ -204,50 +156,7 @@ class GameBoardTest : BehaviorSpec({
             val result: GameBoard = sut.open(location)
 
             then("(1,4)의 닫힌 셀만 지뢰 셀로 열린다") {
-                result.cells shouldContainExactlyInAnyOrder
-                    listOf(
-                        ClosedCell(location = oneByOneLocation),
-                        ClosedCell(location = oneByTwoLocation),
-                        ClosedCell(location = oneByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        LandmineCell(location = Location(row = 1, column = 4)),
-                        ClosedCell(location = Location(row = 1, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = twoByOneLocation),
-                        ClosedCell(location = twoByTwoLocation),
-                        ClosedCell(location = twoByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 2, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(3)),
-                        ClosedCell(
-                            location = Location(row = 2, column = 5),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(2),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = threeByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = threeByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = threeByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(
-                            location = Location(row = 3, column = 4),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 3, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 4, column = 1),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 4, column = 2), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 4, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 1), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 5, column = 2),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 5, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 4)),
-                        ClosedCell(location = Location(row = 5, column = 5)),
-                    )
+                result.cells shouldContainExactlyInAnyOrder fiveByFiveCellsWithFiveLandminesAndOneFourLandmineCell
             }
         }
 
@@ -256,54 +165,7 @@ class GameBoardTest : BehaviorSpec({
             val result: GameBoard = sut.open(location)
 
             then("지뢰가 없는 인접한 셀들 모두 열린다") {
-                result.cells shouldContainExactlyInAnyOrder
-                    listOf(
-                        NumberCell(location = oneByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
-                        NumberCell(location = oneByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
-                        NumberCell(location = oneByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(
-                            location = Location(row = 1, column = 4),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 1, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        NumberCell(location = twoByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
-                        NumberCell(location = twoByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines.ZERO),
-                        NumberCell(location = twoByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 2, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(3)),
-                        ClosedCell(
-                            location = Location(row = 2, column = 5),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(2),
-                            hasLandmine = true,
-                        ),
-                        NumberCell(location = threeByOneLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        NumberCell(location = threeByTwoLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        NumberCell(location = threeByThreeLocation, numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(
-                            location = Location(row = 3, column = 4),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 3, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 4, column = 1),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 4, column = 2), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(location = Location(row = 4, column = 4), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 4, column = 5), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 1), numberOfAdjacentLandmines = NumberOfAdjacentMines(2)),
-                        ClosedCell(
-                            location = Location(row = 5, column = 2),
-                            numberOfAdjacentLandmines = NumberOfAdjacentMines(1),
-                            hasLandmine = true,
-                        ),
-                        ClosedCell(location = Location(row = 5, column = 3), numberOfAdjacentLandmines = NumberOfAdjacentMines(1)),
-                        ClosedCell(location = Location(row = 5, column = 4)),
-                        ClosedCell(location = Location(row = 5, column = 5)),
-                    )
+                result.cells shouldContainExactlyInAnyOrder fiveByFiveCellsWithFiveLandminesOneOneNumberCellAndAdjacentNumberCell
             }
         }
     }
