@@ -3,6 +3,18 @@ package cell
 class Coordinates(
     private val values: List<Coordinate>,
 ) {
+    fun randomMineCoordinates(mineCount: Int): Map<Coordinate, Cell> = values.shuffled().take(mineCount).let(::toCells)
+
+    private fun toCells(mineCoordinates: List<Coordinate>): Map<Coordinate, Cell> {
+        val mineCells = mineCoordinates.map { it to MineCell }
+        val blankCells =
+            values
+                .filterNot(mineCoordinates::contains)
+                .map { it to BlankCell }
+
+        return (mineCells + blankCells).toMap()
+    }
+
     companion object {
         private const val MIN_VALUE = 0
 
