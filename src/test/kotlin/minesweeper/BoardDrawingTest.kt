@@ -44,8 +44,8 @@ class BoardDrawingTest {
         val expected =
             DrawingRow(
                 listOf(
-                    DrawingCell.OpenCell(1),
-                    DrawingCell.MineCell,
+                    DrawingCell.CloseCell,
+                    DrawingCell.CloseCell,
                 ),
             )
         assertAll(
