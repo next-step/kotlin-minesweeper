@@ -1,5 +1,7 @@
 package minesweeper.ui
 
+import minesweeper.domain.cell.Location
+
 object ConsoleInput {
     fun inputHeight(): Int {
         println("높이를 입력하세요.")
@@ -20,5 +22,11 @@ object ConsoleInput {
         val result = readln().toInt()
         println()
         return result
+    }
+
+    fun inputSelectLocation(): Location {
+        print("open: ")
+        val (row, column) = readln().split(", ").map { it.toInt() }
+        return Location(row = row, column = column)
     }
 }

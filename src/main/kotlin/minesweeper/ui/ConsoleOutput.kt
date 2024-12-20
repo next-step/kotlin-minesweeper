@@ -8,12 +8,19 @@ object ConsoleOutput {
 
     fun announceGameStarted() = println("지뢰찾기 게임 시작")
 
+    fun printException(exception: Throwable) = println(exception.message)
+
+    fun announceGameWin() = println("Win Game!!")
+
+    fun announceGameLose() = println("Lose Game.")
+
     fun displayCurrentGameBoard(gameBoard: GameBoard) {
         gameBoard.cells
             .chunked(gameBoard.area.width)
             .forEach { row ->
                 println(row.joinToString(DELIMITER) { display(it.symbol) })
             }
+        println()
     }
 
     private fun display(symbol: Symbol): String {
