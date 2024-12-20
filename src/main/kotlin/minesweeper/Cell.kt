@@ -24,6 +24,24 @@ sealed class Cell(val position: Position) {
         }
     }
 
+    fun availableOpen(): Boolean {
+        return !isOpen
+    }
+
+    fun isMine(): Boolean {
+        return this is MineCell
+    }
+
+    fun matchRowIndex(rowIndex: Int): Boolean {
+        return position.y == rowIndex
+    }
+
+    fun open() {
+        if (isOpen) return // 이미 열린 경우 무시
+
+        isOpen = true
+    }
+
     companion object {
         fun createMine(position: Position): Cell {
             return MineCell(position)
