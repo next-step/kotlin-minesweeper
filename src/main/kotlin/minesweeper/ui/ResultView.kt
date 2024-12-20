@@ -1,6 +1,10 @@
 package minesweeper.ui
 
-import minesweeper.*
+import minesweeper.BoardDrawing
+import minesweeper.DrawingCell
+import minesweeper.DrawingRow
+import minesweeper.Playing
+import minesweeper.State
 
 class ResultView {
     fun startView() {
