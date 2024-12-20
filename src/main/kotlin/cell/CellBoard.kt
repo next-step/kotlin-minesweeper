@@ -1,13 +1,16 @@
 package cell
 
 class CellBoard(
-    private val cells: Map<Coordinate, Cell>,
+    private val _cells: Map<Coordinate, Cell>,
 ) {
     val cellCount: Int
-        get() = cells.size
+        get() = _cells.size
 
     val mineCount: Int
-        get() = cells.values.count { it is MineCell }
+        get() = _cells.values.count { it is MineCell }
+
+    val cells: Map<Coordinate, Cell>
+        get() = _cells.toMap()
 
     companion object {
         private const val MIN_VALUE = 0
