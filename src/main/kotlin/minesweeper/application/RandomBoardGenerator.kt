@@ -1,6 +1,5 @@
 package minesweeper.application
 
-import minesweeper.domain.Board
 import minesweeper.domain.Cells
 import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
@@ -8,7 +7,7 @@ import minesweeper.domain.PlayableBoard
 import minesweeper.domain.UndetonatedMineCell
 
 class RandomBoardGenerator : BoardGenerator {
-    override fun generate(command: GenerateMinesweeperCommand): Board {
+    override fun generate(command: GenerateMinesweeperCommand): PlayableBoard {
         val width = command.width
         val area = command.area
         val mineCount = command.mineCount

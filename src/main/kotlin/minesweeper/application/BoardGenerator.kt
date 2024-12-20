@@ -1,7 +1,7 @@
 package minesweeper.application
 
-import minesweeper.domain.Board
+import minesweeper.domain.PlayableBoard
 
 fun interface BoardGenerator {
-    fun generate(command: GenerateMinesweeperCommand): Board
+    fun generate(command: GenerateMinesweeperCommand): PlayableBoard
 }
