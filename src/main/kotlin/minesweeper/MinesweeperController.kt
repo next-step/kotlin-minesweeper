@@ -29,11 +29,10 @@ class MinesweeperController(
         while (game is PlayableGame) {
             val (y, x) = InputView.getCoordinates()
             game = game.open(y, x)
-            if (game is PlayableGame) {
-                ResultView.render(game)
+            when (game) {
+                is PlayableGame -> ResultView.render(game)
+                is CompletedGame -> ResultView.result(game)
             }
         }
-
-        ResultView.result(game as CompletedGame)
     }
 }
