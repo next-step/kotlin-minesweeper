@@ -11,7 +11,7 @@ class GameBoardCellOpener(
         gameBoard: GameBoard,
         location: Location,
     ): GameBoard {
-        val targetCell = gameBoard.find(location) ?: throw IllegalArgumentException("해당 위치를 가진 셀이 존재하지 않습니다")
+        val targetCell = gameBoard.find(location) ?: throw IllegalArgumentException("해당 위치를 가진 셀이 존재하지 않습니다: location=$location")
         val openCellStrategy = openCellStrategyHandler.findStrategy(targetCell)
         return GameBoard.from(openCellStrategy.open(gameBoard.cells, targetCell))
     }
