@@ -27,8 +27,8 @@ class MinesweeperController(
         ResultView.start()
 
         while (game is PlayableGame) {
-            val (row, col) = InputView.getCoordinates()
-            game = game.open(y = row - 1, x = col - 1)
+            val (y, x) = InputView.getCoordinates()
+            game = game.open(y, x)
             if (game is PlayableGame) {
                 ResultView.render(game)
             }
