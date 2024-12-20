@@ -8,13 +8,12 @@ class MineBoard(
         var numberOfMines = 0
 
         for (direction in Direction.entries) {
-            val nextRow = cell.coordinate.row.value + direction.rowOffset
-            val nextCol = cell.coordinate.col.value + direction.colOffset
+            val nextCoordinate = cell.coordinate + direction.offset
+            if (mineGameMetric.isOutOfMineBoard(nextCoordinate)) {
+                continue
+            }
 
-            if (mineGameMetric.isOutOfMineBoard(Coordinate(Row(nextRow), Col(nextCol)))) continue
-
-            val nextCoordinate = cells.getCoordinateIs(Coordinate(Row(nextRow), Col(nextCol)))
-            if (nextCoordinate.isMineCell()) {
+            if (cells.getCoordinateIs(nextCoordinate).isMineCell()) {
                 numberOfMines++
             }
         }
