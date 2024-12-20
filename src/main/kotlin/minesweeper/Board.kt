@@ -11,8 +11,8 @@ class Board(
         require(minePositions.size < dimensions.totalCells) { "마인의 수는 전체 셀 수보다 작아야 합니다." }
     }
 
-    fun open(openPosition: Position) {
-        cells.open(openPosition)
+    fun open(openPosition: Position): OpenState {
+        return cells.open(openPosition)
     }
 
     fun draw(): BoardDrawing {

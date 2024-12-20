@@ -6,26 +6,37 @@ class Cells(private val values: Map<CellKey, Cell>) {
     val mineCount: Int
         get() = values.values.count { isMineCell(it) }
 
-    fun open(position: Position) {
+    fun open(position: Position): OpenState {
         val cell = at(position)
-        if (cell.availableOpen().not()) {
-            return
+        if (cell.availableOpen().not() || cell.isMine()) {
+            return OpenState.LOSE
         }
-        if (cell.isMine()) {
-            throw IllegalArgumentException("지뢰가 있는 셀은 열 수 없습니다.")
-        }
-
 
         cell.open()
         val visited = mutableSetOf<Position>()
         open(neighborsCells(position), visited)
+
+        if (allNonMineCellsOpened()) {
+            return OpenState.ALL_DONE
+        }
+
+        return OpenState.CONTINUE
+    }
+
+    private fun allNonMineCellsOpened(): Boolean {
+        return cells().all { cell ->
+            cell.isOpen || isMineCell(cell)
+        }
     }
 
     private fun cells(): List<Cell> {
         return values.values.toList()
     }
 
-    private fun open(neighborsCells: Cells, visited: MutableSet<Position>) {
+    private fun open(
+        neighborsCells: Cells,
+        visited: MutableSet<Position>,
+    ) {
         neighborsCells.cells().forEach { cell ->
             if (visited.contains(cell.position) || cell.isOpen || isMineCell(cell)) {
                 return@forEach
@@ -45,7 +56,7 @@ class Cells(private val values: Map<CellKey, Cell>) {
         return Cells(
             Direction.neighbors(position)
                 .mapNotNull { values[it.key()] }
-                .associateBy { it.position.key() }
+                .associateBy { it.position.key() },
         )
     }
 
@@ -92,4 +103,10 @@ class Cells(private val values: Map<CellKey, Cell>) {
             }
         }
     }
+}
+
+enum class OpenState {
+    LOSE,
+    CONTINUE,
+    ALL_DONE,
 }
