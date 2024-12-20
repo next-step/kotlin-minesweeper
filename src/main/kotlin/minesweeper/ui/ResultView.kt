@@ -31,6 +31,14 @@ class ResultView {
     private fun nextLine() {
         println()
     }
+
+    fun resultDraw(win: Boolean) {
+        if (win) {
+            println("Win Game.")
+        } else {
+            println("Lose Game.")
+        }
+    }
 }
 
 enum class CellIcon(val icon: String?) {
