@@ -36,7 +36,7 @@ class BoardDrawingTest {
                 Cells.detectCreateOf(
                     listOf(
                         Cell.createDefault(Position(0, 0)),
-                        Cell.MineCell(Position(1, 0)),
+                        MineCell(Position(1, 0)),
                     ),
                 ),
             )

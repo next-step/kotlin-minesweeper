@@ -15,7 +15,7 @@ class CellTest {
 
     @Test
     fun `주변 지뢰 개수를 지정가능하다`() {
-        val cell = Cell.NumberCell(Position(1, 1))
+        val cell = NumberCell(Position(1, 1))
 
         cell.determineCell(3)
 
@@ -26,7 +26,7 @@ class CellTest {
     fun `지뢰가 있는 셀을 생성할 수 있다`() {
         val cell = Cell.createMine(Position(1, 1))
 
-        assertThat(cell is Cell.MineCell).isTrue()
+        assertThat(cell is MineCell).isTrue()
     }
 
     @Test

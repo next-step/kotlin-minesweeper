@@ -10,9 +10,9 @@ class CellsTest {
         val cells =
             Cells.detectCreateOf(
                 listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 0)),
-                    Cell.MineCell(Position(1, 1)),
+                    NumberCell(Position(0, 0)),
+                    MineCell(Position(1, 0)),
+                    MineCell(Position(1, 1)),
                 ),
             )
 
@@ -26,15 +26,15 @@ class CellsTest {
         val cells =
             Cells.detectCreateOf(
                 listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                    Cell.NumberCell(Position(2, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.NumberCell(Position(1, 1)),
-                    Cell.NumberCell(Position(2, 1)),
-                    Cell.NumberCell(Position(0, 2)),
-                    Cell.NumberCell(Position(1, 2)),
-                    Cell.NumberCell(Position(2, 2)),
+                    NumberCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(2, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
+                    NumberCell(Position(2, 1)),
+                    NumberCell(Position(0, 2)),
+                    NumberCell(Position(1, 2)),
+                    NumberCell(Position(2, 2)),
                 ),
             )
 
@@ -58,10 +58,10 @@ class CellsTest {
         val cells =
             Cells.detectCreateOf(
                 listOf(
-                    Cell.MineCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.NumberCell(Position(1, 1)),
+                    MineCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
                 ),
             )
 
@@ -80,19 +80,23 @@ class CellsTest {
         val cells =
             Cells.detectCreateOf(
                 listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                    Cell.NumberCell(Position(2, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.NumberCell(Position(1, 1)),
-                    Cell.NumberCell(Position(2, 1)),
-                    Cell.NumberCell(Position(0, 2)),
-                    Cell.NumberCell(Position(1, 2)),
-                    Cell.MineCell(Position(2, 2)),
+                    NumberCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(2, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
+                    NumberCell(Position(2, 1)),
+                    NumberCell(Position(0, 2)),
+                    NumberCell(Position(1, 2)),
+                    MineCell(Position(2, 2)),
                 ),
             )
 
         cells.open(Position(0, 0))
+
+        cells.values.values.forEach {
+            println("position: ${it.position}, neighborMineCount: ${it.neighborMineCount} isOpen: ${it.isOpen}")
+        }
 
         assertAll(
             { assertThat(cells.at(Position(0, 0)).isOpen).isTrue() },
