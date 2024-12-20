@@ -14,12 +14,4 @@ data class Dimensions(val width: Int, val height: Int) {
             (0 until width).map { x -> Position(x, y) }
         }
     }
-
-    fun createDefaultCells(): Cells {
-        return allPositions().map {
-            Cell.NumberCell(it)
-        }.let {
-            Cells.detectCreateOf(it)
-        }
-    }
 }

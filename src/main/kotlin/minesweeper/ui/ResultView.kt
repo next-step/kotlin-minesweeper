@@ -21,7 +21,8 @@ class ResultView {
             val icon =
                 when (cell) {
                     is DrawingCell.MineCell -> CellIcon.MINE.icon
-                    is DrawingCell.NumberCell -> cell.mineCount.toString()
+                    is DrawingCell.CloseCell -> CellIcon.CLOSE.icon
+                    is DrawingCell.OpenCell -> cell.cellValue.toString()
                 }
             print(icon)
         }
@@ -32,6 +33,7 @@ class ResultView {
     }
 }
 
-enum class CellIcon(val icon: String) {
+enum class CellIcon(val icon: String?) {
+    CLOSE("C"),
     MINE("*"),
 }

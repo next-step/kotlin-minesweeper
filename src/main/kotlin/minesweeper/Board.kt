@@ -11,6 +11,18 @@ class Board(
         require(minePositions.size < dimensions.totalCells) { "마인의 수는 전체 셀 수보다 작아야 합니다." }
     }
 
+    fun open(openPosition: Position) {
+        cells.open(openPosition)
+    }
+
+    fun draw(): BoardDrawing {
+        return BoardDrawing.create(cells)
+    }
+
+    fun checkMine(position: Position): Boolean {
+        return cells.checkMine(position)
+    }
+
     private val cells: Cells = initializeCells(minePositions)
 
     private fun initializeCells(minePositions: Set<Position>): Cells {
@@ -23,14 +35,6 @@ class Board(
                 }
             }
         return Cells.detectCreateOf(cellList)
-    }
-
-    fun checkMine(position: Position): Boolean {
-        return cells.checkMine(position)
-    }
-
-    fun draw(): BoardDrawing {
-        return BoardDrawing.create(cells)
     }
 
     companion object {

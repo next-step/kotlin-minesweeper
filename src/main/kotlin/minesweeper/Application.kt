@@ -11,5 +11,6 @@ fun main() {
     val board = Board(dimensions, MinePlacer(dimensions, inputView.readMineCount()).placeMines())
 
     resultView.startView()
+    board.open(Position.create(inputView.readOpenPosition()))
     resultView.drawBoard(board.draw())
 }
