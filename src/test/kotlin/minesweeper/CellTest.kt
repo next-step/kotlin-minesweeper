@@ -37,4 +37,14 @@ class CellTest {
 
         assertThat(position).isEqualTo(Position(1, 1))
     }
+
+
+    @Test
+    fun `셀을 열수 있다`() {
+        val cell = Cell.createDefault(Position(1, 1))
+
+        cell.open()
+
+        assertThat(cell.isOpen).isTrue()
+    }
 }

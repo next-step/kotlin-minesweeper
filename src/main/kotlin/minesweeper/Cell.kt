@@ -3,14 +3,13 @@ package minesweeper
 sealed class Cell(val position: Position) {
     abstract val neighborMineCount: Int
 
-    val x: Int
-        get() = position.x
-
     open fun determineCell(determineMineCount: Int) {}
 
-    fun matchRowIndex(rowIndex: Int): Boolean {
-        return position.y == rowIndex
-    }
+    var isOpen: Boolean = false
+        private set
+
+    val x: Int
+        get() = position.x
 
     data class MineCell(val pos: Position) : Cell(pos) {
         override val neighborMineCount: Int = 0
