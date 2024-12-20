@@ -76,7 +76,7 @@ class Cells(
     }
 }
 
-internal fun <K, V> Map<K, V>.replacing(
+private fun <K, V> Map<K, V>.replacing(
     key: K,
     value: V,
 ): Map<K, V> = toMutableMap().apply { set(key, value) }
