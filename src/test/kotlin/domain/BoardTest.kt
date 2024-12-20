@@ -6,12 +6,11 @@ import io.kotest.matchers.shouldBe
 class BoardTest : DescribeSpec({
     describe("countAdjacentMines") {
         lateinit var mineGameMetric: MineGameMetric
-        lateinit var cells: Cells
         lateinit var sut: MineBoard
 
         beforeTest {
             mineGameMetric = MineGameMetric(3, 3, 8)
-            cells =
+            val cells =
                 Cells(
                     listOf(
                         Cell.EmptyCell(Coordinate(Row(2), Col(2))),

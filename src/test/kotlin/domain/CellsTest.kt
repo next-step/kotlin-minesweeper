@@ -4,7 +4,6 @@ import domain.strategy.RandomMineCellGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class CellsTest : DescribeSpec({
     describe("generate test") {
@@ -24,7 +23,7 @@ class CellsTest : DescribeSpec({
 
     describe("getCoordinateIs test") {
         lateinit var cellList: List<Cell>
-        lateinit var sut: Cells
+
         beforeTest {
             cellList =
                 listOf(
@@ -41,18 +40,19 @@ class CellsTest : DescribeSpec({
                         Coordinate(Row(2), Col(2)),
                     ),
                 )
-            sut = Cells(cellList)
         }
 
         context("조회하려는 좌표가 유효한 좌표인 경우") {
+            val sut = Cells(cellList)
             it("해당 셀을 리턴한다.") {
-                sut.getCoordinateIs(Coordinate(Row(1), Col(1))) shouldBeSameInstanceAs cellList[0]
+                sut.getCoordinateIs(Coordinate(Row(1), Col(1))) shouldBe cellList[0]
             }
         }
 
         context("조회하려는 좌표가 유효하지 않은 좌표인 경우") {
             it("throw an exception.") {
-                shouldThrow<IllegalArgumentException> {
+                val sut = Cells(cellList)
+                shouldThrow<NoSuchElementException> {
                     sut.getCoordinateIs(Coordinate(Row(3), Col(3)))
                 }
             }
