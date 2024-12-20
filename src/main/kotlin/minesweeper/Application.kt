@@ -14,8 +14,6 @@ fun main() {
 
     while (state is Playing) {
         state = state.toggle(Position.create(inputView.readOpenPosition()))
-        resultView.drawBoard(state.displayBoard())
+        resultView.drawBoard(state)
     }
-
-    resultView.resultDraw(state.isWin())
 }
