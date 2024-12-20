@@ -13,7 +13,7 @@ object ResultView {
     }
 }
 
-private fun Array<Spot>.toShowString() =
+private fun List<Spot>.toShowString() =
     this.joinToString(
         separator = " ",
         transform = { it.displayCharacter() },
