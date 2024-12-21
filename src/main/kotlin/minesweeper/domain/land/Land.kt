@@ -1,7 +1,5 @@
-package minesweeper.controller
+package minesweeper.domain.land
 
-import minesweeper.domain.land.Point
-import minesweeper.domain.land.LandSize
 import minesweeper.domain.spot.DefaultSpot
 import minesweeper.domain.spot.MineSpot
 import minesweeper.domain.spot.Spot
@@ -16,7 +14,7 @@ class Land private constructor(val spots: List<Spot>, val land: LandSize) {
         fun from(
             land: LandSize,
             mineCount: Int,
-            generateMines: ((Int, Int) -> List<Int>) = { total: Int, count: Int -> GameApp.generateMines(total, count) },
+            generateMines: ((Int, Int) -> List<Int>),
         ): Land {
             val landSize = land.size()
             check(landSize > mineCount) { "땅보다 많은 지뢰를 심을 수 없어요" }
@@ -28,7 +26,7 @@ class Land private constructor(val spots: List<Spot>, val land: LandSize) {
                     val x = index % land.width
                     when (mines.contains(y * land.width + x)) {
                         true -> MineSpot(Point(x, y))
-                        false -> DefaultSpot(Point(x, y))
+                        false -> DefaultSpot(Point(x, y), MineData(land, mines))
                     }
                 }
 

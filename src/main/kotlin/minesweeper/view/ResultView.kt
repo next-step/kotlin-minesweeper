@@ -1,6 +1,6 @@
 package minesweeper.view
 
-import minesweeper.controller.Land
+import minesweeper.domain.land.Land
 import minesweeper.domain.spot.Spot
 
 object ResultView {
@@ -17,7 +17,6 @@ private fun List<Spot>.toShowString() =
     this.joinToString(
         separator = " ",
         transform = {
-            SpotCharacter.characterOf(it)
-//            it.displayCharacter()
-                    },
+            it.characterOf()
+        },
     )
