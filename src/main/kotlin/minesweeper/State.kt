@@ -1,6 +1,6 @@
 package minesweeper
 
-interface State {
+sealed interface State {
     fun toggle(position: Position): State
 
     fun displayBoard(): BoardDrawing
