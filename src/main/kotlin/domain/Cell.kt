@@ -5,6 +5,8 @@ sealed class Cell {
 
     abstract fun addNumberHint(row: Int, col: Int, allCells: Cells): Cell
 
+    open fun isMine(): Boolean = false
+
     data object Empty : Cell() {
         override val id = CellId.EMPTY
 
@@ -18,7 +20,7 @@ sealed class Cell {
                 val newRow = row + dr
                 val newCol = col + dc
                 if (newRow in 0 until allCells.size && newCol in 0 until allCells[newRow].size) {
-                    allCells[newRow][newCol] is MineCell
+                    allCells[newRow][newCol].isMine()
                 } else false
             }
         }
@@ -27,8 +29,10 @@ sealed class Cell {
     data object MineCell : Cell() {
         override val id = CellId.MINE
 
+        override fun isMine(): Boolean = true
+
         override fun addNumberHint(row: Int, col: Int, allCells: Cells): Cell {
-            return this // Mines do not change to another type.
+            return this
         }
     }
 
@@ -36,7 +40,7 @@ sealed class Cell {
         override val id = CellId.NUMBER
 
         override fun addNumberHint(row: Int, col: Int, allCells: Cells): Cell {
-            return this // Mines do not change to another type.
+            return this
         }
     }
 
