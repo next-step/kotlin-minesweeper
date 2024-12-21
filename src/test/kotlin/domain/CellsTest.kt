@@ -34,7 +34,7 @@ class CellsTest : FunSpec({
         test("일부 셀에 지뢰를 추가한 뒤 지뢰가 없는 셀만 반환한다") {
             // given
             val cells = Cells.create(2, 2)
-            val targetCell = cells.allCells().random()
+            val targetCell = cells.allCells().random().addMine()
             val updatedCells = cells.updateCell(targetCell)
 
             // when
@@ -46,11 +46,11 @@ class CellsTest : FunSpec({
         }
     }
 
-    context("withMineOn") {
+    context("updateCell") {
         test("지정한 셀에 지뢰를 추가한 새로운 Cells를 반환한다") {
             // given
             val cells = Cells.create(2, 2)
-            val targetCell = cells.allCells().last()
+            val targetCell = cells.allCells().last().addMine()
 
             // when
             val updatedCells = cells.updateCell(targetCell)
@@ -64,15 +64,43 @@ class CellsTest : FunSpec({
             // given
             val cells = Cells.create(3, 3)
             val targetCells = cells.allCells().take(2) // 처음 두 셀에 차례로 지뢰 설치
-            val updatedOnce = cells.updateCell(targetCells[0])
+            val updatedOnce = cells.updateCell(targetCells[0].addMine())
 
             // when
-            val updatedTwice = updatedOnce.updateCell(targetCells[1])
+            val updatedTwice = updatedOnce.updateCell(targetCells[1].addMine())
 
             // then
             updatedTwice.allCells().count { it.hasMine } shouldBe 2
             updatedTwice.allCells().any { it.position == targetCells[0].position && it.hasMine } shouldBe true
             updatedTwice.allCells().any { it.position == targetCells[1].position && it.hasMine } shouldBe true
+        }
+    }
+
+    context("countAdjacentMines") {
+        test("주변에 지뢰가 없는 경우 0을 반환한다") {
+            // given
+            val cells = Cells.create(3, 3)
+            val targetCell = cells.allCells().random()
+
+            // when
+            val count = cells.countAdjacentMines(targetCell)
+
+            // then
+            count shouldBe 0
+        }
+
+        test("주변에 지뢰를 1개 추가하면 지뢰의 개수는 1개를 반환한다") {
+            // given
+            val cells = Cells.create(3, 3)
+            val targetCell = cells.allCells().first()
+            val adjacentCell = cells.allCells().first { it.position.row == 2 && it.position.column == 2 }
+            val updatedCells = cells.updateCell(adjacentCell.addMine()) // 지뢰 추가
+
+            // when
+            val count = updatedCells.countAdjacentMines(targetCell)
+
+            // then
+            count shouldBe 1
         }
     }
 })
