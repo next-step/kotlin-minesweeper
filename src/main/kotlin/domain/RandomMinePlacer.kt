@@ -9,7 +9,7 @@ class RandomMinePlacer : MinePlacer {
         require(nonMined.size >= mineCount) { "지뢰개수는 지뢰가 설치되지 않은 셀의 개수보다 적거나 같아야 합니다. [mineCount: $mineCount]" }
         val selectedCells = nonMined.shuffled().take(mineCount)
         return selectedCells.fold(cells) { acc, cell ->
-            acc.withMineOn(cell)
+            acc.updateCell(cell.addMine())
         }
     }
 }
