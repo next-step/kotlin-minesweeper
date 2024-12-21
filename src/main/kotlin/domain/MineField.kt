@@ -22,6 +22,22 @@ class MineField(
 
     fun getState(): MineFieldState = MineFieldState(grid.getCells())
 
+    fun openCell(
+        row: Int,
+        col: Int,
+    ): Boolean {
+        val cell = grid.getCells()[row][col]
+        return if (cell.isMine()) {
+            false
+        } else {
+            val positionsToOpen = cell.open(row, col, grid.getCells())
+            positionsToOpen.forEach { (r, c) ->
+                grid.getCells()[r][c].isOpen = true
+            }
+            true
+        }
+    }
+
     companion object {
         private const val MINE_MAXIMUM_EXCEPTION_MESSAGE = "지뢰는 총 셀 수를 초과할 수 없습니다."
     }

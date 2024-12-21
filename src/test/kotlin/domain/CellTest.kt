@@ -17,11 +17,32 @@ class CellTest : StringSpec({
 
     "인접한 지뢰가 없는 Empty 셀은 Empty 상태를 유지한다." {
         val emptyCell = Cell.Empty
-        val cells = Cells(listOf(
-            Row(listOf(Cell.Empty, Cell.Empty, Cell.Empty)),
-            Row(listOf(Cell.Empty, emptyCell, Cell.Empty)),
-            Row(listOf(Cell.Empty, Cell.Empty, Cell.Empty))
-        ))
+        val cells =
+            Cells(
+                listOf(
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            Cell.Empty,
+                            Cell.Empty,
+                        ),
+                    ),
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            emptyCell,
+                            Cell.Empty,
+                        ),
+                    ),
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            Cell.Empty,
+                            Cell.Empty,
+                        ),
+                    ),
+                ),
+            )
 
         val result = emptyCell.addNumberHint(1, 1, cells)
         result shouldBe Cell.Empty
@@ -29,23 +50,57 @@ class CellTest : StringSpec({
 
     "인접한 지뢰가 있는 Empty 셀은 적절한 숫자를 가진 NumberCell이 된다." {
         val emptyCell = Cell.Empty
-        val cells = Cells(listOf(
-            Row(listOf(Cell.MineCell, Cell.Empty, Cell.Empty)),
-            Row(listOf(Cell.Empty, emptyCell, Cell.Empty)),
-            Row(listOf(Cell.Empty, Cell.Empty, Cell.MineCell))
-        ))
+        val cells =
+            Cells(
+                listOf(
+                    Row(
+                        listOf(
+                            Cell.MineCell,
+                            Cell.Empty,
+                            Cell.Empty,
+                        ),
+                    ),
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            emptyCell,
+                            Cell.Empty,
+                        ),
+                    ),
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            Cell.Empty,
+                            Cell.MineCell,
+                        ),
+                    ),
+                ),
+            )
 
         val result = emptyCell.addNumberHint(1, 1, cells)
         result.shouldBeInstanceOf<Cell.NumberCell>()
-        (result as Cell.NumberCell).count shouldBe 2
+        (result).count shouldBe 2
     }
 
     "MineCell은 숫자 힌트가 추가되어도 MineCell 상태를 유지한다." {
         val mineCell = Cell.MineCell
-        val cells = Cells(listOf(
-            Row(listOf(Cell.MineCell, Cell.Empty)),
-            Row(listOf(Cell.Empty, mineCell))
-        ))
+        val cells =
+            Cells(
+                listOf(
+                    Row(
+                        listOf(
+                            Cell.MineCell,
+                            Cell.Empty,
+                        ),
+                    ),
+                    Row(
+                        listOf(
+                            Cell.Empty,
+                            mineCell,
+                        ),
+                    ),
+                ),
+            )
 
         val result = mineCell.addNumberHint(1, 1, cells)
         result shouldBe Cell.MineCell
