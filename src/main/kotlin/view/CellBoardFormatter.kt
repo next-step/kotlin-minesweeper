@@ -19,26 +19,26 @@ fun format(board: CellBoard): String {
 private fun initializeBoardArray(
     height: Int,
     width: Int,
-): Array<CharArray> {
-    return Array(height) { CharArray(width) { 'C' } }
+): Array<MutableList<String>> {
+    return Array(height) { MutableList(width) { "C" } }
 }
 
 private fun populateBoardArray(
-    boardArray: Array<CharArray>,
+    boardArray: Array<MutableList<String>>,
     cells: Map<Coordinate, Cell>,
 ) {
     cells.forEach { (coordinate, cell) ->
         val x = coordinate.x.value
         val y = coordinate.y.value
 
-        boardArray[y][x] =
-            when (cell) {
-                is MineCell -> 'X'
-                else -> 'C'
-            }
+        val emoji = when (cell) {
+            is MineCell -> "💣"
+            else -> "🟫"
+        }
+        boardArray[y][x] = emoji
     }
 }
 
-private fun boardArrayToString(boardArray: Array<CharArray>): String {
-    return boardArray.joinToString("\n") { it.joinToString(" ") }
+private fun boardArrayToString(boardArray: Array<MutableList<String>>): String {
+    return boardArray.joinToString("\n") { it.joinToString("") }
 }
