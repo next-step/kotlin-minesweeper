@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import mine.enums.MineCell
 import org.junit.jupiter.api.Test
 
-class MineRandomPlacerTest {
+class MinesweeperRandomPlacerTest {
     @Test
     fun `지뢰는 개수 배치`() {
         val placer = MineRandomPlacer()

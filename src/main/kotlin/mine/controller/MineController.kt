@@ -1,6 +1,6 @@
 package mine.controller
 
-import mine.domain.Mine
+import mine.domain.Minesweeper
 import mine.view.InputView
 import mine.view.OutputView
 
@@ -10,14 +10,14 @@ class MineController {
         minesweeperStart(mine)
     }
 
-    private fun createMine(): Mine {
+    private fun createMine(): Minesweeper {
         val height = InputView.getHeight()
         val width = InputView.getWidth()
         val mineCount = InputView.getMineCount()
-        return Mine(height, width, mineCount)
+        return Minesweeper(height, width, mineCount)
     }
 
-    private fun minesweeperStart(mine: Mine) {
-        OutputView.gameStart(mine)
+    private fun minesweeperStart(minesweeper: Minesweeper) {
+        OutputView.gameStart(minesweeper)
     }
 }
