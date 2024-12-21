@@ -3,7 +3,7 @@ package cell
 class Coordinates(
     private val values: List<Coordinate>,
 ) {
-    fun randomMineCoordinates(mineCount: Int): Map<Coordinate, Cell> = values.shuffled().take(mineCount).let(::toCells)
+    fun randomMineCoordinates(mineCount: Count): Map<Coordinate, Cell> = values.shuffled().take(mineCount.value).let(::toCells)
 
     private fun toCells(mineCoordinates: List<Coordinate>): Map<Coordinate, Cell> {
         val mineCells = mineCoordinates.map { it to MineCell }
@@ -19,20 +19,18 @@ class Coordinates(
         private const val MIN_VALUE = 0
 
         fun of(
-            height: Int,
-            width: Int,
+            height: Length,
+            width: Length,
         ): Coordinates {
-            require(height > MIN_VALUE) { "높이는 0 보다 커야 합니다." }
-            require(width > MIN_VALUE) { "너비는 0 보다 커야 합니다." }
             return Coordinates(generateCoordinates(height, width))
         }
 
         private fun generateCoordinates(
-            height: Int,
-            width: Int,
+            height: Length,
+            width: Length,
         ): List<Coordinate> =
-            (MIN_VALUE until height).flatMap { y ->
-                generateRowCoordinates(y, width)
+            (MIN_VALUE until height.value).flatMap { y ->
+                generateRowCoordinates(y, width.value)
             }
 
         private fun generateRowCoordinates(

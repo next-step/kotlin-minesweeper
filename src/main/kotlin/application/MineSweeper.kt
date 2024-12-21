@@ -1,8 +1,11 @@
 package application
 
 import cell.CellBoard
+import cell.Count
+import cell.Length
 import view.InputView
 import view.OutputView
+import view.format
 
 class MineSweeper {
     fun execute() {
@@ -18,7 +21,7 @@ class MineSweeper {
         val width = InputView.inputWidth()
         val mineCount = InputView.inputMineCount()
 
-        return Request(height, width, mineCount)
+        return Request(Length(height), Length(width), Count(mineCount))
     }
 
     private fun renderBoard(board: CellBoard) {
@@ -27,8 +30,8 @@ class MineSweeper {
     }
 
     private data class Request(
-        val height: Int,
-        val width: Int,
-        val mineCount: Int,
+        val height: Length,
+        val width: Length,
+        val mineCount: Count,
     )
 }

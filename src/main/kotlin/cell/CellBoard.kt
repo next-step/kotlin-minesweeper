@@ -16,13 +16,10 @@ class CellBoard(
         private const val MIN_VALUE = 0
 
         fun of(
-            height: Int,
-            width: Int,
-            mineCount: Int,
+            height: Length,
+            width: Length,
+            mineCount: Count,
         ): CellBoard {
-            require(height > MIN_VALUE) { "높이는 0 보다 커야 합니다." }
-            require(width > MIN_VALUE) { "너비는 0 보다 커야 합니다." }
-
             val coordinates = Coordinates.of(height, width)
             val cellsWithMine = coordinates.randomMineCoordinates(mineCount)
 
