@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class CoordinatesTest {
     @MethodSource("provideInvalidValue")
     @ParameterizedTest
-    fun `좌표 일급 컬렉션 생성 시 음수가 있으면 예외가 발생한다`(value: Int) {
+    fun `좌표 일급 컬렉션 생성 시 음수가 있으면 예외가 발생한다`(value: Length) {
         shouldThrow<IllegalArgumentException> {
             Coordinates.of(value, value)
         }
@@ -15,6 +15,6 @@ class CoordinatesTest {
 
     companion object {
         @JvmStatic
-        fun provideInvalidValue(): List<Int> = listOf(-1, 0)
+        fun provideInvalidValue(): List<Length> = listOf(Length(-1), Length(0))
     }
 }
