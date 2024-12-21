@@ -45,9 +45,7 @@ class Cells(val values: Map<CellKey, Cell>) {
 
         if (cell.isOpenable) {
             cell.open()
-            cell.neighbors()
-                .mapNotNull { values[it.key()] }
-                .forEach { openCellRecursive(it) }
+            openNeighborCells(cell.neighbors())
         }
     }
 
