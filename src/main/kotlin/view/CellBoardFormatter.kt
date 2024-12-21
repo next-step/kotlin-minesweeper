@@ -1,4 +1,4 @@
-package application
+package view
 
 import cell.Cell
 import cell.CellBoard
