@@ -6,58 +6,13 @@ import org.junit.jupiter.api.assertAll
 
 class CellsTest {
     @Test
-    fun `위치와 지뢰 타입을 가진다`() {
-        val cells =
-            Cells.create(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 1)),
-                ),
-            )
-
-        assertAll(
-            { assertThat(cells.checkMine(Position(0, 0))).isFalse() },
-            { assertThat(cells.checkMine(Position(1, 1))).isTrue() },
-        )
-    }
-
-    @Test
-    fun `행 갯수를 알 수 있다`() {
-        val cells =
-            Cells.create(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                ),
-            )
-
-        assertThat(cells.rowSize()).isEqualTo(1)
-    }
-
-    @Test
-    fun `해당 행의 셀 타입을 알 수 있다`() {
-        val cells =
-            Cells.create(
-                listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 0)),
-                ),
-            )
-
-        assertThat(cells.rowAt(0).map { it }).containsExactly(
-            Cell.NumberCell(Position(0, 0)),
-            Cell.MineCell(Position(1, 0)),
-        )
-    }
-
-    @Test
     fun `셀의 이웃 지뢰 갯수를 알 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.MineCell(Position(1, 0)),
-                    Cell.MineCell(Position(1, 1)),
+                    NumberCell(Position(0, 0)),
+                    MineCell(Position(1, 0)),
+                    MineCell(Position(1, 1)),
                 ),
             )
 
@@ -67,26 +22,88 @@ class CellsTest {
     }
 
     @Test
-    fun `셀은 지뢰를 지정 할 수 있다`() {
+    fun `주위셀을 열 수 있다`() {
         val cells =
-            Cells.create(
+            Cells.detectCreateOf(
                 listOf(
-                    Cell.NumberCell(Position(0, 0)),
-                    Cell.NumberCell(Position(1, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.NumberCell(Position(1, 1)),
-                    Cell.NumberCell(Position(0, 2)),
-                    Cell.NumberCell(Position(1, 2)),
+                    NumberCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(2, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
+                    NumberCell(Position(2, 1)),
+                    NumberCell(Position(0, 2)),
+                    NumberCell(Position(1, 2)),
+                    NumberCell(Position(2, 2)),
                 ),
             )
 
-        val actual = cells.assignMinesToCells(listOf(Position(0, 0), Position(1, 1)))
+        cells.open(Position(0, 0))
 
         assertAll(
-            { assertThat(actual.checkMine(Position(0, 0))).isTrue() },
-            { assertThat(actual.checkMine(Position(1, 1))).isTrue() },
-            { assertThat(actual.checkMine(Position(0, 1))).isFalse() },
-            { assertThat(actual.checkMine(Position(1, 0))).isFalse() },
+            { assertThat(cells.at(Position(0, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(1, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(2, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 1)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(1, 1)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(2, 1)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 2)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(1, 2)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(2, 2)).isOpen).isTrue() },
+        )
+    }
+
+    @Test
+    fun `자신만여는경우`() {
+        val cells =
+            Cells.detectCreateOf(
+                listOf(
+                    MineCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
+                ),
+            )
+
+        cells.open(Position(1, 0))
+
+        assertAll(
+            { assertThat(cells.at(Position(0, 0)).isOpen).isFalse() },
+            { assertThat(cells.at(Position(1, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 1)).isOpen).isFalse() },
+            { assertThat(cells.at(Position(1, 1)).isOpen).isFalse() },
+        )
+    }
+
+    @Test
+    fun `인접한 셀의 지뢰개수가 0이면 모두 연다`() {
+        val cells =
+            Cells.detectCreateOf(
+                listOf(
+                    NumberCell(Position(0, 0)),
+                    NumberCell(Position(1, 0)),
+                    NumberCell(Position(2, 0)),
+                    NumberCell(Position(0, 1)),
+                    NumberCell(Position(1, 1)),
+                    NumberCell(Position(2, 1)),
+                    NumberCell(Position(0, 2)),
+                    NumberCell(Position(1, 2)),
+                    MineCell(Position(2, 2)),
+                ),
+            )
+
+        cells.open(Position(0, 0))
+
+        assertAll(
+            { assertThat(cells.at(Position(0, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(1, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(2, 0)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 1)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(0, 2)).isOpen).isTrue() },
+            { assertThat(cells.at(Position(1, 1)).isOpen).isFalse() },
+            { assertThat(cells.at(Position(2, 1)).isOpen).isFalse() },
+            { assertThat(cells.at(Position(1, 2)).isOpen).isFalse() },
+            { assertThat(cells.at(Position(2, 2)).isOpen).isFalse() },
         )
     }
 }

@@ -1,33 +1,33 @@
 package minesweeper
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class BoardTest {
     @Test
-    fun `지뢰 갯수 지정 가능하다`() {
-        val fixture =
-            testFixture(
-                listOf(
-                    Cell.MineCell(Position(0, 0)),
-                    Cell.NumberCell(Position(0, 1)),
-                    Cell.MineCell(Position(0, 2)),
-                ),
-            )
-        val board = Board.initializeBoard(Dimensions(3, 3), fixture)
-
-        assertAll(
-            { assertThat(board.checkMine(Position(0, 0))).isTrue() },
-            { assertThat(board.checkMine(Position(0, 1))).isFalse() },
-            { assertThat(board.checkMine(Position(0, 2))).isTrue() },
-        )
+    fun `지뢰 최소개수시 예외 발생`() {
+        assertThatIllegalArgumentException().isThrownBy {
+            Board(Dimensions(3, 3), emptySet())
+        }
     }
 
-    private fun testFixture(data: List<Cell>) =
-        object : CellProvider {
-            override fun provide(dimensions: Dimensions): Cells {
-                return Cells.create(data)
-            }
+    @Test
+    fun `지뢰 최대개수 초과시 예외 발생`() {
+        assertThatIllegalArgumentException().isThrownBy {
+            Board(Dimensions(2, 2), setOf(Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 1)))
         }
+    }
+}
+
+class MinePlacerTest {
+    @Test
+    fun `지뢰 갯수 지정 가능하다`() {
+        val dimensions = Dimensions(3, 3)
+        val minePlacer = MinePlacer(dimensions, 2)
+
+        val minePositions = minePlacer.placeMines()
+
+        assertThat(minePositions).hasSize(2)
+    }
 }

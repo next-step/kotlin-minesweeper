@@ -1,8 +1,11 @@
 package minesweeper
 
 sealed class DrawingCell {
+    data object CloseCell : DrawingCell()
+
+    data class OpenCell(val cellValue: Int) : DrawingCell()
+
     data object MineCell : DrawingCell()
-    data class NumberCell(val mineCount: Int) : DrawingCell()
 }
 
 data class DrawingRow(val cells: List<DrawingCell>) {
@@ -24,15 +27,18 @@ data class BoardDrawing(private val _values: MutableList<DrawingRow>) {
 }
 
 private fun Cells.toDrawingRow(): MutableList<DrawingRow> {
-    return (0 until rowSize()).map { i ->
-        val rowCells = rowAt(i)
-        DrawingRow(
-            rowCells.map { cell ->
-                when (cell) {
-                    is Cell.MineCell -> DrawingCell.MineCell
-                    is Cell.NumberCell -> DrawingCell.NumberCell(cell.mineCount)
-                }
-            },
-        )
-    }.toMutableList()
+    return values.values
+        .groupBy { it.y }
+        .map { (_, cells) ->
+            DrawingRow(
+                cells.map { cell ->
+                    if (cell.isOpen) {
+                        DrawingCell.OpenCell(cell.neighborMineCount)
+                    } else {
+                        DrawingCell.CloseCell
+                    }
+                },
+            )
+        }
+        .toMutableList()
 }

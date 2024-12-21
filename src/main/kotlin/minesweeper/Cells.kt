@@ -2,9 +2,52 @@ package minesweeper
 
 typealias CellKey = Int
 
-class Cells(private val values: Map<CellKey, Cell>) {
+enum class OpenState {
+    LOSE,
+    CONTINUE,
+    ALL_DONE,
+}
+
+class Cells(val values: Map<CellKey, Cell>) {
     val mineCount: Int
-        get() = values.values.count { it.isMine }
+        get() = values.values.count { isMineCell(it) }
+
+    fun neighborsMineCount(position: Position): Int =
+        Direction.neighbors(position)
+            .mapNotNull { values[it.key()] }
+            .count { isMineCell(it) }
+
+    fun open(position: Position): OpenState {
+        val cell = at(position)
+        if (cell.isOpen) return OpenState.CONTINUE
+
+        return when (cell) {
+            is MineCell -> {
+                OpenState.LOSE
+            }
+
+            is NumberCell -> {
+                cell.open()
+                openNeighborCells(cell.neighbors())
+                if (allNonMineCellsOpened()) OpenState.ALL_DONE else OpenState.CONTINUE
+            }
+        }
+    }
+
+    private fun openNeighborCells(neighbors: List<Position>) {
+        neighbors
+            .mapNotNull { values[it.key()] }
+            .forEach { openCellRecursive(it) }
+    }
+
+    private fun openCellRecursive(cell: Cell) {
+        if (cell.isOpen || isMineCell(cell)) return
+
+        if (cell.isOpenable) {
+            cell.open()
+            openNeighborCells(cell.neighbors())
+        }
+    }
 
     fun detectMines() {
         values.values.forEach { cell ->
@@ -13,46 +56,13 @@ class Cells(private val values: Map<CellKey, Cell>) {
         }
     }
 
-    fun neighborsMineCount(position: Position): Int {
-        return Direction.neighbors(position)
-            .mapNotNull { values[it.key()] }
-            .count { it.isMine }
-    }
+    fun at(position: Position): Cell = values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
 
-    fun assignMinesToCells(minePositions: List<Position>): Cells {
-        return Cells(
-            values.mapValues { (_, cell) ->
-                if (minePositions.contains(cell.position)) {
-                    Cell.MineCell(cell.position)
-                } else {
-                    cell
-                }
-            },
-        )
-    }
+    private fun allNonMineCellsOpened(): Boolean = values.values.all { it.isOpen || isMineCell(it) }
 
-    fun checkMine(position: Position): Boolean {
-        return at(position).isMine
-    }
-
-    fun rowSize(): Int {
-        return values.values
-            .filter { it.x == 0 }
-            .size
-    }
-
-    fun rowAt(rowIndex: Int): List<Cell> {
-        return values.values
-            .filter { it.matchRowIndex(rowIndex) }
-    }
-
-    private fun at(position: Position): Cell {
-        return values[position.key()] ?: throw IllegalArgumentException("셀이 존재하지 않습니다.")
-    }
+    private fun isMineCell(cell: Cell): Boolean = cell is MineCell
 
     companion object {
-        fun create(otherCells: List<Cell>): Cells {
-            return Cells(otherCells.associateBy { it.position.key() })
-        }
+        fun detectCreateOf(cells: List<Cell>): Cells = Cells(cells.associateBy { it.position.key() }).apply { detectMines() }
     }
 }

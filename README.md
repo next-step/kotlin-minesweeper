@@ -46,3 +46,24 @@
 - [X] delegate pattern 적용 고민
 - [X] Cell 을 sealed class 로 변경
 - [X] Cells <-> Cell 간의 양방향 참조를 제거
+
+# 3단계
+
+## 기능 요구사항
+
+지뢰가 없는 인접한 칸이 모두 열리게 된다.
+
+## 기능 구현
+- [X] `Cell` isMine 제거
+- [X] `detectMines` 초기화 시점에서 정의
+- [X] `dimensions` 지뢰 개수에 대한 책임 분리
+- [X] Cell 은 초기 닫힌 상태다
+- [X] Cell 은 열수 있다.
+- [X] 지뢰가 없는 인접한 칸이 모두 열리게 된다.
+- [X] 열린 셀에 지뢰가 있는 경우 게임 패배
+
+## 3단계 피드백
+
+- [X] interface 와 sealed interface 차이점
+- [X] `Cell` 의 sealed class 의 장점을 활용(When)
+- [X] `Cell` 오픈시 `visited` 제거 

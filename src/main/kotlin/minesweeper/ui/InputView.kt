@@ -21,4 +21,11 @@ class InputView(val inputProvider: () -> String? = { readln() }) {
     private fun readToInt(): Int {
         return inputProvider()?.toIntOrNull() ?: throw IllegalArgumentException("입력이 없습니다.")
     }
+
+    fun readOpenPosition(): Pair<Int, Int> {
+        print("open: ")
+        return readln().split(",").let {
+            Pair(it[0].toInt(), it[1].toInt())
+        }
+    }
 }

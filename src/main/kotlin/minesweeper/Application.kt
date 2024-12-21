@@ -8,9 +8,12 @@ fun main() {
     val resultView = ResultView()
 
     val dimensions = Dimensions(inputView.readWidth(), inputView.readHeight())
-    val board = Board.initializeBoard(dimensions, DefaultCellProvider(inputView.readMineCount()))
-
+    val minePlacer = MinePlacer(dimensions, inputView.readMineCount())
+    var state: State = Playing(Board(dimensions, minePlacer.placeMines()))
     resultView.startView()
-    board.detectMines()
-    resultView.drawBoard(board.draw())
+
+    while (state is Playing) {
+        state = state.toggle(Position.create(inputView.readOpenPosition()))
+        resultView.drawBoard(state)
+    }
 }

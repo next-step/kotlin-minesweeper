@@ -12,7 +12,7 @@ class BoardDrawingTest {
                 mutableListOf(
                     DrawingRow(
                         listOf(
-                            DrawingCell.NumberCell(1),
+                            DrawingCell.OpenCell(1),
                             DrawingCell.MineCell,
                         ),
                     ),
@@ -33,10 +33,10 @@ class BoardDrawingTest {
     fun `첫 번째 행을 반환하고 값을 제거한다`() {
         val boardDrawing =
             BoardDrawing.create(
-                Cells.create(
+                Cells.detectCreateOf(
                     listOf(
                         Cell.createDefault(Position(0, 0)),
-                        Cell.MineCell(Position(1, 0)),
+                        MineCell(Position(1, 0)),
                     ),
                 ),
             )
@@ -44,8 +44,8 @@ class BoardDrawingTest {
         val expected =
             DrawingRow(
                 listOf(
-                    DrawingCell.NumberCell(0),
-                    DrawingCell.MineCell,
+                    DrawingCell.CloseCell,
+                    DrawingCell.CloseCell,
                 ),
             )
         assertAll(
