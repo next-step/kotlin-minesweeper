@@ -1,3 +1,3 @@
 package minesweeper.domain.land
 
-data class Point(private val x: Int, private val y: Int)
+data class Point(val x: Int, val y: Int)

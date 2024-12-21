@@ -18,6 +18,5 @@ private fun List<Spot>.toShowString() =
         separator = " ",
         transform = {
             it.characterOf()
-//            SpotCharacter.characterOf(it)
         },
     )
