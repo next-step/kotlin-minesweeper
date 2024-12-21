@@ -1,19 +1,35 @@
 package minesweeper
 
-import minesweeper.domain.Board
 import minesweeper.domain.Cell
+import minesweeper.domain.Cells
+import minesweeper.domain.ClosedEmptyCell
 import minesweeper.domain.Coordinate
-import minesweeper.domain.EmptyCell
-import minesweeper.domain.MinedCell
+import minesweeper.domain.DetonatedMineCell
+import minesweeper.domain.OpenedEmptyCell
+import minesweeper.domain.PlayableBoard
+import minesweeper.domain.PlayableGame
+import minesweeper.domain.UndetonatedMineCell
 
-fun minedCellOf(
+fun undetonatedMineCellOf(
     y: Int,
     x: Int,
-) = Coordinate(y, x) to MinedCell()
+) = Coordinate(y, x) to UndetonatedMineCell
 
-fun emptyCellOf(
+fun detonatedMineCellOf(
     y: Int,
     x: Int,
-) = Coordinate(y, x) to EmptyCell()
+) = Coordinate(y, x) to DetonatedMineCell
 
-fun boardOf(vararg cells: Pair<Coordinate, Cell>): Board = Board(cells.toMap())
+fun closedEmptyCellOf(
+    y: Int,
+    x: Int,
+) = Coordinate(y, x) to ClosedEmptyCell
+
+fun openedEmptyCellOf(
+    y: Int,
+    x: Int,
+) = Coordinate(y, x) to OpenedEmptyCell
+
+fun playableGameOf(vararg cells: Pair<Coordinate, Cell>) = PlayableGame(PlayableBoard(cellsOf(*cells)))
+
+fun cellsOf(vararg cells: Pair<Coordinate, Cell>) = Cells(cells.toMap())
