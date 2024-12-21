@@ -1,5 +1,6 @@
 package minesweeper.controller
 
+import minesweeper.domain.land.Land
 import minesweeper.domain.land.LandSize
 import minesweeper.view.InputView
 import minesweeper.view.ResultView
