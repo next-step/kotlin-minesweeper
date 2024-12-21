@@ -3,82 +3,74 @@ package mine.domain
 import mine.enums.MineCell
 
 class BoardCalculator {
-    fun calculateBoard(
-        board: List<MineRow>,
-        height: Int,
-        width: Int,
-    ): List<MineRow> {
-        val result: MutableList<MutableList<MineCell>> =
-            MutableList(height) { MutableList(width) { MineCell.Number(MINE_CELL_DEFAULT_VALUE) } }
-        board.forEachIndexed { row, mineRow ->
-            mineRow.mineCells.forEachIndexed { col, cell ->
-                isMine(cell, result, row, col, height, width)
+    fun calculateBoard(mineBoard: List<MineRow>): List<MineRow> {
+        return mineBoard.mapIndexed { rowIndex, currentRow ->
+            val beforeRow = mineBoard.getOrNull(rowIndex - 1)
+            val afterRow = mineBoard.getOrNull(rowIndex + 1)
+            calculateRow(currentRow, beforeRow, afterRow)
+        }
+    }
+
+    private fun calculateRow(
+        currentRow: MineRow,
+        beforeRow: MineRow?,
+        afterRow: MineRow?,
+    ): MineRow {
+        val updatedCells =
+            currentRow.mineCells.mapIndexed { col, cell ->
+                calculateCell(cell, beforeRow, currentRow, afterRow, col)
+            }
+        return MineRow(updatedCells)
+    }
+
+    private fun calculateCell(
+        cell: MineCell,
+        beforeRow: MineRow?,
+        currentRow: MineRow,
+        afterRow: MineRow?,
+        col: Int,
+    ): MineCell {
+        return if (cell == MineCell.MINE) {
+            MineCell.MINE
+        } else {
+            val calculatedMines = adjacentMineCalculate(beforeRow, currentRow, afterRow, col)
+            MineCell.Number(calculatedMines)
+        }
+    }
+
+    private fun adjacentMineCalculate(
+        beforeRow: MineRow?,
+        currentRow: MineRow,
+        afterRow: MineRow?,
+        col: Int,
+    ): Int {
+        return directions.sumOf { dx ->
+            listOfNotNull(beforeRow, currentRow, afterRow).sumOf { row ->
+                checkMine(row, col + dx)
             }
         }
-
-        return result.map { MineRow(it) }
     }
 
-    private fun isMine(
-        cell: MineCell,
-        result: MutableList<MutableList<MineCell>>,
-        row: Int,
+    private fun checkMine(
+        row: MineRow,
         col: Int,
-        height: Int,
-        width: Int,
-    ) {
-        if (cell == MineCell.MINE) {
-            result[row][col] = MineCell.MINE
-            updateNeighbors(result, row, col, height, width)
-        }
+    ): Int {
+        return if (row.isValidCell(col) && isMine(row.mineCells[col])) {
+            MINE_ADD_VALUE
+        } else MINE_NORMAL_VALUE
     }
 
-    private fun updateNeighbors(
-        board: MutableList<MutableList<MineCell>>,
-        row: Int,
-        col: Int,
-        height: Int,
-        width: Int,
-    ) {
-        val directions =
-            listOf(
-                CELL_NEGATIVE to CELL_NEGATIVE,
-                CELL_NEGATIVE to CELL_ZERO,
-                CELL_NEGATIVE to CELL_POSITIVE,
-                CELL_ZERO to CELL_NEGATIVE,
-                CELL_ZERO to CELL_POSITIVE,
-                CELL_POSITIVE to CELL_NEGATIVE,
-                CELL_POSITIVE to CELL_ZERO,
-                CELL_POSITIVE to CELL_POSITIVE,
-            )
-        directions.forEach { (dx, dy) ->
-            val newRow = row + dx
-            val newCol = col + dy
-            isFindMineCell(newRow, height, newCol, width, board)
-        }
-    }
-
-    private fun isFindMineCell(
-        newRow: Int,
-        height: Int,
-        newCol: Int,
-        width: Int,
-        board: MutableList<MutableList<MineCell>>,
-    ) {
-        if (newRow in DEFAULT_START_VALUE until height &&
-            newCol in DEFAULT_START_VALUE until width &&
-            board[newRow][newCol] !is MineCell.MINE
-        ) {
-            val current = board[newRow][newCol] as MineCell.Number
-            board[newRow][newCol] = MineCell.Number(current.value + 1)
-        }
+    private fun isMine(mineCell: MineCell): Boolean {
+        return mineCell == MineCell.MINE
     }
 
     companion object {
+        private const val MINE_ADD_VALUE = 1
+        private const val MINE_NORMAL_VALUE = 0
         const val CELL_NEGATIVE = -1
         const val CELL_ZERO = 0
         const val CELL_POSITIVE = 1
-        const val DEFAULT_START_VALUE = 0
-        const val MINE_CELL_DEFAULT_VALUE = 0
+        private val directions =
+            listOf(CELL_NEGATIVE, CELL_ZERO, CELL_POSITIVE)
     }
 }

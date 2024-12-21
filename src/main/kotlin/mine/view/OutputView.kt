@@ -1,15 +1,15 @@
 package mine.view
 
-import mine.domain.Mine
 import mine.domain.MineRow
+import mine.domain.Minesweeper
 import mine.enums.MineCell
 
 object OutputView {
     const val MINE_SYMBOL = "*"
 
-    fun gameStart(mine: Mine) {
+    fun gameStart(minesweeper: Minesweeper) {
         println("지뢰찾기 게임 시작")
-        mine.minesweeper.forEach { row ->
+        minesweeper.mineBoard.forEach { row ->
             printMineBoard(row)
         }
     }

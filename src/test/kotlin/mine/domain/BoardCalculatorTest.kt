@@ -32,7 +32,7 @@ class BoardCalculatorTest {
                     ),
                 ),
             )
-        val result = BoardCalculator().calculateBoard(board, 3, 3)
+        val result = BoardCalculator().calculateBoard(board)
         val expectedResult =
             listOf(
                 MineRow(listOf(MineCell.Number(1), MineCell.Number(1), MineCell.Number(1))),
