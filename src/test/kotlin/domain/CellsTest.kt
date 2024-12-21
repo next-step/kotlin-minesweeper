@@ -45,7 +45,7 @@ class CellsTest : DescribeSpec({
         context("조회하려는 좌표가 유효한 좌표인 경우") {
             val sut = Cells(cellList)
             it("해당 셀을 리턴한다.") {
-                sut.getCoordinateIs(Coordinate(Row(1), Col(1))) shouldBe cellList[0]
+                sut.get(Coordinate(Row(1), Col(1))) shouldBe cellList[0]
             }
         }
 
@@ -53,7 +53,7 @@ class CellsTest : DescribeSpec({
             it("throw an exception.") {
                 val sut = Cells(cellList)
                 shouldThrow<NoSuchElementException> {
-                    sut.getCoordinateIs(Coordinate(Row(3), Col(3)))
+                    sut.get(Coordinate(Row(3), Col(3)))
                 }
             }
         }

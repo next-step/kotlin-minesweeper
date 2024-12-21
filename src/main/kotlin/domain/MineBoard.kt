@@ -13,7 +13,7 @@ class MineBoard(
                 continue
             }
 
-            if (cells.getCoordinateIs(nextCoordinate).isMineCell()) {
+            if (cells.get(nextCoordinate).isMineCell()) {
                 numberOfMines++
             }
         }

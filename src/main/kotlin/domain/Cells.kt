@@ -12,7 +12,7 @@ value class Cells(val cells: List<Cell>) {
 
     fun emptyCells(): List<EmptyCell> = cells.filterIsInstance<EmptyCell>()
 
-    fun getCoordinateIs(coordinate: Coordinate): Cell {
+    fun get(coordinate: Coordinate): Cell {
         return cells.firstOrNull { it.coordinate == coordinate }
             ?: throw NoSuchElementException("Coordinate $coordinate not found")
     }
