@@ -58,4 +58,72 @@ class CellsTest : DescribeSpec({
             }
         }
     }
+
+    describe("countOpenedMineCells test") {
+        lateinit var cellList: List<Cell>
+
+        beforeTest {
+            cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 1),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                )
+            val sut = Cells(cellList)
+            it("should be 1") {
+                sut.countOpenedMineCells() shouldBe 1
+            }
+        }
+    }
+
+    describe("countEmptyMineCells test") {
+        lateinit var cellList: List<Cell>
+
+        beforeTest {
+            cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 3),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(2, 1),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 3),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(3, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 3),
+                    ),
+                )
+        }
+
+        it("should be 2") {
+            val sut = Cells(cellList)
+            sut.countOpenedEmptyCells() shouldBe 2
+        }
+    }
 })
