@@ -13,19 +13,33 @@ class MineSweeperGame(private val mineBoard: MineBoard, var result: GameResult =
     }
 
     fun openAdjacentCell(coordinate: Coordinate) {
-        val cell = mineBoard.cells.get(coordinate)
+        val queue: ArrayDeque<Coordinate> = ArrayDeque()
+        queue.add(coordinate)
 
-        if (cell.isMineCell()) return
-        if (cell.status == CellStatus.OPEN) return
-
-        mineBoard.openCell(coordinate)
-
-        if (cell is Cell.EmptyCell && mineBoard.countAdjacentMines(cell) == 0) {
-            val adjacentCoordinates = mineBoard.getAdjacentCoordinates(coordinate)
-
-            for (adjacentCoordinate in adjacentCoordinates) {
-                openAdjacentCell(adjacentCoordinate)
-            }
+        while (queue.isNotEmpty()) {
+            processCell(queue)
         }
+    }
+
+    private fun processCell(queue: ArrayDeque<Coordinate>) {
+        val current = queue.removeFirst()
+        val cell = mineBoard.getCell(current)
+
+        if (shouldSkipCell(cell)) return
+
+        mineBoard.openCell(current)
+
+        if (shouldAddAdjacentCells(cell)) {
+            val adjacentCoordinates = mineBoard.getAdjacentCoordinates(cell)
+            queue.addAll(adjacentCoordinates)
+        }
+    }
+
+    private fun shouldSkipCell(cell: Cell): Boolean {
+        return cell.isMineCell() || cell.status == CellStatus.OPEN
+    }
+
+    private fun shouldAddAdjacentCells(cell: Cell): Boolean {
+        return cell is Cell.EmptyCell && mineBoard.countAdjacentMines(cell) == 0
     }
 }

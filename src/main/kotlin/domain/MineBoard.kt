@@ -20,11 +20,11 @@ class MineBoard(
         return numberOfMines
     }
 
-    fun getAdjacentCoordinates(coordinate: Coordinate): List<Coordinate> {
+    fun getAdjacentCoordinates(cell: Cell): List<Coordinate> {
         val adjacentCoordinates = mutableListOf<Coordinate>()
 
         for (direction in Direction.entries) {
-            val nextCoordinate = coordinate + direction.offset
+            val nextCoordinate = cell.coordinate + direction.offset
             if (!mineGameMetric.isOutOfMineBoard(nextCoordinate)) {
                 adjacentCoordinates.add(nextCoordinate)
             }
@@ -52,7 +52,5 @@ class MineBoard(
         cells.get(coordinate).open()
     }
 
-    fun height() = mineGameMetric.boardHeightSize
-
-    fun width() = mineGameMetric.boardWidthSize
+    fun getCell(current: Coordinate): Cell = cells.get(current)
 }

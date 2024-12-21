@@ -20,7 +20,6 @@ class MineSweeperController {
         OutputView.showMineSweeperBoard(mineBoard)
 
         gameLoop(mineBoard)
-        OutputView.showMineSweeperBoard(mineBoard)
     }
 
     private fun gameLoop(mineBoard: MineBoard) {
@@ -30,5 +29,6 @@ class MineSweeperController {
             mineSweeperGame.openAdjacentCell(coordinate)
             OutputView.showMineSweeperBoard(mineBoard)
         }
+        OutputView.showGameResult(mineSweeperGame.result)
     }
 }
