@@ -11,6 +11,9 @@ sealed class Cell(val position: Position) {
 
     fun isMine(): Boolean = this is MineCell
 
+    val isOpenable: Boolean
+        get() = neighborMineCount == 0
+
     fun open() {
         if (isOpen) return
 
