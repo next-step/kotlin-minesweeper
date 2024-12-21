@@ -25,7 +25,7 @@ class MineBoard(
     }
 
     fun isAnyMineCellOpened(): Boolean {
-        return false
+        return cells.countOpenedMineCells() > 0
     }
 
     fun isAllEmptyCellsOpened(): Boolean {

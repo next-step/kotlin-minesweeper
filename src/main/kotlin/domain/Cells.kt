@@ -17,6 +17,11 @@ value class Cells(val cells: List<Cell>) {
             ?: throw NoSuchElementException("Coordinate $coordinate not found")
     }
 
+    fun countOpenedMineCells(): Int {
+        val mineCells = cells.filterIsInstance<MineCell>()
+        return mineCells.count { it.status == CellStatus.OPEN }
+    }
+
     companion object {
         fun generateWithMines(
             mineGameMetric: MineGameMetric,
