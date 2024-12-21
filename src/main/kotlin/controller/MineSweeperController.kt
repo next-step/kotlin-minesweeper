@@ -1,7 +1,8 @@
 package controller
 
-import domain.Board
-import domain.Coordinate
+import domain.Cells
+import domain.MineBoard
+import domain.MineGameMetric
 import domain.strategy.RandomMineCellGenerator
 import view.InputView
 import view.OutputView
@@ -11,10 +12,11 @@ class MineSweeperController {
         val rowSize = InputView.inputRowSize()
         val colSize = InputView.inputColumnSize()
         val mineCount = InputView.inputMineCount()
+        val mineGameMetric = MineGameMetric(boardHeightSize = rowSize, boardWidthSize = colSize, mineCount = mineCount)
 
-        val board = Board(Coordinate(rowSize, colSize), mineCount = mineCount, RandomMineCellGenerator())
-        val cells = board.create()
+        val cells = Cells.generateWithMines(mineGameMetric, RandomMineCellGenerator())
+        val mineBoard = MineBoard(mineGameMetric, cells)
 
-        OutputView.showMineSweeperBoard(cells)
+        OutputView.showMineSweeperBoard(mineBoard)
     }
 }
