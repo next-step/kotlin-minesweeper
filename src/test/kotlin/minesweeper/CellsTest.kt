@@ -94,10 +94,6 @@ class CellsTest {
 
         cells.open(Position(0, 0))
 
-        cells.values.values.forEach {
-            println("position: ${it.position}, neighborMineCount: ${it.neighborMineCount} isOpen: ${it.isOpen}")
-        }
-
         assertAll(
             { assertThat(cells.at(Position(0, 0)).isOpen).isTrue() },
             { assertThat(cells.at(Position(1, 0)).isOpen).isTrue() },

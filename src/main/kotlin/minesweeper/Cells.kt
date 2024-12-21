@@ -20,26 +20,34 @@ class Cells(val values: Map<CellKey, Cell>) {
     fun open(position: Position): OpenState {
         val cell = at(position)
         if (cell.isOpen) return OpenState.CONTINUE
-        if (cell.isMine()) return OpenState.LOSE
 
-        cell.open()
-        val visited = mutableSetOf<Cell>()
-        openCellAndNeighbors(cell, visited)
-        return if (allNonMineCellsOpened()) OpenState.ALL_DONE else OpenState.CONTINUE
+        return when (cell) {
+            is MineCell -> {
+                OpenState.LOSE
+            }
+
+            is NumberCell -> {
+                cell.open()
+                openNeighborCells(cell.neighbors())
+                if (allNonMineCellsOpened()) OpenState.ALL_DONE else OpenState.CONTINUE
+            }
+        }
     }
 
-    private fun openCellAndNeighbors(
-        cell: Cell,
-        visited: MutableSet<Cell>,
-    ) {
-        if (visited.contains(cell) || isMineCell(cell)) return
-        visited.add(cell)
+    private fun openNeighborCells(neighbors: List<Position>) {
+        neighbors
+            .mapNotNull { values[it.key()] }
+            .forEach { openCellRecursive(it) }
+    }
 
-        if (cell.neighborMineCount == 0) {
+    private fun openCellRecursive(cell: Cell) {
+        if (cell.isOpen || isMineCell(cell)) return
+
+        if (cell.isOpenable) {
             cell.open()
             cell.neighbors()
                 .mapNotNull { values[it.key()] }
-                .forEach { openCellAndNeighbors(it, visited) }
+                .forEach { openCellRecursive(it) }
         }
     }
 
@@ -57,7 +65,6 @@ class Cells(val values: Map<CellKey, Cell>) {
     private fun isMineCell(cell: Cell): Boolean = cell is MineCell
 
     companion object {
-        fun detectCreateOf(cells: List<Cell>): Cells =
-            Cells(cells.associateBy { it.position.key() }).apply { detectMines() }
+        fun detectCreateOf(cells: List<Cell>): Cells = Cells(cells.associateBy { it.position.key() }).apply { detectMines() }
     }
 }
