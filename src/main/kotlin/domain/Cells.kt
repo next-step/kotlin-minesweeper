@@ -12,7 +12,15 @@ class Cells(private val cells: List<Cell>) {
         return Cells(updatedCells)
     }
 
-    fun allCells(): List<Cell> = cells
+    fun updateCell(modifiedCell: Cell): Cells {
+        val updatedCells =
+            cells.map {
+                if (it.position == modifiedCell.position) modifiedCell.addMine() else it
+            }
+        return Cells(updatedCells)
+    }
+
+    fun allCells(): List<Cell> = cells.toList()
 
     companion object {
         fun create(
@@ -30,8 +38,8 @@ class Cells(private val cells: List<Cell>) {
             columns: Int,
             row: Int,
         ): List<Cell> {
-            return (1..columns).map { column ->
-                Cell.create(row, column)
+            return List(columns) { index ->
+                Cell.create(row, index + 1)
             }
         }
     }

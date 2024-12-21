@@ -35,7 +35,7 @@ class CellsTest : FunSpec({
             // given
             val cells = Cells.create(2, 2)
             val targetCell = cells.allCells().random()
-            val updatedCells = cells.withMineOn(targetCell)
+            val updatedCells = cells.updateCell(targetCell)
 
             // when
             val nonMined = updatedCells.nonMinedCells()
@@ -53,7 +53,7 @@ class CellsTest : FunSpec({
             val targetCell = cells.allCells().last()
 
             // when
-            val updatedCells = cells.withMineOn(targetCell)
+            val updatedCells = cells.updateCell(targetCell)
 
             // then
             val updatedTargetCell = updatedCells.allCells().first { it.position == targetCell.position }
@@ -64,10 +64,10 @@ class CellsTest : FunSpec({
             // given
             val cells = Cells.create(3, 3)
             val targetCells = cells.allCells().take(2) // 처음 두 셀에 차례로 지뢰 설치
-            val updatedOnce = cells.withMineOn(targetCells[0])
+            val updatedOnce = cells.updateCell(targetCells[0])
 
             // when
-            val updatedTwice = updatedOnce.withMineOn(targetCells[1])
+            val updatedTwice = updatedOnce.updateCell(targetCells[1])
 
             // then
             updatedTwice.allCells().count { it.hasMine } shouldBe 2
