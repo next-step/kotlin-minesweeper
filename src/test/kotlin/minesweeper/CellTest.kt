@@ -7,12 +7,12 @@ import minesweeper.model.Cell
 class CellTest : StringSpec({
     "지뢰찾기 셀 생성 테스트" {
         val cell = Cell()
-        cell.isMine() shouldBe false
+        cell.isMine shouldBe false
     }
     "지뢰찾기 셀 지뢰 생성 테스트" {
         val cell = Cell()
         cell.addMine()
-        cell.isMine() shouldBe true
+        cell.isMine shouldBe true
     }
     "지뢰찾기 셀 AroundCount 테스트" {
         val cell = Cell()
@@ -22,5 +22,14 @@ class CellTest : StringSpec({
         val cell = Cell()
         cell.addMineAroundCount()
         cell.mineAroundCount shouldBe 1
+    }
+    "지뢰찾기 셀 open 테스트" {
+        val cell = Cell()
+        cell.open()
+        cell.isOpen shouldBe true
+    }
+    "지뢰찾기 셀 not open 테스트" {
+        val cell = Cell()
+        cell.isOpen shouldBe false
     }
 })

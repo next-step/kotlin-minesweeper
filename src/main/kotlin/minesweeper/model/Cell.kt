@@ -4,11 +4,12 @@ class Cell(
     val row: Int = 0,
     val column: Int = 0,
 ) {
-    private var isMine: Boolean = false
+    var isMine: Boolean = false
+        private set
     var mineAroundCount: Int = 0
         private set
-
-    fun isMine(): Boolean = isMine
+    var isOpen: Boolean = false
+        private set
 
     fun addMine() {
         isMine = true
@@ -16,6 +17,10 @@ class Cell(
 
     fun addMineAroundCount() {
         mineAroundCount++
+    }
+
+    fun open() {
+        isOpen = true
     }
 
     fun isAround(
