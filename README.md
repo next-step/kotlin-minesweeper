@@ -64,6 +64,6 @@
 
 ## 3단계 피드백
 
-- [ ] interface 와 sealed interface 차이점
+- [X] interface 와 sealed interface 차이점
 - [ ] `Cell` 의 sealed class 의 장점을 활용(When)
 - [ ] `Cell` 오픈시 `visited` 제거 
