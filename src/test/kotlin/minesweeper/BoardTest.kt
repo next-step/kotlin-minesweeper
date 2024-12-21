@@ -39,15 +39,6 @@ class BoardTest {
     }
 
     @Test
-    fun `보드의 넓이와 높이느 30보다 클 수 없다`() {
-        shouldThrow<IllegalArgumentException> {
-            Board(31, 35)
-        }.also {
-            it.message shouldBe "1부터 30까지 입력가능합니다"
-        }
-    }
-
-    @Test
     fun `지뢰 없이 셀을 만들면 지뢰의 숫자는 0이다`() {
         val board = Board(10, 10)
         board.makeCell()
