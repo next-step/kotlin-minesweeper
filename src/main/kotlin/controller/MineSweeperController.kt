@@ -19,14 +19,16 @@ class MineSweeperController {
         val mineBoard = MineBoard(mineGameMetric, cells)
         OutputView.showMineSweeperBoard(mineBoard)
 
-        val mineSweeperGame = MineSweeperGame(mineBoard)
-        gameLoop(mineSweeperGame)
+        gameLoop(mineBoard)
+        OutputView.showMineSweeperBoard(mineBoard)
     }
 
-    private fun gameLoop(mineSweeperGame: MineSweeperGame) {
+    private fun gameLoop(mineBoard: MineBoard) {
+        val mineSweeperGame = MineSweeperGame(mineBoard)
         while (mineSweeperGame.isContinueGame()) {
             val coordinate = InputView.askMineCoordinate()
             mineSweeperGame.openAdjacentCell(coordinate)
+            OutputView.showMineSweeperBoard(mineBoard)
         }
     }
 }

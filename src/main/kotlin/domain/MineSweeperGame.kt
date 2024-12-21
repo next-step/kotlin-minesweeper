@@ -20,7 +20,7 @@ class MineSweeperGame(private val mineBoard: MineBoard, var result: GameResult =
 
         mineBoard.openCell(coordinate)
 
-        if (cell is Cell.EmptyCell) {
+        if (cell is Cell.EmptyCell && mineBoard.countAdjacentMines(cell) == 0) {
             val adjacentCoordinates = mineBoard.getAdjacentCoordinates(coordinate)
 
             for (adjacentCoordinate in adjacentCoordinates) {

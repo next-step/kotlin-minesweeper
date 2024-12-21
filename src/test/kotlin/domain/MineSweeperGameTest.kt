@@ -118,11 +118,11 @@ class MineSweeperGameTest : DescribeSpec({
                         Cell.EmptyCell(Coordinate(1, 2), CellStatus.CLOSED),
                         Cell.EmptyCell(Coordinate(1, 3), CellStatus.CLOSED),
                         Cell.EmptyCell(Coordinate(2, 1), CellStatus.CLOSED),
-                        Cell.MineCell(Coordinate(2, 2), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(2, 2), CellStatus.CLOSED),
                         Cell.EmptyCell(Coordinate(2, 3), CellStatus.CLOSED),
                         Cell.EmptyCell(Coordinate(3, 1), CellStatus.CLOSED),
                         Cell.EmptyCell(Coordinate(3, 2), CellStatus.CLOSED),
-                        Cell.EmptyCell(Coordinate(3, 3), CellStatus.CLOSED),
+                        Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
                     )
                 val cells = Cells(cellList)
                 mineBoard = MineBoard(mineGameMetric, cells)
@@ -133,12 +133,11 @@ class MineSweeperGameTest : DescribeSpec({
                 cellList[1].status shouldBe CellStatus.OPEN
                 cellList[2].status shouldBe CellStatus.OPEN
                 cellList[3].status shouldBe CellStatus.OPEN
+                cellList[4].status shouldBe CellStatus.OPEN
                 cellList[5].status shouldBe CellStatus.OPEN
                 cellList[6].status shouldBe CellStatus.OPEN
                 cellList[7].status shouldBe CellStatus.OPEN
-                cellList[8].status shouldBe CellStatus.OPEN
-
-                cellList[4].status shouldBe CellStatus.CLOSED
+                cellList[8].status shouldBe CellStatus.CLOSED
             }
         }
     }
