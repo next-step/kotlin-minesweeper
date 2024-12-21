@@ -9,5 +9,22 @@ fun main() {
     val game = Game(height, width, mineCount)
 
     OutputView.printGameStartMessage()
-    OutputView.printMineField(game)
+    OutputView.printMineField(game.getMineFieldState())
+
+    while (true) {
+        val (row, col) = InputView.readAskOpenCellMessage()
+
+        val isSafe = game.openCell(row, col)
+        OutputView.printMineField(game.getMineFieldState())
+
+        if (!isSafe) {
+            OutputView.printGameLoseMessage()
+            break
+        }
+
+        if (game.isWin()) {
+            OutputView.printGameWinMessage()
+            break
+        }
+    }
 }
