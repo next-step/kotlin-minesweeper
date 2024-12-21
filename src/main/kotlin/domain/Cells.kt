@@ -42,7 +42,7 @@ value class Cells(val cells: List<Cell>) {
 
             return heightRange.flatMap { height ->
                 widthRange.map { width ->
-                    Coordinate(Row(height), Col(width))
+                    Coordinate(height, width)
                 }
             }
         }
