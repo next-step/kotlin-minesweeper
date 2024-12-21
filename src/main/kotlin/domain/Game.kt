@@ -16,7 +16,10 @@ class Game(
         return mineField.getState()
     }
 
-    fun openCell(row: Int, col: Int): Boolean {
+    fun openCell(
+        row: Int,
+        col: Int,
+    ): Boolean {
         return mineField.openCell(row, col)
     }
 

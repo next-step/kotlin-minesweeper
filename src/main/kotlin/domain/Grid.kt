@@ -3,7 +3,7 @@ package domain
 class Grid(
     private val height: Height,
     private val width: Width,
-    private val  cells: Cells,
+    private val cells: Cells,
 ) {
     fun getCells(): Cells = cells
 

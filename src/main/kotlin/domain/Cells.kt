@@ -4,9 +4,10 @@ class Cells(private val rows: List<Row>) {
     fun getRows(): List<Row> = rows.toList()
 
     fun addNumberHints(): Cells {
-        val updatedRows = rows.mapIndexed { rowIndex, row ->
-            row.addNumberHints(rowIndex, this)
-        }
+        val updatedRows =
+            rows.mapIndexed { rowIndex, row ->
+                row.addNumberHints(rowIndex, this)
+            }
         return Cells(updatedRows)
     }
 
@@ -16,13 +17,18 @@ class Cells(private val rows: List<Row>) {
         get() = rows.size
 
     companion object {
-        fun create(height: Int, width: Int, minePositions: Set<Position>): Cells {
-            val rows = List(height) { row ->
-                Row.create(width) { col ->
-                    val isMine = minePositions.contains(Position(row, col))
-                    Cell.create(isMine)
+        fun create(
+            height: Int,
+            width: Int,
+            minePositions: Set<Position>,
+        ): Cells {
+            val rows =
+                List(height) { row ->
+                    Row.create(width) { col ->
+                        val isMine = minePositions.contains(Position(row, col))
+                        Cell.create(isMine)
+                    }
                 }
-            }
             return Cells(rows)
         }
     }

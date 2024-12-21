@@ -22,7 +22,10 @@ class MineField(
 
     fun getState(): MineFieldState = MineFieldState(grid.getCells())
 
-    fun openCell(row: Int, col: Int): Boolean {
+    fun openCell(
+        row: Int,
+        col: Int,
+    ): Boolean {
         val cell = grid.getCells()[row][col]
         return if (cell.isMine()) {
             false

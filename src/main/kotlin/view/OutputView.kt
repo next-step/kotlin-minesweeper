@@ -1,8 +1,8 @@
 package view
 
-import domain.MineFieldState
 import domain.Cell
 import domain.CellId
+import domain.MineFieldState
 
 object OutputView {
     private const val GAME_START_MESSAGE = "\n지뢰찾기 게임 시작"
