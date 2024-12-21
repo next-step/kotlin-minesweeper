@@ -18,8 +18,15 @@ value class Cells(val cells: List<Cell>) {
     }
 
     fun countOpenedMineCells(): Int {
-        val mineCells = cells.filterIsInstance<MineCell>()
-        return mineCells.count { it.status == CellStatus.OPEN }
+        return mineCells().count { it.status == CellStatus.OPEN }
+    }
+
+    fun countOpenedEmptyCells(): Int {
+        return emptyCells().count { it.status == CellStatus.OPEN }
+    }
+
+    fun countEmptyCells(): Int {
+        return emptyCells().size
     }
 
     companion object {

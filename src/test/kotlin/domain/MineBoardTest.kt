@@ -81,4 +81,53 @@ class MineBoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("isAllEmptyCellsOpened test") {
+        mineGameMetric = MineGameMetric(3, 3, 5)
+
+        beforeTest {
+            val cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2),
+                        CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 3),
+                        CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(2, 1),
+                        CellStatus.OPEN,
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 3),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(3, 1),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 2),
+                        CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 3),
+                        CellStatus.OPEN,
+                    ),
+                )
+            sut = MineBoard(mineGameMetric, Cells(cellList))
+        }
+
+        context("비어있는 셀을 모두 오픈한 경우") {
+            it("should be true") {
+                sut.isAllEmptyCellsOpened() shouldBe true
+            }
+        }
+    }
 })

@@ -29,6 +29,11 @@ class MineBoard(
     }
 
     fun isAllEmptyCellsOpened(): Boolean {
-        return false
+        val openedEmptyCellCount = cells.countOpenedEmptyCells()
+        val totalEmptyCellCount = cells.countEmptyCells()
+
+        println(openedEmptyCellCount)
+        println(totalEmptyCellCount)
+        return openedEmptyCellCount == totalEmptyCellCount
     }
 }
