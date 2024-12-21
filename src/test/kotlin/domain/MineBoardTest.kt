@@ -3,7 +3,7 @@ package domain
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class BoardTest : DescribeSpec({
+class MineBoardTest : DescribeSpec({
     lateinit var mineGameMetric: MineGameMetric
     lateinit var sut: MineBoard
 
