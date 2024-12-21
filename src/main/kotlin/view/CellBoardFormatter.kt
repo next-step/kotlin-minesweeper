@@ -31,10 +31,11 @@ private fun populateBoardArray(
         val x = coordinate.x.value
         val y = coordinate.y.value
 
-        val emoji = when (cell) {
-            is MineCell -> "💣"
-            else -> "🟫"
-        }
+        val emoji =
+            when (cell) {
+                is MineCell -> "💣"
+                else -> "🟫"
+            }
         boardArray[y][x] = emoji
     }
 }

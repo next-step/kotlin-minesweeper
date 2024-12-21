@@ -13,8 +13,6 @@ class CellBoard(
         get() = _cells.toMap()
 
     companion object {
-        private const val MIN_VALUE = 0
-
         fun of(
             height: Length,
             width: Length,
