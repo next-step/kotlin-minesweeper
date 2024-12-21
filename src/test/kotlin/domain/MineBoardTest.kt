@@ -130,4 +130,25 @@ class MineBoardTest : DescribeSpec({
             }
         }
     }
+
+    describe("좌표에 해당하는 셀을 open한다.") {
+        mineGameMetric = MineGameMetric(3, 3, 5)
+
+        beforeTest {
+            val cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2),
+                    ),
+                )
+            sut = MineBoard(mineGameMetric, Cells(cellList))
+
+            sut.openCell(Coordinate(1, 1))
+
+            cellList[0].status shouldBe CellStatus.OPEN
+        }
+    }
 })

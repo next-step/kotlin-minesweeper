@@ -32,8 +32,10 @@ class MineBoard(
         val openedEmptyCellCount = cells.countOpenedEmptyCells()
         val totalEmptyCellCount = cells.countEmptyCells()
 
-        println(openedEmptyCellCount)
-        println(totalEmptyCellCount)
         return openedEmptyCellCount == totalEmptyCellCount
+    }
+
+    fun openCell(coordinate: Coordinate) {
+        cells.get(coordinate).open()
     }
 }
