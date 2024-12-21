@@ -26,6 +26,7 @@ class MineSweeperController {
     private fun gameLoop(mineSweeperGame: MineSweeperGame) {
         while (mineSweeperGame.isContinueGame()) {
             val coordinate = InputView.askMineCoordinate()
+            mineSweeperGame.openAdjacentCell(coordinate)
         }
     }
 }

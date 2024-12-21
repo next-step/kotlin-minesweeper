@@ -11,4 +11,21 @@ class MineSweeperGame(private val mineBoard: MineBoard, var result: GameResult =
         }
         return true
     }
+
+    fun openAdjacentCell(coordinate: Coordinate) {
+        val cell = mineBoard.cells.get(coordinate)
+
+        if (cell.isMineCell()) return
+        if (cell.status == CellStatus.OPEN) return
+
+        mineBoard.openCell(coordinate)
+
+        if (cell is Cell.EmptyCell) {
+            val adjacentCoordinates = mineBoard.getAdjacentCoordinates(coordinate)
+
+            for (adjacentCoordinate in adjacentCoordinates) {
+                openAdjacentCell(adjacentCoordinate)
+            }
+        }
+    }
 }

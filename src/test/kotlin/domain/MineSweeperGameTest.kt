@@ -86,4 +86,60 @@ class MineSweeperGameTest : DescribeSpec({
             }
         }
     }
+
+    describe("openAdjacentCell") {
+        context("연결되어 있는 셀이 없는 경우") {
+            it("해당 셀만 오픈한다.") {
+                mineGameMetric = MineGameMetric(3, 3, 8)
+                val cellList =
+                    listOf(
+                        Cell.EmptyCell(Coordinate(1, 1), CellStatus.CLOSED),
+                        Cell.MineCell(Coordinate(1, 2), CellStatus.CLOSED),
+                        Cell.MineCell(Coordinate(2, 1), CellStatus.CLOSED),
+                        Cell.MineCell(Coordinate(2, 2), CellStatus.CLOSED),
+                    )
+                val cells = Cells(cellList)
+                mineBoard = MineBoard(mineGameMetric, cells)
+                sut = MineSweeperGame(mineBoard)
+                sut.openAdjacentCell(Coordinate(1, 1))
+                cellList[0].status shouldBe CellStatus.OPEN
+                cellList[1].status shouldBe CellStatus.CLOSED
+                cellList[2].status shouldBe CellStatus.CLOSED
+                cellList[3].status shouldBe CellStatus.CLOSED
+            }
+        }
+
+        context("연결되어 있는 셀이 있는 경우") {
+            it("좌표와 연결된 비어있는 셀을 모두 오픈한다.") {
+                mineGameMetric = MineGameMetric(3, 3, 8)
+                val cellList =
+                    listOf(
+                        Cell.EmptyCell(Coordinate(1, 1), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(1, 2), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(1, 3), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(2, 1), CellStatus.CLOSED),
+                        Cell.MineCell(Coordinate(2, 2), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(2, 3), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(3, 1), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(3, 2), CellStatus.CLOSED),
+                        Cell.EmptyCell(Coordinate(3, 3), CellStatus.CLOSED),
+                    )
+                val cells = Cells(cellList)
+                mineBoard = MineBoard(mineGameMetric, cells)
+                sut = MineSweeperGame(mineBoard)
+
+                sut.openAdjacentCell(Coordinate(1, 1))
+                cellList[0].status shouldBe CellStatus.OPEN
+                cellList[1].status shouldBe CellStatus.OPEN
+                cellList[2].status shouldBe CellStatus.OPEN
+                cellList[3].status shouldBe CellStatus.OPEN
+                cellList[5].status shouldBe CellStatus.OPEN
+                cellList[6].status shouldBe CellStatus.OPEN
+                cellList[7].status shouldBe CellStatus.OPEN
+                cellList[8].status shouldBe CellStatus.OPEN
+
+                cellList[4].status shouldBe CellStatus.CLOSED
+            }
+        }
+    }
 })
