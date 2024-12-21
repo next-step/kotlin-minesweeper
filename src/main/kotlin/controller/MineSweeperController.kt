@@ -18,5 +18,7 @@ class MineSweeperController {
         val mineBoard = MineBoard(mineGameMetric, cells)
 
         OutputView.showMineSweeperBoard(mineBoard)
+
+        val coordinate = InputView.askMineCoordinate()
     }
 }
