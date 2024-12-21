@@ -45,7 +45,7 @@ class CellsTest : DescribeSpec({
         context("조회하려는 좌표가 유효한 좌표인 경우") {
             val sut = Cells(cellList)
             it("해당 셀을 리턴한다.") {
-                sut.getCoordinateIs(Coordinate(Row(1), Col(1))) shouldBe cellList[0]
+                sut.get(Coordinate(Row(1), Col(1))) shouldBe cellList[0]
             }
         }
 
@@ -53,9 +53,118 @@ class CellsTest : DescribeSpec({
             it("throw an exception.") {
                 val sut = Cells(cellList)
                 shouldThrow<NoSuchElementException> {
-                    sut.getCoordinateIs(Coordinate(Row(3), Col(3)))
+                    sut.get(Coordinate(Row(3), Col(3)))
                 }
             }
+        }
+    }
+
+    describe("countOpenedMineCells test") {
+        lateinit var cellList: List<Cell>
+
+        beforeTest {
+            cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 1),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                )
+            val sut = Cells(cellList)
+            it("should be 1") {
+                sut.countOpenedMineCells() shouldBe 1
+            }
+        }
+    }
+
+    describe("countEmptyMineCells test") {
+        lateinit var cellList: List<Cell>
+
+        beforeTest {
+            cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 3),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(2, 1),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 3),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(3, 1), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 3),
+                    ),
+                )
+        }
+
+        it("should be 2") {
+            val sut = Cells(cellList)
+            sut.countOpenedEmptyCells() shouldBe 2
+        }
+    }
+
+    describe("countEmptyCells test") {
+        lateinit var cellList: List<Cell>
+        beforeTest {
+            cellList =
+                listOf(
+                    Cell.MineCell(
+                        Coordinate(1, 1),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(1, 3), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(2, 1), CellStatus.OPEN,
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 2),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(2, 3),
+                    ),
+                    Cell.MineCell(
+                        Coordinate(3, 1),
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 2), CellStatus.OPEN,
+                    ),
+                    Cell.EmptyCell(
+                        Coordinate(3, 3), CellStatus.OPEN,
+                    ),
+                )
+        }
+
+        it("should be 5") {
+            val sut = Cells(cellList)
+            sut.countEmptyCells() shouldBe 5
         }
     }
 })
