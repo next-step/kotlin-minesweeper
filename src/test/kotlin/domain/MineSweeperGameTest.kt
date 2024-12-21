@@ -70,7 +70,10 @@ class MineSweeperGameTest : DescribeSpec({
                         listOf(
                             Cell.EmptyCell(Coordinate(1, 1), CellStatus.OPEN),
                             Cell.EmptyCell(Coordinate(2, 2), CellStatus.OPEN),
-                            Cell.EmptyCell(Coordinate(3, 3), CellStatus.OPEN),
+                            Cell.EmptyCell(Coordinate(3, 3), CellStatus.CLOSED),
+                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
+                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
+                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
                         ),
                     )
 
