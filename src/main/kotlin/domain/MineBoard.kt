@@ -19,4 +19,8 @@ class MineBoard(
         }
         return numberOfMines
     }
+
+    fun isMineCell(coordinate: Coordinate): Boolean {
+        return cells.get(coordinate).isMineCell()
+    }
 }

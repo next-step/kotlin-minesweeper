@@ -3,6 +3,7 @@ package controller
 import domain.Cells
 import domain.MineBoard
 import domain.MineGameMetric
+import domain.MineSweeperGame
 import domain.strategy.RandomMineCellGenerator
 import view.InputView
 import view.OutputView
@@ -16,9 +17,15 @@ class MineSweeperController {
 
         val cells = Cells.generateWithMines(mineGameMetric, RandomMineCellGenerator())
         val mineBoard = MineBoard(mineGameMetric, cells)
-
         OutputView.showMineSweeperBoard(mineBoard)
 
-        val coordinate = InputView.askMineCoordinate()
+        val mineSweeperGame = MineSweeperGame(mineBoard)
+        gameLoop(mineSweeperGame)
+    }
+
+    private fun gameLoop(mineSweeperGame: MineSweeperGame) {
+        while (mineSweeperGame.isContinueGame()) {
+            val coordinate = InputView.askMineCoordinate()
+        }
     }
 }
