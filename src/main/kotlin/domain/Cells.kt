@@ -51,7 +51,10 @@ value class Cells(val cells: List<Cell>) {
             mineCellGenerator: MineCellGenerator,
             mineGameMetric: MineGameMetric,
         ): Set<Coordinate> {
-            return mineCellGenerator.execute(mineGameMetric).map { it.coordinate }.toSet()
+            val mineCell = mineCellGenerator.execute(mineGameMetric)
+            return mineCell
+                .map { it.coordinate }
+                .toSet()
         }
 
         private fun parseCell(
