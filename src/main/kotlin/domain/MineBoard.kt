@@ -23,4 +23,12 @@ class MineBoard(
     fun isMineCell(coordinate: Coordinate): Boolean {
         return cells.get(coordinate).isMineCell()
     }
+
+    fun isAnyMineCellOpened(): Boolean {
+        return false
+    }
+
+    fun isAllEmptyCellsOpened(): Boolean {
+        return false
+    }
 }

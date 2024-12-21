@@ -1,25 +1,16 @@
 package domain
 
-class MineSweeperGame(private val mineBoard: MineBoard) {
-    var result: GameResult = GameResult.FAILURE
-
+class MineSweeperGame(private val mineBoard: MineBoard, var result: GameResult = GameResult.FAILURE) {
+    // todo: when 식으로 refactor
     fun isContinueGame(): Boolean {
-        if (isAnyMineCellOpened(mineBoard)) {
+        if (mineBoard.isAnyMineCellOpened()) {
             return false
         }
 
-        if (isAllEmptyCellsOpened(mineBoard)) {
+        if (mineBoard.isAllEmptyCellsOpened()) {
             result = GameResult.SUCCESS
             return false
         }
         return true
-    }
-
-    private fun isAnyMineCellOpened(mineBoard: MineBoard): Boolean {
-        return false
-    }
-
-    private fun isAllEmptyCellsOpened(mineBoard: MineBoard): Boolean {
-        return false
     }
 }
