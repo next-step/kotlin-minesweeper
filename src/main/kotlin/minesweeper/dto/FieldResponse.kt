@@ -6,7 +6,7 @@ import minesweeper.domain.SafeSpot
 import minesweeper.domain.Spot
 
 class FieldResponse(private val field: Field) {
-    fun toFormattedStringInitialField(): String {
+    fun toFormattedStringField(): String {
         val fieldInfo = field.getFieldInfo()
         val positions = generatePositions(fieldInfo.getWidth(), fieldInfo.getHeight())
 
@@ -34,9 +34,13 @@ class FieldResponse(private val field: Field) {
     }
 
     private fun formatSpot(spot: Spot): String {
-        return when (spot) {
-            is SafeSpot -> spot.nearbyMineCount.toString()
-            else -> "*"
+        if (spot.isOpened()) {
+            return if (spot is SafeSpot) {
+                spot.nearbyMineCount.toString()
+            } else {
+                "*"
+            }
         }
+        return "C"
     }
 }

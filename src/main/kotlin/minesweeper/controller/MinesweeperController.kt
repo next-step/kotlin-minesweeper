@@ -7,6 +7,8 @@ import minesweeper.domain.FieldInfo
 import minesweeper.domain.FieldWidth
 import minesweeper.domain.MineCount
 import minesweeper.domain.MinePositionSelector
+import minesweeper.domain.MinesweeperGame
+import minesweeper.domain.Position
 import minesweeper.dto.FieldResponse
 import minesweeper.view.OutputView
 
@@ -27,14 +29,28 @@ class MinesweeperController(
         return inputAdapter.fetchMineCount()
     }
 
-    fun announceInitialField(field: Field) {
-        outputView.printInitialField(FieldResponse(field))
-    }
-
-    fun createNewField(
+    fun makeNewGame(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
-    ): Field {
-        return Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
+    ): MinesweeperGame {
+        val field = Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
+        return MinesweeperGame(field)
+    }
+
+    fun playGame(minesweeperGame: MinesweeperGame) {
+        outputView.printStartGameMessage()
+        while (!minesweeperGame.isFinished) {
+            val openAttemptPosition = getOpenAttemptPosition()
+            minesweeperGame.openSpot(openAttemptPosition)
+            if (minesweeperGame.isFinished) {
+                outputView.printGameLoseMessage()
+                return
+            }
+            outputView.printField(FieldResponse(minesweeperGame.field))
+        }
+    }
+
+    private fun getOpenAttemptPosition(): Position {
+        return inputAdapter.fetchOpenAttemptPosition()
     }
 }

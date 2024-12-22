@@ -11,7 +11,7 @@ class FieldTest : StringSpec({
     "필드를 생성할 수 있다." {
         val height = 3
         val width = 4
-        val minePositions = setOf(Position(0, 0), Position(1, 2), Position(3, 2))
+        val minePositions = setOf(Position(1, 1), Position(2, 3), Position(4, 3))
         val mineCount = MineCount(minePositions.size)
         val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
         val spotGenerator = CustomMinePositionSelector(minePositions)
@@ -40,13 +40,13 @@ class FieldTest : StringSpec({
      */
     "필드의 각 SafeSpot에 대해 주변에 있는 지뢰의 개수를 계산한다." {
         forAll(
-            row(0, 1, 2),
-            row(3, 0, 0),
-            row(2, 2, 2),
+            row(1, 2, 2),
+            row(4, 1, 0),
+            row(3, 3, 2),
         ) { x, y, expected ->
             val height = 3
             val width = 4
-            val minePositions = setOf(Position(0, 0), Position(1, 2), Position(3, 2))
+            val minePositions = setOf(Position(1, 1), Position(2, 3), Position(4, 3))
             val mineCount = MineCount(minePositions.size)
             val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
             val spotGenerator = CustomMinePositionSelector(minePositions)
@@ -56,5 +56,38 @@ class FieldTest : StringSpec({
             val spot = field.getSpot(Position(x, y)) as SafeSpot
             spot.nearbyMineCount shouldBe expected
         }
+    }
+
+    /*
+                        1 2 3 4  x
+     * 1 0 0         1  C 1 0 0
+     2 2 2 1     ->  2  C 2 2 1
+     1 * 2 *         3  C C C C
+                     y
+     */
+    "해당 필드에 인접한 지뢰 수가 0이면 인접한 모든 필드를 오픈한다." {
+        val height = 3
+        val width = 4
+        val minePositions = setOf(Position(1, 1), Position(2, 3), Position(4, 3))
+        val mineCount = MineCount(minePositions.size)
+        val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
+        val spotGenerator = CustomMinePositionSelector(minePositions)
+
+        val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
+
+        field.openSpot(Position(3, 1))
+
+        field.getSpot(Position(1, 1)).isOpened() shouldBe false
+        field.getSpot(Position(2, 1)).isOpened() shouldBe true
+        field.getSpot(Position(3, 1)).isOpened() shouldBe true
+        field.getSpot(Position(4, 1)).isOpened() shouldBe true
+        field.getSpot(Position(1, 2)).isOpened() shouldBe false
+        field.getSpot(Position(2, 2)).isOpened() shouldBe true
+        field.getSpot(Position(3, 2)).isOpened() shouldBe true
+        field.getSpot(Position(4, 2)).isOpened() shouldBe true
+        field.getSpot(Position(1, 3)).isOpened() shouldBe false
+        field.getSpot(Position(2, 3)).isOpened() shouldBe false
+        field.getSpot(Position(3, 3)).isOpened() shouldBe false
+        field.getSpot(Position(4, 3)).isOpened() shouldBe false
     }
 })
