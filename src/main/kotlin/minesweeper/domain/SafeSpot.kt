@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class SafeSpot(private val y: Int, private val x: Int) : Spot(y, x) {
+class SafeSpot(coordinate: Coordinate) : Spot(coordinate) {
     var nearbyMineCount: Int = 0
 
     override fun isMine(): Boolean {

@@ -1,6 +1,6 @@
 package minesweeper.domain
 
-class MineSpot(private val y: Int, private val x: Int) : Spot(y, x) {
+class MineSpot(coordinate: Coordinate) : Spot(coordinate) {
     override fun isMine(): Boolean {
         return true
     }

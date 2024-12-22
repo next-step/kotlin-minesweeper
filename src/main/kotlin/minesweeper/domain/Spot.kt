@@ -1,5 +1,5 @@
 package minesweeper.domain
 
-abstract class Spot(private val y: Int, private val x: Int) {
+abstract class Spot(val coordinate: Coordinate) {
     abstract fun isMine(): Boolean
 }

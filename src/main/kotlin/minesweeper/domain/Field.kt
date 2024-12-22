@@ -16,9 +16,9 @@ class Field(
         val spots = spotGenerator.generate(fieldInfo, mineCount)
         return spots.mapIndexed { index, spot ->
             if (spot is SafeSpot) {
-                val y = index / width
                 val x = index % width
-                val nearbyMineCount = countAdjacentMines(spots, y, x)
+                val y = index / width
+                val nearbyMineCount = countAdjacentMines(spots, x, y)
                 spot.updateNearbyMineCount(nearbyMineCount)
             }
             spot
@@ -29,23 +29,23 @@ class Field(
 
     private fun countAdjacentMines(
         spots: List<Spot>,
-        y: Int,
         x: Int,
+        y: Int,
     ): Int {
         return NearbyDirection.entries
             .toTypedArray()
             .count { direction ->
-                val newY = y + direction.dy
-                val newX = x + direction.dx
-                isWithinBounds(newY, newX) && spots[newY * width + newX].isMine()
+                val newX = x + direction.dx()
+                val newY = y + direction.dy()
+                isWithinBounds(newX, newY) && spots[newY * width + newX].isMine()
             }
     }
 
     private fun isWithinBounds(
-        y: Int,
         x: Int,
+        y: Int,
     ): Boolean {
-        return y in 0 until fieldInfo.getHeight() && x in 0 until width
+        return x in 0 until width && y in 0 until fieldInfo.getHeight()
     }
 
     private fun validateMineCount() {

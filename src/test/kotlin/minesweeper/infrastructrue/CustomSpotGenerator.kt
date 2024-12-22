@@ -1,5 +1,6 @@
 package minesweeper.infrastructrue
 
+import minesweeper.domain.Coordinate
 import minesweeper.domain.FieldInfo
 import minesweeper.domain.MineCount
 import minesweeper.domain.MineSpot
@@ -7,7 +8,7 @@ import minesweeper.domain.SafeSpot
 import minesweeper.domain.Spot
 import minesweeper.domain.SpotGenerator
 
-class CustomSpotGenerator(private val minePositions: Set<Pair<Int, Int>>) : SpotGenerator {
+class CustomSpotGenerator(private val minePositions: Set<Coordinate>) : SpotGenerator {
     override fun generate(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
@@ -21,10 +22,10 @@ class CustomSpotGenerator(private val minePositions: Set<Pair<Int, Int>>) : Spot
     private fun createFieldSpots(
         height: Int,
         width: Int,
-        minePositions: Set<Pair<Int, Int>>,
+        minePositions: Set<Coordinate>,
     ): List<Spot> {
-        return (0 until height).flatMap { x ->
-            (0 until width).map { y ->
+        return (0 until height).flatMap { y ->
+            (0 until width).map { x ->
                 createSpot(x, y, minePositions)
             }
         }
@@ -33,13 +34,13 @@ class CustomSpotGenerator(private val minePositions: Set<Pair<Int, Int>>) : Spot
     private fun createSpot(
         x: Int,
         y: Int,
-        minePositions: Set<Pair<Int, Int>>,
+        minePositions: Set<Coordinate>,
     ): Spot {
-        val position = Pair(y, x)
+        val position = Coordinate(x, y)
 
         if (minePositions.contains(position)) {
-            return MineSpot(y, x)
+            return MineSpot(position)
         }
-        return SafeSpot(y, x)
+        return SafeSpot(position)
     }
 }

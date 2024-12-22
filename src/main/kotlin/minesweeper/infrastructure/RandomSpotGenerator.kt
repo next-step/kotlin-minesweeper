@@ -1,5 +1,6 @@
 package minesweeper.infrastructure
 
+import minesweeper.domain.Coordinate
 import minesweeper.domain.FieldInfo
 import minesweeper.domain.MineCount
 import minesweeper.domain.MineSpot
@@ -23,8 +24,8 @@ class RandomSpotGenerator : SpotGenerator {
         mineCount: MineCount,
         width: Int,
         height: Int,
-    ): Set<Pair<Int, Int>> {
-        val minePositions = mutableSetOf<Pair<Int, Int>>()
+    ): Set<Coordinate> {
+        val minePositions = mutableSetOf<Coordinate>()
         while (minePositions.size < mineCount.count) {
             val position = generateRandomPosition(width, height)
             minePositions.add(position)
@@ -35,19 +36,19 @@ class RandomSpotGenerator : SpotGenerator {
     private fun generateRandomPosition(
         width: Int,
         height: Int,
-    ): Pair<Int, Int> {
-        val x = (0 until height).random()
-        val y = (0 until width).random()
-        return Pair(x, y)
+    ): Coordinate {
+        val x = (0 until width).random()
+        val y = (0 until height).random()
+        return Coordinate(x, y)
     }
 
     private fun createFieldSpots(
         height: Int,
         width: Int,
-        minePositions: Set<Pair<Int, Int>>,
+        minePositions: Set<Coordinate>,
     ): List<Spot> {
-        return (0 until height).flatMap { x ->
-            (0 until width).map { y ->
+        return (0 until width).flatMap { x ->
+            (0 until height).map { y ->
                 createSpot(x, y, minePositions)
             }
         }
@@ -56,13 +57,13 @@ class RandomSpotGenerator : SpotGenerator {
     private fun createSpot(
         x: Int,
         y: Int,
-        minePositions: Set<Pair<Int, Int>>,
+        minePositions: Set<Coordinate>,
     ): Spot {
-        val position = Pair(x, y)
+        val position = Coordinate(x, y)
 
         if (minePositions.contains(position)) {
-            return MineSpot(y, x)
+            return MineSpot(position)
         }
-        return SafeSpot(y, x)
+        return SafeSpot(position)
     }
 }
