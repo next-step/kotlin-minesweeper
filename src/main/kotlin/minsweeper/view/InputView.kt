@@ -17,4 +17,9 @@ object InputView {
         return readln().toInt()
     }
 
+    fun showAndGetOpenCoordinate(): String {
+        print("open: ")
+        return readln()
+    }
+
 }
