@@ -12,9 +12,10 @@ class RandomMineGeneratorTest {
         // given
         val boardSize = BoardSize(10, 10)
         val mineAmount = 101
+        val mineGenerator = RandomMineGenerator()
 
         // when
-        val result = assertThrows<IllegalArgumentException> { RandomMineGenerator(boardSize, mineAmount) }
+        val result = assertThrows<IllegalArgumentException> { mineGenerator.generate(boardSize, mineAmount) }
 
         // then
         assertThat(result.message).isEqualTo("지뢰 갯수는 판의 셀 갯수보다 클 수 없습니다")
