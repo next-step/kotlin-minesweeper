@@ -1,6 +1,18 @@
 package minesweeper.domain
 
 sealed class Spot(val position: Position) {
+    private var isOpened = false
+
+    fun open() {
+        require(!isOpened) { "이미 열린 칸입니다." }
+
+        isOpened = true
+    }
+
+    fun isOpened(): Boolean {
+        return isOpened
+    }
+
     abstract fun isMine(): Boolean
 }
 
