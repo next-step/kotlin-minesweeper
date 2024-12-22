@@ -47,8 +47,8 @@ data class Coordinate private constructor(
         ?.copy(row = row + 1, column = column + 1)
 
     companion object {
-        private const val COORDINATE_GREATER_THAN_ZERO = "좌표는 0보다 커야 합니다"
-        private const val INVALID_INPUT_STRING = "입력값이 올바르지 않습니다"
+        private const val COORDINATE_GREATER_THAN_ZERO = "좌표 값은 0보다 커야 합니다"
+        private const val INVALID_INPUT_STRING = "올바른 형식이 아닙니다"
 
         fun of(row: Int, column: Int): Coordinate = Coordinate(row, column)
 

@@ -16,19 +16,19 @@ class CoordinateTest {
         val result = assertThrows<IllegalArgumentException> { Coordinate.of(0, 0) }
 
         // then
-        assertThat(result.message).isEqualTo("좌표는 0보다 커야 합니다")
+        assertThat(result.message).isEqualTo("좌표 값은 0보다 커야 합니다")
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3", "1", "str, rrr", "str"])
-    fun `올바른 입력값으로 좌표를 생성하지 않으면 아니며 에러를 던져야 한다`(input: String) {
+    fun `올바른 형식으로 좌표를 생성하지 않으면 아니며 에러를 던져야 한다`(input: String) {
         // given
 
         // when
         val result = assertThrows<IllegalArgumentException> { Coordinate.of(input) }
 
         // then
-        assertThat(result.message).isEqualTo("입력값이 올바르지 않습니다")
+        assertThat(result.message).isEqualTo("올바른 형식이 아닙니다")
     }
 
     @Test
