@@ -19,7 +19,8 @@ object ResultView {
 
     fun printCells(cells: Map<Coordinate, Cell>) {
         var rowCount = 1
-        cells.toSortedMap(compareBy<Coordinate> { it.row }.thenBy { it.column })
+        val comparator = compareBy<Coordinate> { it.row }.thenBy { it.column }
+        cells.toSortedMap(comparator)
             .forEach { (coordinate, cell) ->
                 if (coordinate.row > rowCount) {
                     println()
