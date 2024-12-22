@@ -32,11 +32,13 @@ class Field(
         y: Int,
         x: Int,
     ): Int {
-        return NEARBY.count { (dy, dx) ->
-            val newY = y + dy
-            val newX = x + dx
-            isWithinBounds(newY, newX) && spots[newY * width + newX].isMine()
-        }
+        return NearbyDirection.entries
+            .toTypedArray()
+            .count { direction ->
+                val newY = y + direction.dy
+                val newX = x + direction.dx
+                isWithinBounds(newY, newX) && spots[newY * width + newX].isMine()
+            }
     }
 
     private fun isWithinBounds(
@@ -50,15 +52,5 @@ class Field(
         val height = fieldInfo.getHeight()
         val totalSpots = height * width
         require(mineCount.count <= totalSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
-    }
-
-    companion object {
-        private val NEARBY =
-            listOf(
-                Pair(-1, 0),
-                Pair(0, -1),
-                Pair(0, 1),
-                Pair(1, 0),
-            )
     }
 }
