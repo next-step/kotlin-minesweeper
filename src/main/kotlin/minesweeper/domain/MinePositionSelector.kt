@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-fun interface SpotGenerator {
+fun interface MinePositionSelector {
     fun generate(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
-    ): List<Spot>
+    ): Set<Position>
 }

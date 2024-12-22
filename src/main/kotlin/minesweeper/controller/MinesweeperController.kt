@@ -6,14 +6,14 @@ import minesweeper.domain.FieldHeight
 import minesweeper.domain.FieldInfo
 import minesweeper.domain.FieldWidth
 import minesweeper.domain.MineCount
-import minesweeper.domain.SpotGenerator
+import minesweeper.domain.MinePositionSelector
 import minesweeper.dto.FieldResponse
 import minesweeper.view.OutputView
 
 class MinesweeperController(
     private val inputAdapter: MinesweeperInputAdapter,
     private val outputView: OutputView,
-    private val spotGenerator: SpotGenerator,
+    private val minePositionSelector: MinePositionSelector,
 ) {
     fun getFieldWidth(): FieldWidth {
         return inputAdapter.fetchFieldWidth()
@@ -35,6 +35,6 @@ class MinesweeperController(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
     ): Field {
-        return Field(fieldInfo, mineCount, spotGenerator)
+        return Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
     }
 }

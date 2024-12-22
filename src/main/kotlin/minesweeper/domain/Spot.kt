@@ -1,22 +1,16 @@
 package minesweeper.domain
 
-sealed class Spot(val coordinate: Coordinate) {
+sealed class Spot(val position: Position) {
     abstract fun isMine(): Boolean
 }
 
-class SafeSpot(coordinate: Coordinate) : Spot(coordinate) {
-    var nearbyMineCount: Int = 0
-
+class SafeSpot(position: Position, val nearbyMineCount: Int) : Spot(position) {
     override fun isMine(): Boolean {
         return false
     }
-
-    fun updateNearbyMineCount(count: Int) {
-        nearbyMineCount = count
-    }
 }
 
-class MineSpot(coordinate: Coordinate) : Spot(coordinate) {
+class MineSpot(position: Position) : Spot(position) {
     override fun isMine(): Boolean {
         return true
     }

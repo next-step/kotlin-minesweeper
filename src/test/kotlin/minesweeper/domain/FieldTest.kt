@@ -5,35 +5,29 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
-import minesweeper.infrastructrue.CustomSpotGenerator
+import minesweeper.infrastructrue.CustomMinePositionSelector
 
 class FieldTest : StringSpec({
     "필드를 생성할 수 있다." {
         val height = 3
         val width = 4
-        val minePositions = setOf(Coordinate(0, 0), Coordinate(1, 2), Coordinate(3, 2))
+        val minePositions = setOf(Position(0, 0), Position(1, 2), Position(3, 2))
         val mineCount = MineCount(minePositions.size)
         val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
-        val spotGenerator = CustomSpotGenerator(minePositions)
+        val spotGenerator = CustomMinePositionSelector(minePositions)
 
-        val field = Field(fieldInfo, mineCount, spotGenerator)
-
-        field.lines.size shouldBe height
-
-        field.lines.forEach { line ->
-            line.spots.size shouldBe width
-        }
+        val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
 
         (0 until width).forEach { x ->
             (0 until height).forEach { y ->
-                if (minePositions.contains(Coordinate(x, y))) {
-                    val mineSpot = field.lines[y].spots[x]
+                if (minePositions.contains(Position(x, y))) {
+                    val mineSpot = field.getSpot(Position(x, y))
                     mineSpot.shouldBeInstanceOf<MineSpot>()
-                    mineSpot.coordinate shouldBe Coordinate(x, y)
+                    mineSpot.position shouldBe Position(x, y)
                 } else {
-                    val safeSpot = field.lines[y].spots[x]
+                    val safeSpot = field.getSpot(Position(x, y))
                     safeSpot.shouldBeInstanceOf<SafeSpot>()
-                    safeSpot.coordinate shouldBe Coordinate(x, y)
+                    safeSpot.position shouldBe Position(x, y)
                 }
             }
         }
@@ -52,14 +46,14 @@ class FieldTest : StringSpec({
         ) { x, y, expected ->
             val height = 3
             val width = 4
-            val minePositions = setOf(Coordinate(0, 0), Coordinate(1, 2), Coordinate(3, 2))
+            val minePositions = setOf(Position(0, 0), Position(1, 2), Position(3, 2))
             val mineCount = MineCount(minePositions.size)
             val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
-            val spotGenerator = CustomSpotGenerator(minePositions)
+            val spotGenerator = CustomMinePositionSelector(minePositions)
 
-            val field = Field(fieldInfo, mineCount, spotGenerator)
+            val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
 
-            val spot = field.lines[y].spots[x] as SafeSpot
+            val spot = field.getSpot(Position(x, y)) as SafeSpot
             spot.nearbyMineCount shouldBe expected
         }
     }
