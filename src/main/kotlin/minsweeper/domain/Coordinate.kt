@@ -5,6 +5,10 @@ data class Coordinate(
     val column: Int,
 ) {
 
+    init {
+        require(row > 0 && column > 0) { COORDINATE_GREATER_THAN_ZERO }
+    }
+
     fun aroundCoordinates(boardSize: BoardSize): List<Coordinate> = listOfNotNull(
         left(),
         right(boardSize.width),
@@ -40,5 +44,9 @@ data class Coordinate(
     private fun bottomRight(width: Int, height: Int): Coordinate? =
         this.takeIf { column < width - 1 && row < height - 1 }
             ?.copy(row = row + 1, column = column + 1)
+
+    companion object {
+        private const val COORDINATE_GREATER_THAN_ZERO = "좌표는 0보다 커야 합니다"
+    }
 
 }
