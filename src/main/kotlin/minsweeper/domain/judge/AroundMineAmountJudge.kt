@@ -1,4 +1,7 @@
-package minsweeper.domain
+package minsweeper.domain.judge
+
+import minsweeper.domain.Coordinate
+import minsweeper.domain.board.BoardSize
 
 class AroundMineAmountJudge {
 

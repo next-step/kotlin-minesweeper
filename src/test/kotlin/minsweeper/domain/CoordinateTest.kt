@@ -31,4 +31,17 @@ class CoordinateTest {
         assertThat(result.message).isEqualTo("입력값이 올바르지 않습니다")
     }
 
+    @Test
+    fun `올바르게 인풋을 입력하면 좌표를 생성한다`() {
+        // given
+        val input = "1, 2"
+
+        // when
+        val coordinate = Coordinate.of(input)
+
+        // then
+        assertThat(coordinate.row).isEqualTo(1)
+        assertThat(coordinate.column).isEqualTo(2)
+    }
+
 }

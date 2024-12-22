@@ -1,4 +1,4 @@
-package minsweeper.domain
+package minsweeper.domain.result
 
 enum class OpenResult {
     SUCCESS,

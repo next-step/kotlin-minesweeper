@@ -1,5 +1,7 @@
-package minsweeper.domain
+package minsweeper.domain.judge
 
+import minsweeper.domain.Coordinate
+import minsweeper.domain.board.BoardSize
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

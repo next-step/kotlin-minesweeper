@@ -1,7 +1,7 @@
 package minsweeper.domain.generate
 
-import minsweeper.domain.AroundMineAmountJudge
-import minsweeper.domain.BoardSize
+import minsweeper.domain.judge.AroundMineAmountJudge
+import minsweeper.domain.board.BoardSize
 import minsweeper.domain.Cell
 import minsweeper.domain.Coordinate
 

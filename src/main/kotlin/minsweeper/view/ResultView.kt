@@ -18,20 +18,17 @@ object ResultView {
     }
 
     fun printCells(cells: Map<Coordinate, Cell>) {
-        var row = 1
+        var rowCount = 1
         cells.toSortedMap(compareBy<Coordinate> { it.row }.thenBy { it.column })
-            .forEach {
-                if (row < it.key.row) {
+            .forEach { (coordinate, cell) ->
+                if (coordinate.row > rowCount) {
                     println()
-                    row++
+                    rowCount++
                 }
-                print(
-                    "${
-                        cells.getValue(it.key)
-                            .print()
-                    } "
-                )
+                print("${cell.print()} ")
             }
+
+        println()
     }
 
     private fun Cell.print(): String {

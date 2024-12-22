@@ -1,4 +1,4 @@
-package minsweeper.domain
+package minsweeper.domain.board
 
 data class BoardSize(
     val height: Int,

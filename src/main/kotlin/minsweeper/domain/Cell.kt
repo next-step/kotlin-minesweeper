@@ -15,6 +15,11 @@ sealed class Cell(isOpened: Boolean) {
     class Island(
         val aroundMineAmount: Int,
         isOpened: Boolean = false,
-    ) : Cell(isOpened)
+    ) : Cell(isOpened) {
+
+        val isAroundMineAmountZero: Boolean
+            get() = aroundMineAmount == 0
+
+    }
 
 }

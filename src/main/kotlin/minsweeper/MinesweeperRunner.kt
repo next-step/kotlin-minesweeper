@@ -1,9 +1,9 @@
 package minsweeper
 
-import minsweeper.domain.Board
-import minsweeper.domain.BoardSize
+import minsweeper.domain.board.Board
+import minsweeper.domain.board.BoardSize
 import minsweeper.domain.Coordinate
-import minsweeper.domain.OpenResult
+import minsweeper.domain.result.OpenResult
 import minsweeper.domain.generate.CoordinatedCellsGenerator
 import minsweeper.view.InputView
 import minsweeper.view.ResultView
@@ -23,23 +23,26 @@ class MinesweeperRunner {
         val mineAmount = InputView.showAndGetMineAmount()
 
         val generator = CoordinatedCellsGenerator()
-        return Board(generator.generate(boardSize, mineAmount))
+        return Board(boardSize, generator.generate(boardSize, mineAmount))
     }
 
     private fun play(board: Board) {
         ResultView.printGameStart()
         while (true) {
             val coordinate = Coordinate.of(InputView.showAndGetOpenCoordinate())
-            when (board.open(coordinate)) {
-                OpenResult.SUCCESS -> ResultView.printCells(board.coordinatedCells)
-                OpenResult.MINE_FOUND -> {
-                    ResultView.printLoseGame()
-                    return
-                }
+            val result = board.open(coordinate)
+                .also { result -> result.print(board, coordinate) }
 
-                OpenResult.INVALID_COORDINATE -> ResultView.printEnterRightCoordinate(coordinate)
+            if (result == OpenResult.MINE_FOUND) {
+                return
             }
         }
+    }
+
+    private fun OpenResult.print(board: Board, enteredCoordinate: Coordinate): Unit = when (this) {
+        OpenResult.SUCCESS -> ResultView.printCells(board.coordinatedCells)
+        OpenResult.MINE_FOUND -> ResultView.printLoseGame()
+        OpenResult.INVALID_COORDINATE -> ResultView.printEnterRightCoordinate(enteredCoordinate)
     }
 
 }
