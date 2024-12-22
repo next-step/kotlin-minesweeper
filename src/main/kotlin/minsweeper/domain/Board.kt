@@ -1,9 +1,9 @@
 package minsweeper.domain
 
-class Board(val cells: Map<Coordinate, Cell>) {
+class Board(val coordinatedCells: Map<Coordinate, Cell>) {
 
     fun open(coordinate: Coordinate): OpenResult {
-        val cell = cells[coordinate] ?: return OpenResult.INVALID_COORDINATE
+        val cell = coordinatedCells[coordinate] ?: return OpenResult.INVALID_COORDINATE
         if (cell is Cell.Mine) {
             return OpenResult.MINE_FOUND
         }

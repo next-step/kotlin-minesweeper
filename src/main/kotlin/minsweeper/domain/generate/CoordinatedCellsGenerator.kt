@@ -17,7 +17,7 @@ class CoordinatedCellsGenerator(
 
         return List(boardSize.height) { row ->
             List(boardSize.width) { column ->
-                val coordinate = Coordinate(row + 1, column + 1)
+                val coordinate = Coordinate.of(row + 1, column + 1)
                 val cell = cellGenerator.generate(coordinate, mines, boardSize)
                 coordinate to cell
             }

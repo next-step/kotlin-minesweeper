@@ -14,7 +14,7 @@ class RandomMineGenerator : MineGenerator {
         }
 
         return List(boardSize.height) { row ->
-            List(boardSize.width) { column -> Coordinate(row + 1, column + 1) }
+            List(boardSize.width) { column -> Coordinate.of(row + 1, column + 1) }
         }.flatten()
             .toMutableList()
             .apply { shuffle() }

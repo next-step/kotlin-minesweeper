@@ -10,7 +10,7 @@ class BoardTest {
     fun `지뢰를 오픈하면 MINE_FOUND를 반환해야 한다`() {
         // given
         val board = Board(CELLS)
-        val coordinate = Coordinate(1, 3)
+        val coordinate = Coordinate.of(1, 3)
 
         // when
         val result = board.open(coordinate)
@@ -23,7 +23,7 @@ class BoardTest {
     fun `잘못된 좌표를 오픈하면 INVALID_COORDINATE를 반환해야 한다`() {
         // given
         val board = Board(CELLS)
-        val coordinate = Coordinate(1, 4)
+        val coordinate = Coordinate.of(1, 4)
 
         // when
         val result = board.open(coordinate)
@@ -36,7 +36,7 @@ class BoardTest {
     fun `일반 땅을 오픈하면 SUCCESS를 반환해야 한다`() {
         // given
         val board = Board(CELLS)
-        val coordinate = Coordinate(1, 2)
+        val coordinate = Coordinate.of(1, 2)
 
         // when
         val result = board.open(coordinate)

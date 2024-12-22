@@ -28,59 +28,64 @@ class AroundMineAmountJudgeTest {
         @JvmStatic
         fun provideAroundMineAmountTestParam(): List<AroundMineAmountTestParam> = listOf(
             AroundMineAmountTestParam(
-                coordinate = Coordinate(1, 1),
-                mineCoordinates = listOf(Coordinate(1, 2), Coordinate(2, 1), Coordinate(3, 1)),
+                coordinate = Coordinate.of(1, 1),
+                mineCoordinates = listOf(Coordinate.of(1, 2), Coordinate.of(2, 1), Coordinate.of(3, 1)),
                 aroundMineAmount = 2,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(1, 1),
-                mineCoordinates = listOf(Coordinate(2, 2), Coordinate(1, 3), Coordinate(3, 1)),
+                coordinate = Coordinate.of(1, 1),
+                mineCoordinates = listOf(Coordinate.of(2, 2), Coordinate.of(1, 3), Coordinate.of(3, 1)),
                 aroundMineAmount = 1,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(1, 10),
-                mineCoordinates = listOf(Coordinate(1, 9), Coordinate(2, 9), Coordinate(3, 1)),
+                coordinate = Coordinate.of(1, 10),
+                mineCoordinates = listOf(Coordinate.of(1, 9), Coordinate.of(2, 9), Coordinate.of(3, 1)),
                 aroundMineAmount = 2,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(1, 10),
-                mineCoordinates = listOf(Coordinate(2, 10), Coordinate(1, 8), Coordinate(3, 1)),
+                coordinate = Coordinate.of(1, 10),
+                mineCoordinates = listOf(Coordinate.of(2, 10), Coordinate.of(1, 8), Coordinate.of(3, 1)),
                 aroundMineAmount = 1,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(10, 1),
-                mineCoordinates = listOf(Coordinate(9, 2), Coordinate(9, 1), Coordinate(10, 2)),
+                coordinate = Coordinate.of(10, 1),
+                mineCoordinates = listOf(Coordinate.of(9, 2), Coordinate.of(9, 1), Coordinate.of(10, 2)),
                 aroundMineAmount = 3,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(10, 1),
-                mineCoordinates = listOf(Coordinate(9, 1), Coordinate(10, 3), Coordinate(9, 3)),
+                coordinate = Coordinate.of(10, 1),
+                mineCoordinates = listOf(Coordinate.of(9, 1), Coordinate.of(10, 3), Coordinate.of(9, 3)),
                 aroundMineAmount = 1,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(10, 10),
-                mineCoordinates = listOf(Coordinate(9, 9), Coordinate(10, 8), Coordinate(8, 10)),
+                coordinate = Coordinate.of(10, 10),
+                mineCoordinates = listOf(Coordinate.of(9, 9), Coordinate.of(10, 8), Coordinate.of(8, 10)),
                 aroundMineAmount = 1,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(10, 10),
-                mineCoordinates = listOf(Coordinate(9, 10), Coordinate(10, 9), Coordinate(8, 10)),
+                coordinate = Coordinate.of(10, 10),
+                mineCoordinates = listOf(Coordinate.of(9, 10), Coordinate.of(10, 9), Coordinate.of(8, 10)),
                 aroundMineAmount = 2,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(5, 5),
+                coordinate = Coordinate.of(5, 5),
                 mineCoordinates = listOf(
-                    Coordinate(5, 6),
-                    Coordinate(6, 5),
-                    Coordinate(4, 3),
-                    Coordinate(3, 7),
-                    Coordinate(3, 3)
+                    Coordinate.of(5, 6),
+                    Coordinate.of(6, 5),
+                    Coordinate.of(4, 3),
+                    Coordinate.of(3, 7),
+                    Coordinate.of(3, 3)
                 ),
                 aroundMineAmount = 2,
             ),
             AroundMineAmountTestParam(
-                coordinate = Coordinate(5, 5),
-                mineCoordinates = listOf(Coordinate(4, 6), Coordinate(6, 4), Coordinate(4, 4), Coordinate(4, 7)),
+                coordinate = Coordinate.of(5, 5),
+                mineCoordinates = listOf(
+                    Coordinate.of(4, 6),
+                    Coordinate.of(6, 4),
+                    Coordinate.of(4, 4),
+                    Coordinate.of(4, 7)
+                ),
                 aroundMineAmount = 3,
             ),
         )

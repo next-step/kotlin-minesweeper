@@ -42,24 +42,24 @@ class CellGeneratorTest {
         @JvmStatic
         fun provideCellGeneratorMineTestParam(): List<CellGeneratorTestParam> = listOf(
             CellGeneratorTestParam(
-                Coordinate(10, 10),
-                listOf(Coordinate(10, 10), Coordinate(9, 9)),
+                Coordinate.of(10, 10),
+                listOf(Coordinate.of(10, 10), Coordinate.of(9, 9)),
             ),
             CellGeneratorTestParam(
-                Coordinate(1, 1),
-                listOf(Coordinate(1, 1), Coordinate(9, 9)),
+                Coordinate.of(1, 1),
+                listOf(Coordinate.of(1, 1), Coordinate.of(9, 9)),
             ),
         )
 
         @JvmStatic
         fun provideCellGeneratorIslandTestParam(): List<CellGeneratorTestParam> = listOf(
             CellGeneratorTestParam(
-                Coordinate(10, 10),
-                listOf(Coordinate(9, 9), Coordinate(9, 10)),
+                Coordinate.of(10, 10),
+                listOf(Coordinate.of(9, 9), Coordinate.of(9, 10)),
             ),
             CellGeneratorTestParam(
-                Coordinate(1, 1),
-                listOf(Coordinate(2, 2), Coordinate(9, 9)),
+                Coordinate.of(1, 1),
+                listOf(Coordinate.of(2, 2), Coordinate.of(9, 9)),
             ),
         )
 

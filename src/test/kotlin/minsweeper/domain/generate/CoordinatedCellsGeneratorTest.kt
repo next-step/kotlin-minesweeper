@@ -11,7 +11,7 @@ class CoordinatedCellsGeneratorTest {
     @Test
     fun `좌표화된 Cell들을 생성할 수 있다`() {
         // given
-        val mineCoordinate = Coordinate(1, 3)
+        val mineCoordinate = Coordinate.of(1, 3)
         val mineGenerator = object : MineGenerator {
             override fun generate(boardSize: BoardSize, mineAmount: Int): List<Coordinate> = listOf(mineCoordinate)
         }
@@ -21,8 +21,8 @@ class CoordinatedCellsGeneratorTest {
         val result = generator.generate(BoardSize(10, 10), 1)
 
         assertThat(result[mineCoordinate]).isInstanceOf(Cell.Mine::class.java)
-        assertThat(result[Coordinate(2, 3)]).isInstanceOf(Cell.Island::class.java)
-        assertThat(result[Coordinate(3, 2)]).isInstanceOf(Cell.Island::class.java)
+        assertThat(result[Coordinate.of(2, 3)]).isInstanceOf(Cell.Island::class.java)
+        assertThat(result[Coordinate.of(3, 2)]).isInstanceOf(Cell.Island::class.java)
     }
 
 }

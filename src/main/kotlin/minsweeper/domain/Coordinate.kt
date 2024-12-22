@@ -1,6 +1,6 @@
 package minsweeper.domain
 
-data class Coordinate(
+data class Coordinate private constructor(
     val row: Int,
     val column: Int,
 ) {
@@ -47,6 +47,21 @@ data class Coordinate(
 
     companion object {
         private const val COORDINATE_GREATER_THAN_ZERO = "좌표는 0보다 커야 합니다"
+        private const val INVALID_INPUT_STRING = "입력값이 올바르지 않습니다"
+
+        fun of(row: Int, column: Int): Coordinate = Coordinate(row, column)
+
+        fun of(input: String): Coordinate {
+            val splitInput = input.split(",")
+                .map(String::trim)
+                .mapNotNull {
+                    it.toIntOrNull()
+                        ?.minus(1)
+                }
+
+            require(splitInput.size == 2) { INVALID_INPUT_STRING }
+            return of(splitInput[0], splitInput[1])
+        }
     }
 
 }
