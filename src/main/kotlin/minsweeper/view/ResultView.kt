@@ -9,6 +9,14 @@ object ResultView {
         println("지뢰찾기 게임 시작")
     }
 
+    fun printEnterRightCoordinate(coordinate: Coordinate) {
+        println("[${coordinate.row}, ${coordinate.column}] 셀은 존재하지 않습니다. ")
+    }
+
+    fun printLoseGame() {
+        println("Lose Game.")
+    }
+
     fun printCells(cells: Map<Coordinate, Cell>) {
         var row = 1
         cells.toSortedMap(compareBy<Coordinate> { it.row }.thenBy { it.column })
@@ -17,7 +25,12 @@ object ResultView {
                     println()
                     row++
                 }
-                print("${cells.getValue(it.key).print()} ")
+                print(
+                    "${
+                        cells.getValue(it.key)
+                            .print()
+                    } "
+                )
             }
     }
 
