@@ -1,11 +1,14 @@
-package minsweeper.domain
+package minsweeper.domain.judge
 
-class AroundMineCountJudge {
+import minsweeper.domain.Coordinate
+import minsweeper.domain.board.BoardSize
+
+class AroundMineAmountJudge {
 
     fun judge(
-        boardSize: BoardSize,
         coordinate: Coordinate,
         mineCoordinates: List<Coordinate>,
+        boardSize: BoardSize,
     ): Int = coordinate.findAroundCoordinates(boardSize)
         .matches(mineCoordinates)
 

@@ -1,53 +1,52 @@
 package minsweeper
 
-import minsweeper.domain.*
+import minsweeper.domain.board.Board
+import minsweeper.domain.board.BoardSize
+import minsweeper.domain.Coordinate
+import minsweeper.domain.result.OpenResult
+import minsweeper.domain.generate.CoordinatedCellsGenerator
 import minsweeper.view.InputView
 import minsweeper.view.ResultView
 
 class MinesweeperRunner {
 
     fun run() {
-        startGame(initializeBoard())
+        val board = initialize()
+        play(board)
     }
 
-    private fun initializeBoard(): Board {
+    private fun initialize(): Board {
         val boardSize = BoardSize(
             InputView.showAndGetHeight(),
             InputView.showAndGetWidth(),
         )
-        val mineCount = InputView.showAndGetMineCount()
+        val mineAmount = InputView.showAndGetMineAmount()
 
-        return Board.of(
-            boardSize,
-            mineCount,
-            BoardLinesGenerator(aroundMineCountJudge = AroundMineCountJudge()),
-        )
+        val generator = CoordinatedCellsGenerator()
+        return Board(boardSize, generator.generate(boardSize, mineAmount))
     }
 
-    private fun startGame(board: Board) {
-        ResultView.printStartGame()
+    private fun play(board: Board) {
+        ResultView.printGameStart()
         while (true) {
             val coordinate = Coordinate.of(InputView.showAndGetOpenCoordinate())
-            val cell = board.open(coordinate)
-            if (processCellAndCheckGameOver(cell, board)) return
+            val result = board.open(coordinate)
+                .also { result -> result.print(board, coordinate) }
+
+            if (result == OpenResult.MINE_FOUND) {
+                return
+            }
         }
     }
 
-    private fun processCellAndCheckGameOver(cell: Cell, board: Board): Boolean {
-        return when (cell) {
-            is Cell.Island -> {
-                ResultView.printBoard(board.boardLines)
-                false
-            }
-
-            Cell.Mine -> {
-                ResultView.printLoseGame()
-                true
-            }
-        }
+    private fun OpenResult.print(board: Board, enteredCoordinate: Coordinate): Unit = when (this) {
+        OpenResult.SUCCESS -> ResultView.printCells(board.coordinatedCells)
+        OpenResult.MINE_FOUND -> ResultView.printLoseGame()
+        OpenResult.INVALID_COORDINATE -> ResultView.printEnterRightCoordinate(enteredCoordinate)
     }
 
 }
+
 
 fun main() {
     MinesweeperRunner().run()

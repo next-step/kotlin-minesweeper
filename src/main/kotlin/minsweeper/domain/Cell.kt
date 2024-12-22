@@ -1,30 +1,25 @@
 package minsweeper.domain
 
-sealed class Cell {
-    var isOpened: Boolean = false
+sealed class Cell(isOpened: Boolean) {
+    fun isMine() = this is Mine
+
+    var isOpened: Boolean = isOpened
         private set
 
     fun open() {
-        isOpened = true
+        this.isOpened = true
     }
 
-    data class Island(val aroundMineCount: Int) : Cell() {
-        fun isAroundMineCountZero() = aroundMineCount == 0
-    }
-    data object Mine : Cell()
+    class Mine(isOpened: Boolean = false) : Cell(isOpened)
 
-    companion object {
-        fun create(
-            coordinate: Coordinate,
-            boardSize: BoardSize,
-            mineCoordinates: List<Coordinate>,
-            aroundMineCountJudge: AroundMineCountJudge,
-        ): Cell = Mine.takeIf { coordinate in mineCoordinates } ?: Island(
-            aroundMineCountJudge.judge(
-                boardSize,
-                coordinate,
-                mineCoordinates,
-            )
-        )
+    class Island(
+        val aroundMineAmount: Int,
+        isOpened: Boolean = false,
+    ) : Cell(isOpened) {
+
+        val isAroundMineAmountZero: Boolean
+            get() = aroundMineAmount == 0
+
     }
+
 }
