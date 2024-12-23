@@ -17,9 +17,9 @@ class CellTest : FunSpec({
         val cell = Cell.create(1, 1)
 
         // when
-        cell.addMine()
+        val res = cell.addMine()
 
         // then
-        cell.hasMine shouldBe true
+        res.hasMine shouldBe true
     }
 })

@@ -1,16 +1,11 @@
 package domain
 
-class Cell private constructor(
+data class Cell private constructor(
     val position: Position,
+    val hasMine: Boolean,
 ) {
-    private var _hasMine: Boolean = false
-
-    val hasMine: Boolean
-        get() = _hasMine
-
     fun addMine(): Cell {
-        _hasMine = true
-        return this
+        return Cell(position, true)
     }
 
     companion object {
@@ -19,7 +14,7 @@ class Cell private constructor(
             column: Int,
         ): Cell {
             val position = Position(row, column)
-            return Cell(position)
+            return Cell(position, false)
         }
     }
 }

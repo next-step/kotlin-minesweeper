@@ -13,5 +13,5 @@ fun main() {
     val board = boardCreator.create(height, width, mineCount)
 
     OutputView.notifyGameStart()
-    OutputView.printBoard(board)
+    OutputView.printOpenedCells(board.openAllCells())
 }

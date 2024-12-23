@@ -12,7 +12,7 @@ object InputView {
     }
 
     fun inputMineCount(): Int {
-        println("지뢰 개수를 입력하세요.")
+        println("지뢰는 몇 개인가요?")
         return readln().toIntOrNull() ?: inputMineCount()
     }
 }

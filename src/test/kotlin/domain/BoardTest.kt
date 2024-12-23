@@ -29,4 +29,24 @@ class BoardTest : FunSpec({
         // then
         result.cells().allCells().filter { it.hasMine }.size shouldBe 2
     }
+
+    test("openAllCells() 테스트") {
+        // given
+        val cells = Cells.create(3, 3)
+        val board = Board.from(cells)
+        val mineCount = 3
+        val boardWithMines = board.placeMines(RandomMinePlacer(), mineCount)
+
+        // when
+        val openedCells = boardWithMines.openAllCells()
+
+        // then
+        openedCells.size shouldBe cells.allCells().size
+
+        val numberOfMineSymbols = openedCells.count { it.symbol == "*" }
+        numberOfMineSymbols shouldBe mineCount
+
+        val numberOfNumberSymbols = openedCells.count { it.symbol != "*" }
+        numberOfNumberSymbols shouldBe (openedCells.size - numberOfMineSymbols)
+    }
 })

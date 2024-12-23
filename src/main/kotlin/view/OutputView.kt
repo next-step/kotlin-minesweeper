@@ -1,41 +1,39 @@
 package view
 
-import domain.Board
+import domain.OpenedCell
 
 object OutputView {
-    private const val MINE_SYMBOL = "* "
-    private const val CELL_SYMBOL = "C "
-
     fun notifyGameStart() {
         println("지뢰찾기 게임 시작")
     }
 
-    fun printBoard(board: Board) {
-        val cells = board.cells().allCells()
-        val height = cells.maxOf { it.position.row }
-        val width = cells.maxOf { it.position.column }
+    fun printOpenedCells(openedCells: List<OpenedCell>) {
+        buildTotalRowSymbols(openedCells).forEach(::println)
+    }
 
-        (1..height).forEach { rowIndex ->
-            println(buildRowSymbols(cells, rowIndex, width))
+    /**
+     * 전체 행을 문자열로 만들어 리스트로 반환.
+     */
+    private fun buildTotalRowSymbols(openedCells: List<OpenedCell>): List<String> {
+        val height = openedCells.maxOf { it.position.row }
+
+        return (1..height).map { rowIndex ->
+            buildRowSymbol(openedCells, rowIndex)
         }
     }
 
-    private fun buildRowSymbols(
-        cells: List<domain.Cell>,
+    /**
+     * 한 행을 구성하는 문자열 생성.
+     */
+    private fun buildRowSymbol(
+        openedCells: List<OpenedCell>,
         rowIndex: Int,
-        width: Int,
     ): String {
-        return (1..width).joinToString("") { colIndex ->
-            getSymbol(cells, rowIndex, colIndex)
-        }
-    }
+        val width = openedCells.maxOf { it.position.column }
 
-    private fun getSymbol(
-        cells: List<domain.Cell>,
-        row: Int,
-        col: Int,
-    ): String {
-        val foundCell = cells.first { it.position.row == row && it.position.column == col }
-        return if (foundCell.hasMine) MINE_SYMBOL else CELL_SYMBOL
+        return (1..width).joinToString(" ") { colIndex ->
+            openedCells.filter { it.position.row == rowIndex && it.position.column == colIndex }
+                .joinToString(" ") { it.symbol }
+        }
     }
 }
