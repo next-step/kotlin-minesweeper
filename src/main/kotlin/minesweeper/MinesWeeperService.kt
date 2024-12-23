@@ -24,7 +24,7 @@ class MinesWeeperService(
         board.addMineAroundCounts()
     }
 
-    fun isFinishGame() : Boolean {
+    fun isFinishGame(): Boolean {
         return board.isFinishGame()
     }
 }

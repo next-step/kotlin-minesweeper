@@ -48,10 +48,10 @@ class Board(
     }
 
     fun isFinishGame(): Boolean {
-        return cells.cellList.all { it.isOpen || it.isMine }
+        return cells.allMatch { it.isOpen || it.isMine }
     }
 
     private fun isMine(row: Int, column: Int): Boolean {
-        return cells.cellList.find { it.isAround(row, column) }?.isMine ?: false
+        return cells.match { it.isAround(row, column) }?.isMine ?: false
     }
 }

@@ -13,7 +13,11 @@ class MinesWeeperController(
         val width = inputView.inputWidth()
         val mineCount = inputView.inputMineCount()
 
-        val minesWeeperService = MinesWeeperService(height, width, mineCount)
+        val minesWeeperService = MinesWeeperService(
+            height = height,
+            width = width,
+            mineCount = mineCount
+        )
         val board = minesWeeperService.createCells()
         minesWeeperService.addMineAroundCounts()
 
@@ -23,16 +27,21 @@ class MinesWeeperController(
     private fun startGame(minesWeeperService: MinesWeeperService, board: Board) {
         resultView.printStartGame()
         while (!minesWeeperService.isFinishGame()) {
-            val (row, column) = inputView.inputOpenCell()
-            if (!minesWeeperService.openCells(row, column)) {
-                resultView.printLoseGame()
-                break
-            }
-
-            resultView.printBoard(board)
+            if (openCell(minesWeeperService, board)) break
         }
 
         resultView.printWinGame()
+    }
+
+    private fun openCell(minesWeeperService: MinesWeeperService, board: Board): Boolean {
+        val (row, column) = inputView.inputOpenCell()
+        if (!minesWeeperService.openCells(row, column)) {
+            resultView.printLoseGame()
+            return true
+        }
+
+        resultView.printBoard(board)
+        return false
     }
 }
 

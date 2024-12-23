@@ -31,16 +31,28 @@ class Cells(
         val cell = getCell(row, column)
         cell.open()
         if (cell.mineAroundCount == 0) {
-            processAroundCells(cell) {
-                if (!it.isOpen) {
-                    openAroundCells(it.row, it.column)
-                }
+            openDirectionCell(cell)
+        }
+    }
+
+    private fun openDirectionCell(cell: Cell) {
+        processAroundCells(cell) {
+            if (!it.isOpen) {
+                openAroundCells(it.row, it.column)
             }
         }
     }
 
     fun getRowCells(row: Int): Cells {
         return Cells(cellList.filter { it.row == row })
+    }
+
+    fun match(predicate: (Cell) -> Boolean): Cell? {
+        return cellList.find(predicate)
+    }
+
+    fun allMatch(predicate: (Cell) -> Boolean): Boolean {
+        return cellList.all(predicate)
     }
 
     private fun minesCellAroundCount(cell: Cell) {
