@@ -19,5 +19,5 @@ fun main() {
 
     val field = controller.makeNewField(fieldInfo, mineCount)
 
-    controller.playGame2(field)
+    controller.playGame(field)
 }

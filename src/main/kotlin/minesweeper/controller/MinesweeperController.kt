@@ -36,7 +36,7 @@ class MinesweeperController(
         return Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
     }
 
-    fun playGame2(field: Field) {
+    fun playGame(field: Field) {
         outputView.printStartGameMessage()
         while (true) {
             if (doOpen(field)) return
