@@ -5,6 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import minesweeper.infrastructrue.CustomMinePositionSelector
 
 class FieldTest : StringSpec({
@@ -75,7 +76,7 @@ class FieldTest : StringSpec({
 
         val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
 
-        field.openSpot(Position(3, 1))
+        field.openSpot(Position(3, 1)) shouldBeSameInstanceAs OpenResult.Success
 
         field.getSpot(Position(1, 1)).isOpened() shouldBe false
         field.getSpot(Position(2, 1)).isOpened() shouldBe true
@@ -89,5 +90,18 @@ class FieldTest : StringSpec({
         field.getSpot(Position(2, 3)).isOpened() shouldBe false
         field.getSpot(Position(3, 3)).isOpened() shouldBe false
         field.getSpot(Position(4, 3)).isOpened() shouldBe false
+    }
+
+    "지뢰에 해당하는 스팟을 열면 GameOver를 반환한다." {
+        val height = 3
+        val width = 4
+        val minePositions = setOf(Position(1, 1))
+        val mineCount = MineCount(minePositions.size)
+        val fieldInfo = FieldInfo(FieldHeight(height), FieldWidth(width))
+        val spotGenerator = CustomMinePositionSelector(minePositions)
+
+        val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
+
+        field.openSpot(Position(1, 1)) shouldBeSameInstanceAs OpenResult.GameOver
     }
 })

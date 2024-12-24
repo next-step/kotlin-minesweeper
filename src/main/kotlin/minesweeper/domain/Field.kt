@@ -44,18 +44,20 @@ class Field(
         require(minePositions.size <= totalPossibleSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
     }
 
-    fun openSpot(position: Position): Boolean {
-        spots[position]?.let {
-            if (it.isMine()) {
-                return false
-            }
-            openTargetSpot(it as SafeSpot)
-        }
-        return true
+    fun openSpot(position: Position): OpenResult {
+        val targetSpot =
+            spots[position]?.let {
+                if (it.isMine()) {
+                    return OpenResult.GameOver
+                }
+                it
+            } as SafeSpot
+        val openResult = targetSpot.open()
+        checkAndOpenNearbySpot(targetSpot)
+        return openResult
     }
 
-    private fun openTargetSpot(targetSpot: SafeSpot) {
-        targetSpot.open()
+    private fun checkAndOpenNearbySpot(targetSpot: SafeSpot) {
         if (targetSpot.nearbyMineCount == 0) {
             openNearbySpots(targetSpot.position)
         }

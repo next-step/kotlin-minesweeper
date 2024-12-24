@@ -17,7 +17,7 @@ fun main() {
     val fieldInfo = FieldInfo(controller.getFieldHeight(), controller.getFieldWidth())
     val mineCount = controller.getMineCount()
 
-    val game = controller.makeNewGame(fieldInfo, mineCount)
+    val field = controller.makeNewField(fieldInfo, mineCount)
 
-    controller.playGame(game)
+    controller.playGame2(field)
 }

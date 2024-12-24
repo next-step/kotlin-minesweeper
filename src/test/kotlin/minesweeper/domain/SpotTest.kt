@@ -1,8 +1,8 @@
 package minesweeper.domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class SpotTest : StringSpec({
     "지뢰인지 아닌지 여부를 반환할 수 있다." {
@@ -23,16 +23,10 @@ class SpotTest : StringSpec({
         mineSpot.isOpened() shouldBe false
     }
 
-    "이미 열려 있는 칸은 다시 열 수 없다." {
+    "이미 열려 있는 칸을 열면 AlreadyOpened를 반환한다." {
         val safeSpot = SafeSpot(Position(2, 3), 0)
-
         safeSpot.open()
 
-        val exception =
-            shouldThrow<IllegalArgumentException> {
-                safeSpot.open()
-            }
-
-        exception.message shouldBe "이미 열린 칸입니다."
+        safeSpot.open() shouldBeSameInstanceAs OpenResult.AlreadyOpened
     }
 })

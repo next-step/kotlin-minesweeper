@@ -7,7 +7,7 @@ import minesweeper.domain.FieldInfo
 import minesweeper.domain.FieldWidth
 import minesweeper.domain.MineCount
 import minesweeper.domain.MinePositionSelector
-import minesweeper.domain.MinesweeperGame
+import minesweeper.domain.OpenResult
 import minesweeper.domain.Position
 import minesweeper.dto.FieldResponse
 import minesweeper.view.OutputView
@@ -29,25 +29,35 @@ class MinesweeperController(
         return inputAdapter.fetchMineCount()
     }
 
-    fun makeNewGame(
+    fun makeNewField(
         fieldInfo: FieldInfo,
         mineCount: MineCount,
-    ): MinesweeperGame {
-        val field = Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
-        return MinesweeperGame(field)
+    ): Field {
+        return Field(fieldInfo, minePositionSelector.generate(fieldInfo, mineCount))
     }
 
-    fun playGame(minesweeperGame: MinesweeperGame) {
+    fun playGame2(field: Field) {
         outputView.printStartGameMessage()
-        while (!minesweeperGame.isFinished) {
-            val openAttemptPosition = getOpenAttemptPosition()
-            minesweeperGame.openSpot(openAttemptPosition)
-            if (minesweeperGame.isFinished) {
-                outputView.printGameLoseMessage()
-                return
-            }
-            outputView.printField(FieldResponse(minesweeperGame.field))
+        while (true) {
+            if (doOpen(field)) return
         }
+    }
+
+    private fun doOpen(field: Field): Boolean {
+        val openResult = field.openSpot(getOpenAttemptPosition())
+        when (openResult) {
+            is OpenResult.GameOver -> {
+                outputView.printGameLoseMessage()
+                return true
+            }
+            is OpenResult.Success -> {
+                outputView.printField(FieldResponse(field))
+            }
+            OpenResult.AlreadyOpened -> {
+                outputView.printAlreadyOpenedMessage(FieldResponse(field))
+            }
+        }
+        return false
     }
 
     private fun getOpenAttemptPosition(): Position {

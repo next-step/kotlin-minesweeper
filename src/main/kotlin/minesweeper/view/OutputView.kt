@@ -11,6 +11,11 @@ class OutputView {
         println(fieldResponse.toFormattedStringField() + "\n")
     }
 
+    fun printAlreadyOpenedMessage(fieldResponse: FieldResponse) {
+        println("이미 열린 위치입니다.")
+        printField(fieldResponse)
+    }
+
     fun printGameLoseMessage() {
         println("Lose Game.")
     }
