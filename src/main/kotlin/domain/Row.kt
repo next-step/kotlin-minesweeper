@@ -14,6 +14,10 @@ class Row(private val cells: List<Cell>) {
         return Row(updatedCells)
     }
 
+    fun areAllNonMinesOpened(): Boolean {
+        return cells.all { it.isOpen || it.isMine() }
+    }
+
     operator fun get(column: Int): Cell = cells[column]
 
     val size: Int

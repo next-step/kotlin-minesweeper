@@ -21,7 +21,7 @@ object OutputView {
     }
 
     private fun renderMineField(state: MineFieldState): List<String> {
-        return state.cells.getRows().map { row ->
+        return state.cells.rows.map { row ->
             row.getCells()
                 .joinToString(" ") { cell ->
                     mapCellToDisplay(cell)

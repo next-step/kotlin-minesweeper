@@ -4,15 +4,13 @@ class MineField(
     private val height: Height,
     private val width: Width,
     private val mineCount: Int,
-    private val cellMapper: CellMapper = DefaultCellMapper(),
 ) {
-    private val grid: Grid
+    private val grid: Cells
 
     init {
         require(mineCount <= height.value * width.value) { MINE_MAXIMUM_EXCEPTION_MESSAGE }
         val minePositions = generateAllPositions().shuffled().take(mineCount).toSet()
-        val cells = Cells.create(height.value, width.value, minePositions)
-        grid = Grid(height, width, cells).withNumberHints()
+        grid = Cells.create(height.value, width.value, minePositions).addNumberHints()
     }
 
     private fun generateAllPositions(): List<Position> =
@@ -20,22 +18,18 @@ class MineField(
             Position(index / width.value, index % width.value)
         }
 
-    fun getState(): MineFieldState = MineFieldState(grid.getCells())
+    fun getState(): MineFieldState = MineFieldState(grid)
 
     fun openCell(
         row: Int,
-        col: Int,
+        column: Int,
     ): Boolean {
-        val cell = grid.getCells()[row][col]
-        return if (cell.isMine()) {
-            false
-        } else {
-            val positionsToOpen = cell.open(row, col, grid.getCells())
-            positionsToOpen.forEach { (r, c) ->
-                grid.getCells()[r][c].isOpen = true
-            }
-            true
+        if (grid.isCellMine(row, column)) {
+            grid.openCell(row, column) // 열린 지뢰 표시
+            return false
         }
+        grid.openCell(row, column)
+        return true
     }
 
     companion object {

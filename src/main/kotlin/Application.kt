@@ -12,9 +12,9 @@ fun main() {
     OutputView.printMineField(game.getMineFieldState())
 
     while (true) {
-        val (row, col) = InputView.readAskOpenCellMessage()
+        val (row, column) = InputView.readAskOpenCellMessage()
 
-        val isSafe = game.openCell(row, col)
+        val isSafe = game.openCell(row, column)
         OutputView.printMineField(game.getMineFieldState())
 
         if (!isSafe) {
