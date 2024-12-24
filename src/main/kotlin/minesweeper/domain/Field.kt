@@ -30,16 +30,8 @@ class Field(
         minePositions: Set<Position>,
         position: Position,
     ): Int {
-        return NearbyDirection.entries
-            .toTypedArray()
-            .count { direction ->
-                val nearbyPosition =
-                    Position(
-                        position.x + direction.dx(),
-                        position.y + direction.dy(),
-                    )
-                minePositions.contains(nearbyPosition)
-            }
+        val nearbyPositions = position.nearbyPositions()
+        return nearbyPositions.count { it in minePositions }
     }
 
     fun getFieldInfo(): FieldInfo {
