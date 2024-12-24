@@ -67,3 +67,8 @@
 - [X] interface 와 sealed interface 차이점
 - [X] `Cell` 의 sealed class 의 장점을 활용(When)
 - [X] `Cell` 오픈시 `visited` 제거 
+
+## 4단계 - 지뢰 찾기(리팩터링)
+
+- [X] TDD 보완
+- [X] 셀 열기 책임 분리 

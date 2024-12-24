@@ -4,15 +4,11 @@ class Board(
     private val dimensions: Dimensions,
     minePositions: Set<Position>,
 ) {
-    private val cells: Cells = initializeCells(minePositions)
+    val cells: Cells = initializeCells(minePositions)
 
     init {
         require(minePositions.isNotEmpty()) { "마인은 최소 ${MIN_MINE_COUNT}개 이상 이어야 합니다." }
         require(minePositions.size < dimensions.totalCells) { "마인의 수는 전체 셀 수보다 작아야 합니다." }
-    }
-
-    fun open(openPosition: Position): OpenState {
-        return cells.open(openPosition)
     }
 
     fun draw(): BoardDrawing {

@@ -1,5 +1,17 @@
 package minesweeper
 
+enum class OpenState {
+    LOSE,
+    CONTINUE,
+    ALL_DONE,
+}
+
+sealed interface CellOpener {
+    fun open(position: Position): OpenState
+
+    fun openNeighborCells(neighbors: List<Position>)
+}
+
 sealed interface State {
     fun toggle(position: Position): State
 
@@ -9,8 +21,10 @@ sealed interface State {
 }
 
 class Playing(private val board: Board) : State {
+    private val cellOpener = DefaultNeighborOpener(board.cells)
+
     override fun toggle(position: Position): State {
-        return when (board.open(position)) {
+        return when (cellOpener.open(position)) {
             OpenState.CONTINUE -> this
             OpenState.LOSE -> {
                 GameOver(false)

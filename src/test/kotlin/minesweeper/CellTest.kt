@@ -53,4 +53,25 @@ class CellTest {
 
         assertThat(cell.isOpen).isFalse()
     }
+
+    @Test
+    fun `셀의 지뢰 여부를 판단할 수 있다`() {
+        val cell = Cell.createMine(Position(1, 1))
+
+        assertThat(cell.isMine()).isTrue()
+    }
+
+    @Test
+    fun `셀을 열수 있는지 확인 할 수 있다`() {
+        val cell = Cell.createDefault(Position(1, 1))
+
+        assertThat(cell.isOpenable).isTrue()
+    }
+
+    @Test
+    fun `셀을 열수 없는 경우 확인 할 수 있다`() {
+        val cell = NumberCell(Position(1, 1), 1)
+
+        assertThat(cell.isOpenable).isFalse()
+    }
 }

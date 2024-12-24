@@ -30,4 +30,11 @@ class DimensionsTest {
             Dimensions(1, 0)
         }.withMessage("높이는 0보다 커야 합니다.")
     }
+
+    @Test
+    fun `전체 셀의 개수를 반환한다`() {
+        val dimensions = Dimensions(2, 2)
+
+        assertThat(dimensions.totalCells).isEqualTo(4)
+    }
 }
