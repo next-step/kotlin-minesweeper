@@ -18,17 +18,9 @@ class Field(
         }.associateWith { position ->
             when {
                 minePositions.contains(position) -> MineSpot(position)
-                else -> SafeSpot(position, getNearByMineCount(minePositions, position))
+                else -> SafeSpot(position)
             }
         }
-    }
-
-    private fun getNearByMineCount(
-        minePositions: Set<Position>,
-        position: Position,
-    ): Int {
-        val nearbyPositions = position.nearbyPositions()
-        return nearbyPositions.count { it in minePositions }
     }
 
     fun getFieldInfo(): FieldInfo {
@@ -53,6 +45,7 @@ class Field(
                 it
             } as SafeSpot
         val openResult = targetSpot.open()
+        targetSpot.calculateNearbyMineCount(minePositions)
         checkAndOpenNearbySpot(targetSpot)
         return openResult
     }

@@ -26,9 +26,16 @@ sealed class Spot(val position: Position) {
     abstract fun isMine(): Boolean
 }
 
-class SafeSpot(position: Position, val nearbyMineCount: Int) : Spot(position) {
+class SafeSpot(position: Position) : Spot(position) {
+    var nearbyMineCount: Int = 0
+
     override fun isMine(): Boolean {
         return false
+    }
+
+    fun calculateNearbyMineCount(minePositions: Set<Position>) {
+        val nearbyPositions = position.nearbyPositions()
+        this.nearbyMineCount = nearbyPositions.count { it in minePositions }
     }
 }
 

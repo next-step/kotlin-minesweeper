@@ -55,6 +55,7 @@ class FieldTest : StringSpec({
             val field = Field(fieldInfo, spotGenerator.generate(fieldInfo, mineCount))
 
             val spot = field.getSpot(Position(x, y)) as SafeSpot
+            spot.calculateNearbyMineCount(minePositions)
             spot.nearbyMineCount shouldBe expected
         }
     }
