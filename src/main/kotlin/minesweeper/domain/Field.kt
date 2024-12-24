@@ -11,19 +11,16 @@ class Field(
     }
 
     private fun createField(): Map<Position, Spot> {
-        val spots = mutableMapOf<Position, Spot>()
-        for (x in 0 until fieldInfo.getWidth() + 1) {
-            for (y in 0 until fieldInfo.getHeight() + 1) {
-                val position = Position(x, y)
-                spots[position] =
-                    if (minePositions.contains(position)) {
-                        MineSpot(position)
-                    } else {
-                        SafeSpot(position, getNearByMineCount(minePositions, position))
-                    }
+        return (0 until fieldInfo.getWidth() + 1).flatMap { x ->
+            (0 until fieldInfo.getHeight() + 1).map { y ->
+                Position(x, y)
+            }
+        }.associateWith { position ->
+            when {
+                minePositions.contains(position) -> MineSpot(position)
+                else -> SafeSpot(position, getNearByMineCount(minePositions, position))
             }
         }
-        return spots
     }
 
     private fun getNearByMineCount(
