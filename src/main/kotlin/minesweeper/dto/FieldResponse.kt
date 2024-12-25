@@ -7,7 +7,7 @@ import minesweeper.domain.Spot
 
 class FieldResponse(private val field: Field) {
     fun toFormattedStringField(): String {
-        val fieldInfo = field.getFieldInfo()
+        val fieldInfo = field.fieldInfo
         val positions = generatePositions(fieldInfo.getWidth(), fieldInfo.getHeight())
 
         return formatField(positions)

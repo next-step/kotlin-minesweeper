@@ -1,7 +1,7 @@
 package minesweeper.domain
 
 class Field(
-    private val fieldInfo: FieldInfo,
+    val fieldInfo: FieldInfo,
     private val minePositions: Set<Position>,
 ) {
     private val spots: Map<Position, Spot> = createField()
@@ -21,10 +21,6 @@ class Field(
                 else -> SafeSpot(position)
             }
         }
-    }
-
-    fun getFieldInfo(): FieldInfo {
-        return fieldInfo
     }
 
     fun getSpot(position: Position): Spot {
