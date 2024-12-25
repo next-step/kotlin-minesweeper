@@ -23,6 +23,10 @@ sealed class Spot(val position: Position) {
         return isOpened
     }
 
+    fun isClosed(): Boolean {
+        return !isOpened
+    }
+
     abstract fun isMine(): Boolean
 }
 

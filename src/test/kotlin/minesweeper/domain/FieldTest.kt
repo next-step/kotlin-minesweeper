@@ -79,18 +79,20 @@ class FieldTest : StringSpec({
 
         field.openSpot(Position(3, 1)) shouldBeSameInstanceAs OpenResult.Success
 
-        field.getSpot(Position(1, 1)).isOpened() shouldBe false
-        field.getSpot(Position(2, 1)).isOpened() shouldBe true
-        field.getSpot(Position(3, 1)).isOpened() shouldBe true
-        field.getSpot(Position(4, 1)).isOpened() shouldBe true
-        field.getSpot(Position(1, 2)).isOpened() shouldBe false
-        field.getSpot(Position(2, 2)).isOpened() shouldBe true
-        field.getSpot(Position(3, 2)).isOpened() shouldBe true
-        field.getSpot(Position(4, 2)).isOpened() shouldBe true
-        field.getSpot(Position(1, 3)).isOpened() shouldBe false
-        field.getSpot(Position(2, 3)).isOpened() shouldBe false
-        field.getSpot(Position(3, 3)).isOpened() shouldBe false
-        field.getSpot(Position(4, 3)).isOpened() shouldBe false
+        Position(1, 1).isClosedSpot(field)
+        Position(2, 1).isOpenSpot(field)
+        Position(3, 1).isOpenSpot(field)
+        Position(4, 1).isOpenSpot(field)
+
+        Position(1, 2).isClosedSpot(field)
+        Position(2, 2).isOpenSpot(field)
+        Position(3, 2).isOpenSpot(field)
+        Position(4, 2).isOpenSpot(field)
+
+        Position(1, 3).isClosedSpot(field)
+        Position(2, 3).isClosedSpot(field)
+        Position(3, 3).isClosedSpot(field)
+        Position(4, 3).isClosedSpot(field)
     }
 
     "지뢰에 해당하는 스팟을 열면 GameOver를 반환한다." {
@@ -106,3 +108,11 @@ class FieldTest : StringSpec({
         field.openSpot(Position(1, 1)) shouldBeSameInstanceAs OpenResult.GameOver
     }
 })
+
+private fun Position.isOpenSpot(field: Field) {
+    field.getSpot(this).isOpened() shouldBe true
+}
+
+private fun Position.isClosedSpot(field: Field) {
+    field.getSpot(this).isClosed() shouldBe true
+}

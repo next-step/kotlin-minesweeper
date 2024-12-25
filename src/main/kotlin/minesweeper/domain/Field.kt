@@ -56,7 +56,7 @@ class Field(
         val nearbyPositions = position.nearbyPositions()
         nearbyPositions.forEach {
             spots[it]?.let { spot ->
-                if (!spot.isOpened()) {
+                if (spot.isClosed()) {
                     openSpot(it)
                 }
             }
