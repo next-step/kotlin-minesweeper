@@ -28,6 +28,7 @@ sealed class Spot(val position: Position) {
 
 class SafeSpot(position: Position) : Spot(position) {
     var nearbyMineCount: Int = 0
+        private set
 
     override fun isMine(): Boolean {
         return false
