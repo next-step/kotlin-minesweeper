@@ -12,12 +12,23 @@ object MineSweeperController {
         val height = InputView.readHeight()
         val width = InputView.readWidth()
         val mineCount = InputView.readMineCount()
-        val grid =
-            Grid(
-                dimension = Dimension(height, width),
-                mineCount = MineCount(mineCount),
-                mineGenerator = RandomMineGenerator(),
-            )
-        ResultView.renderBoard(grid)
+        ResultView.printStartGameMessage()
+
+        val grid = Grid(
+            dimension = Dimension(height, width),
+            mineCount = MineCount(mineCount),
+            mineGenerator = RandomMineGenerator(),
+        )
+
+        while (true) {
+            val (x, y) = InputView.readOpenCoordinates()
+            val isOpenSuccessful = grid.openCell(x, y)
+            if (isOpenSuccessful) {
+                ResultView.renderBoard(grid)
+            } else {
+                ResultView.printLoseGameMessage()
+                break
+            }
+        }
     }
 }

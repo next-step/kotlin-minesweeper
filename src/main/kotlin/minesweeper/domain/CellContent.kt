@@ -20,10 +20,18 @@ class Empty(val adjacentMines: Int = 0) : CellContent() {
     }
 }
 
-class Cell(private val content: CellContent) {
+class Cell(val content: CellContent) {
+    private var state: CellState = Closed(this)
+    val isOpenState: Boolean get() = state is Open
+
     fun isMine(): Boolean = content is Mine
 
-    fun displayString() = content.toDisplayString()
+    fun displayString() = if (isOpenState) content.toDisplayString() else "C"
+
+    fun open() {
+        val state = state.open()
+        this.state = state
+    }
 
     companion object {
         fun from(

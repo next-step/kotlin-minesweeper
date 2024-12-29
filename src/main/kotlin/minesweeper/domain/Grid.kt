@@ -55,6 +55,36 @@ class Grid(
         }
     }
 
+    fun openCell(row: Int, col: Int): Boolean {
+        val cell = cells[row][col]
+        cell.open()
+        if (cell.isOpenState) {
+            reveal(row, col)
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private fun reveal(row: Int, col: Int) {
+        val cell = cells[row][col]
+        // 탈출조건 - 열려있거나, 지뢰거나, 더이상 인접 카운트가 0이 아닐때
+        if (cell.isOpenState || cell.isMine()) return
+
+        // 지뢰 카운트 0 인 곳이라면 재귀 탐색
+        if ((cell.content as Empty).adjacentMines == 0) {
+            CoordinateOffset.X.offsets.forEach { dx ->
+                CoordinateOffset.Y.offsets.forEach { dy ->
+                    val newRow = row + dx
+                    val newCol = col + dy
+                    if (newRow in cells.indices && newCol in cells[newRow].indices) {
+                        reveal(newRow, newCol)
+                    }
+                }
+            }
+        }
+    }
+
     enum class CoordinateOffset(vararg val offsets: Int) {
         X(-1, 0, 1),
         Y(-1, 0, 1),
