@@ -1,8 +1,12 @@
 package domain
 
 @JvmInline
-value class Col(val value: Int) {
-    operator fun plus(other: Int): Col = Col(value + other)
+value class Col(private val value: Int) : Comparable<Col> {
+    override fun compareTo(other: Col): Int {
+        return this.value.compareTo(other.value)
+    }
 
-    operator fun compareTo(other: Col): Int = value.compareTo(other.value)
+    operator fun plus(other: Col): Col {
+        return Col(this.value + other.value)
+    }
 }

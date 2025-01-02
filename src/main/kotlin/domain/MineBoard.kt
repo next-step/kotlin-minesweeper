@@ -1,15 +1,29 @@
 package domain
 
-class MineBoard(
-    private val mineGameMetric: MineGameMetric,
-    val cells: Cells,
-) {
+import constants.MineSweeperConstants.MINIMUM_HEIGHT
+import constants.MineSweeperConstants.MINIMUM_WIDTH
+
+class MineBoard(private val cells: Cells) {
+    fun cellsSize() = cells.numberOfTotalCells()
+
+    fun hasMineExploded(): Boolean {
+        return cells.isAnyMineCellOpened()
+    }
+
+    fun isCleared(): Boolean {
+        return cells.isAllEmptyCellsOpened()
+    }
+
+    fun getCell(coordinate: Coordinate): Cell = cells.get(coordinate)
+
+    fun openCell(coordinate: Coordinate) = cells.get(coordinate).open()
+
     fun countAdjacentMines(cell: Cell): Int {
         var numberOfMines = 0
 
         for (direction in Direction.entries) {
             val nextCoordinate = cell.coordinate + direction.offset
-            if (mineGameMetric.isOutOfMineBoard(nextCoordinate)) {
+            if (isOutOfMineBoard(nextCoordinate)) {
                 continue
             }
 
@@ -25,7 +39,7 @@ class MineBoard(
 
         for (direction in Direction.entries) {
             val nextCoordinate = cell.coordinate + direction.offset
-            if (!mineGameMetric.isOutOfMineBoard(nextCoordinate)) {
+            if (!isOutOfMineBoard(nextCoordinate)) {
                 adjacentCoordinates.add(nextCoordinate)
             }
         }
@@ -33,21 +47,14 @@ class MineBoard(
         return adjacentCoordinates
     }
 
-    fun isMineCell(coordinate: Coordinate): Boolean {
-        return cells.get(coordinate).isMineCell()
+    private fun isOutOfMineBoard(coordinate: Coordinate): Boolean {
+        return (
+            Row(MINIMUM_HEIGHT) <= coordinate.row && coordinate.row <= cells.height &&
+                Col(MINIMUM_WIDTH) <= coordinate.col && coordinate.col <= cells.width
+        ).not()
     }
 
-    fun isAnyMineCellOpened(): Boolean {
-        return cells.countOpenedMineCells() > 0
+    fun cellsByRow(): Map<Row, List<Cell>> {
+        return cells.groupByRow()
     }
-
-    fun isAllEmptyCellsOpened(): Boolean {
-        return cells.isAllEmptyCellsOpened()
-    }
-
-    fun openCell(coordinate: Coordinate) {
-        cells.get(coordinate).open()
-    }
-
-    fun getCell(current: Coordinate): Cell = cells.get(current)
 }

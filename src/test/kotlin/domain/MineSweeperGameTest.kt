@@ -1,87 +1,78 @@
 package domain
 
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class MineSweeperGameTest : DescribeSpec({
-    lateinit var mineGameMetric: MineGameMetric
-    lateinit var mineBoard: MineBoard
-    lateinit var sut: MineSweeperGame
+    describe("isContinueGame Test") {
+        lateinit var sut: MineSweeperGame
 
-    describe("isContinueGame test") {
-        context("하나 이상의 셀을 지뢰 open 한 경우") {
+        context("하나 이상의 MineCell이 Open 되어 있는 경우") {
             beforeTest {
-                mineGameMetric = MineGameMetric(3, 3, 8)
                 val cells =
                     Cells(
                         listOf(
-                            Cell.MineCell(Coordinate(1, 1), CellStatus.OPEN),
+                            Cell.MineCell(Coordinate(1, 1)),
                             Cell.MineCell(Coordinate(2, 2)),
-                            Cell.MineCell(Coordinate(3, 3)),
+                            Cell.MineCell(Coordinate(3, 3), CellStatus.OPEN),
                         ),
                     )
-
-                mineBoard = MineBoard(mineGameMetric, cells)
+                val mineBoard = MineBoard(cells)
                 sut = MineSweeperGame(mineBoard)
             }
 
             it("should be false") {
-                sut.isContinueGame().shouldBeFalse()
+                sut.isContinueGame() shouldBe false
             }
         }
 
-        context("비어있는 모든 셀을 open 한 경우") {
+        context("모든 MineCell이 Closed 상태인 경우") {
+            val cells =
+                Cells(
+                    listOf(
+                        Cell.MineCell(Coordinate(1, 1)),
+                        Cell.MineCell(Coordinate(2, 2)),
+                        Cell.MineCell(Coordinate(3, 3)),
+                        Cell.EmptyCell(Coordinate(3, 3)),
+                    ),
+                )
             beforeTest {
-                mineGameMetric = MineGameMetric(3, 3, 8)
-                val cells =
-                    Cells(
-                        listOf(
-                            Cell.EmptyCell(Coordinate(1, 1), CellStatus.OPEN),
-                            Cell.EmptyCell(Coordinate(2, 2), CellStatus.OPEN),
-                            Cell.EmptyCell(Coordinate(3, 3), CellStatus.OPEN),
-                        ),
-                    )
-
-                mineBoard = MineBoard(mineGameMetric, cells)
-                sut = MineSweeperGame(mineBoard)
-            }
-
-            it("should be false") {
-                sut.isContinueGame().shouldBeFalse()
-            }
-        }
-
-        context("지뢰 셀을 open 하지 않았고, 비어있는 모든 칸을 open 하지 않은 경우") {
-            beforeTest {
-                mineGameMetric = MineGameMetric(3, 3, 8)
-                val cells =
-                    Cells(
-                        listOf(
-                            Cell.EmptyCell(Coordinate(1, 1), CellStatus.OPEN),
-                            Cell.EmptyCell(Coordinate(2, 2), CellStatus.OPEN),
-                            Cell.EmptyCell(Coordinate(3, 3), CellStatus.CLOSED),
-                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
-                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
-                            Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
-                        ),
-                    )
-
-                mineBoard = MineBoard(mineGameMetric, cells)
+                val mineBoard = MineBoard(cells)
                 sut = MineSweeperGame(mineBoard)
             }
 
             it("should be true") {
-                sut.isContinueGame().shouldBeTrue()
+                sut.isContinueGame() shouldBe true
+            }
+        }
+
+        context("모든 Empty Cell이 Open인 경우") {
+            beforeTest {
+                val cells =
+                    Cells(
+                        listOf(
+                            Cell.EmptyCell(Coordinate(1, 1), CellStatus.OPEN),
+                            Cell.EmptyCell(Coordinate(2, 2), CellStatus.OPEN),
+                            Cell.MineCell(Coordinate(3, 3)),
+                            Cell.EmptyCell(Coordinate(4, 4), CellStatus.OPEN),
+                        ),
+                    )
+                val mineBoard = MineBoard(cells)
+                sut = MineSweeperGame(mineBoard)
+            }
+
+            it("should be false") {
+                sut.isContinueGame() shouldBe false
             }
         }
     }
 
-    describe("openAdjacentCell") {
+    describe("openAdjacentCell test") {
+        lateinit var mineBoard: MineBoard
+        lateinit var sut: MineSweeperGame
+
         context("연결되어 있는 셀이 없는 경우") {
             it("해당 셀만 오픈한다.") {
-                mineGameMetric = MineGameMetric(3, 3, 8)
                 val cellList =
                     listOf(
                         Cell.EmptyCell(Coordinate(1, 1), CellStatus.CLOSED),
@@ -90,7 +81,7 @@ class MineSweeperGameTest : DescribeSpec({
                         Cell.MineCell(Coordinate(2, 2), CellStatus.CLOSED),
                     )
                 val cells = Cells(cellList)
-                mineBoard = MineBoard(mineGameMetric, cells)
+                mineBoard = MineBoard(cells)
                 sut = MineSweeperGame(mineBoard)
                 sut.openAdjacentCell(Coordinate(1, 1))
                 cellList[0].status shouldBe CellStatus.OPEN
@@ -102,7 +93,6 @@ class MineSweeperGameTest : DescribeSpec({
 
         context("연결되어 있는 셀이 있는 경우") {
             it("좌표와 연결된 비어있는 셀을 모두 오픈한다.") {
-                mineGameMetric = MineGameMetric(3, 3, 8)
                 val cellList =
                     listOf(
                         Cell.EmptyCell(Coordinate(1, 1), CellStatus.CLOSED),
@@ -116,7 +106,7 @@ class MineSweeperGameTest : DescribeSpec({
                         Cell.MineCell(Coordinate(3, 3), CellStatus.CLOSED),
                     )
                 val cells = Cells(cellList)
-                mineBoard = MineBoard(mineGameMetric, cells)
+                mineBoard = MineBoard(cells)
                 sut = MineSweeperGame(mineBoard)
 
                 sut.openAdjacentCell(Coordinate(1, 1))
@@ -134,9 +124,11 @@ class MineSweeperGameTest : DescribeSpec({
     }
 
     describe("getGameResult test") {
+        lateinit var mineBoard: MineBoard
+        lateinit var sut: MineSweeperGame
+
         context("빈 셀이 모두 open된 경우") {
             it("should be SUCCESS") {
-                mineGameMetric = MineGameMetric(3, 3, 3)
                 val cellList =
                     listOf(
                         Cell.EmptyCell(Coordinate(1, 1), CellStatus.OPEN),
@@ -151,9 +143,8 @@ class MineSweeperGameTest : DescribeSpec({
                     )
                 val cells = Cells(cellList)
 
-                mineBoard = MineBoard(mineGameMetric, cells)
+                mineBoard = MineBoard(cells)
                 sut = MineSweeperGame(mineBoard)
-
                 val actual = sut.getGameResult()
                 actual shouldBe GameResult.SUCCESS
             }

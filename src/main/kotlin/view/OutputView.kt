@@ -8,11 +8,9 @@ import domain.Row
 
 object OutputView {
     fun showMineSweeperBoard(board: MineBoard) {
-        val cells = board.cells
-
-        val cellsByRow = cells.cells.groupBy { it.coordinate.row }
+        val cellsByRow = board.cellsByRow()
         cellsByRow.toSortedMap(Row::compareTo).forEach { (_, rowCells) ->
-            val sortedRow = rowCells.sortedBy { it.coordinate.col.value }
+            val sortedRow = rowCells.sortedBy { it.coordinate.col }
             sortedRow.forEach { cell ->
                 printCell(cell, board)
             }

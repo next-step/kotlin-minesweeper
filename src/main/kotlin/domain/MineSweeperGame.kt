@@ -3,8 +3,8 @@ package domain
 class MineSweeperGame(private val mineBoard: MineBoard) {
     fun isContinueGame(): Boolean {
         when {
-            mineBoard.isAnyMineCellOpened() -> return false
-            mineBoard.isAllEmptyCellsOpened() -> return false
+            mineBoard.hasMineExploded() -> return false
+            mineBoard.isCleared() -> return false
         }
         return true
     }
@@ -22,7 +22,7 @@ class MineSweeperGame(private val mineBoard: MineBoard) {
         val current = queue.removeFirst()
         val cell = mineBoard.getCell(current)
 
-        if (cell.isAlreadyOpened()) return
+        if (cell.isOpened()) return
 
         mineBoard.openCell(current)
 
@@ -38,7 +38,7 @@ class MineSweeperGame(private val mineBoard: MineBoard) {
 
     fun getGameResult(): GameResult =
         when {
-            mineBoard.isAllEmptyCellsOpened() -> GameResult.SUCCESS
+            mineBoard.isCleared() -> GameResult.SUCCESS
             else -> GameResult.FAILURE
         }
 }

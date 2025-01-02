@@ -1,3 +1,1 @@
-import controller.MineSweeperController
-
-fun main() = MineSweeperController().run()
+fun main() = controller.MineSweeperController().run()

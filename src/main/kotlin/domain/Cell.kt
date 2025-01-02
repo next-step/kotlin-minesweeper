@@ -8,35 +8,35 @@ sealed interface Cell {
 
     fun open()
 
-    fun isAlreadyOpened(): Boolean {
+    fun isOpened(): Boolean {
         return status == CellStatus.OPEN
     }
 
-    data class MineCell(
+    class MineCell(
         override val coordinate: Coordinate,
         private var _status: CellStatus = CellStatus.CLOSED,
     ) : Cell {
         override val status: CellStatus
             get() = _status
-
-        override fun open() {
-            _status = CellStatus.OPEN
-        }
 
         override fun isMineCell(): Boolean = true
+
+        override fun open() {
+            _status = CellStatus.OPEN
+        }
     }
 
-    data class EmptyCell(
+    class EmptyCell(
         override val coordinate: Coordinate,
         private var _status: CellStatus = CellStatus.CLOSED,
     ) : Cell {
         override val status: CellStatus
             get() = _status
 
+        override fun isMineCell(): Boolean = false
+
         override fun open() {
             _status = CellStatus.OPEN
         }
-
-        override fun isMineCell(): Boolean = false
     }
 }
