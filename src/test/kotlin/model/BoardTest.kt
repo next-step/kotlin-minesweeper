@@ -12,7 +12,7 @@ internal class BoardTest {
         val mines = listOf(1, 4, 7)
         val board = Board.createBoard(boardHeight, boardWidth, mines)
 
-        assertThat(board.squares.size).isEqualTo(9)
+        assertThat(board.squares.size * board.squares[0].size).isEqualTo(9)
     }
 
     @Test
@@ -22,19 +22,19 @@ internal class BoardTest {
         val mines = listOf(1, 4, 7)
         val board = Board.createBoard(boardHeight, boardWidth, mines)
 
-        assertThat(board.squares.count { it.type == SquareType.MINE }).isEqualTo(3)
+        assertThat(board.squares.flatten().count { it.type == SquareType.MINE }).isEqualTo(3)
     }
 
     @Test
     fun `3x3 보드 1,1에 지뢰를 배치한다`() {
-        val initialSquares = listOf(
-            Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE),
-            Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE),
-            Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE)
+        val initialSquares = arrayOf(
+            arrayOf(Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE)),
+            arrayOf(Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE)),
+            arrayOf(Square(SquareType.TILE), Square(SquareType.TILE), Square(SquareType.TILE))
         )
         val board = Board(initialSquares)
-        val updatedBoard = board.updateSquare(4, Square(SquareType.MINE))
+        val updatedBoard = board.updateSquare(0, 0, Square(SquareType.MINE))
 
-        assertThat(updatedBoard.squares[4].type).isEqualTo(SquareType.MINE)
+        assertThat(updatedBoard.squares[0][0].type).isEqualTo(SquareType.MINE)
     }
 }

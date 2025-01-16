@@ -13,6 +13,14 @@ object InputView {
 
     fun getMineNumber(): Int {
         println("지뢰는 몇 개 인가요?")
-        return readln().toInt()
+        val mineNumber = readln().toInt()
+        println("지뢰찾기 게임 시작")
+        return mineNumber
+    }
+
+    fun getCoordinate(): Pair<Int, Int> {
+        print("open: ")
+        val input = readln().split(", ")
+        return Pair(input[0].toInt(), input[1].toInt())
     }
 }
