@@ -15,13 +15,13 @@ class MineRandomPlacer {
 
         val minePositions = positions.take(mineCount).toSet()
 
-        val board =
-            (RANDOM_MINE_START_VALUE until height).map { row ->
-                (RANDOM_MINE_START_VALUE until width).map { col ->
-                    if (row to col in minePositions) MineCell.MINE else MineCell.initial()
-                }
-            }
-        return BoardCalculator().calculateBoard(board.map { MineRow(it) })
+        return (RANDOM_MINE_START_VALUE until height).map { x ->
+            MineRow(
+                (RANDOM_MINE_START_VALUE until width).map { y ->
+                    if (x to y in minePositions) MineCell.MINE else MineCell.Number(DEFAULT_MINE_NUMBER)
+                },
+            )
+        }
     }
 
     companion object {

@@ -37,3 +37,16 @@
   * 행, 열 선택 시  인접한 행, 열 C -> 숫자 표기
   * 이미 오픈된 셀 표시(boolean)
 * 지뢰 선택시 Lose Game 으로 출력
+---
+## step4 지뢰찾기(리팩토링)
+### Todo 리스트
+* 클래스간 책임 분리 
+  * MineSweeper -> 게임 상태 혹은 게임 동작  담당 하도록 수정
+  * MineBoard -> 보드 관리 관련 연산
+  * MineRow -> 한 행의 셀 관리 및 상태 제공
+  * MineCell 셀의 상태, 행동 담당(Cell Open)
+  * MineRandomPlacer -> 폭탄 배치 로직 전담
+  * BoardCalculator -> 숫자 계산
+* 책임 분리 
+  * OpenCells - MineSweeper -> MineBoard
+  * getNeighbors - MineSweeper -> MineBoard

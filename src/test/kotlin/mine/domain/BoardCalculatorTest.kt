@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test
 
 class BoardCalculatorTest {
     @Test
-    fun `주변 지뢰갯수  확인후 셀 값 변경 지뢰 1개`() {
-        val board =
+    fun `인접한 폭탄의 갯수를 계산한다`() {
+        val tempBoard =
             listOf(
                 MineRow(
                     listOf(
+                        MineCell.initial(),
+                        MineCell.initial(),
                         MineCell.initial(),
                         MineCell.initial(),
                         MineCell.initial(),
@@ -18,6 +20,17 @@ class BoardCalculatorTest {
                 ),
                 MineRow(
                     listOf(
+                        MineCell.initial(),
+                        MineCell.initial(),
+                        MineCell.initial(),
+                        MineCell.initial(),
+                        MineCell.MINE,
+                    ),
+                ),
+                MineRow(
+                    listOf(
+                        MineCell.initial(),
+                        MineCell.initial(),
                         MineCell.initial(),
                         MineCell.MINE,
                         MineCell.initial(),
@@ -27,28 +40,7 @@ class BoardCalculatorTest {
                     listOf(
                         MineCell.initial(),
                         MineCell.initial(),
-                        MineCell.initial(),
-                    ),
-                ),
-            )
-        val result = BoardCalculator().calculateBoard(board)
-        val expectedResult =
-            listOf(
-                MineRow(listOf(MineCell.Number(1), MineCell.Number(1), MineCell.Number(1))),
-                MineRow(listOf(MineCell.Number(1), MineCell.MINE, MineCell.Number(1))),
-                MineRow(listOf(MineCell.Number(1), MineCell.Number(1), MineCell.Number(1))),
-            )
-
-        result shouldBe expectedResult
-    }
-
-    @Test
-    fun `주변 지뢰갯수  확인후 셀 값 변경 지뢰 2개`() {
-        val board =
-            listOf(
-                MineRow(
-                    listOf(
-                        MineCell.initial(),
+                        MineCell.MINE,
                         MineCell.initial(),
                         MineCell.initial(),
                     ),
@@ -58,61 +50,32 @@ class BoardCalculatorTest {
                         MineCell.initial(),
                         MineCell.MINE,
                         MineCell.initial(),
-                    ),
-                ),
-                MineRow(
-                    listOf(
                         MineCell.initial(),
-                        MineCell.MINE,
                         MineCell.initial(),
                     ),
                 ),
-            )
-        val result = BoardCalculator().calculateBoard(board)
-        val expectedResult =
-            listOf(
-                MineRow(listOf(MineCell.Number(1), MineCell.Number(1), MineCell.Number(1))),
-                MineRow(listOf(MineCell.Number(2), MineCell.MINE, MineCell.Number(2))),
-                MineRow(listOf(MineCell.Number(2), MineCell.MINE, MineCell.Number(2))),
             )
 
-        result shouldBe expectedResult
-    }
+        val boardCalculator = BoardCalculator()
+        val calculatedBoard = boardCalculator.calculateBoard(MineBoard(tempBoard))
+        calculatedBoard.rows[0].mineCells[3] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[0].mineCells[4] shouldBe MineCell.Number(1)
 
-    @Test
-    fun `주변 지뢰갯수  확인후 셀 값 변경 지뢰 0개`() {
-        val board =
-            listOf(
-                MineRow(
-                    listOf(
-                        MineCell.initial(),
-                        MineCell.initial(),
-                        MineCell.initial(),
-                    ),
-                ),
-                MineRow(
-                    listOf(
-                        MineCell.initial(),
-                        MineCell.initial(),
-                        MineCell.initial(),
-                    ),
-                ),
-                MineRow(
-                    listOf(
-                        MineCell.initial(),
-                        MineCell.initial(),
-                        MineCell.initial(),
-                    ),
-                ),
-            )
-        val result = BoardCalculator().calculateBoard(board)
-        val expectedResult =
-            listOf(
-                MineRow(listOf(MineCell.Number(0), MineCell.Number(0), MineCell.Number(0))),
-                MineRow(listOf(MineCell.Number(0), MineCell.Number(0), MineCell.Number(0))),
-                MineRow(listOf(MineCell.Number(0), MineCell.Number(0), MineCell.Number(0))),
-            )
+        calculatedBoard.rows[1].mineCells[2] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[1].mineCells[3] shouldBe MineCell.Number(2)
 
-        result shouldBe expectedResult
+        calculatedBoard.rows[2].mineCells[1] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[2].mineCells[2] shouldBe MineCell.Number(2)
+        calculatedBoard.rows[2].mineCells[4] shouldBe MineCell.Number(2)
+
+        calculatedBoard.rows[3].mineCells[0] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[3].mineCells[1] shouldBe MineCell.Number(2)
+        calculatedBoard.rows[3].mineCells[3] shouldBe MineCell.Number(2)
+        calculatedBoard.rows[3].mineCells[4] shouldBe MineCell.Number(1)
+
+        calculatedBoard.rows[4].mineCells[0] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[4].mineCells[2] shouldBe MineCell.Number(2)
+        calculatedBoard.rows[4].mineCells[3] shouldBe MineCell.Number(1)
+        calculatedBoard.rows[4].mineCells[4] shouldBe MineCell.Number(0)
     }
 }

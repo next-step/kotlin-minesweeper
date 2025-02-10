@@ -1,5 +1,6 @@
 package mine.view
 
+import mine.domain.MineBoard
 import mine.domain.MineRow
 import mine.enums.MineCell
 
@@ -33,8 +34,8 @@ object OutputView {
             is MineCell.Number -> value.toString()
         }
 
-    fun gameResult(mineBoard: List<MineRow>) {
-        mineBoard.forEach { row ->
+    fun gameResult(mineBoard: MineBoard) {
+        mineBoard.rows.forEach { row ->
             printMineBoard(row)
         }
     }

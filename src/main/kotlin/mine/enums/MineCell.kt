@@ -10,13 +10,13 @@ sealed class MineCell {
         override fun withOpen(): MineCell = openCell()
     }
 
-    data class Number(val value: Int) : MineCell() {
+    data class Number(var value: Int) : MineCell() {
         override fun withOpen(): MineCell = openCell()
     }
 
-    abstract fun withOpen(): MineCell
-
     fun openCell(): MineCell = this.apply { isOpen = true }
+
+    abstract fun withOpen(): MineCell
 
     companion object {
         fun initial(): Number {
