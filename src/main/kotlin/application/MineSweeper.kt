@@ -2,6 +2,7 @@ package application
 
 import cell.CellBoard
 import cell.Count
+import cell.GameResult
 import cell.Length
 import view.InputView
 import view.OutputView
@@ -10,10 +11,9 @@ import view.format
 class MineSweeper {
     fun execute() {
         val (height, width, mineCount) = init()
-
         val board = CellBoard.of(height, width, mineCount)
-
-        renderBoard(board)
+        OutputView.printGameStart()
+        gameLoop(board)
     }
 
     private fun init(): Request {
@@ -24,9 +24,22 @@ class MineSweeper {
         return Request(Length(height), Length(width), Count(mineCount))
     }
 
+    private tailrec fun gameLoop(board: CellBoard) {
+        val coordinate = InputView.inputCoordinate()
+        when (board.handleInput(coordinate)) {
+            is GameResult.LOSE -> {
+                OutputView.printLoseGame()
+            }
+            is GameResult.CONTINUE -> {
+                renderBoard(board)
+                gameLoop(board)
+            }
+        }
+    }
+
     private fun renderBoard(board: CellBoard) {
         val formattedBoard = format(board)
-        OutputView.printGameStart(formattedBoard)
+        OutputView.printBoard(formattedBoard)
     }
 
     private data class Request(

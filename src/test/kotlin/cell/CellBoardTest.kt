@@ -50,4 +50,104 @@ class CellBoardTest {
         actual.mineCount shouldBe 1
         blankCell.adjacentMineCount shouldBe MineCount.ONE
     }
+
+    @Test
+    fun `지뢰가 있는 Cell을 클릭하면 LOSE를 반환한다`() {
+        val height = Length(3)
+        val width = Length(3)
+        val mineCount = Count(1)
+        val fixedCoordinates =
+            listOf(
+                Coordinate(
+                    CoordinateValue(1),
+                    CoordinateValue(1),
+                ),
+            )
+        val strategy = FixedMineGenerationStrategy(fixedCoordinates)
+
+        val cellBoard =
+            CellBoard.of(
+                height = height,
+                width = width,
+                mineCount = mineCount,
+                mineGenerationStrategy = strategy,
+            )
+
+        val actual =
+            cellBoard.handleInput(
+                Coordinate(
+                    CoordinateValue(1),
+                    CoordinateValue(1),
+                ),
+            )
+
+        actual shouldBe GameResult.LOSE
+    }
+
+    @Test
+    fun `지뢰가 없는 Cell을 클릭하면 CONTINUE를 반환한다`() {
+        val height = Length(3)
+        val width = Length(3)
+        val mineCount = Count(1)
+        val fixedCoordinates =
+            listOf(
+                Coordinate(
+                    CoordinateValue(1),
+                    CoordinateValue(1),
+                ),
+            )
+        val strategy = FixedMineGenerationStrategy(fixedCoordinates)
+
+        val cellBoard =
+            CellBoard.of(
+                height = height,
+                width = width,
+                mineCount = mineCount,
+                mineGenerationStrategy = strategy,
+            )
+
+        val actual =
+            cellBoard.handleInput(
+                Coordinate(
+                    CoordinateValue(0),
+                    CoordinateValue(0),
+                ),
+            )
+
+        actual shouldBe GameResult.CONTINUE
+    }
+
+    @Test
+    fun `지뢰가 없는 Cell을 클릭하면 주변 Cell들을 모두 공개한다`() {
+        val height = Length(3)
+        val width = Length(3)
+        val mineCount = Count(1)
+        val fixedCoordinates =
+            listOf(
+                Coordinate(
+                    CoordinateValue(0),
+                    CoordinateValue(0),
+                ),
+            )
+        val strategy = FixedMineGenerationStrategy(fixedCoordinates)
+        val cellBoard =
+            CellBoard.of(
+                height = height,
+                width = width,
+                mineCount = mineCount,
+                mineGenerationStrategy = strategy,
+            )
+
+        cellBoard.handleInput(
+            Coordinate(
+                CoordinateValue(2),
+                CoordinateValue(2),
+            ),
+        )
+
+        val actual = cellBoard.cells.values.map(Cell::revealed)
+
+        actual.filter { it }.size shouldBe 8
+        actual.filterNot { it }.size shouldBe 1
+    }
 }
