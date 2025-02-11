@@ -4,6 +4,7 @@ import minesweeper.adapter.MinesweeperInputAdapter
 import minesweeper.domain.FieldHeight
 import minesweeper.domain.FieldWidth
 import minesweeper.domain.MineCount
+import minesweeper.domain.Position
 import minesweeper.view.InputVIew
 
 class ConsoleMinesweeperInputAdapter(private val inputVIew: InputVIew) : MinesweeperInputAdapter {
@@ -22,6 +23,13 @@ class ConsoleMinesweeperInputAdapter(private val inputVIew: InputVIew) : Mineswe
     override fun fetchMineCount(): MineCount {
         inputVIew.inputMineCount().let {
             return MineCount(it.toInt())
+        }
+    }
+
+    override fun fetchOpenAttemptPosition(): Position {
+        inputVIew.inputOpenAttemptPosition().let {
+            val (x, y) = it.split("\\s*,\\s*".toRegex())
+            return Position(x.toInt(), y.toInt())
         }
     }
 }

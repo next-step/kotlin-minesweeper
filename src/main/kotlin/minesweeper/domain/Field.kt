@@ -1,64 +1,65 @@
 package minesweeper.domain
 
 class Field(
-    private val fieldInfo: FieldInfo,
-    private val mineCount: MineCount,
-    private val spotGenerator: SpotGenerator,
+    val fieldInfo: FieldInfo,
+    private val minePositions: Set<Position>,
 ) {
-    private val width = fieldInfo.getWidth()
-    val lines: List<FieldLine> = createField()
+    private val spots: Map<Position, Spot> = createField()
 
     init {
         validateMineCount()
     }
 
-    private fun createField(): List<FieldLine> {
-        val spots = spotGenerator.generate(fieldInfo, mineCount)
-        return spots.mapIndexed { index, spot ->
-            if (spot is SafeSpot) {
-                val y = index / width
-                val x = index % width
-                val nearbyMineCount = countAdjacentMines(spots, y, x)
-                spot.updateNearbyMineCount(nearbyMineCount)
+    private fun createField(): Map<Position, Spot> {
+        return (0 until fieldInfo.getWidth() + 1).flatMap { x ->
+            (0 until fieldInfo.getHeight() + 1).map { y ->
+                Position(x, y)
             }
-            spot
-        }.chunked(width).map { lineSpots ->
-            FieldLine(lineSpots)
+        }.associateWith { position ->
+            when {
+                minePositions.contains(position) -> MineSpot(position)
+                else -> SafeSpot(position)
+            }
         }
     }
 
-    private fun countAdjacentMines(
-        spots: List<Spot>,
-        y: Int,
-        x: Int,
-    ): Int {
-        return NEARBY.count { (dy, dx) ->
-            val newY = y + dy
-            val newX = x + dx
-            isWithinBounds(newY, newX) && spots[newY * width + newX].isMine()
-        }
-    }
-
-    private fun isWithinBounds(
-        y: Int,
-        x: Int,
-    ): Boolean {
-        return y in 0 until fieldInfo.getHeight() && x in 0 until width
+    fun getSpot(position: Position): Spot {
+        return spots[position] ?: throw IllegalArgumentException("해당 위치에 대한 Spot이 존재하지 않습니다.")
     }
 
     private fun validateMineCount() {
-        val height = fieldInfo.getHeight()
-        val totalSpots = height * width
-        require(mineCount.count <= totalSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
+        val totalPossibleSpots = fieldInfo.getHeight() * fieldInfo.getWidth()
+        require(minePositions.size <= totalPossibleSpots) { "지뢰 개수는 필드의 총 스팟보다 많을 수 없습니다." }
     }
 
-    companion object {
-        private val NEARBY =
-            listOf(
-                Pair(-1, 0),
-                Pair(0, -1),
-                Pair(0, 1),
-                Pair(1, 0),
-            )
+    fun openSpot(position: Position): OpenResult {
+        val targetSpot =
+            spots[position]?.let {
+                if (it.isMine()) {
+                    return OpenResult.GameOver
+                }
+                it
+            } as SafeSpot
+        val openResult = targetSpot.open()
+        targetSpot.calculateNearbyMineCount(minePositions)
+        checkAndOpenNearbySpot(targetSpot)
+        return openResult
+    }
+
+    private fun checkAndOpenNearbySpot(targetSpot: SafeSpot) {
+        if (targetSpot.nearbyMineCount == 0) {
+            openNearbySpots(targetSpot.position)
+        }
+    }
+
+    private fun openNearbySpots(position: Position) {
+        val nearbyPositions = position.nearbyPositions()
+        nearbyPositions.forEach {
+            spots[it]?.let { spot ->
+                if (spot.isClosed()) {
+                    openSpot(it)
+                }
+            }
+        }
     }
 }

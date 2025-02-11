@@ -15,4 +15,9 @@ class InputVIew {
         println("\n지뢰는 몇 개인가요?")
         return readln()
     }
+
+    fun inputOpenAttemptPosition(): String {
+        print("open: ")
+        return readln()
+    }
 }
